@@ -17,19 +17,20 @@
     "hideFilters": "Amaga els filtres",
     "remove": "Elimina",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Aparença",
+      "print": "Impressió amigable",
+      "printHint": "Pàgina blanca, text fosc",
+      "theme": "Tema actual",
+      "themeHint": "Coincideix amb el teu tema clar o fosc",
+      "previewKicker": "Pàgina de mostra",
+      "previewTitle": "Títol del document",
+      "previewBody": "El text del cos utilitza els colors i l'espaiat seleccionats.",
+      "previewCallout": "Les crides i accents segueixen el color del mòdul.",
+      "fixedNote": "L'aparença és fixa en el fitxer exportat. Exporta de nou per canviar-la.",
+      "docxBackgroundNote": "Word i altres aplicacions poden no mostrar els fons de pàgina de la mateixa manera, especialment quan s'imprimeix."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Desplaçar-se a la part superior",
+    "moreActions": "Més accions"
   },
   "contentImport": {
     "title": {
@@ -176,7 +177,7 @@
   },
   "nav": {
     "dashboard": "Tauler",
-    "inbox": "Capture",
+    "inbox": "Captura",
     "vocabulary": "Vocabulari",
     "writing": "Escriptura",
     "theory": "Teoria",
@@ -198,10 +199,10 @@
   },
   "inbox": {
     "eyebrow": "Recull",
-    "title": "Capture",
+    "title": "Captura",
     "description": "Deixeu aquí notes ràpides, expressions i idees — i convertiu-les en vocabulari, teoria, escriptura o exercicis quan tingueu un moment.",
     "disabledNoWorkspace": "Creeu un espai de treball abans de capturar.",
-    "capture": "Capture",
+    "capture": "Captura",
     "captureTitle": "Captureu alguna cosa",
     "captureDescription": "Deseu alguna cosa per processar-la més tard. Encara no cal decidir on va.",
     "captureSubmit": "Desa a Capture",
@@ -295,12 +296,12 @@
     "tooDeep": "Aquesta carpeta està niada massa profundament",
     "notFound": "No s'ha trobat la carpeta",
     "nameTaken": "Ja hi ha una carpeta o un text amb aquest nom",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Mou a una carpeta",
+    "dragTipBody": "En un ordinador amb ratolí o trackpad, arrossega un element sobre una targeta de carpeta per moure'l. També pots utilitzar la icona de moure en cada element.",
+    "dragTipDismiss": "Descartar consell",
+    "dragTipShow": "Com moure a carpetes",
+    "dragTipDemo": "Arrossega l'element a la carpeta",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Canvia el tema",
@@ -312,10 +313,10 @@
     "createWorkspaceHint": "Afegiu un altre espai de treball d'idioma",
     "switchWorkspace": "Canvia d'espai de treball",
     "switchFailed": "No s'ha pogut canviar d'espai de treball",
-    "selectLanguage": "Select language",
-    "allLanguages": "All languages",
-    "changeLanguageFailed": "Could not change UI language",
-    "popularLanguages": "Popular"
+    "selectLanguage": "Selecciona l'idioma",
+    "allLanguages": "Tots els idiomes",
+    "changeLanguageFailed": "No s'ha pogut canviar l'idioma de la interfície",
+    "popularLanguages": "Populars"
   },
   "workspace": {
     "title": "Espais de treball",
@@ -472,34 +473,34 @@
     "viewMode": "Mode de visualització",
     "tagManager": {
       "open": "Gestiona les etiquetes",
-      "eyebrow": "Tags",
+      "eyebrow": "Etiquetes",
       "title": "Gestor d'etiquetes",
-      "description": "Trieu una etiqueta i, després, assigneu-la o elimineu-la de les paraules. Les paraules assignades i les altres es mantenen en llistes separades.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Trieu una etiqueta i, a continuació, assigna-la o elimina-la de les paraules.",
+      "pageDescription": "Trieu Estàndard o Personalitzat, seleccioneu una etiqueta i, a continuació, afegiu o elimineu-la de les paraules.",
+      "disabledNoWorkspace": "Creeu un espai de treball abans de gestionar les etiquetes de vocabulari.",
+      "backToVocabulary": "Tornar al vocabulari",
+      "backToSettings": "Tornar a la configuració",
       "groupsLabel": "Grups d'etiquetes estàndard",
       "tagsHeading": "Etiquetes",
       "standardTagsHeading": "Etiquetes estàndard",
       "customTagsHeading": "Etiquetes personalitzades",
-      "customTagsHint": "Etiquetes que creeu per a la vostra organització — no són categories gramaticals.",
+      "customTagsHint": "Etiquetes d'espai de treball que creeu — cerqueu per trobar-les quan la llista sigui llarga.",
       "emptyCustomTags": "Encara no hi ha etiquetes personalitzades. Creeu-les en editar una paraula.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "No hi ha etiquetes personalitzades que coincideixin amb aquesta cerca.",
+      "tagSearchPlaceholder": "Cerca etiquetes…",
       "wordsHeading": "{tag}",
       "kindStandard": "Estàndard",
       "kindCustom": "Personalitzada",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Llistes de paraules",
+      "wordTabAssigned": "Etiquetades",
+      "wordTabOther": "Sense etiquetar",
       "assignedHeading": "Paraules amb aquesta etiqueta",
       "otherHeading": "Altres paraules",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Seleccionar tot en aquesta pàgina",
+      "clearSelection": "Esborrar selecció",
+      "selectionScopePage": "Seleccionant d'aquesta pàgina ({count} de {total})",
+      "selectionScopeFiltered": "Seleccionant dins dels resultats de cerca actuals",
       "searchPlaceholder": "Cerqueu paraules o significats…",
       "wordCount": "{count}",
       "loading": "S'està carregant el vocabulari…",
@@ -509,13 +510,23 @@
       "emptyOther": "Totes les paraules ja tenen aquesta etiqueta.",
       "emptyOtherSearch": "Cap paraula coincident per assignar.",
       "selected": "{count} seleccionades",
-      "addToTag": "Afegeix a l'etiqueta",
-      "removeFromTag": "Elimina de l'etiqueta",
-      "applyAdd": "Afegeix a l'etiqueta ({count})",
-      "applyRemove": "Elimina de l'etiqueta ({count})",
+      "addToTag": "Afegir etiqueta",
+      "removeFromTag": "Eliminar etiqueta",
+      "applyAdd": "Afegir etiqueta ({count})",
+      "applyRemove": "Eliminar etiqueta ({count})",
       "added": "S'han afegit {count} paraula/es a {tag}",
       "removed": "S'han eliminat {count} paraula/es de {tag}",
-      "error": "No s'ha pogut actualitzar la pertinença a l'etiqueta"
+      "error": "No s'ha pogut actualitzar la pertinença a l'etiqueta",
+      "systemsLabel": "Sistemes d'etiquetes",
+      "standardSystemTitle": "Estàndard",
+      "standardSystemMeta": "Tema i ús, mostrats per separat",
+      "usageOptional": "Opcional",
+      "customSystemTitle": "Personalitzat",
+      "customSystemMeta": "{count, plural, one {# etiqueta} other {# etiquetes}}",
+      "customPickerLabel": "Trieu una etiqueta personalitzada",
+      "customPickerPlaceholder": "Seleccioneu una etiqueta personalitzada…",
+      "customSearchPlaceholder": "Cerca etiquetes personalitzades…",
+      "pickTagFirst": "Trieu una etiqueta a dalt per gestionar la pertinença de les paraules."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Actualitzat {time}",
@@ -584,7 +595,11 @@
         "notes": "Notes",
         "updated": "Darrera actualització"
       }
-    }
+    },
+    "selectedCustomTags": "Etiquetes seleccionades",
+    "selectedSynonyms": "Sinònims seleccionats",
+    "removeCustomTag": "Eliminar {name}",
+    "pickerLoading": "Carregant…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Pràctica a punt",
       "aiUnavailable": "No s'han pogut generar preguntes amb IA ara mateix.",
       "aiForbidden": "Els exercicis de teoria amb IA estan disponibles amb Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Instruccions addicionals disponibles en Premium.",
       "aiDisabled": "L'assistència d'IA està desactivada a Configuració.",
       "feedback": {
         "correct": "Correcte!",
@@ -927,20 +942,22 @@
         "why": "Per què",
         "complete": "Entesos",
         "completeHint": "Podeu continuar quan estigueu a punt.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Comença l'exercici",
+        "skipReviewAndStart": "Saltar la revisió i començar l'exercici"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Sense classificar",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# nota} other {# notes}}",
+        "selectAll": "Seleccionar tot",
+        "selectGroup": "Seleccionar notes a {name}",
+        "expand": "Expandir {name}",
+        "collapse": "Col·lapsar {name}",
+        "selectedCount": "{count, plural, one {# teoria seleccionada} other {# teories seleccionades}}",
+        "practiceSelected": "Practicar seleccionat",
+        "clearSelection": "Netejar selecció",
+        "subfolders": "{count, plural, one {# subcarpeta} other {# subcarpetes}}",
+        "selectedOne": "1 teoria seleccionada"
       }
     },
     "types": {
@@ -948,9 +965,9 @@
         "label": "Targetes",
         "description": "Gireu targetes per estudiar paraules i significats amb valoracions de repetició espaiada.",
         "preview": "Girar · Valorar · Repassar",
-        "previewHint": "Finnish word",
+        "previewHint": "Paraula finlandesa",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "GIRA → VALORA → REVISA"
       },
       "fill-in-blank": {
         "label": "Omplir el buit",
@@ -962,18 +979,18 @@
         "description": "Trieu el significat o la paraula correcta — els distractors provenen del vostre vocabulari.",
         "preview": "Quin significat encaixa?",
         "previewPrompt": "Quin significat encaixa?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "Persona finlandesa",
+        "previewB": "temps",
+        "previewC": "edifici"
       },
       "match-pairs": {
         "label": "Emparellar",
         "description": "Emparelleu cada paraula amb el seu significat en una graella a l'estil Quizlet.",
         "preview": "Paraula ↔ Significat",
         "previewLeft": "talo",
-        "previewRight": "house",
+        "previewRight": "casa",
         "previewLeftB": "koti",
-        "previewRightB": "home"
+        "previewRightB": "llar"
       },
       "type-answer": {
         "label": "Escriure la resposta",
@@ -998,8 +1015,8 @@
       "startsWith": "Comença amb «{letter}»",
       "revealPrompt": "Encara encallats? Podeu revelar la resposta completa.",
       "revealAnswer": "Revelar la resposta",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Següent pista",
+      "hintProgress": "Pista {current} de {total}"
     },
     "empty": {
       "noWordsTitle": "Encara no hi ha vocabulari",
@@ -1032,17 +1049,17 @@
       "shuffle": "Barrejar",
       "finish": "Acabar la ronda",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Font de la pregunta",
+        "chooseAi": "Utilitzar AI Generat",
+        "emptyTitle": "No hi ha exemples guardats utilitzables",
+        "emptyDescription": "Afegiu frases d'exemple que incloguin clarament cada paraula, ajusteu els vostres filtres o canvieu a AI Generat.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Exemples guardats",
+          "description": "Creeu preguntes instantàniament a partir dels vostres exemples de vocabulari. Sense espera d'AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI Generat",
+          "description": "Creeu frases noves a partir del vostre vocabulari amb AI."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "La generació d'exercicis amb IA està disponible amb Pro.",
       "disabled": "L'assistència d'IA està desactivada a Configuració.",
       "upgradeHint": "Free inclou unes quantes generacions d'exercicis amb IA cada dia. Pro elimina el límit.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Instruccions addicionals",
+      "additionalInstructionsPlaceholder": "Per exemple: Utilitza situacions de restaurant, mantingues l'idioma a nivell A2 i explica els errors en l'idioma de la teva interfície.",
+      "additionalInstructionsLocked": "Actualitza a Premium per personalitzar els tipus d'exercici compatibles, establir un context de la vida real i afegir les teves pròpies instruccions.",
+      "premiumRequired": "Instruccions addicionals disponibles en Premium.",
+      "presetLabel": "Preconfiguracions",
+      "presetNone": "No s'ha seleccionat cap preconfiguració",
+      "presetApply": "Aplicar",
+      "presetSave": "Desa la preconfiguració",
+      "presetName": "Nom de la preconfiguració",
+      "presetDelete": "Eliminar",
+      "presetSaved": "Preconfiguració desada",
+      "presetDeleted": "Preconfiguració eliminada",
+      "presetSaveFailed": "No s'ha pogut desar aquesta preconfiguració.",
       "emptyWords": "Afegiu paraules de vocabulari abans de generar preguntes.",
       "noneValid": "La IA no ha pogut crear preguntes vàlides per a aquestes paraules. Torneu-ho a provar.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Personalitza el context, l'estil o el focus del teu exercici. Deixa en blanc per utilitzar la configuració per defecte.",
+      "presetUpdate": "Actualitzar preconfiguració",
+      "presetUpdated": "Preconfiguració actualitzada",
+      "presetsTitle": "Preconfiguracions desades",
+      "presetsHelper": "Les preconfiguracions emmagatzemen la configuració de l'exercici i instruccions addicionals. No canvien el vocabulari o teories que has seleccionat.",
+      "presetsEmpty": "Encara no hi ha preconfiguracions desades. Desa la teva configuració actual per reutilitzar-la més tard.",
+      "presetSaveAs": "Desa com a preconfiguració",
+      "presetUpdateCurrent": "Actualitzar amb la configuració actual",
+      "presetRename": "Reanomenar",
+      "presetManage": "Gestionar preconfiguració",
+      "presetRenamed": "Preconfiguració reanomenada",
+      "presetSaveDialogTitle": "Desa com a preconfiguració",
+      "presetSaveDialogDescription": "Nomena aquesta preconfiguració per reutilitzar la configuració actual de l'exercici i instruccions addicionals. El vocabulari o teories seleccionades no s'emmagatzemen.",
+      "presetRenameDialogTitle": "Reanomena la preconfiguració",
+      "presetRenameDialogDescription": "Tria un nou nom per a aquesta preconfiguració.",
+      "presetDeleteDialogTitle": "Eliminar la preconfiguració?",
+      "presetDeleteDialogDescription": "Eliminar “{name}”? La teva configuració actual de l'exercici es manté tal com està."
     },
     "session": {
       "complete": "Sessió completada",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Tornar-ho a provar",
       "questionsLabel": "Preguntes",
       "correctLabel": "Correctes",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Incorrecte",
+      "unansweredLabel": "Sense respondre",
       "reviewLabel": "Per repassar",
       "answeredProgress": "{answered} / {total} respostes",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Comprovar resposta",
+      "nextQuestion": "Següent",
+      "viewResults": "Veure resultats",
       "submitSet": "Enviar les respostes",
       "submitting": "Comprovant…",
       "unansweredWarnTitle": "Preguntes sense respondre",
@@ -1121,54 +1138,54 @@
       "unanswered": "Sense respondre",
       "yourAnswer": "La vostra resposta",
       "correctAnswer": "Resposta correcta",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Només {count} preguntes disponibles dels vostres filtres actuals.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Com practiques",
+        "lockedHint": "Acabeu o comenceu un nou conjunt per canviar això.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Un per un",
+          "description": "Veure una pregunta a la vegada. Comproveu després de cada resposta per obtenir comentaris immediats."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Totes les preguntes",
+          "description": "Veure el conjunt complet, respondre en qualsevol ordre i després enviar una vegada per obtenir comentaris."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Revisar",
+        "allCorrect": "Perfecte — cada pregunta correcta.",
+        "summary": "{incorrect} incorrectes · {unanswered} sense respondre · {needsReview} per revisar",
+        "viewWrong": "Veure respostes incorrectes",
+        "filtersLabel": "Filtrar preguntes",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Totes ({count})",
+          "needs_review": "Incorrectes i sense respondre ({count})",
+          "correct": "Correctes ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Anterior",
+        "nextWrong": "Següent",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} per revisar",
+        "floatLabel": "Navegació de respostes incorrectes",
+        "closeFloat": "Mostrar totes les respostes"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% correcte",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Conjunt perfecte",
+          "body": "Cada resposta ha estat encertada. Aquest tipus de concentració mereix una altra ronda quan estigueu preparat."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Final fort",
+          "body": "Clarament ho esteu entenent — reviseu els errors, després fixeu-ho amb un nou conjunt."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Bona feina — continueu",
+          "body": "Alguns punts encallats són normals. Reviseu-los una vegada, després torneu a intentar-ho mentre encara són frescos."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Quasi hi sou",
+          "body": "Acabeu primer els que no han estat respostos — després la puntuació explicarà una història més clara."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Les preguntes es generen en {language} (llengua de l'espai de treball).",
       "contextualEmptyTitle": "Generar preguntes contextuais",
-      "contextualEmptyDescription": "Creeu preguntes d'opció múltiple d'omplir els buits a partir del vostre vocabulari.",
+      "contextualEmptyDescription": "Afegiu instruccions opcionals a continuació si ho desitgeu, després premeu Generar. Podeu deixar el prompt buit.",
       "contextualProDescription": "Les preguntes contextuals amb IA estan disponibles amb Pro.",
       "unlockContextual": "Desbloquejar amb Pro",
       "correct": "Correcte!",
@@ -1202,8 +1219,8 @@
       "hint": "Seleccioneu una paraula i després toqueu-ne el significat",
       "complete": "Totes les parelles emparellades — molt bé!",
       "shuffle": "Barrejar les columnes",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} parells",
+      "continueRound": "Continuar"
     },
     "typeAnswer": {
       "questionWord": "Quin és el significat?",
@@ -1213,7 +1230,7 @@
         "contextual": "Contextual"
       },
       "contextualEmptyTitle": "Generar preguntes contextuais",
-      "contextualEmptyDescription": "Creeu consignes d'escriptura d'omplir els buits a partir del vostre vocabulari.",
+      "contextualEmptyDescription": "Afegiu instruccions opcionals a continuació si ho desitgeu, després premeu Generar. Podeu deixar el prompt buit.",
       "contextualProDescription": "Les preguntes contextuals amb IA estan disponibles amb Pro.",
       "unlockContextual": "Desbloquejar amb Pro",
       "placeholder": "Escriviu la resposta…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Escriptura",
         "description": "Documents enriquits i conjunts de preguntes que podeu revisitar i exportar.",
-        "how": "Comenceu un esborrany, organitzeu amb carpetes i utilitzeu la IA de Pro per revisar o millorar el text.",
+        "how": "Comenceu un esborrany, organitzeu amb carpetes i utilitzeu l'assignació d'AI del vostre pla per comprovar o millorar el vostre text.",
         "cta": "Obrir l'escriptura"
       },
       "listening": {
         "title": "Comprensió oral",
         "description": "Convertiu àudio o vídeo real en una lliçó.",
-        "how": "Pugeu un clip i genereu una transcripció amb Free. La pràctica d'escolta generada forma part de Pro.",
+        "how": "Pugeu un clip, genereu una transcripció i construïu pràctica d'escolta amb l'assignació d'AI inclosa en el vostre pla.",
         "cta": "Obrir la comprensió oral"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Alguns espais de treball ja existeixen per a la mateixa llengua. El seu contingut s’afegirà als espais de treball existents en lloc de crear duplicats.",
         "empty_backup": "Aquesta còpia de seguretat no conté dades d’aprenentatge importables.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Alguns elements existents comparteixen el mateix nom. La importació reutilitzarà un d'ells de manera determinista i deixarà els altres sense canvis."
       },
       "cancel": "Cancel·la",
       "confirm": "Importa les dades d’aprenentatge",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Aquesta còpia de seguretat és massa gran per processar-la en aquesta pàgina. Proveu una exportació més petita o contacteu amb l’assistència.",
         "notConfigured": "L’emmagatzematge de fitxers encara no està configurat per a la importació de còpies de seguretat."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Ja està al teu compte",
+      "skippedInAccountHint": "Aquests noms coincideixen amb elements que ja tens. No es tornaran a importar. Els nous elements sota el mateix espai de treball encara s'importen.",
+      "skippedInBackupTitle": "Noms duplicats en aquesta còpia de seguretat",
+      "skippedInBackupHint": "El fitxer llista el mateix nom més d'una vegada. Només la primera còpia de cada nom s'importa — això és normal fins i tot en un compte buit.",
+      "skippedOtherTitle": "No s'ha pogut importar"
     },
     "danger": {
       "title": "Tanca el compte",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Abans de continuar",
       "warnings": {
         "workspaces": "Se suprimiran tots els espais de treball i totes les dades de vocabulari, teoria, escriptura, comprensió oral i expressió oral.",
-        "billing": "Qualsevol subscripció activa de Notoria Pro es cancel·larà immediatament.",
+        "billing": "Qualsevol subscripció activa de Notoria Pro o Premium es cancel·larà immediatament.",
         "media": "Se suprimiran els mitjans pujats i la foto de perfil.",
         "permanent": "No hi ha període de recuperació després de la confirmació."
       },
@@ -3233,7 +3250,7 @@
     "upgrade": "Passar a Pro",
     "manage": "Gestionar la subscripció",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratuït",
     "premiumBadge": "Premium",
     "renewsOn": "Es renova el {date}",
     "status": "Estat: {status}",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Camí d'aprenentatge personal",
       "personalizedRecommendations": "Recomanacions personalitzades",
       "crossModuleIntelligence": "Personalització entre mòduls",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Instruccions personalitzades per a exercicis"
     },
     "compare": {
       "heading": "Compareu els plans",
@@ -3458,7 +3475,7 @@
       "feature": "Funció",
       "current": "Actual",
       "capability": "Què obteniu",
-      "free": "Free",
+      "free": "Gratuït",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Inclòs a Free",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Política de privacitat",
     "termsTitle": "Condicions d'ús",
     "privacyDescription": "Com Notoria recull, utilitza i suprimeix dades personals i contingut d'aprenentatge per al seu espai de treball privat d'aprenentatge d'idiomes.",
-    "termsDescription": "Condicions per utilitzar l'espai de treball privat d'aprenentatge d'idiomes de Notoria, els comptes, les funcions d'IA i la facturació de Notoria Pro.",
+    "termsDescription": "Termes per utilitzar l'espai de treball privat d'aprenentatge de llengües de Notoria, comptes, funcions d'AI i facturació Pro o Premium.",
     "updated": "Darrera actualització {date}",
-    "updatedDate": "23 de setembre de 2026",
+    "updatedDate": "27 d'octubre de 2026",
     "backToSignIn": "Tornar a l'inici de sessió",
     "backHome": "Tornar a Notoria",
     "authFooter": "Privacitat · Condicions",
@@ -4071,7 +4088,7 @@
         "purposes": "Per què tractem dades",
         "auth": "Comptes i inici de sessió",
         "ai": "Funcions d'IA",
-        "payments": "Pagaments (Notoria Pro)",
+        "payments": "Pagaments (Pro i Premium)",
         "processors": "Proveïdors de serveis",
         "cookies": "Galetes i emmagatzematge del dispositiu",
         "transfers": "Transferències internacionals",
@@ -4095,7 +4112,7 @@
           "list": [
             "creeu o utilitzeu un compte",
             "deseu material en espais de treball privats",
-            "us subscriviu a Notoria Pro",
+            "subscriure's a Notoria Pro o Premium",
             "utilitzeu eines opcionals assistides per IA",
             "pugeu mitjans per a escolta o ús de perfil",
             "utilitzeu la pràctica de parla",
@@ -4156,7 +4173,7 @@
               "basis": "Contracte (art. 6(1)(b))"
             },
             {
-              "purpose": "Gestionar la facturació i l'estat de la subscripció de Notoria Pro mitjançant Stripe",
+              "purpose": "Gestionar la facturació i l'estat de subscripció de Notoria Pro i Premium a través de Stripe",
               "basis": "Contracte (art. 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "El codi actual no utilitza altres proveïdors de models de llenguatge grans a part d'OpenAI. OpenAI tracta les dades sota els seus propis termes i política de privacitat com a encarregat del tractament per a aquestes funcions."
         },
         "payments": {
-          "title": "7. Pagaments (Notoria Pro)",
+          "title": "7. Pagaments (Pro i Premium)",
           "p1": "Les subscripcions de pagament les gestiona <strong>Stripe</strong>. El pagament, les factures, els mètodes de pagament i la cancel·lació s'executen mitjançant Stripe Checkout i el portal de client de Stripe. Els webhooks de Stripe actualitzen el vostre pla i estat a Notoria.",
           "p2": "Stripe tracta les dades de pagament com a proveïdor de pagaments. Consulteu la documentació de privacitat de Stripe per al tractament de targetes."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Checkout, portal i estat de la subscripció de Notoria Pro"
+              "role": "Comprovació, portal i estat de subscripció de Notoria Pro i Premium"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Aquestes Condicions d'ús expliquen les normes per utilitzar Notoria a <site>www.notoria.fi</site>. Descriuen com funciona el producte avui: espais de treball d'aprenentatge privats, facturació opcional de Notoria Pro mitjançant Stripe i funcions assistides per IA. No substitueixen l'assessorament d'un advocat sobre la vostra situació concreta.",
+      "intro": "Aquests Termes d'Ús expliquen les normes per utilitzar Notoria a <site>www.notoria.fi</site>. Descriuen com funciona el producte actualment: espais d'aprenentatge privats, facturació opcional Pro i Premium a través de Stripe, i funcions assistides per AI. No són un substitut per a consells d'un advocat sobre la vostra situació específica.",
       "tocTitle": "En aquesta pàgina",
       "tocAria": "En aquesta pàgina",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Ús acceptable",
         "ip": "Propietat intel·lectual",
         "ai": "Resultat generat per IA",
-        "plans": "Pla Free i Notoria Pro",
+        "plans": "Plans gratuïts, Pro i Premium",
         "billing": "Subscripció i facturació",
         "refunds": "Reemborsaments i drets dels consumidors",
         "availability": "Disponibilitat",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. El servei",
           "p1": "Notoria és una aplicació web privada d'aprenentatge d'idiomes. Podeu crear espais de treball i conservar material d'aprenentatge com ara vocabulari, notes de teoria, escriptura, exercicis, lliçons d'escolta i sessions de parla.",
-          "p2": "Algunes funcions estan disponibles al pla Free. Notoria Pro desbloqueja capacitats addicionals tal com es mostra al producte i a la pàgina <account>Compte</account> — incloent-hi Escolta, Parla, determinades eines d'estudi amb IA, importació d'exercicis i formats d'exportació de documents de pagament. La disponibilitat de funcions pot canviar a mesura que evolucioni el producte.",
+          "p2": "Àrees d'aprenentatge bàsiques, incloent Escolta, Parlar i Llegir, estan disponibles en cada pla. Pro i Premium afegeixen majors assignacions d'AI i import/export de materials d'aprenentatge; Premium també afegeix coaching personalitzat i funcions de pràctica. La comparació actual es mostra a la vostra pàgina <account>Compte</account>.",
           "p3": "Notoria és per a l'aprenentatge personal d'idiomes. No és una escola, una autoritat d'exàmens ni un servei d'assessorament professional."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. Resultat generat per IA",
           "p1": "Algunes funcions poden revisar, suggerir, generar, transcriure, resumir o tutorar a partir del vostre material. El resultat pot ser incomplet, incorrecte o inadequat per al vostre objectiu. Continueu sent responsables de revisar els resultats de la IA abans de basar-vos-hi per a l'estudi, els exàmens, l'ús professional o la publicació.",
           "p2": "Les funcions d'IA poden no estar disponibles si l'assistència està desactivada a <settings>Configuració</settings>, si el vostre pla no inclou una eina concreta o si un proveïdor és temporalment inaccessible.",
-          "p3": "No totes les ajudes d'IA requereixen Notoria Pro. El producte mostra quines eines són gratuïtes i quines necessiten Pro."
+          "p3": "La disponibilitat d'AI i les assignacions diàries varien entre Gratuït, Pro i Premium. El producte mostra el pla i l'assignació requerits per a cada eina."
         },
         "plans": {
-          "title": "8. Pla Free i Notoria Pro",
+          "title": "8. Plans gratuïts, Pro i Premium",
           "p1": "El pla Free cobreix la pràctica bàsica amb el vostre propi vocabulari i les eines d'estudi relacionades tal com es mostra al producte.",
-          "p2": "Notoria Pro és una subscripció de pagament que desbloqueja funcions addicionals. En el producte actual, això sol incloure Escolta, Parla, importació d'exercicis, pràctica de formar frases, moltes eines d'estudi assistides per IA i exportació de documents PDF/DOCX. Algunes ajudes d'IA més lleugeres (com ara determinades ajudes de vocabulari o de formatatge de l'editor) poden continuar disponibles al pla Free quan l'assistència amb IA estigui activada.",
-          "p3": "L'accés Pro està vinculat al vostre compte d'usuari, de manera que s'aplica a tots els espais de treball sota aquest compte. Els comptes amb un rol d'administrador poden tenir accés de nivell Pro sense una subscripció personal de Stripe.",
-          "p4": "El preu que s'aplica a la vostra compra és el preu mostrat a Stripe Checkout per al pla Pro actual. Qualsevol preu mostrat en un altre lloc del producte (per exemple a Compte) és només indicatiu i ha de coincidir amb la configuració activa de preus de Stripe."
+          "p2": "Pro i Premium són subscripcions de pagament. Pro afegeix assignacions més altes o il·limitades per a moltes eines d'AI, així com importació de materials d'aprenentatge i exportació en PDF/DOCX. Premium inclou Pro i afegeix funcions personalitzades com el Coach d'Aprenentatge, perfil d'aprenentatge personal, pràctica adaptativa, pràctica basada en errors i instruccions d'exercicis personalitzades. La pàgina del Compte mostra la comparació actual i els límits.",
+          "p3": "L'accés de pagament està vinculat al vostre compte d'usuari i s'aplica a través dels seus espais de treball. Els comptes amb un rol d'administrador poden tenir accés de nivell de pagament sense una subscripció personal de Stripe.",
+          "p4": "El preu que s'aplica és el preu mostrat a Stripe Checkout per al pla Pro o Premium seleccionat. Qualsevol preu mostrat en altres llocs del producte (per exemple, a Compte) és només indicatiu i ha de coincidir amb la configuració de preu activa de Stripe."
         },
         "billing": {
           "title": "9. Subscripció, facturació i cancel·lació",
-          "list0": "Les subscripcions Pro es facturen a través de <strong>Stripe</strong>",
-          "list1": "Podeu iniciar el pagament des de <account>Compte</account> o des dels controls Pro bloquejats de l'aplicació",
+          "list0": "Les subscripcions Pro i Premium es facturen a través de <strong>Stripe</strong>",
+          "list1": "Podeu iniciar el procés de pagament o canviar de pla des de <account>Compte</account> o des dels controls de pagament bloquejats a l'aplicació",
           "list2": "Des de Compte, podeu obrir el portal de client de Stripe per veure factures, actualitzar mètodes de pagament i cancel·lar la subscripció",
           "list3": "La cancel·lació segueix el comportament del portal de client de Stripe per a la vostra subscripció",
-          "p1": "Després de cancel·lar, l'accés Pro només continua mentre l'estat de la vostra subscripció de Stripe continui concedint Pro al producte. En la implementació actual, els estats tractats com a Pro inclouen <code>active</code>, <code>trialing</code> i <code>past_due</code>. Quan l'estat ja no qualifiqui, el compte torna al pla Free.",
-          "p2": "Si un pagament falla, Stripe pot passar la subscripció a <code>past_due</code> o a un altre estat. Notoria sincronitza aquest estat a partir dels webhooks de Stripe. Mentre l'estat romangui <code>past_due</code>, les funcions Pro continuen disponibles sota les regles d'accés actuals; si la subscripció més endavant queda cancel·lada o d'una altra manera no elegible, l'accés Pro acaba.",
+          "p1": "Després de cancel·lar la renovació, el vostre accés actual a Pro o Premium continua mentre l'estat de subscripció de Stripe encara sigui vàlid en el producte. Els estats vàlids actualment inclouen <code>actiu</code>, <code>en prova</code> i <code>venut</code>. Quan l'estat ja no sigui vàlid, el compte torna a ser gratuït.",
+          "p2": "Si un pagament falla, Stripe pot moure la subscripció a <code>venut</code> o un altre estat. Notoria sincronitza aquest estat des dels webhooks de Stripe. Mentre es mantingui <code>venut</code>, el pla de pagament actual es manté disponible sota les regles d'accés actuals; si més tard es cancel·la o esdevé no vàlid, l'accés de pagament finalitza.",
           "p3": "Suprimir el vostre compte de Notoria cancel·la la subscripció de Stripe immediatament (millor esforç) com a part de la supressió del compte. Això és diferent de cancel·lar la renovació mitjançant el portal de client tot mantenint el compte."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Exempció de responsabilitat i responsabilitat",
           "p1": "Notoria es proporciona sobre una base «segons disponibilitat» per a l'aprenentatge personal d'idiomes. En la mesura màxima permesa per la legislació aplicable, declinem les garanties que no exigeix la llei.",
-          "p2": "En la mesura màxima permesa per la legislació aplicable, Notoria no és responsable de danys indirectes, incidentals, especials, consequencials o per pèrdua de dades derivats de l'ús del servei o de la confiança en el resultat de la IA. Quan la responsabilitat no es pugui excloure, queda limitada a l'import que hàgiu pagat per Notoria Pro en els tres mesos anteriors a la reclamació, o a qualsevol import superior exigit per la legislació obligatòria.",
+          "p2": "En la mesura màxima permesa per la llei aplicable, Notoria no és responsable de danys indirectes, incidentals, especials, conseqüencials o de pèrdua de dades derivats de l'ús del servei o de la confiança en la sortida d'AI. On la responsabilitat no es pot excloure, es limita a l'import que vau pagar per Notoria Pro o Premium en els tres mesos anteriors a la reclamació, o qualsevol quantitat superior requerida per la llei obligatòria.",
           "p3": "Aquests límits no exclouen la responsabilitat que la legislació finlandesa o de la UE no permet limitar — inclosa la responsabilitat que no es pot renunciar per als consumidors, i la responsabilitat per mort o lesions personals causades per negligència quan s'apliquin aquestes normes."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Construir un banc de vocabulari personal amb significats, exemples i etiquetes",
           "practice": "Practicar amb exercicis basats en les vostres paraules i notes",
           "create": "Escriure notes de teoria i treballs d'escriptura als quals pugueu tornar més endavant",
-          "listenSpeak": "Convertir mitjans en pràctica d'escolta i parlar amb un tutor d'IA amb Pro"
+          "listenSpeak": "Converteix els mitjans en pràctica d'escolta i utilitza les assignacions d'AI per a la transcripció i la pràctica de parlar"
         },
-        "note": "Algunes eines d'IA, d'escolta, de parla i d'exportació formen part de Notoria Pro. El pla Free continua cobrint la pràctica quotidiana de vocabulari i el cicle d'estudi bàsic."
+        "note": "Les àrees d'aprenentatge bàsiques estan disponibles en cada pla. Pro augmenta les assignacions d'AI i afegeix import/export de materials d'aprenentatge; Premium afegeix coaching personalitzat i pràctica."
       },
       "ai": {
         "title": "IA, allà on ajuda",
@@ -4656,7 +4673,7 @@
         "title": "Com es connecten les àrees",
         "p1": "Captura és el punt d'entrada ràpid. Vocabulari i Teoria són on el material s'assenta. Exercici converteix aquest material en pràctica. Escriptura, Escolta i Parla us ajuden a utilitzar l'idioma de manera més activa.",
         "p2": "No cal passar per totes les àrees en ordre. Molta gent es queda amb paraules i pràctica breu durant una temporada.",
-        "p3": "Un pas natural següent és l'escriptura quan voleu produir idioma amb els vostres termes, i després l'escolta i la parla quan voleu que el mateix material treballi a l'orella i a la veu — Escolta i Parla formen part de Notoria Pro.",
+        "p3": "Un pas natural és escriure quan voleu produir llenguatge en els vostres propis termes, després escoltar i parlar quan voleu que el mateix material funcioni a la vostra oïda i veu. Aquestes àrees estan disponibles en cada pla; els límits d'ús d'AI varien segons el pla.",
         "beat": "Primer recolliu i enteneu. Utilitzeu i parleu quan el material estigui a punt de sortir de la pàgina."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Escolta",
-          "body": "Convertiu mitjans en pràctica d'escolta al vostre espai de treball. Disponible amb Notoria Pro."
+          "body": "Converteix els mitjans en pràctica d'escolta al teu espai de treball. Disponible en cada pla; les assignacions de transcripció d'AI varien segons el pla."
         },
         "speaking": {
           "label": "Parla",
-          "body": "Pràctica en directe amb un tutor d'IA, arrelada a l'idioma que esteu estudiant. Disponible amb Notoria Pro."
+          "body": "Pràctica en viu amb un tutor d'AI, fonamentada en la llengua que esteu estudiant. Disponible en cada pla amb una assignació diària basada en el pla."
         },
         "reading": {
           "label": "Lectura",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Com canvio la contrasenya o tanco el compte?",
-          "a": "Obriu <account>Compte</account>. Allà podeu actualitzar la contrasenya si utilitzeu l'inici de sessió per correu, gestionar Notoria Pro, exportar una còpia de seguretat o suprimir permanentment el compte."
+          "a": "Obriu <account>Compte</account>. Podeu actualitzar la vostra contrasenya allà si utilitzeu l'inici de sessió per correu electrònic, gestionar Pro o Premium, exportar una còpia de seguretat o eliminar permanentment el vostre compte. Eliminar el compte també cancel·la immediatament qualsevol subscripció activa de Stripe en la millor base possible; cancel·lar la renovació manté el compte i les seves dades."
         },
         "pro": {
           "q": "Com funcionen la facturació i la cancel·lació?",
-          "a": "Notoria Pro es factura a través de Stripe. Des de <account>Compte</account> podeu millorar el pla, obrir el portal de client de Stripe per gestionar mètodes de pagament i factures, o cancel·lar la renovació."
+          "a": "Notoria Pro i Premium es facturen a través de Stripe. Des de <account>Compte</account> podeu subscriure's, canviar entre Pro i Premium, gestionar mètodes de pagament i factures, cancel·lar la renovació o reprendre una cancel·lació programada. Cancel·lar la renovació manté l'accés fins que Stripe acabi el període de subscripció elegible; eliminar el vostre compte és separat i cancel·la la subscripció immediatament en la millor base possible."
         },
         "proFeatures": {
-          "q": "Què és gratuït i què necessita Notoria Pro?",
-          "a": "La pràctica quotidiana de vocabulari i les eines d'estudi relacionades estan disponibles al pla Free. Algunes eines d'IA, l'escolta, la parla i les funcions d'exportació de documents formen part de Notoria Pro. Compareu i milloreu el pla des de <account>Compte</account>."
+          "q": "Què s'inclou amb Gratuït, Pro i Premium?",
+          "a": "Gratuït inclou les àrees d'aprenentatge bàsiques i les assignacions diàries per a les eines d'AI suportades. Pro augmenta o elimina molts límits d'AI i afegeix importació de materials d'aprenentatge més exportació en PDF/DOCX. Premium inclou Pro i afegeix coaching personalitzat, un perfil d'aprenentatge, pràctica adaptativa i basada en errors, i instruccions d'exercicis personalitzades. Vegeu la comparació en viu i els límits actuals a <account>Compte</account>."
         },
         "learning": {
           "q": "Com funcionen les funcions d'aprenentatge de Notoria?",
@@ -4997,7 +5014,7 @@
         "admins": "Administradors",
         "testers": "Provadors",
         "suspended": "Suspesos",
-        "contentTotal": "Content records"
+        "contentTotal": "Registres de contingut"
       },
       "quickAccess": "Accés ràpid",
       "quickAccessLede": "Aneu a les eines de gestió.",
@@ -5007,14 +5024,14 @@
         "ops": "Operacions"
       },
       "charts": {
-        "signupsTitle": "New accounts",
-        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
-        "activeTitle": "Active learners",
-        "activeLede": "Distinct learners with activity each day (14d).",
-        "rolesTitle": "Roles",
-        "rolesLede": "Share of accounts by role.",
-        "contentTitle": "Content mix",
-        "contentLede": "Stored records across learning modules."
+        "signupsTitle": "Nous comptes",
+        "signupsLede": "Inscripcions diàries durant els darrers 14 dies UTC.",
+        "activeTitle": "Aprenents actius",
+        "activeLede": "Aprenents diferents amb activitat cada dia (14d).",
+        "rolesTitle": "Rols",
+        "rolesLede": "Quota de comptes per rol.",
+        "contentTitle": "Mescla de contingut",
+        "contentLede": "Registres emmagatzemats a través dels mòduls d'aprenentatge."
       }
     },
     "users": {
@@ -5050,8 +5067,8 @@
         "created": "Registrat",
         "updated": "Actualitzat",
         "emailVerified": "Correu verificat",
-        "email": "Email",
-        "password": "Password"
+        "email": "Correu electrònic",
+        "password": "Contrasenya"
       },
       "detail": {
         "account": "Compte",
@@ -5060,7 +5077,7 @@
         "actions": "Accions del compte",
         "workspaces": "Espais de treball",
         "workspacesLede": "Espais de treball d'idioma propietat d'aquest usuari.",
-        "danger": "Danger zone"
+        "danger": "Zona de perill"
       },
       "actions": {
         "saveProfile": "Desa el nom",
@@ -5071,7 +5088,7 @@
         "delete": "Suprimir el compte",
         "grantTester": "Atorgar provador",
         "revokeTester": "Revocar provador",
-        "create": "Create user"
+        "create": "Crear usuari"
       },
       "confirm": {
         "grantAdmin": "Concedir accés d'administració a aquest compte?",
@@ -5089,11 +5106,11 @@
         "admin": "Administrador"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Crear usuari",
+        "lede": "Proporciona un compte amb un correu electrònic i una contrasenya. Poden iniciar sessió immediatament."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratuït",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Propietari",
         "created": "Creat",
         "updated": "Actualitzat",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Correu electrònic de l'owner",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Suprimir aquest espai de treball i tot el contingut d'aprenentatge que conté mitjançant cascades de la base de dades?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Crear espai de treball",
+        "lede": "Adjunta un nou espai de treball d'idioma a un compte existent mitjançant correu electrònic."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Espai de treball",
         "created": "Creat",
         "updated": "Actualitzat",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Títol",
+        "word": "Paraula",
+        "folderName": "Nom de la carpeta"
       },
       "detail": {
         "description": "Inspecció de metadades. Els cossos privats no es carreguen automàticament.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Suprimir el registre",
-        "saveTitle": "Save title"
+        "saveTitle": "Desa el títol"
       },
       "confirm": {
         "delete": "Suprimir aquest registre? Les files fill relacionades segueixen les regles de cascada / set-null de la base de dades."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Els elements de captura emmagatzemen text lliure. L'edició del títol no es suporta aquí — elimina si el registre ha de ser eliminat."
     },
     "jobs": {
       "title": "Tasques",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Codi d'idioma no vàlid.",
       "CONTENT_NOT_FOUND": "Registre no trobat.",
       "INVALID_CONTENT_MODULE": "Mòdul de contingut desconegut.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Aquest correu electrònic ja està registrat.",
+      "PASSWORD_TOO_WEAK": "La contrasenya no compleix els requisits de força.",
+      "CONTENT_TITLE_UNSUPPORTED": "Aquest tipus de contingut no suporta l'edició del títol."
     }
   }
 }

@@ -30,7 +30,7 @@
       "fixedNote": "Giao diện được cố định trong file. Xuất lại nếu muốn đổi.",
       "docxBackgroundNote": "Word và ứng dụng khác có thể không hiển thị nền trang giống nhau, nhất là khi in."
     },
-    "scrollToTop": "Lên đầu trang"
+    "scrollToTop": "Cuộn lên trên"
   },
   "contentImport": {
     "title": {
@@ -414,8 +414,8 @@
     "createCustomTag": "Tạo thẻ riêng",
     "addCustomTag": "Thêm",
     "selectedCustomTags": "Thẻ đã chọn",
-    "selectedSynonyms": "Từ đồng nghĩa đã chọn",
-    "removeCustomTag": "Gỡ {name}",
+    "selectedSynonyms": "Đồng nghĩa đã chọn",
+    "removeCustomTag": "Xóa {name}",
     "pickerLoading": "Đang tải…",
     "notes": "Ghi chú",
     "notesPlaceholder": "Mẹo nhớ, ngữ pháp, ghi chú riêng của bạn…",
@@ -476,32 +476,32 @@
       "open": "Quản lý thẻ",
       "eyebrow": "Thẻ",
       "title": "Quản lý thẻ",
-      "description": "Chọn thẻ rồi thêm hoặc gỡ khỏi từ.",
-      "pageDescription": "Chọn thẻ bên trái, rồi thêm hoặc gỡ thẻ cho các từ trong danh sách. Đổi tab để làm việc với từ đã gắn hoặc chưa gắn.",
-      "disabledNoWorkspace": "Hãy tạo không gian học trước khi quản lý thẻ từ vựng.",
+      "description": "Chọn một thẻ, sau đó gán hoặc xóa nó khỏi các từ.",
+      "pageDescription": "Chọn Tiêu chuẩn hoặc Tùy chỉnh, chọn một thẻ, sau đó thêm hoặc xóa nó khỏi các từ.",
+      "disabledNoWorkspace": "Tạo một không gian làm việc trước khi quản lý thẻ từ vựng.",
       "backToVocabulary": "Quay lại từ vựng",
       "backToSettings": "Quay lại cài đặt",
       "groupsLabel": "Nhóm thẻ chuẩn",
       "tagsHeading": "Thẻ",
       "standardTagsHeading": "Thẻ chuẩn",
       "customTagsHeading": "Thẻ tùy chỉnh",
-      "customTagsHint": "Nhãn bạn tự tạo để tổ chức — không phải từ loại.",
+      "customTagsHint": "Nhãn không gian làm việc bạn tạo — tìm kiếm để tìm chúng khi danh sách dài.",
       "emptyCustomTags": "Chưa có thẻ tùy chỉnh. Tạo khi chỉnh sửa từ.",
-      "emptyTagSearch": "Không có thẻ khớp tìm kiếm này.",
-      "tagSearchPlaceholder": "Tìm thẻ…",
+      "emptyTagSearch": "Không có thẻ tùy chỉnh nào phù hợp với tìm kiếm này.",
+      "tagSearchPlaceholder": "Tìm kiếm thẻ…",
       "wordsHeading": "{tag}",
       "kindStandard": "Chuẩn",
       "kindCustom": "Tùy chỉnh",
       "wordTabsLabel": "Danh sách từ",
-      "wordTabAssigned": "Đã gắn",
-      "wordTabOther": "Chưa gắn",
+      "wordTabAssigned": "Đã gán thẻ",
+      "wordTabOther": "Chưa gán thẻ",
       "assignedHeading": "Từ đã có thẻ này",
       "otherHeading": "Từ khác",
       "sectionCount": "{count}",
       "selectAllVisible": "Chọn tất cả trên trang này",
-      "clearSelection": "Bỏ chọn",
-      "selectionScopePage": "Đang chọn trên trang này ({count}/{total})",
-      "selectionScopeFiltered": "Đang chọn trong kết quả tìm kiếm hiện tại",
+      "clearSelection": "Xóa lựa chọn",
+      "selectionScopePage": "Chọn từ trang này ({count} trong {total})",
+      "selectionScopeFiltered": "Chọn trong kết quả tìm kiếm hiện tại",
       "searchPlaceholder": "Tìm từ hoặc nghĩa…",
       "wordCount": "{count}",
       "loading": "Đang tải từ vựng…",
@@ -512,12 +512,22 @@
       "emptyOtherSearch": "Không có từ khớp để gắn thẻ.",
       "selected": "Đã chọn {count}",
       "addToTag": "Thêm thẻ",
-      "removeFromTag": "Gỡ thẻ",
+      "removeFromTag": "Xóa thẻ",
       "applyAdd": "Thêm thẻ ({count})",
-      "applyRemove": "Gỡ thẻ ({count})",
+      "applyRemove": "Xóa thẻ ({count})",
       "added": "Đã thêm {count} từ vào {tag}",
       "removed": "Đã gỡ {count} từ khỏi {tag}",
-      "error": "Không cập nhật được thẻ"
+      "error": "Không cập nhật được thẻ",
+      "systemsLabel": "Hệ thống thẻ",
+      "standardSystemTitle": "Tiêu chuẩn",
+      "standardSystemMeta": "Chủ đề và cách sử dụng, hiển thị riêng biệt",
+      "usageOptional": "Tùy chọn",
+      "customSystemTitle": "Tùy chỉnh",
+      "customSystemMeta": "{count, plural, one {# nhãn} other {# nhãn}}",
+      "customPickerLabel": "Chọn một thẻ tùy chỉnh",
+      "customPickerPlaceholder": "Chọn một thẻ tùy chỉnh…",
+      "customSearchPlaceholder": "Tìm kiếm thẻ tùy chỉnh…",
+      "pickTagFirst": "Chọn một thẻ ở trên để quản lý thành viên từ."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Cập nhật {time}",
@@ -746,7 +756,7 @@
       "dropActive": "Thả để nhập",
       "modes": {
         "image": "Ảnh",
-        "file": "File",
+        "file": "Tệp",
         "url": "URL",
         "text": "Văn bản"
       },
@@ -786,7 +796,7 @@
       "uploadCancelled": "Đã huỷ tải lên",
       "sourceTypes": {
         "image": "Ảnh",
-        "file": "File",
+        "file": "Tệp",
         "url": "URL"
       },
       "status": {
@@ -878,7 +888,7 @@
       "aiReady": "Sẵn sàng luyện tập",
       "aiUnavailable": "Không tạo được câu hỏi AI lúc này.",
       "aiForbidden": "Bài tập lý thuyết bằng AI dành cho Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Hướng dẫn bổ sung có sẵn trên Premium.",
       "aiDisabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "feedback": {
         "correct": "Đúng!",
@@ -932,20 +942,22 @@
         "why": "Vì sao",
         "complete": "Đã hiểu",
         "completeHint": "Bạn có thể tiếp tục khi sẵn sàng.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Bắt đầu bài tập",
+        "skipReviewAndStart": "Bỏ qua đánh giá và bắt đầu bài tập"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Chưa phân loại",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# ghi chú} other {# ghi chú}}",
+        "selectAll": "Chọn tất cả",
+        "selectGroup": "Chọn ghi chú trong {name}",
+        "expand": "Mở rộng {name}",
+        "collapse": "Thu gọn {name}",
+        "selectedCount": "{count, plural, one {# lý thuyết đã chọn} other {# lý thuyết đã chọn}}",
+        "practiceSelected": "Thực hành đã chọn",
+        "clearSelection": "Xóa lựa chọn",
+        "subfolders": "{count, plural, one {# thư mục con} other {# thư mục con}}",
+        "selectedOne": "1 lý thuyết đã chọn"
       }
     },
     "types": {
@@ -1003,8 +1015,8 @@
       "startsWith": "Bắt đầu bằng “{letter}”",
       "revealPrompt": "Vẫn chưa ra? Bạn có thể xem đáp án.",
       "revealAnswer": "Hiện đáp án",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Gợi ý tiếp theo",
+      "hintProgress": "Gợi ý {current} của {total}"
     },
     "empty": {
       "noWordsTitle": "Chưa có từ để luyện",
@@ -1037,17 +1049,17 @@
       "shuffle": "Xáo thứ tự",
       "finish": "Kết thúc vòng này",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Nguồn câu hỏi",
+        "chooseAi": "Sử dụng AI tạo ra",
+        "emptyTitle": "Không có ví dụ đã lưu nào có thể sử dụng",
+        "emptyDescription": "Thêm câu ví dụ rõ ràng bao gồm mỗi từ, điều chỉnh bộ lọc của bạn, hoặc chuyển sang AI tạo ra.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Ví dụ đã lưu",
+          "description": "Xây dựng câu hỏi ngay lập tức từ các ví dụ từ vựng của bạn. Không phải chờ AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI tạo ra",
+          "description": "Tạo câu mới từ từ vựng của bạn với AI."
         }
       }
     },
@@ -1064,38 +1076,38 @@
       "forbidden": "Tạo bài tập bằng AI dành cho Pro.",
       "disabled": "Hỗ trợ AI đang tắt trong Cài đặt.",
       "upgradeHint": "Tạo bài tập bằng AI dành cho Pro.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Hướng dẫn bổ sung",
+      "additionalInstructionsPlaceholder": "Ví dụ: Sử dụng tình huống nhà hàng, giữ ngôn ngữ ở cấp độ A2, và giải thích lỗi bằng ngôn ngữ giao diện của bạn.",
+      "additionalInstructionsLocked": "Nâng cấp lên Premium để tùy chỉnh các loại bài tập được hỗ trợ, đặt ngữ cảnh thực tế và thêm hướng dẫn của riêng bạn.",
+      "premiumRequired": "Hướng dẫn bổ sung có sẵn trên Premium.",
+      "presetLabel": "Cài đặt",
+      "presetNone": "Chưa chọn cài đặt nào",
+      "presetApply": "Áp dụng",
+      "presetSave": "Lưu cài đặt",
+      "presetName": "Tên cài đặt",
+      "presetDelete": "Xóa",
+      "presetSaved": "Cài đặt đã lưu",
+      "presetDeleted": "Cài đặt đã xóa",
+      "presetSaveFailed": "Không thể lưu cài đặt đó.",
       "emptyWords": "Thêm từ vựng trước khi tạo câu hỏi.",
       "noneValid": "AI không tạo được câu hỏi hợp lệ cho các từ này. Thử lại.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Tùy chỉnh ngữ cảnh, phong cách hoặc trọng tâm của bài tập của bạn. Để trống để sử dụng cài đặt mặc định.",
+      "presetUpdate": "Cập nhật cài đặt",
+      "presetUpdated": "Cài đặt đã cập nhật",
+      "presetsTitle": "Cài đặt đã lưu",
+      "presetsHelper": "Cài đặt lưu trữ các cài đặt bài tập và hướng dẫn bổ sung. Chúng không thay đổi từ vựng hoặc lý thuyết bạn đã chọn.",
+      "presetsEmpty": "Chưa có cài đặt nào được lưu. Lưu cài đặt hiện tại của bạn để sử dụng lại sau.",
+      "presetSaveAs": "Lưu dưới dạng cài đặt",
+      "presetUpdateCurrent": "Cập nhật với cài đặt hiện tại",
+      "presetRename": "Đổi tên",
+      "presetManage": "Quản lý cài đặt",
+      "presetRenamed": "Cài đặt đã đổi tên",
+      "presetSaveDialogTitle": "Lưu dưới dạng cài đặt",
+      "presetSaveDialogDescription": "Đặt tên cho cài đặt này để sử dụng lại các cài đặt bài tập hiện tại và hướng dẫn bổ sung. Từ vựng hoặc lý thuyết đã chọn sẽ không được lưu.",
+      "presetRenameDialogTitle": "Đổi tên cài đặt",
+      "presetRenameDialogDescription": "Chọn một tên mới cho cài đặt này.",
+      "presetDeleteDialogTitle": "Xóa cài đặt?",
+      "presetDeleteDialogDescription": "Xóa “{name}”? Cấu hình bài tập hiện tại của bạn vẫn giữ nguyên."
     },
     "session": {
       "complete": "Hoàn thành phiên học",
@@ -1109,8 +1121,8 @@
       "reviewLabel": "Cần ôn",
       "answeredProgress": "{answered} / {total} đã trả lời",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Kiểm tra",
-      "nextQuestion": "Tiếp theo",
+      "checkAnswer": "Kiểm tra câu trả lời",
+      "nextQuestion": "Câu hỏi tiếp theo",
       "viewResults": "Xem kết quả",
       "submitSet": "Nộp bài",
       "submitting": "Đang chấm…",
@@ -1126,24 +1138,24 @@
       "unanswered": "Chưa trả lời",
       "yourAnswer": "Câu trả lời của bạn",
       "correctAnswer": "Đáp án đúng",
-      "shortSetNote": "Chỉ có {count} câu từ bộ lọc hiện tại.",
+      "shortSetNote": "Chỉ có {count} câu hỏi có sẵn từ bộ lọc hiện tại của bạn.",
       "displayMode": {
-        "label": "Cách làm bài",
-        "lockedHint": "Hoàn thành hoặc tạo bộ mới để đổi cách làm.",
+        "label": "Cách bạn thực hành",
+        "lockedHint": "Hoàn thành hoặc bắt đầu một bộ mới để thay đổi điều này.",
         "one_by_one": {
-          "title": "Từng câu",
-          "description": "Hiện một câu mỗi lần. Kiểm tra sau mỗi câu để nhận feedback ngay."
+          "title": "Một lần một",
+          "description": "Xem một câu hỏi tại một thời điểm. Kiểm tra sau mỗi câu trả lời để nhận phản hồi ngay lập tức."
         },
         "all_questions": {
-          "title": "Toàn bộ câu",
-          "description": "Hiện cả bộ, trả lời theo thứ tự bất kỳ, rồi nộp một lần để chấm."
+          "title": "Tất cả câu hỏi",
+          "description": "Xem toàn bộ bộ, trả lời theo bất kỳ thứ tự nào, sau đó gửi một lần để nhận phản hồi."
         }
       },
       "review": {
         "title": "Xem lại",
-        "allCorrect": "Hoàn hảo — đúng hết mọi câu.",
+        "allCorrect": "Hoàn hảo — mỗi câu hỏi đều đúng.",
         "summary": "{incorrect} sai · {unanswered} chưa trả lời · {needsReview} cần xem lại",
-        "viewWrong": "Xem câu sai",
+        "viewWrong": "Xem câu trả lời sai",
         "filtersLabel": "Lọc câu hỏi",
         "filter": {
           "all": "Tất cả ({count})",
@@ -1151,29 +1163,29 @@
           "correct": "Đúng ({count})"
         },
         "prevWrong": "Trước",
-        "nextWrong": "Sau",
+        "nextWrong": "Tiếp theo",
         "wrongPosition": "{current} / {total}",
         "toReviewCount": "{count} cần xem lại",
-        "floatLabel": "Điều hướng câu sai",
-        "closeFloat": "Hiện tất cả câu"
+        "floatLabel": "Điều hướng câu trả lời sai",
+        "closeFloat": "Hiển thị tất cả câu trả lời"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% đúng",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Bộ hoàn hảo",
+          "body": "Mỗi câu trả lời đều đúng. Sự tập trung đó xứng đáng với một vòng nữa khi bạn sẵn sàng."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Kết thúc mạnh mẽ",
+          "body": "Bạn rõ ràng đã hiểu — xem qua những điểm sai, sau đó khóa lại với một bộ mới."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Công việc tốt — tiếp tục",
+          "body": "Một vài điểm dừng lại là bình thường. Xem lại chúng một lần, sau đó thử lại khi chúng còn mới."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Gần đến nơi",
+          "body": "Hoàn thành những câu chưa trả lời trước — sau đó điểm số sẽ cho một câu chuyện rõ ràng hơn."
         }
       }
     },
@@ -1186,7 +1198,7 @@
       },
       "contextualLanguageHint": "Câu hỏi được tạo bằng {language} (ngôn ngữ workspace).",
       "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
-      "contextualEmptyDescription": "Có thể thêm hướng dẫn tùy chọn bên dưới, rồi bấm Tạo. Để trống cũng được.",
+      "contextualEmptyDescription": "Thêm hướng dẫn tùy chọn bên dưới nếu bạn muốn, sau đó nhấn Tạo. Bạn có thể để trống lời nhắc.",
       "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
       "unlockContextual": "Mở khóa với Pro",
       "correct": "Đúng rồi!",
@@ -1218,7 +1230,7 @@
         "contextual": "Ngữ cảnh"
       },
       "contextualEmptyTitle": "Tạo câu hỏi ngữ cảnh",
-      "contextualEmptyDescription": "Có thể thêm hướng dẫn tùy chọn bên dưới, rồi bấm Tạo. Để trống cũng được.",
+      "contextualEmptyDescription": "Thêm hướng dẫn tùy chọn bên dưới nếu bạn muốn, sau đó nhấn Tạo. Bạn có thể để trống lời nhắc.",
       "contextualProDescription": "Câu hỏi ngữ cảnh bằng AI dành cho Pro.",
       "unlockContextual": "Mở khóa với Pro",
       "placeholder": "Gõ đáp án…",
@@ -1271,7 +1283,7 @@
     }
   },
   "flashcards": {
-    "title": "Flashcards",
+    "title": "Thẻ flash",
     "mode": "học",
     "description": "Ôn từ bằng thẻ lật, phím tắt, và tự đánh giá mức nhớ.",
     "noWorkspace": "Hãy tạo không gian học trước khi học flashcards.",
@@ -1407,13 +1419,13 @@
       "writing": {
         "title": "Viết",
         "description": "Tài liệu rich text và bộ câu hỏi, xem lại và xuất được.",
-        "how": "Bắt đầu bản nháp, sắp xếp bằng thư mục, dùng AI Pro để kiểm tra hoặc cải thiện.",
+        "how": "Bắt đầu một bản nháp, tổ chức với các thư mục, và sử dụng hạn mức AI trong kế hoạch của bạn để kiểm tra hoặc cải thiện văn bản của bạn.",
         "cta": "Mở viết"
       },
       "listening": {
         "title": "Nghe",
         "description": "Biến audio hoặc video thật thành bài học.",
-        "how": "Tải clip và tạo transcript trên Free. Bài luyện nghe do AI tạo thuộc Pro.",
+        "how": "Tải lên một đoạn clip, tạo một bản sao, và xây dựng thực hành nghe với hạn mức AI bao gồm trong kế hoạch của bạn.",
         "cta": "Mở nghe"
       },
       "speaking": {
@@ -2078,12 +2090,12 @@
         "taskManager": "Trình quản lý tác vụ trình duyệt",
         "altClose": "Đóng cửa sổ",
         "altTab": "Chuyển ứng dụng",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Trình quản lý tệp",
         "winDesktop": "Hiện desktop",
         "winLock": "Khóa máy",
         "winRun": "Hộp thoại Run",
         "winSettings": "Cài đặt Windows",
-        "winTaskView": "Task view",
+        "winTaskView": "Chế độ xem tác vụ",
         "winClipboard": "Lịch sử clipboard"
       },
       "actions": {
@@ -2994,7 +3006,7 @@
       "warningTitle": "Trước khi tiếp tục",
       "warnings": {
         "workspaces": "Mọi workspace cùng từ vựng, theory, writing, listening và speaking sẽ bị xóa.",
-        "billing": "Gói Notoria Pro đang hoạt động sẽ bị hủy ngay.",
+        "billing": "Bất kỳ đăng ký Notoria Pro hoặc Premium nào đang hoạt động sẽ bị hủy ngay lập tức.",
         "media": "File media đã tải lên và ảnh đại diện sẽ bị gỡ.",
         "permanent": "Không có thời gian khôi phục sau khi xác nhận."
       },
@@ -3069,7 +3081,7 @@
     "confirmUpgradeTitle": "Chuyển sang Premium?",
     "confirmUpgradeBody": "Premium thay Pro trên đúng gói hiện tại, có hiệu lực ngay. Stripe tính phần chênh lệch theo tỷ lệ ngay lập tức. Không tạo thêm gói thứ hai. Lịch hủy đang có sẽ được gỡ.",
     "confirmDowngradeTitle": "Chuyển sang Pro?",
-    "confirmDowngradeBody": "Pro thay Premium ngay. Stripe hoàn phần chênh lệch theo tỷ lệ ngay lập tức. Tính năng Premium kết thúc khi Stripe xác nhận giá mới. Lịch hủy đang có sẽ được gỡ.",
+    "confirmDowngradeBody": "Bạn giữ toàn bộ tính năng Premium đến {date}. Sau đó, gói đăng ký tiếp tục ở mức Pro với giá 9,99 €/tháng. Gói hiện tại vẫn là Premium cho đến thời điểm đó.",
     "confirmCancelTitle": "Hủy {plan}?",
     "confirmCancelBody": "Quyền {plan} vẫn còn đến {date}. Sau đó tài khoản chuyển sang Free. Bạn sẽ không bị tính phí thêm.",
     "cancelFeedbackLabel": "Vì sao bạn hủy?",
@@ -3358,7 +3370,7 @@
       "personalLearningPath": "Lộ trình học cá nhân",
       "personalizedRecommendations": "Gợi ý cá nhân hóa",
       "crossModuleIntelligence": "Cá nhân hóa xuyên mô-đun",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Hướng dẫn bài tập tùy chỉnh"
     }
   },
   "writing": {
@@ -3772,8 +3784,8 @@
       "practice": "Luyện"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Làm lại",
+      "HARD": "Khó"
     }
   },
   "gettingStarted": {
@@ -4053,9 +4065,9 @@
     "privacyTitle": "Chính sách quyền riêng tư",
     "termsTitle": "Điều khoản sử dụng",
     "privacyDescription": "Cách Notoria thu thập, sử dụng và xóa dữ liệu cá nhân cũng như nội dung học tập cho không gian học ngôn ngữ riêng tư.",
-    "termsDescription": "Điều khoản sử dụng không gian học ngôn ngữ riêng tư của Notoria, tài khoản, tính năng AI và thanh toán Notoria Pro.",
+    "termsDescription": "Điều khoản sử dụng không gian học ngôn ngữ riêng tư của Notoria, tài khoản, tính năng AI, và thanh toán Pro hoặc Premium.",
     "updated": "Cập nhật lần cuối {date}",
-    "updatedDate": "23 tháng 9 năm 2026",
+    "updatedDate": "27 tháng 10 năm 2026",
     "backToSignIn": "Quay lại đăng nhập",
     "backHome": "Quay lại Notoria",
     "authFooter": "Quyền riêng tư · Điều khoản",
@@ -4076,7 +4088,7 @@
         "purposes": "Vì sao chúng tôi xử lý dữ liệu",
         "auth": "Tài khoản và đăng nhập",
         "ai": "Tính năng AI",
-        "payments": "Thanh toán (Notoria Pro)",
+        "payments": "Thanh toán (Pro và Premium)",
         "processors": "Nhà cung cấp dịch vụ",
         "cookies": "Cookie và bộ nhớ trên thiết bị",
         "transfers": "Chuyển dữ liệu quốc tế",
@@ -4100,7 +4112,7 @@
           "list": [
             "tạo hoặc sử dụng tài khoản",
             "lưu tài liệu trong các không gian làm việc riêng tư",
-            "đăng ký Notoria Pro",
+            "đăng ký Notoria Pro hoặc Premium",
             "sử dụng các công cụ hỗ trợ AI tùy chọn",
             "tải lên phương tiện để dùng cho phần nghe hoặc cho hồ sơ",
             "sử dụng phần luyện nói",
@@ -4161,7 +4173,7 @@
               "basis": "Hợp đồng (Art. 6(1)(b))"
             },
             {
-              "purpose": "Xử lý thanh toán và trạng thái đăng ký Notoria Pro qua Stripe",
+              "purpose": "Chạy thanh toán và trạng thái đăng ký Notoria Pro và Premium qua Stripe",
               "basis": "Hợp đồng (Art. 6(1)(b))"
             },
             {
@@ -4196,7 +4208,7 @@
           "p4": "Mã nguồn hiện tại không sử dụng nhà cung cấp mô hình ngôn ngữ lớn nào khác ngoài OpenAI. OpenAI xử lý dữ liệu theo điều khoản và chính sách quyền riêng tư của riêng họ với vai trò bên xử lý dữ liệu cho các tính năng này."
         },
         "payments": {
-          "title": "7. Thanh toán (Notoria Pro)",
+          "title": "7. Thanh toán (Pro và Premium)",
           "p1": "Các gói đăng ký trả phí do <strong>Stripe</strong> xử lý. Việc thanh toán, hóa đơn, phương thức thanh toán và việc hủy đều diễn ra qua Stripe Checkout và Stripe Customer Portal. Webhook của Stripe cập nhật gói và trạng thái của bạn trong Notoria.",
           "p2": "Stripe xử lý dữ liệu thanh toán với vai trò nhà cung cấp dịch vụ thanh toán. Xem tài liệu quyền riêng tư của Stripe về việc xử lý thẻ."
         },
@@ -4238,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Thanh toán, cổng quản lý và trạng thái đăng ký Notoria Pro"
+              "role": "Thanh toán Notoria Pro và Premium, cổng, và trạng thái đăng ký"
             },
             {
               "provider": "Google",
@@ -4352,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Điều khoản sử dụng này giải thích các quy tắc khi sử dụng Notoria tại <site>www.notoria.fi</site>. Chúng mô tả cách sản phẩm hoạt động hiện nay: không gian học tập riêng tư, việc thanh toán Notoria Pro tùy chọn qua Stripe và các tính năng có hỗ trợ AI. Chúng không thay thế cho tư vấn của luật sư về hoàn cảnh cụ thể của bạn.",
+      "intro": "Các Điều khoản Sử dụng này giải thích các quy tắc sử dụng Notoria tại <site>www.notoria.fi</site>. Chúng mô tả cách sản phẩm hoạt động ngày hôm nay: không gian học tập riêng tư, thanh toán Pro và Premium tùy chọn qua Stripe, và các tính năng hỗ trợ AI. Chúng không thay thế cho lời khuyên từ luật sư về tình huống cụ thể của bạn.",
       "tocTitle": "Trên trang này",
       "tocAria": "Trên trang này",
       "toc": {
@@ -4363,7 +4375,7 @@
         "acceptable-use": "Sử dụng hợp lệ",
         "ip": "Quyền sở hữu trí tuệ",
         "ai": "Kết quả do AI tạo ra",
-        "plans": "Gói miễn phí và Notoria Pro",
+        "plans": "Kế hoạch Miễn phí, Pro và Premium",
         "billing": "Đăng ký và thanh toán",
         "refunds": "Hoàn tiền và quyền của người tiêu dùng",
         "availability": "Khả dụng của dịch vụ",
@@ -4382,7 +4394,7 @@
         "service": {
           "title": "2. Dịch vụ",
           "p1": "Notoria là ứng dụng web học ngôn ngữ riêng tư. Bạn có thể tạo các không gian làm việc và lưu tài liệu học tập như từ vựng, ghi chú lý thuyết, bài viết, bài tập, bài học nghe và phiên luyện nói.",
-          "p2": "Một số tính năng có sẵn trong gói miễn phí. Notoria Pro mở khóa thêm các khả năng như được hiển thị trong sản phẩm và trên trang <account>Tài khoản</account> của bạn — bao gồm Nghe, Nói, một số công cụ học tập AI, nhập bài tập và các định dạng xuất tài liệu trả phí. Những tính năng khả dụng có thể thay đổi khi sản phẩm phát triển.",
+          "p2": "Các lĩnh vực học tập cốt lõi, bao gồm Nghe, Nói, và Đọc, có sẵn trên mọi kế hoạch. Pro và Premium thêm hạn mức AI cao hơn và nhập/xuất tài liệu học tập; Premium cũng thêm huấn luyện cá nhân và các tính năng thực hành. So sánh hiện tại được hiển thị trên trang <account>Tài khoản</account> của bạn. Tính khả dụng của các tính năng có thể thay đổi khi sản phẩm phát triển.",
           "p3": "Notoria dành cho việc học ngôn ngữ cá nhân. Đây không phải là một trường học, cơ quan tổ chức thi hay dịch vụ tư vấn chuyên môn."
         },
         "accounts": {
@@ -4423,23 +4435,23 @@
           "title": "7. Kết quả do AI tạo ra",
           "p1": "Một số tính năng có thể kiểm tra, gợi ý, tạo, chép lời, tóm tắt hoặc hướng dẫn dựa trên tài liệu của bạn. Kết quả có thể chưa đầy đủ, không chính xác hoặc không phù hợp với mục tiêu của bạn. Bạn vẫn chịu trách nhiệm xem xét kết quả AI trước khi dựa vào chúng để học, thi, dùng cho công việc chuyên môn hay công bố.",
           "p2": "Các tính năng AI có thể không khả dụng nếu hỗ trợ bị tắt trong <settings>Cài đặt</settings>, nếu gói của bạn không bao gồm một công cụ nhất định, hoặc nếu một nhà cung cấp tạm thời không thể kết nối.",
-          "p3": "Không phải mọi trợ lý AI đều cần Notoria Pro. Sản phẩm hiển thị rõ công cụ nào miễn phí và công cụ nào cần Pro."
+          "p3": "Tính khả dụng AI và hạn mức hàng ngày khác nhau giữa Miễn phí, Pro và Premium. Sản phẩm hiển thị kế hoạch và hạn mức cần thiết cho mỗi công cụ."
         },
         "plans": {
-          "title": "8. Gói miễn phí và Notoria Pro",
+          "title": "8. Kế hoạch Miễn phí, Pro và Premium",
           "p1": "Gói miễn phí bao gồm việc luyện tập cốt lõi với từ vựng của riêng bạn và các công cụ học tập liên quan như được hiển thị trong sản phẩm.",
-          "p2": "Notoria Pro là gói đăng ký trả phí mở khóa thêm các tính năng. Trong sản phẩm hiện tại, gói này thường bao gồm Nghe, Nói, nhập bài tập, luyện đặt câu, nhiều công cụ học tập có hỗ trợ AI, và xuất tài liệu PDF/DOCX. Một số trợ lý AI nhẹ hơn (như một số tiện ích cho từ vựng hoặc định dạng trong trình soạn thảo) có thể vẫn khả dụng ở gói miễn phí khi hỗ trợ AI được bật.",
-          "p3": "Quyền truy cập Pro gắn với tài khoản người dùng của bạn, nên nó áp dụng cho tất cả không gian làm việc thuộc tài khoản đó. Các tài khoản có vai trò quản trị viên có thể có quyền truy cập mức Pro mà không cần gói đăng ký Stripe cá nhân.",
-          "p4": "Giá áp dụng cho giao dịch của bạn là giá được hiển thị tại Stripe Checkout cho gói Pro hiện hành. Mọi mức giá hiển thị ở nơi khác trong sản phẩm (ví dụ trên trang Tài khoản) chỉ mang tính tham khảo và phải khớp với cấu hình giá đang hoạt động trên Stripe."
+          "p2": "Pro và Premium là các đăng ký trả phí. Pro thêm hạn mức cao hơn hoặc không giới hạn cho nhiều công cụ AI cũng như nhập tài liệu học tập và xuất PDF/DOCX. Premium bao gồm Pro và thêm các tính năng cá nhân hóa như Huấn luyện viên Học tập, hồ sơ học tập cá nhân, thực hành thích ứng, thực hành dựa trên sai lầm, và hướng dẫn bài tập tùy chỉnh. Trang Tài khoản hiển thị so sánh hiện tại và giới hạn.",
+          "p3": "Truy cập trả phí được liên kết với tài khoản người dùng của bạn và áp dụng trên tất cả các không gian làm việc của nó. Các tài khoản có vai trò quản trị viên có thể có quyền truy cập cấp trả phí mà không cần đăng ký Stripe cá nhân.",
+          "p4": "Giá áp dụng là giá được hiển thị tại Thanh toán Stripe cho kế hoạch Pro hoặc Premium đã chọn. Bất kỳ giá nào được hiển thị ở nơi khác trong sản phẩm (ví dụ trên Tài khoản) chỉ mang tính chất tham khảo và phải khớp với cấu hình giá Stripe đang hoạt động."
         },
         "billing": {
           "title": "9. Đăng ký, thanh toán và hủy",
-          "list0": "Gói đăng ký Pro được thanh toán qua <strong>Stripe</strong>",
-          "list1": "Bạn có thể bắt đầu thanh toán từ <account>Tài khoản</account> hoặc từ các phần Pro đang bị khóa trong ứng dụng",
+          "list0": "Các đăng ký Pro và Premium được thanh toán qua <strong>Stripe</strong>",
+          "list1": "Bạn có thể bắt đầu thanh toán hoặc thay đổi kế hoạch từ <account>Tài khoản</account> hoặc từ các điều khiển trả phí bị khóa trong ứng dụng",
           "list2": "Từ trang Tài khoản, bạn có thể mở Stripe Customer Portal để xem hóa đơn, cập nhật phương thức thanh toán và hủy gói đăng ký",
           "list3": "Việc hủy tuân theo cách hoạt động của Stripe Customer Portal đối với gói đăng ký của bạn",
-          "p1": "Sau khi bạn hủy, quyền truy cập Pro chỉ tiếp tục trong thời gian trạng thái gói đăng ký Stripe của bạn vẫn cấp Pro trong sản phẩm. Trong cách triển khai hiện tại, các trạng thái được coi là Pro gồm <code>active</code>, <code>trialing</code> và <code>past_due</code>. Khi trạng thái không còn đủ điều kiện, tài khoản trở lại gói miễn phí.",
-          "p2": "Nếu một khoản thanh toán thất bại, Stripe có thể chuyển gói đăng ký sang <code>past_due</code> hoặc một trạng thái khác. Notoria đồng bộ trạng thái đó từ webhook của Stripe. Trong khi trạng thái vẫn là <code>past_due</code>, các tính năng Pro vẫn khả dụng theo quy tắc truy cập hiện tại; nếu sau đó gói đăng ký bị hủy hoặc không còn đủ điều kiện, quyền truy cập Pro sẽ kết thúc.",
+          "p1": "Sau khi bạn hủy gia hạn, quyền truy cập Pro hoặc Premium hiện tại của bạn sẽ tiếp tục trong khi trạng thái đăng ký Stripe vẫn đủ điều kiện trong sản phẩm. Các trạng thái đủ điều kiện hiện tại bao gồm <code>active</code>, <code>trialing</code>, và <code>past_due</code>. Khi trạng thái không còn đủ điều kiện, tài khoản sẽ trở lại Miễn phí.",
+          "p2": "Nếu một khoản thanh toán không thành công, Stripe có thể chuyển đăng ký sang <code>past_due</code> hoặc trạng thái khác. Notoria đồng bộ hóa trạng thái đó từ webhook của Stripe. Khi nó vẫn ở trạng thái <code>past_due</code>, kế hoạch trả phí hiện tại vẫn có sẵn theo các quy tắc truy cập hiện tại; nếu sau đó nó trở thành bị hủy hoặc không đủ điều kiện, quyền truy cập trả phí sẽ kết thúc.",
           "p3": "Việc xóa tài khoản Notoria sẽ hủy gói đăng ký Stripe ngay lập tức (theo nỗ lực tối đa) như một phần của quá trình xóa tài khoản. Điều này khác với việc hủy gia hạn qua Customer Portal mà vẫn giữ tài khoản."
         },
         "refunds": {
@@ -4460,7 +4472,7 @@
         "liability": {
           "title": "13. Tuyên bố miễn trừ và trách nhiệm",
           "p1": "Notoria được cung cấp theo hiện trạng khả dụng cho việc học ngôn ngữ cá nhân. Trong phạm vi tối đa mà luật hiện hành cho phép, chúng tôi miễn trừ các bảo đảm không do luật yêu cầu.",
-          "p2": "Trong phạm vi tối đa mà luật hiện hành cho phép, Notoria không chịu trách nhiệm về các thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, phái sinh hoặc do mất dữ liệu phát sinh từ việc bạn sử dụng dịch vụ hay dựa vào kết quả AI. Khi không thể loại trừ trách nhiệm, trách nhiệm được giới hạn ở số tiền bạn đã trả cho Notoria Pro trong ba tháng trước khi có khiếu nại, hoặc ở mức cao hơn nếu luật bắt buộc yêu cầu.",
+          "p2": "Trong phạm vi tối đa được phép bởi luật hiện hành, Notoria không chịu trách nhiệm cho các thiệt hại gián tiếp, ngẫu nhiên, đặc biệt, hậu quả, hoặc mất dữ liệu phát sinh từ việc bạn sử dụng dịch vụ hoặc dựa vào đầu ra AI. Nơi trách nhiệm không thể bị loại trừ, nó được giới hạn ở số tiền bạn đã trả cho Notoria Pro hoặc Premium trong ba tháng trước khi khiếu nại, hoặc bất kỳ số tiền lớn hơn nào được yêu cầu bởi luật bắt buộc.",
           "p3": "Những giới hạn này không loại trừ trách nhiệm mà luật Phần Lan hoặc luật EU không cho phép giới hạn — bao gồm trách nhiệm không thể từ bỏ đối với người tiêu dùng, và trách nhiệm đối với tử vong hoặc thương tích cá nhân do sự cẩu thả gây ra ở những nơi các quy định đó áp dụng."
         },
         "changes": {
@@ -4533,9 +4545,9 @@
           "vocab": "Xây ngân hàng từ cá nhân với nghĩa, ví dụ và thẻ",
           "practice": "Luyện với bài tập lấy từ từ và ghi chú của chính bạn",
           "create": "Viết ghi chú lý thuyết và bài viết để quay lại sau",
-          "listenSpeak": "Biến media thành luyện nghe, và nói với gia sư AI trên Pro"
+          "listenSpeak": "Biến phương tiện thành thực hành nghe, và sử dụng hạn mức AI cho việc sao chép và thực hành nói"
         },
-        "note": "Một số công cụ AI, nghe, nói và xuất thuộc Notoria Pro. Gói miễn phí vẫn đủ luyện từ vựng hàng ngày và vòng học cốt lõi."
+        "note": "Các lĩnh vực học tập cốt lõi có sẵn trên mọi kế hoạch. Pro nâng cao hạn mức AI và thêm nhập/xuất tài liệu học tập; Premium thêm huấn luyện cá nhân và thực hành."
       },
       "ai": {
         "title": "AI, ở nơi nó giúp ích",
@@ -4661,7 +4673,7 @@
         "title": "Các khu vực nối nhau thế nào",
         "p1": "Ghi nhanh là cửa vào nhanh. Từ vựng và Lý thuyết là nơi tài liệu ổn định. Bài tập biến tài liệu thành luyện tập. Viết, Nghe và Nói giúp bạn dùng ngôn ngữ chủ động hơn.",
         "p2": "Bạn không phải đi qua mọi khu vực theo thứ tự. Nhiều người ở với từ và luyện ngắn khá lâu.",
-        "p3": "Bước tiếp tự nhiên là viết khi bạn muốn tạo ngôn ngữ theo cách của mình, rồi nghe và nói khi cùng tài liệu đó cần vào tai và miệng — Listening và Speaking thuộc Notoria Pro.",
+        "p3": "Một bước tự nhiên tiếp theo là viết khi bạn muốn sản xuất ngôn ngữ theo cách của riêng bạn, sau đó là nghe và nói khi bạn muốn cùng một tài liệu hoạt động trong tai và giọng nói của bạn. Những lĩnh vực này có sẵn trên mọi kế hoạch; giới hạn sử dụng AI khác nhau theo kế hoạch.",
         "beat": "Thu thập và hiểu trước. Dùng và nói khi tài liệu sẵn sàng rời trang giấy."
       },
       "areas": {
@@ -4685,11 +4697,11 @@
         },
         "listening": {
           "label": "Nghe",
-          "body": "Biến media thành luyện nghe trong workspace. Có trên Notoria Pro."
+          "body": "Biến phương tiện thành thực hành nghe trong không gian làm việc của bạn. Có sẵn trên mọi kế hoạch; hạn mức sao chép AI khác nhau theo kế hoạch."
         },
         "speaking": {
           "label": "Nói",
-          "body": "Luyện trực tiếp với gia sư AI, xoay quanh ngôn ngữ bạn đang học. Có trên Notoria Pro."
+          "body": "Thực hành trực tiếp với một gia sư AI, dựa trên ngôn ngữ bạn đang học. Có sẵn trên mọi kế hoạch với hạn mức hàng ngày dựa trên kế hoạch."
         },
         "capture": {
           "label": "Ghi nhanh",
@@ -4739,15 +4751,15 @@
         },
         "account": {
           "q": "Làm sao đổi mật khẩu hoặc đóng tài khoản?",
-          "a": "Mở <account>Tài khoản</account>. Bạn có thể cập nhật mật khẩu nếu đăng nhập bằng email, quản lý Notoria Pro, xuất bản sao lưu, hoặc xoá tài khoản vĩnh viễn."
+          "a": "Mở <account>Tài khoản</account>. Bạn có thể cập nhật mật khẩu của mình ở đó nếu bạn sử dụng đăng nhập bằng email, quản lý Pro hoặc Premium, xuất bản sao lưu, hoặc xóa tài khoản của bạn vĩnh viễn. Việc xóa tài khoản cũng sẽ ngay lập tức hủy bất kỳ đăng ký Stripe nào đang hoạt động trên cơ sở nỗ lực tốt nhất; chỉ hủy gia hạn giữ tài khoản và dữ liệu của nó."
         },
         "pro": {
           "q": "Thanh toán và huỷ gia hạn hoạt động thế nào?",
-          "a": "Notoria Pro thanh toán qua Stripe. Từ <account>Tài khoản</account> bạn có thể nâng cấp, mở cổng khách hàng Stripe để quản lý phương thức thanh toán và hoá đơn, hoặc huỷ gia hạn."
+          "a": "Notoria Pro và Premium được thanh toán qua Stripe. Từ <account>Tài khoản</account> bạn có thể đăng ký, chuyển đổi giữa Pro và Premium, quản lý phương thức thanh toán và hóa đơn, hủy gia hạn, hoặc khôi phục một hủy bỏ đã lên lịch. Hủy gia hạn giữ quyền truy cập cho đến khi Stripe kết thúc thời gian đăng ký đủ điều kiện; việc xóa tài khoản của bạn là riêng biệt và hủy đăng ký ngay lập tức trên cơ sở nỗ lực tốt nhất."
         },
         "proFeatures": {
-          "q": "Cái gì miễn phí, cái gì cần Notoria Pro?",
-          "a": "Luyện từ vựng hàng ngày và các công cụ học liên quan có trên gói miễn phí. Một số công cụ AI, nghe, nói và xuất tài liệu thuộc Notoria Pro. So sánh và nâng cấp từ <account>Tài khoản</account>."
+          "q": "Những gì được bao gồm trong Miễn phí, Pro và Premium?",
+          "a": "Miễn phí bao gồm các lĩnh vực học tập cốt lõi và hạn mức hàng ngày cho các công cụ AI được hỗ trợ. Pro nâng cao hoặc loại bỏ nhiều giới hạn AI và thêm nhập tài liệu học tập cũng như xuất PDF/DOCX. Premium bao gồm Pro và thêm huấn luyện cá nhân, hồ sơ học tập, thực hành thích ứng và dựa trên sai lầm, và hướng dẫn bài tập tùy chỉnh. Xem so sánh trực tiếp và giới hạn hiện tại trong <account>Tài khoản</account>."
         },
         "learning": {
           "q": "Các tính năng học của Notoria hoạt động thế nào?",
@@ -5098,7 +5110,7 @@
         "lede": "Tạo tài khoản với email và mật khẩu. Họ có thể đăng nhập ngay."
       },
       "plans": {
-        "free": "Free",
+        "free": "Miễn phí",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5128,7 +5140,7 @@
       },
       "detail": {
         "description": "Ngôn ngữ: {language}",
-        "meta": "Workspace",
+        "meta": "Không gian làm việc",
         "actions": "Thao tác workspace",
         "actionsLede": "Ngôn ngữ phải duy nhất theo chủ sở hữu. Xóa sẽ cascade nội dung học trong workspace."
       },
@@ -5154,7 +5166,7 @@
         "title": "Tiêu đề",
         "status": "Trạng thái",
         "owner": "Chủ sở hữu",
-        "workspace": "Workspace",
+        "workspace": "Không gian làm việc",
         "updated": "Cập nhật"
       },
       "fields": {
@@ -5162,7 +5174,7 @@
         "status": "Trạng thái",
         "errorCode": "Mã lỗi",
         "owner": "Chủ sở hữu",
-        "workspace": "Workspace",
+        "workspace": "Không gian làm việc",
         "created": "Tạo lúc",
         "updated": "Cập nhật",
         "title": "Tiêu đề",

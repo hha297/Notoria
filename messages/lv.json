@@ -30,7 +30,7 @@
       "fixedNote": "Izskats eksportētajā failā ir fiksēts. Lai to mainītu, eksportējiet vēlreiz.",
       "docxBackgroundNote": "Word un citas programmas var neatainot lapas fonu tāpat, īpaši drukājot."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Ritināt uz augšu"
   },
   "contentImport": {
     "title": {
@@ -473,34 +473,34 @@
     "viewMode": "Attēlošanas režīms",
     "tagManager": {
       "open": "Pārvaldīt birkas",
-      "eyebrow": "Tags",
+      "eyebrow": "Etiķetes",
       "title": "Birku pārvaldnieks",
-      "description": "Izvēlieties birku, tad piešķiriet vai noņemiet to no vārdiem. Piešķirtie un citi vārdi paliek atsevišķos sarakstos.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Izvēlieties etiķeti, pēc tam piešķiriet vai noņemiet to no vārdiem.",
+      "pageDescription": "Izvēlieties Standarta vai Pielāgotu, izvēlieties etiķeti, pēc tam pievienojiet vai noņemiet to no vārdiem.",
+      "disabledNoWorkspace": "Izveidojiet darba telpu, pirms pārvaldāt vārdu etiķetes.",
+      "backToVocabulary": "Atpakaļ uz vārdu krājumu",
+      "backToSettings": "Atpakaļ uz iestatījumiem",
       "groupsLabel": "Standarta birku grupas",
       "tagsHeading": "Birkas",
       "standardTagsHeading": "Standarta birkas",
       "customTagsHeading": "Pielāgotas birkas",
-      "customTagsHint": "Etiķetes, ko izveidojat savai organizācijai — nevis vārdšķiras.",
+      "customTagsHint": "Darba telpas etiķetes, kuras izveidojat — meklējiet, lai tās atrastu, kad saraksts ir garš.",
       "emptyCustomTags": "Vēl nav pielāgotu birku. Izveidojiet tās, rediģējot vārdu.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nav pielāgotu etiķešu, kas atbilst šai meklēšanai.",
+      "tagSearchPlaceholder": "Meklēt etiķetes…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standarta",
       "kindCustom": "Pielāgota",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Vārdu saraksti",
+      "wordTabAssigned": "Etiķetēts",
+      "wordTabOther": "Neetiķetēts",
       "assignedHeading": "Vārdi ar šo birku",
       "otherHeading": "Citi vārdi",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Izvēlēties visus šajā lapā",
+      "clearSelection": "Notīrīt izvēli",
+      "selectionScopePage": "Izvēle no šīs lapas ({count} no {total})",
+      "selectionScopeFiltered": "Izvēle pašreizējo meklēšanas rezultātu ietvaros",
       "searchPlaceholder": "Meklēt vārdus vai nozīmes…",
       "wordCount": "{count}",
       "loading": "Ielādē vārdu krājumu…",
@@ -510,13 +510,23 @@
       "emptyOther": "Katram vārdam jau ir šī birka.",
       "emptyOtherSearch": "Nav atbilstošu vārdu, ko piešķirt.",
       "selected": "Atlasīti: {count}",
-      "addToTag": "Pievienot birkai",
-      "removeFromTag": "Noņemt no birkas",
-      "applyAdd": "Pievienot birkai ({count})",
-      "applyRemove": "Noņemt no birkas ({count})",
+      "addToTag": "Pievienot etiķeti",
+      "removeFromTag": "Noņemt etiķeti",
+      "applyAdd": "Pievienot etiķeti ({count})",
+      "applyRemove": "Noņemt etiķeti ({count})",
       "added": "Pievienoti {count} vārdi birkai {tag}",
       "removed": "Noņemti {count} vārdi no birkas {tag}",
-      "error": "Neizdevās atjaunināt birkas piederību"
+      "error": "Neizdevās atjaunināt birkas piederību",
+      "systemsLabel": "Etiķešu sistēmas",
+      "standardSystemTitle": "Standarta",
+      "standardSystemMeta": "Tēma un lietojums, rādīti atsevišķi",
+      "usageOptional": "Pēc izvēles",
+      "customSystemTitle": "Pielāgota",
+      "customSystemMeta": "{count, plural, one {# etiķete} other {# etiķetes}}",
+      "customPickerLabel": "Izvēlieties pielāgotu etiķeti",
+      "customPickerPlaceholder": "Izvēlieties pielāgotu etiķeti…",
+      "customSearchPlaceholder": "Meklēt pielāgotas etiķetes…",
+      "pickTagFirst": "Vispirms izvēlieties etiķeti, lai pārvaldītu vārdu piederību."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Atjaunināts {time}",
@@ -585,7 +595,11 @@
         "notes": "Piezīmes",
         "updated": "Pēdējoreiz atjaunināts"
       }
-    }
+    },
+    "selectedCustomTags": "Izvēlētās etiķetes",
+    "selectedSynonyms": "Izvēlētie sinonīmi",
+    "removeCustomTag": "Noņemt {name}",
+    "pickerLoading": "Ielādējas…"
   },
   "tags": {
     "groups": {
@@ -941,7 +955,9 @@
         "collapse": "Sakļaut {name}",
         "selectedCount": "{count, plural, zero {# teoriju atlasītas} one {# teorija atlasīta} other {# teorijas atlasītas}}",
         "practiceSelected": "Vingrināties ar atlasītajām",
-        "clearSelection": "Notīrīt atlasi"
+        "clearSelection": "Notīrīt atlasi",
+        "subfolders": "{count, plural, one {# apakšmape} other {# apakšmapes}}",
+        "selectedOne": "Izvēlēta 1 teorija"
       }
     },
     "types": {
@@ -950,13 +966,13 @@
         "description": "Apgrieziet kartītes, lai mācītos vārdus un nozīmes ar atstarotu atkārtošanu.",
         "preview": "Apgriezt · Novērtēt · Pārskatīt",
         "previewHint": "Somu vārds",
-        "previewWord": "suomalainen",
+        "previewWord": "somu",
         "previewFlow": "APGRIEZT → NOVĒRTĒT → PĀRSKATĪT"
       },
       "fill-in-blank": {
         "label": "Aizpildīt tukšo vietu",
         "description": "Pabeidziet piemēru teikumus ar trūkstošo vārdu krājuma vārdu.",
-        "preview": "Minulla on uusi ______."
+        "preview": "Man ir jauns ______."
       },
       "multiple-choice": {
         "label": "Izvēles jautājumi",
@@ -971,9 +987,9 @@
         "label": "Pāru saskaņošana",
         "description": "Saskaņojiet katru vārdu ar tā nozīmi Quizlet stila režģī.",
         "preview": "Vārds ↔ Nozīme",
-        "previewLeft": "talo",
+        "previewLeft": "māja",
         "previewRight": "māja",
-        "previewLeftB": "koti",
+        "previewLeftB": "mājas",
         "previewRightB": "mājas"
       },
       "type-answer": {
@@ -985,9 +1001,9 @@
         "label": "Izveidot teikumu",
         "description": "Uzrakstiet pilnu teikumu ar saglabāto vārdu krājumu un saņemiet MI gramatikas atsauksmi.",
         "preview": "Uzrakstiet teikumu, izmantojot…",
-        "previewChipA": "Minä",
-        "previewChipB": "asun",
-        "previewChipC": "Helsingissä"
+        "previewChipA": "Es",
+        "previewChipB": "dzīvoju",
+        "previewChipC": "Helsinkos"
       }
     },
     "timedHint": {
@@ -1033,17 +1049,17 @@
       "shuffle": "Sajaukt",
       "finish": "Pabeigt kārtu",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Jautājuma avots",
+        "chooseAi": "Izmantot AI ģenerētu",
+        "emptyTitle": "Nav izmantojamu saglabātu piemēru",
+        "emptyDescription": "Pievienojiet piemēru teikumus, kas skaidri ietver katru vārdu, pielāgojiet savus filtrus vai pārejiet uz AI ģenerētu.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Saglabātie piemēri",
+          "description": "Izveidojiet jautājumus nekavējoties no saviem vārdu krājuma piemēriem. Nav AI gaidīšanas."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI ģenerēts",
+          "description": "Izveidojiet jaunus teikumus no sava vārdu krājuma ar AI."
         }
       }
     },
@@ -1100,14 +1116,14 @@
       "tryAgain": "Mēģināt vēlreiz",
       "questionsLabel": "Jautājumi",
       "correctLabel": "Pareizi",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Nepareizi",
+      "unansweredLabel": "Atbildēts",
       "reviewLabel": "Pārskatīt",
       "answeredProgress": "{answered} / {total} atbildēti",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Pārbaudīt atbildi",
+      "nextQuestion": "Nākamais",
+      "viewResults": "Skatīt rezultātus",
       "submitSet": "Iesniegt atbildes",
       "submitting": "Pārbauda…",
       "unansweredWarnTitle": "Neatbildēti jautājumi",
@@ -1122,54 +1138,54 @@
       "unanswered": "Neatbildēts",
       "yourAnswer": "Jūsu atbilde",
       "correctAnswer": "Pareizā atbilde",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "No jūsu pašreizējiem filtriem ir pieejami tikai {count} jautājumi.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Kā jūs praktizējat",
+        "lockedHint": "Pabeidziet vai uzsāciet jaunu komplektu, lai mainītu to.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Pa vienam",
+          "description": "Redziet vienu jautājumu vienlaikus. Pārbaudiet pēc katras atbildes, lai saņemtu tūlītēju atsauksmi."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Visi jautājumi",
+          "description": "Redziet visu komplektu, atbildiet jebkurā secībā, pēc tam iesniedziet vienreiz atsauksmēm."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Pārskats",
+        "allCorrect": "Ideāli — katrs jautājums pareizs.",
+        "summary": "{incorrect} nepareizi · {unanswered} neatbildēti · {needsReview} jāpārskata",
+        "viewWrong": "Skatīt nepareizās atbildes",
+        "filtersLabel": "Filtrēt jautājumus",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Visi ({count})",
+          "needs_review": "Nepareizi un neatbildēti ({count})",
+          "correct": "Pareizi ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Iepriekšējais",
+        "nextWrong": "Nākamais",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} jāpārskata",
+        "floatLabel": "Nepareizo atbilžu navigācija",
+        "closeFloat": "Rādīt visas atbildes"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% pareizi",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Ideāls komplekts",
+          "body": "Katrs atbildes variants ir pareizs. Šāda veida koncentrēšanās pelna vēl vienu kārtu, kad esat gatavs."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Spēcīgs noslēgums",
+          "body": "Jūs skaidri saprotat — pārskatiet nepareizās atbildes, pēc tam nostipriniet to ar jaunu komplektu."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Labi darīts — turpiniet",
+          "body": "Daži apstāšanās punkti ir normāli. Pārskatiet tos vienreiz, pēc tam mēģiniet vēlreiz, kamēr tie ir svaigi."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Gandrīz tur",
+          "body": "Vispirms pabeidziet neatbildētos — tad rezultāts pastāstīs skaidrāku stāstu."
         }
       }
     },
@@ -1182,7 +1198,7 @@
       },
       "contextualLanguageHint": "Jautājumi tiek ģenerēti valodā {language} (darba telpas valoda).",
       "contextualEmptyTitle": "Ģenerēt kontekstuālus jautājumus",
-      "contextualEmptyDescription": "Izveidojiet aizpildāmo tukšo vietu izvēles jautājumus no vārdu krājuma.",
+      "contextualEmptyDescription": "Pievienojiet pēc izvēles norādījumus zemāk, ja vēlaties, pēc tam nospiediet Izveidot. Jūs varat atstāt uzvedni tukšu.",
       "contextualProDescription": "Kontekstuālie MI jautājumi pieejami ar Pro.",
       "unlockContextual": "Atbloķēt ar Pro",
       "correct": "Pareizi!",
@@ -1203,8 +1219,8 @@
       "hint": "Atlasiet vārdu, pēc tam pieskarieties tā nozīmei",
       "complete": "Visi pāri saskaņoti — lieliski!",
       "shuffle": "Sajaukt kolonnas",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pāri",
+      "continueRound": "Turpināt"
     },
     "typeAnswer": {
       "questionWord": "Kāda ir nozīme?",
@@ -1214,7 +1230,7 @@
         "contextual": "Kontekstuāls"
       },
       "contextualEmptyTitle": "Ģenerēt kontekstuālus jautājumus",
-      "contextualEmptyDescription": "Izveidojiet aizpildāmo tukšo vietu ierakstīšanas uzdevumus no vārdu krājuma.",
+      "contextualEmptyDescription": "Pievienojiet pēc izvēles norādījumus zemāk, ja vēlaties, pēc tam nospiediet Izveidot. Jūs varat atstāt uzvedni tukšu.",
       "contextualProDescription": "Kontekstuālie MI jautājumi pieejami ar Pro.",
       "unlockContextual": "Atbloķēt ar Pro",
       "placeholder": "Ierakstiet atbildi…",
@@ -1598,13 +1614,13 @@
       "writing": {
         "title": "Rakstīšana",
         "description": "Bagātie dokumenti un jautājumu kopas, pie kurām varat atgriezties un eksportēt.",
-        "how": "Sāciet melnrakstu, organizējiet ar mapēm un izmantojiet Pro AI, lai pārbaudītu vai uzlabotu tekstu.",
+        "how": "Sāciet melnrakstu, organizējiet ar mapēm un izmantojiet sava plāna AI atļauju, lai pārbaudītu vai uzlabotu savu tekstu.",
         "cta": "Atvērt rakstīšanu"
       },
       "listening": {
         "title": "Klausīšanās",
         "description": "Pārvērtiet reālu audio vai video nodarbībā.",
-        "how": "Free plānā augšupielādējiet klipu un ģenerējiet transkriptu. Ģenerētā klausīšanās prakse ir Pro daļa.",
+        "how": "Augšupielādējiet fragmentu, ģenerējiet transkripciju un veidojiet klausīšanās praksi ar AI atļauju, kas iekļauta jūsu plānā.",
         "cta": "Atvērt klausīšanos"
       },
       "speaking": {
@@ -2269,11 +2285,11 @@
         "taskManager": "Pārlūka uzdevumu pārvaldnieks",
         "altClose": "Aizvērt logu",
         "altTab": "Pārslēgt lietotnes",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Failu pārlūks",
         "winDesktop": "Rādīt darbvirsmu",
         "winLock": "Bloķēt datoru",
         "winRun": "Palaist dialogu",
-        "winSettings": "Windows Settings",
+        "winSettings": "Windows iestatījumi",
         "winTaskView": "Uzdevumu skats",
         "winClipboard": "Starpliktuves vēsture"
       },
@@ -3120,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Dažas darbvietas jau pastāv tai pašai valodai. To saturs tiks pievienots esošajām darbvietām, nevis dublēts.",
         "empty_backup": "Šajā dublējumkopijā nav importējamu mācību datu.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Daži esošie priekšmeti dalās ar to pašu nosaukumu. Importēšana izmantos vienu no tiem noteikti un atstās pārējos nemainītus."
       },
       "cancel": "Atcelt",
       "confirm": "Importēt mācību datus",
@@ -3165,11 +3181,11 @@
         "requestTooLarge": "Šī dublējumkopija ir pārāk liela apstrādei caur šo lapu. Izmēģiniet mazāku eksportu vai sazinieties ar atbalstu.",
         "notConfigured": "Failu krātuve dublējumkopijas importam vēl nav konfigurēta."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Jau jūsu kontā",
+      "skippedInAccountHint": "Šie nosaukumi sakrīt ar priekšmetiem, kas jums jau ir. Tie netiks importēti atkārtoti. Jauni priekšmeti zem tā paša darba vietas joprojām tiks importēti.",
+      "skippedInBackupTitle": "Dublēti nosaukumi šajā dublējumā",
+      "skippedInBackupHint": "Fails uzskaita to pašu nosaukumu vairāk nekā vienu reizi. Tikai pirmais katra nosaukuma eksemplārs tiek importēts — tas ir normāli pat tukšā kontā.",
+      "skippedOtherTitle": "Nevarēja importēt"
     },
     "danger": {
       "title": "Aizvērt kontu",
@@ -3185,7 +3201,7 @@
       "warningTitle": "Pirms turpināšanas",
       "warnings": {
         "workspaces": "Katra darbvieta un viss vārdu krājums, teorija, rakstīšana, klausīšanās un runāšanas dati tiks dzēsti.",
-        "billing": "Jebkurš aktīvs Notoria Pro abonements tiks nekavējoties atcelts.",
+        "billing": "Jebkura aktīva Notoria Pro vai Premium abonementa tiks nekavējoties atcelta.",
         "media": "Augšupielādētā multivide un profila foto tiks noņemti.",
         "permanent": "Pēc apstiprināšanas nav atjaunošanas perioda."
       },
@@ -3234,7 +3250,7 @@
     "upgrade": "Pāriet uz Pro",
     "manage": "Pārvaldīt abonementu",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Bezmaksas",
     "premiumBadge": "Premium",
     "renewsOn": "Atjaunojas {date}",
     "status": "Statuss: {status}",
@@ -3459,7 +3475,7 @@
       "feature": "Funkcija",
       "current": "Pašreizējais",
       "capability": "Ko iegūstat",
-      "free": "Free",
+      "free": "Bezmaksas",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Iekļauts Free",
@@ -4049,9 +4065,9 @@
     "privacyTitle": "Privātuma politika",
     "termsTitle": "Lietošanas noteikumi",
     "privacyDescription": "Kā Notoria vāc, izmanto un dzēš personas datus un mācību saturu savai privātajai valodu mācību darba telpai.",
-    "termsDescription": "Noteikumi Notoria privātās valodu mācību darba telpas, kontu, MI funkciju un Notoria Pro norēķinu lietošanai.",
+    "termsDescription": "Noteikumi par Notoria privātās valodu mācīšanās darba telpas, kontu, AI funkciju un Pro vai Premium norēķinu izmantošanu.",
     "updated": "Pēdējoreiz atjaunināts {date}",
-    "updatedDate": "2026. gada 23. septembris",
+    "updatedDate": "27. oktobris 2026",
     "backToSignIn": "Atpakaļ pie pierakstīšanās",
     "backHome": "Atpakaļ uz Notoria",
     "authFooter": "Privātums · Noteikumi",
@@ -4072,7 +4088,7 @@
         "purposes": "Kāpēc mēs apstrādājam datus",
         "auth": "Konti un pierakstīšanās",
         "ai": "MI funkcijas",
-        "payments": "Maksājumi (Notoria Pro)",
+        "payments": "Norēķini (Pro un Premium)",
         "processors": "Pakalpojumu sniedzēji",
         "cookies": "Sīkdatnes un ierīces krātuve",
         "transfers": "Starptautiskie pārsūtījumi",
@@ -4096,7 +4112,7 @@
           "list": [
             "izveidojat vai lietojat kontu",
             "saglabājat materiālu privātās darba telpās",
-            "abonējat Notoria Pro",
+            "abonēt Notoria Pro vai Premium",
             "lietojat izvēles MI atbalstītus rīkus",
             "augšupielādējat medijus klausīšanās vai profila vajadzībām",
             "lietojat runāšanas praksi",
@@ -4157,7 +4173,7 @@
               "basis": "Līgums (6. panta 1. punkta b) apakšpunkts)"
             },
             {
-              "purpose": "Darbināt Notoria Pro norēķinus un abonementa statusu caur Stripe",
+              "purpose": "Vadīt Notoria Pro un Premium norēķinus un abonementa statusu, izmantojot Stripe",
               "basis": "Līgums (6. panta 1. punkta b) apakšpunkts)"
             },
             {
@@ -4192,7 +4208,7 @@
           "p4": "Pašreizējā kodu bāze neizmanto citus lielus valodu modeļu sniedzējus bez OpenAI. OpenAI apstrādā datus saskaņā ar saviem noteikumiem un privātuma politiku kā apstrādātājs šīm funkcijām."
         },
         "payments": {
-          "title": "7. Maksājumi (Notoria Pro)",
+          "title": "7. Norēķini (Pro un Premium)",
           "p1": "Maksas abonementus apstrādā <strong>Stripe</strong>. Maksāšana, rēķini, maksājuma līdzekļi un atcelšana notiek caur Stripe Checkout un Stripe Customer Portal. Stripe tīmekļa āķi atjaunina jūsu plānu un statusu Notoria.",
           "p2": "Stripe apstrādā maksājumu datus kā maksājumu pakalpojumu sniedzējs. Par karšu apstrādi skatiet Stripe pašu privātuma dokumentāciju."
         },
@@ -4234,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro maksājums, portāls un abonementa statuss"
+              "role": "Notoria Pro un Premium norēķinu, portāla un abonementa statusa"
             },
             {
               "provider": "Google",
@@ -4348,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Šie lietošanas noteikumi skaidro Notoria lietošanas noteikumus adresē <site>www.notoria.fi</site>. Tie apraksta, kā produkts šodien darbojas: privātas mācību darba telpas, izvēles Notoria Pro norēķini caur Stripe un MI atbalstītas funkcijas. Tie neaizstāj advokāta padomu jūsu konkrētajā situācijā.",
+      "intro": "Šie Lietošanas noteikumi izskaidro noteikumus par Notoria izmantošanu vietnē <site>www.notoria.fi</site>. Tie apraksta, kā produkts darbojas šodien: privātas mācību darba telpas, pēc izvēles Pro un Premium norēķini, izmantojot Stripe, un AI atbalstītas funkcijas. Tie nav aizvietojums juridiskajai konsultācijai par jūsu konkrēto situāciju.",
       "tocTitle": "Šajā lapā",
       "tocAria": "Šajā lapā",
       "toc": {
@@ -4359,7 +4375,7 @@
         "acceptable-use": "Pieļaujamā lietošana",
         "ip": "Intelektuālais īpašums",
         "ai": "MI ģenerētais rezultāts",
-        "plans": "Free plāns un Notoria Pro",
+        "plans": "Bezmaksas, Pro un Premium plāni",
         "billing": "Abonements un norēķini",
         "refunds": "Atmaksas un patērētāju tiesības",
         "availability": "Pieejamība",
@@ -4378,7 +4394,7 @@
         "service": {
           "title": "2. Pakalpojums",
           "p1": "Notoria ir privāta valodu mācību tīmekļa lietotne. Varat izveidot darba telpas un glabāt mācību materiālu, piemēram, vārdu krājumu, teorijas piezīmes, rakstīšanu, vingrinājumus, klausīšanās nodarbības un runāšanas sesijas.",
-          "p2": "Dažas funkcijas ir pieejamas Free plānā. Notoria Pro atbloķē papildu iespējas, kā parādīts produktā un jūsu <account>Konta</account> lapā — ieskaitot Klausīšanos, Runāšanu, noteiktus MI mācību rīkus, vingrinājumu importu un maksas dokumentu eksporta formātus. Funkciju pieejamība var mainīties, produktam attīstoties.",
+          "p2": "Pamatmācību jomas, tostarp Klausīšanās, Runāšana un Lasīšana, ir pieejamas katrā plānā. Pro un Premium pievieno augstākas AI atļaujas un mācību materiālu importēšanu/eksportēšanu; Premium arī pievieno personalizētu apmācību un prakses funkcijas. Pašreizējā salīdzināšana ir redzama jūsu <account>Kontā</account>. Funkciju pieejamība var mainīties, attīstoties produktam.",
           "p3": "Notoria ir paredzēta personīgai valodu mācīšanai. Tā nav skola, eksāmenu iestāde vai profesionāls konsultāciju pakalpojums."
         },
         "accounts": {
@@ -4419,23 +4435,23 @@
           "title": "7. MI ģenerētais rezultāts",
           "p1": "Dažas funkcijas var pārbaudīt, ieteikt, ģenerēt, transkribēt, apkopot vai vadīt, pamatojoties uz jūsu materiālu. Rezultāts var būt nepilnīgs, nepareizs vai nepiemērots jūsu mērķim. Jūs paliekat atbildīgs par MI rezultātu pārskatīšanu pirms paļaušanās uz tiem mācībām, eksāmeniem, profesionālai lietošanai vai publicēšanai.",
           "p2": "MI funkcijas var būt nepieejamas, ja palīdzība ir izslēgta <settings>Iestatījumos</settings>, ja jūsu plāns neietver konkrēto rīku vai ja sniedzējs īslaicīgi nav pieejams.",
-          "p3": "Ne visi MI palīgi prasa Notoria Pro. Produkts parāda, kuri rīki ir bezmaksas un kuriem nepieciešams Pro."
+          "p3": "AI pieejamība un ikdienas atļaujas atšķiras starp Bezmaksas, Pro un Premium. Produkts rāda plānu un atļauju, kas nepieciešama katram rīkam."
         },
         "plans": {
-          "title": "8. Free plāns un Notoria Pro",
+          "title": "8. Bezmaksas, Pro un Premium plāni",
           "p1": "Free plāns sedz pamata praksi ar jūsu pašu vārdu krājumu un saistītajiem mācību rīkiem, kā parādīts produktā.",
-          "p2": "Notoria Pro ir maksas abonements, kas atbloķē papildu funkcijas. Pašreizējā produktā tas parasti ietver Klausīšanos, Runāšanu, vingrinājumu importu, teikumu veidošanas praksi, daudzus MI atbalstītus mācību rīkus un PDF/DOCX dokumentu eksportu. Daži vieglāki MI palīgi (piemēram, noteikta vārdu krājuma vai redaktora formatēšanas palīdzība) var palikt pieejami Free plānā, ja MI palīdzība ir ieslēgta.",
-          "p3": "Pro piekļuve ir saistīta ar jūsu lietotāja kontu, tāpēc tā attiecas uz visām darba telpām zem šī konta. Kontiem ar administratora lomu var būt Pro līmeņa piekļuve bez personīgā Stripe abonementa.",
-          "p4": "Jūsu pirkumam piemērojamā cena ir cena, kas parādīta Stripe Checkout pašreizējam Pro plānam. Jebkura citur produktā rādītā cena (piemēram, Kontā) ir tikai orientējoša un jāatbilst aktīvajai Stripe cenas konfigurācijai."
+          "p2": "Pro un Premium ir maksas abonementi. Pro pievieno augstākas vai neierobežotas atļaujas daudziem AI rīkiem, kā arī mācību materiālu importēšanu un PDF/DOCX eksportēšanu. Premium ietver Pro un pievieno personalizētas funkcijas, piemēram, Mācību treneri, personīgo mācību profilu, adaptīvo praksi, kļūdu balstītu praksi un pielāgotas vingrinājumu instrukcijas. Konta lapā ir redzama pašreizējā salīdzināšana un ierobežojumi.",
+          "p3": "Maksas piekļuve ir saistīta ar jūsu lietotāja kontu un attiecas uz visām tā darba telpām. Konti ar administratora lomu var būt ar maksas līmeņa piekļuvi bez personīgas Stripe abonēšanas.",
+          "p4": "Cena, kas attiecas, ir cena, kas norādīta Stripe Checkout par izvēlēto Pro vai Premium plānu. Jebkura cena, kas norādīta citur produktā (piemēram, Kontā), ir tikai informatīva un ir jāatbilst aktīvās Stripe cenas konfigurācijai."
         },
         "billing": {
           "title": "9. Abonements, norēķini un atcelšana",
-          "list0": "Pro abonementi tiek norēķināti caur <strong>Stripe</strong>",
-          "list1": "Varat sākt maksājumu no <account>Konta</account> vai bloķētajām Pro vadīklām lietotnē",
+          "list0": "Pro un Premium abonementi tiek norēķināti, izmantojot <strong>Stripe</strong>",
+          "list1": "Jūs varat uzsākt norēķinus vai mainīt plānu no <account>Konts</account> vai no bloķētajiem maksas kontroles rīkiem lietotnē",
           "list2": "No Konta varat atvērt Stripe Customer Portal, lai skatītu rēķinus, atjauninātu maksājuma līdzekļus un atceltu abonementu",
           "list3": "Atcelšana seko Stripe Customer Portal uzvedībai jūsu abonementam",
-          "p1": "Pēc atcelšanas Pro piekļuve turpinās tikai tik ilgi, kamēr jūsu Stripe abonementa statuss produktā joprojām dod Pro. Pašreizējā īstenojumā kā Pro tiek uzskatīti statusi <code>active</code>, <code>trialing</code> un <code>past_due</code>. Kad statuss vairs nekvalificējas, konts atgriežas Free plānā.",
-          "p2": "Ja maksājums neizdodas, Stripe var pārvietot abonementu uz statusu <code>past_due</code> vai citu statusu. Notoria sinhronizē šo statusu no Stripe tīmekļa āķiem. Ja statuss paliek <code>past_due</code>, Pro funkcijas paliek pieejamas saskaņā ar pašreizējiem piekļuves noteikumiem; ja abonements vēlāk tiek atcelts vai citādi kļūst neatbilstošs, Pro piekļuve beidzas.",
+          "p1": "Pēc tam, kad atcelsiet atjaunošanu, jūsu pašreizējā Pro vai Premium piekļuve turpinās, kamēr Stripe abonementa statuss joprojām kvalificējas produktā. Kvalificējošie statusi pašlaik ietver <code>active</code>, <code>trialing</code> un <code>past_due</code>. Kad statuss vairs nav kvalificēts, konts atgriežas pie Bezmaksas.",
+          "p2": "Ja maksājums neizdodas, Stripe var pārvietot abonementu uz <code>past_due</code> vai citu statusu. Notoria sinhronizē šo statusu no Stripe tīmekļa pakalpojumiem. Kamēr tas paliek <code>past_due</code>, pašreizējais maksas plāns paliek pieejams saskaņā ar esošajiem piekļuves noteikumiem; ja tas vēlāk kļūst atcelts vai citādi nepiemērots, maksas piekļuve beidzas.",
           "p3": "Notoria konta dzēšana nekavējoties atceļ Stripe abonementu (labākais iespējamais) kā daļu no konta dzēšanas. Tas atšķiras no atjaunošanas atcelšanas caur Customer Portal, saglabājot kontu."
         },
         "refunds": {
@@ -4456,7 +4472,7 @@
         "liability": {
           "title": "13. Atrunas un atbildība",
           "p1": "Notoria tiek piedāvāta „kā pieejams” pamatā personīgai valodu mācīšanai. Ciktāl to atļauj piemērojamie tiesību akti, mēs atsakāmies no garantijām, ko likums neprasa.",
-          "p2": "Ciktāl to atļauj piemērojamie tiesību akti, Notoria neatbild par netiešiem, nejaušiem, īpašiem, izrietošiem vai datu zuduma zaudējumiem, kas izriet no pakalpojuma lietošanas vai paļaušanās uz MI rezultātu. Ja atbildību nevar izslēgt, tā ir ierobežota ar summu, ko maksājāt par Notoria Pro trīs mēnešos pirms prasības, vai jebkuru lielāku summu, ko prasa obligātie tiesību akti.",
+          "p2": "Cik vien to atļauj piemērojamie likumi, Notoria nav atbildīga par netiešiem, nejaušiem, īpašiem, sekas izraisītiem vai zaudētiem datiem, kas rodas no jūsu pakalpojuma izmantošanas vai paļaušanās uz AI rezultātiem. Ja atbildība nav izslēdzama, tā ir ierobežota līdz summai, ko jūs samaksājāt par Notoria Pro vai Premium trīs mēnešus pirms prasības, vai jebkurai lielākai summai, ko prasa obligātais likums.",
           "p3": "Šie limiti neizslēdz atbildību, ko Somijas vai ES tiesību akti neļauj ierobežot — ieskaitot atbildību, no kuras patērētāji nevar atteikties, un atbildību par nāvi vai miesas bojājumiem, ko izraisījusi nolaidība, kur šādi noteikumi piemērojami."
         },
         "changes": {
@@ -4529,9 +4545,9 @@
           "vocab": "Veidojiet personīgu vārdu banku ar nozīmēm, piemēriem un birkām",
           "practice": "Vingrinieties ar uzdevumiem, kas nāk no jūsu pašu vārdiem un piezīmēm",
           "create": "Rakstiet teorijas piezīmes un rakstīšanas darbus, pie kuriem varat vēlāk atgriezties",
-          "listenSpeak": "Pārvērtiet medijus klausīšanās praksē un runājiet ar MI skolotāju Pro"
+          "listenSpeak": "Pārvērtiet mediju par klausīšanās praksi un izmantojiet AI atļaujas transkripcijai un runāšanas praksei"
         },
-        "note": "Daži MI, klausīšanās, runāšanas un eksporta rīki ir daļa no Notoria Pro. Free plāns joprojām sedz ikdienas vārdu krājuma praksi un pamata mācību apli."
+        "note": "Pamatmācību jomas ir pieejamas katrā plānā. Pro palielina AI atļaujas un pievieno mācību materiālu importēšanu/eksportēšanu; Premium pievieno personalizētu apmācību un praksi."
       },
       "ai": {
         "title": "MI tur, kur tas palīdz",
@@ -4657,7 +4673,7 @@
         "title": "Kā jomas savienojas",
         "p1": "Uztveršana ir ātrais ieejas punkts. Vārdu krājums un Teorija ir vieta, kur materiāls nostājas. Vingrinājums pārvērš šo materiālu praksē. Rakstīšana, Klausīšanās un Runāšana palīdz valodu lietot aktīvāk.",
         "p2": "Jums nav jāiet cauri katrai jomai secībā. Daudzi kādu laiku paliek pie vārdiem un īsas prakses.",
-        "p3": "Dabiskais nākamais solis ir rakstīšana, ja vēlaties valodu ražot pēc saviem noteikumiem, pēc tam klausīšanās un runāšana, ja vēlaties, lai tas pats materiāls strādā ausī un balsī — Klausīšanās un Runāšana ir daļa no Notoria Pro.",
+        "p3": "Dabisks nākamais solis ir rakstīšana, kad vēlaties radīt valodu savos noteikumos, pēc tam klausīšanās un runāšana, kad vēlaties, lai tas pats materiāls darbotos jūsu ausī un balsī. Šīs jomas ir pieejamas katrā plānā; AI izmantošanas ierobežojumi atšķiras atkarībā no plāna.",
         "beat": "Vispirms sakrājiet un saprotiet. Lietojiet un runājiet, kad materiāls ir gatavs atstāt lapu."
       },
       "areas": {
@@ -4681,11 +4697,11 @@
         },
         "listening": {
           "label": "Klausīšanās",
-          "body": "Pārvērtiet medijus klausīšanās praksē savā darba telpā. Pieejams ar Notoria Pro."
+          "body": "Pārvērtiet mediju par klausīšanās praksi savā darba telpā. Pieejams katrā plānā; AI transkripcijas atļaujas atšķiras atkarībā no plāna."
         },
         "speaking": {
           "label": "Runāšana",
-          "body": "Tiešraides prakse ar MI skolotāju, saistīta ar mācāmo valodu. Pieejams ar Notoria Pro."
+          "body": "Tiešsaistes prakse ar AI pasniedzēju, balstīta uz valodu, ko jūs studējat. Pieejams katrā plānā ar plānā balstītu ikdienas atļauju."
         },
         "reading": {
           "label": "Lasīšana",
@@ -4735,15 +4751,15 @@
         },
         "account": {
           "q": "Kā mainīt paroli vai aizvērt kontu?",
-          "a": "Atveriet <account>Kontu</account>. Tur varat atjaunināt paroli, ja lietojat e-pasta pierakstīšanos, pārvaldīt Notoria Pro, eksportēt dublējumu vai neatgriezeniski dzēst kontu."
+          "a": "Atveriet <account>Kontu</account>. Jūs varat tur atjaunot savu paroli, ja izmantojat e-pasta pieteikšanos, pārvaldīt Pro vai Premium, eksportēt dublējumu vai pastāvīgi izdzēst savu kontu. Konta dzēšana arī nekavējoties atceļ jebkuru aktīvu Stripe abonementu labāko pūļu ietvaros; atjaunošanas atcelšana vien saglabā kontu un tā datus."
         },
         "pro": {
           "q": "Kā darbojas norēķini un atcelšana?",
-          "a": "Notoria Pro tiek norēķināts caur Stripe. No <account>Konta</account> varat uzlabot, atvērt Stripe klientu portālu maksājuma līdzekļu un rēķinu pārvaldībai vai atcelt atjaunošanu."
+          "a": "Notoria Pro un Premium tiek norēķināti, izmantojot Stripe. No <account>Konts</account> jūs varat abonēt, pāriet starp Pro un Premium, pārvaldīt maksājumu metodes un rēķinus, atcelt atjaunošanu vai atsākt ieplānotu atcelšanu. Atjaunošanas atcelšana saglabā piekļuvi līdz Stripe beidz atbilstošo abonementa periodu; konta dzēšana ir atsevišķa un nekavējoties atceļ abonementu labāko pūļu ietvaros."
         },
         "proFeatures": {
-          "q": "Kas ir bezmaksas un kam nepieciešams Notoria Pro?",
-          "a": "Ikdienas vārdu krājuma prakse un saistītie mācību rīki ir pieejami Free plānā. Daži MI rīki, klausīšanās, runāšana un dokumentu eksports ir daļa no Notoria Pro. Salīdziniet un uzlabojiet no <account>Konta</account>."
+          "q": "Kas ir iekļauts Bezmaksas, Pro un Premium?",
+          "a": "Bezmaksas ietver pamatmācību jomas un ikdienas atļaujas atbalstītajiem AI rīkiem. Pro palielina vai noņem daudzu AI ierobežojumus un pievieno mācību materiālu importēšanu, kā arī PDF/DOCX eksportēšanu. Premium ietver Pro un pievieno personalizētu apmācību, mācību profilu, adaptīvo un kļūdu balstītu praksi, kā arī pielāgotas vingrinājumu instrukcijas. Skatiet tiešo salīdzinājumu un pašreizējos ierobežojumus <account>Kontā</account>."
         },
         "learning": {
           "q": "Kā darbojas Notoria mācību funkcijas?",
@@ -5053,7 +5069,7 @@
         "suspended": "Apturēts"
       },
       "plans": {
-        "free": "Free",
+        "free": "Bezmaksas",
         "pro": "Pro",
         "premium": "Premium"
       },

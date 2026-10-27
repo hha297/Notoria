@@ -17,19 +17,20 @@
     "hideFilters": "隐藏筛选",
     "remove": "移除",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "外观",
+      "print": "打印友好",
+      "printHint": "白色页面，深色文本",
+      "theme": "当前主题",
+      "themeHint": "与您的浅色或深色主题匹配",
+      "previewKicker": "样本页面",
+      "previewTitle": "文档标题",
+      "previewBody": "正文使用所选颜色和间距。",
+      "previewCallout": "提示和强调遵循模块颜色。",
+      "fixedNote": "导出的文件中的外观是固定的。再次导出以更改它。",
+      "docxBackgroundNote": "Word和其他应用程序可能不会以相同方式显示页面背景，尤其是在打印时。"
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "滚动到顶部",
+    "moreActions": "更多操作"
   },
   "contentImport": {
     "title": {
@@ -472,34 +473,34 @@
     "viewMode": "显示模式",
     "tagManager": {
       "open": "管理标签",
-      "eyebrow": "Tags",
+      "eyebrow": "标签",
       "title": "标签管理",
-      "description": "选择标签，然后为单词添加或移除。已标注与其他单词分列显示。",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "选择一个标签，然后将其分配或移除到单词中。",
+      "pageDescription": "选择标准或自定义，选择一个标签，然后将其添加或移除到单词中。",
+      "disabledNoWorkspace": "在管理词汇标签之前，请创建一个工作区。",
+      "backToVocabulary": "返回词汇",
+      "backToSettings": "返回设置",
       "groupsLabel": "标准标签组",
       "tagsHeading": "标签",
       "standardTagsHeading": "标准标签",
       "customTagsHeading": "自定义标签",
-      "customTagsHint": "您创建的个人分类标签 — 不是词性。",
+      "customTagsHint": "您创建的工作区标签 — 当列表很长时搜索以找到它们。",
       "emptyCustomTags": "还没有自定义标签。编辑单词时可创建。",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "没有与此搜索匹配的自定义标签。",
+      "tagSearchPlaceholder": "搜索标签…",
       "wordsHeading": "{tag}",
       "kindStandard": "标准",
       "kindCustom": "自定义",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "单词列表",
+      "wordTabAssigned": "已标记",
+      "wordTabOther": "未标记",
       "assignedHeading": "带此标签的单词",
       "otherHeading": "其他单词",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "选择此页面上的所有",
+      "clearSelection": "清除选择",
+      "selectionScopePage": "从此页面选择 ({count} / {total})",
+      "selectionScopeFiltered": "在当前搜索结果中选择",
       "searchPlaceholder": "搜索单词或释义…",
       "wordCount": "{count}",
       "loading": "正在加载词汇…",
@@ -509,13 +510,23 @@
       "emptyOther": "所有单词都已带有此标签。",
       "emptyOtherSearch": "没有可添加的匹配单词。",
       "selected": "已选 {count} 项",
-      "addToTag": "添加到标签",
-      "removeFromTag": "从标签移除",
-      "applyAdd": "添加到标签（{count}）",
-      "applyRemove": "从标签移除（{count}）",
+      "addToTag": "添加标签",
+      "removeFromTag": "移除标签",
+      "applyAdd": "添加标签 ({count})",
+      "applyRemove": "移除标签 ({count})",
       "added": "已将 {count} 个单词添加到 {tag}",
       "removed": "已从 {tag} 移除 {count} 个单词",
-      "error": "无法更新标签成员"
+      "error": "无法更新标签成员",
+      "systemsLabel": "标签系统",
+      "standardSystemTitle": "标准",
+      "standardSystemMeta": "主题和用法，单独显示",
+      "usageOptional": "可选",
+      "customSystemTitle": "自定义",
+      "customSystemMeta": "{count, plural, one {# 标签} other {# 标签}}",
+      "customPickerLabel": "选择自定义标签",
+      "customPickerPlaceholder": "选择自定义标签…",
+      "customSearchPlaceholder": "搜索自定义标签…",
+      "pickTagFirst": "请先选择上面的标签以管理单词成员资格。"
     },
     "moreTags": "+{count}",
     "updatedAgo": "更新于 {time}",
@@ -584,7 +595,11 @@
         "notes": "备注",
         "updated": "最近更新"
       }
-    }
+    },
+    "selectedCustomTags": "已选择标签",
+    "selectedSynonyms": "已选择同义词",
+    "removeCustomTag": "移除 {name}",
+    "pickerLoading": "加载中…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "练习已就绪",
       "aiUnavailable": "暂时无法生成 AI 问题。",
       "aiForbidden": "AI 理论练习适用于 Pro。",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Premium用户可获取额外说明。",
       "aiDisabled": "设置中已关闭 AI 辅助。",
       "feedback": {
         "correct": "正确！",
@@ -927,20 +942,22 @@
         "why": "原因",
         "complete": "已理解",
         "completeHint": "准备好就可以继续。",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "开始练习",
+        "skipReviewAndStart": "跳过复习并开始练习"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "未归档",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# 条目} other {# 条目}}",
+        "selectAll": "全选",
+        "selectGroup": "选择{name}中的笔记",
+        "expand": "展开{name}",
+        "collapse": "折叠{name}",
+        "selectedCount": "{count, plural, one {# 个理论已选} other {# 个理论已选}}",
+        "practiceSelected": "练习所选",
+        "clearSelection": "清除选择",
+        "subfolders": "{count, plural, one {# 个子文件夹} other {# 个子文件夹}}",
+        "selectedOne": "已选择 1 个理论"
       }
     },
     "types": {
@@ -948,32 +965,32 @@
         "label": "闪卡",
         "description": "翻卡学习单词与释义，并用间隔重复评分。",
         "preview": "翻转 · 评分 · 复习",
-        "previewHint": "Finnish word",
+        "previewHint": "芬兰语单词",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "翻转 → 评分 → 复习"
       },
       "fill-in-blank": {
         "label": "填空",
         "description": "在例句中填入缺失的词汇。",
-        "preview": "Minulla on uusi ______."
+        "preview": "Minulla on uusi ______。"
       },
       "multiple-choice": {
         "label": "选择题",
         "description": "选择正确的释义或单词——干扰项来自你的词汇。",
         "preview": "哪个释义合适？",
         "previewPrompt": "哪个释义合适？",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "芬兰人",
+        "previewB": "天气",
+        "previewC": "建筑"
       },
       "match-pairs": {
         "label": "配对",
         "description": "在类似 Quizlet 的网格中将每个词与释义配对。",
         "preview": "单词 ↔ 释义",
         "previewLeft": "talo",
-        "previewRight": "house",
+        "previewRight": "房子",
         "previewLeftB": "koti",
-        "previewRightB": "home"
+        "previewRightB": "家"
       },
       "type-answer": {
         "label": "输入答案",
@@ -998,8 +1015,8 @@
       "startsWith": "以「{letter}」开头",
       "revealPrompt": "还是卡住了？可以显示完整答案。",
       "revealAnswer": "显示答案",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "下一个提示",
+      "hintProgress": "提示 {current} / {total}"
     },
     "empty": {
       "noWordsTitle": "还没有词汇",
@@ -1032,17 +1049,17 @@
       "shuffle": "打乱",
       "finish": "结束本轮",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "问题来源",
+        "chooseAi": "使用 AI 生成",
+        "emptyTitle": "没有可用的保存示例",
+        "emptyDescription": "添加清楚包含每个单词的示例句子，调整您的过滤器，或切换到 AI 生成。",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "保存的示例",
+          "description": "立即从您的词汇示例中构建问题。无需等待 AI。"
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI 生成",
+          "description": "使用 AI 从您的词汇创建新句子。"
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "AI 练习生成适用于 Pro。",
       "disabled": "设置中已关闭 AI 辅助。",
       "upgradeHint": "免费版每天包含几次 AI 练习生成。Pro 取消上限。",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "额外说明",
+      "additionalInstructionsPlaceholder": "例如：使用餐厅场景，保持语言在A2水平，并用您的界面语言解释错误。",
+      "additionalInstructionsLocked": "升级到Premium以自定义支持的练习类型，设置真实场景，并添加您自己的说明。",
+      "premiumRequired": "Premium用户可获取额外说明。",
+      "presetLabel": "预设",
+      "presetNone": "未选择预设",
+      "presetApply": "应用",
+      "presetSave": "保存预设",
+      "presetName": "预设名称",
+      "presetDelete": "删除",
+      "presetSaved": "预设已保存",
+      "presetDeleted": "预设已删除",
+      "presetSaveFailed": "无法保存该预设。",
       "emptyWords": "生成问题前请先添加词汇。",
       "noneValid": "AI 无法为这些词创建有效问题。请重试。",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "自定义练习的上下文、风格或重点。留空以使用默认设置。",
+      "presetUpdate": "更新预设",
+      "presetUpdated": "预设已更新",
+      "presetsTitle": "已保存的预设",
+      "presetsHelper": "预设存储练习设置和额外说明。它们不会更改您选择的词汇或理论。",
+      "presetsEmpty": "尚无保存的预设。保存您当前的设置以便以后重用。",
+      "presetSaveAs": "另存为预设",
+      "presetUpdateCurrent": "使用当前设置更新",
+      "presetRename": "重命名",
+      "presetManage": "管理预设",
+      "presetRenamed": "预设已重命名",
+      "presetSaveDialogTitle": "另存为预设",
+      "presetSaveDialogDescription": "为此预设命名，以重用当前练习设置和额外说明。所选的词汇或理论不会被存储。",
+      "presetRenameDialogTitle": "重命名预设",
+      "presetRenameDialogDescription": "为此预设选择一个新名称。",
+      "presetDeleteDialogTitle": "删除预设？",
+      "presetDeleteDialogDescription": "删除“{name}”？您当前的练习配置保持不变。"
     },
     "session": {
       "complete": "本轮完成",
@@ -1099,14 +1116,14 @@
       "tryAgain": "再试一次",
       "questionsLabel": "题目",
       "correctLabel": "正确",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "不正确",
+      "unansweredLabel": "未回答",
       "reviewLabel": "待复习",
       "answeredProgress": "已答 {answered} / {total}",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "检查答案",
+      "nextQuestion": "下一个",
+      "viewResults": "查看结果",
       "submitSet": "提交答案",
       "submitting": "正在检查…",
       "unansweredWarnTitle": "未答题",
@@ -1121,54 +1138,54 @@
       "unanswered": "未作答",
       "yourAnswer": "你的答案",
       "correctAnswer": "正确答案",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "当前过滤器下仅有 {count} 个问题可用。",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "您如何练习",
+        "lockedHint": "完成或开始新的一组以更改此设置。",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "逐个",
+          "description": "一次查看一个问题。每个答案后检查以获得即时反馈。"
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "所有问题",
+          "description": "查看完整集合，按任意顺序回答，然后一次提交以获得反馈。"
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "复习",
+        "allCorrect": "完美 — 每个问题都正确。",
+        "summary": "{incorrect} 个不正确 · {unanswered} 个未回答 · {needsReview} 个待复习",
+        "viewWrong": "查看错误答案",
+        "filtersLabel": "过滤问题",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "所有 ({count})",
+          "needs_review": "错误和未回答 ({count})",
+          "correct": "正确 ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "上一个",
+        "nextWrong": "下一个",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} 个待复习",
+        "floatLabel": "错误答案导航",
+        "closeFloat": "显示所有答案"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% 正确",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "完美的结果",
+          "body": "每个答案都正确。这样的专注值得再来一轮，准备好再来。"
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "强劲的结束",
+          "body": "您显然掌握了 — 浏览一下错误，然后用新一组巩固。"
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "干得不错 — 继续努力",
+          "body": "一些卡住的点是正常的。复习一次，然后在它们新鲜时再试一次。"
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "快到了",
+          "body": "先完成未回答的问题 — 然后分数会更清晰。"
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "问题以 {language}（工作区语言）生成。",
       "contextualEmptyTitle": "生成情境题",
-      "contextualEmptyDescription": "根据你的词汇创建填空式选择题。",
+      "contextualEmptyDescription": "如果需要，可以在下面添加可选说明，然后按生成。您可以将提示留空。",
       "contextualProDescription": "情境 AI 问题适用于 Pro。",
       "unlockContextual": "用 Pro 解锁",
       "correct": "正确！",
@@ -1202,8 +1219,8 @@
       "hint": "先选一个词，再点对应释义",
       "complete": "全部配对完成——太棒了！",
       "shuffle": "打乱列",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} 对",
+      "continueRound": "继续"
     },
     "typeAnswer": {
       "questionWord": "这个词是什么意思？",
@@ -1213,7 +1230,7 @@
         "contextual": "情境"
       },
       "contextualEmptyTitle": "生成情境题",
-      "contextualEmptyDescription": "根据你的词汇创建填空式输入题。",
+      "contextualEmptyDescription": "如果需要，可以在下面添加可选说明，然后按生成。您可以将提示留空。",
       "contextualProDescription": "情境 AI 问题适用于 Pro。",
       "unlockContextual": "用 Pro 解锁",
       "placeholder": "输入你的答案…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "写作",
         "description": "可反复阅读和导出的富文本文档与题集。",
-        "how": "开始起草，用文件夹整理，并用 Pro 的 AI 检查或改进文本。",
+        "how": "开始草稿，使用文件夹组织，并利用您计划中的 AI 配额检查或改进您的文本。",
         "cta": "打开写作"
       },
       "listening": {
         "title": "听力",
         "description": "把真实音频或视频变成一课。",
-        "how": "免费版可上传片段并生成转录。生成听力练习属于 Pro。",
+        "how": "上传剪辑，生成转录，并利用您计划中的 AI 配额构建听力练习。",
         "cta": "打开听力"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "部分工作区在同一语言下已存在。其内容将加入现有工作区，而不会创建重复项。",
         "empty_backup": "此备份不包含任何可导入的学习数据。",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "一些现有项目共享相同的名称。导入将确定性地重用其中一个，并保持其他不变。"
       },
       "cancel": "取消",
       "confirm": "导入学习数据",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "该备份太大，无法通过此页面处理。请尝试更小的导出或联系支持。",
         "notConfigured": "备份导入的文件存储尚未配置。"
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "已在您的账户中",
+      "skippedInAccountHint": "这些名称与您已有的项目匹配。它们将不会再次导入。相同工作区下的新项目仍会导入。",
+      "skippedInBackupTitle": "备份中重复的名称",
+      "skippedInBackupHint": "该文件中列出了相同的名称多次。每个名称的第一个副本将被导入——即使在空账户中也是正常的。",
+      "skippedOtherTitle": "无法导入"
     },
     "danger": {
       "title": "关闭账户",
@@ -3184,7 +3201,7 @@
       "warningTitle": "继续之前",
       "warnings": {
         "workspaces": "每个工作区以及全部词汇、理论、写作、听力与口语数据都将被删除。",
-        "billing": "任何有效的 Notoria Pro 订阅将立即取消。",
+        "billing": "任何活动的 Notoria Pro 或 Premium 订阅将立即取消。",
         "media": "已上传的媒体与头像将被移除。",
         "permanent": "确认后没有恢复期。"
       },
@@ -3233,8 +3250,8 @@
     "upgrade": "升级到 Pro",
     "manage": "管理订阅",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "免费",
+    "premiumBadge": "高级",
     "renewsOn": "续订日期：{date}",
     "status": "状态：{status}",
     "monthlyPrice": "{price} / 月",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "个人学习路径",
       "personalizedRecommendations": "个性化建议",
       "crossModuleIntelligence": "跨模块个性化",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "自定义练习说明"
     },
     "compare": {
       "heading": "对比方案",
@@ -3458,9 +3475,9 @@
       "feature": "功能",
       "current": "当前",
       "capability": "你获得什么",
-      "free": "Free",
+      "free": "免费",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "高级",
       "freeIncludes": "Free 已包含",
       "proUnlocks": "Pro 增加",
       "premiumAdds": "Premium 增加",
@@ -3552,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "高级",
     "title": "学习",
     "highlight": "教练",
     "description": "个性化展示你的学习方式，以及接下来该关注什么。",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "隐私政策",
     "termsTitle": "使用条款",
     "privacyDescription": "Notoria 如何为其私人语言学习工作区收集、使用与删除个人数据及学习内容。",
-    "termsDescription": "使用 Notoria 私人语言学习工作区、账户、AI 功能以及 Notoria Pro 账单的相关条款。",
+    "termsDescription": "使用 Notoria 的私人语言学习工作区、账户、AI 功能以及 Pro 或 Premium 计费的条款。",
     "updated": "最近更新：{date}",
-    "updatedDate": "2026 年 9 月 23 日",
+    "updatedDate": "2026年10月27日",
     "backToSignIn": "返回登录",
     "backHome": "返回 Notoria",
     "authFooter": "隐私 · 条款",
@@ -4071,7 +4088,7 @@
         "purposes": "我们为何处理数据",
         "auth": "账户与登录",
         "ai": "AI 功能",
-        "payments": "付款（Notoria Pro）",
+        "payments": "付款（Pro 和 Premium）",
         "processors": "服务提供商",
         "cookies": "Cookie 与设备存储",
         "transfers": "国际传输",
@@ -4095,7 +4112,7 @@
           "list": [
             "创建或使用账户",
             "在私人工作区中保存材料",
-            "订阅 Notoria Pro",
+            "订阅 Notoria Pro 或 Premium",
             "使用可选的 AI 辅助工具",
             "上传用于听力或个人资料的媒体",
             "使用口语练习",
@@ -4156,7 +4173,7 @@
               "basis": "合同（第 6(1)(b) 条）"
             },
             {
-              "purpose": "通过 Stripe 运行 Notoria Pro 账单与订阅状态",
+              "purpose": "通过 Stripe 运行 Notoria Pro 和 Premium 的计费和订阅状态",
               "basis": "合同（第 6(1)(b) 条）"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "当前代码库除 OpenAI 外不使用其他大型语言模型提供商。OpenAI 作为这些功能的处理者，依据其自身条款与隐私政策处理数据。"
         },
         "payments": {
-          "title": "7. 付款（Notoria Pro）",
+          "title": "7. 付款（Pro 和 Premium）",
           "p1": "付费订阅由 <strong>Stripe</strong> 处理。结账、发票、付款方式与取消通过 Stripe Checkout 与 Stripe 客户门户进行。Stripe webhook 会更新你在 Notoria 中的方案与状态。",
           "p2": "Stripe 作为付款提供商处理付款数据。有关卡片处理，请参阅 Stripe 自身的隐私文档。"
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro 结账、门户与订阅状态"
+              "role": "Notoria Pro 和 Premium 的结账、门户和订阅状态"
             },
             {
               "provider": "Google",
@@ -4256,7 +4273,7 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
+              "cookie": "Auth.js 会话 Cookie",
               "purpose": "保持你的登录状态（JWT 会话；库默认命名）",
               "code": false
             },
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "本使用条款说明使用位于 <site>www.notoria.fi</site> 的 Notoria 的规则。它们描述了产品当前的运作方式：私人学习工作区、通过 Stripe 的可选 Notoria Pro 账单，以及 AI 辅助功能。它们不能替代律师就你具体情况提供的建议。",
+      "intro": "这些使用条款解释了在 <site>www.notoria.fi</site> 使用 Notoria 的规则。它们描述了产品当前的工作方式：私人学习工作区、通过 Stripe 的可选 Pro 和 Premium 计费，以及 AI 辅助功能。它们不能替代律师关于您具体情况的建议。",
       "tocTitle": "本页内容",
       "tocAria": "本页内容",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "可接受使用",
         "ip": "知识产权",
         "ai": "AI 生成输出",
-        "plans": "Free 方案与 Notoria Pro",
+        "plans": "免费、Pro 和 Premium 计划",
         "billing": "订阅与账单",
         "refunds": "退款与消费者权利",
         "availability": "可用性",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. 服务",
           "p1": "Notoria 是一款私人语言学习网页应用。你可以创建工作区，并保存如词汇、理论笔记、写作、练习、听力课程与口语会话等学习材料。",
-          "p2": "部分功能在 Free 方案中可用。Notoria Pro 解锁产品中以及你的 <account>账户</account> 页面所示的额外能力——包括听力、口语、某些 AI 学习工具、练习导入，以及付费文档导出格式。功能可用性可能随产品演进而变化。",
+          "p2": "核心学习领域，包括听力、口语和阅读，在每个计划中均可用。Pro 和 Premium 增加更高的 AI 配额和学习材料的导入/导出；Premium 还增加个性化辅导和练习功能。当前比较显示在您的 <account>账户</account> 页面上。功能可用性可能会随着产品的发展而变化。",
           "p3": "Notoria 用于个人语言学习。它不是学校、考试机构或专业咨询服务。"
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. AI 生成输出",
           "p1": "部分功能可以基于你的材料进行检查、建议、生成、转录、总结或辅导。输出可能不完整、不正确，或不适合你的目标。你仍有责任在依赖 AI 结果用于学习、考试、专业用途或发布之前进行审核。",
           "p2": "若在 <settings>设置</settings> 中关闭了辅助、你的方案不包含特定工具，或提供商暂时无法访问，则 AI 功能可能不可用。",
-          "p3": "并非所有 AI 助手都需要 Notoria Pro。产品会显示哪些工具免费、哪些需要 Pro。"
+          "p3": "AI 的可用性和每日配额在免费、Pro 和 Premium 之间有所不同。产品显示每个工具所需的计划和配额。"
         },
         "plans": {
-          "title": "8. Free 方案与 Notoria Pro",
+          "title": "8. 免费、Pro 和 Premium 计划",
           "p1": "Free 方案覆盖产品中所示的、基于你自己词汇及相关学习工具的核心练习。",
-          "p2": "Notoria Pro 是付费订阅，可解锁额外功能。在当前产品中，这通常包括听力、口语、练习导入、造句练习、许多 AI 辅助学习工具，以及 PDF/DOCX 文档导出。某些较轻量的 AI 助手（例如某些词汇或编辑器格式辅助）在启用 AI 辅助时，可能仍在 Free 方案中可用。",
-          "p3": "Pro 访问权限与你的用户账户绑定，因此适用于该账户下的各工作区。具有管理员角色的账户可能无需个人 Stripe 订阅即可获得 Pro 级别访问。",
-          "p4": "适用于你购买的价格，是当前 Pro 方案在 Stripe Checkout 显示的价格。产品中其他位置显示的任何价格（例如账户页）仅供参考，且必须与有效的 Stripe 价格配置一致。"
+          "p2": "Pro 和 Premium 是付费订阅。Pro 增加许多 AI 工具的更高或无限配额，并增加学习材料的导入和 PDF/DOCX 导出。Premium 包括 Pro，并增加个性化功能，如学习教练、个人学习档案、自适应练习、基于错误的练习和自定义练习说明。账户页面显示当前比较和限制。",
+          "p3": "付费访问与您的用户账户相关，并适用于其工作区。具有管理员角色的账户可能在没有个人 Stripe 订阅的情况下拥有付费级别的访问权限。",
+          "p4": "适用的价格是所选 Pro 或 Premium 计划在 Stripe 结账时显示的价格。产品中其他地方显示的任何价格（例如在账户上）仅供参考，必须与活动的 Stripe 价格配置相匹配。"
         },
         "billing": {
           "title": "9. 订阅、账单与取消",
-          "list0": "Pro 订阅通过 <strong>Stripe</strong> 计费",
-          "list1": "你可以从 <account>账户</account> 或应用中锁定的 Pro 控件开始结账",
+          "list0": "Pro 和 Premium 订阅通过 <strong>Stripe</strong> 计费",
+          "list1": "您可以从 <account>账户</account> 或应用中的锁定付费控件开始结账或更改计划",
           "list2": "从账户页，你可以打开 Stripe 客户门户以查看发票、更新付款方式并取消订阅",
           "list3": "取消遵循 Stripe 客户门户对你订阅的行为",
-          "p1": "取消后，仅在你的 Stripe 订阅状态仍在产品中授予 Pro 时，Pro 访问才会继续。在当前实现中，被视为 Pro 的状态包括 <code>active</code>、<code>trialing</code> 与 <code>past_due</code>。当状态不再符合条件时，账户将回到 Free 方案。",
-          "p2": "若付款失败，Stripe 可能将订阅移至 <code>past_due</code> 或其他状态。Notoria 通过 Stripe webhook 同步该状态。在状态保持为 <code>past_due</code> 期间，按当前访问规则 Pro 功能仍可用；若订阅随后变为已取消或其他不合格状态，Pro 访问将结束。",
+          "p1": "在您取消续订后，您的当前 Pro 或 Premium 访问权限将在 Stripe 订阅状态仍符合产品要求时继续。符合的状态目前包括 <code>active</code>、<code>trialing</code> 和 <code>past_due</code>。当状态不再符合时，账户将恢复为免费。",
+          "p2": "如果付款失败，Stripe 可能会将订阅状态更改为 <code>past_due</code> 或其他状态。Notoria 从 Stripe webhook 同步该状态。在其保持 <code>past_due</code> 时，当前的付费计划在现行访问规则下保持可用；如果稍后变为取消或其他不合格状态，则付费访问结束。",
           "p3": "删除你的 Notoria 账户会作为账户删除的一部分立即取消 Stripe 订阅（尽力而为）。这不同于通过客户门户取消续订同时保留账户。"
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. 免责声明与责任",
           "p1": "Notoria 以「按可用性提供」的方式用于个人语言学习。在适用法律允许的最大范围内，我们排除法律未要求的保证。",
-          "p2": "在适用法律允许的最大范围内，Notoria 不对因使用服务或依赖 AI 输出而产生的间接、附带、特殊、后果性损害或数据丢失承担责任。在责任无法排除时，责任限于索赔前三个月内你为 Notoria Pro 支付的金额，或强制性法律要求的任何更高金额。",
+          "p2": "在适用法律允许的最大范围内，Notoria 对因您使用服务或依赖 AI 输出而产生的间接、附带、特殊、后果性或数据丢失损害不承担责任。在无法排除责任的情况下，责任限于您在索赔前的三个月内为 Notoria Pro 或 Premium 支付的金额，或法律强制要求的任何更大金额。",
           "p3": "这些限制不排除芬兰或欧盟法律不允许限制的责任——包括对消费者不可放弃的责任，以及在相关规则适用时因过失造成死亡或人身伤害的责任。"
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "建立带有释义、例句与标签的个人词库",
           "practice": "用源自你自己单词与笔记的练习进行训练",
           "create": "撰写可日后重温的理论笔记与写作内容",
-          "listenSpeak": "将媒体转化为听力练习，并在 Pro 下与 AI 辅导对话"
+          "listenSpeak": "将媒体转化为听力练习，并利用 AI 配额进行转录和口语练习"
         },
-        "note": "部分 AI、听力、口语与导出工具属于 Notoria Pro。Free 方案仍覆盖日常词汇练习与核心学习循环。"
+        "note": "核心学习领域在每个计划中均可用。Pro 提高 AI 配额并增加学习材料的导入/导出；Premium 增加个性化辅导和练习。"
       },
       "ai": {
         "title": "AI，在它有帮助的地方",
@@ -4656,7 +4673,7 @@
         "title": "各区域如何连接",
         "p1": "速记是快速入口。词汇与理论是材料落定之处。练习把这些材料转化为训练。写作、听力与口语帮助你更主动地使用语言。",
         "p2": "你不必按顺序走完每个区域。许多人会先在单词与短练习上停留一段时间。",
-        "p3": "自然的下一步是：当你想按自己的方式产出语言时写作，当你想让同一批材料进入耳朵与声音时听与说——听力与口语属于 Notoria Pro。",
+        "p3": "当您想以自己的方式生成语言时，写作是一个自然的下一步，然后是听力和口语，当您希望相同的材料在耳中和声音中工作时。这些领域在每个计划中均可用；AI 使用限制因计划而异。",
         "beat": "先收集与理解。当材料准备好离开纸面时，再使用与说。"
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "听力",
-          "body": "在工作区中将媒体转化为听力练习。适用于 Notoria Pro。"
+          "body": "在您的工作区中将媒体转化为听力练习。每个计划均可用；AI 转录配额因计划而异。"
         },
         "speaking": {
           "label": "口语",
-          "body": "与 AI 辅导进行实时练习，扎根于你正在学习的语言。适用于 Notoria Pro。"
+          "body": "与 AI 导师进行实时练习，基于您正在学习的语言。每个计划均可用，具有基于计划的每日配额。"
         },
         "reading": {
           "label": "阅读",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "我如何更改密码或关闭账户？",
-          "a": "打开 <account>账户</account>。若你使用邮箱登录，可在此更新密码、管理 Notoria Pro、导出备份，或永久删除账户。"
+          "a": "打开 <account>账户</account>。如果您使用电子邮件登录，可以在此更新密码，管理 Pro 或 Premium，导出备份或永久删除您的账户。删除账户也会立即取消任何活动的 Stripe 订阅，尽力而为；仅取消续订则保留账户及其数据。"
         },
         "pro": {
           "q": "账单与取消如何运作？",
-          "a": "Notoria Pro 通过 Stripe 计费。从 <account>账户</account> 你可以升级、打开 Stripe 客户门户以管理付款方式与发票，或取消续订。"
+          "a": "Notoria Pro 和 Premium 通过 Stripe 计费。从 <account>账户</account> 您可以订阅、在 Pro 和 Premium 之间切换、管理支付方式和发票、取消续订或恢复计划中的取消。取消续订保持访问权限，直到 Stripe 结束符合条件的订阅期；删除您的账户是单独的，并立即在尽力而为的基础上取消订阅。"
         },
         "proFeatures": {
-          "q": "哪些免费，哪些需要 Notoria Pro？",
-          "a": "日常词汇练习及相关学习工具可在 Free 方案使用。部分 AI 工具、听力、口语与文档导出功能属于 Notoria Pro。可从 <account>账户</account> 对比并升级。"
+          "q": "免费、Pro 和 Premium 包含什么？",
+          "a": "免费包括核心学习领域和支持的 AI 工具的每日配额。Pro 提高或移除许多 AI 限制，并增加学习材料的导入以及 PDF/DOCX 导出。Premium 包括 Pro，并增加个性化辅导、学习档案、自适应和基于错误的练习以及自定义练习说明。在 <account>账户</account> 中查看实时比较和当前限制。"
         },
         "learning": {
           "q": "Notoria 的学习功能如何运作？",
@@ -5050,8 +5067,8 @@
         "created": "注册时间",
         "updated": "更新时间",
         "emailVerified": "邮箱已验证",
-        "email": "Email",
-        "password": "Password"
+        "email": "电子邮件",
+        "password": "密码"
       },
       "detail": {
         "account": "账户",
@@ -5060,7 +5077,7 @@
         "actions": "账户操作",
         "workspaces": "工作区",
         "workspacesLede": "此用户拥有的语言工作区。",
-        "danger": "Danger zone"
+        "danger": "危险区域"
       },
       "actions": {
         "saveProfile": "保存姓名",
@@ -5071,7 +5088,7 @@
         "delete": "删除账户",
         "grantTester": "授予测试员角色",
         "revokeTester": "撤销测试员角色",
-        "create": "Create user"
+        "create": "创建用户"
       },
       "confirm": {
         "grantAdmin": "要向此账户授予管理员权限吗？",
@@ -5089,13 +5106,13 @@
         "admin": "管理员"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "创建用户",
+        "lede": "使用电子邮件和密码创建一个账户。他们可以立即登录。"
       },
       "plans": {
-        "free": "Free",
+        "free": "免费",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "高级"
       }
     },
     "workspaces": {
@@ -5118,7 +5135,7 @@
         "owner": "所有者",
         "created": "创建时间",
         "updated": "更新时间",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "所有者电子邮件",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "要通过数据库级联删除此工作区及其全部学习内容吗？"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "创建工作区",
+        "lede": "通过电子邮件将新的语言工作区附加到现有账户。"
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "工作区",
         "created": "创建时间",
         "updated": "更新时间",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "标题",
+        "word": "单词",
+        "folderName": "文件夹名称"
       },
       "detail": {
         "description": "元数据检查。私有正文不会自动加载。",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "删除记录",
-        "saveTitle": "Save title"
+        "saveTitle": "保存标题"
       },
       "confirm": {
         "delete": "要删除此记录吗？相关子行将遵循数据库级联 / 置空规则。"
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "捕获项目存储自由格式文本。此处不支持标题编辑——如果记录应被删除，请删除。"
     },
     "jobs": {
       "title": "任务",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "无效的语言代码。",
       "CONTENT_NOT_FOUND": "找不到记录。",
       "INVALID_CONTENT_MODULE": "未知的内容模块。",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "该电子邮件已被注册。",
+      "PASSWORD_TOO_WEAK": "密码不符合强度要求。",
+      "CONTENT_TITLE_UNSUPPORTED": "此内容类型不支持标题编辑。"
     }
   }
 }

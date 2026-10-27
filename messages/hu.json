@@ -17,19 +17,20 @@
     "hideFilters": "Szűrők elrejtése",
     "remove": "Eltávolítás",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Megjelenés",
+      "print": "Nyomtatásbarát",
+      "printHint": "Fehér háttér, sötét szöveg",
+      "theme": "Aktuális téma",
+      "themeHint": "Illeszkedik a világos vagy sötét témádhoz",
+      "previewKicker": "Minta oldal",
+      "previewTitle": "Dokumentum címe",
+      "previewBody": "A törzsszöveg a kiválasztott színeket és térközöket használja.",
+      "previewCallout": "A kiemelések és hangsúlyok a modul színét követik.",
+      "fixedNote": "A megjelenés rögzített az exportált fájlban. Exportálj újra a megváltoztatásához.",
+      "docxBackgroundNote": "A Word és más alkalmazások nem biztos, hogy ugyanúgy jelenítik meg az oldal háttérét, különösen nyomtatáskor."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Ugrás a tetejére",
+    "moreActions": "További műveletek"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "Ez a mappa túl mélyen van beágyazva",
     "notFound": "A mappa nem található",
     "nameTaken": "Ezt a nevet már egy mappa vagy írás használja",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Mozdítsd egy mappába",
+    "dragTipBody": "Számítógépen egérrel vagy érintőpadon húzd a darabot egy mappa kártyára a mozgatáshoz. Az egyes elemeknél a mozgás ikont is használhatod.",
+    "dragTipDismiss": "Tipp elvetése",
+    "dragTipShow": "Hogyan lehet mappákba mozgatni",
+    "dragTipDemo": "Húzd az elemet a mappára",
+    "dragTipCard": "Elem"
   },
   "theme": {
     "toggle": "Téma váltása",
@@ -472,34 +473,34 @@
     "viewMode": "Megjelenítési mód",
     "tagManager": {
       "open": "Címkék kezelése",
-      "eyebrow": "Tags",
+      "eyebrow": "Címkék",
       "title": "Címkekezelő",
-      "description": "Válasszon egy címkét, majd rendelje hozzá vagy távolítsa el a szavakról. A hozzárendelt és a többi szó külön listában marad.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Válassz egy címkét, majd rendeld hozzá vagy távolítsd el szavaktól.",
+      "pageDescription": "Válassz Standard vagy Egyedi, válassz egy címkét, majd add hozzá vagy távolítsd el szavaktól.",
+      "disabledNoWorkspace": "Hozz létre egy munkaterületet a szókincs címkék kezeléséhez.",
+      "backToVocabulary": "Vissza a szókincshez",
+      "backToSettings": "Vissza a beállításokhoz",
       "groupsLabel": "Standard címkecsoportok",
       "tagsHeading": "Címkék",
       "standardTagsHeading": "Standard címkék",
       "customTagsHeading": "Egyéni címkék",
-      "customTagsHint": "Az Ön által létrehozott címkék a saját rendszerezéshez — nem szófajok.",
+      "customTagsHint": "A munkaterületen létrehozott címkék — keresd meg őket, ha a lista hosszú.",
       "emptyCustomTags": "Még nincs egyéni címke. Szó szerkesztésekor hozhatja létre őket.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nincs olyan egyedi címke, ami megfelelne ennek a keresésnek.",
+      "tagSearchPlaceholder": "Címkék keresése…",
       "wordsHeading": "{tag}",
-      "kindStandard": "Standard",
+      "kindStandard": "Szabványos",
       "kindCustom": "Egyéni",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Szólisták",
+      "wordTabAssigned": "Címkézett",
+      "wordTabOther": "Címkétlen",
       "assignedHeading": "Szavak ezzel a címkével",
       "otherHeading": "Egyéb szavak",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Összes kiválasztása ezen az oldalon",
+      "clearSelection": "Kiválasztás törlése",
+      "selectionScopePage": "Kiválasztás ezen az oldalon ({count} a {total}-ból)",
+      "selectionScopeFiltered": "Kiválasztás a jelenlegi keresési eredmények között",
       "searchPlaceholder": "Szavak vagy jelentések keresése…",
       "wordCount": "{count}",
       "loading": "Szókincs betöltése…",
@@ -509,13 +510,23 @@
       "emptyOther": "Minden szó már rendelkezik ezzel a címkével.",
       "emptyOtherSearch": "Nincs hozzárendelhető egyező szó.",
       "selected": "{count} kijelölve",
-      "addToTag": "Hozzáadás a címkéhez",
-      "removeFromTag": "Eltávolítás a címkéről",
-      "applyAdd": "Hozzáadás a címkéhez ({count})",
-      "applyRemove": "Eltávolítás a címkéről ({count})",
+      "addToTag": "Címke hozzáadása",
+      "removeFromTag": "Címke eltávolítása",
+      "applyAdd": "Címke hozzáadása ({count})",
+      "applyRemove": "Címke eltávolítása ({count})",
       "added": "{count} szó hozzáadva ide: {tag}",
       "removed": "{count} szó eltávolítva innen: {tag}",
-      "error": "Nem sikerült frissíteni a címketagságot"
+      "error": "Nem sikerült frissíteni a címketagságot",
+      "systemsLabel": "Címke rendszerek",
+      "standardSystemTitle": "Szabványos",
+      "standardSystemMeta": "Téma és használat, külön megjelenítve",
+      "usageOptional": "Opcionális",
+      "customSystemTitle": "Egyedi",
+      "customSystemMeta": "{count, plural, one {# címke} other {# címke}}",
+      "customPickerLabel": "Válassz egyedi címkét",
+      "customPickerPlaceholder": "Válassz egy egyedi címkét…",
+      "customSearchPlaceholder": "Keresés egyedi címkék között…",
+      "pickTagFirst": "Válassz egy címkét fent a szavak tagságának kezeléséhez."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Frissítve: {time}",
@@ -584,7 +595,11 @@
         "notes": "Jegyzetek",
         "updated": "Utolsó frissítés"
       }
-    }
+    },
+    "selectedCustomTags": "Kiválasztott címkék",
+    "selectedSynonyms": "Kiválasztott szinonimák",
+    "removeCustomTag": "{name} eltávolítása",
+    "pickerLoading": "Betöltés…"
   },
   "tags": {
     "groups": {
@@ -685,7 +700,7 @@
       "heading": "Forrás",
       "vocabulary": "Szókincs",
       "theory": "Elmélet",
-      "import": "Import",
+      "import": "Importálás",
       "imported": "Importálva",
       "lastUsed": "Utoljára használva",
       "selected": "Kiválasztva",
@@ -873,7 +888,7 @@
       "aiReady": "A gyakorlat kész",
       "aiUnavailable": "Jelenleg nem sikerült AI kérdéseket generálni.",
       "aiForbidden": "Az AI elméleti gyakorlatok a Pro csomaggal érhetők el.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "További utasítások elérhetők a Prémiumon.",
       "aiDisabled": "Az AI segítség ki van kapcsolva a Beállításokban.",
       "feedback": {
         "correct": "Helyes!",
@@ -927,20 +942,22 @@
         "why": "Miért",
         "complete": "Értem",
         "completeHint": "Akkor léphet tovább, amikor készen áll.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Gyakorlat indítása",
+        "skipReviewAndStart": "Átugrás a felülvizsgálaton és a gyakorlat indítása"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Nincs mappába sorolva",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# jegyzet} other {# jegyzet}}",
+        "selectAll": "Összes kiválasztása",
+        "selectGroup": "Jegyzetek kiválasztása itt: {name}",
+        "expand": "{name} kibővítése",
+        "collapse": "{name} összecsukása",
+        "selectedCount": "{count, plural, one {# elmélet kiválasztva} other {# elmélet kiválasztva}}",
+        "practiceSelected": "Kiválasztott gyakorlat",
+        "clearSelection": "Kiválasztás törlése",
+        "subfolders": "{count, plural, one {# almappa} other {# almappa}}",
+        "selectedOne": "1 elmélet kiválasztva"
       }
     },
     "types": {
@@ -998,8 +1015,8 @@
       "startsWith": "„{letter}” betűvel kezdődik",
       "revealPrompt": "Még mindig elakadt? Felfedheti a teljes választ.",
       "revealAnswer": "Válasz felfedése",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Következő tipp",
+      "hintProgress": "Tipp {current} a {total}-ból"
     },
     "empty": {
       "noWordsTitle": "Még nincs szókincs",
@@ -1032,17 +1049,17 @@
       "shuffle": "Keverés",
       "finish": "Kör befejezése",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Kérdés forrása",
+        "chooseAi": "AI által generált használata",
+        "emptyTitle": "Nincsenek felhasználható mentett példák",
+        "emptyDescription": "Adj hozzá példamondatokat, amelyek világosan tartalmazzák az egyes szavakat, állítsd be a szűrőidet, vagy válts AI által generáltra.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Mentett példák",
+          "description": "Kérdéseket építhetsz azonnal a szókincs példáidból. Nincs AI várakozás."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI által generált",
+          "description": "Friss mondatokat készíthetsz a szókincsedből AI segítségével."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "Az AI gyakorlatgenerálás a Pro csomaggal érhető el.",
       "disabled": "Az AI segítség ki van kapcsolva a Beállításokban.",
       "upgradeHint": "Az Ingyenes csomag naponta néhány AI gyakorlatgenerálást tartalmaz. A Pro eltávolítja a korlátot.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "További utasítások",
+      "additionalInstructionsPlaceholder": "Például: Használj étterem helyzeteket, tartsd a nyelvet A2 szinten, és magyarázd el a hibákat az interfész nyelvén.",
+      "additionalInstructionsLocked": "Frissíts Prémiumra a támogatott gyakorlat típusok testreszabásához, valós életbeli kontextus beállításához és saját utasításaid hozzáadásához.",
+      "premiumRequired": "További utasítások elérhetők a Prémiumon.",
+      "presetLabel": "Előbeállítások",
+      "presetNone": "Nincs kiválasztott előbeállítás",
+      "presetApply": "Alkalmazás",
+      "presetSave": "Előbeállítás mentése",
+      "presetName": "Előbeállítás neve",
+      "presetDelete": "Törlés",
+      "presetSaved": "Előbeállítás mentve",
+      "presetDeleted": "Előbeállítás törölve",
+      "presetSaveFailed": "Nem sikerült menteni ezt az előbeállítást.",
       "emptyWords": "Adjon hozzá szókincsszavakat a kérdések generálása előtt.",
       "noneValid": "Az AI nem tudott érvényes kérdéseket létrehozni ezekhez a szavakhoz. Próbálja meg újra.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Testreszabhatod a gyakorlat kontextusát, stílusát vagy fókuszát. Üresen hagyva az alapértelmezett beállításokat használja.",
+      "presetUpdate": "Előbeállítás frissítése",
+      "presetUpdated": "Előbeállítás frissítve",
+      "presetsTitle": "Mentett előbeállítások",
+      "presetsHelper": "Az előbeállítások tárolják a gyakorlat beállításait és a további utasításokat. Nem változtatják meg a kiválasztott szókincset vagy elméleteket.",
+      "presetsEmpty": "Még nincsenek mentett előbeállítások. Mentsd el a jelenlegi beállításaidat, hogy később újra felhasználhasd.",
+      "presetSaveAs": "Mentés előbeállításként",
+      "presetUpdateCurrent": "Frissítés a jelenlegi beállításokkal",
+      "presetRename": "Átnevezés",
+      "presetManage": "Előbeállítás kezelése",
+      "presetRenamed": "Előbeállítás átnevezve",
+      "presetSaveDialogTitle": "Mentés előbeállításként",
+      "presetSaveDialogDescription": "Nevezd el ezt az előbeállítást, hogy újra felhasználhasd a jelenlegi gyakorlat beállításait és a további utasításokat. A kiválasztott szókincs vagy elméletek nem kerülnek tárolásra.",
+      "presetRenameDialogTitle": "Előbeállítás átnevezése",
+      "presetRenameDialogDescription": "Válassz egy új nevet ehhez az előbeállításhoz.",
+      "presetDeleteDialogTitle": "Előbeállítás törlése?",
+      "presetDeleteDialogDescription": "Törölni a „{name}”-t? A jelenlegi gyakorlat konfigurációja változatlan marad."
     },
     "session": {
       "complete": "A foglalkozás kész",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Újrapróbálás",
       "questionsLabel": "Kérdések",
       "correctLabel": "Helyes",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Helytelen",
+      "unansweredLabel": "Meg nem válaszolt",
       "reviewLabel": "Áttekintendő",
       "answeredProgress": "{answered} / {total} megválaszolva",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Válasz ellenőrzése",
+      "nextQuestion": "Következő",
+      "viewResults": "Eredmények megtekintése",
       "submitSet": "Válaszok beküldése",
       "submitting": "Ellenőrzés…",
       "unansweredWarnTitle": "Megválaszolatlan kérdések",
@@ -1121,54 +1138,54 @@
       "unanswered": "Nincs megválaszolva",
       "yourAnswer": "Az Ön válasza",
       "correctAnswer": "Helyes válasz",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Csak {count} kérdés érhető el a jelenlegi szűrőid alapján.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Hogyan gyakorolsz",
+        "lockedHint": "Fejezd be vagy indíts egy új készletet, hogy ezt megváltoztathasd.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Egyesével",
+          "description": "Lásd az egyes kérdéseket. Ellenőrizd minden válasz után az azonnali visszajelzésért."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Összes kérdés",
+          "description": "Lásd a teljes készletet, válaszolj bármilyen sorrendben, majd egyszer küldd el a visszajelzésért."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Áttekintés",
+        "allCorrect": "Tökéletes — minden kérdés helyes.",
+        "summary": "{incorrect} helytelen · {unanswered} meg nem válaszolt · {needsReview} áttekintésre szorul",
+        "viewWrong": "Helytelen válaszok megtekintése",
+        "filtersLabel": "Kérdések szűrése",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Összes ({count})",
+          "needs_review": "Helytelen & meg nem válaszolt ({count})",
+          "correct": "Helyes ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Előző",
+        "nextWrong": "Következő",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} áttekintésre",
+        "floatLabel": "Helytelen válaszok navigációja",
+        "closeFloat": "Összes válasz megjelenítése"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% helyes",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Tökéletes készlet",
+          "body": "Minden válasz helyes. Ez a fajta fókusz megérdemel egy új kört, amikor készen állsz."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Erős befejezés",
+          "body": "Nyilvánvalóan érted — nézd át a hibákat, majd rögzítsd egy friss készlettel."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Jó munka — folytasd",
+          "body": "Néhány elakadás normális. Nézd át őket egyszer, majd próbáld újra, amíg frissek."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Majdnem ott vagy",
+          "body": "Először fejezd be a meg nem válaszoltakat — akkor a pontszám világosabb képet ad."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "A kérdések {language} nyelven készülnek (munkaterület nyelve).",
       "contextualEmptyTitle": "Kontextuális kérdések generálása",
-      "contextualEmptyDescription": "Hozzon létre hiányzószavas feleletválasztós kérdéseket a szókincséből.",
+      "contextualEmptyDescription": "Adj hozzá opcionális utasításokat alul, ha szeretnéd, majd nyomj a Generálásra. A prompt üresen is hagyható.",
       "contextualProDescription": "A kontextuális AI kérdések a Pro csomaggal érhetők el.",
       "unlockContextual": "Feloldás Pro-val",
       "correct": "Helyes!",
@@ -1202,8 +1219,8 @@
       "hint": "Válasszon egy szót, majd koppintson a jelentésére",
       "complete": "Minden pár párosítva — szép munka!",
       "shuffle": "Oszlopok keverése",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pár",
+      "continueRound": "Folytatás"
     },
     "typeAnswer": {
       "questionWord": "Mi a jelentése?",
@@ -1213,7 +1230,7 @@
         "contextual": "Kontextuális"
       },
       "contextualEmptyTitle": "Kontextuális kérdések generálása",
-      "contextualEmptyDescription": "Hozzon létre hiányzószavas beírós feladatokat a szókincséből.",
+      "contextualEmptyDescription": "Adj hozzá opcionális utasításokat alul, ha szeretnéd, majd nyomj a Generálásra. A prompt üresen is hagyható.",
       "contextualProDescription": "A kontextuális AI kérdések a Pro csomaggal érhetők el.",
       "unlockContextual": "Feloldás Pro-val",
       "placeholder": "Írja be a választ…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Írás",
         "description": "Formázott dokumentumok és kérdéskészletek, amelyekhez visszatérhet, és amelyeket exportálhat.",
-        "how": "Kezdjen egy vázlatot, rendezze mappákkal, és használja a Pro AI-t a szöveg ellenőrzéséhez vagy javításához.",
+        "how": "Kezdj egy vázlatot, szervezd mappákba, és használd a terved AI keretét a szöveg ellenőrzésére vagy javítására.",
         "cta": "Írás megnyitása"
       },
       "listening": {
         "title": "Hallgatás",
         "description": "Alakítson valódi hangot vagy videót leckévé.",
-        "how": "Töltsön fel egy klippet, és generáljon átiratot az Ingyenes csomagon. A generált hallgatási gyakorlat a Pro része.",
+        "how": "Tölts fel egy klipet, generálj egy átírást, és építs hallásgyakorlatot a tervedben szereplő AI keretével.",
         "cta": "Hallgatás megnyitása"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Egyes munkaterületek már léteznek ugyanahhoz a nyelvhez. A tartalmuk a meglévő munkaterületeibe kerül, ahelyett hogy duplikátumok jönnének létre.",
         "empty_backup": "Ez a biztonsági mentés nem tartalmaz importálható tanulási adatokat.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Néhány meglévő elem megosztja ugyanazt a nevet. Az importálás determinisztikusan újrahasználja az egyiket, és a többit változatlanul hagyja."
       },
       "cancel": "Mégse",
       "confirm": "Tanulási adatok importálása",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Ez a biztonsági mentés túl nagy az ezen az oldalon történő feldolgozáshoz. Próbáljon kisebb exportot, vagy lépjen kapcsolatba az ügyfélszolgálattal.",
         "notConfigured": "A fájltárolás még nincs konfigurálva a biztonsági mentés importjához."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Már a fiókodban van",
+      "skippedInAccountHint": "Ezek a nevek megegyeznek a már meglévő elemekkel. Ezeket nem importálják újra. Az azonos munkaterületen lévő új elemek még mindig importálódnak.",
+      "skippedInBackupTitle": "Duplikált nevek ebben a biztonsági mentésben",
+      "skippedInBackupHint": "A fájl többször is felsorolja ugyanazt a nevet. Csak az első példány kerül importálásra — ez normális még egy üres fiók esetén is.",
+      "skippedOtherTitle": "Nem sikerült importálni"
     },
     "danger": {
       "title": "Fiók bezárása",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Mielőtt folytatná",
       "warnings": {
         "workspaces": "Minden munkaterület, valamint az összes szókincs, elmélet, írás, hallásértés és beszéd adat törlődik.",
-        "billing": "Bármely aktív Notoria Pro előfizetés azonnal lemondásra kerül.",
+        "billing": "Bármely aktív Notoria Pro vagy Premium előfizetés azonnal törlésre kerül.",
         "media": "A feltöltött média és a profilkép eltávolításra kerül.",
         "permanent": "A megerősítés után nincs helyreállítási időszak."
       },
@@ -3233,8 +3250,8 @@
     "upgrade": "Váltás Pro csomagra",
     "manage": "Előfizetés kezelése",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "Ingyenes",
+    "premiumBadge": "Prémium",
     "renewsOn": "Megújul: {date}",
     "status": "Állapot: {status}",
     "monthlyPrice": "{price} / hónap",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Személyes tanulási útvonal",
       "personalizedRecommendations": "Személyre szabott javaslatok",
       "crossModuleIntelligence": "Modulok közötti személyre szabás",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Egyedi gyakorlat utasítások"
     },
     "compare": {
       "heading": "Csomagok összehasonlítása",
@@ -3458,9 +3475,9 @@
       "feature": "Funkció",
       "current": "Jelenlegi",
       "capability": "Amit kap",
-      "free": "Free",
+      "free": "Ingyenes",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "Prémium",
       "freeIncludes": "Benne a Free-ben",
       "proUnlocks": "A Pro hozzáadja",
       "premiumAdds": "A Premium hozzáadja",
@@ -3552,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "Prémium",
     "title": "Tanulási",
     "highlight": "edző",
     "description": "Személyre szabott áttekintés arról, hogyan tanul, és mire érdemes legközelebb fókuszálnia.",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Adatvédelmi tájékoztató",
     "termsTitle": "Felhasználási feltételek",
     "privacyDescription": "Hogyan gyűjti, használja és törli a Notoria a személyes adatokat és a tanulási tartalmat a magán nyelvtanulási munkaterületén.",
-    "termsDescription": "Feltételek a Notoria magán nyelvtanulási munkaterületének, fiókjainak, AI funkcióinak és a Notoria Pro számlázásának használatához.",
+    "termsDescription": "A Notoria privát nyelvtanulási munkaterületének, fiókjainak, AI funkcióinak és Pro vagy Premium számlázásának használati feltételei.",
     "updated": "Utolsó frissítés: {date}",
-    "updatedDate": "2026. szeptember 23.",
+    "updatedDate": "2026. október 27.",
     "backToSignIn": "Vissza a bejelentkezéshez",
     "backHome": "Vissza a Notoriához",
     "authFooter": "Adatvédelem · Feltételek",
@@ -4071,7 +4088,7 @@
         "purposes": "Miért kezelünk adatokat",
         "auth": "Fiókok és bejelentkezés",
         "ai": "AI funkciók",
-        "payments": "Fizetések (Notoria Pro)",
+        "payments": "Fizetések (Pro és Premium)",
         "processors": "Szolgáltatók",
         "cookies": "Sütik és eszközön tárolt adatok",
         "transfers": "Nemzetközi adattovábbítások",
@@ -4095,7 +4112,7 @@
           "list": [
             "fiókot hoz létre vagy használ",
             "anyagot ment magán munkaterületeken",
-            "Notoria Pro előfizetést köt",
+            "feliratkozás a Notoria Pro vagy Premium-ra",
             "opcionális AI-támogatott eszközöket használ",
             "médiát tölt fel hallásértéshez vagy profilhoz",
             "beszédgyakorlatot használ",
@@ -4156,7 +4173,7 @@
               "basis": "Szerződés (6. cikk (1) bek. b) pont)"
             },
             {
-              "purpose": "Notoria Pro számlázás és előfizetési állapot futtatása a Stripe-on keresztül",
+              "purpose": "A Notoria Pro és Premium számlázásának és előfizetési állapotának kezelése a Stripe-on keresztül",
               "basis": "Szerződés (6. cikk (1) bek. b) pont)"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "A jelenlegi kódbázis az OpenAI-n kívül nem használ más nagy nyelvi modell szolgáltatót. Az OpenAI a saját feltételei és adatvédelmi irányelvei szerint dolgozza fel az adatokat ezeknél a funkcióknál."
         },
         "payments": {
-          "title": "7. Fizetések (Notoria Pro)",
+          "title": "7. Fizetések (Pro és Premium)",
           "p1": "A fizetős előfizetéseket a <strong>Stripe</strong> kezeli. A fizetés, a számlák, a fizetési módok és a lemondás a Stripe Checkouton és a Stripe Customer Portalon keresztül zajlik. A Stripe webhookok frissítik a csomagját és állapotát a Notoriában.",
           "p2": "A Stripe fizetési szolgáltatóként dolgozza fel a fizetési adatokat. A kártyakezelésről lásd a Stripe saját adatvédelmi dokumentációját."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro fizetés, portál és előfizetési állapot"
+              "role": "Notoria Pro és Premium pénztár, portál és előfizetési állapot"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ezek a Felhasználási feltételek a Notoria <site>www.notoria.fi</site> használatának szabályait magyarázzák. Leírják, hogyan működik a termék ma: magán tanulási munkaterületek, opcionális Notoria Pro számlázás a Stripe-on keresztül, és AI-támogatott funkciók. Nem helyettesítik a jogi tanácsot az Ön konkrét helyzetére vonatkozóan.",
+      "intro": "Ezek a Használati Feltételek magyarázzák el a Notoria használatának szabályait a <site>www.notoria.fi</site> oldalon. Leírják, hogyan működik a termék ma: privát tanulási munkaterületek, opcionális Pro és Premium számlázás a Stripe-on keresztül, és AI által támogatott funkciók. Ezek nem helyettesítik egy ügyvéd tanácsát a konkrét helyzetedre vonatkozóan.",
       "tocTitle": "Ezen az oldalon",
       "tocAria": "Ezen az oldalon",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Elfogadható használat",
         "ip": "Szellemi tulajdon",
         "ai": "AI által generált kimenet",
-        "plans": "Free csomag és Notoria Pro",
+        "plans": "Ingyenes, Pro és Premium tervek",
         "billing": "Előfizetés és számlázás",
         "refunds": "Visszatérítések és fogyasztói jogok",
         "availability": "Elérhetőség",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. A szolgáltatás",
           "p1": "A Notoria magán nyelvtanulási webalkalmazás. Létrehozhat munkaterületeket, és tarthat tanulási anyagot, például szókincset, elméleti jegyzeteket, írást, gyakorlatokat, hallásértési leckéket és beszédmunkameneteket.",
-          "p2": "Egyes funkciók a free csomagon elérhetők. A Notoria Pro további képességeket old fel, ahogy a termék és a <account>Fiók</account> oldal mutatja — beleértve a Hallásértést, a Beszédet, bizonyos AI tanulmányi eszközöket, a gyakorlatimportot és a fizetős dokumentum-export formátumokat. A funkciók elérhetősége a termék fejlődésével változhat.",
+          "p2": "A fő tanulási területek, beleértve a Hallást, Beszédet és Olvasást, minden terven elérhetők. A Pro és Premium magasabb AI kereteket és tananyag import/exportot ad; a Premium személyre szabott coachingot és gyakorlati funkciókat is hozzáad. A jelenlegi összehasonlítás a <account>Fiók</account> oldaladon látható. A funkciók elérhetősége változhat a termék fejlődése során.",
           "p3": "A Notoria személyes nyelvtanulásra szolgál. Nem iskola, vizsgahatóság vagy szakmai tanácsadó szolgáltatás."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. AI által generált kimenet",
           "p1": "Egyes funkciók ellenőrizhetnek, javasolhatnak, generálhatnak, átírhatnak, összefoglalhatnak vagy oktathatnak az Ön anyaga alapján. A kimenet lehet hiányos, helytelen vagy alkalmatlan a céljához. Ön felelős az AI eredmények áttekintéséért, mielőtt tanulásra, vizsgákra, szakmai használatra vagy közzétételre támaszkodna rájuk.",
           "p2": "Az AI funkciók nem elérhetők, ha a támogatás ki van kapcsolva a <settings>Beállításokban</settings>, ha a csomagja nem tartalmazza az adott eszközt, vagy ha a szolgáltató átmenetileg elérhetetlen.",
-          "p3": "Nem minden AI segítő igényel Notoria Pro-t. A termék mutatja, mely eszközök ingyenesek, és melyekhez Pro szükséges."
+          "p3": "Az AI elérhetősége és napi keretei változnak az Ingyenes, Pro és Premium között. A termék megmutatja a szükséges tervet és keretet minden eszközhöz."
         },
         "plans": {
-          "title": "8. Free csomag és Notoria Pro",
+          "title": "8. Ingyenes, Pro és Premium tervek",
           "p1": "A free csomag lefedi az alapvető gyakorlást a saját szókincsével és a kapcsolódó tanulmányi eszközökkel, ahogy a termék mutatja.",
-          "p2": "A Notoria Pro fizetős előfizetés, amely további funkciókat old fel. A jelenlegi termékben ez jellemzően magában foglalja a Hallásértést, a Beszédet, a gyakorlatimportot, a mondatformáló gyakorlást, számos AI-támogatott tanulmányi eszközt, valamint a PDF/DOCX dokumentum-exportot. Egyes könnyebb AI segítők (például bizonyos szókincs- vagy szerkesztőformázási segédek) a free csomagon is elérhetők maradhatnak, ha az AI-támogatás engedélyezve van.",
-          "p3": "A Pro hozzáférés a felhasználói fiókhoz kötődik, így az adott fiók alatti munkaterületekre érvényes. Az adminisztrátori szerepkörű fiókoknak Pro szintű hozzáférésük lehet személyes Stripe előfizetés nélkül.",
-          "p4": "A vásárlására vonatkozó ár a Stripe Checkouton megjelenő ár az aktuális Pro csomaghoz. A termékben máshol megjelenő ár (például a Fiók oldalon) csak tájékoztató jellegű, és meg kell egyeznie az aktív Stripe árkonfigurációval."
+          "p2": "A Pro és Premium fizetős előfizetések. A Pro magasabb vagy korlátlan kereteket ad sok AI eszközhöz, valamint tananyag importot és PDF/DOCX exportot. A Premium tartalmazza a Pro-t, és hozzáadja a személyre szabott funkciókat, mint a Tanulási Coach, személyes tanulási profil, adaptív gyakorlás, hibákra épülő gyakorlás és egyedi gyakorlati utasítások. A Fiók oldalon látható a jelenlegi összehasonlítás és korlátok.",
+          "p3": "A fizetett hozzáférés a felhasználói fiókodhoz van kötve, és érvényes a munkaterületein. Az adminisztrátori szereppel rendelkező fiókoknak lehetnek fizetett szintű hozzáféréseik személyes Stripe előfizetés nélkül.",
+          "p4": "Az alkalmazandó ár az a ár, amely a Stripe Checkout-on látható a kiválasztott Pro vagy Premium tervhez. Bármely más helyen a termékben (például a Fiókon) megjelenített ár csak tájékoztató jellegű, és meg kell egyeznie az aktív Stripe árképzési konfigurációval."
         },
         "billing": {
           "title": "9. Előfizetés, számlázás és lemondás",
-          "list0": "A Pro előfizetéseket a <strong>Stripe</strong> számlázza",
-          "list1": "A fizetést a <account>Fiók</account> oldalról vagy az alkalmazásban zárolt Pro vezérlőkből indíthatja",
+          "list0": "A Pro és Premium előfizetések a <strong>Stripe</strong> segítségével kerülnek számlázásra",
+          "list1": "A pénztár indításához vagy a terv megváltoztatásához a <account>Fiók</account> oldalról vagy az alkalmazásban található zárt fizetett vezérlőkből indulhatsz",
           "list2": "A Fiók oldalról megnyithatja a Stripe Customer Portalt a számlák megtekintéséhez, a fizetési módok frissítéséhez és az előfizetés lemondásához",
           "list3": "A lemondás a Stripe Customer Portal viselkedését követi az Ön előfizetésére",
-          "p1": "A lemondás után a Pro hozzáférés csak addig folytatódik, amíg a Stripe előfizetési állapota továbbra is Pro-t biztosít a termékben. A jelenlegi megvalósításban Pro-ként kezelt állapotok: <code>active</code>, <code>trialing</code> és <code>past_due</code>. Amikor az állapot már nem felel meg, a fiók visszaáll a free csomagra.",
-          "p2": "Ha a fizetés sikertelen, a Stripe az előfizetést <code>past_due</code> vagy más állapotba helyezheti. A Notoria ezt az állapotot a Stripe webhookokból szinkronizálja. Amíg az állapot <code>past_due</code> marad, a Pro funkciók a jelenlegi hozzáférési szabályok szerint elérhetők maradnak; ha az előfizetés később lemondásra kerül vagy egyébként jogosulatlanná válik, a Pro hozzáférés megszűnik.",
+          "p1": "Miután lemondtad a megújítást, a jelenlegi Pro vagy Premium hozzáférésed addig folytatódik, amíg a Stripe előfizetési állapota még érvényes a termékben. Az érvényes állapotok jelenleg a <code>aktív</code>, <code>próbás</code> és <code>lejárt</code>. Amikor az állapot már nem érvényes, a fiók visszatér az Ingyeneshez.",
+          "p2": "Ha egy kifizetés meghiúsul, a Stripe áthelyezheti az előfizetést <code>lejárt</code> vagy más állapotba. A Notoria szinkronizálja ezt az állapotot a Stripe webhookjain keresztül. Amíg <code>lejárt</code> állapotban marad, a jelenlegi fizetett terv a jelenlegi hozzáférési szabályok szerint elérhető; ha később törlésre kerül vagy más módon nem jogosult, a fizetett hozzáférés véget ér.",
           "p3": "A Notoria fiók törlése azonnal lemondja a Stripe előfizetést (legjobb erőfeszítés) a fióktörlés részeként. Ez különbözik a megújítás Customer Portálon keresztüli lemondásától a fiók megtartása mellett."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Felelősségkizárás és felelősség",
           "p1": "A Notoria „ahogy elérhető” alapon áll rendelkezésre személyes nyelvtanuláshoz. A vonatkozó jog által megengedett legteljesebb mértékben kizárjuk a törvény által nem kötelező garanciákat.",
-          "p2": "A vonatkozó jog által megengedett legteljesebb mértékben a Notoria nem felel közvetett, járulékos, különleges, következményes vagy adatvesztésből eredő károkért, amelyek a szolgáltatás használatából vagy az AI kimenetre való támaszkodásból erednek. Ahol a felelősség nem zárható ki, az a követelés előtti három hónapban a Notoria Pro-ért fizetett összegre, vagy a kötelező jog által megkövetelt nagyobb összegre korlátozódik.",
+          "p2": "A vonatkozó jogszabályok által megengedett legteljesebb mértékben a Notoria nem felelős közvetett, véletlen, különleges, következményes vagy elveszett adatokból eredő károkért, amelyek a szolgáltatás használatából vagy az AI kimenetre való támaszkodásból származnak. Ha a felelősség nem zárható ki, akkor az a Notoria Pro vagy Premium díja, amelyet a követelés előtti három hónapban fizettél, vagy bármely nagyobb összeg, amelyet a kötelező jogszabály megkövetel.",
           "p3": "Ezek a korlátok nem zárják ki azt a felelősséget, amelyet a finn vagy uniós jog nem enged korlátozni — beleértve a fogyasztók számára lemondhatatlan felelősséget, valamint a gondatlanság okozta halálért vagy személyi sérülésért fennálló felelősséget, ahol ilyen szabályok érvényesek."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Építsen személyes szókincsbankot jelentésekkel, példákkal és címkékkel",
           "practice": "Gyakoroljon a saját szavaiból és jegyzeteiből készült gyakorlatokkal",
           "create": "Írjon elméleti jegyzeteket és írásbeli munkát, amelyhez később visszatérhet",
-          "listenSpeak": "Alakítsa a médiát hallásértési gyakorlattá, és beszéljen AI oktatóval Pro csomagon"
+          "listenSpeak": "A médiát hallásgyakorlattá alakítja, és AI kereteket használ a leírásra és a beszédgyakorlatra"
         },
-        "note": "Egyes AI, hallásértés, beszéd és export eszközök a Notoria Pro részei. A free csomag továbbra is lefedi a mindennapi szókincsgyakorlást és az alapvető tanulási kört."
+        "note": "A fő tanulási területek minden terven elérhetők. A Pro emeli az AI kereteket és hozzáadja a tananyag import/exportot; a Premium személyre szabott coachingot és gyakorlati lehetőségeket ad."
       },
       "ai": {
         "title": "AI, ahol segít",
@@ -4656,7 +4673,7 @@
         "title": "Hogyan kapcsolódnak a területek",
         "p1": "A Rögzítés a gyors belépési pont. A Szókincs és az Elmélet az, ahol az anyag leülepszik. A Gyakorlat ezt az anyagot gyakorlattá alakítja. Az Írás, a Hallásértés és a Beszéd segít aktívabban használni a nyelvet.",
         "p2": "Nem kell minden területen sorban végighaladnia. Sokan egy ideig a szavaknál és a rövid gyakorlatnál maradnak.",
-        "p3": "Természetes következő lépés az írás, amikor saját feltételei szerint szeretne nyelvet produkálni, majd a hallásértés és a beszéd, amikor ugyanaz az anyag a fülében és a hangjában is dolgozni szeretne — a Hallásértés és a Beszéd a Notoria Pro részei.",
+        "p3": "A természetes következő lépés az írás, amikor saját feltételeid szerint szeretnél nyelvet termelni, majd a hallás és beszéd, amikor ugyanazt az anyagot szeretnéd hallani és beszélni. Ezek a területek minden terven elérhetők; az AI használati korlátok tervenként változnak.",
         "beat": "Először gyűjtés és megértés. Használat és beszéd, amikor az anyag készen áll elhagyni az oldalt."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Hallásértés",
-          "body": "Alakítsa a médiát hallásértési gyakorlattá a munkaterületén. A Notoria Pro-n elérhető."
+          "body": "A médiát hallásgyakorlattá alakíthatod a munkaterületedben. Minden terven elérhető; az AI átírási keretek tervenként változnak."
         },
         "speaking": {
           "label": "Beszéd",
-          "body": "Élő gyakorlat AI oktatóval, a tanult nyelvhez kötve. A Notoria Pro-n elérhető."
+          "body": "Élő gyakorlás egy AI oktatóval, amely a tanult nyelvre épül. Minden terven elérhető, terv alapú napi kerettel."
         },
         "reading": {
           "label": "Olvasás",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Hogyan változtathatom meg a jelszavamat vagy zárhatom be a fiókomat?",
-          "a": "Nyissa meg a <account>Fiók</account> oldalt. Ott frissítheti a jelszavát, ha e-mailes bejelentkezést használ, kezelheti a Notoria Pro-t, exportálhat biztonsági mentést, vagy véglegesen törölheti a fiókját."
+          "a": "Nyisd meg a <account>Fiókot</account>. Ott frissítheted a jelszavad, ha e-mailes bejelentkezést használsz, kezelheted a Pro vagy Premium előfizetést, exportálhatsz biztonsági másolatot, vagy véglegesen törölheted a fiókodat. A fiók törlése azonnal törli az aktív Stripe előfizetést a legjobb erőfeszítéssel; a megújítás lemondása megtartja a fiókot és annak adatait."
         },
         "pro": {
           "q": "Hogyan működik a számlázás és a lemondás?",
-          "a": "A Notoria Pro-t a Stripe számlázza. A <account>Fiók</account> oldalról frissíthet, megnyithatja a Stripe ügyfélportált a fizetési módok és számlák kezeléséhez, vagy lemondhatja a megújítást."
+          "a": "A Notoria Pro és Premium a Stripe-on keresztül kerülnek számlázásra. A <account>Fiókból</account> feliratkozhatsz, válthatsz a Pro és Premium között, kezelheted a fizetési módokat és számlákat, lemondhatod a megújítást, vagy folytathatod a tervezett lemondást. A megújítás lemondása megtartja a hozzáférést, amíg a Stripe be nem fejezi az érvényes előfizetési időszakot; a fiók törlése különálló, és azonnal törli az előfizetést a legjobb erőfeszítéssel."
         },
         "proFeatures": {
-          "q": "Mi ingyenes, és mihez kell Notoria Pro?",
-          "a": "A mindennapi szókincsgyakorlás és a kapcsolódó tanulmányi eszközök a free csomagon elérhetők. Egyes AI eszközök, a hallásértés, a beszéd és a dokumentum-export funkciók a Notoria Pro részei. Hasonlítsa össze és frissítsen a <account>Fiók</account> oldalról."
+          "q": "Mi tartozik az Ingyenes, Pro és Premium csomagokhoz?",
+          "a": "Az Ingyenes tartalmazza a fő tanulási területeket és a napi kereteket a támogatott AI eszközökhöz. A Pro emeli vagy eltávolítja a sok AI korlátot, és hozzáadja a tananyag importot, valamint a PDF/DOCX exportot. A Premium tartalmazza a Pro-t, és hozzáadja a személyre szabott coachingot, tanulási profilt, adaptív és hibákra épülő gyakorlást, valamint egyedi gyakorlati utasításokat. Nézd meg az élő összehasonlítást és a jelenlegi korlátokat a <account>Fiók</account> oldaladon."
         },
         "learning": {
           "q": "Hogyan működnek a Notoria tanulási funkciói?",
@@ -4997,7 +5014,7 @@
         "admins": "Adminisztrátorok",
         "testers": "Teszterek",
         "suspended": "Felfüggesztett",
-        "contentTotal": "Content records"
+        "contentTotal": "Tartalom rekordok"
       },
       "quickAccess": "Gyors elérés",
       "quickAccessLede": "Ugrás a kezelőeszközökhöz.",
@@ -5050,8 +5067,8 @@
         "created": "Regisztráció",
         "updated": "Frissítve",
         "emailVerified": "E-mail ellenőrizve",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-mail",
+        "password": "Jelszó"
       },
       "detail": {
         "account": "Fiók",
@@ -5060,7 +5077,7 @@
         "actions": "Fiókműveletek",
         "workspaces": "Munkaterületek",
         "workspacesLede": "A felhasználó tulajdonában lévő nyelvi munkaterületek.",
-        "danger": "Danger zone"
+        "danger": "Veszélyzóna"
       },
       "actions": {
         "saveProfile": "Név mentése",
@@ -5071,7 +5088,7 @@
         "delete": "Fiók törlése",
         "grantTester": "Teszter szerepkör adása",
         "revokeTester": "Teszter szerepkör visszavonása",
-        "create": "Create user"
+        "create": "Felhasználó létrehozása"
       },
       "confirm": {
         "grantAdmin": "Admin hozzáférést ad ehhez a fiókhoz?",
@@ -5089,13 +5106,13 @@
         "admin": "Adminisztrátor"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Felhasználó létrehozása",
+        "lede": "Provisionálj egy fiókot e-mail címmel és jelszóval. Azonnal be tudnak jelentkezni."
       },
       "plans": {
-        "free": "Free",
+        "free": "Ingyenes",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "Prémium"
       }
     },
     "workspaces": {
@@ -5118,7 +5135,7 @@
         "owner": "Tulajdonos",
         "created": "Létrehozva",
         "updated": "Frissítve",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Tulajdonos e-mail",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Törli ezt a munkaterületet és az összes benne lévő tanulási tartalmat az adatbázis-kaszkádokon keresztül?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Munkaterület létrehozása",
+        "lede": "Csatolj egy új nyelvi munkaterületet egy meglévő fiókhoz e-mail címmel."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Munkaterület",
         "created": "Létrehozva",
         "updated": "Frissítve",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Cím",
+        "word": "Szó",
+        "folderName": "Mappa neve"
       },
       "detail": {
         "description": "Metaadat-ellenőrzés. A privát tartalmak automatikusan nem töltődnek be.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Rekord törlése",
-        "saveTitle": "Save title"
+        "saveTitle": "Cím mentése"
       },
       "confirm": {
         "delete": "Törli ezt a rekordot? A kapcsolódó gyermek-sorok az adatbázis kaszkád / set-null szabályait követik."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Rögzítsd az elemeket szabad szöveggel. Cím szerkesztése itt nem támogatott — töröld, ha a rekordot el kell távolítani."
     },
     "jobs": {
       "title": "Feladatok",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Érvénytelen nyelvkód.",
       "CONTENT_NOT_FOUND": "A rekord nem található.",
       "INVALID_CONTENT_MODULE": "Ismeretlen tartalommodul.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Ez az e-mail már regisztrálva van.",
+      "PASSWORD_TOO_WEAK": "A jelszó nem felel meg az erősségi követelményeknek.",
+      "CONTENT_TITLE_UNSUPPORTED": "Ez a tartalomtípus nem támogatja a cím szerkesztését."
     }
   }
 }

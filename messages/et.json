@@ -30,7 +30,7 @@
       "fixedNote": "Välimus on eksporditud failis fikseeritud. Muutmiseks ekspordi uuesti.",
       "docxBackgroundNote": "Word ja teised rakendused ei pruugi lehe tausta sama moodi näidata, eriti printimisel."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Kerige üles"
   },
   "contentImport": {
     "title": {
@@ -473,34 +473,34 @@
     "viewMode": "Kuvamisrežiim",
     "tagManager": {
       "open": "Halda silte",
-      "eyebrow": "Tags",
+      "eyebrow": "Sildid",
       "title": "Siltide haldur",
-      "description": "Vali silt, seejärel lisa või eemalda see sõnadelt. Määratud ja teised sõnad jäävad eraldi loenditesse.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Valige silt, seejärel määrake või eemaldage see sõnadelt.",
+      "pageDescription": "Valige Standard või Kohandatud, valige silt, seejärel lisage või eemaldage see sõnadelt.",
+      "disabledNoWorkspace": "Looge tööruum enne sõnavara siltide haldamist.",
+      "backToVocabulary": "Tagasi sõnavara juurde",
+      "backToSettings": "Tagasi seadete juurde",
       "groupsLabel": "Standardsed sildigrupid",
       "tagsHeading": "Sildid",
       "standardTagsHeading": "Standardsed sildid",
       "customTagsHeading": "Kohandatud sildid",
-      "customTagsHint": "Sildid, mille lood enda korralduseks — mitte sõnaliigid.",
+      "customTagsHint": "Tööruumi sildid, mille te loote — otsige, et neid leida, kui nimekiri on pikk.",
       "emptyCustomTags": "Kohandatud silte veel pole. Loo need sõna muutmisel.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Selle otsingu jaoks ei leitud kohandatud silte.",
+      "tagSearchPlaceholder": "Otsige silte…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standardne",
       "kindCustom": "Kohandatud",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Sõnalistid",
+      "wordTabAssigned": "Sildistatud",
+      "wordTabOther": "Sildistamata",
       "assignedHeading": "Selle sildiga sõnad",
       "otherHeading": "Teised sõnad",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Valige kõik sellel lehel",
+      "clearSelection": "Tühjenda valik",
+      "selectionScopePage": "Valimine sellelt lehelt ({count} {total}st)",
+      "selectionScopeFiltered": "Valimine praeguste otsingutulemuste seest",
       "searchPlaceholder": "Otsi sõnu või tähendusi…",
       "wordCount": "{count}",
       "loading": "Sõnavara laadimine…",
@@ -510,13 +510,23 @@
       "emptyOther": "Kõigil sõnadel on juba see silt.",
       "emptyOtherSearch": "Määramiseks sobivaid sõnu pole.",
       "selected": "{count} valitud",
-      "addToTag": "Lisa sildile",
-      "removeFromTag": "Eemalda sildilt",
-      "applyAdd": "Lisa sildile ({count})",
-      "applyRemove": "Eemalda sildilt ({count})",
+      "addToTag": "Lisa silt",
+      "removeFromTag": "Eemalda silt",
+      "applyAdd": "Lisa silt ({count})",
+      "applyRemove": "Eemalda silt ({count})",
       "added": "Lisatud {count} sõna sildile {tag}",
       "removed": "Eemaldatud {count} sõna sildilt {tag}",
-      "error": "Sildi kuuluvuse uuendamine ebaõnnestus"
+      "error": "Sildi kuuluvuse uuendamine ebaõnnestus",
+      "systemsLabel": "Sildi süsteemid",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Teema ja kasutus, näidatud eraldi",
+      "usageOptional": "Valikuline",
+      "customSystemTitle": "Kohandatud",
+      "customSystemMeta": "{count, plural, one {# silt} other {# silti}}",
+      "customPickerLabel": "Valige kohandatud silt",
+      "customPickerPlaceholder": "Valige kohandatud silt…",
+      "customSearchPlaceholder": "Otsige kohandatud silte…",
+      "pickTagFirst": "Valige ülal silt, et hallata sõnade kuuluvust."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Uuendatud {time}",
@@ -585,7 +595,11 @@
         "notes": "Märkmed",
         "updated": "Viimati uuendatud"
       }
-    }
+    },
+    "selectedCustomTags": "Valitud sildid",
+    "selectedSynonyms": "Valitud sünonüümid",
+    "removeCustomTag": "Eemalda {name}",
+    "pickerLoading": "Laadimine…"
   },
   "tags": {
     "groups": {
@@ -941,7 +955,9 @@
         "collapse": "Ahenda {name}",
         "selectedCount": "{count, plural, one {# teooria valitud} other {# teooriat valitud}}",
         "practiceSelected": "Harjuta valituid",
-        "clearSelection": "Tühjenda valik"
+        "clearSelection": "Tühjenda valik",
+        "subfolders": "{count, plural, one {# alamkaust} other {# alamkausta}}",
+        "selectedOne": "1 teooria valitud"
       }
     },
     "types": {
@@ -950,13 +966,13 @@
         "description": "Pööra kaarte sõnade ja tähenduste õppimiseks vahedega kordamise hinnangutega.",
         "preview": "Pööra · Hinda · Vaata üle",
         "previewHint": "Soome sõna",
-        "previewWord": "suomalainen",
+        "previewWord": "soome keel",
         "previewFlow": "PÖÖRA → HINDA → VAATA ÜLE"
       },
       "fill-in-blank": {
         "label": "Lünkade täitmine",
         "description": "Täida näitelaused puuduva sõnavarasõnaga.",
-        "preview": "Minulla on uusi ______."
+        "preview": "Mul on uus ______."
       },
       "multiple-choice": {
         "label": "Valikvastused",
@@ -971,9 +987,9 @@
         "label": "Paaride sobitamine",
         "description": "Sobita iga sõna oma tähendusega Quizleti-stiilis ruudustikus.",
         "preview": "Sõna ↔ Tähendus",
-        "previewLeft": "talo",
+        "previewLeft": "maja",
         "previewRight": "maja",
-        "previewLeftB": "koti",
+        "previewLeftB": "kodu",
         "previewRightB": "kodu"
       },
       "type-answer": {
@@ -985,9 +1001,9 @@
         "label": "Moodusta lause",
         "description": "Kirjuta täielik lause salvestatud sõnavaraga ja saa AI grammatikatagasisidet.",
         "preview": "Kirjuta lause kasutades…",
-        "previewChipA": "Minä",
-        "previewChipB": "asun",
-        "previewChipC": "Helsingissä"
+        "previewChipA": "Mina",
+        "previewChipB": "elan",
+        "previewChipC": "Helsingis"
       }
     },
     "timedHint": {
@@ -1033,17 +1049,17 @@
       "shuffle": "Sega",
       "finish": "Lõpeta voor",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Küsimuse allikas",
+        "chooseAi": "Kasutage AI genereeritud",
+        "emptyTitle": "Ei ole kasutatavaid salvestatud näiteid",
+        "emptyDescription": "Lisage näidislauseid, mis sisaldavad selgelt iga sõna, kohandage oma filtreid või vahetage AI genereeritud vastu.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Salvestatud näited",
+          "description": "Looge küsimusi koheselt oma sõnavara näidete põhjal. Ei mingit AI ootamist."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI genereeritud",
+          "description": "Looge värskeid lauseid oma sõnavarast AI abil."
         }
       }
     },
@@ -1100,14 +1116,14 @@
       "tryAgain": "Proovi uuesti",
       "questionsLabel": "Küsimused",
       "correctLabel": "Õiged",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Vale",
+      "unansweredLabel": "Vastamata",
       "reviewLabel": "Ülevaateks",
       "answeredProgress": "{answered} / {total} vastatud",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Kontrolli vastust",
+      "nextQuestion": "Järgmine",
+      "viewResults": "Vaata tulemusi",
       "submitSet": "Esita vastused",
       "submitting": "Kontrollimine…",
       "unansweredWarnTitle": "Vastamata küsimused",
@@ -1122,54 +1138,54 @@
       "unanswered": "Vastamata",
       "yourAnswer": "Sinu vastus",
       "correctAnswer": "Õige vastus",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Praegustest filtritest on saadaval ainult {count} küsimust.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Kuidas te harjutate",
+        "lockedHint": "Lõpetage või alustage uut komplekti, et seda muuta.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Üksikute kaupa",
+          "description": "Vaadake ühte küsimust korraga. Kontrollige pärast iga vastust kohese tagasiside saamiseks."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Kõik küsimused",
+          "description": "Vaadake kogu komplekti, vastake igas järjekorras, seejärel esitage üks kord tagasiside saamiseks."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Ülevaade",
+        "allCorrect": "Täiuslik — iga küsimus on õige.",
+        "summary": "{incorrect} vale · {unanswered} vastamata · {needsReview} ülevaatamiseks",
+        "viewWrong": "Vaata vale vastuseid",
+        "filtersLabel": "Filtreeri küsimusi",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Kõik ({count})",
+          "needs_review": "Vale ja vastamata ({count})",
+          "correct": "Õige ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Eelmine",
+        "nextWrong": "Järgmine",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} ülevaatamiseks",
+        "floatLabel": "Vale vastuste navigeerimine",
+        "closeFloat": "Kuva kõik vastused"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% õige",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Täiuslik komplekt",
+          "body": "Iga vastus oli õige. Selline keskendumine väärib uut vooru, kui olete valmis."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Tugev lõpetamine",
+          "body": "Teie arusaamine on selgelt paranenud — vaadake möödalaskmisi, seejärel kinnitage see uue komplektiga."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Hea töö — jätkake",
+          "body": "Mõned takistused on normaalsed. Vaadake neid üle, seejärel proovige uuesti, kui need on värsked."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Peaaegu kohal",
+          "body": "Lõpetage esmalt vastamata küsimused — siis näitab tulemus selgemat pilti."
         }
       }
     },
@@ -1182,7 +1198,7 @@
       },
       "contextualLanguageHint": "Küsimused genereeritakse keeles {language} (tööruumi keel).",
       "contextualEmptyTitle": "Genereeri kontekstuaalseid küsimusi",
-      "contextualEmptyDescription": "Loo lünkade täitmise valikvastused oma sõnavarast.",
+      "contextualEmptyDescription": "Lisage allpool valikulised juhised, kui soovite, seejärel vajutage Generaadi. Saate jätta käsu tühjaks.",
       "contextualProDescription": "Kontekstuaalsed AI küsimused on saadaval Pro-ga.",
       "unlockContextual": "Ava Pro-ga",
       "correct": "Õige!",
@@ -1203,8 +1219,8 @@
       "hint": "Vali sõna, seejärel puuduta selle tähendust",
       "complete": "Kõik paarid sobitatud — tubli!",
       "shuffle": "Sega veerud",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} paari",
+      "continueRound": "Jätka"
     },
     "typeAnswer": {
       "questionWord": "Mis on tähendus?",
@@ -1214,7 +1230,7 @@
         "contextual": "Kontekstuaalne"
       },
       "contextualEmptyTitle": "Genereeri kontekstuaalseid küsimusi",
-      "contextualEmptyDescription": "Loo lünkade täitmise tippimisküsimused oma sõnavarast.",
+      "contextualEmptyDescription": "Lisage allpool valikulised juhised, kui soovite, seejärel vajutage Generaadi. Saate jätta käsu tühjaks.",
       "contextualProDescription": "Kontekstuaalsed AI küsimused on saadaval Pro-ga.",
       "unlockContextual": "Ava Pro-ga",
       "placeholder": "Tipi oma vastus…",
@@ -1598,13 +1614,13 @@
       "writing": {
         "title": "Kirjutamine",
         "description": "Rikkalikud dokumendid ja küsimuste komplektid, mida saad uuesti avada ja eksportida.",
-        "how": "Alusta mustandit, korralda kaustadega ja kasuta Pro AI-d teksti kontrollimiseks või parandamiseks.",
+        "how": "Alustage mustandi koostamist, korraldage kaustadega ja kasutage oma plaani AI lubasid oma teksti kontrollimiseks või parandamiseks.",
         "cta": "Ava kirjutamine"
       },
       "listening": {
         "title": "Kuulamine",
         "description": "Muuda päris heli või video tunniks.",
-        "how": "Laadi Free’is klipp üles ja genereeri üleskirjutus. Genereeritud kuulamisharjutus on osa Pro-st.",
+        "how": "Laadige üles klipp, genereerige transkriptsioon ja looge kuulamispraktika koos plaani AI lubadega.",
         "cta": "Ava kuulamine"
       },
       "speaking": {
@@ -2269,11 +2285,11 @@
         "taskManager": "Brauseri tegumihaldur",
         "altClose": "Sulge aken",
         "altTab": "Vaheta rakendusi",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Failihaldur",
         "winDesktop": "Näita töölauda",
         "winLock": "Lukusta arvuti",
         "winRun": "Käivita dialoog",
-        "winSettings": "Windows Settings",
+        "winSettings": "Windowsi seaded",
         "winTaskView": "Tegumivaade",
         "winClipboard": "Lõikepuhvri ajalugu"
       },
@@ -3120,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Mõned tööruumid on sama keele jaoks juba olemas. Nende sisu lisatakse olemasolevatesse tööruumidesse dubleerimise asemel.",
         "empty_backup": "See varukoopia ei sisalda imporditavaid õppeandmeid.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Mõned olemasolevad elemendid jagavad sama nime. Import kasutab ühte neist määratletult ja jätab teised muutmata."
       },
       "cancel": "Tühista",
       "confirm": "Impordi õppeandmed",
@@ -3165,11 +3181,11 @@
         "requestTooLarge": "See varukoopia on selle lehe kaudu töötlemiseks liiga suur. Proovi väiksemat eksporti või võta ühendust toega.",
         "notConfigured": "Failisalvestus pole varukoopia importimiseks veel seadistatud."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Juba teie kontol",
+      "skippedInAccountHint": "Need nimed kattuvad elementidega, mis teil juba on. Need ei impordita uuesti. Uued elemendid sama tööruumi all imporditakse siiski.",
+      "skippedInBackupTitle": "Korduvad nimed selles varukoopias",
+      "skippedInBackupHint": "Fail loetleb sama nime rohkem kui üks kord. Ainult iga nime esimene koopia imporditakse — see on normaalne isegi tühjal kontol.",
+      "skippedOtherTitle": "Ei saanud importida"
     },
     "danger": {
       "title": "Sulge konto",
@@ -3185,7 +3201,7 @@
       "warningTitle": "Enne jätkamist",
       "warnings": {
         "workspaces": "Iga tööruum ning kogu sõnavara, teooria, kirjutamine, kuulamine ja rääkimise andmed kustutatakse.",
-        "billing": "Iga aktiivne Notoria Pro tellimus tühistatakse kohe.",
+        "billing": "Kõik aktiivsed Notoria Pro või Premium tellimused tühistatakse kohe.",
         "media": "Üles laaditud meedia ja profiilifoto eemaldatakse.",
         "permanent": "Pärast kinnitamist taastamisperioodi ei ole."
       },
@@ -3234,7 +3250,7 @@
     "upgrade": "Uuenda Pro-le",
     "manage": "Halda tellimust",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Tasuta",
     "premiumBadge": "Premium",
     "renewsOn": "Uueneb {date}",
     "status": "Olek: {status}",
@@ -3459,7 +3475,7 @@
       "feature": "Funktsioon",
       "current": "Praegune",
       "capability": "Mida saad",
-      "free": "Free",
+      "free": "Tasuta",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Sisaldub Free’il",
@@ -4049,9 +4065,9 @@
     "privacyTitle": "Privaatsuspoliitika",
     "termsTitle": "Kasutustingimused",
     "privacyDescription": "Kuidas Notoria kogub, kasutab ja kustutab isikuandmeid ning õppesisu oma privaatse keeleõppe tööruumi jaoks.",
-    "termsDescription": "Tingimused Notoria privaatse keeleõppe tööruumi, kontode, AI funktsioonide ja Notoria Pro arvelduse kasutamiseks.",
+    "termsDescription": "Tingimused Notoria privaatse keeleõppe tööruumi, kontode, AI funktsioonide ja Pro või Premium arveldamise kasutamiseks.",
     "updated": "Viimati uuendatud {date}",
-    "updatedDate": "23. september 2026",
+    "updatedDate": "27. oktoober 2026",
     "backToSignIn": "Tagasi sisselogimise juurde",
     "backHome": "Tagasi Notoriasse",
     "authFooter": "Privaatsus · Tingimused",
@@ -4072,7 +4088,7 @@
         "purposes": "Miks me andmeid töötleme",
         "auth": "Kontod ja sisselogimine",
         "ai": "AI funktsioonid",
-        "payments": "Maksed (Notoria Pro)",
+        "payments": "Maksed (Pro ja Premium)",
         "processors": "Teenusepakkujad",
         "cookies": "Küpsised ja seadme salvestus",
         "transfers": "Rahvusvahelised edastused",
@@ -4096,7 +4112,7 @@
           "list": [
             "lood või kasutad kontot",
             "salvestad materjali privaatsetesse tööruumidesse",
-            "tellid Notoria Pro",
+            "tellida Notoria Pro või Premium",
             "kasutad valikulisi AI-abistatud tööriistu",
             "laadid üles meediat kuulamise või profiili jaoks",
             "kasutad rääkimisharjutust",
@@ -4157,7 +4173,7 @@
               "basis": "Leping (art 6(1)(b))"
             },
             {
-              "purpose": "Käivitada Notoria Pro arveldust ja tellimuse olekut Stripe’i kaudu",
+              "purpose": "Haldada Notoria Pro ja Premium arveldamist ja tellimuse staatust läbi Stripe'i",
               "basis": "Leping (art 6(1)(b))"
             },
             {
@@ -4192,7 +4208,7 @@
           "p4": "Praegune koodibaas ei kasuta teisi suuri keelemudeli pakkujaid peale OpenAI. OpenAI töötleb andmeid oma tingimuste ja privaatsuspoliitika alusel töötlejana nende funktsioonide jaoks."
         },
         "payments": {
-          "title": "7. Maksed (Notoria Pro)",
+          "title": "7. Maksed (Pro ja Premium)",
           "p1": "Tasulisi tellimusi käsitleb <strong>Stripe</strong>. Maksmine, arved, makseviisid ja tühistamine käivad Stripe Checkout’i ja Stripe Customer Portali kaudu. Stripe’i veebihaagid uuendavad sinu plaani ja olekut Notorias.",
           "p2": "Stripe töötleb makseandmeid makseteenuse pakkujana. Kaardi käsitlemise kohta vaata Stripe’i enda privaatsusdokumentatsiooni."
         },
@@ -4234,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro maksmine, portaal ja tellimuse olek"
+              "role": "Notoria Pro ja Premium kassas, portaal ja tellimuse staatus"
             },
             {
               "provider": "Google",
@@ -4348,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Need kasutustingimused selgitavad Notoria kasutamise reegleid aadressil <site>www.notoria.fi</site>. Need kirjeldavad, kuidas toode täna töötab: privaatsed õppetööruumid, valikuline Notoria Pro arveldus Stripe’i kaudu ja AI-abistatud funktsioonid. Need ei asenda advokaadi nõuannet sinu konkreetse olukorra kohta.",
+      "intro": "Need kasutustingimused selgitavad reegleid Notoria kasutamiseks aadressil <site>www.notoria.fi</site>. Need kirjeldavad, kuidas toode täna töötab: privaatne õppe tööruum, valikuline Pro ja Premium arveldamine läbi Stripe'i ning AI abistavad funktsioonid. Need ei asenda advokaadi nõuandeid teie konkreetse olukorra kohta.",
       "tocTitle": "Sellel lehel",
       "tocAria": "Sellel lehel",
       "toc": {
@@ -4359,7 +4375,7 @@
         "acceptable-use": "Lubatud kasutus",
         "ip": "Intellektuaalomand",
         "ai": "AI-genereeritud väljund",
-        "plans": "Free plaan ja Notoria Pro",
+        "plans": "Tasuta, Pro ja Premium plaanid",
         "billing": "Tellimus ja arveldus",
         "refunds": "Tagasimaksed ja tarbijaõigused",
         "availability": "Kättesaadavus",
@@ -4378,7 +4394,7 @@
         "service": {
           "title": "2. Teenus",
           "p1": "Notoria on privaatne keeleõppe veebirakendus. Saad luua tööruume ja hoida õppematerjali nagu sõnavara, teooriamärkmed, kirjutamine, harjutused, kuulamistunnid ja rääkimisseansid.",
-          "p2": "Mõned funktsioonid on saadaval Free plaanil. Notoria Pro avab täiendavad võimalused, nagu näidatud tootes ja sinu <account>Konto</account> lehel — sealhulgas Kuulamine, Rääkimine, teatud AI õppetööriistad, harjutuste import ja tasulised dokumendi ekspordivormingud. Funktsioonide kättesaadavus võib toote arenedes muutuda.",
+          "p2": "Põhialad, sealhulgas Kuulamine, Rääkimine ja Lugemine, on saadaval igas plaanis. Pro ja Premium lisavad kõrgemaid AI lubasid ja õppe-materjalide import/export; Premium lisab ka isikupärastatud juhendamise ja harjutamise funktsioonid. Praegune võrdlus on näidatud teie <account>Kontole</account>.",
           "p3": "Notoria on isiklikuks keeleõppeks. See ei ole kool, eksamiasutus ega professionaalne nõuandeteenus."
         },
         "accounts": {
@@ -4419,23 +4435,23 @@
           "title": "7. AI-genereeritud väljund",
           "p1": "Mõned funktsioonid saavad kontrollida, soovitada, genereerida, transkribeerida, kokku võtta või juhendada sinu materjali põhjal. Väljund võib olla puudulik, vale või sinu eesmärgi jaoks sobimatu. Sina jääd vastutavaks AI tulemuste ülevaatamise eest enne nendele tuginemist õppimiseks, eksamiteks, professionaalseks kasutuseks või avaldamiseks.",
           "p2": "AI funktsioonid võivad olla kättesaamatud, kui abi on <settings>Seadetes</settings> välja lülitatud, kui sinu plaan konkreetset tööriista ei sisalda või kui pakkuja on ajutiselt kättesaamatu.",
-          "p3": "Mitte kõik AI abilised ei nõua Notoria Pro-d. Toode näitab, millised tööriistad on tasuta ja millised vajavad Pro-d."
+          "p3": "AI kättesaadavus ja igapäevased lubad varieeruvad tasuta, Pro ja Premium vahel. Toode näitab iga tööriista jaoks vajalikku plaani ja lubade arvu."
         },
         "plans": {
-          "title": "8. Free plaan ja Notoria Pro",
+          "title": "8. Tasuta, Pro ja Premium plaanid",
           "p1": "Free plaan katab põhiharjutuse sinu enda sõnavaraga ja seotud õppetööriistadega, nagu tootes näidatud.",
-          "p2": "Notoria Pro on tasuline tellimus, mis avab täiendavaid funktsioone. Praeguses tootes hõlmab see tavaliselt Kuulamist, Rääkimist, harjutuste importi, lause moodustamise harjutust, paljusid AI-abistatud õppetööriistu ning PDF/DOCX dokumendi eksporti. Mõned kergemad AI abilised (näiteks teatud sõnavara või redaktori vormindamise abi) võivad jääda Free plaanil saadaval, kui AI-abi on lubatud.",
-          "p3": "Pro juurdepääs on seotud sinu kasutajakontoga, seega kehtib see kõigile selle konto all olevatele tööruumidele. Administraatori rolliga kontodel võib olla Pro-taseme juurdepääs ilma isikliku Stripe’i tellimuseta.",
-          "p4": "Sinu ostule kehtiv hind on Stripe Checkout’is praeguse Pro plaani jaoks näidatud hind. Mis tahes mujal tootes näidatud hind (näiteks Kontol) on ainult suunav ja peab ühtima aktiivse Stripe’i hinna konfiguratsiooniga."
+          "p2": "Pro ja Premium on tasulised tellimused. Pro lisab kõrgemaid või piiramatu lubasid paljudele AI tööriistadele ning õppe-materjalide importimise ja PDF/DOCX eksportimise. Premium sisaldab Pro ja lisab isikupärastatud funktsioone, nagu Õppimise Juhendaja, isiklik õppeprofiil, kohanduv praktika, vigade põhine praktika ja kohandatud harjutusjuhised. Konto leht näitab praegust võrdlust ja piire.",
+          "p3": "Tasuline juurdepääs on seotud teie kasutajakontoga ja kehtib selle tööruumide vahel. Administratori rolliga kontod võivad omada tasulist juurdepääsu ilma isikliku Stripe'i tellimuseta.",
+          "p4": "Kehtiv hind on hind, mis on näidatud Stripe'i kassas valitud Pro või Premium plaani jaoks. Igasugune mujal tootes näidatud hind (näiteks Kontol) on ainult suunis ja peab vastama aktiivsele Stripe'i hinnakujundusele."
         },
         "billing": {
           "title": "9. Tellimus, arveldus ja tühistamine",
-          "list0": "Pro tellimusi arveldatakse <strong>Stripe</strong>’i kaudu",
-          "list1": "Saad alustada maksmist <account>Kontost</account> või lukustatud Pro juhtnuppudest rakenduses",
+          "list0": "Pro ja Premium tellimused arveldatakse läbi <strong>Stripe</strong>",
+          "list1": "Saate alustada kassasse või muuta plaani <account>Kontolt</account> või lukustatud tasulistest juhtnuppudest rakenduses",
           "list2": "Kontost saad avada Stripe Customer Portali arvete vaatamiseks, makseviiside uuendamiseks ja tellimuse tühistamiseks",
           "list3": "Tühistamine järgib Stripe Customer Portali käitumist sinu tellimuse jaoks",
-          "p1": "Pärast tühistamist jätkub Pro juurdepääs ainult seni, kuni sinu Stripe’i tellimuse olek annab tootes endiselt Pro. Praeguses teostuses käsitletakse Pro-na olekuid <code>active</code>, <code>trialing</code> ja <code>past_due</code>. Kui olek enam ei kvalifitseeru, naaseb konto Free plaanile.",
-          "p2": "Kui makse ebaõnnestub, võib Stripe liigutada tellimuse olekusse <code>past_due</code> või teise olekusse. Notoria sünkroonib selle oleku Stripe’i veebihaakidest. Kui olek jääb <code>past_due</code>, jäävad Pro funktsioonid praeguste juurdepääsureeglite alusel saadaval; kui tellimus hiljem tühistatakse või muutub muul viisil sobimatuks, lõpeb Pro juurdepääs.",
+          "p1": "Pärast uuendamise tühistamist jätkub teie praegune Pro või Premium juurdepääs, kui Stripe'i tellimuse staatus kvalifitseerub tootes. Kvalifitseeruvad staatused hõlmavad praegu <code>aktiivne</code>, <code>katse</code> ja <code>moodustatud</code>. Kui staatus enam ei kvalifitseeru, naaseb konto tasuta.",
+          "p2": "Kui makse ebaõnnestub, võib Stripe tellimuse viia <code>moodustatud</code> või muusse staatusse. Notoria sünkroniseerib selle staatuse Stripe'i veebihookide kaudu. Kui see jääb <code>moodustatud</code>, jääb praegune tasuline plaan saadaval kehtivate juurdepääsureeglite alusel; kui see hiljem tühistatakse või muul viisil ei kvalifitseeru, lõpeb tasuline juurdepääs.",
           "p3": "Notoria konto kustutamine tühistab Stripe’i tellimuse kohe (parim võimalik) konto kustutamise osana. See erineb uuenemise tühistamisest Customer Portali kaudu, hoides konto alles."
         },
         "refunds": {
@@ -4456,7 +4472,7 @@
         "liability": {
           "title": "13. Vastutusest loobumine ja vastutus",
           "p1": "Notoriat pakutakse „nagu saadaval“ alusel isiklikuks keeleõppeks. Kohaldatava õigusega lubatud suurimas ulatuses loobume garantiidest, mida seadus ei nõua.",
-          "p2": "Kohaldatava õigusega lubatud suurimas ulatuses ei vastuta Notoria kaudsete, juhuslike, eriliste, järgnevate või andmekaotuse kahjude eest, mis tulenevad teenuse kasutamisest või AI väljundile tuginemisest. Kui vastutust ei saa välistada, on see piiratud summaga, mille maksid Notoria Pro eest kolme kuu jooksul enne nõuet, või mis tahes suurema summaga, mida kohustuslik õigus nõuab.",
+          "p2": "Kohaldatava seaduse lubatud ulatuses ei vastuta Notoria kaudsete, juhuslike, eriliste, tagajärgede või kadunud andmete kahjude eest, mis tulenevad teie teenuse kasutamisest või AI väljundi usaldamisest. Kui vastutust ei saa välistada, on see piiratud summaga, mille te maksisite Notoria Pro või Premium eest kolme kuu jooksul enne nõuet, või mis tahes suurema summaga, mida nõuab kohustuslik seadus.",
           "p3": "Need limiidid ei välista vastutust, mida Soome või EL õigus ei luba piirata — sealhulgas vastutust, millest tarbijad ei saa loobuda, ja vastutust surma või kehavigastuse eest, mis on põhjustatud hooletusest, kus sellised reeglid kehtivad."
         },
         "changes": {
@@ -4529,9 +4545,9 @@
           "vocab": "Ehita isiklik sõnapank tähenduste, näidete ja siltidega",
           "practice": "Harjuta harjutustega, mis tulevad sinu enda sõnadest ja märkmetest",
           "create": "Kirjuta teooriamärkmeid ja kirjutamistööd, mille juurde saad hiljem naasta",
-          "listenSpeak": "Muuda meedia kuulamisharjutuseks ja räägi AI-õpetajaga Pro-l"
+          "listenSpeak": "Muuda meedia kuulamispraktikaks ja kasuta AI lubasid transkriptsiooniks ja rääkimiseks"
         },
-        "note": "Mõned AI, kuulamise, rääkimise ja ekspordi tööriistad on osa Notoria Pro-st. Free plaan katab endiselt igapäevase sõnavaraharjutuse ja põhiõppe ringi."
+        "note": "Põhialad on saadaval igas plaanis. Pro tõstab AI lubasid ja lisab õppe-materjalide import/export; Premium lisab isikupärastatud juhendamise ja praktika."
       },
       "ai": {
         "title": "AI seal, kus see aitab",
@@ -4657,7 +4673,7 @@
         "title": "Kuidas alad ühenduvad",
         "p1": "Jäädvusta on kiire sisenemispunkt. Sõnavara ja Teooria on koht, kus materjal settib. Harjutus muudab selle materjali praktikaks. Kirjutamine, Kuulamine ja Rääkimine aitavad keelt aktiivsemalt kasutada.",
         "p2": "Sa ei pea läbi käima iga ala järjekorras. Paljud jäävad mõnda aega sõnade ja lühikese harjutuse juurde.",
-        "p3": "Loomulik järgmine samm on kirjutamine, kui soovid keelt oma tingimustel toota, seejärel kuulamine ja rääkimine, kui soovid, et sama materjal töötaks kõrvas ja hääles — Kuulamine ja Rääkimine on osa Notoria Pro-st.",
+        "p3": "Looduslik järgmine samm on kirjutamine, kui soovite keelt toota oma tingimustel, seejärel kuulamine ja rääkimine, kui soovite, et sama materjal töötaks teie kõrvus ja hääles. Need valdkonnad on saadaval igas plaanis; AI kasutuspiirangud varieeruvad plaani järgi.",
         "beat": "Kogu ja saa aru esmalt. Kasuta ja räägi, kui materjal on valmis lehelt lahkuma."
       },
       "areas": {
@@ -4681,11 +4697,11 @@
         },
         "listening": {
           "label": "Kuulamine",
-          "body": "Muuda meedia kuulamisharjutuseks oma tööruumis. Saadaval Notoria Pro-l."
+          "body": "Muuda meedia kuulamispraktikaks oma tööruumis. Saadaval igas plaanis; AI transkriptsiooni lubade arv varieerub plaani järgi."
         },
         "speaking": {
           "label": "Rääkimine",
-          "body": "Live-harjutus AI-õpetajaga, seotud õpitava keelega. Saadaval Notoria Pro-l."
+          "body": "Elav praktika AI juhendajaga, mis põhineb keelel, mida te õpite. Saadaval igas plaanis plaanipõhise igapäevase lubadega."
         },
         "reading": {
           "label": "Lugemine",
@@ -4735,15 +4751,15 @@
         },
         "account": {
           "q": "Kuidas muuta parooli või sulgeda konto?",
-          "a": "Ava <account>Konto</account>. Seal saad uuendada parooli, kui kasutad e-posti sisselogimist, hallata Notoria Pro-d, eksportida varukoopia või konto jäädavalt kustutada."
+          "a": "Avage <account>Account</account>. Seal saate oma parooli uuendada, kui kasutate e-posti sisselogimist, hallata Pro või Premium, eksportida varukoopia või püsivalt kustutada oma konto. Konto kustutamine tühistab ka kohe kõik aktiivsed Stripe'i tellimused parima võimaliku alusel; uuendamise tühistamine hoiab konto ja selle andmed."
         },
         "pro": {
           "q": "Kuidas arveldus ja tühistamine töötavad?",
-          "a": "Notoria Pro arveldatakse Stripe’i kaudu. <account>Kontost</account> saad uuendada, avada Stripe’i kliendiportaali makseviiside ja arvete haldamiseks või tühistada uuenemise."
+          "a": "Notoria Pro ja Premium arveldatakse läbi Stripe. <account>Kontolt</account> saate tellida, vahetada Pro ja Premium vahel, hallata makseviise ja arveid, tühistada uuendamise või jätkata kavandatud tühistamist. Uuendamise tühistamine hoiab juurdepääsu, kuni Stripe lõpetab kvalifitseeritud tellimisperioodi; konto kustutamine on eraldi ja tühistab tellimuse kohe parima võimaliku alusel."
         },
         "proFeatures": {
-          "q": "Mis on tasuta ja mis vajab Notoria Pro-d?",
-          "a": "Igapäevane sõnavaraharjutus ja seotud õppetööriistad on saadaval Free plaanil. Mõned AI tööriistad, kuulamine, rääkimine ja dokumendi eksport on osa Notoria Pro-st. Võrdle ja uuenda <account>Kontost</account>."
+          "q": "Mis on tasuta, Pro ja Premium hulka kuuluv?",
+          "a": "Tasuta sisaldab põhialasid ja igapäevaseid lubasid toetatud AI tööriistade jaoks. Pro tõstab või eemaldab paljusid AI piire ja lisab õppe-materjalide importimise ning PDF/DOCX eksportimise. Premium sisaldab Pro ja lisab isikupärastatud juhendamise, õppeprofiili, kohanduva ja vigade põhise praktika ning kohandatud harjutusjuhised. Vaadake reaalajas võrdlust ja praeguseid piire <account>Kontol</account>."
         },
         "learning": {
           "q": "Kuidas Notoria õppefunktsioonid töötavad?",
@@ -5053,7 +5069,7 @@
         "suspended": "Peatatud"
       },
       "plans": {
-        "free": "Free",
+        "free": "Tasuta",
         "pro": "Pro",
         "premium": "Premium"
       },

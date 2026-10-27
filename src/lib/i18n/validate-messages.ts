@@ -1,5 +1,6 @@
 import { readFileSync } from "node:fs";
 import { join } from "node:path";
+import { parse, TYPE, type MessageFormatElement } from "@formatjs/icu-messageformat-parser";
 
 type JsonValue = string | number | boolean | null | JsonValue[] | JsonObject;
 type JsonObject = { [key: string]: JsonValue };
@@ -43,13 +44,23 @@ function getAtPath(root: JsonValue, path: string): JsonValue | undefined {
   return current;
 }
 
-const ICU_TOKEN = /\{([a-zA-Z0-9_]+)(?:,|\})/g;
-
 function icuVars(message: string): string[] {
   const vars = new Set<string>();
-  for (const match of message.matchAll(ICU_TOKEN)) {
-    if (match[1]) vars.add(match[1]);
+
+  function visit(elements: MessageFormatElement[]) {
+    for (const element of elements) {
+      if (element.type >= TYPE.argument && element.type <= TYPE.plural) {
+        vars.add(element.value);
+      }
+      if (element.type === TYPE.select || element.type === TYPE.plural) {
+        Object.values(element.options).forEach((option) => visit(option.value));
+      } else if (element.type === TYPE.tag) {
+        visit(element.children);
+      }
+    }
   }
+
+  visit(parse(message));
   return [...vars].sort();
 }
 

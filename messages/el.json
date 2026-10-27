@@ -17,19 +17,20 @@
     "hideFilters": "Απόκρυψη φίλτρων",
     "remove": "Αφαίρεση",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Εμφάνιση",
+      "print": "Φιλικό προς εκτύπωση",
+      "printHint": "Λευκή σελίδα, σκούρο κείμενο",
+      "theme": "Τρέχον θέμα",
+      "themeHint": "Ταιριάζει με το ανοιχτό ή σκούρο θέμα σας",
+      "previewKicker": "Δείγμα σελίδας",
+      "previewTitle": "Τίτλος εγγράφου",
+      "previewBody": "Το κείμενο του σώματος χρησιμοποιεί τα επιλεγμένα χρώματα και διαστήματα.",
+      "previewCallout": "Οι επισημάνσεις και οι τονισμοί ακολουθούν το χρώμα του module.",
+      "fixedNote": "Η εμφάνιση είναι σταθερή στο εξαγόμενο αρχείο. Εξάγετε ξανά για να την αλλάξετε.",
+      "docxBackgroundNote": "Το Word και άλλες εφαρμογές ενδέχεται να μην εμφανίζουν τα φόντα σελίδας με τον ίδιο τρόπο, ειδικά κατά την εκτύπωση."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Μετάβαση στην κορυφή",
+    "moreActions": "Περισσότερες ενέργειες"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "Αυτός ο φάκελος είναι ένθετος πολύ βαθιά",
     "notFound": "Ο φάκελος δεν βρέθηκε",
     "nameTaken": "Ένας φάκελος ή γραπτό χρησιμοποιεί ήδη αυτό το όνομα",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Μετακίνηση σε φάκελο",
+    "dragTipBody": "Σε υπολογιστή με ποντίκι ή trackpad, σύρετε ένα αντικείμενο πάνω σε μια κάρτα φακέλου για να το μετακινήσετε. Μπορείτε επίσης να χρησιμοποιήσετε το εικονίδιο μετακίνησης σε κάθε αντικείμενο.",
+    "dragTipDismiss": "Απόρριψη συμβουλής",
+    "dragTipShow": "Πώς να μετακινήσετε σε φακέλους",
+    "dragTipDemo": "Σύρετε το αντικείμενο πάνω σε φάκελο",
+    "dragTipCard": "Αντικείμενο"
   },
   "theme": {
     "toggle": "Εναλλαγή θέματος",
@@ -472,34 +473,34 @@
     "viewMode": "Λειτουργία προβολής",
     "tagManager": {
       "open": "Διαχείριση ετικετών",
-      "eyebrow": "Tags",
+      "eyebrow": "Ετικέτες",
       "title": "Διαχειριστής ετικετών",
-      "description": "Επιλέξτε μια ετικέτα και έπειτα αντιστοιχίστε την ή αφαιρέστε την από λέξεις. Οι αντιστοιχισμένες και οι άλλες λέξεις παραμένουν σε ξεχωριστές λίστες.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Επιλέξτε μια ετικέτα και στη συνέχεια αναθέστε την ή αφαιρέστε την από τις λέξεις.",
+      "pageDescription": "Επιλέξτε Κανονική ή Προσαρμοσμένη, επιλέξτε μια ετικέτα και στη συνέχεια προσθέστε ή αφαιρέστε την από τις λέξεις.",
+      "disabledNoWorkspace": "Δημιουργήστε έναν χώρο εργασίας πριν διαχειριστείτε τις ετικέτες λεξιλογίου.",
+      "backToVocabulary": "Επιστροφή στο λεξιλόγιο",
+      "backToSettings": "Επιστροφή στις ρυθμίσεις",
       "groupsLabel": "Τυπικές ομάδες ετικετών",
       "tagsHeading": "Ετικέτες",
       "standardTagsHeading": "Τυπικές ετικέτες",
       "customTagsHeading": "Προσαρμοσμένες ετικέτες",
-      "customTagsHint": "Ετικέτες που δημιουργείτε για τη δική σας οργάνωση — όχι μέρη του λόγου.",
+      "customTagsHint": "Ετικέτες χώρου εργασίας που δημιουργείτε — αναζητήστε τις όταν η λίστα είναι μεγάλη.",
       "emptyCustomTags": "Δεν υπάρχουν ακόμη προσαρμοσμένες ετικέτες. Δημιουργήστε τις κατά την επεξεργασία μιας λέξης.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Καμία προσαρμοσμένη ετικέτα δεν ταιριάζει σε αυτή την αναζήτηση.",
+      "tagSearchPlaceholder": "Αναζητήστε ετικέτες…",
       "wordsHeading": "{tag}",
       "kindStandard": "Τυπική",
       "kindCustom": "Προσαρμοσμένη",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Λίστες λέξεων",
+      "wordTabAssigned": "Ετικετοποιημένες",
+      "wordTabOther": "Χωρίς ετικέτα",
       "assignedHeading": "Λέξεις με αυτή την ετικέτα",
       "otherHeading": "Άλλες λέξεις",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Επιλέξτε όλα στη σελίδα αυτή",
+      "clearSelection": "Καθαρισμός επιλογής",
+      "selectionScopePage": "Επιλογή από αυτή τη σελίδα ({count} από {total})",
+      "selectionScopeFiltered": "Επιλογή εντός των τρεχουσών αποτελεσμάτων αναζήτησης",
       "searchPlaceholder": "Αναζήτηση λέξεων ή σημασιών…",
       "wordCount": "{count}",
       "loading": "Φόρτωση λεξιλογίου…",
@@ -509,13 +510,23 @@
       "emptyOther": "Κάθε λέξη έχει ήδη αυτή την ετικέτα.",
       "emptyOtherSearch": "Καμία αντίστοιχη λέξη για αντιστοίχιση.",
       "selected": "{count} επιλεγμένες",
-      "addToTag": "Προσθήκη στην ετικέτα",
-      "removeFromTag": "Αφαίρεση από την ετικέτα",
-      "applyAdd": "Προσθήκη στην ετικέτα ({count})",
-      "applyRemove": "Αφαίρεση από την ετικέτα ({count})",
+      "addToTag": "Προσθήκη ετικέτας",
+      "removeFromTag": "Αφαίρεση ετικέτας",
+      "applyAdd": "Προσθήκη ετικέτας ({count})",
+      "applyRemove": "Αφαίρεση ετικέτας ({count})",
       "added": "Προστέθηκαν {count} λέξη/λέξεις στην ετικέτα {tag}",
       "removed": "Αφαιρέθηκαν {count} λέξη/λέξεις από την ετικέτα {tag}",
-      "error": "Δεν ήταν δυνατή η ενημέρωση της συμμετοχής στην ετικέτα"
+      "error": "Δεν ήταν δυνατή η ενημέρωση της συμμετοχής στην ετικέτα",
+      "systemsLabel": "Συστήματα ετικετών",
+      "standardSystemTitle": "Κανονικό",
+      "standardSystemMeta": "Θέμα και χρήση, εμφανίζονται ξεχωριστά",
+      "usageOptional": "Προαιρετικό",
+      "customSystemTitle": "Προσαρμοσμένο",
+      "customSystemMeta": "{count, plural, one {# ετικέτα} other {# ετικέτες}}",
+      "customPickerLabel": "Επιλέξτε μια προσαρμοσμένη ετικέτα",
+      "customPickerPlaceholder": "Επιλέξτε μια προσαρμοσμένη ετικέτα…",
+      "customSearchPlaceholder": "Αναζητήστε προσαρμοσμένες ετικέτες…",
+      "pickTagFirst": "Επιλέξτε μια ετικέτα παραπάνω για να διαχειριστείτε την ένταξη λέξεων."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Ενημερώθηκε {time}",
@@ -584,7 +595,11 @@
         "notes": "Σημειώσεις",
         "updated": "Τελευταία ενημέρωση"
       }
-    }
+    },
+    "selectedCustomTags": "Επιλεγμένες ετικέτες",
+    "selectedSynonyms": "Επιλεγμένα συνώνυμα",
+    "removeCustomTag": "Αφαίρεση {name}",
+    "pickerLoading": "Φόρτωση…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Η εξάσκηση είναι έτοιμη",
       "aiUnavailable": "Δεν ήταν δυνατή η δημιουργία ερωτήσεων τεχνητής νοημοσύνης αυτή τη στιγμή.",
       "aiForbidden": "Οι ασκήσεις θεωρίας με τεχνητή νοημοσύνη είναι διαθέσιμες με Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Επιπλέον οδηγίες είναι διαθέσιμες στην Premium.",
       "aiDisabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "feedback": {
         "correct": "Σωστά!",
@@ -927,20 +942,22 @@
         "why": "Γιατί",
         "complete": "Κατανοητό",
         "completeHint": "Μπορείτε να συνεχίσετε όταν είστε έτοιμοι.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Ξεκινήστε την άσκηση",
+        "skipReviewAndStart": "Παραλείψτε την ανασκόπηση και ξεκινήστε την άσκηση"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Χωρίς φάκελο",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# σημείωση} other {# σημειώσεις}}",
+        "selectAll": "Επιλέξτε όλα",
+        "selectGroup": "Επιλέξτε σημειώσεις στο {name}",
+        "expand": "Επεκτείνετε το {name}",
+        "collapse": "Συρρικνώστε το {name}",
+        "selectedCount": "{count, plural, one {# θεωρία επιλεγμένη} other {# θεωρίες επιλεγμένες}}",
+        "practiceSelected": "Εξασκηθείτε στις επιλεγμένες",
+        "clearSelection": "Καθαρίστε την επιλογή",
+        "subfolders": "{count, plural, one {# υποφάκελος} other {# υποφάκελοι}}",
+        "selectedOne": "1 θεωρία επιλεγμένη"
       }
     },
     "types": {
@@ -948,9 +965,9 @@
         "label": "Κάρτες",
         "description": "Αναποδογυρίστε κάρτες για να μελετήσετε λέξεις και σημασίες με βαθμολογήσεις διαστηματικής επανάληψης.",
         "preview": "Αναποδογύρισμα · Βαθμολόγηση · Επανάληψη",
-        "previewHint": "Finnish word",
+        "previewHint": "Φινλανδική λέξη",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "ΑΝΑΤΡΟΠΗ → ΒΑΘΜΟΛΟΓΗΣΗ → ΑΝΑΣΚΟΠΗΣΗ"
       },
       "fill-in-blank": {
         "label": "Συμπλήρωση κενού",
@@ -962,9 +979,9 @@
         "description": "Επιλέξτε τη σωστή σημασία ή λέξη — οι παρεμβολές προέρχονται από το λεξιλόγιό σας.",
         "preview": "Ποια σημασία ταιριάζει;",
         "previewPrompt": "Ποια σημασία ταιριάζει;",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "Φινλανδός",
+        "previewB": "καιρός",
+        "previewC": "κτίριο"
       },
       "match-pairs": {
         "label": "Αντιστοίχιση ζευγών",
@@ -998,8 +1015,8 @@
       "startsWith": "Ξεκινά με «{letter}»",
       "revealPrompt": "Ακόμα κολλήσατε; Μπορείτε να αποκαλύψετε την πλήρη απάντηση.",
       "revealAnswer": "Αποκάλυψη απάντησης",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Επόμενη συμβουλή",
+      "hintProgress": "Συμβουλή {current} από {total}"
     },
     "empty": {
       "noWordsTitle": "Δεν υπάρχει ακόμη λεξιλόγιο",
@@ -1032,17 +1049,17 @@
       "shuffle": "Ανακάτεμα",
       "finish": "Ολοκλήρωση γύρου",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Πηγή ερώτησης",
+        "chooseAi": "Χρησιμοποιήστε Δημιουργημένο από AI",
+        "emptyTitle": "Δεν υπάρχουν αποθηκευμένα παραδείγματα προς χρήση",
+        "emptyDescription": "Προσθέστε παραδείγματα προτάσεων που περιλαμβάνουν καθαρά κάθε λέξη, προσαρμόστε τα φίλτρα σας ή αλλάξτε σε Δημιουργημένο από AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Αποθηκευμένα παραδείγματα",
+          "description": "Δημιουργήστε ερωτήσεις άμεσα από τα παραδείγματα λεξιλογίου σας. Χωρίς αναμονή AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Δημιουργημένο από AI",
+          "description": "Δημιουργήστε φρέσκες προτάσεις από το λεξιλόγιό σας με AI."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "Η δημιουργία ασκήσεων με τεχνητή νοημοσύνη είναι διαθέσιμη με Pro.",
       "disabled": "Η βοήθεια τεχνητής νοημοσύνης είναι απενεργοποιημένη στις Ρυθμίσεις.",
       "upgradeHint": "Το Free περιλαμβάνει λίγες δημιουργίες ασκήσεων με τεχνητή νοημοσύνη κάθε μέρα. Το Pro καταργεί το όριο.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Επιπλέον οδηγίες",
+      "additionalInstructionsPlaceholder": "Για παράδειγμα: Χρησιμοποιήστε καταστάσεις εστιατορίου, κρατήστε τη γλώσσα στο επίπεδο A2 και εξηγήστε τα λάθη στη γλώσσα της διεπαφής σας.",
+      "additionalInstructionsLocked": "Αναβαθμίστε σε Premium για να προσαρμόσετε τους υποστηριζόμενους τύπους ασκήσεων, να ορίσετε ένα πραγματικό πλαίσιο και να προσθέσετε τις δικές σας οδηγίες.",
+      "premiumRequired": "Επιπλέον οδηγίες είναι διαθέσιμες στην Premium.",
+      "presetLabel": "Προεπιλεγμένα",
+      "presetNone": "Δεν έχει επιλεγεί καμία προεπιλογή",
+      "presetApply": "Εφαρμογή",
+      "presetSave": "Αποθήκευση προεπιλογής",
+      "presetName": "Όνομα προεπιλογής",
+      "presetDelete": "Διαγραφή",
+      "presetSaved": "Η προεπιλογή αποθηκεύτηκε",
+      "presetDeleted": "Η προεπιλογή διαγράφηκε",
+      "presetSaveFailed": "Δεν ήταν δυνατή η αποθήκευση αυτής της προεπιλογής.",
       "emptyWords": "Προσθέστε λέξεις λεξιλογίου πριν δημιουργήσετε ερωτήσεις.",
       "noneValid": "Η τεχνητή νοημοσύνη δεν μπόρεσε να δημιουργήσει έγκυρες ερωτήσεις για αυτές τις λέξεις. Δοκιμάστε ξανά.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Προσαρμόστε το πλαίσιο, το στυλ ή την εστίαση της άσκησής σας. Αφήστε κενό για να χρησιμοποιήσετε τις προεπιλεγμένες ρυθμίσεις.",
+      "presetUpdate": "Ενημέρωση προεπιλογής",
+      "presetUpdated": "Η προεπιλογή ενημερώθηκε",
+      "presetsTitle": "Αποθηκευμένα προεπιλεγμένα",
+      "presetsHelper": "Τα προεπιλεγμένα αποθηκεύουν τις ρυθμίσεις άσκησης και τις επιπλέον οδηγίες. Δεν αλλάζουν το λεξιλόγιο ή τις θεωρίες που επιλέξατε.",
+      "presetsEmpty": "Δεν υπάρχουν αποθηκευμένα προεπιλεγμένα ακόμη. Αποθηκεύστε τις τρέχουσες ρυθμίσεις σας για να τις επαναχρησιμοποιήσετε αργότερα.",
+      "presetSaveAs": "Αποθήκευση ως προεπιλογή",
+      "presetUpdateCurrent": "Ενημέρωση με τις τρέχουσες ρυθμίσεις",
+      "presetRename": "Μετονομασία",
+      "presetManage": "Διαχείριση προεπιλογής",
+      "presetRenamed": "Η προεπιλογή μετονομάστηκε",
+      "presetSaveDialogTitle": "Αποθήκευση ως προεπιλογή",
+      "presetSaveDialogDescription": "Ονομάστε αυτήν την προεπιλογή για να επαναχρησιμοποιήσετε τις τρέχουσες ρυθμίσεις άσκησης και τις επιπλέον οδηγίες. Το επιλεγμένο λεξιλόγιο ή οι θεωρίες δεν αποθηκεύονται.",
+      "presetRenameDialogTitle": "Μετονομασία προεπιλογής",
+      "presetRenameDialogDescription": "Επιλέξτε ένα νέο όνομα για αυτήν την προεπιλογή.",
+      "presetDeleteDialogTitle": "Διαγραφή προεπιλογής;",
+      "presetDeleteDialogDescription": "Διαγράψτε το “{name}”; Η τρέχουσα ρύθμιση άσκησης παραμένει ως έχει."
     },
     "session": {
       "complete": "Η συνεδρία ολοκληρώθηκε",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Δοκιμάστε ξανά",
       "questionsLabel": "Ερωτήσεις",
       "correctLabel": "Σωστά",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Λάθος",
+      "unansweredLabel": "Χωρίς απάντηση",
       "reviewLabel": "Προς επανάληψη",
       "answeredProgress": "{answered} / {total} απαντήθηκαν",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Έλεγχος απάντησης",
+      "nextQuestion": "Επόμενη",
+      "viewResults": "Δείτε τα αποτελέσματα",
       "submitSet": "Υποβολή απαντήσεων",
       "submitting": "Έλεγχος…",
       "unansweredWarnTitle": "Αναπάντητες ερωτήσεις",
@@ -1121,54 +1138,54 @@
       "unanswered": "Δεν απαντήθηκε",
       "yourAnswer": "Η απάντησή σας",
       "correctAnswer": "Σωστή απάντηση",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Μόνο {count} ερωτήσεις διαθέσιμες από τα τρέχοντα φίλτρα σας.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Πώς ασκείστε",
+        "lockedHint": "Ολοκληρώστε ή ξεκινήστε μια νέα σειρά για να αλλάξετε αυτό.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Μία προς μία",
+          "description": "Δείτε μία ερώτηση τη φορά. Ελέγξτε μετά από κάθε απάντηση για άμεση ανατροφοδότηση."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Όλες οι ερωτήσεις",
+          "description": "Δείτε τη πλήρη σειρά, απαντήστε με οποιαδήποτε σειρά και στη συνέχεια υποβάλετε μία φορά για ανατροφοδότηση."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Ανασκόπηση",
+        "allCorrect": "Τέλεια — κάθε ερώτηση σωστή.",
+        "summary": "{incorrect} λάθος · {unanswered} χωρίς απάντηση · {needsReview} προς ανασκόπηση",
+        "viewWrong": "Δείτε τις λάθος απαντήσεις",
+        "filtersLabel": "Φιλτράρετε τις ερωτήσεις",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Όλες ({count})",
+          "needs_review": "Λάθος & χωρίς απάντηση ({count})",
+          "correct": "Σωστά ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Προηγούμενα",
+        "nextWrong": "Επόμενα",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} προς ανασκόπηση",
+        "floatLabel": "Πλοήγηση σε λάθος απαντήσεις",
+        "closeFloat": "Εμφάνιση όλων των απαντήσεων"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% σωστά",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Τέλεια σειρά",
+          "body": "Κάθε απάντηση ήταν σωστή. Αυτός ο τύπος εστίασης αξίζει μια ακόμη προσπάθεια όταν είστε έτοιμοι."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Δυνατό φινάλε",
+          "body": "Φαίνεται ότι το καταλαβαίνετε — ανασκοπήστε τα λάθη, στη συνέχεια κλειδώστε το με μια νέα σειρά."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Καλή δουλειά — συνεχίστε",
+          "body": "Ορισμένα σημεία δυσκολίας είναι φυσιολογικά. Ανασκοπήστε τα μία φορά, στη συνέχεια δοκιμάστε ξανά ενώ είναι φρέσκα."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Σχεδόν εκεί",
+          "body": "Ολοκληρώστε πρώτα τις ερωτήσεις χωρίς απάντηση — στη συνέχεια το σκορ θα πει μια πιο καθαρή ιστορία."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Οι ερωτήσεις δημιουργούνται στα {language} (γλώσσα χώρου εργασίας).",
       "contextualEmptyTitle": "Δημιουργία ερωτήσεων συμφραζομένων",
-      "contextualEmptyDescription": "Δημιουργήστε ερωτήσεις πολλαπλής επιλογής με συμπλήρωση κενού από το λεξιλόγιό σας.",
+      "contextualEmptyDescription": "Προσθέστε προαιρετικές οδηγίες παρακάτω αν θέλετε, στη συνέχεια πατήστε Δημιουργία. Μπορείτε να αφήσετε το prompt κενό.",
       "contextualProDescription": "Οι ερωτήσεις συμφραζομένων με τεχνητή νοημοσύνη είναι διαθέσιμες με Pro.",
       "unlockContextual": "Ξεκλείδωμα με Pro",
       "correct": "Σωστά!",
@@ -1202,8 +1219,8 @@
       "hint": "Επιλέξτε μια λέξη και μετά πατήστε τη σημασία της",
       "complete": "Όλα τα ζεύγη αντιστοιχίστηκαν — εξαιρετικά!",
       "shuffle": "Ανακάτεμα στηλών",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} ζεύγη",
+      "continueRound": "Συνέχεια"
     },
     "typeAnswer": {
       "questionWord": "Ποια είναι η σημασία;",
@@ -1213,7 +1230,7 @@
         "contextual": "Συμφραζόμενα"
       },
       "contextualEmptyTitle": "Δημιουργία ερωτήσεων συμφραζομένων",
-      "contextualEmptyDescription": "Δημιουργήστε προτροπές πληκτρολόγησης με συμπλήρωση κενού από το λεξιλόγιό σας.",
+      "contextualEmptyDescription": "Προσθέστε προαιρετικές οδηγίες παρακάτω αν θέλετε, στη συνέχεια πατήστε Δημιουργία. Μπορείτε να αφήσετε το prompt κενό.",
       "contextualProDescription": "Οι ερωτήσεις συμφραζομένων με τεχνητή νοημοσύνη είναι διαθέσιμες με Pro.",
       "unlockContextual": "Ξεκλείδωμα με Pro",
       "placeholder": "Πληκτρολογήστε την απάντησή σας…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Γραφή",
         "description": "Πλούσια έγγραφα και σύνολα ερωτήσεων που μπορείτε να ξαναδείτε και να εξάγετε.",
-        "how": "Ξεκινήστε ένα πρόχειρο, οργανώστε με φακέλους και χρησιμοποιήστε τεχνητή νοημοσύνη Pro για έλεγχο ή βελτίωση του κειμένου σας.",
+        "how": "Ξεκινήστε ένα προσχέδιο, οργανώστε με φακέλους και χρησιμοποιήστε την επιδότηση AI του σχεδίου σας για να ελέγξετε ή να βελτιώσετε το κείμενό σας.",
         "cta": "Άνοιγμα γραφής"
       },
       "listening": {
         "title": "Ακρόαση",
         "description": "Μετατρέψτε πραγματικό ήχο ή βίντεο σε μάθημα.",
-        "how": "Ανεβάστε ένα απόσπασμα και δημιουργήστε απομαγνητοφώνηση στο Free. Η δημιουργημένη εξάσκηση ακρόασης είναι μέρος του Pro.",
+        "how": "Ανεβάστε ένα κλιπ, δημιουργήστε μια μεταγραφή και χτίστε πρακτική ακρόασης με την επιδότηση AI που περιλαμβάνεται στο σχέδιο σας.",
         "cta": "Άνοιγμα ακρόασης"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Ορισμένοι χώροι εργασίας υπάρχουν ήδη για την ίδια γλώσσα. Το περιεχόμενό τους θα προστεθεί στους υπάρχοντες χώρους εργασίας αντί να δημιουργηθούν διπλότυπα.",
         "empty_backup": "Αυτό το αντίγραφο ασφαλείας δεν περιέχει εισαγώγιμα μαθησιακά δεδομένα.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Ορισμένα υπάρχοντα αντικείμενα μοιράζονται το ίδιο όνομα. Η εισαγωγή θα επαναχρησιμοποιήσει ένα από αυτά με καθορισμένο τρόπο και θα αφήσει τα άλλα αμετάβλητα."
       },
       "cancel": "Ακύρωση",
       "confirm": "Εισαγωγή μαθησιακών δεδομένων",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Αυτό το αντίγραφο ασφαλείας είναι πολύ μεγάλο για επεξεργασία μέσω αυτής της σελίδας. Δοκιμάστε μικρότερη εξαγωγή ή επικοινωνήστε με την υποστήριξη.",
         "notConfigured": "Η αποθήκευση αρχείων δεν έχει ρυθμιστεί ακόμη για εισαγωγή αντιγράφου ασφαλείας."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Ήδη στον λογαριασμό σας",
+      "skippedInAccountHint": "Αυτά τα ονόματα ταιριάζουν με αντικείμενα που έχετε ήδη. Δεν θα εισαχθούν ξανά. Νέα αντικείμενα κάτω από τον ίδιο χώρο εργασίας εισάγονται κανονικά.",
+      "skippedInBackupTitle": "Διπλά ονόματα σε αυτό το αντίγραφο ασφαλείας",
+      "skippedInBackupHint": "Το αρχείο αναφέρει το ίδιο όνομα περισσότερες από μία φορές. Μόνο η πρώτη αντίγραφο κάθε ονόματος εισάγεται — αυτό είναι φυσιολογικό ακόμη και σε έναν κενό λογαριασμό.",
+      "skippedOtherTitle": "Δεν ήταν δυνατή η εισαγωγή"
     },
     "danger": {
       "title": "Κλείσιμο λογαριασμού",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Πριν συνεχίσετε",
       "warnings": {
         "workspaces": "Κάθε χώρος εργασίας και όλα τα δεδομένα λεξιλογίου, θεωρίας, γραφής, ακρόασης και ομιλίας θα διαγραφούν.",
-        "billing": "Κάθε ενεργή συνδρομή Notoria Pro θα ακυρωθεί αμέσως.",
+        "billing": "Οποιαδήποτε ενεργή συνδρομή Notoria Pro ή Premium θα ακυρωθεί άμεσα.",
         "media": "Τα ανεβασμένα πολυμέσα και η φωτογραφία προφίλ σας θα αφαιρεθούν.",
         "permanent": "Δεν υπάρχει περίοδος ανάκτησης μετά την επιβεβαίωση."
       },
@@ -3233,7 +3250,7 @@
     "upgrade": "Αναβάθμιση σε Pro",
     "manage": "Διαχείριση συνδρομής",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Δωρεάν",
     "premiumBadge": "Premium",
     "renewsOn": "Ανανεώνεται στις {date}",
     "status": "Κατάσταση: {status}",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Προσωπική διαδρομή μάθησης",
       "personalizedRecommendations": "Εξατομικευμένες συστάσεις",
       "crossModuleIntelligence": "Εξατομίκευση μεταξύ ενοτήτων",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Προσαρμοσμένες οδηγίες άσκησης"
     },
     "compare": {
       "heading": "Σύγκριση πλάνων",
@@ -3458,7 +3475,7 @@
       "feature": "Λειτουργία",
       "current": "Τρέχον",
       "capability": "Τι λαμβάνετε",
-      "free": "Free",
+      "free": "Δωρεάν",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Περιλαμβάνεται στο Free",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Πολιτική Απορρήτου",
     "termsTitle": "Όροι Χρήσης",
     "privacyDescription": "Πώς το Notoria συλλέγει, χρησιμοποιεί και διαγράφει προσωπικά δεδομένα και μαθησιακό περιεχόμενο για τον ιδιωτικό χώρο εργασίας εκμάθησης γλωσσών.",
-    "termsDescription": "Όροι χρήσης του ιδιωτικού χώρου εργασίας εκμάθησης γλωσσών του Notoria, λογαριασμών, λειτουργιών AI και χρέωσης Notoria Pro.",
+    "termsDescription": "Όροι χρήσης του ιδιωτικού χώρου εκμάθησης γλώσσας Notoria, λογαριασμών, χαρακτηριστικών AI και χρέωσης Pro ή Premium.",
     "updated": "Τελευταία ενημέρωση {date}",
-    "updatedDate": "23 Σεπτεμβρίου 2026",
+    "updatedDate": "27 Οκτωβρίου 2026",
     "backToSignIn": "Επιστροφή στη σύνδεση",
     "backHome": "Επιστροφή στο Notoria",
     "authFooter": "Απόρρητο · Όροι",
@@ -4071,7 +4088,7 @@
         "purposes": "Γιατί επεξεργαζόμαστε δεδομένα",
         "auth": "Λογαριασμοί και σύνδεση",
         "ai": "Λειτουργίες AI",
-        "payments": "Πληρωμές (Notoria Pro)",
+        "payments": "Πληρωμές (Pro και Premium)",
         "processors": "Πάροχοι υπηρεσιών",
         "cookies": "Cookies και αποθήκευση συσκευής",
         "transfers": "Διεθνείς διαβιβάσεις",
@@ -4095,7 +4112,7 @@
           "list": [
             "δημιουργείτε ή χρησιμοποιείτε λογαριασμό",
             "αποθηκεύετε υλικό σε ιδιωτικούς χώρους εργασίας",
-            "εγγράφεστε στο Notoria Pro",
+            "εγγραφείτε στο Notoria Pro ή Premium",
             "χρησιμοποιείτε προαιρετικά εργαλεία με υποστήριξη AI",
             "ανεβάζετε πολυμέσα για ακρόαση ή χρήση προφίλ",
             "χρησιμοποιείτε εξάσκηση ομιλίας",
@@ -4156,7 +4173,7 @@
               "basis": "Σύμβαση (Άρθρο 6(1)(β))"
             },
             {
-              "purpose": "Εκτέλεση χρέωσης και κατάστασης συνδρομής Notoria Pro μέσω Stripe",
+              "purpose": "Διαχείριση χρέωσης και κατάστασης συνδρομής Notoria Pro και Premium μέσω Stripe",
               "basis": "Σύμβαση (Άρθρο 6(1)(β))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "Ο τρέχων κώδικας δεν χρησιμοποιεί άλλους παρόχους μεγάλων γλωσσικών μοντέλων εκτός από το OpenAI. Το OpenAI επεξεργάζεται δεδομένα βάσει των δικών του όρων και πολιτικής απορρήτου ως εκτελών την επεξεργασία για αυτές τις λειτουργίες."
         },
         "payments": {
-          "title": "7. Πληρωμές (Notoria Pro)",
+          "title": "7. Πληρωμές (Pro και Premium)",
           "p1": "Οι πληρωμένες συνδρομές διαχειρίζονται από το <strong>Stripe</strong>. Το checkout, τα τιμολόγια, οι μέθοδοι πληρωμής και η ακύρωση εκτελούνται μέσω Stripe Checkout και Stripe Customer Portal. Τα webhooks του Stripe ενημερώνουν το πλάνο και την κατάστασή σας στο Notoria.",
           "p2": "Το Stripe επεξεργάζεται δεδομένα πληρωμής ως πάροχος πληρωμών. Δείτε την τεκμηρίωση απορρήτου του Stripe για τον χειρισμό καρτών."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Checkout Notoria Pro, portal και κατάσταση συνδρομής"
+              "role": "Checkout Notoria Pro και Premium, πύλη και κατάσταση συνδρομής"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Αυτοί οι Όροι Χρήσης εξηγούν τους κανόνες χρήσης του Notoria στο <site>www.notoria.fi</site>. Περιγράφουν πώς λειτουργεί το προϊόν σήμερα: ιδιωτικοί χώροι εργασίας μάθησης, προαιρετική χρέωση Notoria Pro μέσω Stripe και λειτουργίες με υποστήριξη AI. Δεν αποτελούν υποκατάστατο συμβουλής από δικηγόρο για τη συγκεκριμένη περίπτωσή σας.",
+      "intro": "Αυτοί οι Όροι Χρήσης εξηγούν τους κανόνες για τη χρήση του Notoria στο <site>www.notoria.fi</site>. Περιγράφουν πώς λειτουργεί το προϊόν σήμερα: ιδιωτικοί χώροι εκμάθησης, προαιρετική χρέωση Pro και Premium μέσω Stripe και χαρακτηριστικά υποστήριξης AI. Δεν αποτελούν υποκατάστατο νομικής συμβουλής σχετικά με την συγκεκριμένη κατάσταση σας.",
       "tocTitle": "Σε αυτή τη σελίδα",
       "tocAria": "Σε αυτή τη σελίδα",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Αποδεκτή χρήση",
         "ip": "Διανοητική ιδιοκτησία",
         "ai": "Έξοδος που δημιουργείται από AI",
-        "plans": "Δωρεάν πλάνο και Notoria Pro",
+        "plans": "Δωρεάν, Pro και Premium σχέδια",
         "billing": "Συνδρομή και χρέωση",
         "refunds": "Επιστροφές και δικαιώματα καταναλωτή",
         "availability": "Διαθεσιμότητα",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. Η υπηρεσία",
           "p1": "Το Notoria είναι ιδιωτική εφαρμογή ιστού εκμάθησης γλωσσών. Μπορείτε να δημιουργείτε χώρους εργασίας και να διατηρείτε μαθησιακό υλικό όπως λεξιλόγιο, θεωρητικές σημειώσεις, γραφή, ασκήσεις, μαθήματα ακρόασης και συνεδρίες ομιλίας.",
-          "p2": "Ορισμένες λειτουργίες είναι διαθέσιμες στο δωρεάν πλάνο. Το Notoria Pro ξεκλειδώνει πρόσθετες δυνατότητες όπως εμφανίζονται στο προϊόν και στη σελίδα <account>Λογαριασμός</account> — συμπεριλαμβανομένων Ακρόασης, Ομιλίας, ορισμένων εργαλείων μελέτης AI, εισαγωγής ασκήσεων και πληρωμένων μορφών εξαγωγής εγγράφων. Η διαθεσιμότητα λειτουργιών μπορεί να αλλάξει καθώς εξελίσσεται το προϊόν.",
+          "p2": "Οι βασικές περιοχές εκμάθησης, συμπεριλαμβανομένων των Ακρόαση, Ομιλία και Ανάγνωση, είναι διαθέσιμες σε κάθε σχέδιο. Pro και Premium προσθέτουν υψηλότερες επιδοτήσεις AI και εισαγωγή/εξαγωγή υλικού εκμάθησης; το Premium προσθέτει επίσης εξατομικευμένη καθοδήγηση και χαρακτηριστικά πρακτικής. Η τρέχουσα σύγκριση εμφανίζεται στη σελίδα <account>Λογαριασμός</account> σας. Η διαθεσιμότητα χαρακτηριστικών μπορεί να αλλάξει καθώς το προϊόν εξελίσσεται.",
           "p3": "Το Notoria προορίζεται για προσωπική εκμάθηση γλωσσών. Δεν είναι σχολείο, εξεταστική αρχή ή υπηρεσία επαγγελματικών συμβουλών."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. Έξοδος που δημιουργείται από AI",
           "p1": "Ορισμένες λειτουργίες μπορούν να ελέγχουν, να προτείνουν, να δημιουργούν, να απομαγνητοφωνούν, να συνοψίζουν ή να διδάσκουν βάσει του υλικού σας. Η έξοδος μπορεί να είναι ελλιπής, εσφαλμένη ή ακατάλληλη για τον στόχο σας. Παραμένετε υπεύθυνοι για την αναθεώρηση των αποτελεσμάτων AI πριν βασιστείτε σε αυτά για μελέτη, εξετάσεις, επαγγελματική χρήση ή δημοσίευση.",
           "p2": "Οι λειτουργίες AI μπορεί να μην είναι διαθέσιμες αν η υποστήριξη είναι απενεργοποιημένη στις <settings>Ρυθμίσεις</settings>, αν το πλάνο σας δεν περιλαμβάνει συγκεκριμένο εργαλείο ή αν ένας πάροχος είναι προσωρινά μη προσβάσιμος.",
-          "p3": "Δεν απαιτούν όλα τα βοηθήματα AI το Notoria Pro. Το προϊόν δείχνει ποια εργαλεία είναι δωρεάν και ποια χρειάζονται Pro."
+          "p3": "Η διαθεσιμότητα AI και οι ημερήσιες επιδοτήσεις διαφέρουν μεταξύ Δωρεάν, Pro και Premium. Το προϊόν δείχνει το σχέδιο και την επιδότηση που απαιτείται για κάθε εργαλείο."
         },
         "plans": {
-          "title": "8. Δωρεάν πλάνο και Notoria Pro",
+          "title": "8. Δωρεάν, Pro και Premium σχέδια",
           "p1": "Το δωρεάν πλάνο καλύπτει βασική εξάσκηση με το δικό σας λεξιλόγιο και σχετικά εργαλεία μελέτης όπως εμφανίζονται στο προϊόν.",
-          "p2": "Το Notoria Pro είναι πληρωμένη συνδρομή που ξεκλειδώνει πρόσθετες λειτουργίες. Στο τρέχον προϊόν, αυτό συνήθως περιλαμβάνει Ακρόαση, Ομιλία, εισαγωγή ασκήσεων, εξάσκηση σχηματισμού πρότασης, πολλά εργαλεία μελέτης με υποστήριξη AI και εξαγωγή εγγράφων PDF/DOCX. Ορισμένα ελαφρύτερα βοηθήματα AI (όπως ορισμένα βοηθήματα λεξιλογίου ή μορφοποίησης επεξεργαστή) μπορεί να παραμένουν διαθέσιμα στο δωρεάν πλάνο όταν είναι ενεργοποιημένη η υποστήριξη AI.",
-          "p3": "Η πρόσβαση Pro συνδέεται με τον λογαριασμό χρήστη σας, επομένως ισχύει σε όλους τους χώρους εργασίας υπό αυτόν τον λογαριασμό. Λογαριασμοί με ρόλο διαχειριστή μπορεί να έχουν πρόσβαση επιπέδου Pro χωρίς προσωπική συνδρομή Stripe.",
-          "p4": "Η τιμή που ισχύει για την αγορά σας είναι η τιμή που εμφανίζεται στο Stripe Checkout για το τρέχον πλάνο Pro. Οποιαδήποτε τιμή εμφανίζεται αλλού στο προϊόν (για παράδειγμα στον Λογαριασμό) είναι ενδεικτική μόνο και πρέπει να αντιστοιχεί στην ενεργή διαμόρφωση τιμής Stripe."
+          "p2": "Τα Pro και Premium είναι πληρωμένες συνδρομές. Το Pro προσθέτει υψηλότερες ή απεριόριστες επιδοτήσεις για πολλά εργαλεία AI, καθώς και εισαγωγή υλικού εκμάθησης και εξαγωγή PDF/DOCX. Το Premium περιλαμβάνει το Pro και προσθέτει εξατομικευμένα χαρακτηριστικά όπως ο Εκπαιδευτής Μάθησης, το προσωπικό προφίλ εκμάθησης, προσαρμοσμένη πρακτική και οδηγίες ασκήσεων. Η σελίδα Λογαριασμού δείχνει την τρέχουσα σύγκριση και τα όρια.",
+          "p3": "Η πληρωμένη πρόσβαση συνδέεται με τον λογαριασμό χρήστη σας και ισχύει σε όλους τους χώρους εργασίας του. Οι λογαριασμοί με ρόλο διαχειριστή μπορεί να έχουν πρόσβαση σε επίπεδο πληρωμής χωρίς προσωπική συνδρομή Stripe.",
+          "p4": "Η τιμή που ισχύει είναι η τιμή που εμφανίζεται στο Stripe Checkout για το επιλεγμένο σχέδιο Pro ή Premium. Οποιαδήποτε τιμή εμφανίζεται αλλού στο προϊόν (για παράδειγμα στη σελίδα Λογαριασμού) είναι ενδεικτική μόνο και πρέπει να ταιριάζει με την ενεργή ρύθμιση τιμής του Stripe."
         },
         "billing": {
           "title": "9. Συνδρομή, χρέωση και ακύρωση",
-          "list0": "Οι συνδρομές Pro χρεώνονται μέσω <strong>Stripe</strong>",
-          "list1": "Μπορείτε να ξεκινήσετε το checkout από τον <account>Λογαριασμό</account> ή από κλειδωμένους ελέγχους Pro στην εφαρμογή",
+          "list0": "Οι συνδρομές Pro και Premium χρεώνονται μέσω <strong>Stripe</strong>",
+          "list1": "Μπορείτε να ξεκινήσετε τη διαδικασία πληρωμής ή να αλλάξετε σχέδιο από τη σελίδα <account>Λογαριασμός</account> ή από κλειδωμένα πληρωμένα στοιχεία ελέγχου στην εφαρμογή",
           "list2": "Από τον Λογαριασμό, μπορείτε να ανοίξετε το Stripe Customer Portal για προβολή τιμολογίων, ενημέρωση μεθόδων πληρωμής και ακύρωση της συνδρομής",
           "list3": "Η ακύρωση ακολουθεί τη συμπεριφορά του Stripe Customer Portal για τη συνδρομή σας",
-          "p1": "Μετά την ακύρωση, η πρόσβαση Pro συνεχίζεται μόνο όσο η κατάσταση συνδρομής Stripe εξακολουθεί να χορηγεί Pro στο προϊόν. Στην τρέχουσα υλοποίηση, καταστάσεις που αντιμετωπίζονται ως Pro περιλαμβάνουν τις <code>active</code>, <code>trialing</code> και <code>past_due</code>. Όταν η κατάσταση δεν πληροί πλέον τις προϋποθέσεις, ο λογαριασμός επιστρέφει στο δωρεάν πλάνο.",
-          "p2": "Αν αποτύχει μια πληρωμή, το Stripe μπορεί να μετακινήσει τη συνδρομή σε <code>past_due</code> ή άλλη κατάσταση. Το Notoria συγχρονίζει αυτή την κατάσταση από webhooks Stripe. Ενώ η κατάσταση παραμένει <code>past_due</code>, οι λειτουργίες Pro παραμένουν διαθέσιμες βάσει των τρεχόντων κανόνων πρόσβασης· αν η συνδρομή γίνει αργότερα ακυρωμένη ή άλλως μη επιλέξιμη, η πρόσβαση Pro τερματίζεται.",
+          "p1": "Αφού ακυρώσετε την ανανέωση, η τρέχουσα πρόσβαση Pro ή Premium σας συνεχίζεται όσο η κατάσταση συνδρομής Stripe εξακολουθεί να πληροί τις προϋποθέσεις στο προϊόν. Οι επιλέξιμες καταστάσεις περιλαμβάνουν αυτή τη στιγμή <code>active</code>, <code>trialing</code> και <code>past_due</code>. Όταν η κατάσταση δεν πληροί πλέον τις προϋποθέσεις, ο λογαριασμός επιστρέφει σε Δωρεάν.",
+          "p2": "Εάν μια πληρωμή αποτύχει, η Stripe μπορεί να μεταφέρει τη συνδρομή σε <code>past_due</code> ή άλλη κατάσταση. Το Notoria συγχρονίζει αυτή την κατάσταση από τα webhooks της Stripe. Ενώ παραμένει <code>past_due</code>, το τρέχον πληρωμένο σχέδιο παραμένει διαθέσιμο υπό τους παρόντες κανόνες πρόσβασης. Εάν αργότερα γίνει ακυρωμένο ή διαφορετικά μη επιλέξιμο, η πληρωμένη πρόσβαση τερματίζεται.",
           "p3": "Η διαγραφή του λογαριασμού Notoria ακυρώνει αμέσως τη συνδρομή Stripe (κατά το δυνατόν) ως μέρος της διαγραφής λογαριασμού. Αυτό διαφέρει από την ακύρωση ανανέωσης μέσω του Customer Portal με διατήρηση του λογαριασμού."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Αποποίηση και ευθύνη",
           "p1": "Το Notoria παρέχεται σε βάση «όπως είναι διαθέσιμο» για προσωπική εκμάθηση γλωσσών. Στον μέγιστο βαθμό που επιτρέπει η ισχύουσα νομοθεσία, αποποιούμαστε εγγυήσεις που δεν απαιτούνται από τον νόμο.",
-          "p2": "Στον μέγιστο βαθμό που επιτρέπει η ισχύουσα νομοθεσία, το Notoria δεν ευθύνεται για έμμεσες, παρεπόμενες, ειδικές, επακόλουθες ζημίες ή ζημίες απώλειας δεδομένων που προκύπτουν από τη χρήση της υπηρεσίας ή την εξάρτηση από έξοδο AI. Όπου η ευθύνη δεν μπορεί να αποκλειστεί, περιορίζεται στο ποσό που πληρώσατε για το Notoria Pro τους τρεις μήνες πριν από την αξίωση ή σε οποιοδήποτε μεγαλύτερο ποσό απαιτείται από υποχρεωτικό δίκαιο.",
+          "p2": "Στο μέγιστο βαθμό που επιτρέπεται από την εφαρμοστέα νομοθεσία, το Notoria δεν ευθύνεται για έμμεσες, τυχαίες, ειδικές, επακόλουθες ή ζημίες από απώλεια δεδομένων που προκύπτουν από τη χρήση της υπηρεσίας ή την εξάρτηση από την έξοδο AI. Όπου η ευθύνη δεν μπορεί να αποκλειστεί, περιορίζεται στο ποσό που πληρώσατε για το Notoria Pro ή Premium τους τρεις μήνες πριν από την αξίωση ή οποιοδήποτε μεγαλύτερο ποσό απαιτεί η υποχρεωτική νομοθεσία.",
           "p3": "Αυτοί οι περιορισμοί δεν αποκλείουν ευθύνη που το φινλανδικό ή ενωσιακό δίκαιο δεν επιτρέπει να περιοριστεί — συμπεριλαμβανομένης ευθύνης που δεν μπορεί να παραιτηθεί για καταναλωτές και ευθύνης για θάνατο ή σωματική βλάβη που προκαλείται από αμέλεια όπου ισχύουν τέτοιοι κανόνες."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Χτίστε προσωπική τράπεζα λεξιλογίου με σημασίες, παραδείγματα και ετικέτες",
           "practice": "Εξασκηθείτε με ασκήσεις από τις δικές σας λέξεις και σημειώσεις",
           "create": "Γράψτε θεωρητικές σημειώσεις και εργασία γραφής στην οποία μπορείτε να επιστρέφετε",
-          "listenSpeak": "Μετατρέψτε πολυμέσα σε εξάσκηση ακρόασης και μιλήστε με AI tutor στο Pro"
+          "listenSpeak": "Μετατρέψτε τα μέσα σε πρακτική ακρόασης και χρησιμοποιήστε τις επιδοτήσεις AI για μεταγραφή και πρακτική ομιλίας"
         },
-        "note": "Ορισμένα εργαλεία AI, ακρόασης, ομιλίας και εξαγωγής αποτελούν μέρος του Notoria Pro. Το δωρεάν πλάνο εξακολουθεί να καλύπτει την καθημερινή εξάσκηση λεξιλογίου και τον βασικό κύκλο μελέτης."
+        "note": "Οι βασικές περιοχές εκμάθησης είναι διαθέσιμες σε κάθε σχέδιο. Το Pro αυξάνει τις επιδοτήσεις AI και προσθέτει εισαγωγή/εξαγωγή υλικού εκμάθησης; το Premium προσθέτει εξατομικευμένη καθοδήγηση και πρακτική."
       },
       "ai": {
         "title": "AI, όπου βοηθά",
@@ -4656,7 +4673,7 @@
         "title": "Πώς συνδέονται οι τομείς",
         "p1": "Η Καταγραφή είναι το γρήγορο σημείο εισόδου. Το Λεξιλόγιο και η Θεωρία είναι όπου το υλικό εγκαθίσταται. Η Άσκηση μετατρέπει αυτό το υλικό σε εξάσκηση. Η Γραφή, η Ακρόαση και η Ομιλία σάς βοηθούν να χρησιμοποιείτε τη γλώσσα πιο ενεργά.",
         "p2": "Δεν χρειάζεται να περάσετε από κάθε τομέα με σειρά. Πολλοί παραμένουν στις λέξεις και στη σύντομη εξάσκηση για λίγο.",
-        "p3": "Ένα φυσικό επόμενο βήμα είναι η γραφή όταν θέλετε να παράγετε γλώσσα με τους δικούς σας όρους και στη συνέχεια η ακρόαση και η ομιλία όταν θέλετε το ίδιο υλικό να δουλεύει στο αυτί και στη φωνή σας — η Ακρόαση και η Ομιλία αποτελούν μέρος του Notoria Pro.",
+        "p3": "Ένα φυσικό επόμενο βήμα είναι η συγγραφή όταν θέλετε να παράγετε γλώσσα με τους δικούς σας όρους, στη συνέχεια η ακρόαση και η ομιλία όταν θέλετε το ίδιο υλικό να λειτουργεί στο αυτί και τη φωνή σας. Αυτές οι περιοχές είναι διαθέσιμες σε κάθε σχέδιο; οι περιορισμοί χρήσης AI διαφέρουν ανά σχέδιο.",
         "beat": "Συλλέξτε και κατανοήστε πρώτα. Χρησιμοποιήστε και μιλήστε όταν το υλικό είναι έτοιμο να φύγει από τη σελίδα."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Ακρόαση",
-          "body": "Μετατρέψτε πολυμέσα σε εξάσκηση ακρόασης στον χώρο εργασίας σας. Διαθέσιμη στο Notoria Pro."
+          "body": "Μετατρέψτε τα μέσα σε πρακτική ακρόασης στον χώρο εργασίας σας. Διαθέσιμο σε κάθε σχέδιο; οι επιδοτήσεις AI για μεταγραφή διαφέρουν ανά σχέδιο."
         },
         "speaking": {
           "label": "Ομιλία",
-          "body": "Ζωντανή εξάσκηση με AI tutor, βασισμένη στη γλώσσα που μελετάτε. Διαθέσιμη στο Notoria Pro."
+          "body": "Ζωντανή πρακτική με έναν εκπαιδευτή AI, βασισμένη στη γλώσσα που μελετάτε. Διαθέσιμο σε κάθε σχέδιο με ημερήσια επιδότηση βάσει σχεδίου."
         },
         "reading": {
           "label": "Ανάγνωση",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Πώς αλλάζω τον κωδικό μου ή κλείνω τον λογαριασμό μου;",
-          "a": "Ανοίξτε τον <account>Λογαριασμό</account>. Μπορείτε να ενημερώσετε τον κωδικό σας εκεί αν χρησιμοποιείτε σύνδεση με email, να διαχειριστείτε το Notoria Pro, να εξαγάγετε αντίγραφο ασφαλείας ή να διαγράψετε οριστικά τον λογαριασμό σας."
+          "a": "Ανοίξτε <account>Λογαριασμό</account>. Μπορείτε να ενημερώσετε τον κωδικό πρόσβασής σας εκεί αν χρησιμοποιείτε είσοδο μέσω email, να διαχειριστείτε το Pro ή Premium, να εξάγετε ένα αντίγραφο ασφαλείας ή να διαγράψετε μόνιμα τον λογαριασμό σας. Η διαγραφή του λογαριασμού ακυρώνει επίσης άμεσα οποιαδήποτε ενεργή συνδρομή Stripe σε καλύτερη βάση προσπάθειας; η απλή ακύρωση ανανέωσης διατηρεί τον λογαριασμό και τα δεδομένα του."
         },
         "pro": {
           "q": "Πώς λειτουργούν η χρέωση και η ακύρωση;",
-          "a": "Το Notoria Pro χρεώνεται μέσω Stripe. Από τον <account>Λογαριασμό</account> μπορείτε να αναβαθμίσετε, να ανοίξετε την πύλη πελάτη Stripe για διαχείριση μεθόδων πληρωμής και τιμολογίων ή να ακυρώσετε την ανανέωση."
+          "a": "Το Notoria Pro και Premium χρεώνονται μέσω Stripe. Από το <account>Λογαριασμό</account> μπορείτε να εγγραφείτε, να αλλάξετε μεταξύ Pro και Premium, να διαχειριστείτε μεθόδους πληρωμής και τιμολόγια, να ακυρώσετε την ανανέωση ή να επαναφέρετε μια προγραμματισμένη ακύρωση. Η ακύρωση ανανέωσης διατηρεί την πρόσβαση μέχρι η Stripe να τερματίσει την επιλέξιμη περίοδο συνδρομής; η διαγραφή του λογαριασμού σας είναι ξεχωριστή και ακυρώνει τη συνδρομή άμεσα σε καλύτερη βάση προσπάθειας."
         },
         "proFeatures": {
-          "q": "Τι είναι δωρεάν και τι χρειάζεται Notoria Pro;",
-          "a": "Η καθημερινή εξάσκηση λεξιλογίου και σχετικά εργαλεία μελέτης είναι διαθέσιμα στο δωρεάν πλάνο. Ορισμένα εργαλεία AI, ακρόαση, ομιλία και λειτουργίες εξαγωγής εγγράφων αποτελούν μέρος του Notoria Pro. Συγκρίνετε και αναβαθμίστε από τον <account>Λογαριασμό</account>."
+          "q": "Τι περιλαμβάνεται με το Δωρεάν, Pro και Premium;",
+          "a": "Το Δωρεάν περιλαμβάνει τις βασικές περιοχές εκμάθησης και ημερήσιες επιδοτήσεις για υποστηριζόμενα εργαλεία AI. Το Pro αυξάνει ή αφαιρεί πολλούς περιορισμούς AI και προσθέτει εισαγωγή υλικού εκμάθησης καθώς και εξαγωγή PDF/DOCX. Το Premium περιλαμβάνει το Pro και προσθέτει εξατομικευμένη καθοδήγηση, προφίλ εκμάθησης, προσαρμοσμένη και πρακτική με βάση τα λάθη, και οδηγίες ασκήσεων. Δείτε τη ζωντανή σύγκριση και τα τρέχοντα όρια στη σελίδα <account>Λογαριασμός</account>."
         },
         "learning": {
           "q": "Πώς λειτουργούν οι μαθησιακές λειτουργίες του Notoria;",
@@ -4997,7 +5014,7 @@
         "admins": "Διαχειριστές",
         "testers": "Δοκιμαστές",
         "suspended": "Ανασταλμένοι",
-        "contentTotal": "Content records"
+        "contentTotal": "Καταγραφές περιεχομένου"
       },
       "quickAccess": "Γρήγορη πρόσβαση",
       "quickAccessLede": "Μετάβαση στα εργαλεία διαχείρισης.",
@@ -5051,7 +5068,7 @@
         "updated": "Ενημερώθηκε",
         "emailVerified": "Επαληθευμένο email",
         "email": "Email",
-        "password": "Password"
+        "password": "Κωδικός πρόσβασης"
       },
       "detail": {
         "account": "Λογαριασμός",
@@ -5060,7 +5077,7 @@
         "actions": "Ενέργειες λογαριασμού",
         "workspaces": "Χώροι εργασίας",
         "workspacesLede": "Χώροι εργασίας γλώσσας που ανήκουν σε αυτόν τον χρήστη.",
-        "danger": "Danger zone"
+        "danger": "Ζώνη κινδύνου"
       },
       "actions": {
         "saveProfile": "Αποθήκευση ονόματος",
@@ -5071,7 +5088,7 @@
         "delete": "Διαγραφή λογαριασμού",
         "grantTester": "Χορήγηση δοκιμαστή",
         "revokeTester": "Ανάκληση δοκιμαστή",
-        "create": "Create user"
+        "create": "Δημιουργία χρήστη"
       },
       "confirm": {
         "grantAdmin": "Να χορηγηθεί πρόσβαση διαχειριστή σε αυτόν τον λογαριασμό;",
@@ -5089,11 +5106,11 @@
         "admin": "Διαχειριστής"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Δημιουργία χρήστη",
+        "lede": "Δημιουργήστε έναν λογαριασμό με email και κωδικό πρόσβασης. Μπορούν να συνδεθούν αμέσως."
       },
       "plans": {
-        "free": "Free",
+        "free": "Δωρεάν",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Κάτοχος",
         "created": "Δημιουργήθηκε",
         "updated": "Ενημερώθηκε",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Email ιδιοκτήτη",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Να διαγραφεί αυτός ο χώρος εργασίας και όλο το περιεχόμενο μάθησης μέσα του μέσω διαδοχικών διαγραφών βάσης δεδομένων;"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Δημιουργία χώρου εργασίας",
+        "lede": "Συνδέστε έναν νέο χώρο εργασίας γλώσσας σε έναν υπάρχοντα λογαριασμό μέσω email."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Χώρος εργασίας",
         "created": "Δημιουργήθηκε",
         "updated": "Ενημερώθηκε",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Τίτλος",
+        "word": "Λέξη",
+        "folderName": "Όνομα φακέλου"
       },
       "detail": {
         "description": "Επιθεώρηση μεταδεδομένων. Τα ιδιωτικά σώματα δεν φορτώνονται αυτόματα.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Διαγραφή εγγραφής",
-        "saveTitle": "Save title"
+        "saveTitle": "Αποθήκευση τίτλου"
       },
       "confirm": {
         "delete": "Να διαγραφεί αυτή η εγγραφή; Οι σχετιζόμενες θυγατρικές γραμμές ακολουθούν κανόνες διαδοχικής διαγραφής / null της βάσης δεδομένων."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Καταγράψτε αντικείμενα που αποθηκεύουν ελεύθερο κείμενο. Η επεξεργασία τίτλου δεν υποστηρίζεται εδώ — διαγράψτε αν η καταγραφή πρέπει να αφαιρεθεί."
     },
     "jobs": {
       "title": "Εργασίες",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Μη έγκυρος κωδικός γλώσσας.",
       "CONTENT_NOT_FOUND": "Η εγγραφή δεν βρέθηκε.",
       "INVALID_CONTENT_MODULE": "Άγνωστη ενότητα περιεχομένου.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Αυτό το email είναι ήδη καταχωρημένο.",
+      "PASSWORD_TOO_WEAK": "Ο κωδικός πρόσβασης δεν πληροί τις απαιτήσεις ισχύος.",
+      "CONTENT_TITLE_UNSUPPORTED": "Αυτός ο τύπος περιεχομένου δεν υποστηρίζει την επεξεργασία τίτλου."
     }
   }
 }

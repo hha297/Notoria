@@ -17,19 +17,20 @@
     "hideFilters": "إخفاء عوامل التصفية",
     "remove": "إزالة",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "المظهر",
+      "print": "ملائم للطباعة",
+      "printHint": "صفحة بيضاء، نص داكن",
+      "theme": "الثيم الحالي",
+      "themeHint": "يتطابق مع الثيم الفاتح أو الداكن الخاص بك",
+      "previewKicker": "صفحة عينة",
+      "previewTitle": "عنوان الوثيقة",
+      "previewBody": "نص الجسم يستخدم الألوان والمسافات المحددة.",
+      "previewCallout": "تسليط الضوء والتأكيدات تتبع لون الوحدة.",
+      "fixedNote": "المظهر ثابت في الملف المصدر. قم بالتصدير مرة أخرى لتغييره.",
+      "docxBackgroundNote": "قد لا تظهر تطبيقات Word وغيرها الخلفيات بنفس الطريقة، خاصة عند الطباعة."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "التمرير إلى الأعلى",
+    "moreActions": "إجراءات إضافية"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "هذا المجلد متداخل بعمق زائد",
     "notFound": "المجلد غير موجود",
     "nameTaken": "مجلد أو كتابة يستخدم هذا الاسم بالفعل",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "نقل إلى مجلد",
+    "dragTipBody": "على الكمبيوتر مع الماوس أو لوحة اللمس، اسحب العنصر إلى بطاقة المجلد لنقله. يمكنك أيضًا استخدام أيقونة النقل على كل عنصر.",
+    "dragTipDismiss": "تجاهل النصيحة",
+    "dragTipShow": "كيفية النقل إلى المجلدات",
+    "dragTipDemo": "اسحب العنصر إلى المجلد",
+    "dragTipCard": "عنصر"
   },
   "theme": {
     "toggle": "تبديل المظهر",
@@ -472,34 +473,34 @@
     "viewMode": "وضع العرض",
     "tagManager": {
       "open": "إدارة الوسوم",
-      "eyebrow": "Tags",
+      "eyebrow": "العلامات",
       "title": "مدير الوسوم",
-      "description": "اختر وسمًا، ثم عيّنه أو أزله من الكلمات. تبقى الكلمات المعيَّنة وغيرها في قائمتين منفصلتين.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "اختر علامة، ثم قم بتعيينها أو إزالتها من الكلمات.",
+      "pageDescription": "اختر قياسي أو مخصص، اختر علامة، ثم أضفها أو أزلها من الكلمات.",
+      "disabledNoWorkspace": "قم بإنشاء مساحة عمل قبل إدارة علامات المفردات.",
+      "backToVocabulary": "العودة إلى المفردات",
+      "backToSettings": "العودة إلى الإعدادات",
       "groupsLabel": "مجموعات الوسوم القياسية",
       "tagsHeading": "الوسوم",
       "standardTagsHeading": "الوسوم القياسية",
       "customTagsHeading": "الوسوم المخصصة",
-      "customTagsHint": "تسميات تنشئها لتنظيمك الخاص — وليست أقسام كلام.",
+      "customTagsHint": "تسميات مساحة العمل التي تنشئها — ابحث للعثور عليها عندما تكون القائمة طويلة.",
       "emptyCustomTags": "لا توجد وسوم مخصصة بعد. أنشئها عند تعديل كلمة.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "لا توجد علامات مخصصة تطابق هذا البحث.",
+      "tagSearchPlaceholder": "ابحث عن علامات…",
       "wordsHeading": "{tag}",
       "kindStandard": "قياسي",
       "kindCustom": "مخصص",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "قوائم الكلمات",
+      "wordTabAssigned": "موسومة",
+      "wordTabOther": "غير موسومة",
       "assignedHeading": "كلمات بهذا الوسم",
       "otherHeading": "كلمات أخرى",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "حدد الكل في هذه الصفحة",
+      "clearSelection": "مسح التحديد",
+      "selectionScopePage": "تحديد من هذه الصفحة ({count} من {total})",
+      "selectionScopeFiltered": "تحديد ضمن نتائج البحث الحالية",
       "searchPlaceholder": "البحث في الكلمات أو المعاني…",
       "wordCount": "{count}",
       "loading": "جارٍ تحميل المفردات…",
@@ -509,13 +510,23 @@
       "emptyOther": "كل كلمة تحمل هذا الوسم بالفعل.",
       "emptyOtherSearch": "لا توجد كلمات مطابقة للتعيين.",
       "selected": "تم تحديد {count}",
-      "addToTag": "إضافة إلى الوسم",
-      "removeFromTag": "إزالة من الوسم",
-      "applyAdd": "إضافة إلى الوسم ({count})",
-      "applyRemove": "إزالة من الوسم ({count})",
+      "addToTag": "إضافة علامة",
+      "removeFromTag": "إزالة علامة",
+      "applyAdd": "إضافة علامة ({count})",
+      "applyRemove": "إزالة علامة ({count})",
       "added": "تمت إضافة {count} كلمة/كلمات إلى {tag}",
       "removed": "تمت إزالة {count} كلمة/كلمات من {tag}",
-      "error": "تعذّر تحديث انتماء الوسم"
+      "error": "تعذّر تحديث انتماء الوسم",
+      "systemsLabel": "أنظمة العلامات",
+      "standardSystemTitle": "قياسي",
+      "standardSystemMeta": "الموضوع والاستخدام، معروضان بشكل منفصل",
+      "usageOptional": "اختياري",
+      "customSystemTitle": "مخصص",
+      "customSystemMeta": "{count, plural, one {# علامة} other {# علامات}}",
+      "customPickerLabel": "اختر علامة مخصصة",
+      "customPickerPlaceholder": "اختر علامة مخصصة…",
+      "customSearchPlaceholder": "ابحث عن علامات مخصصة…",
+      "pickTagFirst": "اختر علامة أعلاه لإدارة عضوية الكلمات."
     },
     "moreTags": "+{count}",
     "updatedAgo": "حُدّث {time}",
@@ -584,7 +595,11 @@
         "notes": "ملاحظات",
         "updated": "آخر تحديث"
       }
-    }
+    },
+    "selectedCustomTags": "العلامات المحددة",
+    "selectedSynonyms": "المرادفات المحددة",
+    "removeCustomTag": "إزالة {name}",
+    "pickerLoading": "جارٍ التحميل…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "الممارسة جاهزة",
       "aiUnavailable": "تعذّر إنشاء أسئلة الذكاء الاصطناعي الآن.",
       "aiForbidden": "تمارين النظرية بالذكاء الاصطناعي متاحة مع Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "تعليمات إضافية متاحة في Premium.",
       "aiDisabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "feedback": {
         "correct": "صحيح!",
@@ -927,20 +942,22 @@
         "why": "لماذا",
         "complete": "مفهوم",
         "completeHint": "يمكنك المتابعة عندما تكون جاهزًا.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "ابدأ التمرين",
+        "skipReviewAndStart": "تجاوز المراجعة وابدأ التمرين"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "غير مصنف",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# ملاحظة} other {# ملاحظات}}",
+        "selectAll": "حدد الكل",
+        "selectGroup": "حدد الملاحظات في {name}",
+        "expand": "توسيع {name}",
+        "collapse": "طي {name}",
+        "selectedCount": "{count, plural, one {# نظرية محددة} other {# نظريات محددة}}",
+        "practiceSelected": "مارس المحدد",
+        "clearSelection": "مسح التحديد",
+        "subfolders": "{count, plural, one {# مجلد فرعي} other {# مجلدات فرعية}}",
+        "selectedOne": "تم اختيار 1 نظرية"
       }
     },
     "types": {
@@ -950,7 +967,7 @@
         "preview": "قلب · تقييم · مراجعة",
         "previewHint": "كلمة فنلندية",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "اقلب → قيم → راجع"
       },
       "fill-in-blank": {
         "label": "ملء الفراغ",
@@ -998,8 +1015,8 @@
       "startsWith": "تبدأ بـ «{letter}»",
       "revealPrompt": "ما زلت عالقًا؟ يمكنك كشف الإجابة الكاملة.",
       "revealAnswer": "كشف الإجابة",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "التلميح التالي",
+      "hintProgress": "التلميح {current} من {total}"
     },
     "empty": {
       "noWordsTitle": "لا توجد مفردات بعد",
@@ -1032,17 +1049,17 @@
       "shuffle": "خلط",
       "finish": "إنهاء الجولة",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "مصدر السؤال",
+        "chooseAi": "استخدم الذكاء الاصطناعي المُولد",
+        "emptyTitle": "لا توجد أمثلة محفوظة قابلة للاستخدام",
+        "emptyDescription": "أضف جمل أمثلة تتضمن كل كلمة بوضوح، اضبط الفلاتر الخاصة بك، أو انتقل إلى الذكاء الاصطناعي المُولد.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "أمثلة محفوظة",
+          "description": "قم ببناء الأسئلة على الفور من أمثلة المفردات الخاصة بك. لا يوجد انتظار للذكاء الاصطناعي."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "تم إنشاؤه بواسطة الذكاء الاصطناعي",
+          "description": "أنشئ جمل جديدة من مفرداتك باستخدام الذكاء الاصطناعي."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "إنشاء التمارين بالذكاء الاصطناعي متاح مع Pro.",
       "disabled": "تم إيقاف مساعدة الذكاء الاصطناعي في الإعدادات.",
       "upgradeHint": "الخطة المجانية تتضمن بضع إنشاءات تمارين بالذكاء الاصطناعي يوميًا. Pro يزيل الحد.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "تعليمات إضافية",
+      "additionalInstructionsPlaceholder": "على سبيل المثال: استخدم مواقف المطاعم، حافظ على اللغة بمستوى A2، واشرح الأخطاء بلغة واجهتك.",
+      "additionalInstructionsLocked": "قم بالترقية إلى Premium لتخصيص أنواع التمارين المدعومة، وتحديد سياق حقيقي، وإضافة تعليماتك الخاصة.",
+      "premiumRequired": "تعليمات إضافية متاحة في Premium.",
+      "presetLabel": "الإعدادات المحفوظة",
+      "presetNone": "لا توجد إعدادات محفوظة محددة",
+      "presetApply": "تطبيق",
+      "presetSave": "احفظ الإعدادات المحفوظة",
+      "presetName": "اسم الإعداد المحفوظ",
+      "presetDelete": "حذف",
+      "presetSaved": "تم حفظ الإعداد المحفوظ",
+      "presetDeleted": "تم حذف الإعداد المحفوظ",
+      "presetSaveFailed": "لم يتمكن من حفظ هذا الإعداد المحفوظ.",
       "emptyWords": "أضف كلمات مفردات قبل إنشاء الأسئلة.",
       "noneValid": "تعذّر على الذكاء الاصطناعي إنشاء أسئلة صالحة لهذه الكلمات. حاول مرة أخرى.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "خصص السياق أو الأسلوب أو التركيز لتمرينك. اتركه فارغًا لاستخدام الإعدادات الافتراضية.",
+      "presetUpdate": "تحديث الإعدادات المحفوظة",
+      "presetUpdated": "تم تحديث الإعداد المحفوظ",
+      "presetsTitle": "الإعدادات المحفوظة",
+      "presetsHelper": "تخزن الإعدادات المحفوظة إعدادات التمرين والتعليمات الإضافية. لا تغير المفردات أو النظريات التي اخترتها.",
+      "presetsEmpty": "لا توجد إعدادات محفوظة بعد. احفظ إعداداتك الحالية لإعادة استخدامها لاحقًا.",
+      "presetSaveAs": "احفظ كإعداد محفوظ",
+      "presetUpdateCurrent": "تحديث بالإعدادات الحالية",
+      "presetRename": "إعادة تسمية",
+      "presetManage": "إدارة الإعدادات المحفوظة",
+      "presetRenamed": "تمت إعادة تسمية الإعداد المحفوظ",
+      "presetSaveDialogTitle": "احفظ كإعداد محفوظ",
+      "presetSaveDialogDescription": "قم بتسمية هذا الإعداد المحفوظ لإعادة استخدام إعدادات التمرين الحالية والتعليمات الإضافية. لا يتم تخزين المفردات أو النظريات المحددة.",
+      "presetRenameDialogTitle": "إعادة تسمية الإعداد المحفوظ",
+      "presetRenameDialogDescription": "اختر اسمًا جديدًا لهذا الإعداد المحفوظ.",
+      "presetDeleteDialogTitle": "حذف الإعداد المحفوظ؟",
+      "presetDeleteDialogDescription": "حذف “{name}”？ ستبقى تكوين التمرين الحالي كما هو."
     },
     "session": {
       "complete": "اكتملت الجلسة",
@@ -1099,14 +1116,14 @@
       "tryAgain": "حاول مرة أخرى",
       "questionsLabel": "الأسئلة",
       "correctLabel": "صحيحة",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "غير صحيح",
+      "unansweredLabel": "غير مجاب عليه",
       "reviewLabel": "للمراجعة",
       "answeredProgress": "{answered} / {total} مُجابة",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "تحقق من الإجابة",
+      "nextQuestion": "التالي",
+      "viewResults": "عرض النتائج",
       "submitSet": "إرسال الإجابات",
       "submitting": "جارٍ التحقق…",
       "unansweredWarnTitle": "أسئلة بلا إجابة",
@@ -1121,54 +1138,54 @@
       "unanswered": "لم يُجب",
       "yourAnswer": "إجابتك",
       "correctAnswer": "الإجابة الصحيحة",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "يوجد فقط {count} سؤال متاح من الفلاتر الحالية.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "كيف تتدرب",
+        "lockedHint": "أنهِ أو ابدأ مجموعة جديدة لتغيير ذلك.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "واحد تلو الآخر",
+          "description": "شاهد سؤالًا واحدًا في كل مرة. تحقق بعد كل إجابة للحصول على ملاحظات فورية."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "جميع الأسئلة",
+          "description": "شاهد المجموعة الكاملة، أجب بأي ترتيب، ثم قدم مرة واحدة للحصول على ملاحظات."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "مراجعة",
+        "allCorrect": "مثالي — كل سؤال صحيح.",
+        "summary": "{incorrect} غير صحيح · {unanswered} غير مجاب عليه · {needsReview} للمراجعة",
+        "viewWrong": "عرض الإجابات الخاطئة",
+        "filtersLabel": "تصفية الأسئلة",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "الكل ({count})",
+          "needs_review": "خاطئ وغير مجاب عليه ({count})",
+          "correct": "صحيح ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "السابق",
+        "nextWrong": "التالي",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} للمراجعة",
+        "floatLabel": "تنقل الإجابات الخاطئة",
+        "closeFloat": "عرض جميع الإجابات"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% صحيح",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "مجموعة مثالية",
+          "body": "كل إجابة صحيحة. هذا النوع من التركيز يستحق جولة أخرى عندما تكون جاهزًا."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "إنهاء قوي",
+          "body": "من الواضح أنك تفهم — راجع الأخطاء، ثم قم بتثبيتها مع مجموعة جديدة."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "عمل جيد — استمر",
+          "body": "بعض النقاط العالقة أمر طبيعي. راجعها مرة واحدة، ثم حاول مرة أخرى بينما لا تزال جديدة."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "قريب من الانتهاء",
+          "body": "قم بإنهاء الأسئلة غير المجابة أولاً — ثم ستخبر النتيجة قصة أوضح."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "تُنشأ الأسئلة بـ {language} (لغة مساحة العمل).",
       "contextualEmptyTitle": "إنشاء أسئلة سياقية",
-      "contextualEmptyDescription": "أنشئ أسئلة اختيار من متعدد بملء فراغات من مفرداتك.",
+      "contextualEmptyDescription": "أضف تعليمات اختيارية أدناه إذا كنت ترغب، ثم اضغط على إنشاء. يمكنك ترك الموجه فارغًا.",
       "contextualProDescription": "أسئلة الذكاء الاصطناعي السياقية متاحة مع Pro.",
       "unlockContextual": "افتح مع Pro",
       "correct": "صحيح!",
@@ -1202,8 +1219,8 @@
       "hint": "اختر كلمة، ثم انقر معناها",
       "complete": "تمت مطابقة كل الأزواج — أحسنت!",
       "shuffle": "خلط الأعمدة",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} أزواج",
+      "continueRound": "استمر"
     },
     "typeAnswer": {
       "questionWord": "ما المعنى؟",
@@ -1213,7 +1230,7 @@
         "contextual": "سياقي"
       },
       "contextualEmptyTitle": "إنشاء أسئلة سياقية",
-      "contextualEmptyDescription": "أنشئ مطالبات كتابة بملء فراغات من مفرداتك.",
+      "contextualEmptyDescription": "أضف تعليمات اختيارية أدناه إذا كنت ترغب، ثم اضغط على إنشاء. يمكنك ترك الموجه فارغًا.",
       "contextualProDescription": "أسئلة الذكاء الاصطناعي السياقية متاحة مع Pro.",
       "unlockContextual": "افتح مع Pro",
       "placeholder": "اكتب إجابتك…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "الكتابة",
         "description": "مستندات غنية ومجموعات أسئلة يمكنك العودة إليها وتصديرها.",
-        "how": "ابدأ مسودة، نظّم بالمجلدات، واستخدم ذكاء Pro الاصطناعي للتحقق من نصك أو تحسينه.",
+        "how": "ابدأ مسودة، نظم باستخدام المجلدات، واستخدم حصة الذكاء الاصطناعي في خطتك للتحقق أو تحسين نصك.",
         "cta": "فتح الكتابة"
       },
       "listening": {
         "title": "الاستماع",
         "description": "حوّل صوتًا أو فيديو حقيقيًا إلى درس.",
-        "how": "ارفع مقطعًا وأنشئ نصًا مكتوبًا في الخطة المجانية. تمارين الاستماع المُولَّدة جزء من Pro.",
+        "how": "قم بتحميل مقطع، أنشئ نصًا، وابنِ ممارسة الاستماع مع حصة الذكاء الاصطناعي المضمنة في خطتك.",
         "cta": "فتح الاستماع"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "بعض مساحات العمل موجودة بالفعل لنفس اللغة. سيُضاف محتواها إلى مساحات عملك الحالية بدلًا من إنشاء تكرارات.",
         "empty_backup": "لا تحتوي هذه النسخة الاحتياطية على أي بيانات تعلّم قابلة للاستيراد.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "بعض العناصر الموجودة تشترك في نفس الاسم. سيعيد الاستيراد استخدام أحدها بشكل حتمي ويترك الآخرين دون تغيير."
       },
       "cancel": "إلغاء",
       "confirm": "استيراد بيانات التعلّم",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "هذه النسخة الاحتياطية كبيرة جدًا للمعالجة عبر هذه الصفحة. جرّب تصديرًا أصغر أو تواصل مع الدعم.",
         "notConfigured": "تخزين الملفات غير مُعدّ لاستيراد النسخ الاحتياطية بعد."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "موجود بالفعل في حسابك",
+      "skippedInAccountHint": "تتطابق هذه الأسماء مع العناصر التي لديك بالفعل. لن يتم استيرادها مرة أخرى. العناصر الجديدة تحت نفس مساحة العمل لا تزال تستورد.",
+      "skippedInBackupTitle": "أسماء مكررة في هذا النسخ الاحتياطي",
+      "skippedInBackupHint": "تقوم الملف بإدراج نفس الاسم أكثر من مرة. يتم استيراد النسخة الأولى فقط من كل اسم — هذا أمر طبيعي حتى في حساب فارغ.",
+      "skippedOtherTitle": "لم يتمكن من الاستيراد"
     },
     "danger": {
       "title": "إغلاق الحساب",
@@ -3184,7 +3201,7 @@
       "warningTitle": "قبل المتابعة",
       "warnings": {
         "workspaces": "ستُحذف كل مساحة عمل وكل بيانات المفردات والنظرية والكتابة والاستماع والتحدث.",
-        "billing": "سيُلغى أي اشتراك Notoria Pro نشط فورًا.",
+        "billing": "سيتم إلغاء أي اشتراك نشط في Notoria Pro أو Premium على الفور.",
         "media": "ستُزال الوسائط المرفوعة وصورة ملفك الشخصي.",
         "permanent": "لا توجد فترة استرداد بعد التأكيد."
       },
@@ -3233,8 +3250,8 @@
     "upgrade": "الترقية إلى Pro",
     "manage": "إدارة الاشتراك",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "مجاني",
+    "premiumBadge": "مميز",
     "renewsOn": "يتجدد في {date}",
     "status": "الحالة: {status}",
     "monthlyPrice": "{price} / شهر",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "مسار التعلّم الشخصي",
       "personalizedRecommendations": "توصيات مخصصة",
       "crossModuleIntelligence": "تخصيص عبر الوحدات",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "تعليمات تمرين مخصصة"
     },
     "compare": {
       "heading": "قارن الخطط",
@@ -3458,9 +3475,9 @@
       "feature": "الميزة",
       "current": "الحالية",
       "capability": "ما تحصل عليه",
-      "free": "Free",
+      "free": "مجاني",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "مميز",
       "freeIncludes": "مضمّن في Free",
       "proUnlocks": "يضيف Pro",
       "premiumAdds": "يضيف Premium",
@@ -3552,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "مميز",
     "title": "مدرب",
     "highlight": "التعلّم",
     "description": "نظرة مخصصة على كيفية تعلّمك وما يجب التركيز عليه تاليًا.",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "سياسة الخصوصية",
     "termsTitle": "شروط الاستخدام",
     "privacyDescription": "كيف يجمع Notoria البيانات الشخصية ومحتوى التعلّم ويستخدمها ويحذفها لمساحة عمل تعلّم اللغة الخاصة.",
-    "termsDescription": "شروط استخدام مساحة عمل تعلّم اللغة الخاصة في Notoria، والحسابات، وميزات الذكاء الاصطناعي، وفوترة Notoria Pro.",
+    "termsDescription": "الشروط لاستخدام مساحة تعلم اللغة الخاصة بـ Notoria، والحسابات، وميزات الذكاء الاصطناعي، والفوترة Pro أو Premium.",
     "updated": "آخر تحديث {date}",
-    "updatedDate": "23 سبتمبر 2026",
+    "updatedDate": "27 أكتوبر 2026",
     "backToSignIn": "العودة إلى تسجيل الدخول",
     "backHome": "العودة إلى Notoria",
     "authFooter": "الخصوصية · الشروط",
@@ -4071,7 +4088,7 @@
         "purposes": "لماذا نعالج البيانات",
         "auth": "الحسابات وتسجيل الدخول",
         "ai": "ميزات الذكاء الاصطناعي",
-        "payments": "المدفوعات (Notoria Pro)",
+        "payments": "المدفوعات (Pro وPremium)",
         "processors": "مقدمو الخدمات",
         "cookies": "ملفات تعريف الارتباط وتخزين الجهاز",
         "transfers": "النقل الدولي",
@@ -4095,7 +4112,7 @@
           "list": [
             "إنشاء حساب أو استخدامه",
             "حفظ مواد في مساحات عمل خاصة",
-            "الاشتراك في Notoria Pro",
+            "الاشتراك في Notoria Pro أو Premium",
             "استخدام أدوات اختيارية بمساعدة الذكاء الاصطناعي",
             "رفع وسائط للاستماع أو لاستخدام الملف الشخصي",
             "استخدام تمرين التحدث",
@@ -4156,7 +4173,7 @@
               "basis": "العقد (المادة 6(1)(b))"
             },
             {
-              "purpose": "تشغيل فوترة Notoria Pro وحالة الاشتراك عبر Stripe",
+              "purpose": "تشغيل فوترة Notoria Pro وPremium وحالة الاشتراك عبر Stripe",
               "basis": "العقد (المادة 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "لا يستخدم قاعدة الشيفرة الحالية مزوّدي نماذج لغوية كبيرة غير OpenAI. يعالج OpenAI البيانات بموجب شروطه وسياسة خصوصيته كمعالج لهذه الميزات."
         },
         "payments": {
-          "title": "7. المدفوعات (Notoria Pro)",
+          "title": "7. المدفوعات (Pro وPremium)",
           "p1": "تُعالَج الاشتراكات المدفوعة عبر <strong>Stripe</strong>. يعمل الدفع والفواتير ووسائل الدفع والإلغاء عبر Stripe Checkout وبوابة عملاء Stripe. تحدّث خطافات Stripe خطتك وحالتك في Notoria.",
           "p2": "يعالج Stripe بيانات الدفع كمزوّد دفع. انظر وثائق خصوصية Stripe الخاصة لمعالجة البطاقات."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "دفع Notoria Pro والبوابة وحالة الاشتراك"
+              "role": "الدفع، البوابة، وحالة الاشتراك لـ Notoria Pro وPremium"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "توضح شروط الاستخدام هذه قواعد استخدام Notoria على <site>www.notoria.fi</site>. وهي تصف كيف يعمل المنتج اليوم: مساحات عمل تعلّم خاصة، وفوترة اختيارية لـ Notoria Pro عبر Stripe، وميزات بمساعدة الذكاء الاصطناعي. وهي ليست بديلًا عن استشارة محامٍ بشأن وضعك الخاص.",
+      "intro": "تشرح هذه الشروط قواعد استخدام Notoria على <site>www.notoria.fi</site>. تصف كيف يعمل المنتج اليوم: مساحات التعلم الخاصة، والفوترة الاختيارية Pro وPremium عبر Stripe، وميزات المساعدة بالذكاء الاصطناعي. لا تعتبر بديلاً عن نصيحة محامي بشأن وضعك الخاص.",
       "tocTitle": "في هذه الصفحة",
       "tocAria": "في هذه الصفحة",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "الاستخدام المقبول",
         "ip": "الملكية الفكرية",
         "ai": "مخرجات الذكاء الاصطناعي",
-        "plans": "الخطة المجانية وNotoria Pro",
+        "plans": "خطط مجانية وPro وPremium",
         "billing": "الاشتراك والفوترة",
         "refunds": "الاسترداد وحقوق المستهلك",
         "availability": "التوافر",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. الخدمة",
           "p1": "Notoria هو تطبيق ويب خاص لتعلّم اللغات. يمكنك إنشاء مساحات عمل والاحتفاظ بمادة تعلّم مثل المفردات وملاحظات النظرية والكتابة والتمارين ودروس الاستماع وجلسات التحدث.",
-          "p2": "بعض الميزات متاحة في الخطة المجانية. يفتح Notoria Pro قدرات إضافية كما يظهر في المنتج وفي صفحة <account>الحساب</account> — بما في ذلك الاستماع والتحدث وبعض أدوات الدراسة بالذكاء الاصطناعي واستيراد التمارين وصيغ تصدير المستندات المدفوعة. يمكن أن يتغيّر توافر الميزات مع تطوّر المنتج.",
+          "p2": "تتوفر مجالات التعلم الأساسية، بما في ذلك الاستماع، والتحدث، والقراءة، في كل خطة. تضيف Pro وPremium حصص ذكاء اصطناعي أعلى واستيراد/تصدير مواد التعلم؛ كما تضيف Premium أيضًا ميزات تدريب شخصية وممارسة.",
           "p3": "Notoria مخصّص لتعلّم اللغة الشخصي. وهو ليس مدرسة أو جهة امتحانات أو خدمة استشارات مهنية."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. مخرجات الذكاء الاصطناعي",
           "p1": "يمكن لبعض الميزات التحقق أو الاقتراح أو الإنشاء أو النسخ أو التلخيص أو التدريس بناءً على مادتك. قد تكون المخرجات ناقصة أو غير صحيحة أو غير مناسبة لهدفك. تظل مسؤولًا عن مراجعة نتائج الذكاء الاصطناعي قبل الاعتماد عليها للدراسة أو الامتحانات أو الاستخدام المهني أو النشر.",
           "p2": "قد تكون ميزات الذكاء الاصطناعي غير متاحة إذا أُوقفت المساعدة في <settings>الإعدادات</settings>، أو إذا كانت خطتك لا تتضمن أداة معيّنة، أو إذا كان المزوّد غير قابل للوصول مؤقتًا.",
-          "p3": "ليست كل مساعدات الذكاء الاصطناعي تتطلب Notoria Pro. يُظهر المنتج أي الأدوات مجانية وأيها تحتاج Pro."
+          "p3": "تختلف توفر الذكاء الاصطناعي والحصص اليومية بين الخطط المجانية وPro وPremium. يظهر المنتج الخطة والحصة المطلوبة لكل أداة."
         },
         "plans": {
-          "title": "8. الخطة المجانية وNotoria Pro",
+          "title": "8. الخطط المجانية وPro وPremium",
           "p1": "تغطي الخطة المجانية التمرين الأساسي بمفرداتك وأدوات الدراسة ذات الصلة كما يظهر في المنتج.",
-          "p2": "Notoria Pro اشتراك مدفوع يفتح ميزات إضافية. في المنتج الحالي، يشمل ذلك عادة الاستماع والتحدث واستيراد التمارين وتمرين تكوين جملة والعديد من أدوات الدراسة بمساعدة الذكاء الاصطناعي وتصدير مستندات PDF/DOCX. قد تبقى بعض مساعدات الذكاء الاصطناعي الأخف (مثل بعض مساعدات المفردات أو تنسيق المحرر) متاحة في الخطة المجانية عندما تكون مساعدة الذكاء الاصطناعي مفعّلة.",
-          "p3": "يرتبط وصول Pro بحساب المستخدم الخاص بك، لذا ينطبق عبر مساحات العمل تحت ذلك الحساب. قد تتمتع الحسابات ذات دور المسؤول بوصول بمستوى Pro دون اشتراك Stripe شخصي.",
-          "p4": "السعر الذي ينطبق على شرائك هو السعر المعروض في Stripe Checkout لخطة Pro الحالية. أي سعر يظهر في مكان آخر في المنتج (مثل الحساب) إرشادي فقط ويجب أن يطابق تكوين سعر Stripe النشط."
+          "p2": "تعتبر Pro وPremium اشتراكات مدفوعة. تضيف Pro حصص أعلى أو غير محدودة للعديد من أدوات الذكاء الاصطناعي بالإضافة إلى استيراد مواد التعلم وتصدير PDF/DOCX. تشمل Premium Pro وتضيف ميزات شخصية مثل مدرب التعلم، وملف التعلم الشخصي، وممارسة تكيفية، وممارسة قائمة على الأخطاء، وتعليمات تمارين مخصصة. تعرض صفحة الحساب المقارنة الحالية والحدود.",
+          "p3": "يرتبط الوصول المدفوع بحساب المستخدم الخاص بك ويطبق عبر مساحاته. قد تحتوي الحسابات ذات دور المسؤول على وصول بمستوى مدفوع دون اشتراك Stripe شخصي.",
+          "p4": "السعر الذي ينطبق هو السعر المعروض في Stripe Checkout للخطة Pro أو Premium المحددة. أي سعر معروض في مكان آخر في المنتج (على سبيل المثال في الحساب) هو سعر إرشادي فقط ويجب أن يتطابق مع تكوين سعر Stripe النشط."
         },
         "billing": {
           "title": "9. الاشتراك والفوترة والإلغاء",
-          "list0": "تُفوتر اشتراكات Pro عبر <strong>Stripe</strong>",
-          "list1": "يمكنك بدء الدفع من <account>الحساب</account> أو من عناصر تحكم Pro المقفلة في التطبيق",
+          "list0": "تتم فوترة اشتراكات Pro وPremium عبر <strong>Stripe</strong>",
+          "list1": "يمكنك بدء الدفع أو تغيير الخطة من <account>الحساب</account> أو من عناصر التحكم المدفوعة المقفلة في التطبيق",
           "list2": "من الحساب، يمكنك فتح بوابة عملاء Stripe لعرض الفواتير وتحديث وسائل الدفع وإلغاء الاشتراك",
           "list3": "يتبع الإلغاء سلوك بوابة عملاء Stripe لاشتراكك",
-          "p1": "بعد الإلغاء، يستمر وصول Pro فقط طالما تمنح حالة اشتراك Stripe ما زالت Pro في المنتج. في التنفيذ الحالي، تشمل الحالات المعامَلة كـ Pro ‏<code>active</code> و<code>trialing</code> و<code>past_due</code>. عندما لا تعود الحالة مؤهّلة، يعود الحساب إلى الخطة المجانية.",
-          "p2": "إذا فشل الدفع، قد ينقل Stripe الاشتراك إلى <code>past_due</code> أو حالة أخرى. يزامن Notoria تلك الحالة من خطافات Stripe. طالما بقيت الحالة <code>past_due</code>، تظل ميزات Pro متاحة بموجب قواعد الوصول الحالية؛ إذا أصبح الاشتراك لاحقًا ملغى أو غير مؤهّل بخلاف ذلك، ينتهي وصول Pro.",
+          "p1": "بعد إلغاء التجديد، يستمر وصولك الحالي إلى Pro أو Premium بينما لا تزال حالة الاشتراك في Stripe مؤهلة في المنتج. تشمل الحالات المؤهلة حاليًا <code>active</code> و<code>trialing</code> و<code>past_due</code>. عندما لم تعد الحالة مؤهلة، يعود الحساب إلى الخطة المجانية.",
+          "p2": "إذا فشلت عملية الدفع، قد تنقل Stripe الاشتراك إلى <code>past_due</code> أو حالة أخرى. يقوم Notoria بمزامنة تلك الحالة من webhooks الخاصة بـ Stripe. بينما تبقى <code>past_due</code>، تبقى الخطة المدفوعة الحالية متاحة بموجب قواعد الوصول الحالية؛ إذا أصبحت ملغاة أو غير مؤهلة لاحقًا، ينتهي الوصول المدفوع.",
           "p3": "حذف حساب Notoria يلغي اشتراك Stripe فورًا (بأفضل جهد) كجزء من حذف الحساب. وذلك مختلف عن إلغاء التجديد عبر بوابة العملاء مع الاحتفاظ بالحساب."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. إخلاء المسؤولية والمسؤولية",
           "p1": "يُقدَّم Notoria على أساس «حسب التوافر» لتعلّم اللغة الشخصي. إلى أقصى حد يسمح به القانون المعمول به، نخلي المسؤولية عن الضمانات غير المطلوبة قانونًا.",
-          "p2": "إلى أقصى حد يسمح به القانون المعمول به، لا يكون Notoria مسؤولًا عن أضرار غير مباشرة أو عرضية أو خاصة أو تبعية أو فقدان بيانات ناشئة عن استخدامك للخدمة أو الاعتماد على مخرجات الذكاء الاصطناعي. حيث لا يمكن استبعاد المسؤولية، تقتصر على المبلغ الذي دفعته لـ Notoria Pro في الأشهر الثلاثة السابقة للمطالبة، أو أي مبلغ أكبر يطلبه القانون الإلزامي.",
+          "p2": "إلى أقصى حد يسمح به القانون المعمول به، لا تتحمل Notoria أي مسؤولية عن الأضرار غير المباشرة أو العرضية أو الخاصة أو التبعية أو فقدان البيانات الناجمة عن استخدامك للخدمة أو الاعتماد على مخرجات الذكاء الاصطناعي. حيث لا يمكن استبعاد المسؤولية، تقتصر على المبلغ الذي دفعته مقابل Notoria Pro أو Premium في الأشهر الثلاثة التي سبقت المطالبة، أو أي مبلغ أكبر يتطلبه القانون الإلزامي.",
           "p3": "لا تستبعد هذه الحدود المسؤولية التي لا يسمح القانون الفنلندي أو قانون الاتحاد الأوروبي بتقييدها — بما في ذلك المسؤولية التي لا يمكن التنازل عنها للمستهلكين، والمسؤولية عن الوفاة أو الإصابة الشخصية الناجمة عن الإهمال حيث تنطبق تلك القواعد."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "ابنِ بنك مفردات شخصيًا مع المعاني والأمثلة والوسوم",
           "practice": "تمرّن بتمارين مستمدة من كلماتك وملاحظاتك",
           "create": "اكتب ملاحظات نظرية وأعمال كتابة يمكنك العودة إليها لاحقًا",
-          "listenSpeak": "حوّل الوسائط إلى تمرين استماع، وتحدّث مع مدرّب ذكاء اصطناعي على Pro"
+          "listenSpeak": "حوّل الوسائط إلى ممارسة استماع، واستخدم حصص الذكاء الاصطناعي للتفريغ وممارسة التحدث"
         },
-        "note": "بعض أدوات الذكاء الاصطناعي والاستماع والتحدث والتصدير جزء من Notoria Pro. ما زالت الخطة المجانية تغطي تمرين المفردات اليومي وحلقة الدراسة الأساسية."
+        "note": "تتوفر مجالات التعلم الأساسية في كل خطة. تزيد Pro من حصص الذكاء الاصطناعي وتضيف استيراد/تصدير مواد التعلم؛ تضيف Premium تدريبًا شخصيًا وممارسة."
       },
       "ai": {
         "title": "الذكاء الاصطناعي، حيث يساعد",
@@ -4656,7 +4673,7 @@
         "title": "كيف تتصل المجالات",
         "p1": "التقاط هو نقطة الدخول السريعة. المفردات والنظرية حيث تستقر المادة. يحوّل التمرين تلك المادة إلى ممارسة. تساعد الكتابة والاستماع والتحدث على استخدام اللغة بنشاط أكبر.",
         "p2": "لا تحتاج إلى المرور بكل مجال بالترتيب. كثيرون يبقون مع الكلمات والتمرين القصير لفترة.",
-        "p3": "الخطوة التالية الطبيعية هي الكتابة عندما تريد إنتاج لغة بشروطك، ثم الاستماع والتحدث عندما تريد أن تعمل المادة نفسها في أذنك وصوتك — الاستماع والتحدث جزء من Notoria Pro.",
+        "p3": "خطوة طبيعية تالية هي الكتابة عندما تريد إنتاج اللغة بشروطك الخاصة، ثم الاستماع والتحدث عندما تريد أن تعمل نفس المادة في أذنك وصوتك. هذه المجالات متاحة في كل خطة؛ تختلف حدود استخدام الذكاء الاصطناعي حسب الخطة.",
         "beat": "اجمع وافهم أولًا. استخدم وتحدّث عندما تكون المادة جاهزة لمغادرة الصفحة."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "الاستماع",
-          "body": "حوّل الوسائط إلى تمرين استماع في مساحة عملك. متاح على Notoria Pro."
+          "body": "حوّل الوسائط إلى ممارسة استماع في مساحة عملك. متاحة في كل خطة؛ تختلف حصص التفريغ بالذكاء الاصطناعي حسب الخطة."
         },
         "speaking": {
           "label": "التحدث",
-          "body": "تمرين مباشر مع مدرّب ذكاء اصطناعي، مرتكز على اللغة التي تدرسها. متاح على Notoria Pro."
+          "body": "ممارسة مباشرة مع معلم ذكاء اصطناعي، مستندة إلى اللغة التي تدرسها. متاحة في كل خطة مع حصة يومية تعتمد على الخطة."
         },
         "reading": {
           "label": "القراءة",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "كيف أغيّر كلمة المرور أو أغلق حسابي؟",
-          "a": "افتح <account>الحساب</account>. يمكنك تحديث كلمة المرور هناك إذا استخدمت تسجيل الدخول بالبريد، وإدارة Notoria Pro، وتصدير نسخة احتياطية، أو حذف حسابك نهائيًا."
+          "a": "افتح <account>الحساب</account>. يمكنك تحديث كلمة المرور الخاصة بك هناك إذا كنت تستخدم تسجيل الدخول عبر البريد الإلكتروني، إدارة Pro أو Premium، تصدير نسخة احتياطية، أو حذف حسابك بشكل دائم. يؤدي حذف الحساب أيضًا إلى إلغاء أي اشتراك نشط في Stripe على أساس أفضل جهد؛ إلغاء التجديد وحده يحتفظ بالحساب وبياناته."
         },
         "pro": {
           "q": "كيف تعمل الفوترة والإلغاء؟",
-          "a": "يُفوتر Notoria Pro عبر Stripe. من <account>الحساب</account> يمكنك الترقية، أو فتح بوابة عملاء Stripe لإدارة وسائل الدفع والفواتير، أو إلغاء التجديد."
+          "a": "يتم فواتير Notoria Pro وPremium عبر Stripe. من <account>الحساب</account> يمكنك الاشتراك، التبديل بين Pro وPremium، إدارة طرق الدفع والفواتير، إلغاء التجديد، أو استئناف إلغاء مجدول. يؤدي إلغاء التجديد إلى الاحتفاظ بالوصول حتى تنتهي Stripe من فترة الاشتراك المؤهلة؛ حذف حسابك هو أمر منفصل ويلغي الاشتراك على الفور على أساس أفضل جهد."
         },
         "proFeatures": {
-          "q": "ما المجاني، وما يحتاج Notoria Pro؟",
-          "a": "تمرين المفردات اليومي وأدوات الدراسة ذات الصلة متاحة في الخطة المجانية. بعض أدوات الذكاء الاصطناعي والاستماع والتحدث وميزات تصدير المستندات جزء من Notoria Pro. قارن ورقِّ من <account>الحساب</account>."
+          "q": "ما الذي يتضمنه Free وPro وPremium؟",
+          "a": "تتضمن Free مجالات التعلم الأساسية وحصص يومية لأدوات الذكاء الاصطناعي المدعومة. تزيد Pro أو تزيل العديد من حدود الذكاء الاصطناعي وتضيف استيراد مواد التعلم بالإضافة إلى تصدير PDF/DOCX. تشمل Premium Pro وتضيف تدريبًا شخصيًا، وملف تعلم، وممارسة تكيفية وقائمة على الأخطاء، وتعليمات تمارين مخصصة. راجع المقارنة الحية والحدود الحالية في <account>الحساب</account>."
         },
         "learning": {
           "q": "كيف تعمل ميزات التعلّم في Notoria؟",
@@ -4997,7 +5014,7 @@
         "admins": "المسؤولون",
         "testers": "المختبرون",
         "suspended": "موقوف",
-        "contentTotal": "Content records"
+        "contentTotal": "سجلات المحتوى"
       },
       "quickAccess": "وصول سريع",
       "quickAccessLede": "الانتقال إلى أدوات الإدارة.",
@@ -5007,14 +5024,14 @@
         "ops": "العمليات"
       },
       "charts": {
-        "signupsTitle": "New accounts",
-        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
-        "activeTitle": "Active learners",
-        "activeLede": "Distinct learners with activity each day (14d).",
-        "rolesTitle": "Roles",
-        "rolesLede": "Share of accounts by role.",
-        "contentTitle": "Content mix",
-        "contentLede": "Stored records across learning modules."
+        "signupsTitle": "حسابات جديدة",
+        "signupsLede": "التسجيلات اليومية على مدار آخر 14 يومًا بتوقيت UTC.",
+        "activeTitle": "المتعلمين النشطين",
+        "activeLede": "متعلمين متميزين لديهم نشاط كل يوم (14 يومًا).",
+        "rolesTitle": "الأدوار",
+        "rolesLede": "نسبة الحسابات حسب الدور.",
+        "contentTitle": "مزيج المحتوى",
+        "contentLede": "السجلات المخزنة عبر وحدات التعلم."
       }
     },
     "users": {
@@ -5050,8 +5067,8 @@
         "created": "تاريخ التسجيل",
         "updated": "آخر تحديث",
         "emailVerified": "البريد الإلكتروني موثّق",
-        "email": "Email",
-        "password": "Password"
+        "email": "البريد الإلكتروني",
+        "password": "كلمة المرور"
       },
       "detail": {
         "account": "الحساب",
@@ -5060,7 +5077,7 @@
         "actions": "إجراءات الحساب",
         "workspaces": "مساحات العمل",
         "workspacesLede": "مساحات عمل اللغة التي يملكها هذا المستخدم.",
-        "danger": "Danger zone"
+        "danger": "منطقة الخطر"
       },
       "actions": {
         "saveProfile": "حفظ الاسم",
@@ -5071,7 +5088,7 @@
         "delete": "حذف الحساب",
         "grantTester": "منح دور المختبر",
         "revokeTester": "إلغاء دور المختبر",
-        "create": "Create user"
+        "create": "إنشاء مستخدم"
       },
       "confirm": {
         "grantAdmin": "منح صلاحية الإدارة لهذا الحساب؟",
@@ -5089,13 +5106,13 @@
         "admin": "مسؤول"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "إنشاء مستخدم",
+        "lede": "توفير حساب باستخدام بريد إلكتروني وكلمة مرور. يمكنهم تسجيل الدخول على الفور."
       },
       "plans": {
-        "free": "Free",
+        "free": "مجاني",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "مميز"
       }
     },
     "workspaces": {
@@ -5118,7 +5135,7 @@
         "owner": "المالك",
         "created": "تاريخ الإنشاء",
         "updated": "آخر تحديث",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "البريد الإلكتروني للمالك",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "حذف مساحة العمل هذه وكل محتوى التعلّم داخلها عبر تتابع قاعدة البيانات؟"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "إنشاء مساحة عمل",
+        "lede": "إرفاق مساحة عمل لغة جديدة بحساب موجود عبر البريد الإلكتروني."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "مساحة العمل",
         "created": "تاريخ الإنشاء",
         "updated": "آخر تحديث",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "العنوان",
+        "word": "الكلمة",
+        "folderName": "اسم المجلد"
       },
       "detail": {
         "description": "فحص البيانات الوصفية. المحتوى الخاص لا يُحمَّل تلقائيًا.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "حذف السجل",
-        "saveTitle": "Save title"
+        "saveTitle": "احفظ العنوان"
       },
       "confirm": {
         "delete": "حذف هذا السجل؟ تتبع الصفوف الفرعية قواعد التتابع / التعيين إلى فارغ في قاعدة البيانات."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "التقاط العناصر المخزنة نصًا حرًا. لا يدعم تحرير العنوان هنا — احذف إذا كان يجب إزالة السجل."
     },
     "jobs": {
       "title": "المهام",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "رمز لغة غير صالح.",
       "CONTENT_NOT_FOUND": "السجل غير موجود.",
       "INVALID_CONTENT_MODULE": "وحدة محتوى غير معروفة.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "هذا البريد الإلكتروني مسجل بالفعل.",
+      "PASSWORD_TOO_WEAK": "كلمة المرور لا تلبي متطلبات القوة.",
+      "CONTENT_TITLE_UNSUPPORTED": "هذا النوع من المحتوى لا يدعم تحرير العنوان."
     }
   }
 }

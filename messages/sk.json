@@ -30,7 +30,7 @@
       "fixedNote": "Vzhľad je v exportovanom súbore pevný. Ak ho chcete zmeniť, exportujte znova.",
       "docxBackgroundNote": "Word a iné aplikácie nemusia zobrazovať pozadia stránok rovnako, najmä pri tlači."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Posuňte sa na vrchol"
   },
   "contentImport": {
     "title": {
@@ -301,7 +301,7 @@
     "dragTipDismiss": "Zavrieť tip",
     "dragTipShow": "Ako presúvať do priečinkov",
     "dragTipDemo": "Pretiahnite položku na priečinok",
-    "dragTipCard": "Item"
+    "dragTipCard": "Položka"
   },
   "theme": {
     "toggle": "Prepnúť motiv",
@@ -473,34 +473,34 @@
     "viewMode": "Režim zobrazení",
     "tagManager": {
       "open": "Spravovat štítky",
-      "eyebrow": "Tags",
+      "eyebrow": "Značky",
       "title": "Správca štítku",
-      "description": "Vyberte štítok a poté jej priraďte slovum alebo odeberte. Prirazená a ostatní slová zustávají v samostatných seznamech.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Vyberte značku a potom ju priraďte alebo odstráňte z slov.",
+      "pageDescription": "Vyberte Štandardnú alebo Vlastnú, vyberte značku a potom ju pridajte alebo odstráňte zo slov.",
+      "disabledNoWorkspace": "Vytvorte pracovný priestor pred správou slovných značiek.",
+      "backToVocabulary": "Späť k slovníku",
+      "backToSettings": "Späť k nastaveniam",
       "groupsLabel": "Standardní skupiny štítku",
       "tagsHeading": "Štítky",
       "standardTagsHeading": "Standardní štítky",
       "customTagsHeading": "Vlastní štítky",
-      "customTagsHint": "Štítky, ktoré vytváríte pro vlastní organizaci — nejde o slovní druhy.",
+      "customTagsHint": "Označenia pracovného priestoru, ktoré vytvoríte — hľadajte ich, keď je zoznam dlhý.",
       "emptyCustomTags": "Zatiaľ žiadne vlastní štítky. Vytvorte je pri úprave slová.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Žiadne vlastné značky nezodpovedajú tomuto vyhľadávaniu.",
+      "tagSearchPlaceholder": "Hľadať značky…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standardní",
       "kindCustom": "Vlastní",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Zoznamy slov",
+      "wordTabAssigned": "Označené",
+      "wordTabOther": "Neoznačené",
       "assignedHeading": "Slová s tímto štítkem",
       "otherHeading": "Ostatní slová",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Vybrať všetko na tejto stránke",
+      "clearSelection": "Vymazať výber",
+      "selectionScopePage": "Výber z tejto stránky ({count} z {total})",
+      "selectionScopeFiltered": "Výber v rámci aktuálnych výsledkov vyhľadávania",
       "searchPlaceholder": "Hľadať slová alebo významy…",
       "wordCount": "{count}",
       "loading": "Načítanie slovnej zásoby…",
@@ -510,13 +510,23 @@
       "emptyOther": "Každé slovo už má tento štítok.",
       "emptyOtherSearch": "Žiadna odpovídající slová k prirazení.",
       "selected": "Vybrané: {count}",
-      "addToTag": "Pridať ke štítku",
-      "removeFromTag": "Odstrániť ze štítku",
-      "applyAdd": "Pridať ke štítku ({count})",
-      "applyRemove": "Odstrániť ze štítku ({count})",
+      "addToTag": "Pridať značku",
+      "removeFromTag": "Odstrániť značku",
+      "applyAdd": "Pridať značku ({count})",
+      "applyRemove": "Odstrániť značku ({count})",
       "added": "Ke štítku {tag} pridáno {count} slov",
       "removed": "Ze štítku {tag} odebráno {count} slov",
-      "error": "Členství ve štítku sa nepodarilo aktualizovať"
+      "error": "Členství ve štítku sa nepodarilo aktualizovať",
+      "systemsLabel": "Značkové systémy",
+      "standardSystemTitle": "Štandardná",
+      "standardSystemMeta": "Téma a použitie, zobrazené samostatne",
+      "usageOptional": "Voliteľné",
+      "customSystemTitle": "Vlastná",
+      "customSystemMeta": "{count, plural, one {# značka} other {# značiek}}",
+      "customPickerLabel": "Vyberte vlastnú značku",
+      "customPickerPlaceholder": "Vyberte vlastnú značku…",
+      "customSearchPlaceholder": "Hľadať vlastné značky…",
+      "pickTagFirst": "Najprv vyberte značku vyššie na správu členstva slov."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Aktualizováno {time}",
@@ -585,7 +595,11 @@
         "notes": "Poznámky",
         "updated": "Naposledy aktualizováno"
       }
-    }
+    },
+    "selectedCustomTags": "Vybrané značky",
+    "selectedSynonyms": "Vybrané synonymá",
+    "removeCustomTag": "Odstrániť {name}",
+    "pickerLoading": "Načítava sa…"
   },
   "tags": {
     "groups": {
@@ -657,7 +671,7 @@
   },
   "exercises": {
     "title": "Cvičenia",
-    "studio": "studio",
+    "studio": "štúdio",
     "description": "Vyberte režim studia a procvičujte slovnú zásobu.",
     "studioDescription": "Procvičujte ze slovnej zásoby, teoretických poznámek alebo importovaného materiálu — vyberte zdroj a spusťte soustredenou relaci.",
     "startActivity": "Spustit",
@@ -686,7 +700,7 @@
       "heading": "Zdroj",
       "vocabulary": "Slovná zásoba",
       "theory": "Teória",
-      "import": "Import",
+      "import": "Importovať",
       "imported": "Importováno",
       "lastUsed": "Naposledy použité",
       "selected": "Vybrané",
@@ -941,7 +955,9 @@
         "collapse": "Zbaliť {name}",
         "selectedCount": "{count, plural, one {# teória vybraná} few {# teórie vybrané} many {# teórie vybrané} other {# teórií vybraných}}",
         "practiceSelected": "Precvičiť vybrané",
-        "clearSelection": "Zrušiť výber"
+        "clearSelection": "Zrušiť výber",
+        "subfolders": "{count, plural, one {# podpriečinok} other {# podpriečinkov}}",
+        "selectedOne": "1 teória vybraná"
       }
     },
     "types": {
@@ -1033,17 +1049,17 @@
       "shuffle": "Zamíchat",
       "finish": "Dokončiť kolo",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Zdroj otázky",
+        "chooseAi": "Použiť generované AI",
+        "emptyTitle": "Žiadne použiteľné uložené príklady",
+        "emptyDescription": "Pridajte príkladové vety, ktoré jasne obsahujú každé slovo, upravte svoje filtre alebo prepnite na generované AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Uložené príklady",
+          "description": "Vytvorte otázky okamžite z vašich slovných príkladov. Žiadne čakanie na AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Generované AI",
+          "description": "Vytvorte nové vety z vašich slov s AI."
         }
       }
     },
@@ -1100,14 +1116,14 @@
       "tryAgain": "Zkusit znova",
       "questionsLabel": "Otázky",
       "correctLabel": "Správne",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Nesprávne",
+      "unansweredLabel": "Nezodpovedané",
       "reviewLabel": "K opakovanie",
       "answeredProgress": "{answered} / {total} zodpovezeno",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Skontrolovať odpoveď",
+      "nextQuestion": "Ďalšia",
+      "viewResults": "Zobraziť výsledky",
       "submitSet": "Odoslať odpovede",
       "submitting": "Kontrola…",
       "unansweredWarnTitle": "Nezodpovezené otázky",
@@ -1122,54 +1138,54 @@
       "unanswered": "Nezodpovezeno",
       "yourAnswer": "Vaše odpoveď",
       "correctAnswer": "Správná odpoveď",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Iba {count} otázok dostupných z vašich aktuálnych filtrov.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Ako cvičíte",
+        "lockedHint": "Dokončite alebo začnite novú sadu, aby ste to zmenili.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Jedna po druhej",
+          "description": "Zobrazte jednu otázku naraz. Skontrolujte po každej odpovedi pre okamžitú spätnú väzbu."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Všetky otázky",
+          "description": "Zobrazte celú sadu, odpovedajte v akomkoľvek poradí a potom raz odošlite na spätnú väzbu."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Prehľad",
+        "allCorrect": "Dokonalé — každá otázka správna.",
+        "summary": "{incorrect} nesprávne · {unanswered} nezodpovedané · {needsReview} na prehľad",
+        "viewWrong": "Zobraziť nesprávne odpovede",
+        "filtersLabel": "Filtrovať otázky",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Všetky ({count})",
+          "needs_review": "Nesprávne a nezodpovedané ({count})",
+          "correct": "Správne ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Predchádzajúce",
+        "nextWrong": "Ďalšie",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} na prehľad",
+        "floatLabel": "Navigácia nesprávnych odpovedí",
+        "closeFloat": "Zobraziť všetky odpovede"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% správne",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Dokonalá sada",
+          "body": "Každá odpoveď bola správna. Takáto koncentrácia si zaslúži ďalšie kolo, keď budete pripravení."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Silný výkon",
+          "body": "Jasne to chápete — prejdite si chybné odpovede, potom to upevnite s novou sadou."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Dobrá práca — pokračujte",
+          "body": "Niekoľko zablokovaných bodov je normálnych. Prejdite si ich raz, potom to skúste znova, kým sú čerstvé."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Takmer tam",
+          "body": "Najprv dokončite nezodpovedané otázky — potom skóre povie jasnejší príbeh."
         }
       }
     },
@@ -1182,7 +1198,7 @@
       },
       "contextualLanguageHint": "Otázky sú generovány v jazyce {language} (jazyk workspace).",
       "contextualEmptyTitle": "Generovat kontextové otázky",
-      "contextualEmptyDescription": "Vytvorte otázky s výberem z možností a doplňováním medzier z vaší slovnej zásoby.",
+      "contextualEmptyDescription": "Pridajte voliteľné pokyny nižšie, ak chcete, potom stlačte Generovať. Môžete nechať výzvu prázdnu.",
       "contextualProDescription": "Kontextové otázky AI sú dostupné s Pro.",
       "unlockContextual": "Odemknout s Pro",
       "correct": "Správne!",
@@ -1203,8 +1219,8 @@
       "hint": "Vyberte slovo a pak klepnete na jeho význam",
       "complete": "Všetky páry spárovány — skvelá práce!",
       "shuffle": "Zamíchat stĺpce",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} párov",
+      "continueRound": "Pokračovať"
     },
     "typeAnswer": {
       "questionWord": "Jaký je význam?",
@@ -1214,7 +1230,7 @@
         "contextual": "Kontextové"
       },
       "contextualEmptyTitle": "Generovat kontextové otázky",
-      "contextualEmptyDescription": "Vytvorte podnety k písanie s doplňováním medzier z vaší slovnej zásoby.",
+      "contextualEmptyDescription": "Pridajte voliteľné pokyny nižšie, ak chcete, potom stlačte Generovať. Môžete nechať výzvu prázdnu.",
       "contextualProDescription": "Kontextové otázky AI sú dostupné s Pro.",
       "unlockContextual": "Odemknout s Pro",
       "placeholder": "Napíšte odpoveď…",
@@ -1268,7 +1284,7 @@
   },
   "writing": {
     "title": "Písanie",
-    "studio": "studio",
+    "studio": "štúdio",
     "description": "Vytvárejte pracovní listy a podnety pro jazyk, ktorý sa učíte.",
     "disabledNoWorkspace": "Než pridáte dokumenty k písanie, vytvorte workspace.",
     "create": "Vytvoriť písanie",
@@ -1522,7 +1538,7 @@
   "dashboard": {
     "overview": "Prehled",
     "your": "Váš",
-    "workspaceLabel": "workspace",
+    "workspaceLabel": "pracovný priestor",
     "description": "Soukromý študijné workspace pro jazyk, ktorý vás zajímá — sbírejte slová, mejte teorii po ruce, procvičujte vlastními slovy a pak pište, poslouchejte a mluvte, dokud to nebude vaše.",
     "wordsSaved": "Uložená slová",
     "wordsReadyToPractice": "Slová pripravená k procvičenia",
@@ -1598,13 +1614,13 @@
       "writing": {
         "title": "Písanie",
         "description": "Rozšírené dokumenty a sady otázok, ke kterým sa môžete vracet a exportovať je.",
-        "how": "Začnite koncept, organizujte složkami a s Pro AI kontrolujte alebo vylepšujte text.",
+        "how": "Začnite návrh, organizujte pomocou priečinkov a využite AI príspevok vo vašom pláne na kontrolu alebo zlepšenie vášho textu.",
         "cta": "Otvoriť písanie"
       },
       "listening": {
         "title": "Počúvanie",
         "description": "Premeňte reálné audio alebo video na lekci.",
-        "how": "Nahrajte klip a vygenerujte prepis ve Free. Generovaná poslechová cvičenia sú součástí Pro.",
+        "how": "Nahrajte klip, vygenerujte prepis a vytvorte cvičenie na počúvanie s AI príspevkom zahrnutým vo vašom pláne.",
         "cta": "Otvoriť počúvanie"
       },
       "speaking": {
@@ -3120,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Nekteré pracovní priestory už existují pro stejný jazyk. Ich obsah bude pridán do stávajících pracovních prostoru místo vytvárení duplicit.",
         "empty_backup": "Táto záloha neobsahuje žiadna importovatelná učební data.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Niektoré existujúce položky zdieľajú rovnaký názov. Import použije jednu z nich deterministicky a ostatné nechá nezmenené."
       },
       "cancel": "Zrušiť",
       "confirm": "Importovať učební data",
@@ -3165,11 +3181,11 @@
         "requestTooLarge": "Táto záloha je príliš velká ke spracovanie na tejto stránce. Skúste menší export alebo kontaktujte podporu.",
         "notConfigured": "Úložište súborov pro import zálohy ešte nie je nastaveno."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Už vo vašom účte",
+      "skippedInAccountHint": "Tieto názvy zodpovedajú položkám, ktoré už máte. Nebudú importované znova. Nové položky pod rovnakým pracovným priestorom sa stále importujú.",
+      "skippedInBackupTitle": "Duplicitné názvy v tejto zálohe",
+      "skippedInBackupHint": "Súbor uvádza rovnaký názov viac ako raz. Iba prvá kópia každého názvu sa importuje — to je normálne aj na prázdnom účte.",
+      "skippedOtherTitle": "Nemožno importovať"
     },
     "danger": {
       "title": "Uzavrít účet",
@@ -3185,7 +3201,7 @@
       "warningTitle": "Než budete pokračovať",
       "warnings": {
         "workspaces": "Budou smazány všetky pracovní priestory a veškerá data slovnej zásoby, teória, písanie, poslechu a hovorenie.",
-        "billing": "Jakékoli aktivní predplatné Notoria Pro bude okamžite zrušeno.",
+        "billing": "Akákoľvek aktívna predplatná služba Notoria Pro alebo Premium bude okamžite zrušená.",
         "media": "Nahraná média a fotografie profilu budou odstraneny.",
         "permanent": "Po potvrzení neexistuje žiadna lhuta pro obnovení."
       },
@@ -3234,8 +3250,8 @@
     "upgrade": "Upgradovat na Pro",
     "manage": "Spravovat predplatné",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "Bezplatné",
+    "premiumBadge": "Prémiové",
     "renewsOn": "Obnovuje sa {date}",
     "status": "Stav: {status}",
     "monthlyPrice": "{price} / mesiac",
@@ -3459,9 +3475,9 @@
       "feature": "Funkce",
       "current": "Aktuálne",
       "capability": "Co získáte",
-      "free": "Free",
+      "free": "Bezplatné",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "Prémiové",
       "freeIncludes": "Zahrnuto ve Free",
       "proUnlocks": "Pro pridává",
       "premiumAdds": "Premium pridává",
@@ -3553,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "Prémiové",
     "title": "Kouč",
     "highlight": "učenie",
     "description": "Personalizovaný pohled na to, jak sa učíte a na co sa zamerit dál.",
@@ -3599,7 +3615,7 @@
     "vocabulary": "Slovná zásoba",
     "vocabularyEmpty": "Zatiaľ žiadna slová ve slovnej zásobe",
     "reviews": "Opakovanie kartiček",
-    "misses": "Again / Hard",
+    "misses": "Znova / Ťažké",
     "listening": "Počúvanie",
     "speaking": "Hovorenie",
     "writing": "Písanie",
@@ -3753,8 +3769,8 @@
       "practice": "Cvičit"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Znova",
+      "HARD": "Ťažké"
     },
     "status": {
       "MASTERED": "Zvládnuto",
@@ -3799,23 +3815,23 @@
       "title": "Co je Notoria?",
       "lead": "Notoria je váš soukromý deník učenie.",
       "paragraphs": [
-        "Think of it as a notebook for your language journey — except everything you write down can become part of your practice.",
-        "There is no predefined curriculum you have to follow. There is no \"correct\" way to use your workspace. There is no teacher watching over your shoulder. Nobody is grading your notes."
+        "Myslite na to ako na zápisník pre vašu jazykovú cestu — okrem toho, že všetko, čo si zapíšete, sa môže stať súčasťou vašej praxe.",
+        "Neexistuje žiadny preddefinovaný učebný plán, ktorý by ste museli dodržiavať. Neexistuje žiadny \"správny\" spôsob, ako používať váš pracovný priestor. Nikto vás nesleduje. Nikto nehodnotí vaše poznámky."
       ],
       "examplesIntro": "Vy rozhodujete, co do Notoria patrí. Napríklad môžete:",
       "examples": [
-        "Write down a word you heard today",
-        "Save a grammar rule you finally understood",
-        "Add an example sentence that makes sense to you",
-        "Upload a video you want to study",
-        "Write about something you want to practice saying"
+        "Zapíšte si slovo, ktoré ste dnes počuli",
+        "Uložte gramatické pravidlo, ktoré ste konečne pochopili",
+        "Pridajte príkladovú vetu, ktorá vám dáva zmysel",
+        "Nahrajte video, ktoré chcete študovať",
+        "Napíšte o niečom, čo chcete cvičiť"
       ],
       "overTime": "Postupem času sa z týchto drobností stává vaše osobní jazyková znalostní báze.",
       "noWrongWay": {
         "title": "Neexistuje správný ani špatný zpusob, jak budovat deník.",
         "paragraphs": [
-          "Your learning diary is yours. You don't have to organize everything perfectly. You don't have to use every feature. You don't have to follow a particular learning method.",
-          "Use Notoria in whatever way makes learning easier and more meaningful to you. The goal is not to create a perfect database — the goal is to create a learning space that actually belongs to you."
+          "Váš učebný denník je váš. Nemusíte všetko organizovať dokonale. Nemusíte používať každú funkciu. Nemusíte dodržiavať konkrétnu metódu učenia.",
+          "Používajte Notoria akýmkoľvek spôsobom, ktorý uľahčuje a robí učenie zmysluplnejším pre vás. Cieľom nie je vytvoriť dokonalú databázu — cieľom je vytvoriť učebný priestor, ktorý skutočne patrí vám."
         ]
       }
     },
@@ -3861,19 +3877,19 @@
         "title": "Slovná zásoba",
         "intro": "Slovná zásoba je vaše osobní knihovna slov — základ všeho ostatního v Notoria.",
         "bullets": [
-          "Add words and phrases you actually encounter",
-          "Include meanings, translations, and example sentences",
-          "Add pronunciation notes when helpful",
-          "Use tags to organize by topic, level, situation, or anything that helps you find words later",
-          "Reuse vocabulary in exercises and review sessions"
+          "Pridajte slová a frázy, s ktorými sa skutočne stretávate",
+          "Zahrňte významy, preklady a príkladové vety",
+          "Pridajte poznámky k výslovnosti, keď sú užitočné",
+          "Použite štítky na organizovanie podľa témy, úrovne, situácie alebo čohokoľvek, čo vám pomôže neskôr nájsť slová",
+          "Znovu použite slovnú zásobu v cvičeniach a revíziách"
         ],
         "body": "Místo memorování z generického seznamu slov budujete knihovnu, ktorá odráží vaši skutečnou cestu učenie.",
         "exampleIntro": "Napríklad dnes uslyšíte finské slovo „varata“:",
         "examples": [
-          "Word: varata",
-          "Meaning: to book / reserve",
-          "Example: Haluan varata ajan.",
-          "Tag: Daily life"
+          "Slovo: varata",
+          "Význam: rezervovať",
+          "Príklad: Haluan varata ajan.",
+          "Štítok: Každodenný život"
         ],
         "exampleNote": "Toto slovo je nyní součástí vaší osobní znalostní báze Notoria — pripravené k opakovanie a cvičenia.",
         "emphasis": "Nepridávejte každé slovo, ktoré uvidíte. Pridávejte slová, ktorá sú smysluplná pro VÁS."
@@ -3882,11 +3898,11 @@
         "title": "Teória",
         "intro": "Teória je váš osobní jazykový referenční priestor — místo pro znalosti, ktoré chcete mít po ruce.",
         "bullets": [
-          "Grammar rules and patterns",
-          "Pronunciation notes",
-          "Usage explanations",
-          "Examples and personal notes",
-          "Things you repeatedly forget"
+          "Gramatické pravidlá a vzory",
+          "Poznámky k výslovnosti",
+          "Vysvetlenia použitia",
+          "Príklady a osobné poznámky",
+          "Veci, na ktoré opakovane zabúdate"
         ],
         "body": "Pište vysvetlenie vlastními slovy. Gramatická poznámka nemusí znít jako učebnice. Ak vám dává smysl jednoduché vysvetlenie, je to dobré vysvetlenie pro váš deník.",
         "emphasis": "Teória je jako referenční zápisník, ke kterému sa vracíte, kdykoli niečo zapomenete."
@@ -3896,11 +3912,11 @@
         "intro": "Cvičenia vám umožňují aktivne precvičovať znalosti, ktoré jste sesbírali.",
         "bullets": [
           "Flashcards",
-          "Quizzes and multiple choice",
-          "Fill-in-the-blank exercises",
-          "Vocabulary practice from your saved words",
-          "Grammar practice from your theory notes",
-          "Other formats based on your own material"
+          "Kvízy a výber z viacerých možností",
+          "Cvičenia na doplnenie",
+          "Cvičenie slovnej zásoby z vašich uložených slov",
+          "Cvičenie gramatiky z vašich teoretických poznámok",
+          "Iné formáty založené na vašom vlastnom materiáli"
         ],
         "emphasis": "Hodnota spočívá v precvičovanie VAŠICH znalostí — ne náhodné slovnej zásoby z generického kurzu, ale slov a pojmu, ktoré jste osobne označili za duležité."
       },
@@ -3908,13 +3924,13 @@
         "title": "Písanie",
         "intro": "Písanie je místo, kde sa pasivní znalost mení v aktivní používání jazyka.",
         "bullets": [
-          "Draft texts on topics you care about",
-          "Create question sets for yourself",
-          "Practice using vocabulary you've learned",
-          "Experiment with new grammar",
-          "Review and improve your writing over time",
-          "With Pro: use AI to check and improve your work",
-          "Export your writing when you need it"
+          "Píšte texty na témy, ktoré vás zaujímajú",
+          "Vytvorte sady otázok pre seba",
+          "Cvičte používanie slovnej zásoby, ktorú ste sa naučili",
+          "Experimentujte s novou gramatikou",
+          "Revidujte a zlepšujte svoje písanie v priebehu času",
+          "S Pro: použite AI na kontrolu a zlepšenie vašej práce",
+          "Exportujte svoje písanie, keď to potrebujete"
         ],
         "emphasis": "Vaše písanie nemusí být dokonalé. Jde o to jazyk používat, delat chyby, všímat si, co ešte neznáte, a postupne sa zlepšovat."
       },
@@ -3922,19 +3938,19 @@
         "title": "Počúvanie",
         "intro": "Počúvanie vám umožňuje študovať skutečný obsah, ktorý si sami zvolíte — ne len predepsané lekce.",
         "bullets": [
-          "Upload audio or video",
-          "Generate a transcript",
-          "Study the transcript line by line",
-          "Turn the material into a lesson",
-          "Discover vocabulary and expressions from real content"
+          "Nahrajte audio alebo video",
+          "Vygenerujte prepis",
+          "Študujte prepis riadok po riadku",
+          "Premeňte materiál na lekciu",
+          "Objavte slovnú zásobu a výrazy z reálneho obsahu"
         ],
         "body": "Prineste do Notoria niečo, čemu skutečne chcete porozumet:",
         "examples": [
-          "A YouTube video",
-          "A conversation recording",
-          "A podcast episode",
-          "A lecture",
-          "Any other learning material"
+          "YouTube video",
+          "Nahrávka rozhovoru",
+          "Epizóda podcastu",
+          "Prednáška",
+          "Akýkoľvek iný učebný materiál"
         ],
         "emphasis": "Obsah rídíte vy. Notoria vám pomáhá mu porozumet a učit sa z nej."
       },
@@ -3942,11 +3958,11 @@
         "title": "Hovorenie",
         "intro": "Hovorenie je aktivní konverzační část vaší cesty učenie.",
         "bullets": [
-          "Talk with an AI tutor through video",
-          "Practice speaking naturally",
-          "Use vocabulary and knowledge you've collected",
-          "Review the conversation transcript afterward",
-          "Read feedback and identify areas to improve"
+          "Rozprávajte s AI lektorom cez video",
+          "Cvičte prirodzené rozprávanie",
+          "Použite slovnú zásobu a vedomosti, ktoré ste nazbierali",
+          "Následne si prejdite prepis rozhovoru",
+          "Prečítajte si spätnú väzbu a identifikujte oblasti na zlepšenie"
         ],
         "emphasis": "Mluvení nemusí být dokonalé. Účelem je procvičit jazyk v realistické situaci — a pak se učit z toho, co se stalo."
       },
@@ -3954,11 +3970,11 @@
         "title": "Čítanie",
         "intro": "Čítanie premeňuje texty, ktoré si zvolíte, na cvičenia porozumení.",
         "bullets": [
-          "Paste text or upload PDF/DOCX passages",
-          "Generate multiple-choice, written, or true/false/not stated questions",
-          "Practice and review answers with AI grading for written responses",
-          "Save useful words from the passage into Vocabulary",
-          "Organize passages with folders"
+          "Vložte text alebo nahrajte pasáže PDF/DOCX",
+          "Vygenerujte otázky s výberom z viacerých možností, písané alebo pravda/nepravda/neuvádza sa",
+          "Cvičte a prehodnocujte odpovede s AI hodnotením pre písané odpovede",
+          "Uložte užitočné slová z pasáže do slovnej zásoby",
+          "Organizujte pasáže pomocou priečinkov"
         ],
         "emphasis": "Prineste materiál, kterému skutečne chcete porozumet — zprávy, príbehy, pracovní listy — a premeňte ho na cvičenia, ktoré patrí do vašeho deníku."
       },
@@ -3966,20 +3982,20 @@
         "title": "Zachycení",
         "intro": "Zachycení je rychlá odkládací zóna — uložte niečo ve chvíľu, kdy na to narazíte, a pozdeji rozhodnete, kam to patrí.",
         "bullets": [
-          "Save a word, phrase, grammar doubt, or writing idea in seconds",
-          "Add an optional note or source for context",
-          "Keep items in To process until you are ready",
-          "Turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time",
-          "An item is marked Processed only after you finish creating that linked entry"
+          "Uložte slovo, frázu, gramatickú pochybnosť alebo nápad na písanie za sekundy",
+          "Pridajte voliteľnú poznámku alebo zdroj pre kontext",
+          "Udržujte položky v Na spracovanie, kým nie ste pripravení",
+          "Premeňte zachytenie na slovnú zásobu, teóriu, písanie alebo cvičenie, keď máte čas",
+          "Položka je označená ako Spracovaná až po dokončení vytvárania prepojenej položky"
         ],
         "body": "Zachycení stojí na začátku smyčky: nejdrív sbírejte, pak organizujte. V daném okamžiku nepotrebujete dokonalou kategorii — potrebujete myšlenku uloženou.",
         "emphasis": "Ak máte len deset sekund, zachycení stačí. Trídení muže počkat.",
         "exampleIntro": "Napríklad uslyšíte frázi v autobuse a máte len chvíľu:",
         "examples": [
-          "Content: varata aika",
-          "Note: heard on the bus — booking an appointment",
-          "Source: daily life",
-          "Later: process into Vocabulary with meaning and an example"
+          "Obsah: varata aika",
+          "Poznámka: počul na autobuse — rezervácia stretnutia",
+          "Zdroj: každodenný život",
+          "Neskôr: spracovať do slovnej zásoby s významom a príkladom"
         ],
         "exampleNote": "Útržek je v bezpečí v Zachycení. Až budete mít pet klidných minút, predejte ho do slovnej zásoby (alebo Teória / Písanie) a dokončete záznam — teprve pak je Zpracováno."
       }
@@ -3996,11 +4012,11 @@
         "addMore": "Pridať viac znalostí"
       },
       "paragraphs": [
-        "Capture holds the scraps until you are ready to place them.",
-        "What you collect in Vocabulary and Theory becomes the source for your exercises.",
-        "Writing and Listening help you use and understand the language in new contexts.",
-        "Speaking puts it all into active conversation.",
-        "Review closes the loop — and each review often leads to new words and notes to add."
+        "Zachytené položky sa uchovávajú, kým nie ste pripravení ich umiestniť.",
+        "To, čo zbierate v slovnej zásobe a teórii, sa stáva zdrojom pre vaše cvičenia.",
+        "Písanie a počúvanie vám pomáhajú používať a chápať jazyk v nových kontextoch.",
+        "Rozprávanie to všetko uvádza do aktívneho rozhovoru.",
+        "Revízia uzatvára cyklus — a každá revízia často vedie k novým slovám a poznámkam na pridanie."
       ],
       "highlight": "Čím viac znalostí pridáte, ktoré pro vás mají smysl, tím užitečnejší a osobnejší bude vaše cvičenia."
     },
@@ -4008,17 +4024,17 @@
       "title": "Toto je váš deník.",
       "lead": "Notoria je nástroj pro váš proces učenie — ne test toho, jak dobre sa učíte.",
       "dontNeed": [
-        "You don't need to make your notes perfect",
-        "You don't need to worry about whether your tags are \"correct\"",
-        "You don't need to write textbook-quality explanations",
-        "You don't need to finish every exercise",
-        "You don't need to use every feature"
+        "Nemusíte robiť svoje poznámky dokonalé",
+        "Nemusíte sa obávať, či sú vaše štítky \"správne\"",
+        "Nemusíte písať vysoko kvalitné vysvetlenia",
+        "Nemusíte dokončiť každé cvičenie",
+        "Nemusíte používať každú funkciu"
       ],
       "canDo": [
-        "You can change your mind.",
-        "You can reorganize things.",
-        "You can make mistakes.",
-        "You can learn at your own pace."
+        "Môžete zmeniť názor.",
+        "Môžete reorganizovať veci.",
+        "Môžete robiť chyby.",
+        "Môžete sa učiť vlastným tempom."
       ],
       "quote": "Nikdo váš deník neznámkuje. Budujete ho pro sebe."
     },
@@ -4049,9 +4065,9 @@
     "privacyTitle": "Zásady ochrany osobních údaju",
     "termsTitle": "Podmínky používání",
     "privacyDescription": "Jak Notoria shromažďuje, používá a maže osobní údaje a obsah učenie pro svoj soukromý pracovní priestor pro učenie jazyku.",
-    "termsDescription": "Podmínky používání soukromého pracovního prostoru Notoria pro učenie jazyku, účtu, funkcí AI a fakturace Notoria Pro.",
+    "termsDescription": "Podmienky používania súkromného jazykového vzdelávacieho pracovného priestoru Notoria, účtov, funkcií AI a fakturácie Pro alebo Premium.",
     "updated": "Naposledy aktualizováno {date}",
-    "updatedDate": "23. zárí 2026",
+    "updatedDate": "27. október 2026",
     "backToSignIn": "Späť k prihlásenie",
     "backHome": "Späť na Notoria",
     "authFooter": "Súkromie · Podmínky",
@@ -4072,7 +4088,7 @@
         "purposes": "Proč údaje zpracováváme",
         "auth": "Účty a prihlásenie",
         "ai": "Funkce AI",
-        "payments": "Platby (Notoria Pro)",
+        "payments": "Platby (Pro a Premium)",
         "processors": "Poskytovatelé služeb",
         "cookies": "Cookies a úložište zarízení",
         "transfers": "Mezinárodní predávání",
@@ -4094,13 +4110,13 @@
           "title": "2. Co tyto zásady pokrývají",
           "p1": "Pokrývají osobní údaje a obsah učenie zpracovávané, keď:",
           "list": [
-            "create or use an account",
-            "save material in private workspaces",
-            "subscribe to Notoria Pro",
-            "use optional AI-assisted tools",
-            "upload media for listening or profile use",
-            "use speaking practice",
-            "send feedback or contact us"
+            "vytvoriť alebo používať účet",
+            "uložiť materiál v súkromných pracovných priestoroch",
+            "predplatiť Notoria Pro alebo Premium",
+            "používať voliteľné nástroje s podporou AI",
+            "nahrať médiá na počúvanie alebo použitie profilu",
+            "používať cvičenia reči",
+            "poslať spätnú väzbu alebo nás kontaktovať"
           ],
           "p2": "Aktuálne kód aplikace neobsahuje SDK marketingové analytiky ani reklam tretích stran. Netvrdíme, že používáme trackery, ktoré v produktu nie sú."
         },
@@ -4110,11 +4126,11 @@
           "accountAuth": {
             "title": "Účet a autentizace",
             "list": [
-              "Name and email address",
-              "Password hash for email/password accounts (passwords are never stored in plain text)",
-              "Google account identifiers and OAuth tokens if you sign in with Google",
-              "Optional profile photo (avatar)",
-              "Account role and created/updated timestamps"
+              "Meno a e-mailová adresa",
+              "Hash hesla pre účty s e-mailom/heslom (heslá sa nikdy neukladajú v čistom texte)",
+              "Identifikátory účtu Google a OAuth tokeny, ak sa prihlásite pomocou Google",
+              "Voliteľná profilová fotografia (avatar)",
+              "Úloha účtu a časové pečiatky vytvorenia/aktualizácie"
             ]
           },
           "learningContent": {
@@ -4125,8 +4141,8 @@
           "subscription": {
             "title": "Metadata predplatného a plateb",
             "list": [
-              "Plan (free or Pro) and subscription status",
-              "Stripe customer and subscription identifiers, and current period end when applicable"
+              "Plán (bezplatný alebo Pro) a stav predplatného",
+              "Identifikátory zákazníka a predplatného Stripe, a koniec aktuálneho obdobia, ak je to relevantné"
             ],
             "p1": "Čísla karet a tajemství platebních metod zustávají u Stripe. Notoria uchovává iba fakturační metadata potrebná k odrazu vašeho stavu Pro."
           },
@@ -4149,32 +4165,32 @@
           },
           "rows": [
             {
-              "purpose": "Provide accounts, workspaces, and your saved learning material",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Poskytnúť účty, pracovné priestory a váš uložený učebný materiál",
+              "basis": "Zmluva (čl. 6(1)(b))"
             },
             {
-              "purpose": "Authenticate you (email/password or Google) and reset passwords",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Overiť vás (e-mail/heslo alebo Google) a resetovať heslá",
+              "basis": "Zmluva (čl. 6(1)(b))"
             },
             {
-              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Spravovať fakturáciu a stav predplatného Notoria Pro a Premium cez Stripe",
+              "basis": "Zmluva (čl. 6(1)(b))"
             },
             {
-              "purpose": "Optional AI help, listening transcription, and speaking practice when you use those features",
-              "basis": "Contract (Art. 6(1)(b)); preference controls where available"
+              "purpose": "Voliteľná pomoc AI, prepis počúvania a cvičenie reči, keď používate tieto funkcie",
+              "basis": "Zmluva (čl. 6(1)(b)); ovládacie prvky preferencií, kde sú k dispozícii"
             },
             {
-              "purpose": "Keep the service secure and reliable (abuse prevention, debugging)",
-              "basis": "Legitimate interests (Art. 6(1)(f))"
+              "purpose": "Udržiavať službu bezpečnú a spoľahlivú (prevencia zneužitia, ladenie)",
+              "basis": "Legitímne záujmy (čl. 6(1)(f))"
             },
             {
-              "purpose": "Respond to support and feedback messages",
-              "basis": "Legitimate interests / contract, depending on the request"
+              "purpose": "Odpovedať na správy podpory a spätnej väzby",
+              "basis": "Legitímne záujmy / zmluva, v závislosti od požiadavky"
             },
             {
-              "purpose": "Comply with legal obligations",
-              "basis": "Legal obligation (Art. 6(1)(c))"
+              "purpose": "Dodržiavať právne povinnosti",
+              "basis": "Právna povinnosť (čl. 6(1)(c))"
             }
           ],
           "p1": "Ak potrebujete formální poznámku k právnímu základu konkrétní činnosti, napíšte na <contact>contact@notoria.fi</contact>."
@@ -4192,7 +4208,7 @@
           "p4": "Aktuálne kódová základna nepoužívá iné poskytovatele velkých jazykových modelu krome OpenAI. OpenAI zpracovává údaje podle vlastních podmínek a zásad ochrany osobních údaju jako zpracovatel pro tyto funkce."
         },
         "payments": {
-          "title": "7. Platby (Notoria Pro)",
+          "title": "7. Platby (Pro a Premium)",
           "p1": "Placená predplatná zpracovává <strong>Stripe</strong>. Pokladna, faktury, platební metody a zrušení probíhají cez Stripe Checkout a Stripe Customer Portal. Webhooky Stripe aktualizují váš plán a stav v Notoria.",
           "p2": "Stripe zpracovává platební údaje jako poskytovatel plateb. Podrobnosti o práci s kartami viz vlastní dokumentace Stripe k ochrane osobních údaju."
         },
@@ -4205,44 +4221,44 @@
           },
           "rows": [
             {
-              "provider": "PostgreSQL database (production documented as Neon)",
-              "role": "Account and learning data"
+              "provider": "PostgreSQL databáza (produkcia dokumentovaná ako Neon)",
+              "role": "Účet a učebné údaje"
             },
             {
               "provider": "Vercel",
-              "role": "Application hosting (configured region includes Frankfurt / fra1)"
+              "role": "Hosting aplikácií (konfigurovaná oblasť zahŕňa Frankfurt / fra1)"
             },
             {
               "provider": "Cloudinary",
-              "role": "Avatars, listening media, editor images, and exercise-import files"
+              "role": "Avatary, počúvacie médiá, obrázky editora a súbory na import cvičení"
             },
             {
               "provider": "AssemblyAI",
-              "role": "Transcription of listening audio"
+              "role": "Prepis počúvacieho audia"
             },
             {
               "provider": "Stream Video",
-              "role": "Live speaking call audio/video transport; session fields such as recording URLs only if a recording event is later received. New calls do not use Stream transcription."
+              "role": "Prenos zvuku/videa živého hovoru; polia relácie, ako sú URL záznamov, iba ak je neskôr prijatá udalosť záznamu. Nové hovory nepoužívajú prepis Stream."
             },
             {
               "provider": "OpenAI",
-              "role": "Optional AI assistance, speaking-tutor realtime audio, and speaking-call transcription (gpt-4o-transcribe)"
+              "role": "Voliteľná pomoc AI, audio v reálnom čase lektora reči a prepis hovoru (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
-              "role": "Password-reset email and Support feedback delivery"
+              "role": "E-mail na resetovanie hesla a doručenie spätnej väzby podpory"
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro checkout, portal, and subscription status"
+              "role": "Notoria Pro a Premium pokladňa, portál a stav predplatného"
             },
             {
               "provider": "Google",
-              "role": "OAuth sign-in when you choose Google; web fonts for the UI"
+              "role": "OAuth prihlásenie, keď si vyberiete Google; webové písma pre UI"
             },
             {
               "provider": "Dicebear",
-              "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
+              "role": "Generované obrázky avatarov používané v reláciách reči (z názvu semena; žiadne heslo účtu nie je odoslané)"
             }
           ],
           "p2": "Prepisy hovoru hovorenie sa behem session zachycují cez OpenAI Realtime (gpt-4o-transcribe) a ukládají na serveru. Prepis a titulky Stream sú u nových hovoru vypnuté. Nahrávanie je pri vytvorení hovoru vypnuté; URL nahrávky sa uloží iba ak produkt pozdeji prijme událost pripravené nahrávky od Stream."
@@ -4258,27 +4274,27 @@
           "rows": [
             {
               "cookie": "Auth.js session cookie",
-              "purpose": "Keeps you signed in (JWT session; library default naming)",
+              "purpose": "Udržuje vás prihláseného (JWT session; predvolené pomenovanie knižnice)",
               "code": false
             },
             {
               "cookie": "notoria-locale",
-              "purpose": "UI language",
+              "purpose": "Jazyk UI",
               "code": true
             },
             {
               "cookie": "notoria-workspace",
-              "purpose": "Active workspace",
+              "purpose": "Aktívny pracovný priestor",
               "code": true
             },
             {
               "cookie": "notoria-ai-preferences",
-              "purpose": "AI assistance preferences",
+              "purpose": "Preferencie pomoci AI",
               "code": true
             },
             {
               "cookie": "sidebar_state",
-              "purpose": "Sidebar open/closed preference",
+              "purpose": "Preferencia otvoreného/zatvoreného bočného panela",
               "code": true
             }
           ],
@@ -4294,10 +4310,10 @@
         "retention": {
           "title": "11. Jak dlouho údaje uchováváme",
           "list": [
-            "Account and learning data are kept while your account remains open so you can use the service",
-            "Password-reset tokens expire after 30 minutes",
-            "Subscription metadata is kept as needed to reflect your current Pro status and Stripe billing relationship",
-            "Support and feedback emails are retained as long as needed to handle your request and related follow-up"
+            "Údaje o účte a učení sa uchovávajú, kým je váš účet otvorený, aby ste mohli používať službu",
+            "Tokeny na resetovanie hesla vypršia po 30 minútach",
+            "Metadata predplatného sa uchovávajú podľa potreby, aby odrážali váš aktuálny stav Pro a vzťah fakturácie Stripe",
+            "E-maily podpory a spätnej väzby sa uchovávajú tak dlho, ako je potrebné na vybavenie vašej požiadavky a súvisiaceho sledovania"
           ],
           "p1": "Presná okna uchování záloh u poskytovatelu infrastruktury nie sú v aplikaci pevne zakódována a môžu sa rídit provozními postupy týchto poskytovatelu. Kontaktujte nás, ak potrebujete upresnení k žádosti o smazání."
         },
@@ -4309,9 +4325,9 @@
           "deleteTitle": "Odstrániť účet",
           "deleteP1": "Účet môžete trvalo odstrániť z <account>Účet</account>. Po úspešném smazání Notoria:",
           "deleteList": [
-            "deletes your user record and cascaded learning data from Notoria’s database",
-            "cancels and removes related Stripe customer data where Stripe is configured (best effort)",
-            "destroys avatar media and listening-lesson media that the deletion flow is implemented to remove from Cloudinary"
+            "odstráni váš používateľský záznam a kaskádové údaje o učení z databázy Notoria",
+            "zruší a odstráni súvisiace údaje zákazníka Stripe, kde je Stripe nakonfigurovaný (najlepšie úsilie)",
+            "zničí médiá avatarov a médiá počúvania, ktoré je proces odstránenia implementovaný na odstránenie z Cloudinary"
           ],
           "deleteP2": "Aktuálne tok smazání netvrdí, že automaticky vyčistí každý artefakt tretí strany. Najmä nekterá aktiva Cloudinary (napríklad obrázky editoru alebo súbory importov cvičenia) a artefakty hovoru hovorenie Stream môžu u týchto poskytovatelu ostať, dokud nebudou vyčišteny zvlášť alebo vyčišteny podle ich vlastních harmonogramu.",
           "deleteP3": "Po smazání môžu krátce ostať omezené zbytkové kopie tiež v šifrovaných zálohách alebo protokolech, dokud sa tyto systémy neotočí. Ak po smazání účtu niečo konkrétního zustane, napíšte na <contact>contact@notoria.fi</contact>."
@@ -4320,12 +4336,12 @@
           "title": "13. Vaše práva (GDPR)",
           "p1": "Ak jste v EU/EHP alebo jste jinak chráneni GDPR, môžete mít právo:",
           "list": [
-            "access your personal data",
-            "correct inaccurate data",
-            "erase data (including by deleting your account)",
-            "restrict or object to certain processing",
-            "receive a portable copy of data you provided (see Export above)",
-            "withdraw consent where processing is based on consent"
+            "prístup k vašim osobným údajom",
+            "opraviť nepresné údaje",
+            "vymazať údaje (vrátane odstránenia vášho účtu)",
+            "obmedziť alebo namietať proti určitým spracovaniam",
+            "získať prenosnú kópiu údajov, ktoré ste poskytli (pozri Export vyššie)",
+            "odvolať súhlas, ak je spracovanie založené na súhlase"
           ],
           "listComplaint": "podat stížnost u dozorového úradu — ve Finsku u Úradu ombudsmana pro ochranu osobních údaju (<ombudsman>tietosuoja.fi</ombudsman>)",
           "p2": "Pro uplatnení týchto práv napíšte na <contact>contact@notoria.fi</contact>. Mužeme potrebovat overit, že žádost pochází od držitele účtu."
@@ -4348,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Tyto Podmínky používání vysvetlují pravidla používání Notoria na <site>www.notoria.fi</site>. Popisují, jak produkt dnes funguje: soukromé pracovní priestory pro učenie, volitelná fakturace Notoria Pro cez Stripe a funkce s podporou AI. Nenahrazují radu právníka k vaší konkrétní situaci.",
+      "intro": "Tieto podmienky používania vysvetľujú pravidlá používania Notoria na <site>www.notoria.fi</site>. Popisujú, ako produkt funguje dnes: súkromné vzdelávacie pracovné priestory, voliteľná fakturácia Pro a Premium cez Stripe a funkcie asistované AI. Nie sú náhradou za radu od právnika o vašej konkrétnej situácii.",
       "tocTitle": "Na tejto stránce",
       "tocAria": "Na tejto stránce",
       "toc": {
@@ -4359,7 +4375,7 @@
         "acceptable-use": "Prijatelné používání",
         "ip": "Duševní vlastnictví",
         "ai": "Výstup generovaný AI",
-        "plans": "Plán Free a Notoria Pro",
+        "plans": "Bezplatné, Pro a Premium plány",
         "billing": "Predplatné a fakturace",
         "refunds": "Vrácení penez a spotrebitelská práva",
         "availability": "Dostupnost",
@@ -4378,16 +4394,16 @@
         "service": {
           "title": "2. Služba",
           "p1": "Notoria je soukromá webová aplikace pro učenie jazyku. Môžete vytváret pracovní priestory a uchovávat učební materiál, napríklad slovnú zásobu, teoretické poznámky, písanie, cvičenia, lekce poslechu a session hovorenie.",
-          "p2": "Nekteré funkce sú dostupné v plánu Free. Notoria Pro odemyká ďalší schopnosti, jak je ukázáno v produktu a na stránce <account>Účet</account> — včetne Poslechu, Hovorenie, určitých AI studijních nástroju, importov cvičenia a placených formátu exportu dokumentov. Dostupnost funkcí sa muže menit s vývojem produktu.",
+          "p2": "Hlavné oblasti učenia, vrátane Počúvania, Hovorenia a Čítania, sú dostupné na každom pláne. Pro a Premium pridávajú vyššie AI príspevky a import/export učebných materiálov; Premium tiež pridáva personalizované koučovanie a cvičebné funkcie. Aktuálne porovnanie je zobrazené na vašej <account>Účte</account>.",
           "p3": "Notoria je určena k osobnímu učenie jazyku. Nie je školou, zkušebním úradem ani službou profesionálního poradenství."
         },
         "accounts": {
           "title": "3. Účty",
           "list": [
-            "Provide accurate account information",
-            "Keep your password and account access secure",
-            "Sign in with email and password, or with Google when Google sign-in is available",
-            "Use Notoria only if you are able to enter into a binding agreement under applicable law"
+            "Poskytnúť presné informácie o účte",
+            "Udržiavať svoje heslo a prístup k účtu v bezpečí",
+            "Prihlásiť sa pomocou e-mailu a hesla alebo pomocou Google, keď je prihlásenie Google k dispozícii",
+            "Používať Notoria iba v prípade, že ste schopní uzavrieť záväznú dohodu podľa platného práva"
           ],
           "p1": "Produkt neimplementuje samostatnou vekovou bránu. Ak sa domníváte, že byl účet vytvoren bez príslušného oprávnenia, kontaktujte <contact>contact@notoria.fi</contact>.",
           "p2": "Upozornete nás na <contact>contact@notoria.fi</contact>, ak sa domníváte, že byl váš účet kompromitován."
@@ -4402,12 +4418,12 @@
           "title": "5. Prijatelné používání",
           "p1": "Souhlasíte, že nebudete:",
           "list": [
-            "break the law or infringe others’ rights",
-            "attempt to access other users’ private workspaces or accounts",
-            "probe, overload, or disrupt the service, APIs, or related infrastructure",
-            "abuse AI, transcription, listening, or speaking features in ways that harm others or circumvent plan limits through fraud",
-            "reverse engineer the service except where mandatory local law allows",
-            "misrepresent your identity to Stripe, Google, or Notoria support"
+            "porušiť zákon alebo zasahovať do práv iných",
+            "pokúsiť sa získať prístup k súkromným pracovným priestorom alebo účtom iných používateľov",
+            "testovať, preťažovať alebo narušovať službu, API alebo súvisiacu infraštruktúru",
+            "zneužívať AI, prepisovanie, počúvanie alebo funkcie reči spôsobmi, ktoré poškodzujú iných alebo obchádzajú limity plánov podvodom",
+            "reverzne inžinierstvo služby, pokiaľ to miestny zákon neumožňuje",
+            "nepravdivo sa predstavovať Stripe, Google alebo podpore Notoria"
           ]
         },
         "ip": {
@@ -4419,23 +4435,23 @@
           "title": "7. Výstup generovaný AI",
           "p1": "Nekteré funkce môžu kontrolovat, navrhovat, generovat, prepisovat, shrnovat alebo tutorky vycházet z vašeho materiálu. Výstup muže být neúplný, nesprávný alebo nevhodný pro váš cieľ. Zustáváte odpovední za kontrolu výsledku AI, než sa na ne spolehnete pri studiu, zkouškách, profesionálním použití alebo zverejnení.",
           "p2": "Funkce AI môžu být nedostupné, ak je asistence vypnutá v <settings>Nastavenia</settings>, ak váš plán konkrétní nástroj nezahrnuje, alebo ak je poskytovatel dočasne nedostupný.",
-          "p3": "Ne všetky AI pomocníky vyžadujú Notoria Pro. Produkt ukazuje, ktoré nástroje sú zadarmo a ktoré potrebují Pro."
+          "p3": "Dostupnosť AI a denné príspevky sa líšia medzi Bezplatným, Pro a Premium. Produkt zobrazuje plán a príspevok potrebný pre každý nástroj."
         },
         "plans": {
-          "title": "8. Plán Free a Notoria Pro",
+          "title": "8. Bezplatné, Pro a Premium plány",
           "p1": "Plán Free pokrývá základné cvičenia s vlastní slovní zásobou a související študijné nástroje, jak je ukázáno v produktu.",
-          "p2": "Notoria Pro je placené predplatné, ktoré odemyká ďalší funkce. V aktuálním produktu to typicky zahrnuje Počúvanie, Hovorenie, import cvičenia, cvičenia skládání vet, mnoho studijních nástroju s AI a export dokumentov PDF/DOCX. Nekteré lehčí AI pomocníky (napríklad určité pomucky slovnej zásoby alebo formátovanie editoru) môžu ostať dostupné v plánu Free, keď je AI asistence zapnutá.",
-          "p3": "Prístup Pro je vázán na váš uživatelský účet, takže platí napríč pracovními priestory pod tímto účtem. Účty s rolí administrátora môžu mít prístup na úrovni Pro bez osobního predplatného Stripe.",
-          "p4": "Cena, ktorá platí pro váš nákup, je cena zobrazená ve Stripe Checkout pro aktuálne plán Pro. Jakákoli cena zobrazená jinde v produktu (napríklad na Účtu) je iba indikativní a musí odpovídat aktivní konfiguraci ceny Stripe."
+          "p2": "Pro a Premium sú platené predplatné. Pro pridáva vyššie alebo neobmedzené príspevky pre mnohé AI nástroje plus import učebných materiálov a export PDF/DOCX. Premium obsahuje Pro a pridáva personalizované funkcie ako Kouč učenia, osobný učebný profil, adaptívne cvičenie, cvičenie založené na chybách a vlastné pokyny na cvičenie. Stránka Účet zobrazuje aktuálne porovnanie a limity.",
+          "p3": "Platený prístup je viazaný na váš používateľský účet a platí vo všetkých jeho pracovných priestoroch. Účty s administrátorskou rolou môžu mať prístup na úrovni plateného predplatného bez osobného predplatného Stripe.",
+          "p4": "Cena, ktorá sa uplatňuje, je cena zobrazená na Stripe Checkout pre vybraný plán Pro alebo Premium. Akákoľvek cena zobrazená inde v produkte (napríklad na Účte) je iba orientačná a musí zodpovedať aktívnej cenovej konfigurácii Stripe."
         },
         "billing": {
           "title": "9. Predplatné, fakturace a zrušení",
-          "list0": "Predplatná Pro sa účtují cez <strong>Stripe</strong>",
-          "list1": "Pokladnu môžete spustit z <account>Účet</account> alebo ze zamčených ovládacích prvku Pro v aplikaci",
+          "list0": "Predplatné Pro a Premium sú fakturované cez <strong>Stripe</strong>",
+          "list1": "Môžete začať pokladňu alebo zmeniť plán z <account>Účtu</account> alebo z uzamknutých platených ovládacích prvkov v aplikácii",
           "list2": "Z Účtu môžete otvoriť Stripe Customer Portal pro zobrazení faktur, aktualizaci platebních metod a zrušení predplatného",
           "list3": "Zrušení sa rídí chováním Stripe Customer Portal pro vaše predplatné",
-          "p1": "Po zrušení prístup Pro pokračuje iba, dokud stav predplatného Stripe stále udeluje Pro v produktu. V aktuálne implementaci stavy považované za Pro zahrnují <code>active</code>, <code>trialing</code> a <code>past_due</code>. Keď stav už nekvalifikuje, účet sa vrátí na plán Free.",
-          "p2": "Ak platba selže, Stripe muže presunout predplatné do <code>past_due</code> alebo jiného stavu. Notoria synchronizuje tento stav z webhooku Stripe. Dokud stav zustává <code>past_due</code>, funkce Pro zustávají dostupné podle aktuálních pravidel prístupu; ak predplatné pozdeji prejde na zrušené alebo jinak nezpusobilé, prístup Pro končí.",
+          "p1": "Po zrušení obnovenia pokračuje váš aktuálny prístup Pro alebo Premium, pokiaľ stav predplatného Stripe stále kvalifikuje v produkte. Kvalifikované stavy aktuálne zahŕňajú <code>aktívny</code>, <code>skúšobný</code> a <code>po termíne</code>. Keď stav už nie je kvalifikovaný, účet sa vráti k Bezplatnému.",
+          "p2": "Ak platba zlyhá, Stripe môže presunúť predplatné do <code>po termíne</code> alebo iného stavu. Notoria synchronizuje tento stav z webhooks Stripe. Kým zostáva <code>po termíne</code>, aktuálny platený plán zostáva dostupný podľa súčasných pravidiel prístupu; ak sa neskôr stane zrušeným alebo inak neplatným, platený prístup končí.",
           "p3": "Smazání účtu Notoria okamžite zruší predplatné Stripe (best effort) jako součást smazání účtu. To je odlišné od zrušení obnovení cez Customer Portal pri zachování účtu."
         },
         "refunds": {
@@ -4456,7 +4472,7 @@
         "liability": {
           "title": "13. Vyloučení záruk a odpovednost",
           "p1": "Notoria je poskytována na základe „jak je dostupná“ pro osobní učenie jazyku. V nejširším rozsahu povoleném platným právem vylučujeme záruky, ktoré právo nevyžaduje.",
-          "p2": "V nejširším rozsahu povoleném platným právem Notoria neodpovídá za neprímé, nahodilé, zvláštní, následné škody ani škody ze ztráty dat vzniklé z používání služby alebo spoléhání na výstup AI. Kde nie je možné odpovednost vyloučit, je omezena na částku, ktorú jste za Notoria Pro zaplatili ve trech mesících pred nárokem, alebo na jakoukoli vyšší částku vyžadovanou kogentním právem.",
+          "p2": "V maximálnom rozsahu povolenom platným právom nie je Notoria zodpovedná za nepriame, náhodné, osobitné, následné alebo straty dát vznikajúce z vášho používania služby alebo spoliehania sa na výstup AI. Kde nie je možné vylúčiť zodpovednosť, je obmedzená na sumu, ktorú ste zaplatili za Notoria Pro alebo Premium v troch mesiacoch pred nárokom, alebo akúkoľvek vyššiu sumu požadovanú povinným právom.",
           "p3": "Tyto limity nevylučují odpovednost, ktorú finské alebo unijní právo omezit nedovoluje — včetne odpovednosti, ktoré sa spotrebitelé nemohou vzdát, a odpovednosti za smrt alebo újmu na zdraví zpusobenou nedbalostí, kde taková pravidla platí."
         },
         "changes": {
@@ -4529,9 +4545,9 @@
           "vocab": "Budujte osobní banku slovnej zásoby s významy, príklady a štítky",
           "practice": "Cvičte s cvičeniami z vašich vlastních slov a poznámek",
           "create": "Pište teoretické poznámky a texty, ke kterým sa môžete vrátiť",
-          "listenSpeak": "Premeňte média na cvičenia poslechu a mluvte s AI tutorem na Pro"
+          "listenSpeak": "Premeňte médiá na cvičenie počúvania a využite AI príspevky na prepis a cvičenie hovorenia"
         },
-        "note": "Nekteré nástroje AI, poslechu, hovorenie a exportu sú součástí Notoria Pro. Plán Free stále pokrývá každodenní cvičenia slovnej zásoby a základné smyčku studia."
+        "note": "Hlavné oblasti učenia sú dostupné na každom pláne. Pro zvyšuje AI príspevky a pridáva import/export učebných materiálov; Premium pridáva personalizované koučovanie a cvičenie."
       },
       "ai": {
         "title": "AI tam, kde pomáhá",
@@ -4657,7 +4673,7 @@
         "title": "Jak sa oblasti propojují",
         "p1": "Zachycení je rychlý vstupní bod. Slovná zásoba a Teória sú místa, kde materiál usedá. Cvičenia ten materiál premeňuje na praxi. Písanie, Počúvanie a Hovorenie vám pomáhají jazyk používat aktivneji.",
         "p2": "Nemusíte procházet každou oblast v poradie. Mnoho lidí zustává u slov a krátkého cvičenia delší dobu.",
-        "p3": "Prirozený ďalší krok je písanie, keď chcete produkovat jazyk vlastními podmínkami, pak počúvanie a hovorenie, keď má stejný materiál pracovat v uchu a hlase — Počúvanie a Hovorenie sú součástí Notoria Pro.",
+        "p3": "Prírodným ďalším krokom je písanie, keď chcete produkovať jazyk na vlastných podmienkach, potom počúvanie a hovorenie, keď chcete, aby ten istý materiál pracoval vo vašich ušiach a hlase. Tieto oblasti sú dostupné na každom pláne; limity používania AI sa líšia podľa plánu.",
         "beat": "Nejdrív sbírejte a porozumejte. Používejte a mluvte, až je materiál pripraven opustit stránku."
       },
       "areas": {
@@ -4681,11 +4697,11 @@
         },
         "listening": {
           "label": "Počúvanie",
-          "body": "Premeňte média na cvičenia poslechu v pracovním prostoru. Dostupné na Notoria Pro."
+          "body": "Premeňte médiá na cvičenie počúvania vo vašom pracovnom priestore. Dostupné na každom pláne; príspevky na prepis AI sa líšia podľa plánu."
         },
         "speaking": {
           "label": "Hovorenie",
-          "body": "Živé cvičenia s AI tutorem, zakotvené v jazyce, ktorý studujete. Dostupné na Notoria Pro."
+          "body": "Živé cvičenie s AI lektorom, zakotvené v jazyku, ktorý študujete. Dostupné na každom pláne s denným príspevkom založeným na pláne."
         },
         "reading": {
           "label": "Čítanie",
@@ -4735,15 +4751,15 @@
         },
         "account": {
           "q": "Jak zmením heslo alebo uzavru účet?",
-          "a": "Otevrete <account>Účet</account>. Tam môžete aktualizovať heslo, ak používáte prihlásenie e-mailem, spravovat Notoria Pro, exportovať zálohu alebo trvalo odstrániť účet."
+          "a": "Otvor <account>Účet</account>. Môžete tam aktualizovať svoje heslo, ak používate prihlásenie cez e-mail, spravovať Pro alebo Premium, exportovať zálohu alebo trvalo zmazať svoj účet. Zmazanie účtu tiež okamžite zruší akékoľvek aktívne predplatné Stripe na základe najlepšieho úsilia; zrušenie obnovenia samo o sebe udržuje účet a jeho údaje."
         },
         "pro": {
           "q": "Jak funguje fakturace a zrušení?",
-          "a": "Notoria Pro sa účtuje cez Stripe. Z <account>Účet</account> môžete upgradovat, otvoriť zákaznický portál Stripe pro správu platebních metod a faktur, alebo zrušiť obnovení."
+          "a": "Notoria Pro a Premium sú fakturované cez Stripe. Z <account>Účtu</account> môžete predplatiť, prepnúť medzi Pro a Premium, spravovať platobné metódy a faktúry, zrušiť obnovenie alebo obnoviť naplánované zrušenie. Zrušenie obnovenia udržuje prístup, kým Stripe neskončí kvalifikované predplatné; zmazanie vášho účtu je samostatné a okamžite zruší predplatné na základe najlepšieho úsilia."
         },
         "proFeatures": {
-          "q": "Co je zadarmo a co potrebuje Notoria Pro?",
-          "a": "Každodenní cvičenia slovnej zásoby a související študijné nástroje sú dostupné v plánu Free. Nekteré nástroje AI, počúvanie, hovorenie a export dokumentov sú součástí Notoria Pro. Porovnejte a upgradujte z <account>Účet</account>."
+          "q": "Čo je zahrnuté v Bezplatnom, Pro a Premium?",
+          "a": "Bezplatné obsahuje hlavné oblasti učenia a denné príspevky pre podporované AI nástroje. Pro zvyšuje alebo odstraňuje mnohé limity AI a pridáva import učebných materiálov plus export PDF/DOCX. Premium obsahuje Pro a pridáva personalizované koučovanie, učebný profil, adaptívne a cvičenie založené na chybách a vlastné pokyny na cvičenie. Pozrite si živé porovnanie a aktuálne limity v <account>Účte</account>."
         },
         "learning": {
           "q": "Jak fungují funkce učenie Notoria?",
@@ -5053,9 +5069,9 @@
         "suspended": "Pozastaveno"
       },
       "plans": {
-        "free": "Free",
+        "free": "Bezplatné",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "Prémiové"
       },
       "fields": {
         "id": "ID uživatele",
@@ -5157,7 +5173,7 @@
       "fields": {
         "id": "Id",
         "title": "Názov",
-        "word": "Word",
+        "word": "Slovo",
         "folderName": "Názov priečinka",
         "status": "Stav",
         "errorCode": "Kód chyby",

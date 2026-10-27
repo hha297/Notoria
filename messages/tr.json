@@ -17,19 +17,20 @@
     "hideFilters": "Filtreleri gizle",
     "remove": "Kaldır",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Görünüm",
+      "print": "Yazdırmaya uygun",
+      "printHint": "Beyaz sayfa, koyu metin",
+      "theme": "Mevcut tema",
+      "themeHint": "Açık veya koyu temanızla eşleşir",
+      "previewKicker": "Örnek sayfa",
+      "previewTitle": "Belge başlığı",
+      "previewBody": "Gövde metni seçilen renkler ve boşlukları kullanır.",
+      "previewCallout": "Vurgu ve aksanlar modül rengini takip eder.",
+      "fixedNote": "Görünüm, dışa aktarılan dosyada sabittir. Değiştirmek için tekrar dışa aktarın.",
+      "docxBackgroundNote": "Word ve diğer uygulamalar sayfa arka planlarını aynı şekilde göstermeyebilir, özellikle yazdırırken."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "En üste kaydır",
+    "moreActions": "Daha fazla işlem"
   },
   "contentImport": {
     "title": {
@@ -472,34 +473,34 @@
     "viewMode": "Görüntüleme modu",
     "tagManager": {
       "open": "Etiketleri yönet",
-      "eyebrow": "Tags",
+      "eyebrow": "Etiketler",
       "title": "Etiket yöneticisi",
-      "description": "Bir etiket seçin, ardından kelimelere atayın veya kaldırın. Atanmış ve diğer kelimeler ayrı listelerde kalır.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Bir etiket seçin, ardından kelimelerden atayın veya kaldırın.",
+      "pageDescription": "Standart veya Özel seçin, bir etiket seçin, ardından kelimelerden ekleyin veya kaldırın.",
+      "disabledNoWorkspace": "Kelime dağarcığı etiketlerini yönetmeden önce bir çalışma alanı oluşturun.",
+      "backToVocabulary": "Kelime dağarcısına geri dön",
+      "backToSettings": "Ayarlar sayfasına geri dön",
       "groupsLabel": "Standart etiket grupları",
       "tagsHeading": "Etiketler",
       "standardTagsHeading": "Standart etiketler",
       "customTagsHeading": "Özel etiketler",
-      "customTagsHint": "Kendi düzenlemeniz için oluşturduğunuz etiketler — sözcük türü değildir.",
+      "customTagsHint": "Oluşturduğunuz çalışma alanı etiketleri — liste uzun olduğunda bulmak için arama yapın.",
       "emptyCustomTags": "Henüz özel etiket yok. Bir kelimeyi düzenlerken oluşturun.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Bu aramaya uyan özel etiket yok.",
+      "tagSearchPlaceholder": "Etiketleri ara…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standart",
       "kindCustom": "Özel",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Kelime listeleri",
+      "wordTabAssigned": "Etiketli",
+      "wordTabOther": "Etiketsiz",
       "assignedHeading": "Bu etikete sahip kelimeler",
       "otherHeading": "Diğer kelimeler",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Bu sayfadaki tümünü seç",
+      "clearSelection": "Seçimi temizle",
+      "selectionScopePage": "Bu sayfadan seçiliyor ({count} / {total})",
+      "selectionScopeFiltered": "Mevcut arama sonuçları içinde seçiliyor",
       "searchPlaceholder": "Kelime veya anlam ara…",
       "wordCount": "{count}",
       "loading": "Kelime dağarcığı yükleniyor…",
@@ -509,13 +510,23 @@
       "emptyOther": "Her kelimede zaten bu etiket var.",
       "emptyOtherSearch": "Atanacak eşleşen kelime yok.",
       "selected": "{count} seçili",
-      "addToTag": "Etikete ekle",
-      "removeFromTag": "Etiketten kaldır",
-      "applyAdd": "Etikete ekle ({count})",
-      "applyRemove": "Etiketten kaldır ({count})",
+      "addToTag": "Etiket ekle",
+      "removeFromTag": "Etiketi kaldır",
+      "applyAdd": "Etiket ekle ({count})",
+      "applyRemove": "Etiketi kaldır ({count})",
       "added": "{tag} etiketine {count} kelime eklendi",
       "removed": "{tag} etiketinden {count} kelime kaldırıldı",
-      "error": "Etiket üyeliği güncellenemedi"
+      "error": "Etiket üyeliği güncellenemedi",
+      "systemsLabel": "Etiket sistemleri",
+      "standardSystemTitle": "Standart",
+      "standardSystemMeta": "Konu ve kullanım, ayrı gösterilir",
+      "usageOptional": "İsteğe bağlı",
+      "customSystemTitle": "Özel",
+      "customSystemMeta": "{count, plural, one {# etiket} other {# etiket}}",
+      "customPickerLabel": "Özel bir etiket seçin",
+      "customPickerPlaceholder": "Bir özel etiket seçin…",
+      "customSearchPlaceholder": "Özel etiketleri ara…",
+      "pickTagFirst": "Kelime üyeliğini yönetmek için yukarıdan bir etiket seçin."
     },
     "moreTags": "+{count}",
     "updatedAgo": "{time} güncellendi",
@@ -584,7 +595,11 @@
         "notes": "Notlar",
         "updated": "Son güncelleme"
       }
-    }
+    },
+    "selectedCustomTags": "Seçilen etiketler",
+    "selectedSynonyms": "Seçilen eşanlamlılar",
+    "removeCustomTag": "{name} etiketini kaldır",
+    "pickerLoading": "Yükleniyor…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Pratik hazır",
       "aiUnavailable": "Şu anda AI soruları oluşturulamadı.",
       "aiForbidden": "AI teori alıştırmaları Pro ile kullanılabilir.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Ekstra talimatlar Premium'da mevcuttur.",
       "aiDisabled": "AI yardımı Ayarlar’da kapalı.",
       "feedback": {
         "correct": "Doğru!",
@@ -927,20 +942,22 @@
         "why": "Neden",
         "complete": "Anlaşıldı",
         "completeHint": "Hazır olduğunuzda ilerleyebilirsiniz.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Egzersizi başlat",
+        "skipReviewAndStart": "Gözden geçirmeyi atla ve egzersizi başlat"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Sınıflandırılmamış",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# not} other {# notlar}}",
+        "selectAll": "Hepsini seç",
+        "selectGroup": "{name} içindeki notları seç",
+        "expand": "{name} genişlet",
+        "collapse": "{name} daralt",
+        "selectedCount": "{count, plural, one {# teori seçildi} other {# teori seçildi}}",
+        "practiceSelected": "Seçilenleri pratik yap",
+        "clearSelection": "Seçimi temizle",
+        "subfolders": "{count, plural, one {# alt klasör} other {# alt klasör}}",
+        "selectedOne": "1 teori seçildi"
       }
     },
     "types": {
@@ -955,7 +972,7 @@
       "fill-in-blank": {
         "label": "Boşluk Doldurma",
         "description": "Örnek cümleleri eksik kelime bilgisi kelimesiyle tamamlayın.",
-        "preview": "Minulla on uusi ______."
+        "preview": "Minulla on yeni ______."
       },
       "multiple-choice": {
         "label": "Çoktan Seçmeli",
@@ -998,8 +1015,8 @@
       "startsWith": "“{letter}” ile başlar",
       "revealPrompt": "Hâlâ takıldınız mı? Tam cevabı gösterebilirsiniz.",
       "revealAnswer": "Cevabı Göster",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Sonraki ipucu",
+      "hintProgress": "İpucu {current} / {total}"
     },
     "empty": {
       "noWordsTitle": "Henüz kelime yok",
@@ -1032,17 +1049,17 @@
       "shuffle": "Karıştır",
       "finish": "Turu bitir",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Soru kaynağı",
+        "chooseAi": "AI Üretimi Kullan",
+        "emptyTitle": "Kullanılabilir kaydedilmiş örnek yok",
+        "emptyDescription": "Her kelimeyi açıkça içeren örnek cümleler ekleyin, filtrelerinizi ayarlayın veya AI Üretimi'ne geçin.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Kaydedilmiş örnekler",
+          "description": "Kelime örneklerinizden soruları anında oluşturun. AI beklemesi yok."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI Üretimi",
+          "description": "Kelime dağarcığınızdan AI ile yeni cümleler oluşturun."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "AI alıştırma oluşturma Pro ile kullanılabilir.",
       "disabled": "AI yardımı Ayarlar’da kapalı.",
       "upgradeHint": "Free her gün birkaç AI alıştırma oluşturma içerir. Pro limiti kaldırır.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Ekstra talimatlar",
+      "additionalInstructionsPlaceholder": "Örneğin: Restoran durumlarını kullanın, dili A2 seviyesinde tutun ve hataları arayüz dilinizde açıklayın.",
+      "additionalInstructionsLocked": "Desteklenen egzersiz türlerini özelleştirmek, gerçek yaşam bağlamı ayarlamak ve kendi talimatlarınızı eklemek için Premium'a yükseltin.",
+      "premiumRequired": "Ekstra talimatlar Premium'da mevcuttur.",
+      "presetLabel": "Ön ayarlar",
+      "presetNone": "Hiçbir ön ayar seçilmedi",
+      "presetApply": "Uygula",
+      "presetSave": "Ön ayarı kaydet",
+      "presetName": "Ön ayar adı",
+      "presetDelete": "Sil",
+      "presetSaved": "Ön ayar kaydedildi",
+      "presetDeleted": "Ön ayar silindi",
+      "presetSaveFailed": "Bu ön ayarı kaydedemedik.",
       "emptyWords": "Soru oluşturmadan önce kelime bilgisi kelimeleri ekleyin.",
       "noneValid": "AI bu kelimeler için geçerli sorular oluşturamadı. Tekrar deneyin.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Egzersizinizin bağlamını, stilini veya odak noktasını özelleştirin. Varsayılan ayarları kullanmak için boş bırakın.",
+      "presetUpdate": "Ön ayarı güncelle",
+      "presetUpdated": "Ön ayar güncellendi",
+      "presetsTitle": "Kaydedilmiş ön ayarlar",
+      "presetsHelper": "Ön ayarlar, egzersiz ayarlarını ve ek talimatları saklar. Seçtiğiniz kelime dağarcığını veya teorileri değiştirmez.",
+      "presetsEmpty": "Henüz kaydedilmiş ön ayar yok. Mevcut ayarlarınızı daha sonra yeniden kullanmak için kaydedin.",
+      "presetSaveAs": "Ön ayar olarak kaydet",
+      "presetUpdateCurrent": "Mevcut ayarlarla güncelle",
+      "presetRename": "Yeniden adlandır",
+      "presetManage": "Ön ayarı yönet",
+      "presetRenamed": "Ön ayar yeniden adlandırıldı",
+      "presetSaveDialogTitle": "Ön ayar olarak kaydet",
+      "presetSaveDialogDescription": "Bu ön ayarı adlandırarak mevcut egzersiz ayarlarını ve ek talimatları yeniden kullanın. Seçilen kelime dağarcığı veya teoriler saklanmaz.",
+      "presetRenameDialogTitle": "Ön ayarı yeniden adlandır",
+      "presetRenameDialogDescription": "Bu ön ayar için yeni bir ad seçin.",
+      "presetDeleteDialogTitle": "Ön ayarı silmek istiyor musunuz?",
+      "presetDeleteDialogDescription": "“{name}” silinsin mi? Mevcut egzersiz yapılandırmanız olduğu gibi kalır."
     },
     "session": {
       "complete": "Oturum tamamlandı",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Tekrar dene",
       "questionsLabel": "Sorular",
       "correctLabel": "Doğru",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Yanlış",
+      "unansweredLabel": "Cevapsız",
       "reviewLabel": "Gözden geçirilecek",
       "answeredProgress": "{answered} / {total} cevaplandı",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Cevabı kontrol et",
+      "nextQuestion": "Sonraki",
+      "viewResults": "Sonuçları görüntüle",
       "submitSet": "Cevapları gönder",
       "submitting": "Kontrol ediliyor…",
       "unansweredWarnTitle": "Cevaplanmamış sorular",
@@ -1121,54 +1138,54 @@
       "unanswered": "Cevaplanmadı",
       "yourAnswer": "Cevabınız",
       "correctAnswer": "Doğru cevap",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Mevcut filtrelerinizden yalnızca {count} soru mevcut.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Nasıl pratik yapıyorsunuz",
+        "lockedHint": "Bunu değiştirmek için bir seti bitirin veya yeni bir set başlatın.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Tek tek",
+          "description": "Her seferinde bir soruyu görün. Her cevaptan sonra anında geri bildirim için kontrol edin."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Tüm sorular",
+          "description": "Tam seti görün, herhangi bir sırayla cevaplayın, ardından geri bildirim için bir kez gönderin."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Gözden Geçir",
+        "allCorrect": "Mükemmel — her soru doğru.",
+        "summary": "{incorrect} yanlış · {unanswered} cevapsız · {needsReview} gözden geçirilecek",
+        "viewWrong": "Yanlış cevapları görüntüle",
+        "filtersLabel": "Soruları filtrele",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Tümü ({count})",
+          "needs_review": "Yanlış & cevapsız ({count})",
+          "correct": "Doğru ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Önceki",
+        "nextWrong": "Sonraki",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} gözden geçirilecek",
+        "floatLabel": "Yanlış cevaplar navigasyonu",
+        "closeFloat": "Tüm cevapları göster"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% doğru",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Mükemmel set",
+          "body": "Her cevap doğru. Bu tür bir odaklanma, hazır olduğunuzda başka bir turu hak ediyor."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Güçlü bitiş",
+          "body": "Açıkça anlıyorsunuz — kaçırdıklarınızı gözden geçirin, ardından yeni bir setle pekiştirin."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "İyi iş — devam edin",
+          "body": "Birkaç takılma noktası normaldir. Onları bir kez gözden geçirin, ardından taze iken tekrar deneyin."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Neredeyse orada",
+          "body": "Önce cevapsız olanları bitirin — ardından puan daha net bir hikaye anlatacaktır."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Sorular {language} dilinde oluşturulur (çalışma alanı dili).",
       "contextualEmptyTitle": "Bağlamsal sorular oluştur",
-      "contextualEmptyDescription": "Kelime bilginizden boşluk doldurma çoktan seçmeli sorular oluşturun.",
+      "contextualEmptyDescription": "İsterseniz aşağıya isteğe bağlı talimatlar ekleyin, ardından Üret'e basın. İsteği boş bırakabilirsiniz.",
       "contextualProDescription": "Bağlamsal AI soruları Pro ile kullanılabilir.",
       "unlockContextual": "Pro ile kilidi aç",
       "correct": "Doğru!",
@@ -1202,8 +1219,8 @@
       "hint": "Bir kelime seçin, ardından anlamına dokunun",
       "complete": "Tüm çiftler eşleştirildi — harika iş!",
       "shuffle": "Sütunları karıştır",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} çift",
+      "continueRound": "Devam et"
     },
     "typeAnswer": {
       "questionWord": "Anlamı nedir?",
@@ -1213,7 +1230,7 @@
         "contextual": "Bağlamsal"
       },
       "contextualEmptyTitle": "Bağlamsal sorular oluştur",
-      "contextualEmptyDescription": "Kelime bilginizden boşluk doldurma yazma istemleri oluşturun.",
+      "contextualEmptyDescription": "İsterseniz aşağıya isteğe bağlı talimatlar ekleyin, ardından Üret'e basın. İsteği boş bırakabilirsiniz.",
       "contextualProDescription": "Bağlamsal AI soruları Pro ile kullanılabilir.",
       "unlockContextual": "Pro ile kilidi aç",
       "placeholder": "Cevabınızı yazın…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Yazma",
         "description": "Yeniden ziyaret edip dışa aktarabileceğiniz zengin belgeler ve soru setleri.",
-        "how": "Bir taslak başlatın, klasörlerle düzenleyin ve metninizi kontrol etmek veya iyileştirmek için Pro AI’yı kullanın.",
+        "how": "Bir taslak başlatın, klasörlerle düzenleyin ve planınızdaki AI kotasını metninizi kontrol etmek veya geliştirmek için kullanın.",
         "cta": "Yazmayı aç"
       },
       "listening": {
         "title": "Dinleme",
         "description": "Gerçek ses veya videoyu bir derse dönüştürün.",
-        "how": "Bir klip yükleyin ve Free’de transkript oluşturun. Oluşturulan dinleme pratiği Pro’nun bir parçasıdır.",
+        "how": "Bir klip yükleyin, bir transkript oluşturun ve planınızdaki AI kotası ile dinleme pratiği oluşturun.",
         "cta": "Dinlemeyi aç"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Bazı çalışma alanları aynı dil için zaten mevcut. İçerikleri çoğaltmak yerine mevcut çalışma alanlarınıza eklenecek.",
         "empty_backup": "Bu yedek içe aktarılabilir öğrenme verisi içermiyor.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Bazı mevcut öğeler aynı ismi paylaşıyor. İçe aktarma, bunlardan birini belirli bir şekilde yeniden kullanacak ve diğerlerini değiştirmeyecektir."
       },
       "cancel": "İptal",
       "confirm": "Öğrenme verilerini içe aktar",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Bu yedek bu sayfa üzerinden işlenemeyecek kadar büyük. Daha küçük bir dışa aktarma deneyin veya destek ile iletişime geçin.",
         "notConfigured": "Yedek içe aktarma için dosya depolama henüz yapılandırılmadı."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Zaten hesabınızda",
+      "skippedInAccountHint": "Bu isimler zaten sahip olduğunuz öğelerle eşleşiyor. Yeniden içe aktarılmayacaklar. Aynı çalışma alanındaki yeni öğeler yine de içe aktarılır.",
+      "skippedInBackupTitle": "Bu yedekte tekrar eden isimler",
+      "skippedInBackupHint": "Dosya aynı ismi birden fazla kez listeliyor. Her ismin yalnızca ilk kopyası içe aktarılır — bu, boş bir hesapta bile normaldir.",
+      "skippedOtherTitle": "İçe aktarılamadı"
     },
     "danger": {
       "title": "Hesabı kapat",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Devam etmeden önce",
       "warnings": {
         "workspaces": "Her çalışma alanı ile tüm kelime dağarcığı, kuram, yazma, dinleme ve konuşma verileri silinecek.",
-        "billing": "Etkin herhangi bir Notoria Pro aboneliği hemen iptal edilecek.",
+        "billing": "Herhangi bir aktif Notoria Pro veya Premium aboneliği hemen iptal edilecektir.",
         "media": "Yüklenen medya ve profil fotoğrafınız kaldırılacak.",
         "permanent": "Onaydan sonra kurtarma süresi yoktur."
       },
@@ -3233,7 +3250,7 @@
     "upgrade": "Pro’ya yükselt",
     "manage": "Aboneliği yönet",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Ücretsiz",
     "premiumBadge": "Premium",
     "renewsOn": "{date} tarihinde yenilenir",
     "status": "Durum: {status}",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Kişisel Öğrenme Yolu",
       "personalizedRecommendations": "Kişiselleştirilmiş öneriler",
       "crossModuleIntelligence": "Modüller arası kişiselleştirme",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Özel egzersiz talimatları"
     },
     "compare": {
       "heading": "Planları karşılaştır",
@@ -3458,7 +3475,7 @@
       "feature": "Özellik",
       "current": "Mevcut",
       "capability": "Ne alırsınız",
-      "free": "Free",
+      "free": "Ücretsiz",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Free’de dahil",
@@ -3598,7 +3615,7 @@
     "vocabulary": "Kelime dağarcığı",
     "vocabularyEmpty": "Henüz kelime yok",
     "reviews": "Kart tekrarları",
-    "misses": "Again / Hard",
+    "misses": "Tekrar / Zor",
     "listening": "Dinleme",
     "speaking": "Konuşma",
     "writing": "Yazma",
@@ -3752,8 +3769,8 @@
       "practice": "Pratik yap"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Tekrar",
+      "HARD": "Zor"
     },
     "status": {
       "MASTERED": "Ustalaşıldı",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Gizlilik Politikası",
     "termsTitle": "Kullanım Koşulları",
     "privacyDescription": "Notoria’nın özel dil öğrenme çalışma alanı için kişisel verileri ve öğrenme içeriğini nasıl topladığı, kullandığı ve sildiği.",
-    "termsDescription": "Notoria’nın özel dil öğrenme çalışma alanı, hesaplar, AI özellikleri ve Notoria Pro faturalandırmasını kullanmaya ilişkin koşullar.",
+    "termsDescription": "Notoria'nın özel dil öğrenme çalışma alanı, hesaplar, AI özellikleri ve Pro veya Premium faturalama için kullanım şartları.",
     "updated": "Son güncelleme {date}",
-    "updatedDate": "23 Eylül 2026",
+    "updatedDate": "27 Ekim 2026",
     "backToSignIn": "Oturum açmaya dön",
     "backHome": "Notoria’ya dön",
     "authFooter": "Gizlilik · Koşullar",
@@ -4071,7 +4088,7 @@
         "purposes": "Verileri neden işliyoruz",
         "auth": "Hesaplar ve oturum açma",
         "ai": "AI özellikleri",
-        "payments": "Ödemeler (Notoria Pro)",
+        "payments": "Ödemeler (Pro ve Premium)",
         "processors": "Hizmet sağlayıcılar",
         "cookies": "Çerezler ve cihaz depolama",
         "transfers": "Uluslararası aktarımlar",
@@ -4095,7 +4112,7 @@
           "list": [
             "hesap oluşturmak veya kullanmak",
             "özel çalışma alanlarında materyal kaydetmek",
-            "Notoria Pro’ya abone olmak",
+            "Notoria Pro veya Premium'a abone olun",
             "isteğe bağlı AI destekli araçları kullanmak",
             "dinleme veya profil kullanımı için medya yüklemek",
             "konuşma pratiği kullanmak",
@@ -4156,7 +4173,7 @@
               "basis": "Sözleşme (Mad. 6(1)(b))"
             },
             {
-              "purpose": "Stripe üzerinden Notoria Pro faturalandırması ve abonelik durumunu yürütmek",
+              "purpose": "Notoria Pro ve Premium faturalama ve abonelik durumunu Stripe aracılığıyla yürütün",
               "basis": "Sözleşme (Mad. 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "Mevcut kod tabanı OpenAI dışında başka büyük dil modeli sağlayıcıları kullanmaz. OpenAI, bu özellikler için bir işleyici olarak kendi koşulları ve gizlilik politikası kapsamında verileri işler."
         },
         "payments": {
-          "title": "7. Ödemeler (Notoria Pro)",
+          "title": "7. Ödemeler (Pro ve Premium)",
           "p1": "Ücretli abonelikler <strong>Stripe</strong> tarafından yönetilir. Ödeme, faturalar, ödeme yöntemleri ve iptal Stripe Checkout ve Stripe Müşteri Portalı üzerinden yürür. Stripe webhook’ları planınızı ve durumunuzu Notoria’da günceller.",
           "p2": "Stripe ödeme verilerini bir ödeme sağlayıcısı olarak işler. Kart işlemi için Stripe’ın kendi gizlilik belgelerine bakın."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro ödeme, portal ve abonelik durumu"
+              "role": "Notoria Pro ve Premium ödeme, portal ve abonelik durumu"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Bu Kullanım Koşulları, <site>www.notoria.fi</site> adresinde Notoria’yı kullanma kurallarını açıklar. Ürünün bugün nasıl çalıştığını anlatır: özel öğrenme çalışma alanları, Stripe üzerinden isteğe bağlı Notoria Pro faturalandırması ve AI destekli özellikler. Belirli durumunuz hakkında bir avukattan alınacak tavsiyenin yerine geçmez.",
+      "intro": "Bu Kullanım Şartları, Notoria'yı <site>www.notoria.fi</site> adresinde kullanma kurallarını açıklar. Ürünün bugünkü işleyişini tanımlar: özel öğrenme çalışma alanları, Stripe aracılığıyla isteğe bağlı Pro ve Premium faturalama ve AI destekli özellikler. Bunlar, belirli durumunuz hakkında bir avukattan alınacak tavsiyenin yerini almaz.",
       "tocTitle": "Bu sayfada",
       "tocAria": "Bu sayfada",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Kabul edilebilir kullanım",
         "ip": "Fikri mülkiyet",
         "ai": "AI tarafından üretilen çıktı",
-        "plans": "Free plan ve Notoria Pro",
+        "plans": "Ücretsiz, Pro ve Premium planlar",
         "billing": "Abonelik ve faturalandırma",
         "refunds": "İadeler ve tüketici hakları",
         "availability": "Kullanılabilirlik",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. Hizmet",
           "p1": "Notoria özel bir dil öğrenme web uygulamasıdır. Çalışma alanları oluşturabilir ve kelime dağarcığı, teori notları, yazma, alıştırmalar, dinleme dersleri ve konuşma oturumları gibi öğrenme materyali tutabilirsiniz.",
-          "p2": "Bazı özellikler free planda kullanılabilir. Notoria Pro, üründe ve <account>Hesap</account> sayfanızda gösterildiği gibi ek yeteneklerin kilidini açar — Dinleme, Konuşma, belirli AI çalışma araçları, alıştırma içe aktarma ve ücretli belge dışa aktarma biçimleri dahil. Özellik kullanılabilirliği ürün geliştikçe değişebilir.",
+          "p2": "Dinleme, Konuşma ve Okuma gibi temel öğrenme alanları her planda mevcuttur. Pro ve Premium, daha yüksek AI kotası ve öğrenme materyali içe/dışa aktarma ekler; Premium ayrıca kişiselleştirilmiş koçluk ve pratik özellikleri ekler. Mevcut karşılaştırma, <account>Hesap</account> sayfanızda gösterilmektedir. Özelliklerin kullanılabilirliği, ürün geliştikçe değişebilir.",
           "p3": "Notoria kişisel dil öğrenimi içindir. Okul, sınav otoritesi veya profesyonel danışmanlık hizmeti değildir."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. AI tarafından üretilen çıktı",
           "p1": "Bazı özellikler materyalinize göre kontrol edebilir, önerebilir, üretebilir, transkribe edebilir, özetleyebilir veya eğitmenlik yapabilir. Çıktı eksik, yanlış veya hedefinize uygun olmayabilir. Çalışma, sınavlar, profesyonel kullanım veya yayın için bunlara güvenmeden önce AI sonuçlarını gözden geçirmekten siz sorumlusunuz.",
           "p2": "AI özellikleri <settings>Ayarlar</settings> içinde yardım kapalıysa, planınız belirli bir aracı içermiyorsa veya bir sağlayıcı geçici olarak erişilemezse kullanılamayabilir.",
-          "p3": "Tüm AI yardımcıları Notoria Pro gerektirmez. Ürün hangi araçların ücretsiz, hangilerinin Pro gerektirdiğini gösterir."
+          "p3": "AI kullanılabilirliği ve günlük kotalar, Ücretsiz, Pro ve Premium arasında değişir. Ürün, her araç için gereken plan ve kotayı gösterir."
         },
         "plans": {
-          "title": "8. Free plan ve Notoria Pro",
+          "title": "8. Ücretsiz, Pro ve Premium planlar",
           "p1": "Free plan, üründe gösterildiği gibi kendi kelime dağarcığınızla temel pratik ve ilgili çalışma araçlarını kapsar.",
-          "p2": "Notoria Pro, ek özelliklerin kilidini açan ücretli bir aboneliktir. Mevcut üründe bu genellikle Dinleme, Konuşma, alıştırma içe aktarma, cümle kurma pratiği, birçok AI destekli çalışma aracı ve PDF/DOCX belge dışa aktarmayı içerir. Daha hafif bazı AI yardımcıları (belirli kelime dağarcığı veya düzenleyici biçimlendirme yardımları gibi) AI yardımı etkin olduğunda free planda kullanılabilir kalabilir.",
-          "p3": "Pro erişimi kullanıcı hesabınıza bağlıdır; bu nedenle o hesap altındaki çalışma alanlarına uygulanır. Yönetici rolüne sahip hesaplar kişisel bir Stripe aboneliği olmadan Pro düzeyinde erişime sahip olabilir.",
-          "p4": "Satın alımınıza uygulanan fiyat, mevcut Pro planı için Stripe Checkout’ta gösterilen fiyattır. Ürünün başka yerinde (örneğin Hesap’ta) gösterilen herhangi bir fiyat yalnızca göstergedir ve etkin Stripe fiyat yapılandırmasıyla eşleşmelidir."
+          "p2": "Pro ve Premium, ücretli aboneliklerdir. Pro, birçok AI aracı için daha yüksek veya sınırsız kotalar ekler ve öğrenme materyali içe aktarma ile PDF/DOCX dışa aktarma ekler. Premium, Pro'yu içerir ve Kişisel Koç, kişisel öğrenme profili, uyumlu pratik, hata bazlı pratik ve özel egzersiz talimatları gibi kişiselleştirilmiş özellikler ekler. Hesap sayfası, mevcut karşılaştırmayı ve sınırları gösterir.",
+          "p3": "Ücretli erişim, kullanıcı hesabınıza bağlıdır ve çalışma alanları arasında geçerlidir. Yönetici rolüne sahip hesaplar, kişisel bir Stripe aboneliği olmadan ücretli düzeyde erişime sahip olabilir.",
+          "p4": "Geçerli olan fiyat, seçilen Pro veya Premium planı için Stripe Checkout'ta gösterilen fiyattır. Üründe başka bir yerde gösterilen herhangi bir fiyat (örneğin Hesap'ta) yalnızca göstergedir ve aktif Stripe fiyat yapılandırmasıyla eşleşmelidir."
         },
         "billing": {
           "title": "9. Abonelik, faturalandırma ve iptal",
-          "list0": "Pro abonelikleri <strong>Stripe</strong> üzerinden faturalandırılır",
-          "list1": "Ödemeyi <account>Hesap</account> üzerinden veya uygulamadaki kilitli Pro kontrollerinden başlatabilirsiniz",
+          "list0": "Pro ve Premium abonelikleri <strong>Stripe</strong> aracılığıyla faturalandırılır",
+          "list1": "Ödeme işlemini başlatabilir veya planı <account>Hesap</account> üzerinden veya uygulamadaki kilitli ücretli kontrollerden değiştirebilirsiniz",
           "list2": "Hesap’tan faturaları görüntülemek, ödeme yöntemlerini güncellemek ve aboneliği iptal etmek için Stripe Müşteri Portalı’nı açabilirsiniz",
           "list3": "İptal, aboneliğiniz için Stripe Müşteri Portalı davranışını izler",
-          "p1": "İptalden sonra Pro erişimi, Stripe abonelik durumunuz üründe hâlâ Pro verdiği sürece devam eder. Mevcut uygulamada Pro olarak kabul edilen durumlar <code>active</code>, <code>trialing</code> ve <code>past_due</code> içerir. Durum artık uygun olmadığında hesap free plana döner.",
-          "p2": "Bir ödeme başarısız olursa Stripe aboneliği <code>past_due</code> veya başka bir duruma taşıyabilir. Notoria bu durumu Stripe webhook’larından senkronize eder. Durum <code>past_due</code> kaldığı sürece Pro özellikleri mevcut erişim kuralları altında kullanılabilir kalır; abonelik daha sonra iptal edilirse veya başka şekilde uygun olmazsa Pro erişimi sona erer.",
+          "p1": "Yenilemeyi iptal ettikten sonra, mevcut Pro veya Premium erişiminiz, Stripe abonelik durumu ürün içinde geçerli olduğu sürece devam eder. Geçerli durumlar şu anda <code>active</code>, <code>trialing</code> ve <code>past_due</code> içerir. Durum artık geçerli olmadığında, hesap Ücretsiz'e döner.",
+          "p2": "Bir ödeme başarısız olursa, Stripe aboneliği <code>past_due</code> veya başka bir duruma geçirebilir. Notoria, bu durumu Stripe web kancalarından senkronize eder. <code>past_due</code> durumunda kaldığı sürece, mevcut ücretli plan mevcut erişim kuralları altında kullanılabilir; eğer daha sonra iptal edilirse veya başka bir şekilde uygun olmazsa, ücretli erişim sona erer.",
           "p3": "Notoria hesabınızı silmek, hesap silmenin bir parçası olarak Stripe aboneliğini hemen iptal eder (en iyi çaba). Bu, hesabı tutarken Müşteri Portalı üzerinden yenilemeyi iptal etmekten farklıdır."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Sorumluluk reddi ve sorumluluk",
           "p1": "Notoria, kişisel dil öğrenimi için “kullanılabilir olduğu haliyle” sunulur. Geçerli hukukun izin verdiği en geniş ölçüde, hukukun gerektirmediği garantileri reddederiz.",
-          "p2": "Geçerli hukukun izin verdiği en geniş ölçüde Notoria, hizmeti kullanmanızdan veya AI çıktısına güvenmenizden doğan dolaylı, arızi, özel, sonuçsal veya veri kaybı zararlarından sorumlu değildir. Sorumluluk hariç tutulamıyorsa, talepten önceki üç ayda Notoria Pro için ödediğiniz tutarla veya zorunlu hukukun gerektirdiği daha yüksek bir tutarla sınırlıdır.",
+          "p2": "Geçerli yasaların izin verdiği en geniş ölçüde, Notoria, hizmeti kullanmanızdan veya AI çıktısına güvenmenizden kaynaklanan dolaylı, tesadüfi, özel, sonuçsal veya veri kaybı zararlarından sorumlu değildir. Sorumluluğun hariç tutulamadığı durumlarda, talep öncesinde Notoria Pro veya Premium için ödediğiniz tutarla sınırlıdır veya zorunlu yasalarca gerektiren daha büyük bir tutar ile sınırlıdır.",
           "p3": "Bu sınırlar, Finlandiya veya AB hukukunun sınırlanmasına izin vermediği sorumluluğu — tüketiciler için feragat edilemeyen sorumluluk ve bu kuralların uygulandığı yerlerde ihmalden kaynaklanan ölüm veya kişisel yaralanma sorumluluğu dahil — hariç tutmaz."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Anlamlar, örnekler ve etiketlerle kişisel bir kelime bankası oluşturun",
           "practice": "Kendi kelime ve notlarınızdan çıkan alıştırmalarla pratik yapın",
           "create": "Daha sonra yeniden ziyaret edebileceğiniz teori notları ve yazma çalışmaları oluşturun",
-          "listenSpeak": "Medyayı dinleme pratiğine dönüştürün ve Pro ile bir AI eğitmenle konuşun"
+          "listenSpeak": "Medya içeriğini dinleme pratiğine dönüştürün ve transkripsiyon ve konuşma pratiği için AI kotalarını kullanın"
         },
-        "note": "Bazı AI, dinleme, konuşma ve dışa aktarma araçları Notoria Pro’nun parçasıdır. Free plan hâlâ günlük kelime pratiğini ve temel çalışma döngüsünü kapsar."
+        "note": "Temel öğrenme alanları her planda mevcuttur. Pro, AI kotalarını artırır ve öğrenme materyali içe/dışa aktarma ekler; Premium kişiselleştirilmiş koçluk ve pratik ekler."
       },
       "ai": {
         "title": "AI, yardımcı olduğu yerde",
@@ -4656,7 +4673,7 @@
         "title": "Alanlar nasıl bağlanır",
         "p1": "Yakala hızlı giriş noktasıdır. Kelime dağarcığı ve Teori materyalin yerleştiği yerdir. Alıştırma o materyali pratiğe dönüştürür. Yazma, Dinleme ve Konuşma dili daha aktif kullanmanıza yardımcı olur.",
         "p2": "Her alandan sırayla geçmek zorunda değilsiniz. Birçok kişi bir süre kelimeler ve kısa pratikle kalır.",
-        "p3": "Doğal bir sonraki adım, dili kendi koşullarınızda üretmek istediğinizde yazma; aynı materyalin kulağınızda ve sesinizde çalışmasını istediğinizde dinleme ve konuşmadır — Dinleme ve Konuşma Notoria Pro’nun parçasıdır.",
+        "p3": "Kendi şartlarınızla dil üretmek istediğinizde yazma, ardından aynı materyalin kulağınızda ve sesinizde çalışmasını istediğinizde dinleme ve konuşma doğal bir sonraki adımdır. Bu alanlar her planda mevcuttur; AI kullanım sınırları plana göre değişir.",
         "beat": "Önce toplayın ve anlayın. Materyal sayfayı terk etmeye hazır olduğunda kullanın ve konuşun."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Dinleme",
-          "body": "Medyayı çalışma alanınızda dinleme pratiğine dönüştürün. Notoria Pro’da kullanılabilir."
+          "body": "Medya içeriğini çalışma alanınızdaki dinleme pratiğine dönüştürün. Her planda mevcuttur; AI transkripsiyon kotaları plana göre değişir."
         },
         "speaking": {
           "label": "Konuşma",
-          "body": "Çalıştığınız dile dayalı olarak bir AI eğitmenle canlı pratik. Notoria Pro’da kullanılabilir."
+          "body": "Öğrendiğiniz dilde bir AI eğitmeni ile canlı pratik. Her planda, plana dayalı günlük bir kota ile mevcuttur."
         },
         "reading": {
           "label": "Okuma",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Şifremi nasıl değiştiririm veya hesabımı nasıl kapatırım?",
-          "a": "<account>Hesap</account>’ı açın. E-posta ile oturum açıyorsanız şifrenizi oradan güncelleyebilir, Notoria Pro’yu yönetebilir, bir yedek dışa aktarabilir veya hesabınızı kalıcı olarak silebilirsiniz."
+          "a": "<account>Hesap</account>'ı açın. E-posta ile oturum açıyorsanız şifrenizi oradan güncelleyebilir, Pro veya Premium'u yönetebilir, bir yedekleme dışa aktarabilir veya hesabınızı kalıcı olarak silebilirsiniz. Hesabı silmek, ayrıca aktif bir Stripe aboneliğini en iyi çaba ile hemen iptal eder; yalnızca yenilemeyi iptal etmek, hesabı ve verilerini korur."
         },
         "pro": {
           "q": "Faturalandırma ve iptal nasıl çalışır?",
-          "a": "Notoria Pro Stripe üzerinden faturalandırılır. <account>Hesap</account> üzerinden yükseltebilir, ödeme yöntemlerini ve faturaları yönetmek için Stripe müşteri portalını açabilir veya yenilemeyi iptal edebilirsiniz."
+          "a": "Notoria Pro ve Premium, Stripe aracılığıyla faturalandırılır. <account>Hesap</account>'tan abone olabilir, Pro ve Premium arasında geçiş yapabilir, ödeme yöntemlerini ve faturaları yönetebilir, yenilemeyi iptal edebilir veya planlı bir iptali yeniden başlatabilirsiniz. Yenilemeyi iptal etmek, Stripe uygun abonelik süresi sona erene kadar erişimi korur; hesabınızı silmek ayrı bir işlemdir ve aboneliği en iyi çaba ile hemen iptal eder."
         },
         "proFeatures": {
-          "q": "Neler ücretsiz, neler Notoria Pro gerektirir?",
-          "a": "Günlük kelime pratiği ve ilgili çalışma araçları free planda kullanılabilir. Bazı AI araçları, dinleme, konuşma ve belge dışa aktarma özellikleri Notoria Pro’nun parçasıdır. Karşılaştırın ve <account>Hesap</account> üzerinden yükseltin."
+          "q": "Ücretsiz, Pro ve Premium ile neler dahildir?",
+          "a": "Ücretsiz, temel öğrenme alanlarını ve desteklenen AI araçları için günlük kotaları içerir. Pro, birçok AI sınırını artırır veya kaldırır ve öğrenme materyali içe aktarma ile PDF/DOCX dışa aktarma ekler. Premium, Pro'yu içerir ve kişiselleştirilmiş koçluk, öğrenme profili, uyumlu ve hata bazlı pratik ile özel egzersiz talimatları ekler. Canlı karşılaştırmayı ve mevcut sınırları <account>Hesap</account>'ta görebilirsiniz."
         },
         "learning": {
           "q": "Notoria’nın öğrenme özellikleri nasıl çalışır?",
@@ -4997,7 +5014,7 @@
         "admins": "Yöneticiler",
         "testers": "Test kullanıcıları",
         "suspended": "Askıya alınanlar",
-        "contentTotal": "Content records"
+        "contentTotal": "İçerik kayıtları"
       },
       "quickAccess": "Hızlı erişim",
       "quickAccessLede": "Yönetim araçlarına gidin.",
@@ -5050,8 +5067,8 @@
         "created": "Kayıt",
         "updated": "Güncellendi",
         "emailVerified": "E-posta doğrulandı",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-posta",
+        "password": "Şifre"
       },
       "detail": {
         "account": "Hesap",
@@ -5060,7 +5077,7 @@
         "actions": "Hesap işlemleri",
         "workspaces": "Çalışma alanları",
         "workspacesLede": "Bu kullanıcının sahip olduğu dil çalışma alanları.",
-        "danger": "Danger zone"
+        "danger": "Tehlike bölgesi"
       },
       "actions": {
         "saveProfile": "Adı kaydet",
@@ -5071,7 +5088,7 @@
         "delete": "Hesabı sil",
         "grantTester": "Test kullanıcısı rolü ver",
         "revokeTester": "Test kullanıcısı rolünü kaldır",
-        "create": "Create user"
+        "create": "Kullanıcı oluştur"
       },
       "confirm": {
         "grantAdmin": "Bu hesaba yönetici erişimi verilsin mi?",
@@ -5089,11 +5106,11 @@
         "admin": "Yönetici"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Kullanıcı oluştur",
+        "lede": "Bir e-posta ve şifre ile bir hesap oluşturun. Hemen giriş yapabilirler."
       },
       "plans": {
-        "free": "Free",
+        "free": "Ücretsiz",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Sahip",
         "created": "Oluşturuldu",
         "updated": "Güncellendi",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Sahip e-postası",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Bu çalışma alanı ve içindeki tüm öğrenme içeriği veritabanı zincirleme silme ile silinsin mi?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Çalışma alanı oluştur",
+        "lede": "Mevcut bir hesaba yeni bir dil çalışma alanı ekleyin."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Çalışma alanı",
         "created": "Oluşturuldu",
         "updated": "Güncellendi",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Başlık",
+        "word": "Kelime",
+        "folderName": "Klasör adı"
       },
       "detail": {
         "description": "Meta veri incelemesi. Özel gövdeler otomatik yüklenmez.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Kaydı sil",
-        "saveTitle": "Save title"
+        "saveTitle": "Başlığı kaydet"
       },
       "confirm": {
         "delete": "Bu kayıt silinsin mi? İlgili alt satırlar veritabanı cascade / set-null kurallarını izler."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Öğeleri serbest metin olarak saklayın. Başlık düzenlemesi burada desteklenmiyor — kayıt silinmeli ise silin."
     },
     "jobs": {
       "title": "İşler",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Geçersiz dil kodu.",
       "CONTENT_NOT_FOUND": "Kayıt bulunamadı.",
       "INVALID_CONTENT_MODULE": "Bilinmeyen içerik modülü.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Bu e-posta zaten kayıtlı.",
+      "PASSWORD_TOO_WEAK": "Şifre güç gereksinimlerini karşılamıyor.",
+      "CONTENT_TITLE_UNSUPPORTED": "Bu içerik türü başlık düzenlemesini desteklemiyor."
     }
   }
 }

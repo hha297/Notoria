@@ -17,19 +17,20 @@
     "hideFilters": "Piilota suodattimet",
     "remove": "Poista",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Ulkoasu",
+      "print": "Tulostusystävällinen",
+      "printHint": "Valkoinen sivu, tumma teksti",
+      "theme": "Nykyinen teema",
+      "themeHint": "Vastaava valo- tai tumma teema",
+      "previewKicker": "Näytesivu",
+      "previewTitle": "Asiakirjan otsikko",
+      "previewBody": "Runko-teksti käyttää valittuja värejä ja väliä.",
+      "previewCallout": "Huomiot ja korostukset seuraavat moduulin väriä.",
+      "fixedNote": "Ulkoasu on kiinteä viedyssä tiedostossa. Vie uudelleen muuttaaksesi sitä.",
+      "docxBackgroundNote": "Word ja muut sovellukset eivät välttämättä näytä sivun taustoja samalla tavalla, erityisesti tulostaessa."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Selaa ylös",
+    "moreActions": "Lisää toimintoja"
   },
   "contentImport": {
     "title": {
@@ -469,34 +470,34 @@
     "viewMode": "Näkymä",
     "tagManager": {
       "open": "Hallitse tunnisteita",
-      "eyebrow": "Tags",
+      "eyebrow": "Tagit",
       "title": "Tunnisteiden hallinta",
-      "description": "Valitse tunniste ja lisää tai poista se sanoilta. Jäsenet ja muut sanat näkyvät erillisissä listoissa.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Valitse tagi ja määritä tai poista se sanoilta.",
+      "pageDescription": "Valitse Standardi tai Mukautettu, valitse tagi ja lisää tai poista se sanoilta.",
+      "disabledNoWorkspace": "Luo työtila ennen sanaston tagien hallintaa.",
+      "backToVocabulary": "Takaisin sanastoon",
+      "backToSettings": "Takaisin asetuksiin",
       "groupsLabel": "Vakiotunnisteiden ryhmät",
       "tagsHeading": "Tunnisteet",
       "standardTagsHeading": "Vakiotunnisteet",
       "customTagsHeading": "Omat tunnisteet",
-      "customTagsHint": "Itse luomasi järjestelytunnisteet — eivät sanaluokkia.",
+      "customTagsHint": "Työtilan etikettejä, jotka olet luonut — etsi niitä, kun lista on pitkä.",
       "emptyCustomTags": "Ei omia tunnisteita vielä. Luo niitä sanan muokkauksessa.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Mikään mukautettu tagi ei vastaa tätä hakua.",
+      "tagSearchPlaceholder": "Etsi tageja…",
       "wordsHeading": "{tag}",
       "kindStandard": "Vakio",
       "kindCustom": "Oma",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Sanaluettelot",
+      "wordTabAssigned": "Merkitty",
+      "wordTabOther": "Merkitsemätön",
       "assignedHeading": "Sanat tällä tunnisteella",
       "otherHeading": "Muut sanat",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Valitse kaikki tällä sivulla",
+      "clearSelection": "Tyhjennä valinta",
+      "selectionScopePage": "Valitaan tältä sivulta ({count} / {total})",
+      "selectionScopeFiltered": "Valitaan nykyisten hakutulosten sisällä",
       "searchPlaceholder": "Hae sanoja tai merkityksiä…",
       "wordCount": "{count}",
       "loading": "Ladataan sanastoa…",
@@ -506,13 +507,23 @@
       "emptyOther": "Kaikilla sanoilla on jo tämä tunniste.",
       "emptyOtherSearch": "Ei vastaavia sanoja lisättäväksi.",
       "selected": "{count} valittu",
-      "addToTag": "Lisää tunnisteeseen",
-      "removeFromTag": "Poista tunnisteesta",
-      "applyAdd": "Lisää tunnisteeseen ({count})",
-      "applyRemove": "Poista tunnisteesta ({count})",
+      "addToTag": "Lisää tagi",
+      "removeFromTag": "Poista tagi",
+      "applyAdd": "Lisää tagi ({count})",
+      "applyRemove": "Poista tagi ({count})",
       "added": "Lisättiin {count} sana(a) tunnisteeseen {tag}",
       "removed": "Poistettiin {count} sana(a) tunnisteesta {tag}",
-      "error": "Tunnisteen jäsenyyttä ei voitu päivittää"
+      "error": "Tunnisteen jäsenyyttä ei voitu päivittää",
+      "systemsLabel": "Tagijärjestelmät",
+      "standardSystemTitle": "Standardi",
+      "standardSystemMeta": "Aihe ja käyttö, näytetään erikseen",
+      "usageOptional": "Valinnainen",
+      "customSystemTitle": "Mukautettu",
+      "customSystemMeta": "{count, plural, one {# etiketti} other {# etikettiä}}",
+      "customPickerLabel": "Valitse mukautettu tagi",
+      "customPickerPlaceholder": "Valitse mukautettu tagi…",
+      "customSearchPlaceholder": "Etsi mukautettuja tageja…",
+      "pickTagFirst": "Valitse yllä oleva tagi hallitaksesi sanan jäsenyyttä."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Päivitetty {time}",
@@ -584,7 +595,11 @@
     },
     "otherMeaningsPage": "{total} merkitystä · sivu {page}/{totalPages}",
     "otherMeaningsPrev": "Edellinen",
-    "otherMeaningsNext": "Seuraava"
+    "otherMeaningsNext": "Seuraava",
+    "selectedCustomTags": "Valitut tagit",
+    "selectedSynonyms": "Valitut synonyymit",
+    "removeCustomTag": "Poista {name}",
+    "pickerLoading": "Ladataan…"
   },
   "tags": {
     "groups": {
@@ -651,7 +666,7 @@
       "conjunction": "Konjunktio",
       "interjection": "Interjektio",
       "article": "Artikkeli",
-      "determiner": "Determiner"
+      "determiner": "Määrittäjä"
     }
   },
   "exercises": {
@@ -873,7 +888,7 @@
       "aiReady": "Harjoitus valmis",
       "aiUnavailable": "Tekoälykysymyksiä ei voitu luoda juuri nyt.",
       "aiForbidden": "Teorian tekoälyharjoitukset kuuluvat Pro-pakettiin.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Lisäohjeita on saatavilla Premiumissa.",
       "aiDisabled": "AI-avustus on pois päältä Asetuksissa.",
       "feedback": {
         "correct": "Oikein!",
@@ -940,7 +955,9 @@
         "collapse": "Pienennä {name}",
         "selectedCount": "{count, plural, one {# teoria valittu} other {# teoriaa valittu}}",
         "practiceSelected": "Harjoittele valittuja",
-        "clearSelection": "Tyhjennä valinta"
+        "clearSelection": "Tyhjennä valinta",
+        "subfolders": "{count, plural, one {# alikansio} other {# alikansiota}}",
+        "selectedOne": "1 teoria valittu"
       }
     },
     "types": {
@@ -998,8 +1015,8 @@
       "startsWith": "Alkaa merkillä “{letter}”",
       "revealPrompt": "Vieläkö jumissa? Voit paljastaa koko vastauksen.",
       "revealAnswer": "Näytä vastaus",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Seuraava vihje",
+      "hintProgress": "Vihje {current} / {total}"
     },
     "empty": {
       "noWordsTitle": "Ei sanastoa vielä",
@@ -1032,17 +1049,17 @@
       "shuffle": "Sekoita",
       "finish": "Lopeta kierros",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Kysymyksen lähde",
+        "chooseAi": "Käytä AI:ta luotuna",
+        "emptyTitle": "Ei käytettävissä olevia tallennettuja esimerkkejä",
+        "emptyDescription": "Lisää esimerkkilauseita, jotka sisältävät selvästi jokaisen sanan, säädä suodattimia tai vaihda AI:ta luotuna.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Tallennetut esimerkit",
+          "description": "Luo kysymyksiä välittömästi sanastoesimerkeistäsi. Ei AI-odotusta."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI:lla luotu",
+          "description": "Luo uusia lauseita sanastostasi AI:n avulla."
         }
       }
     },
@@ -1099,14 +1116,14 @@
       "tryAgain": "Yritä uudelleen",
       "questionsLabel": "Kysymykset",
       "correctLabel": "Oikein",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Väärin",
+      "unansweredLabel": "Vastaamaton",
       "reviewLabel": "Kertaa",
       "answeredProgress": "{answered} / {total} vastattu",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Tarkista vastaus",
+      "nextQuestion": "Seuraava",
+      "viewResults": "Näytä tulokset",
       "submitSet": "Lähetä vastaukset",
       "submitting": "Tarkistetaan…",
       "unansweredWarnTitle": "Vastaamattomia kysymyksiä",
@@ -1121,54 +1138,54 @@
       "unanswered": "Ei vastausta",
       "yourAnswer": "Vastauksesi",
       "correctAnswer": "Oikea vastaus",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Vain {count} kysymystä saatavilla nykyisistä suodattimista.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Miten harjoittelet",
+        "lockedHint": "Valmis tai aloita uusi setti muuttaaksesi tätä.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Yksi kerrallaan",
+          "description": "Näe yksi kysymys kerrallaan. Tarkista jokaisen vastauksen jälkeen välittömän palautteen saamiseksi."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Kaikki kysymykset",
+          "description": "Näe koko setti, vastaa missä järjestyksessä tahansa ja lähetä sitten kerralla palautetta varten."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Katsaus",
+        "allCorrect": "Täydellinen — jokainen kysymys oikein.",
+        "summary": "{incorrect} väärin · {unanswered} vastaamatonta · {needsReview} tarkistettavaa",
+        "viewWrong": "Näytä väärät vastaukset",
+        "filtersLabel": "Suodata kysymyksiä",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Kaikki ({count})",
+          "needs_review": "Väärin & vastaamaton ({count})",
+          "correct": "Oikein ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Edellinen",
+        "nextWrong": "Seuraava",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} tarkistettavaa",
+        "floatLabel": "Väärät vastaukset navigointi",
+        "closeFloat": "Näytä kaikki vastaukset"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% oikein",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Täydellinen setti",
+          "body": "Jokainen vastaus osui. Tällainen keskittyminen ansaitsee uuden kierroksen, kun olet valmis."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Vahva loppu",
+          "body": "Ymmärrät selvästi — käy läpi puutteet ja lukitse se uudella setillä."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Hyvää työtä — jatka",
+          "body": "Muutama jumittava kohta on normaalia. Käy ne läpi kerran ja yritä uudelleen, kun ne ovat tuoreita."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Melkein perillä",
+          "body": "Lopeta ensin vastaamattomat — sitten tulos kertoo selvemmän tarinan."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Kysymykset luodaan kielellä {language} (työtilan kieli).",
       "contextualEmptyTitle": "Luo kontekstikysymyksiä",
-      "contextualEmptyDescription": "Luo aukkotehtävä-monivalintoja sanastostasi.",
+      "contextualEmptyDescription": "Lisää valinnaisia ohjeita alle, jos haluat, ja paina sitten Luo. Voit jättää kehotteen tyhjäksi.",
       "contextualProDescription": "Konteksti-tekoälykysymykset kuuluvat Pro-tilaukseen.",
       "unlockContextual": "Avaa Prolla",
       "correct": "Oikein!",
@@ -1202,8 +1219,8 @@
       "hint": "Valitse sana, sitten napauta sen merkitystä",
       "complete": "Kaikki parit yhdistetty — hienoa!",
       "shuffle": "Sekoita sarakkeet",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} paria",
+      "continueRound": "Jatka"
     },
     "typeAnswer": {
       "questionWord": "Mikä on merkitys?",
@@ -1213,7 +1230,7 @@
         "contextual": "Konteksti"
       },
       "contextualEmptyTitle": "Luo kontekstikysymyksiä",
-      "contextualEmptyDescription": "Luo aukkotehtävä-kirjoituspromptteja sanastostasi.",
+      "contextualEmptyDescription": "Lisää valinnaisia ohjeita alle, jos haluat, ja paina sitten Luo. Voit jättää kehotteen tyhjäksi.",
       "contextualProDescription": "Konteksti-tekoälykysymykset kuuluvat Pro-tilaukseen.",
       "unlockContextual": "Avaa Prolla",
       "placeholder": "Kirjoita vastaus…",
@@ -1402,13 +1419,13 @@
       "writing": {
         "title": "Kirjoittaminen",
         "description": "Rich-tekstidokumentit ja tehtäväsarjat, joihin voit palata ja jotka voit viedä.",
-        "how": "Aloita luonnos, järjestä kansioilla ja käytä Pro-tekoälyä tekstin tarkistukseen tai parantamiseen.",
+        "how": "Aloita luonnos, järjestä kansioilla ja käytä suunnitelmasi AI-käyttöoikeutta tarkistaaksesi tai parantaaksesi tekstiäsi.",
         "cta": "Avaa kirjoittaminen"
       },
       "listening": {
         "title": "Kuuntelu",
         "description": "Muuta aito ääni tai video oppitunniksi.",
-        "how": "Lataa klippi ja luo litterointi Ilmaisella. Kuunteluharjoitusten luonti kuuluu Prohon.",
+        "how": "Lataa klippi, luo transkriptio ja rakenna kuunteluharjoituksia suunnitelmasi AI-käyttöoikeuden avulla.",
         "cta": "Avaa kuuntelu"
       },
       "speaking": {
@@ -2969,11 +2986,11 @@
         "requestTooLarge": "Varmuuskopio on liian suuri käsiteltäväksi tällä sivulla. Kokeile pienempää vientiä tai ota yhteyttä tukeen.",
         "notConfigured": "Tiedostojen tallennusta ei ole vielä määritetty varmuuskopioiden tuontia varten."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Jo tililläsi",
+      "skippedInAccountHint": "Nämä nimet vastaavat jo olemassa olevia kohteita. Niitä ei tuoda uudelleen. Uudet kohteet samassa työtilassa tuodaan silti.",
+      "skippedInBackupTitle": "Kaksinkertaiset nimet tässä varmuuskopiossa",
+      "skippedInBackupHint": "Tiedosto listaa saman nimen useammin kuin kerran. Vain ensimmäinen kopio jokaisesta nimestä tuodaan — tämä on normaalia jopa tyhjällä tilillä.",
+      "skippedOtherTitle": "Ei voitu tuoda"
     },
     "danger": {
       "title": "Sulje tili",
@@ -2989,7 +3006,7 @@
       "warningTitle": "Ennen kuin jatkat",
       "warnings": {
         "workspaces": "Kaikki työtilat sekä sanasto, teoria, kirjoitus, kuuntelu ja puhuminen poistetaan.",
-        "billing": "Aktiivinen Notoria Pro -tilaus peruutetaan heti.",
+        "billing": "Kaikki aktiiviset Notoria Pro- tai Premium-tilaukset peruutetaan välittömästi.",
         "media": "Ladatut mediatiedostot ja profiilikuvasi poistetaan.",
         "permanent": "Vahvistuksen jälkeen ei ole palautusaikaa."
       },
@@ -3254,7 +3271,7 @@
       "personalLearningPath": "Henkilökohtainen oppimispolku",
       "personalizedRecommendations": "Henkilökohtaiset suositukset",
       "crossModuleIntelligence": "Moduulien välinen personointi",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Mukautetut harjoitusohjeet"
     },
     "compare": {
       "heading": "Vertaa tilauksia",
@@ -3598,7 +3615,7 @@
     "vocabulary": "Sanasto",
     "vocabularyEmpty": "Ei vielä sanastoa",
     "reviews": "Korttikerrat",
-    "misses": "Again / Hard",
+    "misses": "Uudelleen / Vaikea",
     "listening": "Kuuntelu",
     "speaking": "Puhuminen",
     "writing": "Kirjoitus",
@@ -3752,8 +3769,8 @@
       "practice": "Harjoittele"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Uudelleen",
+      "HARD": "Vaikea"
     },
     "status": {
       "MASTERED": "Hallittu",
@@ -3998,7 +4015,8 @@
         "Sanastoon ja Teoriaan keräämäsi on lähde harjoituksillesi.",
         "Kirjoittaminen ja Kuuntelu auttavat käyttämään ja ymmärtämään kieltä uusissa yhteyksissä.",
         "Puhuminen tuo kaiken aktiiviseen keskusteluun.",
-        "Arviointi sulkee kierroksen — ja usein johtaa uusiin sanoihin ja muistiinpanoihin."
+        "Arviointi sulkee kierroksen — ja usein johtaa uusiin sanoihin ja muistiinpanoihin.",
+        "Katsaus sulkee silmukan — ja jokainen katsaus johtaa usein uusiin sanoihin ja muistiinpanoihin lisättäväksi."
       ],
       "highlight": "Mitä enemmän lisäät sinulle merkityksellistä tietoa, sitä hyödyllisempi ja henkilökohtaisempi harjoittelu on."
     },
@@ -4047,9 +4065,9 @@
     "privacyTitle": "Tietosuojaseloste",
     "termsTitle": "Käyttöehdot",
     "privacyDescription": "Miten Notoria kerää, käyttää ja poistaa henkilötietoja sekä oppimissisältöä yksityisessä kieltenoppimisen työtilassaan.",
-    "termsDescription": "Ehdot Notorian yksityisen kieltenoppimisen työtilan, tilien, tekoälyominaisuuksien ja Notoria Pro -laskutuksen käyttöön.",
+    "termsDescription": "Ehdot Notorian yksityisen kieltenoppimisympäristön, tilien, AI-ominaisuuksien ja Pro- tai Premium-laskutuksen käytölle.",
     "updated": "Päivitetty {date}",
-    "updatedDate": "23. syyskuuta 2026",
+    "updatedDate": "27. lokakuuta 2026",
     "backToSignIn": "Takaisin kirjautumiseen",
     "backHome": "Takaisin Notoriaan",
     "authFooter": "Tietosuoja · Ehdot",
@@ -4070,7 +4088,7 @@
         "purposes": "Miksi käsittelemme tietoja",
         "auth": "Tilit ja kirjautuminen",
         "ai": "Tekoälyominaisuudet",
-        "payments": "Maksut (Notoria Pro)",
+        "payments": "Maksut (Pro ja Premium)",
         "processors": "Palveluntarjoajat",
         "cookies": "Evästeet ja laitteen tallennus",
         "transfers": "Kansainväliset siirrot",
@@ -4094,7 +4112,7 @@
           "list": [
             "luot tai käytät tiliä",
             "tallennat materiaalia yksityisiin työtiloihin",
-            "tilaat Notoria Pron",
+            "tilaa Notoria Pro tai Premium",
             "käytät valinnaisia tekoälytyökaluja",
             "lataat mediaa kuuntelua tai profiilia varten",
             "käytät puheharjoittelua",
@@ -4155,7 +4173,7 @@
               "basis": "Sopimus (6 artikla 1 kohta b)"
             },
             {
-              "purpose": "Hoitaa Notoria Pron laskutus ja tilauksen tila Stripen kautta",
+              "purpose": "Suorita Notoria Pro ja Premium -laskutus ja tilauksen tila Stripe:n kautta",
               "basis": "Sopimus (6 artikla 1 kohta b)"
             },
             {
@@ -4190,7 +4208,7 @@
           "p4": "Nykyinen koodikanta ei käytä muita suuria kielimallipalveluita OpenAI:n lisäksi. OpenAI käsittelee tietoja omien ehtojensa ja tietosuojakäytäntönsä mukaisesti käsittelijänä näissä ominaisuuksissa."
         },
         "payments": {
-          "title": "7. Maksut (Notoria Pro)",
+          "title": "7. Maksut (Pro ja Premium)",
           "p1": "Maksulliset tilaukset hoitaa <strong>Stripe</strong>. Kassavirta, laskut, maksutavat ja peruutus kulkevat Stripe Checkoutin ja Stripe Customer Portalin kautta. Stripen webhookit päivittävät suunnitelmasi ja tilasi Notoriassa.",
           "p2": "Stripe käsittelee maksutietoja maksupalveluntarjoajana. Korttien käsittelystä kerrotaan Stripen omassa tietosuojadokumentaatiossa."
         },
@@ -4232,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pron kassa, portaali ja tilauksen tila"
+              "role": "Notoria Pro ja Premium -kassa, portaali ja tilauksen tila"
             },
             {
               "provider": "Google",
@@ -4346,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Nämä käyttöehdot selittävät Notorian käyttöä koskevat säännöt osoitteessa <site>www.notoria.fi</site>. Ne kuvaavat, miten tuote toimii tänään: yksityiset oppimistyötilat, valinnainen Notoria Pro -laskutus Stripen kautta sekä tekoälyavusteiset ominaisuudet. Ne eivät korvaa oikeudellista neuvontaa omassa tilanteessasi.",
+      "intro": "Nämä käyttöehdot selittävät säännöt Notorian käytölle osoitteessa <site>www.notoria.fi</site>. Ne kuvaavat, miten tuote toimii tänään: yksityiset oppimisympäristöt, valinnainen Pro- ja Premium-laskutus Stripe:n kautta sekä AI-avusteiset ominaisuudet. Ne eivät ole korvike lakimiehen neuvonnalle erityisessä tilanteessasi.",
       "tocTitle": "Tällä sivulla",
       "tocAria": "Tällä sivulla",
       "toc": {
@@ -4357,7 +4375,7 @@
         "acceptable-use": "Hyväksyttävä käyttö",
         "ip": "Immateriaalioikeudet",
         "ai": "Tekoälyn tuottama sisältö",
-        "plans": "Ilmainen suunnitelma ja Notoria Pro",
+        "plans": "Ilmaiset, Pro- ja Premium-suunnitelmat",
         "billing": "Tilaus ja laskutus",
         "refunds": "Palautukset ja kuluttajaoikeudet",
         "availability": "Saatavuus",
@@ -4376,7 +4394,7 @@
         "service": {
           "title": "2. Palvelu",
           "p1": "Notoria on yksityinen kieltenoppimisen verkkosovellus. Voit luoda työtiloja ja säilyttää oppimateriaalia, kuten sanastoa, teoriamuistiinpanoja, kirjoitusta, harjoituksia, kuuntelutunteja ja puheistuntoja.",
-          "p2": "Osa ominaisuuksista on saatavilla ilmaisella suunnitelmalla. Notoria Pro avaa lisäominaisuuksia tuotteessa ja <account>Tili</account>-sivullasi näkyvällä tavalla — mukaan lukien Kuuntelu, Puhuminen, tietyt tekoälytyökalut, harjoitusten tuonti ja maksulliset dokumenttivientimuodot. Ominaisuuksien saatavuus voi muuttua tuotteen kehittyessä.",
+          "p2": "Keskeiset oppimisalueet, mukaan lukien Kuuntelu, Puhe ja Lukeminen, ovat saatavilla jokaisessa suunnitelmassa. Pro ja Premium lisäävät korkeammat AI-käyttöoikeudet ja oppimateriaalin tuonti/vienti; Premium lisää myös henkilökohtaista valmennusta ja harjoitusominaisuuksia. Nykyinen vertailu näkyy <account>Tilisi</account> sivulla. Ominaisuuksien saatavuus voi muuttua tuotteen kehittyessä.",
           "p3": "Notoria on henkilökohtaiseen kieltenoppimiseen. Se ei ole koulu, tutkintoviranomainen eikä ammatillinen neuvontapalvelu."
         },
         "accounts": {
@@ -4417,23 +4435,23 @@
           "title": "7. Tekoälyn tuottama sisältö",
           "p1": "Osa ominaisuuksista voi tarkistaa, ehdottaa, tuottaa, litteroida, tiivistää tai ohjata materiaaliisi perustuen. Tulokset voivat olla puutteellisia, virheellisiä tai sopimattomia tavoitteeseesi. Olet vastuussa tekoälytulosten tarkistamisesta ennen kuin tukeudut niihin opiskelussa, kokeissa, ammatillisessa käytössä tai julkaisussa.",
           "p2": "Tekoälyominaisuudet voivat olla poissa käytöstä, jos apu on kytketty pois <settings>Asetukset</settings>-sivulla, jos suunnitelmasi ei sisällä tiettyä työkalua tai jos palveluntarjoaja on tilapäisesti tavoittamattomissa.",
-          "p3": "Kaikki tekoälyavustajat eivät edellytä Notoria Prota. Tuote näyttää, mitkä työkalut ovat ilmaisia ja mitkä tarvitsevat Pron."
+          "p3": "AI:n saatavuus ja päivittäiset käyttöoikeudet vaihtelevat Ilmaisen, Pro:n ja Premiumin välillä. Tuote näyttää kunkin työkalun vaatimuksen suunnitelman ja käyttöoikeuden."
         },
         "plans": {
-          "title": "8. Ilmainen suunnitelma ja Notoria Pro",
+          "title": "8. Ilmaiset, Pro- ja Premium-suunnitelmat",
           "p1": "Ilmainen suunnitelma kattaa ydinharjoittelun omalla sanastollasi ja siihen liittyvät opiskelutyökalut tuotteessa näkyvällä tavalla.",
-          "p2": "Notoria Pro on maksullinen tilaus, joka avaa lisäominaisuuksia. Nykyisessä tuotteessa siihen kuuluu tyypillisesti Kuuntelu, Puhuminen, harjoitusten tuonti, muodosta-lause -harjoittelu, monet tekoälyavusteiset opiskelutyökalut sekä PDF-/DOCX-dokumenttivienti. Jotkin kevyemmät tekoälyavustajat (kuten tietyt sanasto- tai editorin muotoiluavut) voivat säilyä käytössä ilmaisella suunnitelmalla, kun tekoälyapu on käytössä.",
-          "p3": "Pro-käyttöoikeus on sidottu käyttäjätiliisi, joten se koskee kaikkia kyseisen tilin työtiloja. Ylläpitäjäroolin tileillä voi olla Pro-tason käyttöoikeus ilman henkilökohtaista Stripe-tilausta.",
-          "p4": "Ostokseesi sovellettava hinta on Stripe Checkoutissa nykyiselle Pro-suunnitelmalle näytetty hinta. Mualla tuotteessa (esimerkiksi Tili-sivulla) näytetty hinta on vain suuntaa-antava ja sen on vastattava aktiivista Stripe-hintakonfiguraatiota."
+          "p2": "Pro ja Premium ovat maksullisia tilauksia. Pro lisää korkeammat tai rajattomat käyttöoikeudet monille AI-työkaluille sekä oppimateriaalin tuonnin ja PDF/DOCX-viennin. Premium sisältää Pro:n ja lisää henkilökohtaisia ominaisuuksia, kuten Oppimisvalmentajan, henkilökohtaisen oppimisprofiilin, mukautuvan harjoittelun, virheisiin perustuvan harjoittelun ja mukautetut harjoitusohjeet. Tilin sivu näyttää nykyisen vertailun ja rajat.",
+          "p3": "Maksullinen pääsy on sidottu käyttäjätiliisi ja koskee sen työtiloja. Tilit, joilla on ylläpitäjän rooli, voivat saada maksullisen tason pääsyn ilman henkilökohtaista Stripe-tilausta.",
+          "p4": "Hinta, joka on voimassa, on hinta, joka näkyy Stripe Checkoutissa valitulle Pro- tai Premium-suunnitelmalle. Mikään muu tuoteessa näkyvä hinta (esimerkiksi Tilillä) on vain suuntaa-antava ja sen on vastattava aktiivista Stripe-hintakonfiguraatiota."
         },
         "billing": {
           "title": "9. Tilaus, laskutus ja peruutus",
-          "list0": "Pro-tilaukset laskutetaan <strong>Stripen</strong> kautta",
-          "list1": "Voit aloittaa kassavirran <account>Tili</account>-sivulta tai sovelluksen lukituista Pro-kontrolleista",
+          "list0": "Pro- ja Premium-tilaukset laskutetaan <strong>Stripe</strong>n kautta",
+          "list1": "Voit aloittaa kassalle tai vaihtaa suunnitelmaa <account>Tililtä</account> tai lukituista maksullisista ohjausvaihtoehdoista sovelluksessa",
           "list2": "Tili-sivulta voit avata Stripe Customer Portalin nähdäksesi laskut, päivittääksesi maksutavat ja peruuttaaksesi tilauksen",
           "list3": "Peruutus noudattaa Stripen Customer Portalin käyttäytymistä tilauksellesi",
-          "p1": "Peruutuksen jälkeen Pro-käyttöoikeus jatkuu vain niin kauan kuin Stripen tilauksen tila edelleen myöntää Pron tuotteessa. Nykyisessä toteutuksessa Proksi käsiteltäviä tiloja ovat <code>active</code>, <code>trialing</code> ja <code>past_due</code>. Kun tila ei enää täytä ehtoja, tili palaa ilmaiseen suunnitelmaan.",
-          "p2": "Jos maksu epäonnistuu, Stripe voi siirtää tilauksen tilaan <code>past_due</code> tai toiseen tilaan. Notoria synkronoi tilan Stripen webhookeista. Niin kauan kuin tila on <code>past_due</code>, Pro-ominaisuudet pysyvät käytössä nykyisten käyttöoikeussääntöjen mukaan; jos tilaus myöhemmin peruuntuu tai muuten kelpaamattomaksi, Pro-käyttöoikeus päättyy.",
+          "p1": "Kun peruutat uusimisen, nykyinen Pro- tai Premium-pääsysi jatkuu, kunnes Stripe-tilauksen tila on edelleen kelvollinen tuotteessa. Kelvolliset tilat sisältävät tällä hetkellä <code>active</code>, <code>trialing</code> ja <code>past_due</code>. Kun tila ei enää kelpaa, tili palaa Ilmaiseen.",
+          "p2": "Jos maksaminen epäonnistuu, Stripe voi siirtää tilauksen <code>past_due</code> tai muuhun tilaan. Notoria synkronoi tämän tilan Stripe-webhookeista. Kun se on <code>past_due</code>, nykyinen maksullinen suunnitelma pysyy saatavilla nykyisten pääsääntöjen mukaan; jos se myöhemmin peruutetaan tai muuten tulee kelvottomaksi, maksullinen pääsy päättyy.",
           "p3": "Notoria-tilin poistaminen peruuttaa Stripe-tilauksen heti (parhaan mukaan) osana tilin poistoa. Se eroaa uusinnan peruuttamisesta Customer Portalin kautta tilin säilyttäen."
         },
         "refunds": {
@@ -4454,7 +4472,7 @@
         "liability": {
           "title": "13. Vastuuvapaus ja vastuu",
           "p1": "Notoria tarjotaan ”saatavuuden mukaan” henkilökohtaiseen kieltenoppimiseen. Sovellettavan lain sallimassa laajuudessa emme anna takuita, joita laki ei edellytä.",
-          "p2": "Sovellettavan lain sallimassa laajuudessa Notoria ei ole vastuussa epäsuorista, satunnaisista, erityisistä, seurannaisista tai tietojen menetyksen vahingoista, jotka johtuvat palvelun käytöstäsi tai tekoälytuloksiin tukeutumisesta. Missä vastuuta ei voida sulkea pois, se rajoittuu Notoria Prosta maksamaasi määrään kolmena kuukautena ennen vaatimusta tai mihin tahansa suurempaan määrään, jonka pakottava laki edellyttää.",
+          "p2": "Siltä osin kuin sovellettava laki sallii, Notoria ei ole vastuussa epäsuorista, satunnaisista, erityisistä, seuraamuksellisista tai menetetyn datan vahingoista, jotka johtuvat palvelun käytöstä tai AI:n tulosten luottamisesta. Jos vastuuta ei voida sulkea pois, se rajoittuu määrään, jonka maksoit Notoria Pro:sta tai Premiumista kolmen kuukauden aikana ennen vaatimusta, tai muuhun suurempaan määrään, jota pakottava laki vaatii.",
           "p3": "Nämä rajoitukset eivät sulje pois vastuuta, jota Suomen tai EU:n laki ei salli rajoittaa — mukaan lukien vastuu, josta kuluttajat eivät voi luopua, sekä vastuu kuolemasta tai henkilövahingosta huolimattomuuden vuoksi, kun tällaiset säännöt soveltuvat."
         },
         "changes": {
@@ -4527,9 +4545,9 @@
           "vocab": "Rakenna oma sanapankki merkityksineen, esimerkkeineen ja tunnisteineen",
           "practice": "Harjoittele tehtävillä, jotka käyttävät omia sanojasi ja muistiinpanojasi",
           "create": "Kirjoita teoriamuistiinpanoja ja kirjoitustyötä, joihin voit palata",
-          "listenSpeak": "Muuta mediaa kuunteluharjoituksiksi ja puhu AI-tutorin kanssa Prolla"
+          "listenSpeak": "Muunna media kuunteluharjoitukseksi ja käytä AI-käyttöoikeuksia transkriptiota ja puheharjoituksia varten"
         },
-        "note": "Osa tekoäly-, kuuntelu-, puhumis- ja vientitoiminnoista kuuluu Notoria Prohon. Ilmaisella suunnitelmalla voit silti harjoitella sanastoa ja ydinlooppia."
+        "note": "Keskeiset oppimisalueet ovat saatavilla jokaisessa suunnitelmassa. Pro nostaa AI-käyttöoikeuksia ja lisää oppimateriaalin tuonnin/viennin; Premium lisää henkilökohtaista valmennusta ja harjoitusta."
       },
       "ai": {
         "title": "Tekoäly siellä missä se auttaa",
@@ -4655,7 +4673,7 @@
         "title": "Miten alueet liittyvät",
         "p1": "Keräys on nopea sisäänkäynti. Sanasto ja Teoria ovat paikkoja, joihin ainesto asettuu. Harjoitus muuttaa sen harjoitteluksi. Kirjoittaminen, kuuntelu ja puhuminen auttavat käyttämään kieltä aktiivisemmin.",
         "p2": "Sinun ei tarvitse kulkea joka aluetta järjestyksessä. Monet pysyvät sanoissa ja lyhyessä harjoittelussa pitkään.",
-        "p3": "Luonteva seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omin ehdoin, sitten kuuntelu ja puhuminen, kun sama materiaali tarvitaan korvaan ja ääneen — Kuuntelu ja Puhuminen kuuluvat Notoria Prohon.",
+        "p3": "Luonnollinen seuraava askel on kirjoittaminen, kun haluat tuottaa kieltä omilla ehdoillasi, sitten kuuntelu ja puhe, kun haluat saman materiaalin toimivan korvassasi ja äänessäsi. Nämä alueet ovat saatavilla jokaisessa suunnitelmassa; AI:n käyttörajoitukset vaihtelevat suunnitelmittain.",
         "beat": "Kerää ja ymmärrä ensin. Käytä ja puhu, kun materiaali on valmis jättämään sivun."
       },
       "areas": {
@@ -4679,11 +4697,11 @@
         },
         "listening": {
           "label": "Kuuntelu",
-          "body": "Muuta mediaa kuunteluharjoitukseksi työtilassasi. Saatavilla Notoria Prolla."
+          "body": "Muunna media kuunteluharjoitukseksi työtilassasi. Saatavilla jokaisessa suunnitelmassa; AI-transkriptiokäyttöoikeudet vaihtelevat suunnitelmittain."
         },
         "speaking": {
           "label": "Puhuminen",
-          "body": "Live-harjoittelua AI-tutorin kanssa, oppimasi kielen ympärillä. Saatavilla Notoria Prolla."
+          "body": "Elävä harjoittelu AI-opettajan kanssa, joka perustuu opiskelemallesi kielelle. Saatavilla jokaisessa suunnitelmassa suunnitelmapohjaisella päivittäisellä käyttöoikeudella."
         },
         "capture": {
           "label": "Keräys",
@@ -4733,15 +4751,15 @@
         },
         "account": {
           "q": "Miten vaihdan salasanan tai suljen tilin?",
-          "a": "Avaa <account>Tili</account>. Voit päivittää salasanan jos käytät sähköpostikirjautumista, hallita Notoria Prota, viedä varmuuskopion tai poistaa tilin pysyvästi."
+          "a": "Avaa <account>Tilisi</account>. Voit päivittää salasanasi siellä, jos käytät sähköpostikirjautumista, hallita Pro- tai Premium-tilauksia, viedä varmuuskopion tai poistaa tilisi pysyvästi. Tilin poistaminen peruuttaa myös välittömästi kaikki aktiiviset Stripe-tilaukset parhaalla mahdollisella tavalla; uusimisen peruuttaminen pitää tilin ja sen tiedot."
         },
         "pro": {
           "q": "Miten laskutus ja peruutus toimivat?",
-          "a": "Notoria Pro laskutetaan Stripen kautta. <account>Tili</account>-sivulta voit päivittää, avata Stripe-asiakasportaalin maksutapoihin ja laskuihin, tai peruuttaa uusinnan."
+          "a": "Notoria Pro ja Premium laskutetaan Stripe:n kautta. <account>Tililtä</account> voit tilata, vaihtaa Pro:n ja Premiumin välillä, hallita maksutapoja ja laskuja, peruuttaa uusimisen tai jatkaa aikataulutettua peruutusta. Uusimisen peruuttaminen pitää pääsyn voimassa, kunnes Stripe päättää kelvollisen tilausjakson; tilin poistaminen on erillinen toimenpide ja peruuttaa tilauksen välittömästi parhaalla mahdollisella tavalla."
         },
         "proFeatures": {
-          "q": "Mikä on ilmaista, ja mikä vaatii Notoria Pron?",
-          "a": "Arjen sanastoharjoittelu ja siihen liittyvät työkalut kuuluvat ilmaiseen suunnitelmaan. Osa tekoälytyökaluista, kuuntelu, puhuminen ja dokumenttivienti kuuluvat Notoria Prohon. Vertaa ja päivitä <account>Tili</account>-sivulla."
+          "q": "Mitä sisältyy Ilmaiseen, Pro:hon ja Premiumiin?",
+          "a": "Ilmainen sisältää keskeiset oppimisalueet ja päivittäiset käyttöoikeudet tuetuista AI-työkaluista. Pro nostaa tai poistaa monia AI-rajoituksia ja lisää oppimateriaalin tuonnin sekä PDF/DOCX-viennin. Premium sisältää Pro:n ja lisää henkilökohtaista valmennusta, oppimisprofiilin, mukautuvaa ja virheisiin perustuvaa harjoittelua sekä mukautettuja harjoitusohjeita. Katso live-vertailu ja nykyiset rajat <account>Tililtä</account>."
         },
         "learning": {
           "q": "Miten Notorian oppimistoiminnot toimivat?",
@@ -5020,8 +5038,8 @@
       "title": "Käyttäjät",
       "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
       "searchPlaceholder": "Hae nimeä tai sähköpostia…",
-      "empty": "No users match these filters.",
-      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "empty": "Yhtään käyttäjää ei vastaa näitä suodattimia.",
+      "selfGuard": "Turvatoimet estävät oman admin-tilin muuttamisen tai poistamisen täällä.",
       "columns": {
         "user": "Käyttäjä",
         "role": "Rooli",
@@ -5031,8 +5049,8 @@
         "created": "Rekisteröity"
       },
       "filters": {
-        "role": "Role",
-        "status": "Status",
+        "role": "Rooli",
+        "status": "Tila",
         "allRoles": "Kaikki roolit",
         "allStatuses": "Kaikki tilat"
       },
@@ -5041,43 +5059,43 @@
         "suspended": "Jäädytetty"
       },
       "fields": {
-        "id": "User id",
+        "id": "Käyttäjä-id",
         "name": "Nimi",
         "role": "Rooli",
-        "status": "Status",
-        "plan": "Plan",
-        "created": "Registered",
-        "updated": "Updated",
-        "emailVerified": "Email verified",
+        "status": "Tila",
+        "plan": "Suunnitelma",
+        "created": "Rekisteröity",
+        "updated": "Päivitetty",
+        "emailVerified": "Sähköposti vahvistettu",
         "email": "Sähköposti",
         "password": "Salasana"
       },
       "detail": {
-        "account": "Account",
-        "usage": "Content counts",
-        "usageLede": "Owned records across learning modules.",
-        "actions": "Account actions",
-        "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user.",
-        "danger": "Danger zone"
+        "account": "Tili",
+        "usage": "Sisältömäärät",
+        "usageLede": "Omistettuja tietueita oppimismoduuleissa.",
+        "actions": "Tilitoimet",
+        "workspaces": "Työtilat",
+        "workspacesLede": "Tämän käyttäjän omistamat kielityötilat.",
+        "danger": "Vaaravyöhyke"
       },
       "actions": {
         "saveProfile": "Save name",
-        "grantAdmin": "Grant admin",
-        "revokeAdmin": "Revoke admin",
-        "suspend": "Suspend",
-        "restore": "Restore",
-        "delete": "Delete account",
+        "grantAdmin": "Myönnä admin-oikeudet",
+        "revokeAdmin": "Poista admin-oikeudet",
+        "suspend": "Keskeytä",
+        "restore": "Palauta",
+        "delete": "Poista tili",
         "grantTester": "Anna testaaja-rooli",
         "revokeTester": "Poista testaaja-rooli",
         "create": "Luo käyttäjä"
       },
       "confirm": {
-        "grantAdmin": "Grant admin access to this account?",
-        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
-        "suspend": "Suspend this account? They lose access on the next protected request.",
-        "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantAdmin": "Myönnetäänkö admin-oikeudet tälle tilille?",
+        "revokeAdmin": "Poistetaanko admin-oikeudet? Tämä epäonnistuu, jos he ovat viimeinen aktiivinen admin.",
+        "suspend": "Keskeytetäänkö tämä tili? He menettävät pääsyn seuraavassa suojatussa pyynnössä.",
+        "restore": "Palautetaanko tämä tili?",
+        "delete": "Poistetaanko tämä tili pysyvästi ja siihen liittyvät oppimisdata? Tätä ei voi peruuttaa.",
         "grantTester": "Annetaanko testaaja-rooli? He saavat kaikki sovellusominaisuudet QA:ta varten; tallennettu tilaus ei muutu.",
         "revokeTester": "Poistetaanko testaaja-rooli? Ominaisuuksien käyttö palaa heidän todellisen tilauksensa mukaiseksi."
       },
@@ -5089,162 +5107,162 @@
       },
       "create": {
         "title": "Luo käyttäjä",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "lede": "Luo tili sähköpostilla ja salasanalla. He voivat kirjautua heti sisään."
       },
       "plans": {
-        "free": "Free",
+        "free": "Ilmainen",
         "pro": "Pro",
         "premium": "Premium"
       }
     },
     "workspaces": {
-      "title": "Workspaces",
+      "title": "Työtilat",
       "description": "Inspect and manage language workspaces.",
-      "searchPlaceholder": "Search name, language, or owner email…",
-      "empty": "No workspaces match these filters.",
-      "createForUser": "Create workspace for this user",
+      "searchPlaceholder": "Etsi nimeä, kieltä tai omistajan sähköpostia…",
+      "empty": "Yhtään työtilaa ei vastaa näitä suodattimia.",
+      "createForUser": "Luo työtila tälle käyttäjälle",
       "columns": {
-        "name": "Name",
-        "language": "Language",
-        "owner": "Owner",
-        "updated": "Updated"
+        "name": "Nimi",
+        "language": "Kieli",
+        "owner": "Omistaja",
+        "updated": "Päivitetty"
       },
       "fields": {
-        "id": "Workspace id",
-        "name": "Name",
-        "nameOptional": "Optional display name",
-        "language": "Language",
-        "owner": "Owner",
-        "created": "Created",
-        "updated": "Updated",
-        "ownerEmail": "Owner email",
+        "id": "Työtila-id",
+        "name": "Nimi",
+        "nameOptional": "Valinnainen näyttönimi",
+        "language": "Kieli",
+        "owner": "Omistaja",
+        "created": "Luotu",
+        "updated": "Päivitetty",
+        "ownerEmail": "Omistajan sähköposti",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
-        "description": "Language: {language}",
-        "meta": "Workspace",
-        "actions": "Workspace actions",
-        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+        "description": "Kieli: {language}",
+        "meta": "Työtila",
+        "actions": "Työtilan toimet",
+        "actionsLede": "Kielen muokkaamisen on pysyttävä ainutlaatuisena omistajakohtaisesti. Poistaminen vaikuttaa oppimis sisältöön tässä työtilassa."
       },
       "actions": {
-        "create": "Create workspace",
-        "save": "Save",
-        "delete": "Delete workspace"
+        "create": "Luo työtila",
+        "save": "Tallenna",
+        "delete": "Poista työtila"
       },
       "confirm": {
-        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+        "delete": "Poistetaanko tämä työtila ja kaikki oppimis sisältö sen sisällä tietokannan kaskadien kautta?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Luo työtila",
+        "lede": "Liitä uusi kielityötila olemassa olevaan tiliin sähköpostilla."
       }
     },
     "content": {
       "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
-      "searchPlaceholder": "Search titles…",
-      "empty": "No records match these filters.",
-      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "searchPlaceholder": "Etsi otsikoita…",
+      "empty": "Yhtään tietuetta ei vastaa näitä suodattimia.",
+      "listeningMediaNote": "Kuuntelutunnin poistaminen poistaa tietokannan rivin. Ulkoisten medioiden puhdistus on parhaan mukaan ja sitä ei suoriteta tämän admin-toimenpiteen kautta.",
       "columns": {
-        "title": "Title",
-        "status": "Status",
-        "owner": "Owner",
-        "workspace": "Workspace",
-        "updated": "Updated"
+        "title": "Otsikko",
+        "status": "Tila",
+        "owner": "Omistaja",
+        "workspace": "Työtila",
+        "updated": "Päivitetty"
       },
       "fields": {
         "id": "Id",
-        "status": "Status",
-        "errorCode": "Error code",
-        "owner": "Owner",
-        "workspace": "Workspace",
-        "created": "Created",
-        "updated": "Updated",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "status": "Tila",
+        "errorCode": "Virhekoodi",
+        "owner": "Omistaja",
+        "workspace": "Työtila",
+        "created": "Luotu",
+        "updated": "Päivitetty",
+        "title": "Otsikko",
+        "word": "Sana",
+        "folderName": "Kansion nimi"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
-        "meta": "Record",
-        "metaLede": "Identifiers and status only.",
-        "actions": "Actions"
+        "meta": "Tietue",
+        "metaLede": "Tunnisteet ja tila vain.",
+        "actions": "Toimet"
       },
       "actions": {
-        "delete": "Delete record",
-        "saveTitle": "Save title"
+        "delete": "Poista tietue",
+        "saveTitle": "Tallenna otsikko"
       },
       "confirm": {
-        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+        "delete": "Poistetaanko tämä tietue? Liittyvät lapsirivit seuraavat tietokannan kaskadi / set-null sääntöjä."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Tallenna kohteet vapaamuotoisella tekstillä. Otsikon muokkaamista ei tueta täällä — poista, jos tietue on poistettava."
     },
     "jobs": {
-      "title": "Jobs",
-      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
-      "searchPlaceholder": "Filter by title…",
-      "empty": "No jobs match these filters.",
+      "title": "Työt",
+      "description": "Suorittavat lukot ja epäonnistuneet käsittelytiedot. Tilat ovat vain luku - älä pakota epäonnistunutta työtä näyttämään onnistuneelta.",
+      "searchPlaceholder": "Suodata otsikon mukaan…",
+      "empty": "Yhtään työtä ei vastaa näitä suodattimia.",
       "buckets": {
-        "attention": "Needs attention",
-        "running": "Running",
-        "failed": "Failed",
+        "attention": "Vaatii huomiota",
+        "running": "Suoritetaan",
+        "failed": "Epäonnistunut",
         "all": "All",
-        "runningLocks": "Running locks",
-        "failedLocks": "Failed locks",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports"
+        "runningLocks": "Suorittavat lukot",
+        "failedLocks": "Epäonnistuneet lukot",
+        "failedListening": "Epäonnistunut kuuntelu",
+        "failedImports": "Epäonnistuneet tuonnit"
       },
       "filters": {
-        "kind": "Kind",
-        "allKinds": "All kinds"
+        "kind": "Tyyppi",
+        "allKinds": "Kaikki tyypit"
       },
       "kinds": {
-        "ai_lock": "AI lock",
-        "listening": "Listening",
-        "exercise_import": "Exercise import",
-        "lock": "AI lock",
-        "import": "Exercise import"
+        "ai_lock": "AI-lukko",
+        "listening": "Kuuntelu",
+        "exercise_import": "Harjoituksen tuonti",
+        "lock": "AI-lukko",
+        "import": "Harjoituksen tuonti"
       },
       "columns": {
-        "kind": "Kind",
-        "title": "Title",
-        "status": "Status",
-        "error": "Error",
-        "owner": "Owner",
-        "updated": "Updated"
+        "kind": "Tyyppi",
+        "title": "Otsikko",
+        "status": "Tila",
+        "error": "Virhe",
+        "owner": "Omistaja",
+        "updated": "Päivitetty"
       }
     },
     "audit": {
-      "title": "Audit log",
-      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
-      "searchPlaceholder": "Search action, entity, or actor email…",
-      "empty": "No audit entries yet.",
+      "title": "Audit-loki",
+      "description": "Vain luku -historia hallinnollisista muutoksista. Todistuksia ja yksityisiä tietoja ei koskaan tallenneta tänne.",
+      "searchPlaceholder": "Etsi toimintoa, kohdetta tai toimijan sähköpostia…",
+      "empty": "Ei audit-kirjauksia vielä.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "success": "Result"
+        "when": "Milloin",
+        "actor": "Toimija",
+        "action": "Toiminto",
+        "entity": "Kohde",
+        "success": "Tulos"
       },
       "success": {
         "yes": "OK",
-        "no": "Failed"
+        "no": "Epäonnistui"
       }
     },
     "errors": {
-      "UNKNOWN": "Something went wrong. Try again.",
-      "LAST_ADMIN": "Cannot change the last active admin.",
-      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
-      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
-      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
-      "USER_NOT_FOUND": "User not found.",
-      "WORKSPACE_NOT_FOUND": "Workspace not found.",
-      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
-      "INVALID_LANGUAGE": "Invalid language code.",
-      "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "UNKNOWN": "Jokin meni pieleen. Yritä uudelleen.",
+      "LAST_ADMIN": "Viimeistä aktiivista adminia ei voi muuttaa.",
+      "CANNOT_DEMOTE_SELF": "Et voi alentaa omaa admin-tiliäsi.",
+      "CANNOT_SUSPEND_SELF": "Et voi keskeyttää omaa tiliäsi.",
+      "CANNOT_DELETE_SELF": "Et voi poistaa omaa tiliäsi.",
+      "USER_NOT_FOUND": "Käyttäjää ei löytynyt.",
+      "WORKSPACE_NOT_FOUND": "Työtilaa ei löytynyt.",
+      "WORKSPACE_LANGUAGE_EXISTS": "Tällä käyttäjällä on jo työtila tälle kielelle.",
+      "INVALID_LANGUAGE": "Virheellinen kielikoodi.",
+      "CONTENT_NOT_FOUND": "Tietuetta ei löytynyt.",
+      "INVALID_CONTENT_MODULE": "Tuntematon sisältömoduuli.",
+      "EMAIL_EXISTS": "Tämä sähköposti on jo rekisteröity.",
+      "PASSWORD_TOO_WEAK": "Salasana ei täytä vahvuusvaatimuksia.",
+      "CONTENT_TITLE_UNSUPPORTED": "Tätä sisältötyyppiä ei tueta otsikon muokkaamisessa."
     }
   }
 }

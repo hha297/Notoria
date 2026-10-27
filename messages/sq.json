@@ -17,19 +17,20 @@
     "hideFilters": "Fshih filtrat",
     "remove": "Hiq",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Pamja",
+      "print": "Printueshme",
+      "printHint": "Faqe e bardhë, tekst i errët",
+      "theme": "Tema aktuale",
+      "themeHint": "Përputhet me temën tuaj të ndriçuar ose të errët",
+      "previewKicker": "Faqe shembuj",
+      "previewTitle": "Titulli i dokumentit",
+      "previewBody": "Teksti i trupit përdor ngjyrat dhe hapësirat e zgjedhura.",
+      "previewCallout": "Thirrjet dhe akcentet ndjekin ngjyrën e modulit.",
+      "fixedNote": "Pamja është e fiksuar në skedarin e eksportuar. Eksportoni përsëri për ta ndryshuar.",
+      "docxBackgroundNote": "Word dhe aplikacione të tjera mund të mos tregojnë sfondet e faqeve në të njëjtën mënyrë, veçanërisht kur printoni."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Rrokullis në majë",
+    "moreActions": "Më shumë veprime"
   },
   "contentImport": {
     "title": {
@@ -140,7 +141,7 @@
     "imageInvalidType": "Përdorni një imazh PNG, JPG, GIF ose WebP.",
     "imageUnavailable": "Ngarkimi i imazheve nuk është i konfiguruar.",
     "or": "ose",
-    "format": "Format",
+    "format": "Formati",
     "formatSuccess": "Përmbajtja u formatua",
     "formatUnchanged": "Tashmë e formatuar",
     "formatWorking": "Duke formatuar…",
@@ -295,12 +296,12 @@
     "tooDeep": "Kjo dosje është e futur shumë thellë",
     "notFound": "Dosja nuk u gjet",
     "nameTaken": "Një dosje ose shkrim e përdor tashmë këtë emër",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Shkoni në një dosje",
+    "dragTipBody": "Në një kompjuter me një maus ose trackpad, tërhiqni një copë mbi një kartë dosjeje për ta lëvizur. Mund të përdorni gjithashtu ikonën e lëvizjes në çdo artikull.",
+    "dragTipDismiss": "Hidh poshtë këshillën",
+    "dragTipShow": "Si të lëvizni në dosje",
+    "dragTipDemo": "Tërhiqni artikullin mbi dosje",
+    "dragTipCard": "Artikulli"
   },
   "theme": {
     "toggle": "Ndrysho temën",
@@ -417,7 +418,7 @@
     "addCustomTag": "Shto",
     "notes": "Shënimet",
     "notesPlaceholder": "Mnemonikë, këshilla gramatikore, kujtesa personale...",
-    "formatNotes": "Format",
+    "formatNotes": "Formati",
     "formatNotesSuccess": "Shënimet u formatuan",
     "formatNotesUnchanged": "Shënimet janë tashmë të formatuara",
     "formatNotesAiFallback": "Formatimi me AI nuk është i disponueshëm — u aplikua pastrim bazë në vend të tij",
@@ -472,34 +473,34 @@
     "viewMode": "Mënyra e shfaqjes",
     "tagManager": {
       "open": "Menaxho etiketat",
-      "eyebrow": "Tags",
+      "eyebrow": "Etiketat",
       "title": "Menaxheri i etiketave",
-      "description": "Zgjidhni një etiketë, pastaj caktojeni ose hiqeni nga fjalët. Fjalët e caktuara dhe të tjera mbeten në lista të ndara.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Zgjidh një etiketë, pastaj cakto ose hiq atë nga fjalët.",
+      "pageDescription": "Zgjidh Standard ose Personalizuar, zgjidh një etiketë, pastaj shto ose hiq atë nga fjalët.",
+      "disabledNoWorkspace": "Krijo një hapësirë pune para se të menaxhosh etiketat e fjalorit.",
+      "backToVocabulary": "Kthehu te fjalori",
+      "backToSettings": "Kthehu te cilësimet",
       "groupsLabel": "Grupet standarde të etiketave",
       "tagsHeading": "Etiketat",
       "standardTagsHeading": "Etiketat standarde",
       "customTagsHeading": "Etiketat e personalizuara",
-      "customTagsHint": "Etiketa që krijoni për organizimin tuaj — jo pjesë të ligjëratës.",
+      "customTagsHint": "Etiketat e hapësirës që krijon — kërko për t'i gjetur ato kur lista është e gjatë.",
       "emptyCustomTags": "Ende nuk ka etiketa të personalizuara. Krijojini kur të ndryshoni një fjalë.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nuk ka etiketat e personalizuara që përputhen me këtë kërkim.",
+      "tagSearchPlaceholder": "Kërko etiketat…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standarde",
       "kindCustom": "E personalizuar",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Listat e fjalëve",
+      "wordTabAssigned": "Me etiketë",
+      "wordTabOther": "Pa etiketë",
       "assignedHeading": "Fjalë me këtë etiketë",
       "otherHeading": "Fjalë të tjera",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Zgjidh të gjitha në këtë faqe",
+      "clearSelection": "Pastro përzgjedhjen",
+      "selectionScopePage": "Duke zgjedhur nga kjo faqe ({count} nga {total})",
+      "selectionScopeFiltered": "Duke zgjedhur brenda rezultateve aktuale të kërkimit",
       "searchPlaceholder": "Kërkoni fjalë ose kuptime…",
       "wordCount": "{count}",
       "loading": "Duke ngarkuar fjalorin…",
@@ -509,13 +510,23 @@
       "emptyOther": "Çdo fjalë e ka tashmë këtë etiketë.",
       "emptyOtherSearch": "Nuk ka fjalë përputhëse për t’u caktuar.",
       "selected": "{count} të përzgjedhura",
-      "addToTag": "Shto te etiketa",
-      "removeFromTag": "Hiq nga etiketa",
-      "applyAdd": "Shto te etiketa ({count})",
-      "applyRemove": "Hiq nga etiketa ({count})",
+      "addToTag": "Shto etiketë",
+      "removeFromTag": "Hiq etiketë",
+      "applyAdd": "Shto etiketë ({count})",
+      "applyRemove": "Hiq etiketë ({count})",
       "added": "U shtuan {count} fjalë te {tag}",
       "removed": "U hoqën {count} fjalë nga {tag}",
-      "error": "Nuk mundëm të përditësonim anëtarësinë e etiketës"
+      "error": "Nuk mundëm të përditësonim anëtarësinë e etiketës",
+      "systemsLabel": "Sistemet e etiketave",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Tema dhe përdorimi, të shfaqura veçmas",
+      "usageOptional": "Opsionale",
+      "customSystemTitle": "Personalizuar",
+      "customSystemMeta": "{count, plural, one {# etiketë} other {# etiketat}}",
+      "customPickerLabel": "Zgjidh një etiketë të personalizuar",
+      "customPickerPlaceholder": "Zgjidh një etiketë të personalizuar…",
+      "customSearchPlaceholder": "Kërko etiketat e personalizuara…",
+      "pickTagFirst": "Zgjidh një etiketë më sipër për të menaxhuar anëtarësimin e fjalëve."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Përditësuar {time}",
@@ -584,7 +595,11 @@
         "notes": "Shënimet",
         "updated": "Përditësuar së fundi"
       }
-    }
+    },
+    "selectedCustomTags": "Etiketat e zgjedhura",
+    "selectedSynonyms": "Sinonimet e zgjedhura",
+    "removeCustomTag": "Hiq {name}",
+    "pickerLoading": "Po ngarkohet…"
   },
   "tags": {
     "groups": {
@@ -674,7 +689,7 @@
       "easy": "E lehtë",
       "medium": "Mesatare",
       "hard": "E vështirë",
-      "intensive": "Intensive",
+      "intensive": "Intensiv",
       "easyHint": "Ndihmesa të qarta dhe praktikë e drejtpërdrejtë me fjalët tuaja.",
       "mediumHint": "Përzierje pyetjesh direkte dhe kontekstuale duke përdorur fjalorin tuaj.",
       "hardHint": "Më shumë kontekst dhe ndihmesa më pak të dukshme — prapë fjalët tuaja.",
@@ -685,7 +700,7 @@
       "heading": "Burimi",
       "vocabulary": "Fjalor",
       "theory": "Teori",
-      "import": "Import",
+      "import": "Importo",
       "imported": "I importuar",
       "lastUsed": "Përdorur së fundi",
       "selected": "I zgjedhur",
@@ -873,7 +888,7 @@
       "aiReady": "Praktika është gati",
       "aiUnavailable": "Nuk mund të gjeneroheshin pyetje AI tani.",
       "aiForbidden": "Ushtrimet e teorisë me AI janë të disponueshme me Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Udhëzime shtesë janë të disponueshme në Premium.",
       "aiDisabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "feedback": {
         "correct": "E saktë!",
@@ -927,20 +942,22 @@
         "why": "Pse",
         "complete": "U kuptua",
         "completeHint": "Mund të vazhdoni kur të jeni gati.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Filloni ushtrimin",
+        "skipReviewAndStart": "Kalo në rishikim dhe fillo ushtrimin"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Të paorganizuar",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# shënim} other {# shënime}}",
+        "selectAll": "Zgjidh të gjitha",
+        "selectGroup": "Zgjidh shënimet në {name}",
+        "expand": "Zgjero {name}",
+        "collapse": "Përkul {name}",
+        "selectedCount": "{count, plural, one {# teori e zgjedhur} other {# teori të zgjedhura}}",
+        "practiceSelected": "Praktiko të zgjedhurat",
+        "clearSelection": "Pastro zgjedhjen",
+        "subfolders": "{count, plural, one {# nënfolder} other {# nënfolderë}}",
+        "selectedOne": "1 teori e zgjedhur"
       }
     },
     "types": {
@@ -948,9 +965,9 @@
         "label": "Kartela",
         "description": "Ktheni kartelat për të studiuar fjalë dhe kuptime me vlerësime përsëritjeje të hapësiruar.",
         "preview": "Kthe · Vlerëso · Rishiko",
-        "previewHint": "Finnish word",
+        "previewHint": "Fjala finlandeze",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "KTHE → VLERËSO → RISHIKO"
       },
       "fill-in-blank": {
         "label": "Plotëso boshllëkun",
@@ -962,18 +979,18 @@
         "description": "Zgjidhni kuptimin ose fjalën e saktë — shpërqendruesit vijnë nga fjalori juaj.",
         "preview": "Cili kuptim përshtatet?",
         "previewPrompt": "Cili kuptim përshtatet?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "Njeri finlandez",
+        "previewB": "mot",
+        "previewC": "ndërtesë"
       },
       "match-pairs": {
         "label": "Përputh çifte",
         "description": "Përputhni çdo fjalë me kuptimin e saj në një rrjetë në stil Quizlet.",
         "preview": "Fjalë ↔ Kuptim",
         "previewLeft": "talo",
-        "previewRight": "house",
+        "previewRight": "shtëpi",
         "previewLeftB": "koti",
-        "previewRightB": "home"
+        "previewRightB": "shtëpi"
       },
       "type-answer": {
         "label": "Shkruaj përgjigjen",
@@ -998,8 +1015,8 @@
       "startsWith": "Fillon me “{letter}”",
       "revealPrompt": "Ende të bllokuar? Mund ta zbuloni përgjigjen e plotë.",
       "revealAnswer": "Zbulo përgjigjen",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Këshilla tjetër",
+      "hintProgress": "Këshilla {current} nga {total}"
     },
     "empty": {
       "noWordsTitle": "Nuk ka fjalor ende",
@@ -1032,17 +1049,17 @@
       "shuffle": "Përziej",
       "finish": "Përfundo raundin",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Burimi i pyetjeve",
+        "chooseAi": "Përdor të gjeneruar nga AI",
+        "emptyTitle": "Nuk ka shembuj të ruajtur të përdorshëm",
+        "emptyDescription": "Shto fjali shembuj që përfshijnë qartë çdo fjalë, rregullo filtrat e tu, ose kaloni në të gjeneruar nga AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Shembuj të ruajtur",
+          "description": "Ndërto pyetje menjëherë nga shembujt e fjalorit tënd. Pa pritje nga AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "E gjeneruar nga AI",
+          "description": "Krijo fjali të reja nga fjalori yt me AI."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "Gjenerimi i ushtrimeve me AI është i disponueshëm me Pro.",
       "disabled": "Ndihma e AI është e çaktivizuar te Cilësimet.",
       "upgradeHint": "Free përfshin disa gjenerime ushtrimesh AI çdo ditë. Pro heq kufirin.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Udhëzime shtesë",
+      "additionalInstructionsPlaceholder": "Për shembull: Përdorni situata restorantesh, mbani gjuhën në nivelin A2, dhe shpjegoni gabimet në gjuhën tuaj të ndërfaqes.",
+      "additionalInstructionsLocked": "Përmirësoni në Premium për të personalizuar llojet e ushtrimeve të mbështetura, vendosni një kontekst të jetës reale, dhe shtoni udhëzimet tuaja.",
+      "premiumRequired": "Udhëzime shtesë janë të disponueshme në Premium.",
+      "presetLabel": "Presetet",
+      "presetNone": "Nuk është zgjedhur asnjë preset",
+      "presetApply": "Apliko",
+      "presetSave": "Ruaj preset",
+      "presetName": "Emri i presetit",
+      "presetDelete": "Fshi",
+      "presetSaved": "Preseti u ruajt",
+      "presetDeleted": "Preseti u fshi",
+      "presetSaveFailed": "Nuk mund të ruhet ai preset.",
       "emptyWords": "Shtoni fjalë fjalori përpara se të gjeneroni pyetje.",
       "noneValid": "AI nuk mund të krijonte pyetje të vlefshme për këto fjalë. Provoni përsëri.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Personalizoni kontekstin, stilin, ose fokusin e ushtrimit tuaj. Lëreni bosh për të përdorur cilësimet e paracaktuara.",
+      "presetUpdate": "Përditëso preset",
+      "presetUpdated": "Preseti u përditësua",
+      "presetsTitle": "Presetet e ruajtura",
+      "presetsHelper": "Presetet ruajnë cilësimet e ushtrimeve dhe udhëzime shtesë. Ato nuk ndryshojnë fjalorin ose teoritë që keni zgjedhur.",
+      "presetsEmpty": "Nuk ka preset të ruajtur ende. Ruani cilësimet tuaja aktuale për t'i ripërdorur më vonë.",
+      "presetSaveAs": "Ruaj si preset",
+      "presetUpdateCurrent": "Përditëso me cilësimet aktuale",
+      "presetRename": "Riemëro",
+      "presetManage": "Menaxho preset",
+      "presetRenamed": "Preseti u riemërua",
+      "presetSaveDialogTitle": "Ruaj si preset",
+      "presetSaveDialogDescription": "Emërtoni këtë preset për të ripërdorur cilësimet aktuale të ushtrimit dhe udhëzimet shtesë. Fjalori ose teoritë e zgjedhura nuk ruhen.",
+      "presetRenameDialogTitle": "Riemëro preset",
+      "presetRenameDialogDescription": "Zgjidhni një emër të ri për këtë preset.",
+      "presetDeleteDialogTitle": "Fshi preset?",
+      "presetDeleteDialogDescription": "Fshi “{name}”? Konfigurimi juaj aktual i ushtrimit mbetet siç është."
     },
     "session": {
       "complete": "Seanca përfundoi",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Provo përsëri",
       "questionsLabel": "Pyetje",
       "correctLabel": "Të sakta",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "E pasaktë",
+      "unansweredLabel": "Pa përgjigje",
       "reviewLabel": "Për rishikim",
       "answeredProgress": "{answered} / {total} të përgjigjura",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Kontrollo përgjigjen",
+      "nextQuestion": "Tjetra",
+      "viewResults": "Shiko rezultatet",
       "submitSet": "Dërgo përgjigjet",
       "submitting": "Duke kontrolluar…",
       "unansweredWarnTitle": "Pyetje pa përgjigje",
@@ -1121,54 +1138,54 @@
       "unanswered": "Pa përgjigje",
       "yourAnswer": "Përgjigja juaj",
       "correctAnswer": "Përgjigja e saktë",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Vetëm {count} pyetje të disponueshme nga filtrat e tu aktualë.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Si praktikoni",
+        "lockedHint": "Mbaro ose fillo një set të ri për të ndryshuar këtë.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Një nga një",
+          "description": "Shiko një pyetje në një kohë. Kontrollo pas çdo përgjigjeje për feedback të menjëhershëm."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Të gjitha pyetjet",
+          "description": "Shiko setin e plotë, përgjigju në çdo rend, pastaj dërgo një herë për feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Rishikim",
+        "allCorrect": "Perfect — çdo pyetje e saktë.",
+        "summary": "{incorrect} e pasaktë · {unanswered} pa përgjigje · {needsReview} për rishikim",
+        "viewWrong": "Shiko përgjigjet e gabuara",
+        "filtersLabel": "Filtro pyetjet",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Të gjitha ({count})",
+          "needs_review": "Gabim & pa përgjigje ({count})",
+          "correct": "E saktë ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Të mëparshmet",
+        "nextWrong": "Të ardhshmet",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} për rishikim",
+        "floatLabel": "Navigimi i përgjigjeve të gabuara",
+        "closeFloat": "Shiko të gjitha përgjigjet"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% e saktë",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Set perfekt",
+          "body": "Çdo përgjigje e saktë. Ky lloj përqendrimi meriton një raund tjetër kur je gati."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Mbarim i fortë",
+          "body": "Qartë po e kupton — shiko gabimet, pastaj mbylle me një set të ri."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Punë e mirë — vazhdo",
+          "body": "Disa pika të ngjitura janë normale. Rishiko ato një herë, pastaj provo përsëri ndërsa janë të freskëta."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Gati aty",
+          "body": "Mbaro ato pa përgjigje së pari — pastaj rezultati do të tregojë një histori më të qartë."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Pyetjet gjenerohen në {language} (gjuha e hapësirës së punës).",
       "contextualEmptyTitle": "Gjenero pyetje kontekstuale",
-      "contextualEmptyDescription": "Krijoni pyetje me zgjedhje të shumëfishtë plotësimi boshllëqesh nga fjalori juaj.",
+      "contextualEmptyDescription": "Shto udhëzime opsionale më poshtë nëse dëshiron, pastaj shtyp Gjenero. Mund ta lësh propozimin bosh.",
       "contextualProDescription": "Pyetjet kontekstuale me AI janë të disponueshme me Pro.",
       "unlockContextual": "Zhblloko me Pro",
       "correct": "E saktë!",
@@ -1202,8 +1219,8 @@
       "hint": "Zgjidhni një fjalë, pastaj prekni kuptimin e saj",
       "complete": "Të gjitha çiftet u përputhën — punë e shkëlqyer!",
       "shuffle": "Përziej kolonat",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} çift",
+      "continueRound": "Vazhdo"
     },
     "typeAnswer": {
       "questionWord": "Cili është kuptimi?",
@@ -1213,7 +1230,7 @@
         "contextual": "Kontekstuale"
       },
       "contextualEmptyTitle": "Gjenero pyetje kontekstuale",
-      "contextualEmptyDescription": "Krijoni udhëzime shkrimi me plotësim boshllëqesh nga fjalori juaj.",
+      "contextualEmptyDescription": "Shto udhëzime opsionale më poshtë nëse dëshiron, pastaj shtyp Gjenero. Mund ta lësh propozimin bosh.",
       "contextualProDescription": "Pyetjet kontekstuale me AI janë të disponueshme me Pro.",
       "unlockContextual": "Zhblloko me Pro",
       "placeholder": "Shkruani përgjigjen tuaj…",
@@ -1543,7 +1560,7 @@
     "open": "Hap",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "Kapja",
         "body": "Hidheni një fjalë, shprehje, dyshim gramatike ose ide shkrimi për pak sekonda — pa nevojë të vendosni menjëherë ku i takon. Shtoni një shënim ose burim opsional, mbajini elementet te Për t’u përpunuar, pastaj ktheni një capture në Fjalor, Teori, Shkrim ose Ushtrim kur të keni kohë. Një element shënohet si I përpunuar vetëm pasi të përfundoni krijimin e atij zëri të lidhur."
       },
       "vocabulary": {
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Shkrim",
         "description": "Dokumente të pasura dhe grupe pyetjesh që mund t’i rihapni dhe eksportoni.",
-        "how": "Filloni një draft, organizoni me dosje dhe përdorni AI të Pro për të kontrolluar ose përmirësuar tekstin.",
+        "how": "Filloni një draft, organizoni me dosje, dhe përdorni lejen e AI të planit tuaj për të kontrolluar ose përmirësuar tekstin tuaj.",
         "cta": "Hap shkrimin"
       },
       "listening": {
         "title": "Dëgjim",
         "description": "Ktheni audio ose video reale në mësim.",
-        "how": "Ngarkoni një klip dhe gjeneroni një transkript me Free. Praktika e gjeneruar e dëgjimit është pjesë e Pro.",
+        "how": "Ngarko një klip, gjenero një transkript, dhe ndërto praktikën e dëgjimit me lejen e AI të përfshirë në planin tuaj.",
         "cta": "Hap dëgjimin"
       },
       "speaking": {
@@ -1648,7 +1665,7 @@
     "nextStepTitle": "Hapi tjetër",
     "continueEmpty": "Nuk ka asgjë për të vazhduar ende — shtoni një shënim teorie, pjesë shkrimi, mësim dëgjimi ose seancë të foluri dhe do të shfaqet këtu.",
     "inbox": {
-      "title": "Capture",
+      "title": "Kapja",
       "subtitle": "Shënime të shpejta që presin të renditen në bibliotekën tuaj.",
       "count": "{count, plural, =0 {Asgjë në pritje} one {# element për t’u përpunuar} other {# elemente për t’u përpunuar}}",
       "cta": "Hap Capture"
@@ -2120,7 +2137,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "Kapja",
       "description": "Ruani shpejt copëza — fjalë, dyshime, ide — pastaj ktheni ato në elemente reale studimi kur të keni një moment.",
       "cta": "E kuptova",
       "steps": {
@@ -2268,7 +2285,7 @@
         "taskManager": "Menaxheri i detyrave të shfletuesit",
         "altClose": "Mbyll dritaren",
         "altTab": "Ndërro aplikacionet",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Eksploruesi i skedarëve",
         "winDesktop": "Shfaq desktopin",
         "winLock": "Kyç PC-në",
         "winRun": "Dialogu Run",
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Disa hapësira pune ekzistojnë tashmë për të njëjtën gjuhë. Përmbajtja e tyre do të shtohet në hapësirat ekzistuese në vend që të krijohen dyfishime.",
         "empty_backup": "Kjo kopje rezervë nuk përmban të dhëna të importueshme të të mësuarit.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Disa artikuj ekzistues ndajnë të njëjtin emër. Importi do të ripërdorë një prej tyre në mënyrë deterministe dhe do të lërë të tjerët të pandryshuar."
       },
       "cancel": "Anulo",
       "confirm": "Importo të dhënat e të mësuarit",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Ajo kopje rezervë është shumë e madhe për t’u përpunuar përmes kësaj faqeje. Provoni një eksport më të vogël ose kontaktoni mbështetjen.",
         "notConfigured": "Ruajtja e skedarëve nuk është konfiguruar ende për importin e kopjes rezervë."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Të pranishëm në llogarinë tuaj",
+      "skippedInAccountHint": "Këto emra përputhen me artikuj që keni tashmë. Ata nuk do të importohen përsëri. Artikujt e rinj nën të njëjtin hapësirë akoma importohen.",
+      "skippedInBackupTitle": "Emra të dyfishtë në këtë backup",
+      "skippedInBackupHint": "Skedari liston të njëjtin emër më shumë se një herë. Vetëm kopja e parë e çdo emri importohet — kjo është normale edhe në një llogari bosh.",
+      "skippedOtherTitle": "Nuk mund të importohet"
     },
     "danger": {
       "title": "Mbyll llogarinë",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Përpara se të vazhdoni",
       "warnings": {
         "workspaces": "Çdo hapësirë pune dhe të gjitha të dhënat e fjalorit, teorisë, shkrimit, dëgjimit dhe të folurit do të fshihen.",
-        "billing": "Çdo abonim aktiv Notoria Pro do të anulohet menjëherë.",
+        "billing": "Çdo abonim aktiv Notoria Pro ose Premium do të anulohet menjëherë.",
         "media": "Media e ngarkuar dhe fotoja e profilit do të hiqen.",
         "permanent": "Nuk ka periudhë rikuperimi pas konfirmimit."
       },
@@ -3233,7 +3250,7 @@
     "upgrade": "Kaloni në Pro",
     "manage": "Menaxhoni abonimin",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Falë",
     "premiumBadge": "Premium",
     "renewsOn": "Rinovohet më {date}",
     "status": "Statusi: {status}",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Rruga personale e të mësuarit",
       "personalizedRecommendations": "Rekomandime të personalizuara",
       "crossModuleIntelligence": "Personalizim ndërmodular",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Udhëzime të personalizuara për ushtrime"
     },
     "compare": {
       "heading": "Krahasoni planet",
@@ -3458,7 +3475,7 @@
       "feature": "Veçoria",
       "current": "Aktual",
       "capability": "Çfarë merrni",
-      "free": "Free",
+      "free": "Falë",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "E përfshirë në Free",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Politika e privatësisë",
     "termsTitle": "Kushtet e përdorimit",
     "privacyDescription": "Si Notoria mbledh, përdor dhe fshin të dhënat personale dhe përmbajtjen mësimore për hapësirën e saj private të të mësuarit të gjuhës.",
-    "termsDescription": "Kushtet për përdorimin e hapësirës private të të mësuarit të gjuhës të Notoria, llogarive, veçorive AI dhe faturimit të Notoria Pro.",
+    "termsDescription": "Kushtet për përdorimin e hapësirës private të mësimit të gjuhës Notoria, llogarive, veçorive të AI, dhe faturimit Pro ose Premium.",
     "updated": "Përditësuar së fundi më {date}",
-    "updatedDate": "23 shtator 2026",
+    "updatedDate": "27 Tetor 2026",
     "backToSignIn": "Kthehuni te identifikimi",
     "backHome": "Kthehuni te Notoria",
     "authFooter": "Privatësia · Kushtet",
@@ -4071,7 +4088,7 @@
         "purposes": "Pse i përpunojmë të dhënat",
         "auth": "Llogaritë dhe identifikimi",
         "ai": "Veçoritë AI",
-        "payments": "Pagesat (Notoria Pro)",
+        "payments": "Pagesat (Pro dhe Premium)",
         "processors": "Ofruesit e shërbimeve",
         "cookies": "Cookies dhe ruajtja në pajisje",
         "transfers": "Transferimet ndërkombëtare",
@@ -4095,7 +4112,7 @@
           "list": [
             "krijoni ose përdorni një llogari",
             "ruani material në hapësira private pune",
-            "abonoheni në Notoria Pro",
+            "abonohuni në Notoria Pro ose Premium",
             "përdorni mjete opsionale të asistuara nga AI",
             "ngarkoni media për dëgjim ose përdorim profili",
             "përdorni praktikën e të folurit",
@@ -4156,7 +4173,7 @@
               "basis": "Kontrata (Neni 6(1)(b))"
             },
             {
-              "purpose": "Menaxhimi i faturimit dhe statusit të abonimit Notoria Pro përmes Stripe",
+              "purpose": "Menaxho faturimin dhe statusin e abonimit të Notoria Pro dhe Premium përmes Stripe",
               "basis": "Kontrata (Neni 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "Kodi aktual nuk përdor ofrues të tjerë të modeleve të mëdha gjuhësore përveç OpenAI. OpenAI i përpunon të dhënat sipas kushteve dhe politikës së saj të privatësisë si përpunues për këto veçori."
         },
         "payments": {
-          "title": "7. Pagesat (Notoria Pro)",
+          "title": "7. Pagesat (Pro dhe Premium)",
           "p1": "Abonimet me pagesë trajtohen nga <strong>Stripe</strong>. Pagesa, faturat, metodat e pagesës dhe anulimi ekzekutohen përmes Stripe Checkout dhe Stripe Customer Portal. Webhook-et e Stripe përditësojnë planin dhe statusin tuaj në Notoria.",
           "p2": "Stripe i përpunon të dhënat e pagesës si ofrues pagesash. Shihni dokumentacionin e privatësisë së Stripe për trajtimin e kartave."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Pagesa, portali dhe statusi i abonimit Notoria Pro"
+              "role": "Notoria Pro dhe Premium checkout, portal, dhe statusi i abonimit"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Këto Kushte të përdorimit shpjegojnë rregullat për përdorimin e Notoria në <site>www.notoria.fi</site>. Ato përshkruajnë se si produkti funksionon sot: hapësira private të të mësuarit, faturim opsional Notoria Pro përmes Stripe dhe veçori të asistuara nga AI. Ato nuk zëvendësojnë këshillën e një avokati për situatën tuaj specifike.",
+      "intro": "Këto Kushtet e Përdorimit shpjegojnë rregullat për përdorimin e Notoria në <site>www.notoria.fi</site>. Ato përshkruajnë se si funksionon produkti sot: hapësira private të mësimit, faturimi opsional Pro dhe Premium përmes Stripe, dhe veçoritë e ndihmuara nga AI. Ato nuk janë një zëvendësim për këshilla nga një avokat për situatën tuaj specifike.",
       "tocTitle": "Në këtë faqe",
       "tocAria": "Në këtë faqe",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Përdorimi i pranueshëm",
         "ip": "Pronësia intelektuale",
         "ai": "Dalja e gjeneruar nga AI",
-        "plans": "Plani Free dhe Notoria Pro",
+        "plans": "Planet Falas, Pro, dhe Premium",
         "billing": "Abonimi dhe faturimi",
         "refunds": "Rimbursimet dhe të drejtat e konsumatorit",
         "availability": "Disponueshmëria",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. Shërbimi",
           "p1": "Notoria është një aplikacion privat ueb për të mësuarin e gjuhës. Mund të krijoni hapësira pune dhe të mbani material mësimor si fjalor, shënime teorie, shkrim, ushtrime, mësime dëgjimi dhe sesione të foluri.",
-          "p2": "Disa veçori janë të disponueshme në planin free. Notoria Pro hap aftësi shtesë siç tregohet në produkt dhe në faqen tuaj <account>Llogaria</account> — përfshirë Dëgjimin, Të folurit, mjete të caktuara studimi AI, importin e ushtrimeve dhe formatet e paguara të eksportit të dokumenteve. Disponueshmëria e veçorive mund të ndryshojë ndërsa produkti evoluron.",
+          "p2": "Fushat kryesore të mësimit, duke përfshirë Dëgjimin, Foljen, dhe Leximin, janë të disponueshme në çdo plan. Pro dhe Premium shtojnë leje më të larta të AI dhe import/export të materialeve të mësimit; Premium gjithashtu shton trajnim të personalizuar dhe veçori praktike. Krahasimi aktual shfaqet në faqen tuaj <account>Account</account>.",
           "p3": "Notoria është për të mësuarin personal të gjuhës. Nuk është shkollë, autoritet provimesh ose shërbim këshillimi profesional."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. Dalja e gjeneruar nga AI",
           "p1": "Disa veçori mund të kontrollojnë, sugjerojnë, gjenerojnë, transkriptojnë, përmbledhin ose tutorojnë bazuar në materialin tuaj. Dalja mund të jetë e paplotë, e pasaktë ose e papërshtatshme për qëllimin tuaj. Ju mbeteni përgjegjës për të rishikuar rezultatet AI para se t’u mbështeteni për studim, prova, përdorim profesional ose publikim.",
           "p2": "Veçoritë AI mund të jenë të padisponueshme nëse ndihma është e çaktivizuar në <settings>Cilësimet</settings>, nëse plani juaj nuk përfshin një mjet të caktuar, ose nëse një ofrues është përkohësisht i paarritshëm.",
-          "p3": "Jo të gjitha ndihmat AI kërkojnë Notoria Pro. Produkti tregon cilat mjete janë falas dhe cilat kërkojnë Pro."
+          "p3": "Disponueshmëria e AI dhe lejet ditore ndryshojnë midis Falas, Pro, dhe Premium. Produkti tregon planin dhe lejen e kërkuar për çdo mjet."
         },
         "plans": {
-          "title": "8. Plani Free dhe Notoria Pro",
+          "title": "8. Planet Falas, Pro, dhe Premium",
           "p1": "Plani free mbulon praktikën bazë me fjalorin tuaj dhe mjetet e lidhura të studimit siç tregohet në produkt.",
-          "p2": "Notoria Pro është një abonim me pagesë që hap veçori shtesë. Në produktin aktual, kjo zakonisht përfshin Dëgjimin, Të folurit, importin e ushtrimeve, praktikën formoni-fjali, shumë mjete studimi të asistuara nga AI dhe eksportin e dokumenteve PDF/DOCX. Disa ndihma më të lehta AI (si ndihma të caktuara fjalori ose formatimi të redaktorit) mund të mbeten të disponueshme në planin free kur ndihma AI është e aktivizuar.",
-          "p3": "Qasja Pro është e lidhur me llogarinë tuaj të përdoruesit, kështu që zbatohet nëpër hapësirat e punës nën atë llogari. Llogaritë me rol administrues mund të kenë qasje në nivel Pro pa një abonim personal Stripe.",
-          "p4": "Çmimi që zbatohet për blerjen tuaj është çmimi i treguar në Stripe Checkout për planin aktual Pro. Çdo çmim i treguar diku tjetër në produkt (për shembull në Llogari) është vetëm indikativ dhe duhet të përputhet me konfigurimin aktiv të çmimit Stripe."
+          "p2": "Pro dhe Premium janë abonime me pagesë. Pro shton leje më të larta ose të pakufizuara për shumë mjete AI plus import të materialeve të mësimit dhe eksport PDF/DOCX. Premium përfshin Pro dhe shton veçori të personalizuara si Treneri i Mësimit, profili personal i mësimit, praktika adaptuese, praktika të bazuara në gabime, dhe udhëzime për ushtrime të personalizuara. Faqja e Llogarisë tregon krahasimin aktual dhe kufijtë.",
+          "p3": "Qasja me pagesë është e lidhur me llogarinë tuaj të përdoruesit dhe zbatohet në të gjitha hapësirat e saj. Llogaritë me një rol administrator mund të kenë qasje në nivelin e pagesës pa një abonim personal në Stripe.",
+          "p4": "Çmimi që zbatohet është çmimi i shfaqur në Stripe Checkout për planin e zgjedhur Pro ose Premium. Çdo çmim i shfaqur diku tjetër në produkt (për shembull në Llogari) është vetëm indikativ dhe duhet të përputhet me konfigurimin aktiv të çmimeve në Stripe."
         },
         "billing": {
           "title": "9. Abonimi, faturimi dhe anulimi",
-          "list0": "Abonimet Pro faturohen përmes <strong>Stripe</strong>",
-          "list1": "Mund të filloni pagesën nga <account>Llogaria</account> ose nga kontrollet e kyçura Pro në aplikacion",
+          "list0": "Abonimet Pro dhe Premium faturohen përmes <strong>Stripe</strong>",
+          "list1": "Mund të filloni checkout ose të ndryshoni planin nga <account>Account</account> ose nga kontrollet e paguara të bllokuara në aplikacion",
           "list2": "Nga Llogaria, mund të hapni Stripe Customer Portal për të parë faturat, për të përditësuar metodat e pagesës dhe për të anuluar abonimin",
           "list3": "Anulimi ndjek sjelljen e Customer Portal të Stripe për abonimin tuaj",
-          "p1": "Pas anulimit, qasja Pro vazhdon vetëm sa kohë që statusi i abonimit tuaj Stripe jep ende Pro në produkt. Në zbatimin aktual, statuset e trajtuara si Pro përfshijnë <code>active</code>, <code>trialing</code> dhe <code>past_due</code>. Kur statusi nuk kualifikohet më, llogaria kthehet në planin free.",
-          "p2": "Nëse një pagesë dështon, Stripe mund ta kalojë abonimin në <code>past_due</code> ose në një status tjetër. Notoria e sinkronizon atë status nga webhook-et e Stripe. Sa kohë që statusi mbetet <code>past_due</code>, veçoritë Pro mbeten të disponueshme sipas rregullave aktuale të qasjes; nëse abonimi më vonë bëhet i anuluar ose ndryshe i pakualifikuar, qasja Pro përfundon.",
+          "p1": "Pas anulimit të rinovimit, qasja juaj aktuale Pro ose Premium vazhdon ndërsa statusi i abonimit në Stripe ende kualifikohet në produkt. Statuset që kualifikohen aktualisht përfshijnë <code>active</code>, <code>trialing</code>, dhe <code>past_due</code>. Kur statusi nuk kualifikohet më, llogaria kthehet në Falas.",
+          "p2": "Nëse një pagesë dështon, Stripe mund ta kalojë abonimin në <code>past_due</code> ose një status tjetër. Notoria sinkronizon atë status nga webhooks e Stripe. Ndërsa mbetet <code>past_due</code>, plani aktual me pagesë mbetet i disponueshëm sipas rregullave të tanishme të qasjes; nëse më vonë bëhet i anuluar ose ndryshe i papërshtatshëm, qasja me pagesë përfundon.",
           "p3": "Fshirja e llogarisë suaj Notoria anulon menjëherë abonimin Stripe (përpjekje më e mirë) si pjesë e fshirjes së llogarisë. Kjo është e ndryshme nga anulimi i rinovimit përmes Customer Portal duke mbajtur llogarinë."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Mohimi i garancisë dhe përgjegjësia",
           "p1": "Notoria ofrohet në bazë «siç është e disponueshme» për të mësuarin personal të gjuhës. Në masën më të plotë të lejuar nga ligji i zbatueshëm, ne heqim dorë nga garancitë që nuk kërkohen nga ligji.",
-          "p2": "Në masën më të plotë të lejuar nga ligji i zbatueshëm, Notoria nuk është përgjegjëse për dëme indirekte, të rastësishme, speciale, rrjedhëse ose të humbjes së të dhënave që rrjedhin nga përdorimi juaj i shërbimit ose mbështetja në daljen AI. Kur përgjegjësia nuk mund të përjashtohet, ajo kufizohet në shumën që keni paguar për Notoria Pro në tre muajt para pretendimit, ose çdo shumë më të madhe të kërkuar nga ligji i detyrueshëm.",
+          "p2": "Në masën më të madhe të lejuar nga ligji në fuqi, Notoria nuk është përgjegjëse për dëme indirekte, aksidentale, speciale, pasuese, ose të dhënave të humbura që lindin nga përdorimi i shërbimit tuaj ose mbështetja në rezultatin e AI. Kur përgjegjësia nuk mund të përjashtohet, ajo është e kufizuar në shumën që keni paguar për Notoria Pro ose Premium në tre muajt para kërkesës, ose çdo shumë më të madhe që kërkohet nga ligji i detyrueshëm.",
           "p3": "Këto kufizime nuk përjashtojnë përgjegjësinë që ligji finlandez ose i BE-së nuk lejon të kufizohet — përfshirë përgjegjësinë që nuk mund të hiqet dorë për konsumatorët dhe përgjegjësinë për vdekje ose lëndim personal të shkaktuar nga neglizhenca ku zbatohet."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Ndërtoni një bankë personale fjalori me kuptime, shembuj dhe etiketa",
           "practice": "Praktikoni me ushtrime të nxjerra nga fjalët dhe shënimet tuaja",
           "create": "Shkruani shënime teorie dhe punë shkrimi ku mund të ktheheni më vonë",
-          "listenSpeak": "Ktheni median në praktikë dëgjimi dhe flisni me një tutor AI në Pro"
+          "listenSpeak": "Kthe media në praktikë dëgjimi, dhe përdor lejet e AI për transkriptim dhe praktikë të folurit"
         },
-        "note": "Disa mjete AI, dëgjimi, të folurit dhe eksporti janë pjesë e Notoria Pro. Plani free mbulon ende praktikën e përditshme të fjalorit dhe ciklin bazë të studimit."
+        "note": "Fushat kryesore të mësimit janë të disponueshme në çdo plan. Pro rrit lejet e AI dhe shton import/export të materialeve të mësimit; Premium shton trajnim të personalizuar dhe praktikë."
       },
       "ai": {
         "title": "AI, ku ndihmon",
@@ -4656,7 +4673,7 @@
         "title": "Si lidhen zonat",
         "p1": "Kapja është pika e shpejtë e hyrjes. Fjalori dhe Teoria janë ku materiali vendoset. Ushtrimi e kthen atë material në praktikë. Shkrimi, Dëgjimi dhe Të folurit ju ndihmojnë ta përdorni gjuhën më aktivisht.",
         "p2": "Nuk keni nevojë të kaloni nëpër çdo zonë me radhë. Shumë njerëz qëndrojnë me fjalët dhe praktikën e shkurtër për një kohë.",
-        "p3": "Një hap natyral i radhës është shkrimi kur dëshironi të prodhoni gjuhë me kushtet tuaja, pastaj dëgjimi dhe të folurit kur dëshironi që i njëjti material të punojë në vesh dhe zë — Dëgjimi dhe Të folurit janë pjesë e Notoria Pro.",
+        "p3": "Një hap natyror është të shkruash kur dëshiron të prodhosh gjuhë në kushtet e tua, pastaj dëgjimi dhe folja kur dëshiron që i njëjti material të funksionojë në veshin dhe zërin tënd. Këto fusha janë të disponueshme në çdo plan; kufijtë e përdorimit të AI ndryshojnë sipas planit.",
         "beat": "Mblidhni dhe kuptoni së pari. Përdorni dhe flisni kur materiali është gati të largohet nga faqja."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Dëgjimi",
-          "body": "Ktheni median në praktikë dëgjimi në hapësirën tuaj të punës. E disponueshme në Notoria Pro."
+          "body": "Kthe media në praktikë dëgjimi në hapësirën tënde të punës. E disponueshme në çdo plan; lejet e transkriptimit të AI ndryshojnë sipas planit."
         },
         "speaking": {
           "label": "Të folurit",
-          "body": "Praktikë e drejtpërdrejtë me një tutor AI, e bazuar në gjuhën që po studioni. E disponueshme në Notoria Pro."
+          "body": "Praktikë e drejtpërdrejtë me një mësues AI, e bazuar në gjuhën që po studion. E disponueshme në çdo plan me një leje ditore të bazuar në plan."
         },
         "reading": {
           "label": "Leximi",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Si ndryshoj fjalëkalimin ose mbyll llogarinë?",
-          "a": "Hapni <account>Llogarinë</account>. Mund të përditësoni fjalëkalimin aty nëse përdorni identifikimin me email, të menaxhoni Notoria Pro, të eksportoni një kopje rezervë ose të fshini përgjithmonë llogarinë."
+          "a": "Hap <account>Account</account>. Mund të përditësosh fjalëkalimin tënd atje nëse përdor identifikimin me email, menaxho Pro ose Premium, eksportoni një kopje rezervë, ose fshih përhershëm llogarinë tënde. Fshirja e llogarisë gjithashtu anulon menjëherë çdo abonim aktiv në Stripe në një bazë përpjekjeje më të mirë; anulimi i rinovimit vetëm mban llogarinë dhe të dhënat e saj."
         },
         "pro": {
           "q": "Si funksionojnë faturimi dhe anulimi?",
-          "a": "Notoria Pro faturohet përmes Stripe. Nga <account>Llogaria</account> mund të kaloni në një plan më të lartë, të hapni portalin e klientit Stripe për të menaxhuar metodat e pagesës dhe faturat, ose të anuloni rinovimin."
+          "a": "Notoria Pro dhe Premium faturohen përmes Stripe. Nga <account>Account</account> mund të abonohesh, të kalosh midis Pro dhe Premium, të menaxhosh metodat e pagesës dhe faturat, të anullosh rinovimin, ose të rifillosh një anulim të planifikuar. Anulimi i rinovimit mban qasjen deri sa Stripe të përfundojë periudhën e abonimit të kualifikuar; fshirja e llogarisë është e veçantë dhe anulon abonimin menjëherë në një bazë përpjekjeje më të mirë."
         },
         "proFeatures": {
-          "q": "Çfarë është falas dhe çfarë kërkon Notoria Pro?",
-          "a": "Praktika e përditshme e fjalorit dhe mjetet e lidhura të studimit janë të disponueshme në planin free. Disa mjete AI, dëgjimi, të folurit dhe veçoritë e eksportit të dokumenteve janë pjesë e Notoria Pro. Krahasoni dhe kaloni në plan më të lartë nga <account>Llogaria</account>."
+          "q": "Çfarë përfshihet me Falas, Pro, dhe Premium?",
+          "a": "Falas përfshin fushat kryesore të mësimit dhe lejet ditore për mjetet e mbështetura të AI. Pro rrit ose heq shumë kufizime të AI dhe shton import të materialeve të mësimit plus eksport PDF/DOCX. Premium përfshin Pro dhe shton trajnim të personalizuar, një profil mësimi, praktikë adaptuese dhe të bazuar në gabime, dhe udhëzime për ushtrime të personalizuara. Shiko krahasimin e drejtpërdrejtë dhe kufijtë aktualë në <account>Account</account>."
         },
         "learning": {
           "q": "Si funksionojnë veçoritë e të mësuarit të Notoria?",
@@ -4997,7 +5014,7 @@
         "admins": "Administratorë",
         "testers": "Testues",
         "suspended": "Pezulluar",
-        "contentTotal": "Content records"
+        "contentTotal": "Regjistrimet e përmbajtjes"
       },
       "quickAccess": "Qasje e shpejtë",
       "quickAccessLede": "Shko te mjetet e menaxhimit.",
@@ -5051,7 +5068,7 @@
         "updated": "Përditësuar",
         "emailVerified": "Email i verifikuar",
         "email": "Email",
-        "password": "Password"
+        "password": "Fjalëkalimi"
       },
       "detail": {
         "account": "Llogaria",
@@ -5060,7 +5077,7 @@
         "actions": "Veprimet e llogarisë",
         "workspaces": "Hapësirat e punës",
         "workspacesLede": "Hapësirat gjuhësore në pronësi të këtij përdoruesi.",
-        "danger": "Danger zone"
+        "danger": "Zona e rrezikut"
       },
       "actions": {
         "saveProfile": "Ruani emrin",
@@ -5071,7 +5088,7 @@
         "delete": "Fshini llogarinë",
         "grantTester": "Jep rolin e testuesit",
         "revokeTester": "Hiq rolin e testuesit",
-        "create": "Create user"
+        "create": "Krijo përdorues"
       },
       "confirm": {
         "grantAdmin": "T’i jepet qasje administruese kësaj llogarie?",
@@ -5089,11 +5106,11 @@
         "admin": "Administrator"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Krijo përdorues",
+        "lede": "Siguroni një llogari me një email dhe fjalëkalim. Ata mund të hyjnë menjëherë."
       },
       "plans": {
-        "free": "Free",
+        "free": "Falë",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Pronari",
         "created": "Krijuar",
         "updated": "Përditësuar",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Emaili i pronarit",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Të fshihet kjo hapësirë pune dhe e gjithë përmbajtja mësimore brenda saj përmes kaskadave të bazës së të dhënave?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Krijo hapësirë pune",
+        "lede": "Lidhni një hapësirë të re gjuhësore me një llogari ekzistuese përmes emailit."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Hapësira e punës",
         "created": "Krijuar",
         "updated": "Përditësuar",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Titulli",
+        "word": "Fjala",
+        "folderName": "Emri i dosjes"
       },
       "detail": {
         "description": "Inspektim i metadatave. Trupat privatë nuk ngarkohen automatikisht.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Fshini regjistrimin",
-        "saveTitle": "Save title"
+        "saveTitle": "Ruaj titullin"
       },
       "confirm": {
         "delete": "Të fshihet ky regjistrim? Rreshtat e lidhur fëmijë ndjekin rregullat cascade / set-null të bazës së të dhënave."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Artikujt e kapur ruajnë tekst të lirë. Redaktimi i titujve nuk mbështetet këtu — fshini nëse regjistrimi duhet të hiqet."
     },
     "jobs": {
       "title": "Detyrat",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Kod gjuhe i pavlefshëm.",
       "CONTENT_NOT_FOUND": "Regjistrimi nuk u gjet.",
       "INVALID_CONTENT_MODULE": "Modul përmbajtjeje i panjohur.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Ky email është regjistruar tashmë.",
+      "PASSWORD_TOO_WEAK": "Fjalëkalimi nuk përmbush kërkesat e forcës.",
+      "CONTENT_TITLE_UNSUPPORTED": "Ky lloj përmbajtjeje nuk mbështet redaktimin e titujve."
     }
   }
 }

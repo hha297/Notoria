@@ -30,7 +30,7 @@
       "fixedNote": "ظاهر در فایل خروجی ثابت است. برای تغییر دوباره صادر کنید.",
       "docxBackgroundNote": "Word و برنامه‌های دیگر ممکن است پس‌زمینه صفحه را به‌ویژه هنگام چاپ یکسان نشان ندهند."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "به بالا بروید"
   },
   "contentImport": {
     "title": {
@@ -473,34 +473,34 @@
     "viewMode": "حالت نمایش",
     "tagManager": {
       "open": "مدیریت برچسب‌ها",
-      "eyebrow": "Tags",
+      "eyebrow": "برچسب‌ها",
       "title": "مدیر برچسب",
-      "description": "برچسبی انتخاب کنید، سپس به کلمات اختصاص دهید یا حذف کنید. کلمات دارای برچسب و سایر کلمات در فهرست‌های جدا می‌مانند.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "یک برچسب انتخاب کنید، سپس آن را به کلمات اختصاص دهید یا حذف کنید.",
+      "pageDescription": "استاندارد یا سفارشی را انتخاب کنید، یک برچسب انتخاب کنید، سپس آن را به کلمات اضافه یا حذف کنید.",
+      "disabledNoWorkspace": "قبل از مدیریت برچسب‌های واژگان، یک فضای کاری ایجاد کنید.",
+      "backToVocabulary": "بازگشت به واژگان",
+      "backToSettings": "بازگشت به تنظیمات",
       "groupsLabel": "گروه‌های برچسب استاندارد",
       "tagsHeading": "برچسب‌ها",
       "standardTagsHeading": "برچسب‌های استاندارد",
       "customTagsHeading": "برچسب‌های سفارشی",
-      "customTagsHint": "برچسب‌هایی که برای سازمان‌دهی خود می‌سازید — نه نقش دستوری.",
+      "customTagsHint": "برچسب‌های فضای کاری که ایجاد می‌کنید — برای پیدا کردن آن‌ها در لیست طولانی جستجو کنید.",
       "emptyCustomTags": "هنوز برچسب سفارشی نیست. هنگام ویرایش کلمه بسازید.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "هیچ برچسب سفارشی با این جستجو مطابقت ندارد.",
+      "tagSearchPlaceholder": "جستجوی برچسب‌ها…",
       "wordsHeading": "{tag}",
       "kindStandard": "استاندارد",
       "kindCustom": "سفارشی",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "لیست‌های کلمات",
+      "wordTabAssigned": "برچسب‌گذاری شده",
+      "wordTabOther": "بدون برچسب",
       "assignedHeading": "کلمات با این برچسب",
       "otherHeading": "سایر کلمات",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "انتخاب همه در این صفحه",
+      "clearSelection": "پاک کردن انتخاب",
+      "selectionScopePage": "انتخاب از این صفحه ({count} از {total})",
+      "selectionScopeFiltered": "انتخاب در نتایج جستجوی فعلی",
       "searchPlaceholder": "جستجوی کلمات یا معانی…",
       "wordCount": "{count}",
       "loading": "در حال بارگذاری واژگان…",
@@ -510,13 +510,23 @@
       "emptyOther": "همه کلمات از قبل این برچسب را دارند.",
       "emptyOtherSearch": "کلمه‌ای برای اختصاص پیدا نشد.",
       "selected": "{count} انتخاب شده",
-      "addToTag": "افزودن به برچسب",
-      "removeFromTag": "حذف از برچسب",
-      "applyAdd": "افزودن به برچسب ({count})",
-      "applyRemove": "حذف از برچسب ({count})",
+      "addToTag": "اضافه کردن برچسب",
+      "removeFromTag": "حذف برچسب",
+      "applyAdd": "اضافه کردن برچسب ({count})",
+      "applyRemove": "حذف برچسب ({count})",
       "added": "{count} کلمه به {tag} اضافه شد",
       "removed": "{count} کلمه از {tag} حذف شد",
-      "error": "به‌روزرسانی عضویت برچسب ممکن نشد"
+      "error": "به‌روزرسانی عضویت برچسب ممکن نشد",
+      "systemsLabel": "سیستم‌های برچسب",
+      "standardSystemTitle": "استاندارد",
+      "standardSystemMeta": "موضوع و استفاده، به‌طور جداگانه نمایش داده می‌شود",
+      "usageOptional": "اختیاری",
+      "customSystemTitle": "سفارشی",
+      "customSystemMeta": "{count, plural, one {# برچسب} other {# برچسب‌ها}}",
+      "customPickerLabel": "یک برچسب سفارشی انتخاب کنید",
+      "customPickerPlaceholder": "یک برچسب سفارشی انتخاب کنید…",
+      "customSearchPlaceholder": "جستجوی برچسب‌های سفارشی…",
+      "pickTagFirst": "یک برچسب در بالا انتخاب کنید تا عضویت کلمات را مدیریت کنید."
     },
     "moreTags": "+{count}",
     "updatedAgo": "به‌روز شده {time}",
@@ -557,7 +567,7 @@
       "format": "فرمت",
       "formatPdf": "PDF",
       "formatCsv": "CSV",
-      "formatDocx": "Word",
+      "formatDocx": "ورد",
       "formatPdfHint": "صفحه قابل چاپ",
       "formatDocxHint": "فایل قابل ویرایش",
       "formatCsvHint": "صفحه‌گسترده",
@@ -585,7 +595,11 @@
         "notes": "یادداشت‌ها",
         "updated": "آخرین به‌روزرسانی"
       }
-    }
+    },
+    "selectedCustomTags": "برچسب‌های انتخاب شده",
+    "selectedSynonyms": "هم‌معنی‌های انتخاب شده",
+    "removeCustomTag": "حذف {name}",
+    "pickerLoading": "در حال بارگذاری…"
   },
   "tags": {
     "groups": {
@@ -941,7 +955,9 @@
         "collapse": "جمع کردن {name}",
         "selectedCount": "{count, plural, one {# نظریه انتخاب شده} other {# نظریه انتخاب شده}}",
         "practiceSelected": "تمرین انتخاب‌شده‌ها",
-        "clearSelection": "پاک کردن انتخاب"
+        "clearSelection": "پاک کردن انتخاب",
+        "subfolders": "{count, plural, one {# زیرپوشه} other {# زیرپوشه‌ها}}",
+        "selectedOne": "1 نظریه انتخاب شده"
       }
     },
     "types": {
@@ -950,13 +966,13 @@
         "description": "کارت‌ها را برگردانید تا کلمات و معانی را با امتیازدهی تکرار فاصله‌دار مطالعه کنید.",
         "preview": "برگرداندن · امتیاز · مرور",
         "previewHint": "کلمه فنلاندی",
-        "previewWord": "suomalainen",
+        "previewWord": "سوماالینن",
         "previewFlow": "برگرداندن → امتیاز → مرور"
       },
       "fill-in-blank": {
         "label": "پر کردن جای خالی",
         "description": "جملات نمونه را با کلمه واژگان گمشده کامل کنید.",
-        "preview": "Minulla on uusi ______."
+        "preview": "من یک ______ جدید دارم."
       },
       "multiple-choice": {
         "label": "چندگزینه‌ای",
@@ -971,9 +987,9 @@
         "label": "جفت‌سازی",
         "description": "هر کلمه را به معنیش در شبکه‌ای شبیه Quizlet وصل کنید.",
         "preview": "کلمه ↔ معنی",
-        "previewLeft": "talo",
+        "previewLeft": "خانه",
         "previewRight": "خانه",
-        "previewLeftB": "koti",
+        "previewLeftB": "کوتاه",
         "previewRightB": "منزل"
       },
       "type-answer": {
@@ -985,9 +1001,9 @@
         "label": "ساخت جمله",
         "description": "با واژگان ذخیره‌شده جمله کامل بنویسید و بازخورد دستوری هوش مصنوعی بگیرید.",
         "preview": "جمله‌ای بنویسید با…",
-        "previewChipA": "Minä",
-        "previewChipB": "asun",
-        "previewChipC": "Helsingissä"
+        "previewChipA": "من",
+        "previewChipB": "زندگی می‌کنم",
+        "previewChipC": "در هلسینکی"
       }
     },
     "timedHint": {
@@ -1033,17 +1049,17 @@
       "shuffle": "درهم‌ریختن",
       "finish": "پایان دور",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "منبع سوال",
+        "chooseAi": "استفاده از تولید شده توسط AI",
+        "emptyTitle": "هیچ مثال ذخیره‌شده قابل استفاده‌ای وجود ندارد",
+        "emptyDescription": "جملات مثالی اضافه کنید که به وضوح هر کلمه را شامل شوند، فیلترهای خود را تنظیم کنید یا به تولید شده توسط AI سوئیچ کنید.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "مثال‌های ذخیره‌شده",
+          "description": "سوالات را به‌طور آنی از مثال‌های واژگان خود بسازید. هیچ انتظار AI وجود ندارد."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "تولید شده توسط AI",
+          "description": "جملات جدیدی از واژگان خود با AI ایجاد کنید."
         }
       }
     },
@@ -1100,14 +1116,14 @@
       "tryAgain": "دوباره امتحان کنید",
       "questionsLabel": "سؤال‌ها",
       "correctLabel": "درست",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "نادرست",
+      "unansweredLabel": "بدون پاسخ",
       "reviewLabel": "برای مرور",
       "answeredProgress": "{answered} / {total} پاسخ داده شده",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "بررسی پاسخ",
+      "nextQuestion": "بعدی",
+      "viewResults": "مشاهده نتایج",
       "submitSet": "ارسال پاسخ‌ها",
       "submitting": "در حال بررسی…",
       "unansweredWarnTitle": "سؤال‌های بی‌پاسخ",
@@ -1122,54 +1138,54 @@
       "unanswered": "پاسخ داده نشده",
       "yourAnswer": "پاسخ شما",
       "correctAnswer": "پاسخ درست",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "فقط {count} سوال از فیلترهای فعلی شما موجود است.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "چگونه تمرین می‌کنید",
+        "lockedHint": "برای تغییر این، یک مجموعه را تمام کنید یا یک مجموعه جدید شروع کنید.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "یکی یکی",
+          "description": "یک سوال را در یک زمان ببینید. بعد از هر پاسخ برای بازخورد فوری بررسی کنید."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "تمام سوالات",
+          "description": "مجموعه کامل را ببینید، به هر ترتیبی پاسخ دهید، سپس یک بار برای بازخورد ارسال کنید."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "مرور",
+        "allCorrect": "کامل — هر سوال درست است.",
+        "summary": "{incorrect} نادرست · {unanswered} بدون پاسخ · {needsReview} برای مرور",
+        "viewWrong": "مشاهده پاسخ‌های نادرست",
+        "filtersLabel": "فیلتر سوالات",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "همه ({count})",
+          "needs_review": "نادرست و بدون پاسخ ({count})",
+          "correct": "درست ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "قبلی",
+        "nextWrong": "بعدی",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} برای مرور",
+        "floatLabel": "ناوبری پاسخ‌های نادرست",
+        "closeFloat": "نمایش همه پاسخ‌ها"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% درست",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "مجموعه کامل",
+          "body": "هر پاسخ درست بود. این نوع تمرکز نیاز به یک دور دیگر دارد وقتی که آماده‌اید."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "پایان قوی",
+          "body": "شما به وضوح در حال یادگیری هستید — اشتباهات را مرور کنید، سپس با یک مجموعه جدید قفل کنید."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "کار خوب — ادامه دهید",
+          "body": "چند نقطه گیر کرده طبیعی است. آن‌ها را یک بار مرور کنید، سپس دوباره امتحان کنید در حالی که تازه هستند."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "تقریباً به هدف رسیدید",
+          "body": "اول سوالات بدون پاسخ را تمام کنید — سپس نمره داستان واضح‌تری را خواهد گفت."
         }
       }
     },
@@ -1182,7 +1198,7 @@
       },
       "contextualLanguageHint": "سؤال‌ها به {language} (زبان فضای کاری) تولید می‌شوند.",
       "contextualEmptyTitle": "تولید سؤال‌های زمینه‌ای",
-      "contextualEmptyDescription": "سؤال‌های چندگزینه‌ای جای خالی از واژگان خود بسازید.",
+      "contextualEmptyDescription": "اگر می‌خواهید، دستورالعمل‌های اختیاری زیر را اضافه کنید، سپس روی تولید کلیک کنید. می‌توانید درخواست را خالی بگذارید.",
       "contextualProDescription": "سؤال‌های زمینه‌ای هوش مصنوعی با Pro در دسترس است.",
       "unlockContextual": "باز کردن با Pro",
       "correct": "درست!",
@@ -1203,8 +1219,8 @@
       "hint": "یک کلمه انتخاب کنید، سپس معنیش را بزنید",
       "complete": "همه جفت‌ها جور شد — عالی!",
       "shuffle": "درهم‌ریختن ستون‌ها",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} جفت",
+      "continueRound": "ادامه"
     },
     "typeAnswer": {
       "questionWord": "معنی چیست؟",
@@ -1214,7 +1230,7 @@
         "contextual": "زمینه‌ای"
       },
       "contextualEmptyTitle": "تولید سؤال‌های زمینه‌ای",
-      "contextualEmptyDescription": "اعلان‌های تایپی جای خالی از واژگان خود بسازید.",
+      "contextualEmptyDescription": "اگر می‌خواهید، دستورالعمل‌های اختیاری زیر را اضافه کنید، سپس روی تولید کلیک کنید. می‌توانید درخواست را خالی بگذارید.",
       "contextualProDescription": "سؤال‌های زمینه‌ای هوش مصنوعی با Pro در دسترس است.",
       "unlockContextual": "باز کردن با Pro",
       "placeholder": "پاسخ خود را بنویسید…",
@@ -1438,7 +1454,7 @@
       "descriptionQuestionSet": "کاربرگی از این سؤال‌ها دانلود کنید.",
       "format": "فرمت",
       "formatPdf": "PDF",
-      "formatDocx": "Word",
+      "formatDocx": "ورد",
       "formatPdfHint": "صفحه قابل چاپ",
       "formatDocxHint": "فایل قابل ویرایش",
       "options": "شامل",
@@ -1598,13 +1614,13 @@
       "writing": {
         "title": "نوشتار",
         "description": "اسناد غنی و مجموعه سؤال که می‌توانید دوباره ببینید و صادر کنید.",
-        "how": "پیش‌نویس شروع کنید، با پوشه سازمان‌دهی کنید و از هوش مصنوعی Pro برای بررسی یا بهبود متن استفاده کنید.",
+        "how": "یک پیش‌نویس شروع کنید، با پوشه‌ها سازماندهی کنید و از اعتبار AI برنامه خود برای بررسی یا بهبود متن خود استفاده کنید.",
         "cta": "باز کردن نوشتار"
       },
       "listening": {
         "title": "شنیدن",
         "description": "صوت یا ویدیوی واقعی را به درس تبدیل کنید.",
-        "how": "یک کلیپ بارگذاری کنید و در نسخه رایگان رونوشت بگیرید. تمرین شنیدن تولیدشده بخشی از Pro است.",
+        "how": "یک کلیپ بارگذاری کنید، یک متن تولید کنید و تمرین شنیداری بسازید با اعتبار AI شامل در برنامه شما.",
         "cta": "باز کردن شنیدن"
       },
       "speaking": {
@@ -2238,7 +2254,7 @@
         "ctrl": "Ctrl",
         "ctrlShift": "Ctrl + Shift",
         "alt": "Alt",
-        "win": "Windows"
+        "win": "ویندوز"
       },
       "reservedPurposes": {
         "newWindow": "پنجره جدید",
@@ -2269,11 +2285,11 @@
         "taskManager": "مدیر وظایف مرورگر",
         "altClose": "بستن پنجره",
         "altTab": "تعویض برنامه‌ها",
-        "winExplorer": "File Explorer",
+        "winExplorer": "مدیر فایل",
         "winDesktop": "نمایش دسکتاپ",
         "winLock": "قفل رایانه",
         "winRun": "دیالوگ اجرا",
-        "winSettings": "Windows Settings",
+        "winSettings": "تنظیمات ویندوز",
         "winTaskView": "نمای وظایف",
         "winClipboard": "تاریخچه کلیپ‌بورد"
       },
@@ -2405,7 +2421,7 @@
       "description": "این یادداشت را به‌صورت صفحه قابل چاپ یا فایل قابل ویرایش دانلود کنید.",
       "format": "فرمت",
       "formatPdf": "PDF",
-      "formatDocx": "Word",
+      "formatDocx": "ورد",
       "formatPdfHint": "صفحه قابل چاپ",
       "formatDocxHint": "فایل قابل ویرایش",
       "confirm": "صادر کردن",
@@ -3120,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "برخی فضاهای کاری از قبل برای همان زبان وجود دارند. محتوایشان به فضاهای کاری موجود اضافه می‌شود به‌جای ساخت تکراری.",
         "empty_backup": "این پشتیبان داده یادگیری قابل وارد کردن ندارد.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "برخی از موارد موجود نام یکسانی دارند. وارد کردن یکی از آنها به طور قطعی انجام می‌شود و دیگران بدون تغییر باقی می‌مانند."
       },
       "cancel": "لغو",
       "confirm": "وارد کردن داده‌های یادگیری",
@@ -3165,11 +3181,11 @@
         "requestTooLarge": "این پشتیبان برای پردازش از این صفحه خیلی بزرگ است. صادر کردن کوچک‌تری امتحان کنید یا با پشتیبانی تماس بگیرید.",
         "notConfigured": "ذخیره‌سازی فایل برای وارد کردن پشتیبان هنوز پیکربندی نشده است."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "قبلاً در حساب شما موجود است",
+      "skippedInAccountHint": "این نام‌ها با مواردی که قبلاً دارید مطابقت دارند. آنها دوباره وارد نخواهند شد. موارد جدید تحت همان فضای کاری هنوز وارد می‌شوند.",
+      "skippedInBackupTitle": "نام‌های تکراری در این پشتیبان",
+      "skippedInBackupHint": "فایل نام یکسان را بیش از یک بار لیست می‌کند. فقط اولین نسخه از هر نام وارد می‌شود — این در یک حساب خالی هم طبیعی است.",
+      "skippedOtherTitle": "نمی‌توان وارد کرد"
     },
     "danger": {
       "title": "بستن حساب",
@@ -3185,7 +3201,7 @@
       "warningTitle": "قبل از ادامه",
       "warnings": {
         "workspaces": "هر فضای کاری و همه داده‌های واژگان، نظریه، نوشتار، شنیدن و صحبت حذف می‌شود.",
-        "billing": "هر اشتراک فعال Notoria Pro فوراً لغو می‌شود.",
+        "billing": "هر اشتراک فعال Notoria Pro یا Premium بلافاصله لغو خواهد شد.",
         "media": "رسانه‌های بارگذاری‌شده و عکس پروفایل حذف می‌شود.",
         "permanent": "پس از تأیید دوره بازیابی نیست."
       },
@@ -3234,8 +3250,8 @@
     "upgrade": "ارتقا به Pro",
     "manage": "مدیریت اشتراک",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "رایگان",
+    "premiumBadge": "پریمیوم",
     "renewsOn": "تمدید در {date}",
     "status": "وضعیت: {status}",
     "monthlyPrice": "{price} / ماه",
@@ -3459,9 +3475,9 @@
       "feature": "ویژگی",
       "current": "فعلی",
       "capability": "آنچه می‌گیرید",
-      "free": "Free",
+      "free": "رایگان",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "پریمیوم",
       "freeIncludes": "شامل Free",
       "proUnlocks": "Pro اضافه می‌کند",
       "premiumAdds": "Premium اضافه می‌کند",
@@ -3553,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "پریمیوم",
     "title": "مربی",
     "highlight": "یادگیری",
     "description": "نمایی شخصی از چگونگی یادگیری شما و تمرکز بعدی.",
@@ -4049,9 +4065,9 @@
     "privacyTitle": "سیاست حفظ حریم خصوصی",
     "termsTitle": "شرایط استفاده",
     "privacyDescription": "چگونه Notoria داده‌های شخصی و محتوای یادگیری را برای فضای کاری خصوصی یادگیری زبان جمع‌آوری، استفاده و حذف می‌کند.",
-    "termsDescription": "شرایط استفاده از فضای کاری خصوصی یادگیری زبان Notoria، حساب‌ها، ویژگی‌های هوش مصنوعی و صورتحساب Notoria Pro.",
+    "termsDescription": "شرایط استفاده از فضای یادگیری خصوصی زبان Notoria، حساب‌ها، ویژگی‌های AI و صورتحساب Pro یا Premium.",
     "updated": "آخرین به‌روزرسانی {date}",
-    "updatedDate": "۲۳ سپتامبر ۲۰۲۶",
+    "updatedDate": "27 اکتبر 2026",
     "backToSignIn": "بازگشت به ورود",
     "backHome": "بازگشت به Notoria",
     "authFooter": "حریم خصوصی · شرایط",
@@ -4072,7 +4088,7 @@
         "purposes": "چرا داده پردازش می‌کنیم",
         "auth": "حساب‌ها و ورود",
         "ai": "ویژگی‌های هوش مصنوعی",
-        "payments": "پرداخت‌ها (Notoria Pro)",
+        "payments": "پرداخت‌ها (Pro و Premium)",
         "processors": "ارائه‌دهندگان خدمات",
         "cookies": "کوکی‌ها و ذخیره‌سازی دستگاه",
         "transfers": "انتقال‌های بین‌المللی",
@@ -4096,7 +4112,7 @@
           "list": [
             "حساب می‌سازید یا استفاده می‌کنید",
             "مطلب را در فضاهای کاری خصوصی ذخیره می‌کنید",
-            "در Notoria Pro مشترک می‌شوید",
+            "اشتراک در Notoria Pro یا Premium",
             "از ابزارهای اختیاری کمک هوش مصنوعی استفاده می‌کنید",
             "رسانه برای شنیدن یا پروفایل بارگذاری می‌کنید",
             "از تمرین صحبت استفاده می‌کنید",
@@ -4157,7 +4173,7 @@
               "basis": "قرارداد (ماده ۶(۱)(ب))"
             },
             {
-              "purpose": "اجرای صورتحساب و وضعیت اشتراک Notoria Pro از طریق Stripe",
+              "purpose": "اجرای صورتحساب و وضعیت اشتراک Notoria Pro و Premium از طریق Stripe",
               "basis": "قرارداد (ماده ۶(۱)(ب))"
             },
             {
@@ -4192,7 +4208,7 @@
           "p4": "کدبیس فعلی از ارائه‌دهندگان مدل زبان بزرگ دیگر به‌جز OpenAI استفاده نمی‌کند. OpenAI داده را تحت شرایط و سیاست حریم خصوصی خود به‌عنوان پردازش‌گر برای این ویژگی‌ها پردازش می‌کند."
         },
         "payments": {
-          "title": "۷. پرداخت‌ها (Notoria Pro)",
+          "title": "7. پرداخت‌ها (Pro و Premium)",
           "p1": "اشتراک‌های پولی توسط <strong>Stripe</strong> مدیریت می‌شوند. تسویه، فاکتور، روش‌های پرداخت و لغو از طریق Stripe Checkout و پورتال مشتری Stripe اجرا می‌شود. وب‌هوک‌های Stripe طرح و وضعیت شما را در Notoria به‌روز می‌کنند.",
           "p2": "Stripe داده پرداخت را به‌عنوان ارائه‌دهنده پرداخت پردازش می‌کند. برای مدیریت کارت به مستندات حریم خصوصی Stripe مراجعه کنید."
         },
@@ -4205,7 +4221,7 @@
           },
           "rows": [
             {
-              "provider": "PostgreSQL database (production documented as Neon)",
+              "provider": "پایگاه داده PostgreSQL (تولید مستند به عنوان Neon)",
               "role": "داده حساب و یادگیری"
             },
             {
@@ -4234,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "تسویه Notoria Pro، پورتال، و وضعیت اشتراک"
+              "role": "پرداخت و وضعیت اشتراک Notoria Pro و Premium"
             },
             {
               "provider": "Google",
@@ -4257,7 +4273,7 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
+              "cookie": "کوکی جلسه Auth.js",
               "purpose": "ورود شما را نگه می‌دارد (جلسه JWT؛ نام‌گذاری پیش‌فرض کتابخانه)",
               "code": false
             },
@@ -4348,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "این شرایط استفاده قواعد استفاده از Notoria در <site>www.notoria.fi</site> را توضیح می‌دهد. چگونگی کارکرد فعلی محصول را توصیف می‌کند: فضاهای کاری یادگیری خصوصی، صورتحساب اختیاری Notoria Pro از طریق Stripe، و ویژگی‌های کمک هوش مصنوعی. جایگزین مشاوره وکیل درباره وضعیت خاص شما نیست.",
+      "intro": "این شرایط استفاده قوانین استفاده از Notoria را در <site>www.notoria.fi</site> توضیح می‌دهد. آن‌ها نحوه کارکرد محصول را امروز توصیف می‌کنند: فضاهای یادگیری خصوصی، صورتحساب اختیاری Pro و Premium از طریق Stripe، و ویژگی‌های کمک‌شده توسط AI. آن‌ها جایگزینی برای مشاوره از یک وکیل در مورد وضعیت خاص شما نیستند.",
       "tocTitle": "در این صفحه",
       "tocAria": "در این صفحه",
       "toc": {
@@ -4359,7 +4375,7 @@
         "acceptable-use": "استفاده قابل قبول",
         "ip": "مالکیت فکری",
         "ai": "خروجی تولیدشده با هوش مصنوعی",
-        "plans": "طرح رایگان و Notoria Pro",
+        "plans": "برنامه‌های رایگان، Pro و Premium",
         "billing": "اشتراک و صورتحساب",
         "refunds": "بازپرداخت و حقوق مصرف‌کننده",
         "availability": "در دسترس بودن",
@@ -4378,7 +4394,7 @@
         "service": {
           "title": "۲. سرویس",
           "p1": "Notoria یک وب‌اپ خصوصی یادگیری زبان است. می‌توانید فضاهای کاری بسازید و مطلب یادگیری مانند واژگان، یادداشت نظریه، نوشتار، تمرین، درس شنیدن و جلسات صحبت نگه دارید.",
-          "p2": "برخی ویژگی‌ها در طرح رایگان در دسترس‌اند. Notoria Pro قابلیت‌های اضافی را همان‌طور که در محصول و صفحه <account>حساب</account> نشان داده شده باز می‌کند — شامل شنیدن، صحبت، برخی ابزارهای مطالعه هوش مصنوعی، وارد کردن تمرین، و فرمت‌های صادر کردن سند پولی. در دسترس بودن ویژگی می‌تواند با تکامل محصول تغییر کند.",
+          "p2": "حوزه‌های یادگیری اصلی، از جمله شنیداری، گفتاری و خواندن، در هر برنامه موجود است. Pro و Premium اعتبارهای بالاتر AI و واردات/صادرات مواد یادگیری را اضافه می‌کنند؛ Premium همچنین ویژگی‌های مربی شخصی و تمرین را اضافه می‌کند. مقایسه فعلی در صفحه <account>حساب</account> شما نمایش داده می‌شود. در دسترس بودن ویژگی‌ها ممکن است با تکامل محصول تغییر کند.",
           "p3": "Notoria برای یادگیری شخصی زبان است. مدرسه، مرجع آزمون، یا سرویس مشاوره حرفه‌ای نیست."
         },
         "accounts": {
@@ -4419,23 +4435,23 @@
           "title": "۷. خروجی تولیدشده با هوش مصنوعی",
           "p1": "برخی ویژگی‌ها می‌توانند بر اساس مطلب شما بررسی، پیشنهاد، تولید، رونویسی، خلاصه یا آموزش دهند. خروجی ممکن است ناقص، نادرست یا نامناسب برای هدف شما باشد. شما مسئول بررسی نتایج هوش مصنوعی قبل از اتکا برای مطالعه، آزمون، استفاده حرفه‌ای یا انتشار هستید.",
           "p2": "ویژگی‌های هوش مصنوعی ممکن است در دسترس نباشند اگر کمک در <settings>تنظیمات</settings> خاموش باشد، اگر طرح شما ابزار خاصی را شامل نشود، یا اگر ارائه‌دهنده‌ای موقتاً در دسترس نباشد.",
-          "p3": "همه کمک‌های هوش مصنوعی به Notoria Pro نیاز ندارند. محصول نشان می‌دهد کدام ابزارها رایگان‌اند و کدام به Pro نیاز دارند."
+          "p3": "دسترس‌پذیری AI و اعتبارهای روزانه بین رایگان، Pro و Premium متفاوت است. محصول برنامه و اعتبار مورد نیاز برای هر ابزار را نشان می‌دهد."
         },
         "plans": {
-          "title": "۸. طرح رایگان و Notoria Pro",
+          "title": "8. برنامه‌های رایگان، Pro و Premium",
           "p1": "طرح رایگان تمرین اصلی با واژگان خودتان و ابزارهای مطالعه مرتبط را همان‌طور که در محصول نشان داده شده پوشش می‌دهد.",
-          "p2": "Notoria Pro اشتراک پولی است که ویژگی‌های اضافی را باز می‌کند. در محصول فعلی، معمولاً شامل شنیدن، صحبت، وارد کردن تمرین، تمرین ساخت جمله، بسیاری از ابزارهای مطالعه کمک هوش مصنوعی، و صادر کردن سند PDF/DOCX است. برخی کمک‌های سبک‌تر هوش مصنوعی (مانند کمک‌های معین واژگان یا قالب‌بندی ویرایشگر) ممکن است در طرح رایگان وقتی کمک هوش مصنوعی فعال است در دسترس بمانند.",
-          "p3": "دسترسی Pro به حساب کاربری شما گره خورده است، بنابراین در فضاهای کاری زیر آن حساب اعمال می‌شود. حساب‌های با نقش مدیر ممکن است دسترسی سطح Pro بدون اشتراک شخصی Stripe داشته باشند.",
-          "p4": "قیمتی که برای خرید شما اعمال می‌شود قیمتی است که در Stripe Checkout برای طرح Pro فعلی نشان داده می‌شود. هر قیمتی که جای دیگری در محصول نشان داده شود (مثلاً در حساب) فقط راهنماست و باید با پیکربندی قیمت فعال Stripe مطابقت داشته باشد."
+          "p2": "Pro و Premium اشتراک‌های پرداختی هستند. Pro اعتبارهای بالاتر یا نامحدود برای بسیاری از ابزارهای AI را اضافه می‌کند و همچنین واردات مواد یادگیری و صادرات PDF/DOCX را اضافه می‌کند. Premium شامل Pro است و ویژگی‌های شخصی‌سازی شده مانند مربی یادگیری، پروفایل یادگیری شخصی، تمرین تطبیقی، تمرین مبتنی بر اشتباه و دستورالعمل‌های تمرین سفارشی را اضافه می‌کند. صفحه حساب مقایسه فعلی و محدودیت‌ها را نشان می‌دهد.",
+          "p3": "دسترسی پرداختی به حساب کاربری شما مرتبط است و در تمام فضاهای کاری آن اعمال می‌شود. حساب‌هایی که نقش مدیر دارند ممکن است بدون اشتراک Stripe شخصی به دسترسی سطح پرداختی دسترسی داشته باشند.",
+          "p4": "قیمتی که اعمال می‌شود، قیمتی است که در پرداخت Stripe برای برنامه انتخاب شده Pro یا Premium نمایش داده می‌شود. هر قیمتی که در جای دیگری در محصول نمایش داده می‌شود (به عنوان مثال در حساب) فقط به عنوان یک نشانه است و باید با پیکربندی قیمت فعال Stripe مطابقت داشته باشد."
         },
         "billing": {
           "title": "۹. اشتراک، صورتحساب و لغو",
-          "list0": "اشتراک‌های Pro از طریق <strong>Stripe</strong> صورتحساب می‌شوند",
-          "list1": "می‌توانید تسویه را از <account>حساب</account> یا از کنترل‌های قفل‌شده Pro در برنامه شروع کنید",
+          "list0": "اشتراک‌های Pro و Premium از طریق <strong>Stripe</strong> صورتحساب می‌شوند",
+          "list1": "شما می‌توانید از صفحه <account>حساب</account> یا از کنترل‌های پرداخت قفل شده در برنامه، پرداخت را شروع کنید یا برنامه را تغییر دهید",
           "list2": "از حساب می‌توانید پورتال مشتری Stripe را برای مشاهده فاکتور، به‌روزرسانی روش پرداخت و لغو اشتراک باز کنید",
           "list3": "لغو از رفتار پورتال مشتری Stripe برای اشتراک شما پیروی می‌کند",
-          "p1": "پس از لغو، دسترسی Pro فقط تا وقتی وضعیت اشتراک Stripe هنوز Pro را در محصول اعطا می‌کند ادامه دارد. در پیاده‌سازی فعلی، وضعیت‌های تلقی‌شده به‌عنوان Pro شامل <code>active</code>، <code>trialing</code> و <code>past_due</code> است. وقتی وضعیت دیگر واجد شرایط نباشد، حساب به طرح رایگان برمی‌گردد.",
-          "p2": "اگر پرداخت ناموفق باشد، Stripe ممکن است اشتراک را به <code>past_due</code> یا وضعیت دیگری ببرد. Notoria آن وضعیت را از وب‌هوک‌های Stripe همگام می‌کند. تا وقتی وضعیت <code>past_due</code> بماند، ویژگی‌های Pro تحت قواعد دسترسی فعلی در دسترس می‌مانند؛ اگر اشتراک بعداً لغو یا نامعتبر شود، دسترسی Pro پایان می‌یابد.",
+          "p1": "پس از لغو تمدید، دسترسی فعلی شما به Pro یا Premium در حالی که وضعیت اشتراک Stripe هنوز در محصول واجد شرایط است، ادامه می‌یابد. وضعیت‌های واجد شرایط در حال حاضر شامل <code>active</code>، <code>trialing</code> و <code>past_due</code> است. وقتی وضعیت دیگر واجد شرایط نباشد، حساب به رایگان برمی‌گردد.",
+          "p2": "اگر پرداختی ناموفق باشد، Stripe ممکن است اشتراک را به <code>past_due</code> یا وضعیت دیگری منتقل کند. Notoria آن وضعیت را از وب‌هوک‌های Stripe همگام‌سازی می‌کند. در حالی که هنوز <code>past_due</code> است، برنامه پرداختی فعلی تحت قوانین دسترسی فعلی در دسترس است؛ اگر بعداً لغو شود یا به هر دلیل دیگری واجد شرایط نباشد، دسترسی پرداختی پایان می‌یابد.",
           "p3": "حذف حساب Notoria اشتراک Stripe را فوراً به‌عنوان بخشی از حذف حساب لغو می‌کند (بهترین تلاش). این با لغو تمدید از طریق پورتال مشتری در حالی که حساب را نگه می‌دارید متفاوت است."
         },
         "refunds": {
@@ -4456,7 +4472,7 @@
         "liability": {
           "title": "۱۳. سلب مسئولیت و مسئولیت",
           "p1": "Notoria بر پایه «در صورت موجود بودن» برای یادگیری شخصی زبان ارائه می‌شود. تا کامل‌ترین حد مجاز توسط قانون قابل اعمال، ضمانت‌هایی را که قانون الزام نکرده سلب می‌کنیم.",
-          "p2": "تا کامل‌ترین حد مجاز توسط قانون قابل اعمال، Notoria مسئول خسارات غیرمستقیم، اتفاقی، ویژه، تبعی، یا از دست رفتن داده ناشی از استفاده شما از سرویس یا اتکا به خروجی هوش مصنوعی نیست. جایی که مسئولیت قابل حذف نباشد، به مبلغی که برای Notoria Pro در سه ماه قبل از ادعا پرداخت کرده‌اید، یا هر مبلغ بیشتری که قانون اجباری الزام کند، محدود است.",
+          "p2": "تا حد ممکن مجاز توسط قانون قابل اجرا، Notoria مسئول خسارات غیرمستقیم، تصادفی، ویژه، تبعی یا از دست رفتن داده‌ها ناشی از استفاده شما از خدمات یا اتکا به خروجی AI نیست. در جایی که مسئولیت نمی‌تواند مستثنی شود، محدود به مبلغی است که شما برای Notoria Pro یا Premium در سه ماه قبل از ادعا پرداخت کرده‌اید، یا هر مبلغ بیشتری که توسط قانون الزامی نیاز است.",
           "p3": "این محدودیت‌ها مسئولیتی را که قانون فنلاند یا اتحادیه اروپا اجازه محدود کردن نمی‌دهد — شامل مسئولیت غیرقابل چشم‌پوشی برای مصرف‌کنندگان، و مسئولیت مرگ یا آسیب شخصی ناشی از سهل‌انگاری جایی که چنین قواعدی اعمال می‌شود — حذف نمی‌کنند."
         },
         "changes": {
@@ -4529,9 +4545,9 @@
           "vocab": "بانک واژگان شخصی با معانی، مثال‌ها و برچسب‌ها بسازید",
           "practice": "با تمرین‌های برگرفته از کلمات و یادداشت‌های خودتان تمرین کنید",
           "create": "یادداشت نظریه و کار نوشتاری بنویسید که بعداً بتوانید دوباره ببینید",
-          "listenSpeak": "رسانه را به تمرین شنیدن تبدیل کنید، و در Pro با مربی هوش مصنوعی صحبت کنید"
+          "listenSpeak": "رسانه را به تمرین شنیداری تبدیل کنید و از اعتبارهای AI برای نوشتن و تمرین گفتاری استفاده کنید"
         },
-        "note": "برخی ابزارهای هوش مصنوعی، شنیدن، صحبت و صادر کردن بخشی از Notoria Pro هستند. طرح رایگان همچنان تمرین واژگان روزمره و حلقه مطالعه اصلی را پوشش می‌دهد."
+        "note": "حوزه‌های یادگیری اصلی در هر برنامه موجود است. Pro اعتبارهای AI را افزایش می‌دهد و واردات/صادرات مواد یادگیری را اضافه می‌کند؛ Premium مربی شخصی و تمرین را اضافه می‌کند."
       },
       "ai": {
         "title": "هوش مصنوعی، جایی که کمک می‌کند",
@@ -4657,7 +4673,7 @@
         "title": "حوزه‌ها چگونه متصل می‌شوند",
         "p1": "ثبت سریع نقطه ورود سریع است. واژگان و نظریه جایی هستند که مطلب می‌نشیند. تمرین آن مطلب را به تمرین تبدیل می‌کند. نوشتار، شنیدن و صحبت کمک می‌کنند زبان را فعال‌تر به‌کار ببرید.",
         "p2": "لازم نیست از هر حوزه به ترتیب عبور کنید. بسیاری مدتی با کلمات و تمرین کوتاه می‌مانند.",
-        "p3": "گام بعدی طبیعی نوشتار است وقتی می‌خواهید زبان را با شرایط خودتان تولید کنید، سپس شنیدن و صحبت وقتی می‌خواهید همان مطلب در گوش و صدا کار کند — شنیدن و صحبت بخشی از Notoria Pro هستند.",
+        "p3": "یک مرحله طبیعی بعدی نوشتن است زمانی که می‌خواهید زبان را به شرایط خود تولید کنید، سپس شنیدن و صحبت کردن زمانی که می‌خواهید همان ماده در گوش و صدای شما کار کند. این حوزه‌ها در هر برنامه موجود است؛ محدودیت‌های استفاده از AI بسته به برنامه متفاوت است.",
         "beat": "اول جمع و بفهمید. وقتی مطلب آماده ترک صفحه است به‌کار ببرید و صحبت کنید."
       },
       "areas": {
@@ -4681,11 +4697,11 @@
         },
         "listening": {
           "label": "شنیدن",
-          "body": "رسانه را در فضای کاری به تمرین شنیدن تبدیل کنید. در Notoria Pro در دسترس است."
+          "body": "رسانه را به تمرین شنیداری در فضای کاری خود تبدیل کنید. در هر برنامه موجود است؛ اعتبارهای تبدیل AI بسته به برنامه متفاوت است."
         },
         "speaking": {
           "label": "صحبت کردن",
-          "body": "تمرین زنده با مربی هوش مصنوعی، مبتنی بر زبانی که مطالعه می‌کنید. در Notoria Pro در دسترس است."
+          "body": "تمرین زنده با یک معلم AI، مبتنی بر زبانی که در حال مطالعه هستید. در هر برنامه با اعتبار روزانه مبتنی بر برنامه موجود است."
         },
         "reading": {
           "label": "خواندن",
@@ -4735,15 +4751,15 @@
         },
         "account": {
           "q": "چگونه رمز عبور را عوض کنم یا حساب را ببندم؟",
-          "a": "<account>حساب</account> را باز کنید. اگر با ایمیل وارد می‌شوید می‌توانید رمز را آنجا به‌روز کنید، Notoria Pro را مدیریت کنید، پشتیبان صادر کنید، یا حساب را برای همیشه حذف کنید."
+          "a": "صفحه <account>حساب</account> را باز کنید. اگر از ورود با ایمیل استفاده می‌کنید، می‌توانید رمز عبور خود را در آنجا به‌روزرسانی کنید، Pro یا Premium را مدیریت کنید، یک پشتیبان‌گیری صادر کنید یا حساب خود را به‌طور دائمی حذف کنید. حذف حساب همچنین بلافاصله هر اشتراک فعال Stripe را به‌طور بهترین تلاش لغو می‌کند؛ لغو تمدید به تنهایی حساب و داده‌های آن را حفظ می‌کند."
         },
         "pro": {
           "q": "صورتحساب و لغو چگونه کار می‌کند؟",
-          "a": "Notoria Pro از طریق Stripe صورتحساب می‌شود. از <account>حساب</account> می‌توانید ارتقا دهید، پورتال مشتری Stripe را برای مدیریت روش پرداخت و فاکتور باز کنید، یا تمدید را لغو کنید."
+          "a": "Notoria Pro و Premium از طریق Stripe صورتحساب می‌شوند. از <account>حساب</account> می‌توانید اشتراک بگیرید، بین Pro و Premium سوئیچ کنید، روش‌های پرداخت و فاکتورها را مدیریت کنید، تمدید را لغو کنید یا یک لغو برنامه‌ریزی شده را از سر بگیرید. لغو تمدید دسترسی را تا زمانی که Stripe دوره اشتراک واجد شرایط را به پایان برساند، حفظ می‌کند؛ حذف حساب شما جداگانه است و اشتراک را بلافاصله به‌طور بهترین تلاش لغو می‌کند."
         },
         "proFeatures": {
-          "q": "چه چیزی رایگان است، و چه چیزی به Notoria Pro نیاز دارد؟",
-          "a": "تمرین واژگان روزمره و ابزارهای مطالعه مرتبط در طرح رایگان در دسترس‌اند. برخی ابزارهای هوش مصنوعی، شنیدن، صحبت و صادر کردن سند بخشی از Notoria Pro هستند. از <account>حساب</account> مقایسه و ارتقا دهید."
+          "q": "چه چیزی با برنامه‌های رایگان، Pro و Premium شامل می‌شود؟",
+          "a": "رایگان شامل حوزه‌های یادگیری اصلی و اعتبارهای روزانه برای ابزارهای AI پشتیبانی شده است. Pro بسیاری از محدودیت‌های AI را افزایش می‌دهد یا حذف می‌کند و واردات مواد یادگیری و صادرات PDF/DOCX را اضافه می‌کند. Premium شامل Pro است و ویژگی‌های شخصی‌سازی شده مانند مربی یادگیری، پروفایل یادگیری شخصی، تمرین تطبیقی و مبتنی بر اشتباه و دستورالعمل‌های تمرین سفارشی را اضافه می‌کند. مقایسه زنده و محدودیت‌های فعلی را در <account>حساب</account> مشاهده کنید."
         },
         "learning": {
           "q": "ویژگی‌های یادگیری Notoria چگونه کار می‌کنند؟",
@@ -5031,8 +5047,8 @@
       },
       "roles": {
         "user": "کاربر",
-        "tester": "Tester",
-        "admin": "Admin"
+        "tester": "آزمایشگر",
+        "admin": "مدیر"
       },
       "columns": {
         "user": "کاربر",
@@ -5053,9 +5069,9 @@
         "suspended": "تعلیق‌شده"
       },
       "plans": {
-        "free": "Free",
+        "free": "رایگان",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "پریمیوم"
       },
       "fields": {
         "id": "شناسه کاربر",

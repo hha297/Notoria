@@ -17,19 +17,20 @@
     "hideFilters": "Сховати фільтри",
     "remove": "Прибрати",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Зовнішній вигляд",
+      "print": "Друкований варіант",
+      "printHint": "Біла сторінка, темний текст",
+      "theme": "Поточна тема",
+      "themeHint": "Відповідає вашій світлій або темній темі",
+      "previewKicker": "Приклад сторінки",
+      "previewTitle": "Назва документа",
+      "previewBody": "Текст тіла використовує вибрані кольори та відстані.",
+      "previewCallout": "Виділення та акценти відповідають кольору модуля.",
+      "fixedNote": "Зовнішній вигляд зафіксовано у експортованому файлі. Експортуйте знову, щоб змінити його.",
+      "docxBackgroundNote": "Word та інші програми можуть не відображати фонові зображення сторінок однаково, особливо при друку."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Прокрутити вгору",
+    "moreActions": "Більше дій"
   },
   "contentImport": {
     "title": {
@@ -472,34 +473,34 @@
     "viewMode": "Режим відображення",
     "tagManager": {
       "open": "Керувати тегами",
-      "eyebrow": "Tags",
+      "eyebrow": "Теги",
       "title": "Менеджер тегів",
-      "description": "Оберіть тег, потім призначте або зніміть його зі слів. Призначені та інші слова залишаються в окремих списках.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Виберіть тег, а потім призначте або видаліть його з слів.",
+      "pageDescription": "Виберіть стандартний або користувацький, виберіть тег, а потім додайте або видаліть його зі слів.",
+      "disabledNoWorkspace": "Створіть робочий простір перед управлінням тегами словника.",
+      "backToVocabulary": "Назад до словника",
+      "backToSettings": "Назад до налаштувань",
       "groupsLabel": "Стандартні групи тегів",
       "tagsHeading": "Теги",
       "standardTagsHeading": "Стандартні теги",
       "customTagsHeading": "Власні теги",
-      "customTagsHint": "Мітки, які ви створюєте для власної організації — не частини мови.",
+      "customTagsHint": "Мітки робочого простору, які ви створюєте — шукайте, щоб знайти їх, коли список довгий.",
       "emptyCustomTags": "Власних тегів ще немає. Створюйте їх під час редагування слова.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Немає відповідних користувацьких тегів для цього пошуку.",
+      "tagSearchPlaceholder": "Шукати теги…",
       "wordsHeading": "{tag}",
       "kindStandard": "Стандартний",
       "kindCustom": "Власний",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Списки слів",
+      "wordTabAssigned": "Позначені",
+      "wordTabOther": "Не позначені",
       "assignedHeading": "Слова з цим тегом",
       "otherHeading": "Інші слова",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Вибрати всіх на цій сторінці",
+      "clearSelection": "Очистити вибір",
+      "selectionScopePage": "Вибір з цієї сторінки ({count} з {total})",
+      "selectionScopeFiltered": "Вибір у межах поточних результатів пошуку",
       "searchPlaceholder": "Пошук слів або значень…",
       "wordCount": "{count}",
       "loading": "Завантаження словника…",
@@ -509,13 +510,23 @@
       "emptyOther": "У всіх слів уже є цей тег.",
       "emptyOtherSearch": "Немає підходящих слів для призначення.",
       "selected": "Вибрано: {count}",
-      "addToTag": "Додати до тега",
-      "removeFromTag": "Прибрати з тега",
-      "applyAdd": "Додати до тега ({count})",
-      "applyRemove": "Прибрати з тега ({count})",
+      "addToTag": "Додати тег",
+      "removeFromTag": "Видалити тег",
+      "applyAdd": "Додати тег ({count})",
+      "applyRemove": "Видалити тег ({count})",
       "added": "Додано слів до «{tag}»: {count}",
       "removed": "Прибрано слів із «{tag}»: {count}",
-      "error": "Не вдалося оновити належність до тега"
+      "error": "Не вдалося оновити належність до тега",
+      "systemsLabel": "Системи тегів",
+      "standardSystemTitle": "Стандартний",
+      "standardSystemMeta": "Тема та використання, показані окремо",
+      "usageOptional": "Необов'язково",
+      "customSystemTitle": "Користувацький",
+      "customSystemMeta": "{count, plural, one {# мітка} other {# міток}}",
+      "customPickerLabel": "Виберіть користувацький тег",
+      "customPickerPlaceholder": "Виберіть користувацький тег…",
+      "customSearchPlaceholder": "Шукати користувацькі теги…",
+      "pickTagFirst": "Спочатку виберіть тег вище, щоб керувати членством слів."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Оновлено {time}",
@@ -584,7 +595,11 @@
         "notes": "Нотатки",
         "updated": "Останнє оновлення"
       }
-    }
+    },
+    "selectedCustomTags": "Вибрані теги",
+    "selectedSynonyms": "Вибрані синоніми",
+    "removeCustomTag": "Видалити {name}",
+    "pickerLoading": "Завантаження…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Практику готово",
       "aiUnavailable": "Зараз не вдалося згенерувати питання зі ШІ.",
       "aiForbidden": "Вправи з теорії зі ШІ доступні з Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Додаткові інструкції доступні на Premium.",
       "aiDisabled": "Допомогу ШІ вимкнено в Налаштуваннях.",
       "feedback": {
         "correct": "Правильно!",
@@ -927,20 +942,22 @@
         "why": "Чому",
         "complete": "Зрозуміло",
         "completeHint": "Можете рухатися далі, коли будете готові.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Розпочати вправу",
+        "skipReviewAndStart": "Пропустити огляд і розпочати вправу"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Без категорії",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# нотатка} other {# нотаток}}",
+        "selectAll": "Вибрати всі",
+        "selectGroup": "Вибрати нотатки в {name}",
+        "expand": "Розгорнути {name}",
+        "collapse": "Згорнути {name}",
+        "selectedCount": "{count, plural, one {# теорія вибрана} other {# теорій вибрано}}",
+        "practiceSelected": "Практикувати вибране",
+        "clearSelection": "Очистити вибір",
+        "subfolders": "{count, plural, one {# підпапка} other {# підпапок}}",
+        "selectedOne": "Вибрано 1 теорію"
       }
     },
     "types": {
@@ -948,9 +965,9 @@
         "label": "Картки",
         "description": "Перевертайте картки, щоб вивчати слова й значення з оцінками інтервального повторення.",
         "preview": "Перевернути · Оцінити · Повторити",
-        "previewHint": "Finnish word",
+        "previewHint": "Фінське слово",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "ПЕРЕВЕРНУТИ → ОЦІНИТИ → ОГЛЯНУТИ"
       },
       "fill-in-blank": {
         "label": "Заповнити пропуск",
@@ -962,9 +979,9 @@
         "description": "Оберіть правильне значення або слово — відволікаючі варіанти з вашого словника.",
         "preview": "Яке значення пасує?",
         "previewPrompt": "Яке значення пасує?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "Фінська людина",
+        "previewB": "погода",
+        "previewC": "будівля"
       },
       "match-pairs": {
         "label": "Пари",
@@ -998,8 +1015,8 @@
       "startsWith": "Починається з «{letter}»",
       "revealPrompt": "Усе ще складно? Можете відкрити повну відповідь.",
       "revealAnswer": "Відкрити відповідь",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Наступна підказка",
+      "hintProgress": "Підказка {current} з {total}"
     },
     "empty": {
       "noWordsTitle": "Словника ще немає",
@@ -1032,17 +1049,17 @@
       "shuffle": "Перемішати",
       "finish": "Завершити раунд",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Джерело питання",
+        "chooseAi": "Використати згенероване AI",
+        "emptyTitle": "Немає доступних збережених прикладів",
+        "emptyDescription": "Додайте приклади речень, які чітко містять кожне слово, налаштуйте фільтри або переключіться на згенероване AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Збережені приклади",
+          "description": "Створюйте питання миттєво з ваших прикладів словника. Без очікування AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Згенероване AI",
+          "description": "Створюйте нові речення з вашого словника за допомогою AI."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "Генерація вправ зі ШІ доступна з Pro.",
       "disabled": "Допомогу ШІ вимкнено в Налаштуваннях.",
       "upgradeHint": "Безкоштовний план включає кілька генерацій вправ зі ШІ на день. Pro знімає обмеження.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Додаткові інструкції",
+      "additionalInstructionsPlaceholder": "Наприклад: Використовуйте ситуації в ресторані, зберігайте мову на рівні A2 та пояснюйте помилки на вашій мові інтерфейсу.",
+      "additionalInstructionsLocked": "Оновіть до Premium, щоб налаштувати підтримувані типи вправ, встановити реальний контекст і додати власні інструкції.",
+      "premiumRequired": "Додаткові інструкції доступні на Premium.",
+      "presetLabel": "Пресети",
+      "presetNone": "Пресет не вибрано",
+      "presetApply": "Застосувати",
+      "presetSave": "Зберегти пресет",
+      "presetName": "Назва пресету",
+      "presetDelete": "Видалити",
+      "presetSaved": "Пресет збережено",
+      "presetDeleted": "Пресет видалено",
+      "presetSaveFailed": "Не вдалося зберегти цей пресет.",
       "emptyWords": "Додайте слова до словника, перш ніж генерувати питання.",
       "noneValid": "ШІ не зміг створити дійсні питання для цих слів. Спробуйте ще раз.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Налаштуйте контекст, стиль або акцент вашої вправи. Залиште порожнім, щоб використовувати налаштування за замовчуванням.",
+      "presetUpdate": "Оновити пресет",
+      "presetUpdated": "Пресет оновлено",
+      "presetsTitle": "Збережені пресети",
+      "presetsHelper": "Пресети зберігають налаштування вправ і додаткові інструкції. Вони не змінюють вибраний словник або теорії.",
+      "presetsEmpty": "Ще немає збережених пресетів. Збережіть свої поточні налаштування, щоб використовувати їх пізніше.",
+      "presetSaveAs": "Зберегти як пресет",
+      "presetUpdateCurrent": "Оновити з поточними налаштуваннями",
+      "presetRename": "Перейменувати",
+      "presetManage": "Керувати пресетом",
+      "presetRenamed": "Пресет перейменовано",
+      "presetSaveDialogTitle": "Зберегти як пресет",
+      "presetSaveDialogDescription": "Назвіть цей пресет, щоб повторно використовувати поточні налаштування вправ і додаткові інструкції. Вибраний словник або теорії не зберігаються.",
+      "presetRenameDialogTitle": "Перейменувати пресет",
+      "presetRenameDialogDescription": "Виберіть нову назву для цього пресету.",
+      "presetDeleteDialogTitle": "Видалити пресет?",
+      "presetDeleteDialogDescription": "Видалити “{name}”? Ваша поточна конфігурація вправ залишиться без змін."
     },
     "session": {
       "complete": "Сесію завершено",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Спробувати ще раз",
       "questionsLabel": "Питання",
       "correctLabel": "Правильно",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Невірно",
+      "unansweredLabel": "Без відповіді",
       "reviewLabel": "До повторення",
       "answeredProgress": "{answered} / {total} відповідей",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Перевірити відповідь",
+      "nextQuestion": "Далі",
+      "viewResults": "Переглянути результати",
       "submitSet": "Надіслати відповіді",
       "submitting": "Перевірка…",
       "unansweredWarnTitle": "Питання без відповіді",
@@ -1121,54 +1138,54 @@
       "unanswered": "Без відповіді",
       "yourAnswer": "Ваша відповідь",
       "correctAnswer": "Правильна відповідь",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Лише {count} питань доступно з ваших поточних фільтрів.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Як ви практикуєте",
+        "lockedHint": "Закінчіть або почніть новий набір, щоб змінити це.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "По одному",
+          "description": "Дивіться одне питання за раз. Перевіряйте після кожної відповіді для миттєвого зворотного зв'язку."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Всі питання",
+          "description": "Дивіться весь набір, відповідайте в будь-якому порядку, а потім подайте один раз для зворотного зв'язку."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Перегляд",
+        "allCorrect": "Ідеально — кожне питання вірне.",
+        "summary": "{incorrect} невірно · {unanswered} без відповіді · {needsReview} для перегляду",
+        "viewWrong": "Переглянути невірні відповіді",
+        "filtersLabel": "Фільтрувати питання",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Всі ({count})",
+          "needs_review": "Невірні та без відповіді ({count})",
+          "correct": "Вірні ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Попередні",
+        "nextWrong": "Наступні",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} для перегляду",
+        "floatLabel": "Навігація по невірним відповідям",
+        "closeFloat": "Показати всі відповіді"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% вірно",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Ідеальний набір",
+          "body": "Кожна відповідь вірна. Така концентрація заслуговує на ще один раунд, коли ви будете готові."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Сильний фініш",
+          "body": "Ви явно розумієте — перегляньте пропуски, а потім закріпіть знання з новим набором."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Добра робота — продовжуйте",
+          "body": "Кілька важких моментів — це нормально. Перегляньте їх один раз, а потім спробуйте ще раз, поки вони свіжі."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Майже готово",
+          "body": "Спочатку закінчіть невідповіді — тоді результат розповість чіткішу історію."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Питання генеруються мовою {language} (мова робочого простору).",
       "contextualEmptyTitle": "Згенерувати контекстні питання",
-      "contextualEmptyDescription": "Створіть питання з множинним вибором і заповненням пропусків зі свого словника.",
+      "contextualEmptyDescription": "Додайте необов'язкові інструкції нижче, якщо хочете, а потім натисніть Генерувати. Ви можете залишити запит порожнім.",
       "contextualProDescription": "Контекстні питання зі ШІ доступні з Pro.",
       "unlockContextual": "Відкрити з Pro",
       "correct": "Правильно!",
@@ -1202,8 +1219,8 @@
       "hint": "Оберіть слово, потім торкніться його значення",
       "complete": "Усі пари зіставлено — чудово!",
       "shuffle": "Перемішати стовпці",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} пар",
+      "continueRound": "Продовжити"
     },
     "typeAnswer": {
       "questionWord": "Яке значення?",
@@ -1213,7 +1230,7 @@
         "contextual": "Контекстні"
       },
       "contextualEmptyTitle": "Згенерувати контекстні питання",
-      "contextualEmptyDescription": "Створіть підказки для введення з заповненням пропусків зі свого словника.",
+      "contextualEmptyDescription": "Додайте необов'язкові інструкції нижче, якщо хочете, а потім натисніть Генерувати. Ви можете залишити запит порожнім.",
       "contextualProDescription": "Контекстні питання зі ШІ доступні з Pro.",
       "unlockContextual": "Відкрити з Pro",
       "placeholder": "Введіть відповідь…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Письмо",
         "description": "Розгорнуті документи й набори питань, до яких можна повернутися й експортувати.",
-        "how": "Почніть чернетку, організуйте папками й використовуйте Pro ШІ для перевірки або покращення тексту.",
+        "how": "Почніть чернетку, організуйте з папками та використовуйте AI-ліміт вашого плану для перевірки або покращення вашого тексту.",
         "cta": "Відкрити письмо"
       },
       "listening": {
         "title": "Аудіювання",
         "description": "Перетворюйте реальне аудіо чи відео на урок.",
-        "how": "Завантажте кліп і створіть транскрипт на безкоштовному плані. Згенерована практика аудіювання входить до Pro.",
+        "how": "Завантажте кліп, згенеруйте транскрипцію та створіть практику слухання з AI-лімітом, включеним у ваш план.",
         "cta": "Відкрити аудіювання"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Деякі робочі простори вже існують для тієї самої мови. Їхній вміст буде додано до наявних робочих просторів замість створення дублікатів.",
         "empty_backup": "Ця резервна копія не містить навчальних даних для імпорту.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Деякі існуючі елементи мають однакову назву. Імпорт повторно використовуватиме один з них детерміністично і залишить інші без змін."
       },
       "cancel": "Скасувати",
       "confirm": "Імпортувати навчальні дані",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Ця резервна копія занадто велика для обробки на цій сторінці. Спробуйте менший експорт або зверніться до служби підтримки.",
         "notConfigured": "Сховище файлів для імпорту резервних копій ще не налаштовано."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Вже в вашому акаунті",
+      "skippedInAccountHint": "Ці назви збігаються з елементами, які ви вже маєте. Вони не будуть імпортовані знову. Нові елементи під тим же робочим простором все ще імпортуються.",
+      "skippedInBackupTitle": "Дублікати назв у цьому резервному копії",
+      "skippedInBackupHint": "Файл містить одну й ту ж назву більше ніж один раз. Тільки перша копія кожної назви імпортується — це нормально, навіть на порожньому акаунті.",
+      "skippedOtherTitle": "Не вдалося імпортувати"
     },
     "danger": {
       "title": "Закрити обліковий запис",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Перш ніж продовжити",
       "warnings": {
         "workspaces": "Буде видалено кожен робочий простір і всі дані словника, теорії, письма, аудіювання та говоріння.",
-        "billing": "Будь-яка активна підписка Notoria Pro буде скасована негайно.",
+        "billing": "Будь-яка активна підписка Notoria Pro або Premium буде скасована негайно.",
         "media": "Завантажені медіа та фото профілю буде видалено.",
         "permanent": "Після підтвердження періоду відновлення немає."
       },
@@ -3233,8 +3250,8 @@
     "upgrade": "Оновити до Pro",
     "manage": "Керувати підпискою",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "Безкоштовно",
+    "premiumBadge": "Преміум",
     "renewsOn": "Поновлення {date}",
     "status": "Статус: {status}",
     "monthlyPrice": "{price} / місяць",
@@ -3439,7 +3456,7 @@
       "speaking": "Говоріння",
       "reading": "Читання",
       "pdfDocxExport": "Експорт навчальних матеріалів",
-      "learningCoach": "Learning Coach",
+      "learningCoach": "Навчальний коуч",
       "askLearningCoach": "Запитати AI Learning Coach",
       "learningProfile": "Особистий навчальний профіль",
       "adaptiveDailyPractice": "Адаптивна щоденна практика",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Особистий навчальний шлях",
       "personalizedRecommendations": "Персоналізовані рекомендації",
       "crossModuleIntelligence": "Персоналізація між модулями",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Індивідуальні інструкції для вправ"
     },
     "compare": {
       "heading": "Порівняння планів",
@@ -3458,9 +3475,9 @@
       "feature": "Функція",
       "current": "Поточний",
       "capability": "Що Ви отримуєте",
-      "free": "Free",
+      "free": "Безкоштовно",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "Преміум",
       "freeIncludes": "Включено у Free",
       "proUnlocks": "Pro додає",
       "premiumAdds": "Premium додає",
@@ -3552,7 +3569,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "Преміум",
     "title": "Навчальний",
     "highlight": "коуч",
     "description": "Персоналізований огляд того, як Ви навчаєтеся і на чому варто зосередитися далі.",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Політика конфіденційності",
     "termsTitle": "Умови використання",
     "privacyDescription": "Як Notoria збирає, використовує та видаляє персональні дані й навчальний контент у приватному робочому просторі для вивчення мов.",
-    "termsDescription": "Умови користування приватним робочим простором Notoria для вивчення мов, обліковими записами, AI-функціями та оплатою Notoria Pro.",
+    "termsDescription": "Умови використання приватного робочого простору для вивчення мов Notoria, облікових записів, функцій AI та виставлення рахунків Pro або Premium.",
     "updated": "Останнє оновлення {date}",
-    "updatedDate": "23 вересня 2026",
+    "updatedDate": "27 жовтня 2026",
     "backToSignIn": "Назад до входу",
     "backHome": "Назад до Notoria",
     "authFooter": "Конфіденційність · Умови",
@@ -4071,7 +4088,7 @@
         "purposes": "Навіщо ми обробляємо дані",
         "auth": "Облікові записи та вхід",
         "ai": "AI-функції",
-        "payments": "Оплата (Notoria Pro)",
+        "payments": "Платежі (Pro та Premium)",
         "processors": "Постачальники послуг",
         "cookies": "Файли cookie та сховище пристрою",
         "transfers": "Міжнародні передачі",
@@ -4095,7 +4112,7 @@
           "list": [
             "створюєте або користуєтеся обліковим записом",
             "зберігаєте матеріали в приватних робочих просторах",
-            "оформлюєте підписку на Notoria Pro",
+            "підписатися на Notoria Pro або Premium",
             "користуєтеся додатковими інструментами з підтримкою AI",
             "завантажуєте медіа для аудіювання або профілю",
             "практикуєте говоріння",
@@ -4156,7 +4173,7 @@
               "basis": "Договір (ст. 6(1)(b))"
             },
             {
-              "purpose": "Обробляти оплату Notoria Pro і статус підписки через Stripe",
+              "purpose": "Вести облік виставлення рахунків та статусу підписки Notoria Pro та Premium через Stripe",
               "basis": "Договір (ст. 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "У поточному коді не використовуються інші постачальники великих мовних моделей, окрім OpenAI. OpenAI обробляє дані за власними умовами та політикою конфіденційності як процесор для цих функцій."
         },
         "payments": {
-          "title": "7. Оплата (Notoria Pro)",
+          "title": "7. Платежі (Pro та Premium)",
           "p1": "Платні підписки обробляє <strong>Stripe</strong>. Оформлення, рахунки, платіжні методи та скасування виконуються через Stripe Checkout і Stripe Customer Portal. Webhook-и Stripe оновлюють Ваш план і статус у Notoria.",
           "p2": "Stripe обробляє платіжні дані як платіжний провайдер. Про обробку карток див. власну документацію Stripe з конфіденційності."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Оформлення Notoria Pro, портал і статус підписки"
+              "role": "Оформлення замовлення Notoria Pro та Premium, портал та статус підписки"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ці Умови використання пояснюють правила користування Notoria на <site>www.notoria.fi</site>. Вони описують, як продукт працює сьогодні: приватні навчальні робочі простори, додаткова оплата Notoria Pro через Stripe та функції з підтримкою AI. Вони не замінюють поради юриста щодо Вашої конкретної ситуації.",
+      "intro": "Ці Умови використання пояснюють правила використання Notoria на <site>www.notoria.fi</site>. Вони описують, як продукт працює сьогодні: приватні навчальні робочі простори, необов'язкове виставлення рахунків Pro та Premium через Stripe, а також функції з підтримкою AI. Вони не є заміною консультації з юристом щодо вашої конкретної ситуації.",
       "tocTitle": "На цій сторінці",
       "tocAria": "На цій сторінці",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Допустиме використання",
         "ip": "Інтелектуальна власність",
         "ai": "Результати, згенеровані AI",
-        "plans": "План Free і Notoria Pro",
+        "plans": "Безкоштовні, Pro та Premium плани",
         "billing": "Підписка та оплата",
         "refunds": "Повернення коштів і права споживачів",
         "availability": "Доступність",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. Сервіс",
           "p1": "Notoria — приватний вебзастосунок для вивчення мов. Ви можете створювати робочі простори та зберігати навчальний матеріал: словник, теоретичні нотатки, письмо, вправи, уроки аудіювання та сесії говоріння.",
-          "p2": "Деякі функції доступні на плані Free. Notoria Pro відкриває додаткові можливості, як показано в продукті та на сторінці <account>Обліковий запис</account> — включно з Аудіюванням, Говорінням, певними AI-інструментами навчання, імпортом вправ і платними форматами експорту документів. Доступність функцій може змінюватися з розвитком продукту.",
+          "p2": "Основні навчальні області, включаючи Слухання, Говоріння та Читання, доступні на кожному плані. Pro та Premium додають вищі ліміти AI та імпорт/експорт навчальних матеріалів; Premium також додає персоналізоване коучинг та функції практики. Поточне порівняння показано на вашій <account>Сторінці облікового запису</account>.",
           "p3": "Notoria призначена для особистого вивчення мов. Це не школа, не екзаменаційний орган і не сервіс професійних консультацій."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. Результати, згенеровані AI",
           "p1": "Деякі функції можуть перевіряти, пропонувати, генерувати, транскрибувати, узагальнювати або навчати на основі Вашого матеріалу. Результат може бути неповним, неточним або непридатним для Вашої мети. Ви лишаєтеся відповідальними за перегляд результатів AI перед тим, як покладатися на них для навчання, іспитів, професійного використання чи публікації.",
           "p2": "AI-функції можуть бути недоступні, якщо допомогу вимкнено в <settings>Налаштуваннях</settings>, якщо Ваш план не включає певний інструмент або якщо постачальник тимчасово недоступний.",
-          "p3": "Не всі AI-помічники потребують Notoria Pro. Продукт показує, які інструменти безкоштовні, а які потребують Pro."
+          "p3": "Доступність AI та щоденні ліміти варіюються між Безкоштовним, Pro та Premium. Продукт показує план та ліміт, необхідні для кожного інструменту."
         },
         "plans": {
-          "title": "8. План Free і Notoria Pro",
+          "title": "8. Безкоштовні, Pro та Premium плани",
           "p1": "План Free охоплює основну практику з власним словником і пов’язаними інструментами навчання, як показано в продукті.",
-          "p2": "Notoria Pro — платна підписка, що відкриває додаткові функції. У поточному продукті це зазвичай включає Аудіювання, Говоріння, імпорт вправ, практику складання речень, багато AI-інструментів навчання та експорт документів у PDF/DOCX. Деякі легші AI-помічники (наприклад, певна допомога зі словником чи форматуванням у редакторі) можуть лишатися доступними на плані Free, коли AI-допомогу увімкнено.",
-          "p3": "Доступ Pro прив’язаний до Вашого облікового запису користувача, тому він діє в усіх робочих просторах цього облікового запису. Облікові записи з роллю адміністратора можуть мати доступ рівня Pro без особистої підписки Stripe.",
-          "p4": "Ціна, що застосовується до Вашої покупки, — це ціна, показана в Stripe Checkout для поточного плану Pro. Будь-яка ціна, показана в інших місцях продукту (наприклад, в Обліковому записі), є орієнтовною й має відповідати активній конфігурації ціни Stripe."
+          "p2": "Pro та Premium — це платні підписки. Pro підвищує або знімає багато обмежень AI та додає імпорт навчальних матеріалів, а також експорт PDF/DOCX. Premium включає Pro та додає персоналізовані функції, такі як Навчальний коуч, особистий навчальний профіль, адаптивна практика, практика на основі помилок та інструкції для користувацьких вправ. Сторінка облікового запису показує поточне порівняння та обмеження.",
+          "p3": "Платний доступ пов'язаний з вашим обліковим записом користувача та застосовується до всіх його робочих просторів. Облікові записи з роллю адміністратора можуть мати доступ на платному рівні без особистої підписки Stripe.",
+          "p4": "Ціна, що застосовується, — це ціна, показана на Stripe Checkout для вибраного плану Pro або Premium. Будь-яка ціна, показана в іншому місці продукту (наприклад, на Сторінці облікового запису), є лише орієнтовною і повинна відповідати активній конфігурації ціни Stripe."
         },
         "billing": {
           "title": "9. Підписка, оплата та скасування",
-          "list0": "Підписки Pro оплачуються через <strong>Stripe</strong>",
-          "list1": "Ви можете розпочати оформлення з <account>Облікового запису</account> або з заблокованих елементів керування Pro в застосунку",
+          "list0": "Підписки Pro та Premium виставляються через <strong>Stripe</strong>",
+          "list1": "Ви можете почати оформлення замовлення або змінити план з <account>Сторінки облікового запису</account> або з заблокованих платних контролів в додатку",
           "list2": "З Облікового запису Ви можете відкрити Stripe Customer Portal, щоб переглядати рахунки, оновлювати платіжні методи та скасовувати підписку",
           "list3": "Скасування відповідає поведінці Stripe Customer Portal для Вашої підписки",
-          "p1": "Після скасування доступ Pro триває лише доти, доки статус підписки Stripe усе ще надає Pro в продукті. У поточній реалізації статуси, що вважаються Pro, включають <code>active</code>, <code>trialing</code> і <code>past_due</code>. Коли статус більше не кваліфікується, обліковий запис повертається на план Free.",
-          "p2": "Якщо платіж не вдається, Stripe може перевести підписку в <code>past_due</code> або інший статус. Notoria синхронізує цей статус із webhook-ів Stripe. Поки статус лишається <code>past_due</code>, функції Pro лишаються доступними за поточними правилами доступу; якщо підписку пізніше скасовано або вона стає непридатною, доступ Pro припиняється.",
+          "p1": "Після скасування поновлення ваш доступ до Pro або Premium триває, поки статус підписки Stripe все ще відповідає вимогам продукту. Відповідні статуси наразі включають <code>active</code>, <code>trialing</code> та <code>past_due</code>. Коли статус більше не відповідає вимогам, обліковий запис повертається до Безкоштовного.",
+          "p2": "Якщо платіж не вдається, Stripe може перевести підписку в статус <code>past_due</code> або інший статус. Notoria синхронізує цей статус з вебхуками Stripe. Поки він залишається <code>past_due</code>, поточний платний план залишається доступним відповідно до чинних правил доступу; якщо пізніше він стане скасованим або іншим чином недоступним, платний доступ закінчується.",
           "p3": "Видалення облікового запису Notoria негайно скасовує підписку Stripe (за можливості) як частину видалення облікового запису. Це відрізняється від скасування поновлення через Customer Portal зі збереженням облікового запису."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Відмова від гарантій і відповідальність",
           "p1": "Notoria надається на основі «як доступно» для особистого вивчення мов. У максимальній мірі, дозволеній застосовним правом, ми відмовляємося від гарантій, які не вимагаються законом.",
-          "p2": "У максимальній мірі, дозволеній застосовним правом, Notoria не несе відповідальності за непрямі, випадкові, особливі, наслідкові збитки чи втрату даних, що виникають із користування сервісом або покладання на результати AI. Там, де відповідальність не можна виключити, вона обмежується сумою, яку Ви сплатили за Notoria Pro за три місяці до претензії, або будь-якою більшою сумою, яку вимагає обов’язкове право.",
+          "p2": "В максимально можливій мірі, дозволеній чинним законодавством, Notoria не несе відповідальності за непрямі, випадкові, спеціальні, наслідкові або втрати даних, що виникають внаслідок вашого використання сервісу або покладання на результати AI. У випадках, коли відповідальність не може бути виключена, вона обмежується сумою, яку ви сплатили за Notoria Pro або Premium за три місяці до подання позову, або будь-якою більшою сумою, що вимагається обов'язковим законодавством.",
           "p3": "Ці обмеження не виключають відповідальності, яку фінське або право ЄС не дозволяє обмежувати — включно з відповідальністю, від якої споживачі не можуть відмовитися, та відповідальністю за смерть або тілесні ушкодження через недбалість, де такі правила застосовуються."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Створюйте особистий банк словника зі значеннями, прикладами та тегами",
           "practice": "Практикуйтеся з вправами з Ваших власних слів і нотаток",
           "create": "Пишіть теоретичні нотатки та письмові роботи, до яких можна повернутися",
-          "listenSpeak": "Перетворюйте медіа на практику аудіювання та говоріть з AI-репетитором на Pro"
+          "listenSpeak": "Перетворюйте медіа на практику слухання та використовуйте AI-ліміти для транскрипції та практики говоріння"
         },
-        "note": "Деякі інструменти AI, аудіювання, говоріння та експорту входять до Notoria Pro. План Free усе одно покриває щоденну практику словника та основний навчальний цикл."
+        "note": "Основні навчальні області доступні на кожному плані. Pro підвищує ліміти AI та додає імпорт/експорт навчальних матеріалів; Premium додає персоналізоване коучинг та практику."
       },
       "ai": {
         "title": "AI там, де допомагає",
@@ -4656,7 +4673,7 @@
         "title": "Як зони пов’язані",
         "p1": "Захоплення — швидка точка входу. Словник і Теорія — де матеріал осідає. Вправи перетворюють цей матеріал на практику. Письмо, Аудіювання та Говоріння допомагають активніше використовувати мову.",
         "p2": "Не обов’язково проходити кожну зону по порядку. Багато хто певний час лишається зі словами та короткою практикою.",
-        "p3": "Природний наступний крок — письмо, коли хочете продукувати мову на своїх умовах, потім аудіювання й говоріння, коли хочете, щоб той самий матеріал працював у вусі й голосі — Аудіювання та Говоріння входять до Notoria Pro.",
+        "p3": "Природним наступним кроком є написання, коли ви хочете створити мову на своїх умовах, а потім слухання та говоріння, коли ви хочете, щоб той самий матеріал працював у вашому вусі та голосі. Ці області доступні на кожному плані; обмеження використання AI варіюються за планом.",
         "beat": "Спочатку збирайте й розумійте. Використовуйте й говоріть, коли матеріал готовий зійти зі сторінки."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Аудіювання",
-          "body": "Перетворюйте медіа на практику аудіювання у Вашому робочому просторі. Доступно в Notoria Pro."
+          "body": "Перетворюйте медіа на практику слухання у вашому робочому просторі. Доступно на кожному плані; ліміти транскрипції AI варіюються за планом."
         },
         "speaking": {
           "label": "Говоріння",
-          "body": "Жива практика з AI-репетитором, ґрунтована на мові, яку вивчаєте. Доступно в Notoria Pro."
+          "body": "Жива практика з AI-наставником, заснована на мові, яку ви вивчаєте. Доступно на кожному плані з щоденним лімітом, що залежить від плану."
         },
         "reading": {
           "label": "Читання",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Як змінити пароль або закрити обліковий запис?",
-          "a": "Відкрийте <account>Обліковий запис</account>. Там можна оновити пароль (якщо входите через email), керувати Notoria Pro, експортувати резервну копію або назавжди видалити обліковий запис."
+          "a": "Відкрийте <account>Сторінку облікового запису</account>. Ви можете оновити свій пароль там, якщо використовуєте вхід за електронною поштою, керувати Pro або Premium, експортувати резервну копію або назавжди видалити свій обліковий запис. Видалення облікового запису також негайно скасовує будь-яку активну підписку Stripe на основі найкращих зусиль; скасування поновлення зберігає обліковий запис та його дані."
         },
         "pro": {
           "q": "Як працюють оплата та скасування?",
-          "a": "Notoria Pro оплачується через Stripe. З <account>Облікового запису</account> Ви можете оновити план, відкрити портал клієнта Stripe для керування платіжними методами та рахунками або скасувати поновлення."
+          "a": "Notoria Pro та Premium виставляються через Stripe. З <account>Сторінки облікового запису</account> ви можете підписатися, перемикатися між Pro та Premium, керувати методами оплати та рахунками, скасувати поновлення або відновити заплановане скасування. Скасування поновлення зберігає доступ, поки Stripe закінчує період підписки, що відповідає вимогам; видалення вашого облікового запису є окремим і скасовує підписку негайно на основі найкращих зусиль."
         },
         "proFeatures": {
-          "q": "Що безкоштовно, а що потребує Notoria Pro?",
-          "a": "Щоденна практика словника та пов’язані інструменти навчання доступні на плані Free. Деякі AI-інструменти, аудіювання, говоріння та експорт документів входять до Notoria Pro. Порівняйте й оновіть план у <account>Обліковому записі</account>."
+          "q": "Що входить у Безкоштовний, Pro та Premium?",
+          "a": "Безкоштовний включає основні навчальні області та щоденні ліміти для підтримуваних AI-інструментів. Pro підвищує або знімає багато обмежень AI та додає імпорт навчальних матеріалів, а також експорт PDF/DOCX. Premium включає Pro та додає персоналізоване коучинг, навчальний профіль, адаптивну та практику на основі помилок, а також інструкції для користувацьких вправ. Дивіться живе порівняння та поточні обмеження на <account>Сторінці облікового запису</account>."
         },
         "learning": {
           "q": "Як працюють навчальні функції Notoria?",
@@ -4997,7 +5014,7 @@
         "admins": "Адміністратори",
         "testers": "Тестувальники",
         "suspended": "Заблоковані",
-        "contentTotal": "Content records"
+        "contentTotal": "Записи контенту"
       },
       "quickAccess": "Швидкий доступ",
       "quickAccessLede": "Перейти до інструментів керування.",
@@ -5050,8 +5067,8 @@
         "created": "Зареєстровано",
         "updated": "Оновлено",
         "emailVerified": "Email підтверджено",
-        "email": "Email",
-        "password": "Password"
+        "email": "Електронна пошта",
+        "password": "Пароль"
       },
       "detail": {
         "account": "Обліковий запис",
@@ -5060,7 +5077,7 @@
         "actions": "Дії з обліковим записом",
         "workspaces": "Робочі простори",
         "workspacesLede": "Мовні робочі простори цього користувача.",
-        "danger": "Danger zone"
+        "danger": "Небезпечна зона"
       },
       "actions": {
         "saveProfile": "Зберегти ім’я",
@@ -5071,7 +5088,7 @@
         "delete": "Видалити обліковий запис",
         "grantTester": "Призначити тестувальника",
         "revokeTester": "Зняти тестувальника",
-        "create": "Create user"
+        "create": "Створити користувача"
       },
       "confirm": {
         "grantAdmin": "Надати цьому обліковому запису доступ адміна?",
@@ -5089,13 +5106,13 @@
         "admin": "Адміністратор"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Створити користувача",
+        "lede": "Створіть акаунт з електронною поштою та паролем. Вони можуть увійти відразу."
       },
       "plans": {
-        "free": "Free",
+        "free": "Безкоштовно",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "Преміум"
       }
     },
     "workspaces": {
@@ -5118,7 +5135,7 @@
         "owner": "Власник",
         "created": "Створено",
         "updated": "Оновлено",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Електронна пошта власника",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Видалити цей робочий простір і весь навчальний контент у ньому через каскади бази даних?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Створити робочий простір",
+        "lede": "Прикріпіть новий мовний робочий простір до існуючого акаунту за електронною поштою."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Робочий простір",
         "created": "Створено",
         "updated": "Оновлено",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Назва",
+        "word": "Слово",
+        "folderName": "Назва папки"
       },
       "detail": {
         "description": "Перегляд метаданих. Приватний вміст не завантажується автоматично.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Видалити запис",
-        "saveTitle": "Save title"
+        "saveTitle": "Зберегти назву"
       },
       "confirm": {
         "delete": "Видалити цей запис? Пов’язані дочірні рядки підпадають під правила каскаду / set-null у базі даних."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Зберігайте елементи, що містять вільний текст. Редагування заголовка тут не підтримується — видаліть, якщо запис потрібно видалити."
     },
     "jobs": {
       "title": "Завдання",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Недійсний код мови.",
       "CONTENT_NOT_FOUND": "Запис не знайдено.",
       "INVALID_CONTENT_MODULE": "Невідомий модуль контенту.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Ця електронна пошта вже зареєстрована.",
+      "PASSWORD_TOO_WEAK": "Пароль не відповідає вимогам безпеки.",
+      "CONTENT_TITLE_UNSUPPORTED": "Цей тип контенту не підтримує редагування заголовка."
     }
   }
 }

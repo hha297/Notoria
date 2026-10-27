@@ -17,19 +17,20 @@
     "hideFilters": "Թաքցնել զտիչները",
     "remove": "Հեռացնել",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Տեսքը",
+      "print": "Տպելու համար հարմար",
+      "printHint": "Սպիտակ էջ, մուգ տեքստ",
+      "theme": "Ընտրված թեման",
+      "themeHint": "Համապատասխանում է ձեր լուսավոր կամ մութ թեմային",
+      "previewKicker": "Նմուշ էջ",
+      "previewTitle": "Փաստաթղթի վերնագիր",
+      "previewBody": "Մարմնային տեքստը օգտագործում է ընտրված գույները և տարածքները:",
+      "previewCallout": "Հայտարարությունները և շեշտադրումները հետևում են մոդուլի գույնին:",
+      "fixedNote": "Տեսքը ֆիքսված է արտահանված ֆայլում: Փոխելու համար կրկին արտահանել:",
+      "docxBackgroundNote": "Word-ը և այլ ծրագրեր կարող են էջի ֆոները տարբեր կերպ ցույց տալ, հատկապես տպելու ժամանակ:"
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Գլխավոր",
+    "moreActions": "Ավելին գործողություններ"
   },
   "contentImport": {
     "title": {
@@ -176,7 +177,7 @@
   },
   "nav": {
     "dashboard": "Վահանակ",
-    "inbox": "Capture",
+    "inbox": "Պատկերել",
     "vocabulary": "Բառապաշար",
     "writing": "Գրավոր",
     "theory": "Տեսություն",
@@ -198,10 +199,10 @@
   },
   "inbox": {
     "eyebrow": "Հավաքել",
-    "title": "Capture",
+    "title": "Պատկերել",
     "description": "Այստեղ գցեք արագ նշումներ, արտահայտություններ և գաղափարներ — ապա դրանք վերածեք բառապաշարի, տեսության, գրավոր աշխատանքի կամ վարժությունների, երբ ժամանակ ունենաք։",
     "disabledNoWorkspace": "Capture օգտագործելուց առաջ ստեղծեք աշխատատարածք։",
-    "capture": "Capture",
+    "capture": "Պատկերել",
     "captureTitle": "Գրանցել ինչ-որ բան",
     "captureDescription": "Պահպանեք ինչ-որ բան՝ հետո մշակելու համար։ Դեռ պարտադիր չէ որոշել, թե որտեղ է այն պատկանում։",
     "captureSubmit": "Պահպանել Capture-ում",
@@ -295,12 +296,12 @@
     "tooDeep": "Այս պանակը չափազանց խորն է ներդրված",
     "notFound": "Պանակը չի գտնվել",
     "nameTaken": "Այս անունն արդեն օգտագործվում է պանակի կամ գրավոր աշխատանքի համար",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Place in a folder",
+    "dragTipBody": "Մկնիկով կամ տրաքպադով համակարգչում, քաշեք մի կտոր դեպի ֆոլդերի քարտը: Կարող եք նաև օգտագործել յուրաքանչյուր իրի տեղափոխման պատկերակը:",
+    "dragTipDismiss": "Չեղարկել խորհուրդը",
+    "dragTipShow": "Ինչպես տեղափոխել ֆոլդերներ",
+    "dragTipDemo": "Քաշեք իրը ֆոլդերի վրա",
+    "dragTipCard": "Իր"
   },
   "theme": {
     "toggle": "Փոխել թեման",
@@ -472,34 +473,34 @@
     "viewMode": "Ցուցադրման ռեժիմ",
     "tagManager": {
       "open": "Կառավարել պիտակները",
-      "eyebrow": "Tags",
+      "eyebrow": "Պիտակներ",
       "title": "Պիտակների կառավարիչ",
-      "description": "Ընտրեք պիտակ, ապա նշանակեք կամ հեռացրեք այն բառերից։ Նշանակված և այլ բառերը մնում են առանձին ցանկերում։",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Ընտրեք պիտակ, ապա նշանակեք կամ հեռացրեք այն բառերից:",
+      "pageDescription": "Ընտրեք ստանդարտ կամ հարմարեցված, ընտրեք պիտակ, ապա ավելացրեք կամ հեռացրեք այն բառերից:",
+      "disabledNoWorkspace": "Սկսեք աշխատանքային տարածք, նախքան բառապաշարի պիտակները կառավարելը:",
+      "backToVocabulary": "Վերադառնալ բառապաշարին",
+      "backToSettings": "Վերադառնալ կարգավորումներին",
       "groupsLabel": "Ստանդարտ պիտակների խմբեր",
       "tagsHeading": "Պիտակներ",
       "standardTagsHeading": "Ստանդարտ պիտակներ",
       "customTagsHeading": "Անհատական պիտակներ",
-      "customTagsHint": "Պիտակներ, որոնք ստեղծում եք ձեր սեփական կազմակերպման համար — ոչ թե խոսքի մասեր։",
+      "customTagsHint": "Աշխատանքային տարածքի պիտակներ, որոնք դուք ստեղծում եք՝ որոնեք դրանք, երբ ցուցակը երկար է:",
       "emptyCustomTags": "Դեռ անհատական պիտակներ չկան։ Ստեղծեք դրանք բառ խմբագրելիս։",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Այս որոնմանը համապատասխանող հարմարեցված պիտակներ չկան:",
+      "tagSearchPlaceholder": "Որոնել պիտակներ…",
       "wordsHeading": "{tag}",
       "kindStandard": "Ստանդարտ",
       "kindCustom": "Անհատական",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Բառերի ցուցակներ",
+      "wordTabAssigned": "Պիտակավորված",
+      "wordTabOther": "Պիտակավորված չէ",
       "assignedHeading": "Այս պիտակով բառեր",
       "otherHeading": "Այլ բառեր",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Ընտրել բոլորն այս էջում",
+      "clearSelection": "Մաքրել ընտրությունը",
+      "selectionScopePage": "Ընտրում այս էջից ({count} מתוך {total})",
+      "selectionScopeFiltered": "Ընտրում ընթացիկ որոնման արդյունքներից",
       "searchPlaceholder": "Որոնել բառեր կամ իմաստներ…",
       "wordCount": "{count}",
       "loading": "Բառապաշարը բեռնվում է…",
@@ -509,13 +510,23 @@
       "emptyOther": "Յուրաքանչյուր բառ արդեն ունի այս պիտակը։",
       "emptyOtherSearch": "Նշանակելու համար համընկնող բառեր չկան։",
       "selected": "{count} ընտրված",
-      "addToTag": "Ավելացնել պիտակին",
-      "removeFromTag": "Հեռացնել պիտակից",
-      "applyAdd": "Ավելացնել պիտակին ({count})",
-      "applyRemove": "Հեռացնել պիտակից ({count})",
+      "addToTag": "Ավելացնել պիտակ",
+      "removeFromTag": "Հեռացնել պիտակը",
+      "applyAdd": "Ավելացնել պիտակ ({count})",
+      "applyRemove": "Հեռացնել պիտակ ({count})",
       "added": "{tag} պիտակին ավելացված է {count} բառ",
       "removed": "{tag} պիտակից հեռացված է {count} բառ",
-      "error": "Չհաջողվեց թարմացնել պիտակի անդամակցությունը"
+      "error": "Չհաջողվեց թարմացնել պիտակի անդամակցությունը",
+      "systemsLabel": "Պիտակային համակարգեր",
+      "standardSystemTitle": "Ստանդարտ",
+      "standardSystemMeta": "Թեմա և օգտագործում, ցուցադրվում են առանձին",
+      "usageOptional": "Ընտրովի",
+      "customSystemTitle": "Հարմարեցված",
+      "customSystemMeta": "{count, plural, one {# պիտակ} other {# պիտակներ}}",
+      "customPickerLabel": "Ընտրեք հարմարեցված պիտակ",
+      "customPickerPlaceholder": "Ընտրեք հարմարեցված պիտակ…",
+      "customSearchPlaceholder": "Որոնել հարմարեցված պիտակներ…",
+      "pickTagFirst": "Առաջին հերթին ընտրեք պիտակ, որպեսզի կառավարեք բառերի անդամակցությունը:"
     },
     "moreTags": "+{count}",
     "updatedAgo": "Թարմացված է {time}",
@@ -584,7 +595,11 @@
         "notes": "Նշումներ",
         "updated": "Վերջին թարմացում"
       }
-    }
+    },
+    "selectedCustomTags": "Ընտրված պիտակներ",
+    "selectedSynonyms": "Ընտրված սինոնիմներ",
+    "removeCustomTag": "Հեռացնել {name}",
+    "pickerLoading": "Բեռնվում է…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Վարժությունը պատրաստ է",
       "aiUnavailable": "Այժմ չհաջողվեց ստեղծել AI հարցեր։",
       "aiForbidden": "AI տեսության վարժությունները հասանելի են Pro-ով։",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Ավելորդ հրահանգները հասանելի են Premium-ում:",
       "aiDisabled": "AI օգնությունը անջատված է Կարգավորումներում։",
       "feedback": {
         "correct": "Ճիշտ է։",
@@ -927,20 +942,22 @@
         "why": "Ինչու",
         "complete": "Հասկացա",
         "completeHint": "Կարող եք շարունակել, երբ պատրաստ եք։",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Սկսել վարժությունը",
+        "skipReviewAndStart": "Թողնել վերանայումը և սկսել վարժությունը"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Չհամակարգված",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# նշում} other {# նշումներ}}",
+        "selectAll": "Ընտրել բոլորին",
+        "selectGroup": "Ընտրել նշումները {name}-ում",
+        "expand": "Ընդլայնել {name}",
+        "collapse": "Փոքրացնել {name}",
+        "selectedCount": "{count, plural, one {# տեսություն ընտրված} other {# տեսություններ ընտրված}}",
+        "practiceSelected": "Պրակտիկա ընտրված",
+        "clearSelection": "Մաքրել ընտրությունը",
+        "subfolders": "{count, plural, one {# ենթափղթ} other {# ենթափղթեր}}",
+        "selectedOne": "Ընտրված 1 տեսություն"
       }
     },
     "types": {
@@ -950,7 +967,7 @@
         "preview": "Շրջել · Գնահատել · Վերանայել",
         "previewHint": "Ֆիններեն բառ",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "ԹԵՐՈՒԹՅՈՒՆ → ԱՐԺԵՔ → ՎԵՐԱԲԵՐՈՒԹՅՈՒՆ"
       },
       "fill-in-blank": {
         "label": "Լրացնել բացը",
@@ -998,8 +1015,8 @@
       "startsWith": "Սկսվում է «{letter}»-ով",
       "revealPrompt": "Դեռ դժվարանու՞մ եք։ Կարող եք բացահայտել ամբողջական պատասխանը։",
       "revealAnswer": "Բացահայտել պատասխանը",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Հաջորդ խորհուրդը",
+      "hintProgress": "Հուշում {current} / {total}"
     },
     "empty": {
       "noWordsTitle": "Բառապաշար դեռ չկա",
@@ -1032,17 +1049,17 @@
       "shuffle": "Խառնել",
       "finish": "Ավարտել փուլը",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Հարցի աղբյուր",
+        "chooseAi": "Օգտագործել AI ստեղծված",
+        "emptyTitle": "Չկա օգտագործելի պահպանված օրինակներ",
+        "emptyDescription": "Ավելացրեք օրինակային նախադասություններ, որոնք հստակ ներառում են յուրաքանչյուր բառ, կարգավորեք ձեր ֆիլտրերը կամ անցեք AI ստեղծվածին:",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Պահպանված օրինակներ",
+          "description": "Ամենաարագ հարցեր ստեղծեք ձեր բառապաշարի օրինակներից: Ոչ մի AI սպասում:"
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI ստեղծված",
+          "description": "Ստեղծեք նոր նախադասություններ ձեր բառապաշարից AI-ով:"
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "AI վարժությունների ստեղծումը հասանելի է Pro-ով։",
       "disabled": "AI օգնությունը անջատված է Կարգավորումներում։",
       "upgradeHint": "Անվճար տարբերակը ներառում է մի քանի AI վարժության ստեղծում ամեն օր։ Pro-ը հանում է սահմանը։",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Ավելորդ հրահանգներ",
+      "additionalInstructionsPlaceholder": "Օրինակ: Օգտագործեք ռեստորանի իրավիճակներ, պահեք լեզուն A2 մակարդակում և բացատրեք սխալները ձեր ինտերֆեյսի լեզվով:",
+      "additionalInstructionsLocked": "Անցեք Premium-ի՝ աջակցվող վարժությունների տեսակները հարմարեցնելու, իրական կյանքի համատեքստ սահմանելու և ձեր սեփական հրահանգներն ավելացնելու համար։",
+      "premiumRequired": "Ավելորդ հրահանգները հասանելի են Premium-ում:",
+      "presetLabel": "Նախնական կարգավորումներ",
+      "presetNone": "Չի ընտրված նախնական կարգավորում",
+      "presetApply": "Կիրառել",
+      "presetSave": "Պահել նախնական կարգավորում",
+      "presetName": "Նախնական կարգավորման անուն",
+      "presetDelete": "Ջնջել",
+      "presetSaved": "Նախնական կարգավորումը պահպանված է",
+      "presetDeleted": "Նախնական կարգավորումը ջնջված է",
+      "presetSaveFailed": "Չի հաջողվել պահպանել այդ նախնական կարգավորումը:",
       "emptyWords": "Ավելացրեք բառապաշարի բառեր՝ նախքան հարցեր ստեղծելը։",
       "noneValid": "AI-ն չկարողացավ վավեր հարցեր ստեղծել այս բառերի համար։ Փորձեք կրկին։",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Անհրաժեշտ է հարմարեցնել ձեր վարժության համատեքստը, ոճը կամ ուշադրությունը: Թողեք դատարկ, որպեսզի օգտագործեք նախնական կարգավորումները:",
+      "presetUpdate": "Թարմացնել նախնական կարգավորումը",
+      "presetUpdated": "Նախնական կարգավորումը թարմացված է",
+      "presetsTitle": "Պահված նախնական կարգավորումներ",
+      "presetsHelper": "Նախնական կարգավորումները պահում են վարժության կարգավորումները և ավելորդ հրահանգները: Դրանք չեն փոխում ձեր ընտրած բառապաշարը կամ տեսությունները:",
+      "presetsEmpty": "Այժմ պահված նախնական կարգավորումներ չկան: Պահեք ձեր ընթացիկ կարգավորումները, որպեսզի դրանք կրկին օգտագործեք:",
+      "presetSaveAs": "Պահել որպես նախնական կարգավորում",
+      "presetUpdateCurrent": "Թարմացնել ընթացիկ կարգավորումներով",
+      "presetRename": "Վերանվանել",
+      "presetManage": "Կառավարել նախնական կարգավորումը",
+      "presetRenamed": "Նախնական կարգավորումը վերանվանված է",
+      "presetSaveDialogTitle": "Պահել որպես նախնական կարգավորում",
+      "presetSaveDialogDescription": "Անվանեք այս նախնական կարգավորումը, որպեսզի կրկին օգտագործեք ընթացիկ վարժության կարգավորումները և ավելորդ հրահանգները: Ընտրված բառապաշարը կամ տեսությունները չեն պահպանվում:",
+      "presetRenameDialogTitle": "Վերանվանել նախնական կարգավորումը",
+      "presetRenameDialogDescription": "Ընտրեք այս նախնական կարգավորման համար նոր անուն:",
+      "presetDeleteDialogTitle": "Ջնջել նախնական կարգավորումը?",
+      "presetDeleteDialogDescription": "Ջնջել “{name}”? Ձեր ընթացիկ վարժության կարգավորումը կմնա այնպես, ինչպես կա:"
     },
     "session": {
       "complete": "Նստաշրջանն ավարտված է",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Փորձել կրկին",
       "questionsLabel": "Հարցեր",
       "correctLabel": "Ճիշտ",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Չի ճիշտ",
+      "unansweredLabel": "Չպատասխանված",
       "reviewLabel": "Վերանայման",
       "answeredProgress": "{answered} / {total} պատասխանված",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Ստուգել պատասխան",
+      "nextQuestion": "Հաջորդը",
+      "viewResults": "Դիտել արդյունքները",
       "submitSet": "Ուղարկել պատասխանները",
       "submitting": "Ստուգվում է…",
       "unansweredWarnTitle": "Չպատասխանված հարցեր",
@@ -1121,54 +1138,54 @@
       "unanswered": "Չպատասխանված",
       "yourAnswer": "Ձեր պատասխանը",
       "correctAnswer": "Ճիշտ պատասխան",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Միայն {count} հարցեր հասանելի են ձեր ընթացիկ ֆիլտրերից:",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Ինչպես եք պարապում",
+        "lockedHint": "Ավարտեք կամ սկսեք նոր հավաքածու, որպեսզի փոխեք սա:",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Մեկ առ մեկ",
+          "description": "Տեսեք մեկ հարց մեկ անգամ: Ստուգեք յուրաքանչյուր պատասխանից հետո անմիջական արձագանքի համար:"
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Բոլոր հարցերը",
+          "description": "Տեսեք ամբողջ հավաքածուն, պատասխանեք ցանկացած կարգով, ապա ներկայացրեք մեկ անգամ արձագանքի համար:"
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Վերանայում",
+        "allCorrect": "Ամեն ինչ ճիշտ է՝ յուրաքանչյուր հարց ճիշտ:",
+        "summary": "{incorrect} սխալ · {unanswered} չպատասխանված · {needsReview} վերանայելու համար",
+        "viewWrong": "Դիտել սխալ պատասխանները",
+        "filtersLabel": "Ֆիլտրել հարցերը",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Բոլորը ({count})",
+          "needs_review": "Սխալ & չպատասխանված ({count})",
+          "correct": "Ճիշտ ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Նախորդ",
+        "nextWrong": "Հաջորդ",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} վերանայելու համար",
+        "floatLabel": "Սխալ պատասխանների նավիգացիա",
+        "closeFloat": "Ցուցադրել բոլոր պատասխանները"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% ճիշտ",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Ամեն ինչ ճիշտ",
+          "body": "Յուրաքանչյուր պատասխան ճիշտ է: Այդպիսի կենտրոնացումը արժանի է մեկ այլ շրջանի, երբ պատրաստ եք:"
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Հզոր ավարտ",
+          "body": "Դուք ակնհայտորեն հասկանում եք՝ անցեք բաց թողածներին, ապա ամրացրեք նոր հավաքածուով:"
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Լավ աշխատանք՝ շարունակեք",
+          "body": "Մի քանի դժվարություններ նորմալ են: Վերանայեք դրանք մեկ անգամ, ապա փորձեք կրկին, երբ դրանք նոր են:"
         },
         "unanswered": {
           "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "body": "Նախ ավարտեք չպատասխանված հարցերը, ապա գնահատականն ավելի հստակ պատկեր կտա։"
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Հարցերը ստեղծվում են {language}-ով (աշխատատարածքի լեզու)։",
       "contextualEmptyTitle": "Ստեղծել համատեքստային հարցեր",
-      "contextualEmptyDescription": "Ստեղծեք բաց թողնված տեղով բազմակի ընտրության հարցեր Ձեր բառապաշարից։",
+      "contextualEmptyDescription": "Ավելացրեք ընտրովի հրահանգներ ստորև, եթե ցանկանում եք, ապա սեղմեք Ստեղծել: Դուք կարող եք թողնել հրահանգը դատարկ:",
       "contextualProDescription": "Համատեքստային AI հարցերը հասանելի են Pro-ով։",
       "unlockContextual": "Բացել Pro-ով",
       "correct": "Ճիշտ է։",
@@ -1202,8 +1219,8 @@
       "hint": "Ընտրեք բառ, ապա հպեք դրա իմաստին",
       "complete": "Բոլոր զույգերը համապատասխանեցված են — հիանալի է։",
       "shuffle": "Խառնել սյուները",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} զույգ",
+      "continueRound": "Շարունակել"
     },
     "typeAnswer": {
       "questionWord": "Ո՞րն է իմաստը",
@@ -1213,7 +1230,7 @@
         "contextual": "Համատեքստային"
       },
       "contextualEmptyTitle": "Ստեղծել համատեքստային հարցեր",
-      "contextualEmptyDescription": "Ստեղծեք բաց թողնված տեղով մուտքագրման հարցադրումներ Ձեր բառապաշարից։",
+      "contextualEmptyDescription": "Ավելացրեք ընտրովի հրահանգներ ստորև, եթե ցանկանում եք, ապա սեղմեք Ստեղծել: Դուք կարող եք թողնել հրահանգը դատարկ:",
       "contextualProDescription": "Համատեքստային AI հարցերը հասանելի են Pro-ով։",
       "unlockContextual": "Բացել Pro-ով",
       "placeholder": "Մուտքագրեք Ձեր պատասխանը…",
@@ -1543,7 +1560,7 @@
     "open": "Բացել",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "Պատկերել",
         "body": "Վայրկյանների ընթացքում գրանցեք բառ, արտահայտություն, քերականական կասկած կամ գրավոր գաղափար — դեռ կարիք չկա որոշել, թե որտեղ է այն պատկանում։ Ավելացրեք ըստ ցանկության նշում կամ աղբյուր, պահեք տարրերը «Մշակման սպասող»-ում, ապա վերածեք գրառումը Բառապաշարի, Տեսության, Գրավորի կամ Վարժության, երբ ժամանակ ունենաք։ Տարրը նշվում է որպես Մշակված միայն այն բանից հետո, երբ ավարտում եք կապված գրառման ստեղծումը։"
       },
       "vocabulary": {
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Գրավոր",
         "description": "Հարուստ փաստաթղթեր և հարցերի հավաքածուներ, որոնք կարող եք վերանայել և արտահանել։",
-        "how": "Սկսեք նախագիծ, կազմակերպեք թղթապանակներով և օգտագործեք Pro AI՝ տեքստը ստուգելու կամ բարելավելու համար։",
+        "how": "Սկսեք նախագիծ, կազմակերպեք թղթապանակներով և օգտագործեք ձեր պլանի AI թույլատրումը՝ ստուգելու կամ բարելավելու ձեր տեքստը:",
         "cta": "Բացել գրավորը"
       },
       "listening": {
         "title": "Լսում",
         "description": "Վերածեք իրական աուդիո կամ տեսանյութ դասի։",
-        "how": "Վերբեռնեք հատված և ստեղծեք տառադարձություն Անվճար տարբերակում։ Ստեղծված լսողական վարժությունը Pro-ի մաս է։",
+        "how": "Բեռնեք կլիպ, ստեղծեք տեքստ, և կառուցեք լսելու պրակտիկա՝ ձեր պլանում ներառված AI թույլատրությամբ:",
         "cta": "Բացել լսումը"
       },
       "speaking": {
@@ -1648,7 +1665,7 @@
     "nextStepTitle": "Հաջորդ քայլ",
     "continueEmpty": "Դեռ շարունակելու բան չկա — ավելացրեք տեսության նշում, գրավոր աշխատանք, լսողական դաս կամ խոսքի նստաշրջան, և այն կհայտնվի այստեղ։",
     "inbox": {
-      "title": "Capture",
+      "title": "Պատկերել",
       "subtitle": "Արագ նշումներ, որոնք սպասում են Ձեր գրադարանում դասավորվելուն։",
       "count": "{count, plural, =0 {Ոչինչ չի սպասում} one {# տարր մշակման} other {# տարր մշակման}}",
       "cta": "Բացել Capture"
@@ -2120,7 +2137,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "Պատկերել",
       "description": "Արագ պահեք գրառումներ — բառեր, կասկածներ, գաղափարներ — ապա վերածեք դրանք իրական ուսումնական տարրերի, երբ ժամանակ ունենաք։",
       "cta": "Հասկացա",
       "steps": {
@@ -2268,11 +2285,11 @@
         "taskManager": "Դիտարկիչի առաջադրանքների կառավարիչ",
         "altClose": "Փակել պատուհանը",
         "altTab": "Փոխել հավելվածները",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Ֆայլերի հետազոտիչ",
         "winDesktop": "Ցուցադրել աշխատասեղանը",
         "winLock": "Կողպել համակարգիչը",
         "winRun": "Գործարկման երկխոսություն",
-        "winSettings": "Windows Settings",
+        "winSettings": "Windows կարգավորումներ",
         "winTaskView": "Առաջադրանքների տեսք",
         "winClipboard": "Սեղմատախտակի պատմություն"
       },
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Որոշ աշխատատարածքներ արդեն գոյություն ունեն նույն լեզվի համար։ Դրանց բովանդակությունը կավելացվի առկա աշխատատարածքներին՝ առանց կրկնօրինակների։",
         "empty_backup": "Այս պահուստը ներմուծելի ուսումնական տվյալներ չի պարունակում։",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Որոշ առկա իրեր ունեն նույն անունը: Ներմուծումը կօգտագործի դրանցից մեկը որոշակիորեն և մյուսները կմնան անփոփոխ:"
       },
       "cancel": "Չեղարկել",
       "confirm": "Ներմուծել ուսումնական տվյալները",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Այդ պահուստը չափազանց մեծ է այս էջով մշակելու համար։ Փորձեք ավելի փոքր արտահանում կամ կապվեք աջակցության հետ։",
         "notConfigured": "Պահուստի ներմուծման համար ֆայլերի պահեստը դեռ կազմաձևված չէ։"
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Այն արդեն ձեր հաշվում է",
+      "skippedInAccountHint": "Այս անունները համընկնում են արդեն ունեցած իրերի հետ: Դրանք չեն կրկնակի ներմուծվի: Նոր իրերը նույն աշխատանքային տարածքում դեռ ներմուծվում են:",
+      "skippedInBackupTitle": "Կրկնվող անուններ այս պահեստում",
+      "skippedInBackupHint": "Ֆայլը ցուցակում նույն անունը ավելի քան մեկ անգամ է: Միայն յուրաքանչյուր անունի առաջին պատճենը է ներմուծվում — սա նորմալ է նույնիսկ դատարկ հաշվում:",
+      "skippedOtherTitle": "Չի հաջողվել ներմուծել"
     },
     "danger": {
       "title": "Փակել հաշիվը",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Շարունակելուց առաջ",
       "warnings": {
         "workspaces": "Բոլոր աշխատատարածքները և ամբողջ բառապաշարը, տեսությունը, գրելը, լսումը և խոսքի տվյալները կջնջվեն։",
-        "billing": "Ցանկացած ակտիվ Notoria Pro բաժանորդագրություն անմիջապես կչեղարկվի։",
+        "billing": "Յուրաքանչյուր ակտիվ Notoria Pro կամ Premium բաժանորդագրություն անմիջապես կչեղարկվի:",
         "media": "Վերբեռնված մեդիան և պրոֆիլի լուսանկարը կհեռացվեն։",
         "permanent": "Հաստատումից հետո վերականգնման ժամանակաշրջան չկա։"
       },
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Անձնական ուսումնական ուղի",
       "personalizedRecommendations": "Անհատականացված առաջարկներ",
       "crossModuleIntelligence": "Մոդուլների միջև անհատականացում",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Անհատականացված վարժությունների հրահանգներ"
     },
     "compare": {
       "heading": "Համեմատել պլանները",
@@ -3792,7 +3809,7 @@
       "connections": "Ձեր գիտելիքը դառնում է պրակտիկա",
       "philosophy": "Ձեր ուսումնական օրագիրը",
       "startHere": "Սկսեք այստեղից",
-      "inbox": "Capture"
+      "inbox": "Պատկերել"
     },
     "welcome": {
       "title": "Ի՞նչ է Notoria-ն",
@@ -3962,7 +3979,7 @@
         "emphasis": "Բերեք այն նյութը, որն իրականում ուզում եք հասկանալ — նորություններ, պատմություններ, աշխատաթերթեր — և վերածեք այն պրակտիկայի, որն պատկանում է ձեր օրագրին։"
       },
       "inbox": {
-        "title": "Capture",
+        "title": "Պատկերել",
         "intro": "Capture-ը ձեր արագ պահպանման գոտին է — պահեք ինչ-որ բան այն պահին, երբ հանդիպում եք դրան, ապա հետո որոշեք, թե որտեղ է պատկանում։",
         "bullets": [
           "Վայրկյանների ընթացքում պահեք բառ, արտահայտություն, քերականական կասկած կամ գրավոր գաղափար",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Գաղտնիության քաղաքականություն",
     "termsTitle": "Օգտագործման պայմաններ",
     "privacyDescription": "Ինչպես է Notoria-ն հավաքում, օգտագործում և ջնջում անձնական տվյալները և ուսումնական բովանդակությունը իր մասնավոր լեզվասովորող աշխատատարածքի համար։",
-    "termsDescription": "Notoria-ի մասնավոր լեզվասովորող աշխատատարածքի, հաշիվների, AI հնարավորությունների և Notoria Pro վճարումների օգտագործման պայմանները։",
+    "termsDescription": "Notoria-ի մասնավոր լեզվաբառարանային աշխատանքային տարածքի, հաշիվների, AI հատկությունների և Pro կամ Premium վճարման պայմանները:",
     "updated": "Վերջին թարմացումը՝ {date}",
-    "updatedDate": "23 սեպտեմբերի 2026",
+    "updatedDate": "27 Հոկտեմբերի 2026",
     "backToSignIn": "Վերադառնալ մուտքին",
     "backHome": "Վերադառնալ Notoria",
     "authFooter": "Գաղտնիություն · Պայմաններ",
@@ -4071,7 +4088,7 @@
         "purposes": "Ինչու ենք մշակում տվյալները",
         "auth": "Հաշիվներ և մուտք",
         "ai": "AI հնարավորություններ",
-        "payments": "Վճարումներ (Notoria Pro)",
+        "payments": "Վճարումներ (Pro և Premium)",
         "processors": "Ծառայություն մատուցողներ",
         "cookies": "Cookie-ներ և սարքի պահեստ",
         "transfers": "Միջազգային փոխանցումներ",
@@ -4095,7 +4112,7 @@
           "list": [
             "ստեղծում կամ օգտագործում եք հաշիվ",
             "պահպանում եք նյութեր մասնավոր աշխատատարածքներում",
-            "բաժանորդագրվում եք Notoria Pro-ին",
+            "բաժանորդագրվել Notoria Pro կամ Premium",
             "օգտագործում եք կամընտիր AI աջակցությամբ գործիքներ",
             "վերբեռնում եք մեդիա լսելու կամ պրոֆիլի համար",
             "օգտագործում եք խոսքի պարապմունք",
@@ -4156,7 +4173,7 @@
               "basis": "Պայմանագիր (հոդ. 6(1)(b))"
             },
             {
-              "purpose": "Իրականացնել Notoria Pro վճարումը և բաժանորդագրության կարգավիճակը Stripe-ով",
+              "purpose": "Կառավարել Notoria Pro և Premium վճարումները և բաժանորդագրության կարգավիճակը Stripe-ի միջոցով",
               "basis": "Պայմանագիր (հոդ. 6(1)(b))"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "Ներկայիս կոդաբազան OpenAI-ից բացի այլ մեծ լեզվական մոդելների մատակարարներ չի օգտագործում։ OpenAI-ն տվյալները մշակում է իր սեփական պայմանների և գաղտնիության քաղաքականության համաձայն՝ որպես այս հնարավորությունների մշակող։"
         },
         "payments": {
-          "title": "7. Վճարումներ (Notoria Pro)",
+          "title": "7. Վճարումներ (Pro և Premium)",
           "p1": "Վճարովի բաժանորդագրությունները մշակում է <strong>Stripe</strong>-ը։ Վճարումը, հաշիվ-ապրանքագրերը, վճարման եղանակները և չեղարկումը կատարվում են Stripe Checkout-ով և Stripe Customer Portal-ով։ Stripe webhook-ները թարմացնում են Ձեր պլանը և կարգավիճակը Notoria-ում։",
           "p2": "Stripe-ը վճարման տվյալները մշակում է որպես վճարային մատակարար։ Քարտերի մշակման համար տե՛ս Stripe-ի սեփական գաղտնիության փաստաթղթերը։"
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro վճարում, պորտալ և բաժանորդագրության կարգավիճակ"
+              "role": "Notoria Pro և Premium վճարման, պորտալի և բաժանորդագրության կարգավիճակը"
             },
             {
               "provider": "Google",
@@ -4256,7 +4273,7 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
+              "cookie": "Auth.js սեսիայի cookie",
               "purpose": "Պահում է Ձեզ մուտք գործած (JWT նիստ; գրադարանի լռելյայն անվանում)",
               "code": false
             },
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Այս Օգտագործման պայմանները բացատրում են Notoria-ի օգտագործման կանոնները <site>www.notoria.fi</site> հասցեում։ Դրանք նկարագրում են, թե ինչպես է արտադրանքն աշխատում այսօր՝ մասնավոր ուսումնական աշխատատարածքներ, կամընտիր Notoria Pro վճարում Stripe-ով և AI աջակցությամբ հնարավորություններ։ Դրանք փոխարինող չեն փաստաբանի խորհրդին՝ Ձեր կոնկրետ իրավիճակի վերաբերյալ։",
+      "intro": "Այս Օգտագործման պայմանները բացատրում են Notoria-ի օգտագործման կանոնները <site>www.notoria.fi</site>-ում: Դրանք նկարագրում են, թե ինչպես է արտադրանքը աշխատում այսօր՝ մասնավոր ուսուցման աշխատանքային տարածքներ, ընտրովի Pro և Premium վճարում Stripe-ի միջոցով և AI-օգնությամբ հատկություններ: Դրանք չեն կարող փոխարինել իրավաբանների խորհրդին ձեր կոնկրետ իրավիճակի վերաբերյալ:",
       "tocTitle": "Այս էջում",
       "tocAria": "Այս էջում",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Ընդունելի օգտագործում",
         "ip": "Մտավոր սեփականություն",
         "ai": "AI-ով գեներացված արդյունք",
-        "plans": "Անվճար պլան և Notoria Pro",
+        "plans": "Ազատ, Pro և Premium պլաններ",
         "billing": "Բաժանորդագրություն և վճարում",
         "refunds": "Վերադարձներ և սպառողի իրավունքներ",
         "availability": "Հասանելիություն",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. Ծառայությունը",
           "p1": "Notoria-ն մասնավոր լեզվասովորող վեբ հավելված է։ Կարող եք ստեղծել աշխատատարածքներ և պահել ուսումնական նյութ՝ օրինակ բառապաշար, տեսական նշումներ, գրավոր աշխատանք, վարժություններ, լսողական դասեր և խոսքի նիստեր։",
-          "p2": "Որոշ հնարավորություններ հասանելի են անվճար պլանում։ Notoria Pro-ն բացում է լրացուցիչ հնարավորություններ, ինչպես ցույց է տրված արտադրանքում և Ձեր <account>Հաշիվ</account> էջում — ներառյալ Listening, Speaking, որոշ AI ուսումնական գործիքներ, վարժությունների ներմուծում և վճարովի փաստաթղթերի արտահանման ձևաչափեր։ Հնարավորությունների հասանելիությունը կարող է փոխվել արտադրանքի զարգացման հետ։",
+          "p2": "Հիմնական ուսուցման ոլորտները, այդ թվում՝ Լսում, Խոսք և Կարդալ, հասանելի են յուրաքանչյուր պլանում: Pro և Premium ավելացնում են ավելի բարձր AI թույլատրություններ և ուսուցման նյութերի ներմուծում/արտահանման; Premium-ն նաև ավելացնում է անհատականացված մարզում և պրակտիկայի հատկություններ: Ընթացիկ համեմատությունը ցուցադրվում է ձեր <account>Հաշիվ</account> էջում: Հատկությունների հասանելիությունը կարող է փոխվել արտադրանքի զարգացման ընթացքում:",
           "p3": "Notoria-ն նախատեսված է անձնական լեզվասովորելու համար։ Այն դպրոց, քննությունների մարմին կամ մասնագիտական խորհրդատվության ծառայություն չէ։"
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. AI-ով գեներացված արդյունք",
           "p1": "Որոշ հնարավորություններ կարող են ստուգել, առաջարկել, գեներացնել, տառադարձել, ամփոփել կամ ուսուցանել՝ հիմնվելով Ձեր նյութի վրա։ Արդյունքը կարող է լինել թերի, սխալ կամ անհարմար Ձեր նպատակի համար։ Դուք մնում եք պատասխանատու AI արդյունքները վերանայելու համար՝ նախքան դրանց վրա հենվելը ուսումնասիրության, քննությունների, մասնագիտական օգտագործման կամ հրապարակման համար։",
           "p2": "AI հնարավորությունները կարող են անհասանելի լինել, եթե աջակցությունը անջատված է <settings>Կարգավորումներում</settings>, եթե Ձեր պլանը չի ներառում որոշակի գործիք, կամ եթե մատակարարը ժամանակավորապես անհասանելի է։",
-          "p3": "Ոչ բոլոր AI օգնականներն են պահանջում Notoria Pro։ Արտադրանքը ցույց է տալիս, թե որ գործիքներն են անվճար և որոնք պահանջում են Pro։"
+          "p3": "AI-ի հասանելիությունը և օրական թույլատրությունները տարբերվում են Ազատ, Pro և Premium միջև: Ապրանքը ցույց է տալիս պլանը և թույլատրությունը, որոնք պահանջվում են յուրաքանչյուր գործի համար:"
         },
         "plans": {
-          "title": "8. Անվճար պլան և Notoria Pro",
+          "title": "8. Ազատ, Pro և Premium պլաններ",
           "p1": "Անվճար պլանը ընդգրկում է հիմնական պրակտիկան Ձեր սեփական բառապաշարով և հարակից ուսումնական գործիքներով՝ ինչպես ցույց է տրված արտադրանքում։",
-          "p2": "Notoria Pro-ն վճարովի բաժանորդագրություն է, որը բացում է լրացուցիչ հնարավորություններ։ Ներկայիս արտադրանքում դա սովորաբար ներառում է Listening, Speaking, վարժությունների ներմուծում, նախադասություն կազմելու պարապմունք, բազմաթիվ AI աջակցությամբ ուսումնական գործիքներ և PDF/DOCX փաստաթղթերի արտահանում։ Որոշ ավելի թեթև AI օգնականներ (օրինակ՝ որոշ բառապաշարի կամ խմբագրիչի ձևաչափման օգնություններ) կարող են մնալ հասանելի անվճար պլանում, երբ AI աջակցությունը միացված է։",
-          "p3": "Pro մուտքը կապված է Ձեր օգտատիրոջ հաշվին, ուստի այն գործում է այդ հաշվի բոլոր աշխատատարածքներում։ Ադմինիստրատորի դերով հաշիվները կարող են ունենալ Pro մակարդակի մուտք առանց անձնական Stripe բաժանորդագրության։",
-          "p4": "Ձեր գնումին կիրառվող գինը Stripe Checkout-ում ցուցադրված գինն է ընթացիկ Pro պլանի համար։ Արտադրանքում այլուր ցուցադրված գինը միայն ուղենշային է և պետք է համընկնի ակտիվ Stripe գնի կազմաձևման հետ։"
+          "p2": "Pro և Premium-ը վճարովի բաժանորդագրություններ են: Pro-ն ավելացնում է ավելի բարձր կամ անսահմանափակ թույլատրություններ շատ AI գործիքների համար, ինչպես նաև ուսուցման նյութերի ներմուծում և PDF/DOCX արտահանում: Premium-ն ընդգրկում է Pro-ն և ավելացնում անհատականացված հատկություններ, ինչպիսիք են Ուսուցման մարզիչը, անձնական ուսուցման պրոֆիլը, ադապտիվ պրակտիկան, սխալների վրա հիմնված պրակտիկան և հարմարեցված վարժությունների հրահանգները: Հաշվի էջը ցույց է տալիս ընթացիկ համեմատությունը և սահմանափակումները:",
+          "p3": "Վճարովի մուտքը կապված է ձեր օգտվողի հաշվի հետ և կիրառվում է դրա աշխատանքային տարածքներում: Վարչական դերի ունեցող հաշիվները կարող են ունենալ վճարովի մակարդակի մուտք առանց անձնական Stripe բաժանորդագրության:",
+          "p4": "Դրական գինը, որը կիրառվում է, այն գինն է, որը ցուցադրվում է Stripe Checkout-ում ընտրված Pro կամ Premium պլանի համար: Ապրանքի այլ վայրերում (օրինակ՝ Հաշիվում) ցուցադրվող ցանկացած գին միայն ցուցադրական է և պետք է համապատասխանի ակտիվ Stripe գնի կարգավորմանը:"
         },
         "billing": {
           "title": "9. Բաժանորդագրություն, վճարում և չեղարկում",
-          "list0": "Pro բաժանորդագրությունները վճարվում են <strong>Stripe</strong>-ի միջոցով",
-          "list1": "Կարող եք սկսել վճարումը <account>Հաշիվ</account> էջից կամ հավելվածում կողպված Pro կառավարիչներից",
+          "list0": "Pro և Premium բաժանորդագրությունները վճարվում են <strong>Stripe</strong>-ի միջոցով",
+          "list1": "Դուք կարող եք սկսել վճարումը կամ փոխել պլանը <account>Հաշիվ</account>-ից կամ ծրագրի փակված վճարովի կառույցներից",
           "list2": "Հաշիվ էջից կարող եք բացել Stripe Customer Portal՝ հաշիվ-ապրանքագրեր դիտելու, վճարման եղանակներ թարմացնելու և բաժանորդագրությունը չեղարկելու համար",
           "list3": "Չեղարկումը հետևում է Stripe Customer Portal-ի վարքագծին Ձեր բաժանորդագրության համար",
-          "p1": "Չեղարկելուց հետո Pro մուտքը շարունակվում է միայն այնքան ժամանակ, քանի դեռ Ձեր Stripe բաժանորդագրության կարգավիճակը դեռ Pro է տալիս արտադրանքում։ Ներկայիս իրականացման մեջ Pro համարվող կարգավիճակներն են <code>active</code>, <code>trialing</code> և <code>past_due</code>։ Երբ կարգավիճակն այլևս չի համապատասխանում, հաշիվը վերադառնում է անվճար պլանին։",
-          "p2": "Եթե վճարումը ձախողվում է, Stripe-ը կարող է բաժանորդագրությունը տեղափոխել <code>past_due</code> կամ այլ կարգավիճակի։ Notoria-ն համաժամեցնում է այդ կարգավիճակը Stripe webhook-ներից։ Մինչ կարգավիճակը մնում է <code>past_due</code>, Pro հնարավորությունները մնում են հասանելի ներկայիս մուտքի կանոններով։ եթե բաժանորդագրությունը հետո չեղարկվում է կամ այլ կերպ անորակ է դառնում, Pro մուտքը ավարտվում է։",
+          "p1": "Երբ դուք չեղարկում եք նորացումը, ձեր ընթացիկ Pro կամ Premium մուտքը շարունակվում է, մինչդեռ Stripe-ի բաժանորդագրության կարգավիճակը դեռ որակավորում է արտադրությունում: Որակավորող կարգավիճակները ներկայումս ներառում են <code>active</code>, <code>trialing</code>, և <code>past_due</code>. Երբ կարգավիճակը այլևս չի որակավորվում, հաշիվը վերադառնում է Ազատ:",
+          "p2": "Եթե վճարումը ձախողվի, Stripe-ը կարող է տեղափոխել բաժանորդագրությունը <code>past_due</code> կամ այլ կարգավիճակի: Notoria-ն համաժամեցնում է այդ կարգավիճակը Stripe-ի վեբ հղումներից: Երբ այն մնում է <code>past_due</code>, ընթացիկ վճարովի պլանը մնում է հասանելի ներկայիս մուտքի կանոնների ներքո; եթե այն հետագայում դառնում է չեղարկված կամ այլ կերպ որակավորված չէ, վճարովի մուտքը ավարտվում է:",
           "p3": "Ձեր Notoria հաշիվը ջնջելը անմիջապես չեղարկում է Stripe բաժանորդագրությունը (լավագույն ջանքով)՝ որպես հաշվի ջնջման մաս։ Դա տարբերվում է Customer Portal-ով վերանորոգումը չեղարկելուց՝ հաշիվը պահպանելով։"
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Հրաժարում և պատասխանատվություն",
           "p1": "Notoria-ն տրամադրվում է «ինչպես հասանելի է» հիմունքներով՝ անհատական լեզվի ուսուցման համար։ Կիրառելի օրենքով թույլատրված առավելագույն չափով մենք հրաժարվում ենք երաշխիքներից, որոնք օրենքով պարտադիր չեն։",
-          "p2": "Կիրառելի օրենքով թույլատրված առավելագույն չափով Notoria-ն պատասխանատու չէ անուղղակի, պատահական, հատուկ, հետևանքային կամ կորցրած տվյալների վնասների համար, որոնք բխում են ծառայության օգտագործումից կամ AI արդյունքի վրա հենվելուց։ Որտեղ պատասխանատվությունը չի կարող բացառվել, այն սահմանափակվում է Notoria Pro-ի համար պահանջից առաջ երեք ամսում վճարած գումարով կամ պարտադիր օրենքով պահանջվող ավելի մեծ գումարով։",
+          "p2": "Առկա օրենքով թույլատրված առավելագույն չափով, Notoria-ն պատասխանատվություն չի կրում անուղղակի, պատահական, հատուկ, հետևողական կամ կորցրած տվյալների վնասների համար, որոնք առաջանում են ծառայության օգտագործման կամ AI արդյունքի վրա հենվելու արդյունքում: Եթե պատասխանատվությունը չի կարող բացառվել, այն սահմանափակվում է այն գումարով, որը դուք վճարել եք Notoria Pro կամ Premium-ի համար պահանջի երեք ամիս առաջ, կամ ցանկացած ավելի մեծ գումար, որը պահանջվում է պարտադիր օրենքով:",
           "p3": "Այս սահմանափակումները չեն բացառում պատասխանատվությունը, որը ֆիննական կամ ԵՄ օրենքը չի թույլատրում սահմանափակել — ներառյալ սպառողների համար հրաժարվել չհնարավոր պատասխանատվությունը և անփութությամբ պատճառված մահվան կամ անձնական վնասվածքի պատասխանատվությունը, որտեղ այդ կանոնները կիրառելի են։"
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Կառուցեք անձնական բառապաշարի բանկ՝ իմաստներով, օրինակներով և պիտակներով",
           "practice": "Պարապեք վարժություններով՝ հիմնված Ձեր սեփական բառերի և նշումների վրա",
           "create": "Գրեք տեսական նշումներ և գրավոր աշխատանք, որոնք կարող եք հետագայում վերանայել",
-          "listenSpeak": "Մեդիան վերածեք լսողական պարապմունքի և խոսեք AI դաստիարակի հետ Pro-ում"
+          "listenSpeak": "Մեդիան վերածեք լսելու պրակտիկայի, և օգտագործեք AI թույլատրությունները տեքստի և խոսքի պրակտիկայի համար"
         },
-        "note": "Որոշ AI, լսողական, խոսքի և արտահանման գործիքներ Notoria Pro-ի մաս են։ Անվճար պլանը դեռ ընդգրկում է ամենօրյա բառապաշարի պարապմունքը և ուսումնական հիմնական ցիկլը։"
+        "note": "Հիմնական ուսուցման ոլորտները հասանելի են յուրաքանչյուր պլանում: Pro-ն բարձրացնում է AI թույլատրությունները և ավելացնում ուսուցման նյութերի ներմուծում/արտահանման; Premium-ն ավելացնում է անհատականացված մարզում և պրակտիկա:"
       },
       "ai": {
         "title": "AI՝ որտեղ օգնում է",
@@ -4656,7 +4673,7 @@
         "title": "Ինչպես են կապվում ոլորտները",
         "p1": "Capture-ը արագ մուտքի կետ է։ Բառապաշարն ու տեսությունը այն տեղերն են, որտեղ նյութը նստում է։ Վարժությունները այդ նյութը դարձնում են պրակտիկա։ Գրավորը, լսողությունն ու խոսակցությունը օգնում են լեզուն ավելի ակտիվ գործածել։",
         "p2": "Պարտադիր չէ ամեն ոլորտ անցնել հերթականությամբ։ Շատերը որոշ ժամանակ մնում են բառերի և կարճ պրակտիկայի մոտ։",
-        "p3": "Բնական հաջորդ քայլը գրավորն է, երբ ցանկանում եք լեզու արտադրել Ձեր պայմաններով, ապա լսողությունն ու խոսակցությունը, երբ նույն նյութը պետք է աշխատի ականջում և ձայնում — լսողությունն ու խոսակցությունը Notoria Pro-ի մաս են։",
+        "p3": "Բնական հաջորդ քայլը գրելը է, երբ ցանկանում եք արտադրել լեզու ձեր պայմաններով, ապա լսելը և խոսելը, երբ ցանկանում եք, որ նույն նյութը աշխատի ձեր ականջում և ձայնում: Այս ոլորտները հասանելի են յուրաքանչյուր պլանում; AI օգտագործման սահմանափակումները տարբերվում են պլանով:",
         "beat": "Նախ հավաքեք և հասկացեք։ Գործածեք և խոսեք, երբ նյութը պատրաստ է էջից դուրս գալու։"
       },
       "areas": {
@@ -4680,18 +4697,18 @@
         },
         "listening": {
           "label": "Լսողություն",
-          "body": "Մեդիան վերածեք լսողության պրակտիկայի Ձեր աշխատատարածքում։ Հասանելի է Notoria Pro-ում։"
+          "body": "Մեդիան վերածեք լսելու պրակտիկայի ձեր աշխատանքային տարածքում: Հասանելի է յուրաքանչյուր պլանում; AI տեքստի թույլատրությունները տարբերվում են պլանով:"
         },
         "speaking": {
           "label": "Խոսակցություն",
-          "body": "Կենդանի պրակտիկա AI ուսուցչի հետ՝ հիմնված սովորած լեզվի վրա։ Հասանելի է Notoria Pro-ում։"
+          "body": "Կյանքի պրակտիկա AI ուսուցչի հետ, հիմնված այն լեզվի վրա, որը դուք ուսումնասիրում եք: Հասանելի է յուրաքանչյուր պլանում՝ պլանային օրական թույլատրությամբ:"
         },
         "reading": {
           "label": "Ընթերցանություն",
           "body": "Ներմուծեք կամ տեղադրեք հատվածներ, ստեղծեք ըմբռնման պրակտիկա և վերանայեք արդյունքները։ Անվճար պլանն ունի օրական AI սահմանաչափ· Pro-ն և Premium-ը բարձրացնում կամ հանում են այն։"
         },
         "capture": {
-          "label": "Capture",
+          "label": "Պատկերել",
           "body": "Արագ գցելու գոտի գրառումների համար — բառեր, կասկածներ և գաղափարներ — որոնք հետո մշակում եք բառապաշար, տեսություն, գրավոր կամ վարժություն։ Նախ Capture, երբ միայն մի պահ ունեք· տարրերը մնում են չմշակված, մինչև ավարտեք կապված գրառումը։"
         }
       },
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Ինչպե՞ս փոխեմ գաղտնաբառը կամ փակեմ հաշիվը։",
-          "a": "Բացեք <account>Հաշիվ</account>։ Այնտեղ կարող եք թարմացնել գաղտնաբառը, եթե օգտագործում եք էլ․ փոստով մուտք, կառավարել Notoria Pro-ն, արտահանել պահուստ կամ մշտապես ջնջել հաշիվը։"
+          "a": "Բացեք <account>Հաշիվ</account>: Դուք կարող եք այնտեղ թարմացնել ձեր գաղտնաբառը, եթե օգտագործում եք էլ. փոստով մուտք, կառավարել Pro կամ Premium, արտահանել պահուստային պատճեն, կամ մշտապես ջնջել ձեր հաշիվը: Հաշվի ջնջումը նաև անմիջապես չեղարկում է ցանկացած ակտիվ Stripe բաժանորդագրություն լավագույն ջանքերի հիման վրա; միայն նորացման չեղարկումը պահում է հաշիվը և դրա տվյալները:"
         },
         "pro": {
           "q": "Ինչպե՞ս են աշխատում վճարումներն ու չեղարկումը։",
-          "a": "Notoria Pro-ն վճարվում է Stripe-ով։ <account>Հաշիվ</account>-ից կարող եք բարելավել, բացել Stripe հաճախորդի պորտալը վճարման եղանակների և հաշիվ-ապրանքագրերի համար, կամ չեղարկել երկարաձգումը։"
+          "a": "Notoria Pro և Premium-ը վճարվում են Stripe-ի միջոցով: <account>Հաշիվ</account>-ից կարող եք բաժանորդագրվել, անցնել Pro և Premium միջև, կառավարել վճարման մեթոդները և հաշիվները, չեղարկել նորացումը կամ վերականգնել ծրագրավորված չեղարկումը: Նորացման չեղարկումը պահում է մուտքը մինչև Stripe-ը ավարտի որակավորված բաժանորդագրության ժամանակահատվածը; ձեր հաշվի ջնջումը առանձին է և անմիջապես չեղարկում է բաժանորդագրությունը լավագույն ջանքերի հիման վրա."
         },
         "proFeatures": {
-          "q": "Ի՞նչն է անվճար, և ինչի համար է պետք Notoria Pro։",
-          "a": "Ամենօրյա բառապաշարի պրակտիկան և առնչվող ուսումնական գործիքները հասանելի են անվճար պլանում։ Որոշ AI գործիքներ, լսողություն, խոսակցություն և փաստաթղթերի արտահանում Notoria Pro-ի մաս են։ Համեմատեք և բարելավեք <account>Հաշիվ</account>-ից։"
+          "q": "Ինչ է ներառված Ազատ, Pro և Premium-ում?",
+          "a": "Ազատը ներառում է հիմնական ուսուցման ոլորտները և օրական թույլատրությունները աջակցվող AI գործիքների համար: Pro-ն բարձրացնում է կամ հեռացնում է շատ AI սահմանափակումներ և ավելացնում ուսուցման նյութերի ներմուծում և PDF/DOCX արտահանում: Premium-ն ընդգրկում է Pro-ն և ավելացնում անհատականացված մարզում, ուսուցման պրոֆիլ, ադապտիվ և սխալների վրա հիմնված պրակտիկա, և հարմարեցված վարժությունների հրահանգներ: Տեսեք կենդանի համեմատությունը և ընթացիկ սահմանափակումները <account>Հաշիվ</account>-ում."
         },
         "learning": {
           "q": "Ինչպե՞ս են աշխատում Notoria-ի ուսումնական հնարավորությունները։",
@@ -4997,7 +5014,7 @@
         "admins": "Ադմինիստրատորներ",
         "testers": "Փորձարկողներ",
         "suspended": "Կասեցված",
-        "contentTotal": "Content records"
+        "contentTotal": "Բովանդակության գրառումներ"
       },
       "quickAccess": "Արագ մուտք",
       "quickAccessLede": "Անցնել կառավարման գործիքներին։",
@@ -5050,8 +5067,8 @@
         "created": "Գրանցված",
         "updated": "Թարմացված",
         "emailVerified": "Էլփոստը հաստատված է",
-        "email": "Email",
-        "password": "Password"
+        "email": "Էլփոստ",
+        "password": "Գաղտնաբառ"
       },
       "detail": {
         "account": "Հաշիվ",
@@ -5060,7 +5077,7 @@
         "actions": "Հաշվի գործողություններ",
         "workspaces": "Աշխատատարածքներ",
         "workspacesLede": "Այս օգտատիրոջ լեզվական աշխատատարածքները։",
-        "danger": "Danger zone"
+        "danger": "Ավտանգության գոտի"
       },
       "actions": {
         "saveProfile": "Պահպանել անունը",
@@ -5071,7 +5088,7 @@
         "delete": "Ջնջել հաշիվը",
         "grantTester": "Տալ փորձարկողի դեր",
         "revokeTester": "Հանել փորձարկողի դերը",
-        "create": "Create user"
+        "create": "Ստեղծել օգտվող"
       },
       "confirm": {
         "grantAdmin": "Ադմին մուտք տա՞լ այս հաշվին։",
@@ -5089,11 +5106,11 @@
         "admin": "Ադմինիստրատոր"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Ստեղծել օգտվող",
+        "lede": "Ստեղծեք հաշիվ էլփոստով և գաղտնաբառով: Նրանք կարող են անմիջապես մուտք գործել:"
       },
       "plans": {
-        "free": "Free",
+        "free": "Ազատ",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Սեփականատեր",
         "created": "Ստեղծված",
         "updated": "Թարմացված",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Տիրոջ էլփոստ",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Ջնջե՞լ այս աշխատատարածքը և նրա ամբողջ ուսումնական բովանդակությունը տվյալների բազայի կասկադներով։"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Ստեղծել աշխատանքային տարածք",
+        "lede": "Կցեք նոր լեզվաբառարան գոյություն ունեցող հաշվի միջոցով էլփոստով:"
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Աշխատատարածք",
         "created": "Ստեղծված",
         "updated": "Թարմացված",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Վերնագիր",
+        "word": "Բառ",
+        "folderName": "Ֆոլդերի անուն"
       },
       "detail": {
         "description": "Մետատվյալների ստուգում։ Անձնական բովանդակությունը ավտոմատ չի բեռնվում։",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Ջնջել գրառումը",
-        "saveTitle": "Save title"
+        "saveTitle": "Պահել վերնագիրը"
       },
       "confirm": {
         "delete": "Ջնջե՞լ այս գրառումը։ Կապակցված ենթատողերը հետևում են տվյալների բազայի cascade / set-null կանոններին։"
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Պատկերելու իրերը պահում են ազատ ձևի տեքստ: Վերնագրի խմբագրումը այստեղ չի աջակցվում — ջնջեք, եթե գրառումը պետք է հեռացվի:"
     },
     "jobs": {
       "title": "Առաջադրանքներ",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Անվավեր լեզվի կոդ։",
       "CONTENT_NOT_FOUND": "Գրառումը չի գտնվել։",
       "INVALID_CONTENT_MODULE": "Անհայտ բովանդակության մոդուլ։",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Այս էլփոստը արդեն գրանցված է:",
+      "PASSWORD_TOO_WEAK": "Գաղտնաբառը չի համապատասխանում ուժի պահանջներին:",
+      "CONTENT_TITLE_UNSUPPORTED": "Այս բովանդակության տեսակն աջակցում է վերնագրի խմբագրմանը:"
     }
   }
 }

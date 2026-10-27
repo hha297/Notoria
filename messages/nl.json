@@ -17,19 +17,20 @@
     "hideFilters": "Filters verbergen",
     "remove": "Verwijderen",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Uiterlijk",
+      "print": "Afdrukvriendelijk",
+      "printHint": "Witte pagina, donkere tekst",
+      "theme": "Huidig thema",
+      "themeHint": "Komt overeen met je lichte of donkere thema",
+      "previewKicker": "Voorbeeldpagina",
+      "previewTitle": "Documenttitel",
+      "previewBody": "De hoofdtekst gebruikt de geselecteerde kleuren en spatiëring.",
+      "previewCallout": "Callouts en accenten volgen de modulekleur.",
+      "fixedNote": "Uiterlijk is vastgelegd in het geëxporteerde bestand. Exporteer opnieuw om het te wijzigen.",
+      "docxBackgroundNote": "Word en andere apps tonen mogelijk pagina-achtergronden niet op dezelfde manier, vooral bij het afdrukken."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Scroll naar boven",
+    "moreActions": "Meer acties"
   },
   "contentImport": {
     "title": {
@@ -474,32 +475,32 @@
       "open": "Tags beheren",
       "eyebrow": "Tags",
       "title": "Tagbeheer",
-      "description": "Kies een tag en wijs deze toe of verwijder deze van woorden. Toegewezen en overige woorden blijven in aparte lijsten.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Kies een tag en wijs deze toe of verwijder deze van woorden.",
+      "pageDescription": "Kies Standaard of Aangepast, kies een tag en voeg deze toe of verwijder deze van woorden.",
+      "disabledNoWorkspace": "Maak een werkruimte aan voordat je vocabulaire-tags beheert.",
+      "backToVocabulary": "Terug naar vocabulaire",
+      "backToSettings": "Terug naar instellingen",
       "groupsLabel": "Standaard taggroepen",
       "tagsHeading": "Tags",
       "standardTagsHeading": "Standaardtags",
       "customTagsHeading": "Aangepaste tags",
-      "customTagsHint": "Labels die u zelf maakt voor uw organisatie — geen woordsoorten.",
+      "customTagsHint": "Werkruimte-labels die je maakt — zoek ze als de lijst lang is.",
       "emptyCustomTags": "Nog geen aangepaste tags. Maak ze aan bij het bewerken van een woord.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Geen aangepaste tags die overeenkomen met deze zoekopdracht.",
+      "tagSearchPlaceholder": "Zoek tags…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standaard",
       "kindCustom": "Aangepast",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Woordenlijsten",
+      "wordTabAssigned": "Getagd",
+      "wordTabOther": "Ontagged",
       "assignedHeading": "Woorden met deze tag",
       "otherHeading": "Overige woorden",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Selecteer alles op deze pagina",
+      "clearSelection": "Selectie wissen",
+      "selectionScopePage": "Selecteren vanaf deze pagina ({count} van {total})",
+      "selectionScopeFiltered": "Selecteren binnen de huidige zoekresultaten",
       "searchPlaceholder": "Zoek woorden of betekenissen…",
       "wordCount": "{count}",
       "loading": "Woordenschat laden…",
@@ -509,13 +510,23 @@
       "emptyOther": "Elk woord heeft deze tag al.",
       "emptyOtherSearch": "Geen overeenkomende woorden om toe te wijzen.",
       "selected": "{count} geselecteerd",
-      "addToTag": "Aan tag toevoegen",
-      "removeFromTag": "Van tag verwijderen",
-      "applyAdd": "Aan tag toevoegen ({count})",
-      "applyRemove": "Van tag verwijderen ({count})",
+      "addToTag": "Tag toevoegen",
+      "removeFromTag": "Tag verwijderen",
+      "applyAdd": "Tag toevoegen ({count})",
+      "applyRemove": "Tag verwijderen ({count})",
       "added": "{count} woord(en) toegevoegd aan {tag}",
       "removed": "{count} woord(en) verwijderd van {tag}",
-      "error": "Kon taglidmaatschap niet bijwerken"
+      "error": "Kon taglidmaatschap niet bijwerken",
+      "systemsLabel": "Tag-systemen",
+      "standardSystemTitle": "Standaard",
+      "standardSystemMeta": "Onderwerp en gebruik, apart weergegeven",
+      "usageOptional": "Optioneel",
+      "customSystemTitle": "Aangepast",
+      "customSystemMeta": "{count, plural, one {# label} other {# labels}}",
+      "customPickerLabel": "Kies een aangepaste tag",
+      "customPickerPlaceholder": "Selecteer een aangepaste tag…",
+      "customSearchPlaceholder": "Zoek aangepaste tags…",
+      "pickTagFirst": "Kies een tag hierboven om het lidmaatschap van woorden te beheren."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Bijgewerkt {time}",
@@ -584,7 +595,11 @@
         "notes": "Notities",
         "updated": "Laatst bijgewerkt"
       }
-    }
+    },
+    "selectedCustomTags": "Geselecteerde tags",
+    "selectedSynonyms": "Geselecteerde synoniemen",
+    "removeCustomTag": "Verwijder {name}",
+    "pickerLoading": "Laden…"
   },
   "tags": {
     "groups": {
@@ -873,7 +888,7 @@
       "aiReady": "Oefening klaar",
       "aiUnavailable": "AI-vragen konden nu niet worden gegenereerd.",
       "aiForbidden": "AI-theorieoefeningen zijn beschikbaar met Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Extra instructies zijn beschikbaar op Premium.",
       "aiDisabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "feedback": {
         "correct": "Goed!",
@@ -927,20 +942,22 @@
         "why": "Waarom",
         "complete": "Begrepen",
         "completeHint": "U kunt verdergaan wanneer u klaar bent.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Start oefening",
+        "skipReviewAndStart": "Overslaan en oefening starten"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Niet geordend",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# notitie} other {# notities}}",
+        "selectAll": "Selecteer alles",
+        "selectGroup": "Selecteer notities in {name}",
+        "expand": "Uitvouwen {name}",
+        "collapse": "Inklappen {name}",
+        "selectedCount": "{count, plural, one {# theorie geselecteerd} other {# theorieën geselecteerd}}",
+        "practiceSelected": "Oefen geselecteerde",
+        "clearSelection": "Selectie wissen",
+        "subfolders": "{count, plural, one {# submap} other {# submappen}}",
+        "selectedOne": "1 theorie geselecteerd"
       }
     },
     "types": {
@@ -998,8 +1015,8 @@
       "startsWith": "Begint met “{letter}”",
       "revealPrompt": "Nog vast? U kunt het volledige antwoord tonen.",
       "revealAnswer": "Antwoord tonen",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Volgende hint",
+      "hintProgress": "Hint {current} van {total}"
     },
     "empty": {
       "noWordsTitle": "Nog geen woordenschat",
@@ -1032,17 +1049,17 @@
       "shuffle": "Schudden",
       "finish": "Ronde afronden",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Vraagbron",
+        "chooseAi": "Gebruik AI-gegenereerd",
+        "emptyTitle": "Geen bruikbare opgeslagen voorbeelden",
+        "emptyDescription": "Voeg voorbeeldzinnen toe die elk woord duidelijk bevatten, pas je filters aan of schakel over naar AI-gegenereerd.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Opgeslagen voorbeelden",
+          "description": "Bouw vragen direct vanuit je vocabulairevoorbeelden. Geen AI-wacht."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI-gegenereerd",
+          "description": "Creëer nieuwe zinnen vanuit je vocabulaire met AI."
         }
       }
     },
@@ -1059,38 +1076,38 @@
       "forbidden": "AI-oefeningengeneratie is beschikbaar met Pro.",
       "disabled": "AI-hulp is uitgeschakeld in Instellingen.",
       "upgradeHint": "Free omvat enkele AI-oefeningengeneraties per dag. Pro verwijdert de limiet.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
+      "additionalInstructions": "Extra instructies",
+      "additionalInstructionsPlaceholder": "Bijvoorbeeld: Gebruik restaurantsituaties, houd de taal op A2-niveau en leg fouten uit in je interface-taal.",
+      "additionalInstructionsLocked": "Upgrade naar Premium om ondersteunde oefentypen aan te passen, een realistische context in te stellen en je eigen instructies toe te voegen.",
+      "premiumRequired": "Extra instructies zijn beschikbaar op Premium.",
       "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "presetNone": "Geen preset geselecteerd",
+      "presetApply": "Toepassen",
+      "presetSave": "Preset opslaan",
+      "presetName": "Preset naam",
+      "presetDelete": "Verwijderen",
+      "presetSaved": "Preset opgeslagen",
+      "presetDeleted": "Preset verwijderd",
+      "presetSaveFailed": "Kon die preset niet opslaan.",
       "emptyWords": "Voeg woordenschatwoorden toe voordat u vragen genereert.",
       "noneValid": "AI kon geen geldige vragen maken voor deze woorden. Probeer het opnieuw.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Pas de context, stijl of focus van je oefening aan. Laat leeg om de standaardinstellingen te gebruiken.",
+      "presetUpdate": "Preset bijwerken",
+      "presetUpdated": "Preset bijgewerkt",
+      "presetsTitle": "Opgeslagen presets",
+      "presetsHelper": "Presets slaan oefeninstellingen en extra instructies op. Ze veranderen de geselecteerde woordenschat of theorieën niet.",
+      "presetsEmpty": "Nog geen opgeslagen presets. Sla je huidige instellingen op om ze later opnieuw te gebruiken.",
+      "presetSaveAs": "Opslaan als preset",
+      "presetUpdateCurrent": "Bijwerken met huidige instellingen",
+      "presetRename": "Hernoemen",
+      "presetManage": "Preset beheren",
+      "presetRenamed": "Preset hernoemd",
+      "presetSaveDialogTitle": "Opslaan als preset",
+      "presetSaveDialogDescription": "Geef deze preset een naam om de huidige oefeninstellingen en extra instructies opnieuw te gebruiken. Geselecteerde woordenschat of theorieën worden niet opgeslagen.",
+      "presetRenameDialogTitle": "Preset hernoemen",
+      "presetRenameDialogDescription": "Kies een nieuwe naam voor deze preset.",
+      "presetDeleteDialogTitle": "Preset verwijderen?",
+      "presetDeleteDialogDescription": "Verwijder “{name}”? Je huidige oefenconfiguratie blijft zoals deze is."
     },
     "session": {
       "complete": "Sessie voltooid",
@@ -1099,14 +1116,14 @@
       "tryAgain": "Opnieuw proberen",
       "questionsLabel": "Vragen",
       "correctLabel": "Goed",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Onjuist",
+      "unansweredLabel": "Onbeantwoord",
       "reviewLabel": "Te herzien",
       "answeredProgress": "{answered} / {total} beantwoord",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Controleer antwoord",
+      "nextQuestion": "Volgende",
+      "viewResults": "Bekijk resultaten",
       "submitSet": "Antwoorden indienen",
       "submitting": "Controleren…",
       "unansweredWarnTitle": "Onbeantwoorde vragen",
@@ -1121,54 +1138,54 @@
       "unanswered": "Niet beantwoord",
       "yourAnswer": "Uw antwoord",
       "correctAnswer": "Juiste antwoord",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Slechts {count} vragen beschikbaar vanuit je huidige filters.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Hoe je oefent",
+        "lockedHint": "Voltooi of begin een nieuwe set om dit te wijzigen.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Een voor een",
+          "description": "Zie één vraag tegelijk. Controleer na elk antwoord voor directe feedback."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Alle vragen",
+          "description": "Zie de volledige set, beantwoord in willekeurige volgorde en dien eenmaal in voor feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Beoordelen",
+        "allCorrect": "Perfect — elke vraag correct.",
+        "summary": "{incorrect} onjuist · {unanswered} onbeantwoord · {needsReview} om te beoordelen",
+        "viewWrong": "Bekijk onjuiste antwoorden",
+        "filtersLabel": "Filter vragen",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
+          "all": "Alle ({count})",
+          "needs_review": "Onjuist & onbeantwoord ({count})",
           "correct": "Correct ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Vorige",
+        "nextWrong": "Volgende",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} om te beoordelen",
+        "floatLabel": "Navigatie onjuiste antwoorden",
+        "closeFloat": "Toon alle antwoorden"
       },
       "scorePercent": "{percent}% correct",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Perfecte set",
+          "body": "Elke antwoord was correct. Die focus verdient een nieuwe ronde wanneer je er klaar voor bent."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Sterke afsluiting",
+          "body": "Je begrijpt het duidelijk — bekijk de gemiste punten, en sluit het af met een nieuwe set."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Goed werk — ga door",
+          "body": "Een paar vastgelopen punten zijn normaal. Bekijk ze eenmaal en probeer het opnieuw terwijl ze vers zijn."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Bijna daar",
+          "body": "Beantwoord eerst de onbeantwoorde vragen — dan zal de score een duidelijker verhaal vertellen."
         }
       }
     },
@@ -1181,7 +1198,7 @@
       },
       "contextualLanguageHint": "Vragen worden gegenereerd in {language} (taal van de werkruimte).",
       "contextualEmptyTitle": "Contextuele vragen genereren",
-      "contextualEmptyDescription": "Maak invul-meerkeuzevragen vanuit uw woordenschat.",
+      "contextualEmptyDescription": "Voeg optionele instructies hieronder toe als je dat wilt, en druk vervolgens op Genereren. Je kunt de prompt leeg laten.",
       "contextualProDescription": "Contextuele AI-vragen zijn beschikbaar met Pro.",
       "unlockContextual": "Ontgrendelen met Pro",
       "correct": "Goed!",
@@ -1202,8 +1219,8 @@
       "hint": "Selecteer een woord, tik daarna op de betekenis",
       "complete": "Alle paren gekoppeld — goed gedaan!",
       "shuffle": "Kolommen schudden",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} paren",
+      "continueRound": "Doorgaan"
     },
     "typeAnswer": {
       "questionWord": "Wat is de betekenis?",
@@ -1213,7 +1230,7 @@
         "contextual": "Contextueel"
       },
       "contextualEmptyTitle": "Contextuele vragen genereren",
-      "contextualEmptyDescription": "Maak invulprompts om te typen vanuit uw woordenschat.",
+      "contextualEmptyDescription": "Voeg optionele instructies hieronder toe als je dat wilt, en druk vervolgens op Genereren. Je kunt de prompt leeg laten.",
       "contextualProDescription": "Contextuele AI-vragen zijn beschikbaar met Pro.",
       "unlockContextual": "Ontgrendelen met Pro",
       "placeholder": "Typ uw antwoord…",
@@ -1597,13 +1614,13 @@
       "writing": {
         "title": "Schrijven",
         "description": "Rijke documenten en vragensets die u opnieuw kunt openen en exporteren.",
-        "how": "Begin een concept, organiseer met mappen, en gebruik Pro AI om uw tekst te controleren of te verbeteren.",
+        "how": "Begin een concept, organiseer met mappen en gebruik de AI-toelage van je plan om je tekst te controleren of te verbeteren.",
         "cta": "Schrijven openen"
       },
       "listening": {
         "title": "Luisteren",
         "description": "Maak van echte audio of video een les.",
-        "how": "Upload een fragment en genereer een transcriptie op Free. Gegenereerde luisteroefeningen horen bij Pro.",
+        "how": "Upload een clip, genereer een transcript en bouw luisteroefeningen met de AI-toelage die in je plan is inbegrepen.",
         "cta": "Luisteren openen"
       },
       "speaking": {
@@ -3119,7 +3136,7 @@
       "warnings": {
         "workspace_language_reuse": "Sommige werkruimten bestaan al voor dezelfde taal. Hun inhoud wordt aan uw bestaande werkruimten toegevoegd in plaats van duplicaten te maken.",
         "empty_backup": "Deze back-up bevat geen importeerbare leergegevens.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Sommige bestaande items delen dezelfde naam. Import zal er een deterministisch hergebruiken en de anderen ongewijzigd laten."
       },
       "cancel": "Annuleren",
       "confirm": "Leergegevens importeren",
@@ -3164,11 +3181,11 @@
         "requestTooLarge": "Die back-up is te groot om via deze pagina te verwerken. Probeer een kleinere export of neem contact op met de ondersteuning.",
         "notConfigured": "Bestandsopslag is nog niet geconfigureerd voor back-upimport."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Al in je account",
+      "skippedInAccountHint": "Deze namen komen overeen met items die je al hebt. Ze worden niet opnieuw geïmporteerd. Nieuwe items onder dezelfde werkruimte worden nog steeds geïmporteerd.",
+      "skippedInBackupTitle": "Dubbele namen in deze backup",
+      "skippedInBackupHint": "Het bestand vermeldt dezelfde naam meer dan eens. Alleen de eerste kopie van elke naam wordt geïmporteerd — dit is normaal, zelfs op een leeg account.",
+      "skippedOtherTitle": "Kon niet importeren"
     },
     "danger": {
       "title": "Account sluiten",
@@ -3184,7 +3201,7 @@
       "warningTitle": "Voordat u doorgaat",
       "warnings": {
         "workspaces": "Elke werkruimte en alle woordenschat-, theorie-, schrijf-, luister- en spreekgegevens worden verwijderd.",
-        "billing": "Elk actief Notoria Pro-abonnement wordt onmiddellijk geannuleerd.",
+        "billing": "Elke actieve Notoria Pro of Premium-abonnement wordt onmiddellijk geannuleerd.",
         "media": "Geüploade media en uw profielfoto worden verwijderd.",
         "permanent": "Er is geen herstelperiode na bevestiging."
       },
@@ -3233,7 +3250,7 @@
     "upgrade": "Upgraden naar Pro",
     "manage": "Abonnement beheren",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratis",
     "premiumBadge": "Premium",
     "renewsOn": "Verlengt op {date}",
     "status": "Status: {status}",
@@ -3449,7 +3466,7 @@
       "personalLearningPath": "Persoonlijk leerpad",
       "personalizedRecommendations": "Gepersonaliseerde aanbevelingen",
       "crossModuleIntelligence": "Cross-module personalisatie",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Aangepaste oefeninstructies"
     },
     "compare": {
       "heading": "Abonnementen vergelijken",
@@ -3458,7 +3475,7 @@
       "feature": "Functie",
       "current": "Huidig",
       "capability": "Wat u krijgt",
-      "free": "Free",
+      "free": "Gratis",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Inbegrepen bij Free",
@@ -4048,9 +4065,9 @@
     "privacyTitle": "Privacybeleid",
     "termsTitle": "Gebruiksvoorwaarden",
     "privacyDescription": "Hoe Notoria persoonsgegevens en leercontent verzamelt, gebruikt en verwijdert voor de privé-taalleerwerkruimte.",
-    "termsDescription": "Voorwaarden voor het gebruik van de privé-taalleerwerkruimte van Notoria, accounts, AI-functies en facturering van Notoria Pro.",
+    "termsDescription": "Voorwaarden voor het gebruik van Notoria's privé taal-leerwerkruimte, accounts, AI-functies en Pro of Premium facturering.",
     "updated": "Laatst bijgewerkt {date}",
-    "updatedDate": "23 september 2026",
+    "updatedDate": "27 oktober 2026",
     "backToSignIn": "Terug naar aanmelden",
     "backHome": "Terug naar Notoria",
     "authFooter": "Privacy · Voorwaarden",
@@ -4071,7 +4088,7 @@
         "purposes": "Waarom we gegevens verwerken",
         "auth": "Accounts en aanmelden",
         "ai": "AI-functies",
-        "payments": "Betalingen (Notoria Pro)",
+        "payments": "Betalingen (Pro en Premium)",
         "processors": "Dienstverleners",
         "cookies": "Cookies en apparaatopslag",
         "transfers": "Internationale doorgiften",
@@ -4095,7 +4112,7 @@
           "list": [
             "een account aanmaakt of gebruikt",
             "materiaal opslaat in privéwerkruimten",
-            "zich abonneert op Notoria Pro",
+            "abonneren op Notoria Pro of Premium",
             "optionele AI-ondersteunde tools gebruikt",
             "media uploadt voor luisteren of profielgebruik",
             "spreekpraktijk gebruikt",
@@ -4156,7 +4173,7 @@
               "basis": "Overeenkomst (art. 6 lid 1 onder b)"
             },
             {
-              "purpose": "Facturering en abonnementsstatus van Notoria Pro uitvoeren via Stripe",
+              "purpose": "Beheer Notoria Pro en Premium facturering en abonnementsstatus via Stripe",
               "basis": "Overeenkomst (art. 6 lid 1 onder b)"
             },
             {
@@ -4191,7 +4208,7 @@
           "p4": "De huidige codebase gebruikt geen andere providers van grote taalmodellen naast OpenAI. OpenAI verwerkt gegevens onder de eigen voorwaarden en het eigen privacybeleid als verwerker voor deze functies."
         },
         "payments": {
-          "title": "7. Betalingen (Notoria Pro)",
+          "title": "7. Betalingen (Pro en Premium)",
           "p1": "Betaalde abonnementen worden afgehandeld door <strong>Stripe</strong>. Afrekenen, facturen, betaalmethoden en opzegging verlopen via Stripe Checkout en het Stripe Customer Portal. Stripe-webhooks werken uw abonnement en status bij in Notoria.",
           "p2": "Stripe verwerkt betalingsgegevens als betalingsprovider. Zie de privacydocumentatie van Stripe voor de omgang met kaarten."
         },
@@ -4233,7 +4250,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Afrekenen, portal en abonnementsstatus van Notoria Pro"
+              "role": "Notoria Pro en Premium checkout, portal en abonnementsstatus"
             },
             {
               "provider": "Google",
@@ -4347,7 +4364,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Deze Gebruiksvoorwaarden leggen de regels uit voor het gebruik van Notoria op <site>www.notoria.fi</site>. Ze beschrijven hoe het product vandaag werkt: privé-leerwerkruimten, optionele facturering van Notoria Pro via Stripe, en AI-ondersteunde functies. Ze zijn geen vervanging voor advies van een advocaat over uw specifieke situatie.",
+      "intro": "Deze Gebruiksvoorwaarden leggen de regels uit voor het gebruik van Notoria op <site>www.notoria.fi</site>. Ze beschrijven hoe het product vandaag werkt: privé leerwerkruimtes, optionele Pro en Premium facturering via Stripe, en AI-ondersteunde functies. Ze zijn geen vervanging voor advies van een advocaat over jouw specifieke situatie.",
       "tocTitle": "Op deze pagina",
       "tocAria": "Op deze pagina",
       "toc": {
@@ -4358,7 +4375,7 @@
         "acceptable-use": "Aanvaardbaar gebruik",
         "ip": "Intellectuele eigendom",
         "ai": "AI-gegenereerde output",
-        "plans": "Free-abonnement en Notoria Pro",
+        "plans": "Gratis, Pro en Premium plannen",
         "billing": "Abonnement en facturering",
         "refunds": "Restituties en consumentenrechten",
         "availability": "Beschikbaarheid",
@@ -4377,7 +4394,7 @@
         "service": {
           "title": "2. De dienst",
           "p1": "Notoria is een privé-taalleerwebapp. U kunt werkruimten maken en leermateriaal bewaren zoals vocabulaire, theorienotities, schrijven, oefeningen, luisterlessen en spreeksessies.",
-          "p2": "Sommige functies zijn beschikbaar op het free-abonnement. Notoria Pro ontgrendelt aanvullende mogelijkheden zoals getoond in het product en op uw pagina <account>Account</account> — inclusief Luisteren, Spreken, bepaalde AI-studietools, oefeningimport en betaalde documentexportformaten. Functiebeschikbaarheid kan wijzigen naarmate het product evolueert.",
+          "p2": "Kernleergebieden, waaronder Luisteren, Spreken en Lezen, zijn beschikbaar op elk plan. Pro en Premium voegen hogere AI-toelagen en import/export van leermateriaal toe; Premium voegt ook gepersonaliseerde coaching en oefenfuncties toe. De huidige vergelijking wordt weergegeven op je <account>Account</account> pagina. Beschikbaarheid van functies kan veranderen naarmate het product evolueert.",
           "p3": "Notoria is bedoeld voor persoonlijk taalleren. Het is geen school, exameninstantie of dienst voor professioneel advies."
         },
         "accounts": {
@@ -4418,23 +4435,23 @@
           "title": "7. AI-gegenereerde output",
           "p1": "Sommige functies kunnen controleren, suggereren, genereren, transcriberen, samenvatten of begeleiden op basis van uw materiaal. Output kan onvolledig, onjuist of ongeschikt zijn voor uw doel. U blijft verantwoordelijk voor het beoordelen van AI-resultaten voordat u erop vertrouwt voor studie, examens, professioneel gebruik of publicatie.",
           "p2": "AI-functies kunnen niet beschikbaar zijn als ondersteuning is uitgeschakeld in <settings>Instellingen</settings>, als uw abonnement een bepaalde tool niet omvat, of als een provider tijdelijk niet bereikbaar is.",
-          "p3": "Niet alle AI-helpers vereisen Notoria Pro. Het product toont welke tools gratis zijn en welke Pro nodig hebben."
+          "p3": "AI-beschikbaarheid en dagelijkse toelagen variëren tussen Gratis, Pro en Premium. Het product toont het plan en de toelage die vereist zijn voor elk hulpmiddel."
         },
         "plans": {
-          "title": "8. Free-abonnement en Notoria Pro",
+          "title": "8. Gratis, Pro en Premium plannen",
           "p1": "Het free-abonnement dekt kerntoefening met uw eigen vocabulaire en gerelateerde studietools zoals getoond in het product.",
-          "p2": "Notoria Pro is een betaald abonnement dat aanvullende functies ontgrendelt. In het huidige product omvat dat typisch Luisteren, Spreken, oefeningimport, zin-maken-oefening, veel AI-ondersteunde studietools en PDF/DOCX-documentexport. Sommige lichtere AI-helpers (zoals bepaalde vocabulaire- of editoropmaakhulpen) kunnen beschikbaar blijven op het free-abonnement wanneer AI-ondersteuning is ingeschakeld.",
-          "p3": "Pro-toegang is gekoppeld aan uw gebruikersaccount, zodat deze geldt voor de werkruimten onder dat account. Accounts met een beheerdersrol kunnen Pro-niveau toegang hebben zonder een persoonlijk Stripe-abonnement.",
-          "p4": "De prijs die geldt voor uw aankoop is de prijs die bij Stripe Checkout wordt getoond voor het huidige Pro-abonnement. Elke prijs die elders in het product wordt getoond (bijvoorbeeld op Account) is slechts indicatief en moet overeenkomen met de actieve Stripe-prijsconfiguratie."
+          "p2": "Pro en Premium zijn betaalde abonnementen. Pro voegt hogere of onbeperkte toelagen voor veel AI-hulpmiddelen toe, plus import van leermateriaal en PDF/DOCX-export. Premium omvat Pro en voegt gepersonaliseerde functies toe zoals de Leercoach, persoonlijk leerprofiel, adaptieve oefening, foutgebaseerde oefening en aangepaste oefeninstructies. De Account-pagina toont de huidige vergelijking en limieten.",
+          "p3": "Betaalde toegang is gekoppeld aan je gebruikersaccount en geldt voor al zijn werkruimtes. Accounts met een beheerdersrol kunnen betaalde toegang hebben zonder een persoonlijk Stripe-abonnement.",
+          "p4": "De prijs die van toepassing is, is de prijs die wordt weergegeven bij Stripe Checkout voor het geselecteerde Pro of Premium plan. Elke prijs die elders in het product wordt weergegeven (bijvoorbeeld op Account) is slechts indicatief en moet overeenkomen met de actieve prijsconfiguratie van Stripe."
         },
         "billing": {
           "title": "9. Abonnement, facturering en opzegging",
-          "list0": "Pro-abonnementen worden gefactureerd via <strong>Stripe</strong>",
-          "list1": "U kunt afrekenen starten vanuit <account>Account</account> of vanuit vergrendelde Pro-bedieningselementen in de app",
+          "list0": "Pro en Premium abonnementen worden gefactureerd via <strong>Stripe</strong>",
+          "list1": "Je kunt de checkout starten of het plan wijzigen vanuit <account>Account</account> of vanuit vergrendelde betaalde controles in de app",
           "list2": "Via Account kunt u het Stripe Customer Portal openen om facturen te bekijken, betaalmethoden bij te werken en het abonnement op te zeggen",
           "list3": "Opzegging volgt het gedrag van het Stripe Customer Portal voor uw abonnement",
-          "p1": "Nadat u opzegt, blijft Pro-toegang alleen bestaan zolang uw Stripe-abonnementsstatus in het product nog Pro verleent. In de huidige implementatie omvatten statussen die als Pro worden behandeld <code>active</code>, <code>trialing</code> en <code>past_due</code>. Wanneer de status niet langer kwalificeert, keert het account terug naar het free-abonnement.",
-          "p2": "Als een betaling mislukt, kan Stripe het abonnement naar <code>past_due</code> of een andere status verplaatsen. Notoria synchroniseert die status vanuit Stripe-webhooks. Zolang de status <code>past_due</code> blijft, blijven Pro-functies beschikbaar onder de huidige toegangsregels; als het abonnement later wordt geannuleerd of anderszins niet meer in aanmerking komt, eindigt Pro-toegang.",
+          "p1": "Nadat je de verlenging annuleert, blijft je huidige Pro of Premium-toegang behouden zolang de Stripe-abonnementsstatus nog kwalificeert in het product. Kwalificerende statussen zijn momenteel <code>actief</code>, <code>trialing</code> en <code>past_due</code>. Wanneer de status niet langer kwalificeert, keert het account terug naar Gratis.",
+          "p2": "Als een betaling mislukt, kan Stripe het abonnement verplaatsen naar <code>past_due</code> of een andere status. Notoria synchroniseert die status vanuit Stripe-webhooks. Terwijl het <code>past_due</code> blijft, blijft het huidige betaalde plan beschikbaar onder de huidige toegangsregels; als het later wordt geannuleerd of anderszins niet in aanmerking komt, eindigt de betaalde toegang.",
           "p3": "Het verwijderen van uw Notoria-account zegt het Stripe-abonnement onmiddellijk op (best effort) als onderdeel van accountverwijdering. Dat verschilt van het opzeggen van verlenging via het Customer Portal terwijl u het account behoudt."
         },
         "refunds": {
@@ -4455,7 +4472,7 @@
         "liability": {
           "title": "13. Disclaimer en aansprakelijkheid",
           "p1": "Notoria wordt geleverd op een „as available”-basis voor persoonlijk taalleren. Voor zover toegestaan door toepasselijk recht wijzen we garanties af die niet wettelijk verplicht zijn.",
-          "p2": "Voor zover toegestaan door toepasselijk recht is Notoria niet aansprakelijk voor indirecte, incidentele, bijzondere, gevolgschade of schade door verloren gegevens die voortvloeit uit uw gebruik van de dienst of vertrouwen op AI-output. Waar aansprakelijkheid niet kan worden uitgesloten, is deze beperkt tot het bedrag dat u in de drie maanden vóór de vordering voor Notoria Pro hebt betaald, of elk hoger bedrag dat door dwingend recht wordt vereist.",
+          "p2": "Voor zover toegestaan door de toepasselijke wetgeving, is Notoria niet aansprakelijk voor indirecte, incidentele, speciale, gevolg- of gegevensverlies schade die voortvloeit uit jouw gebruik van de service of afhankelijkheid van AI-uitvoer. Waar aansprakelijkheid niet kan worden uitgesloten, is deze beperkt tot het bedrag dat je hebt betaald voor Notoria Pro of Premium in de drie maanden voorafgaand aan de claim, of elk groter bedrag dat vereist is door dwingende wetgeving.",
           "p3": "Deze beperkingen sluiten geen aansprakelijkheid uit die Fins of EU-recht niet toestaat te beperken — inclusief aansprakelijkheid die voor consumenten niet kan worden afgeweken, en aansprakelijkheid voor dood of persoonlijk letsel veroorzaakt door nalatigheid waar dergelijke regels van toepassing zijn."
         },
         "changes": {
@@ -4528,9 +4545,9 @@
           "vocab": "Bouw een persoonlijke vocabulairebank met betekenissen, voorbeelden en tags",
           "practice": "Oefen met oefeningen uit uw eigen woorden en notities",
           "create": "Schrijf theorienotities en schrijfwerk waar u later op kunt terugkomen",
-          "listenSpeak": "Zet media om in luisterpraktijk en spreek met een AI-docent op Pro"
+          "listenSpeak": "Zet media om in luisteroefeningen en gebruik AI-toelagen voor transcriptie en spreekpraktijk"
         },
-        "note": "Sommige AI-, luister-, spreek- en exporttools maken deel uit van Notoria Pro. Het free-abonnement dekt nog steeds dagelijkse vocabulaireoefening en de kern-studielus."
+        "note": "Kernleergebieden zijn beschikbaar op elk plan. Pro verhoogt AI-toelagen en voegt import/export van leermateriaal toe; Premium voegt gepersonaliseerde coaching en oefening toe."
       },
       "ai": {
         "title": "AI, waar het helpt",
@@ -4656,7 +4673,7 @@
         "title": "Hoe de gebieden verbinden",
         "p1": "Vastleggen is het snelle instappunt. Vocabulaire en Theorie zijn waar materiaal landt. Oefening zet dat materiaal om in praktijk. Schrijven, Luisteren en Spreken helpen u de taal actiever te gebruiken.",
         "p2": "U hoeft niet elk gebied in volgorde te doorlopen. Veel mensen blijven een tijd bij woorden en korte oefening.",
-        "p3": "Een natuurlijke volgende stap is schrijven wanneer u taal wilt produceren op uw eigen voorwaarden, daarna luisteren en spreken wanneer u hetzelfde materiaal in oor en stem wilt laten werken — Luisteren en Spreken maken deel uit van Notoria Pro.",
+        "p3": "Een natuurlijke volgende stap is schrijven wanneer je taal op jouw voorwaarden wilt produceren, en dan luisteren en spreken wanneer je hetzelfde materiaal wilt laten werken in je oor en stem. Deze gebieden zijn beschikbaar op elk plan; AI-gebruikslimieten variëren per plan.",
         "beat": "Eerst verzamelen en begrijpen. Gebruiken en spreken wanneer het materiaal klaar is om de pagina te verlaten."
       },
       "areas": {
@@ -4680,11 +4697,11 @@
         },
         "listening": {
           "label": "Luisteren",
-          "body": "Zet media om in luisterpraktijk in uw werkruimte. Beschikbaar op Notoria Pro."
+          "body": "Zet media om in luisteroefeningen in je werkruimte. Beschikbaar op elk plan; AI-transcriptietoelagen variëren per plan."
         },
         "speaking": {
           "label": "Spreken",
-          "body": "Live oefenen met een AI-docent, geworteld in de taal die u studeert. Beschikbaar op Notoria Pro."
+          "body": "Live oefenen met een AI-tutor, gebaseerd op de taal die je bestudeert. Beschikbaar op elk plan met een plan-gebaseerde dagelijkse toelage."
         },
         "reading": {
           "label": "Lezen",
@@ -4734,15 +4751,15 @@
         },
         "account": {
           "q": "Hoe wijzig ik mijn wachtwoord of sluit ik mijn account?",
-          "a": "Open <account>Account</account>. Daar kunt u uw wachtwoord bijwerken als u e-mailaanmelden gebruikt, Notoria Pro beheren, een back-up exporteren of uw account permanent verwijderen."
+          "a": "Open <account>Account</account>. Je kunt daar je wachtwoord bijwerken als je e-mailaanmelding gebruikt, Pro of Premium beheren, een back-up exporteren of je account permanent verwijderen. Het verwijderen van het account annuleert ook onmiddellijk elk actief Stripe-abonnement op basis van beste inspanning; alleen het annuleren van de verlenging houdt het account en de gegevens ervan."
         },
         "pro": {
           "q": "Hoe werken facturering en opzegging?",
-          "a": "Notoria Pro wordt gefactureerd via Stripe. Via <account>Account</account> kunt u upgraden, het Stripe-klantenportaal openen om betaalmethoden en facturen te beheren, of verlenging opzeggen."
+          "a": "Notoria Pro en Premium worden gefactureerd via Stripe. Vanuit <account>Account</account> kun je je abonneren, wisselen tussen Pro en Premium, betaalmethoden en facturen beheren, de verlenging annuleren of een geplande annulering hervatten. Het annuleren van de verlenging houdt toegang totdat Stripe de kwalificerende abonnementsperiode beëindigt; het verwijderen van je account is afzonderlijk en annuleert het abonnement onmiddellijk op basis van beste inspanning."
         },
         "proFeatures": {
-          "q": "Wat is gratis, en wat heeft Notoria Pro nodig?",
-          "a": "Dagelijkse vocabulaireoefening en gerelateerde studietools zijn beschikbaar op het free-abonnement. Sommige AI-tools, luisteren, spreken en documentexportfuncties maken deel uit van Notoria Pro. Vergelijk en upgrade via <account>Account</account>."
+          "q": "Wat is inbegrepen bij Gratis, Pro en Premium?",
+          "a": "Gratis omvat de kernleergebieden en dagelijkse toelagen voor ondersteunde AI-hulpmiddelen. Pro verhoogt of verwijdert veel AI-limieten en voegt import van leermateriaal plus PDF/DOCX-export toe. Premium omvat Pro en voegt gepersonaliseerde coaching, een leerprofiel, adaptieve en foutgebaseerde oefening, en aangepaste oefeninstructies toe. Zie de live vergelijking en huidige limieten in <account>Account</account>."
         },
         "learning": {
           "q": "Hoe werken de leerfuncties van Notoria?",
@@ -4997,7 +5014,7 @@
         "admins": "Beheerders",
         "testers": "Testgebruikers",
         "suspended": "Opgeschort",
-        "contentTotal": "Content records"
+        "contentTotal": "Inhoudsrecords"
       },
       "quickAccess": "Snelle toegang",
       "quickAccessLede": "Ga naar de beheertools.",
@@ -5050,8 +5067,8 @@
         "created": "Geregistreerd",
         "updated": "Bijgewerkt",
         "emailVerified": "E-mail geverifieerd",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-mail",
+        "password": "Wachtwoord"
       },
       "detail": {
         "account": "Account",
@@ -5060,7 +5077,7 @@
         "actions": "Accountacties",
         "workspaces": "Werkruimten",
         "workspacesLede": "Taalwerkruimten die van deze gebruiker zijn.",
-        "danger": "Danger zone"
+        "danger": "Gevarenzone"
       },
       "actions": {
         "saveProfile": "Naam opslaan",
@@ -5071,7 +5088,7 @@
         "delete": "Account verwijderen",
         "grantTester": "Testgebruiker toekennen",
         "revokeTester": "Testgebruiker intrekken",
-        "create": "Create user"
+        "create": "Gebruiker aanmaken"
       },
       "confirm": {
         "grantAdmin": "Beheerderstoegang toekennen aan dit account?",
@@ -5089,11 +5106,11 @@
         "admin": "Beheerder"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Gebruiker aanmaken",
+        "lede": "Voorzie een account van een e-mailadres en wachtwoord. Ze kunnen zich onmiddellijk aanmelden."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratis",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5135,7 @@
         "owner": "Eigenaar",
         "created": "Aangemaakt",
         "updated": "Bijgewerkt",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Eigenaar e-mailadres",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5153,8 @@
         "delete": "Deze werkruimte en alle leercontent erin verwijderen via databasecascades?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Werkruimte aanmaken",
+        "lede": "Koppel een nieuwe taalwerkruimte aan een bestaand account via e-mail."
       }
     },
     "content": {
@@ -5160,9 +5177,9 @@
         "workspace": "Werkruimte",
         "created": "Aangemaakt",
         "updated": "Bijgewerkt",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Titel",
+        "word": "Woord",
+        "folderName": "Mapnaam"
       },
       "detail": {
         "description": "Metadata-inspectie. Privé-inhoud wordt niet automatisch geladen.",
@@ -5172,12 +5189,12 @@
       },
       "actions": {
         "delete": "Record verwijderen",
-        "saveTitle": "Save title"
+        "saveTitle": "Titel opslaan"
       },
       "confirm": {
         "delete": "Dit record verwijderen? Gerelateerde onderliggende rijen volgen cascade-/set-null-regels van de database."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Vang items op en sla vrije tekst op. Titelbewerking wordt hier niet ondersteund — verwijder als het record moet worden verwijderd."
     },
     "jobs": {
       "title": "Taken",
@@ -5243,9 +5260,9 @@
       "INVALID_LANGUAGE": "Ongeldige taalcode.",
       "CONTENT_NOT_FOUND": "Record niet gevonden.",
       "INVALID_CONTENT_MODULE": "Onbekende contentmodule.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Dit e-mailadres is al geregistreerd.",
+      "PASSWORD_TOO_WEAK": "Wachtwoord voldoet niet aan de sterkte-eisen.",
+      "CONTENT_TITLE_UNSUPPORTED": "Dit type inhoud ondersteunt geen titelbewerking."
     }
   }
 }

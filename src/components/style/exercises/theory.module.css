@@ -749,6 +749,18 @@
   color: color-mix(in oklab, var(--folder-accent) 72%, var(--muted-foreground));
 }
 
+@media (max-width: 639px) {
+  .theory-folder-main {
+    grid-template-columns: auto minmax(0, 1fr);
+    align-items: start;
+  }
+
+  .theory-folder-count {
+    grid-column: 2;
+    justify-self: start;
+  }
+}
+
 .theory-folder-body {
   display: flex;
   flex-direction: column;
