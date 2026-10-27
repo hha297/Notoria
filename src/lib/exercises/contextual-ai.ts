@@ -315,10 +315,11 @@ async function requestExercises(
 
   const completion = await client.chat.completions.create(
     {
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
+      reasoning_effort: "none",
       temperature:
         input.difficulty === "easy" ? 0.4 : options?.simplifyRetry ? 0.35 : 0.7,
-      max_tokens: AI_OUTPUT_TOKENS.exerciseContextual,
+      max_completion_tokens: AI_OUTPUT_TOKENS.exerciseContextual,
       response_format: { type: "json_object" },
       messages: [
         {

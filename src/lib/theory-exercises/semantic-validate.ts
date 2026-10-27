@@ -164,9 +164,10 @@ async function judgeSemanticChunk(input: {
     const client = requireOpenAiClient({ timeoutMs: 60_000 });
     completion = await client.chat.completions.create(
       {
-        model: "gpt-4o-mini",
+        model: "gpt-5.6-luna",
+        reasoning_effort: "none",
         temperature: 0,
-        max_tokens: AI_OUTPUT_TOKENS.theoryValidate,
+        max_completion_tokens: AI_OUTPUT_TOKENS.theoryValidate,
         response_format: { type: "json_object" },
         messages: [
           {

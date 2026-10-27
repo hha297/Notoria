@@ -25,6 +25,7 @@ type UseExerciseSetUiOptions = {
   questionIdPrefix: string;
   /** Stable top-of-set anchor id. */
   setAnchorId: string;
+  isAnswered?: (questionId: string, value: unknown) => boolean;
 };
 
 /**
@@ -39,6 +40,7 @@ export function useExerciseSetUi({
   checkedCount,
   questionIdPrefix,
   setAnchorId,
+  isAnswered = (_questionId, value) => isNonEmptyAnswer(value),
 }: UseExerciseSetUiOptions) {
   const { displayMode, setDisplayMode } = useExerciseDisplayMode();
   const [cursor, setCursor] = useState(0);
@@ -92,7 +94,7 @@ export function useExerciseSetUi({
   );
 
   const currentCanCheck = Boolean(
-    currentQuestionId && isNonEmptyAnswer(answers[currentQuestionId]),
+    currentQuestionId && isAnswered(currentQuestionId, answers[currentQuestionId]),
   );
 
   const goNextQuestion = useCallback(() => {

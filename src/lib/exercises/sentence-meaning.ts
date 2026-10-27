@@ -37,9 +37,10 @@ export async function glossSentenceMeaning(input: {
     signal: input.signal,
     timeoutMs: 60_000,
     body: {
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-luna",
+      reasoning_effort: "none",
       temperature: 0.2,
-      max_tokens: AI_OUTPUT_TOKENS.sentenceGloss,
+      max_completion_tokens: AI_OUTPUT_TOKENS.sentenceGloss,
       response_format: { type: "json_object" },
       messages: [
         {
@@ -171,9 +172,10 @@ async function glossSentenceMeaningsBatch(input: {
     workKind: input.workKind ?? "background",
     timeoutMs: 60_000,
     body: {
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-luna",
+      reasoning_effort: "none",
       temperature: 0.2,
-      max_tokens: Math.min(
+      max_completion_tokens: Math.min(
         400 + sentences.length * 80,
         AI_OUTPUT_TOKENS.sentenceGlossBatch,
       ),

@@ -1,8 +1,8 @@
 /* Learning coach atelier — calm, editorial, not a metrics dashboard */
 
 .coach-atelier {
-  --coach-fg: var(--accent-lime);
-  --coach-bg: color-mix(in oklab, var(--accent-lime) 14%, var(--surface));
+  --coach-fg: var(--page-accent);
+  --coach-bg: color-mix(in oklab, var(--page-accent) 14%, var(--surface));
   min-width: 0;
   width: 100%;
 }
@@ -625,14 +625,14 @@
 }
 
 :global(.dark) .coach-atelier {
-  --coach-bg: color-mix(in oklab, var(--accent-lime) 10%, var(--surface));
+  --coach-bg: color-mix(in oklab, var(--page-accent) 10%, var(--surface));
 }
 
 :global(.dark) .coach-action {
   background:
     linear-gradient(
       120deg,
-      color-mix(in oklab, var(--accent-lime) 8%, transparent),
+      color-mix(in oklab, var(--page-accent) 8%, transparent),
       transparent 68%
     ),
     color-mix(in oklab, var(--surface-elevated) 70%, transparent);
@@ -1182,7 +1182,7 @@
 }
 
 .coach-streak {
-  --coach-fg: var(--accent-lime);
+  --coach-fg: var(--page-accent);
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
@@ -1361,7 +1361,7 @@
 }
 
 .coach-streak-tooltip {
-  --coach-fg: var(--accent-lime);
+  --coach-fg: var(--page-accent);
   position: fixed;
   z-index: 9999;
   min-width: 10.5rem;
@@ -1549,7 +1549,7 @@
 }
 
 .coach-chart-tooltip {
-  --coach-fg: var(--accent-lime);
+  --coach-fg: var(--page-accent);
   position: fixed;
   z-index: 9999;
   min-width: 11rem;

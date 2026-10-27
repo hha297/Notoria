@@ -250,9 +250,10 @@ export async function generateReadingQuestions(input: {
     const client = getOpenAIClient();
     const passage = clipForAi(input.body, AI_INPUT_LIMITS.passage);
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
+      reasoning_effort: "none",
       temperature: 0.35,
-      max_tokens: AI_OUTPUT_TOKENS.readingGenerate,
+      max_completion_tokens: AI_OUTPUT_TOKENS.readingGenerate,
       response_format: { type: "json_object" },
       messages: [
         {

@@ -24,8 +24,6 @@ import {
   type VocabularySpellingResult,
 } from "@/lib/vocabulary/ai-types";
 
-const VOCAB_MODEL = "gpt-4o-mini";
-
 function parseJsonContent(content: string | null | undefined) {
   if (!content?.trim()) return null;
   try {
@@ -65,7 +63,7 @@ export async function analyzeVocabularySpelling(
       partOfSpeech: fields.partOfSpeech,
     }),
     language: input.language,
-    model: VOCAB_MODEL,
+    model: "gpt-5.6-luna",
     promptVersion: AI_PROMPT_VERSIONS.vocabSpelling,
   });
   const cached = getCachedAiResult<VocabularySpellingResult>(cacheKey);
@@ -74,7 +72,7 @@ export async function analyzeVocabularySpelling(
       userId: ctx.userId,
       operation: "vocab.spelling",
       feature: "ai_vocabulary",
-      model: VOCAB_MODEL,
+      model: "gpt-5.6-luna",
       outcome: "cache_hit",
       reservationId: ctx.reservationId,
       workKind: "interactive",
@@ -90,9 +88,10 @@ export async function analyzeVocabularySpelling(
     signal: ctx.signal,
     timeoutMs: 8_000,
     body: {
-      model: VOCAB_MODEL,
+      model: "gpt-5.6-luna",
+      reasoning_effort: "none",
       temperature: 0.1,
-      max_tokens: AI_OUTPUT_TOKENS.vocabSpelling,
+      max_completion_tokens: AI_OUTPUT_TOKENS.vocabSpelling,
       response_format: { type: "json_object" },
       messages: [
         {
@@ -176,9 +175,10 @@ async function completeMeaningJson(
     signal: ctx.signal,
     timeoutMs: 8_000,
     body: {
-      model: VOCAB_MODEL,
+      model: "gpt-5.6-luna",
+      reasoning_effort: "none",
       temperature: 0.1,
-      max_tokens: AI_OUTPUT_TOKENS.vocabMeaning,
+      max_completion_tokens: AI_OUTPUT_TOKENS.vocabMeaning,
       response_format: { type: "json_object" },
       messages: [
         {
@@ -278,7 +278,7 @@ export async function analyzeVocabularyMeaning(
       partOfSpeech: fields.partOfSpeech,
     }),
     language: input.language,
-    model: VOCAB_MODEL,
+    model: "gpt-5.6-luna",
     promptVersion: AI_PROMPT_VERSIONS.vocabMeaning,
   });
   const cached = getCachedAiResult<VocabularyMeaningResult>(cacheKey);
@@ -287,7 +287,7 @@ export async function analyzeVocabularyMeaning(
       userId: ctx.userId,
       operation: "vocab.meaning",
       feature: "ai_vocabulary",
-      model: VOCAB_MODEL,
+      model: "gpt-5.6-luna",
       outcome: "cache_hit",
       reservationId: ctx.reservationId,
       workKind: "interactive",

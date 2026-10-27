@@ -104,10 +104,14 @@
   --color-module-listen-fg: var(--module-listen-fg);
   --color-module-speak-bg: var(--module-speak-bg);
   --color-module-speak-fg: var(--module-speak-fg);
+  --color-module-coach-bg: var(--module-coach-bg);
+  --color-module-coach-fg: var(--module-coach-fg);
   --color-module-read-bg: var(--module-read-bg);
   --color-module-read-fg: var(--module-read-fg);
   --color-module-home-bg: var(--module-home-bg);
   --color-module-home-fg: var(--module-home-fg);
+  --color-module-inbox-bg: var(--module-inbox-bg);
+  --color-module-inbox-fg: var(--module-inbox-fg);
   --color-module-guide-bg: var(--module-guide-bg);
   --color-module-guide-fg: var(--module-guide-fg);
   --color-module-account-bg: var(--module-account-bg);
@@ -230,29 +234,33 @@
   --sidebar-ring: rgba(44, 132, 224, 0.5);
 
   /* Soft module fills — light, low-chroma so paper washes stay restrained */
-  --module-vocab-bg: #eaf5ef;
-  --module-vocab-fg: #2c8c66;
+  --module-vocab-bg: #e5f5eb;
+  --module-vocab-fg: #247b4d;
   --module-exercise-bg: #fef3d6;
-  --module-exercise-fg: #b17816;
+  --module-exercise-fg: #96620f;
   --module-writing-bg: #fceef3;
   --module-writing-fg: #c73e66;
-  --module-theory-bg: #eeeaf8;
-  --module-theory-fg: #5c4aa8;
-  --module-listen-bg: #e9f1f8;
-  --module-listen-fg: #2c84e0;
-  /* Amber — distinct from Writing rose and Listening blue */
-  --module-speak-bg: #fef3e8;
-  --module-speak-fg: #c45c12;
-  --module-read-bg: #ebeef8;
-  --module-read-fg: #3d5a9e;
-  --module-home-bg: #e4f1ee;
-  --module-home-fg: #2f7a72;
-  --module-guide-bg: #f5efe9;
-  --module-guide-fg: #a86b45;
-  --module-account-bg: #ebeeef;
-  --module-account-fg: #5e6a72;
-  --module-settings-bg: #eef0eb;
-  --module-settings-fg: #55615a;
+  --module-theory-bg: #f3e7f8;
+  --module-theory-fg: #8742a8;
+  --module-listen-bg: #e5f3fb;
+  --module-listen-fg: #0e71a8;
+  /* Coral — distinct from Writing rose and Listening blue */
+  --module-speak-bg: #fce9e5;
+  --module-speak-fg: #c2412d;
+  --module-coach-bg: #e1f2f5;
+  --module-coach-fg: #007b91;
+  --module-read-bg: #e9edf3;
+  --module-read-fg: #3b567a;
+  --module-home-bg: #eceff2;
+  --module-home-fg: #626b73;
+  --module-inbox-bg: #faeee5;
+  --module-inbox-fg: #a9531d;
+  --module-guide-bg: #edecfa;
+  --module-guide-fg: #675fc0;
+  --module-account-bg: #f3e8f3;
+  --module-account-fg: #855a88;
+  --module-settings-bg: #eff1e4;
+  --module-settings-fg: #68723d;
   /* Sky — Tag Manager; cool blue, not writing rose / home teal / listen blue */
   --module-tags-bg: #e0f2fe;
   --module-tags-fg: #0369a1;
@@ -441,44 +449,48 @@
   --sidebar-border: #4d4f46;
   --sidebar-ring: rgba(44, 132, 224, 0.65);
 
-  --module-vocab-bg: #1e3328;
-  --module-vocab-fg: #7dcca8;
+  --module-vocab-bg: #193529;
+  --module-vocab-fg: #70d39c;
   --module-exercise-bg: #3d3420;
   --module-exercise-fg: #f7a501;
   --module-writing-bg: #3a2430;
   --module-writing-fg: #e87a9a;
-  --module-theory-bg: #2c2740;
-  --module-theory-fg: #b8a3e6;
-  --module-listen-bg: #243040;
-  --module-listen-fg: #7eb3ee;
-  --module-speak-bg: #3a2c1c;
-  --module-speak-fg: #f0a45a;
-  --module-read-bg: #252a40;
-  --module-read-fg: #9eb0e8;
-  --module-home-bg: #1e3331;
-  --module-home-fg: #7dccc4;
-  --module-guide-bg: #3a2c24;
-  --module-guide-fg: #d4a57a;
-  --module-account-bg: #2a3036;
-  --module-account-fg: #9aa8b4;
-  --module-settings-bg: #2c322e;
-  --module-settings-fg: #a8b4ac;
+  --module-theory-bg: #38233f;
+  --module-theory-fg: #d08feb;
+  --module-listen-bg: #1d3140;
+  --module-listen-fg: #6bb9ef;
+  --module-speak-bg: #3b2522;
+  --module-speak-fg: #ff8066;
+  --module-coach-bg: #17343a;
+  --module-coach-fg: #52c6cf;
+  --module-read-bg: #29303d;
+  --module-read-fg: #8798c4;
+  --module-home-bg: #2d3135;
+  --module-home-fg: #adb7c2;
+  --module-inbox-bg: #3a291f;
+  --module-inbox-fg: #e5a06e;
+  --module-guide-bg: #292842;
+  --module-guide-fg: #aaa4f5;
+  --module-account-bg: #38283a;
+  --module-account-fg: #d19bd5;
+  --module-settings-bg: #303522;
+  --module-settings-fg: #bdca7f;
   --module-tags-bg: #0c2a3a;
   --module-tags-fg: #38bdf8;
 
   /*
-    Dark wash — slightly broader/stronger than before so paper accent reads
-    closer to the sidebar soft wash, without washing out the dark base.
+    Dark wash — deliberately restrained so route color stays near the edges
+    without brightening the main reading surface.
   */
   --studio-wash-base-a: 22%;
   --studio-wash-base-b: 12%;
-  --studio-wash-scene-a: 28%;
-  --studio-wash-scene-b: 14%;
+  --studio-wash-scene-a: 24%;
+  --studio-wash-scene-b: 11%;
   --studio-wash-fade-a: 50%;
   --studio-wash-fade-b: 48%;
   /* Outer shell glow — follows page accent on every route */
-  --studio-shell-wash: 40%;
-  --studio-shell-wash-soft: 24%;
+  --studio-shell-wash: 23%;
+  --studio-shell-wash-soft: 13%;
 
   /* Dark: page-accent tokens inherit module overrides above; surfaces follow them */
   --control-surface-base: var(--surface-elevated);
@@ -834,6 +846,50 @@
       );
   }
 
+  .dark .studio-shell {
+    background-image:
+      radial-gradient(
+        ellipse 66% 50% at -8% -6%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-shell-wash),
+          transparent
+        ),
+        transparent 68%
+      ),
+      radial-gradient(
+        ellipse 58% 44% at 108% -8%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-shell-wash-soft),
+          transparent
+        ),
+        transparent 66%
+      ),
+      radial-gradient(
+        ellipse 56% 42% at 106% 108%,
+        color-mix(
+          in oklab,
+          var(--page-accent) 6%,
+          color-mix(
+            in oklab,
+            var(--page-accent-soft) var(--studio-shell-wash-soft),
+            transparent
+          )
+        ),
+        transparent 68%
+      ),
+      radial-gradient(
+        ellipse 54% 40% at -10% 110%,
+        color-mix(
+          in oklab,
+          var(--page-accent-soft) var(--studio-shell-wash-soft),
+          transparent
+        ),
+        transparent 66%
+      );
+  }
+
   .studio-paper {
     /* Rounded content frame — natural height follows content */
     @apply min-w-0 border border-page-accent-border text-ink shadow-[0_1px_2px_rgba(35,37,29,0.04)];
@@ -926,7 +982,7 @@
   .studio-paper[data-studio-scene]::after {
     background:
       radial-gradient(
-        ellipse 58% 34% at 10% 0%,
+        ellipse 55% 32% at 10% 0%,
         color-mix(
           in oklab,
           var(--page-accent-soft) var(--studio-wash-scene-a),
@@ -935,7 +991,7 @@
         transparent var(--studio-wash-fade-a)
       ),
       radial-gradient(
-        ellipse 42% 28% at 90% 0%,
+        ellipse 40% 26% at 90% 0%,
         color-mix(
           in oklab,
           var(--page-accent-soft) var(--studio-wash-scene-b),
@@ -969,6 +1025,7 @@
   }
 
   .dark .studio-paper[data-studio-scene]::before {
+    opacity: 0.54;
     background:
       radial-gradient(
         ellipse 56% 34% at 6% 0%,
@@ -987,9 +1044,10 @@
   }
 
   .dark .studio-paper[data-studio-scene]::after {
+    opacity: 0.58;
     background:
       radial-gradient(
-        ellipse 68% 40% at 10% 0%,
+        ellipse 52% 28% at 10% 0%,
         color-mix(
           in oklab,
           var(--page-accent-soft) var(--studio-wash-scene-a),
@@ -998,7 +1056,7 @@
         transparent var(--studio-wash-fade-a)
       ),
       radial-gradient(
-        ellipse 50% 34% at 90% 0%,
+        ellipse 37% 23% at 90% 0%,
         color-mix(
           in oklab,
           var(--page-accent-soft) var(--studio-wash-scene-b),
@@ -1047,7 +1105,7 @@
     .studio-paper[data-studio-scene]::after {
       background:
         radial-gradient(
-          ellipse 68% 28% at 12% 0%,
+          ellipse 64% 26% at 12% 0%,
           color-mix(
             in oklab,
             var(--page-accent-soft) var(--studio-wash-scene-a),
@@ -1056,7 +1114,7 @@
           transparent 50%
         ),
         radial-gradient(
-          ellipse 48% 22% at 88% 0%,
+          ellipse 45% 20% at 88% 0%,
           color-mix(
             in oklab,
             var(--page-accent-soft) var(--studio-wash-scene-b),
@@ -1085,6 +1143,19 @@
     --page-accent: var(--module-home-fg);
     --page-accent-soft: var(--module-home-bg);
     --studio-wash-scene-a: 66%;
+  }
+
+  [data-studio-scene="inbox"] {
+    --page-accent: var(--module-inbox-fg);
+    --page-accent-soft: var(--module-inbox-bg);
+    --studio-wash-scene-a: 64%;
+  }
+
+  [data-studio-scene="coach"] {
+    --page-accent: var(--module-coach-fg);
+    --page-accent-soft: var(--module-coach-bg);
+    --page-accent-hover: color-mix(in oklab, var(--module-coach-fg) 9%, transparent);
+    --studio-wash-scene-a: 70%;
   }
 
   [data-studio-scene="guide"] {
@@ -1157,8 +1228,12 @@
     --studio-wash-scene-a: 24%;
   }
   .dark [data-studio-scene="home"],
-  .dark [data-studio-scene="speak"] {
+  .dark [data-studio-scene="speak"],
+  .dark [data-studio-scene="coach"] {
     --studio-wash-scene-a: 26%;
+  }
+  .dark [data-studio-scene="inbox"] {
+    --studio-wash-scene-a: 24%;
   }
   .dark [data-studio-scene="exercises"] {
     --studio-wash-scene-a: 22%;
@@ -1663,6 +1738,16 @@
     --portal-page-accent-soft: var(--module-home-bg);
   }
 
+  html[data-portal-scene="inbox"] {
+    --portal-page-accent: var(--module-inbox-fg);
+    --portal-page-accent-soft: var(--module-inbox-bg);
+  }
+
+  html[data-portal-scene="coach"] {
+    --portal-page-accent: var(--module-coach-fg);
+    --portal-page-accent-soft: var(--module-coach-bg);
+  }
+
   html[data-portal-scene="guide"] {
     --portal-page-accent: var(--module-guide-fg);
     --portal-page-accent-soft: var(--module-guide-bg);
@@ -2013,14 +2098,10 @@
   }
 
   .coach-atelier-shell {
-    --writing-ink: var(--accent-lime);
-    --writing-wash: color-mix(in oklab, var(--accent-lime) 22%, var(--surface));
-    --writing-accent-fg: var(--accent-lime);
-    --writing-accent-bg: color-mix(
-      in oklab,
-      var(--accent-lime) 22%,
-      var(--surface)
-    );
+    --writing-ink: var(--module-coach-fg);
+    --writing-wash: var(--module-coach-bg);
+    --writing-accent-fg: var(--module-coach-fg);
+    --writing-accent-bg: var(--module-coach-bg);
     --page-accent: var(--writing-accent-fg);
     --page-accent-soft: var(--writing-accent-bg);
   }
@@ -2682,11 +2763,84 @@
   .vocab-usage-menu {
     --page-accent: var(--success);
     --page-accent-soft: var(--success-muted);
+    padding: 0.45rem !important;
     border-color: color-mix(
       in oklab,
       var(--success) 28%,
       var(--hairline-cloud)
     ) !important;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-group"] {
+    display: grid;
+    gap: 0.22rem;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-label"] {
+    padding: 0.3rem 0.45rem 0.45rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-checkbox-item"] {
+    --usage-accent: var(--module-vocab-fg);
+    min-height: 2.35rem;
+    padding: 0.48rem 2rem 0.48rem 0.65rem !important;
+    border: 1px solid
+      color-mix(in oklab, var(--usage-accent) 14%, transparent);
+    border-radius: 0.6rem;
+    background: color-mix(in oklab, var(--usage-accent) 6%, transparent);
+    font-weight: 600;
+    transition:
+      border-color 120ms ease,
+      background 120ms ease,
+      color 120ms ease;
+  }
+
+  .vocab-usage-menu
+    [data-slot="dropdown-menu-checkbox-item"]::before {
+    content: "";
+    position: static;
+    display: block;
+    width: 0.52rem;
+    height: 0.52rem;
+    flex: 0 0 0.52rem;
+    border-radius: 999px;
+    background: var(--usage-accent);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--usage-accent) 16%, transparent);
+  }
+
+  .vocab-usage-menu [data-usage-id="formal"] {
+    --usage-accent: var(--module-vocab-fg);
+  }
+  .vocab-usage-menu [data-usage-id="informal"] {
+    --usage-accent: var(--module-home-fg);
+  }
+  .vocab-usage-menu [data-usage-id="spoken"] {
+    --usage-accent: var(--module-listen-fg);
+  }
+  .vocab-usage-menu [data-usage-id="slang"] {
+    --usage-accent: var(--module-theory-fg);
+  }
+  .vocab-usage-menu [data-usage-id="idiom"] {
+    --usage-accent: var(--module-exercise-fg);
+  }
+  .vocab-usage-menu [data-usage-id="literary"] {
+    --usage-accent: var(--module-speak-fg);
+  }
+  .vocab-usage-menu [data-usage-id="technical"] {
+    --usage-accent: color-mix(in oklab, var(--module-listen-fg) 62%, var(--module-vocab-fg));
+  }
+  .vocab-usage-menu [data-usage-id="archaic"] {
+    --usage-accent: color-mix(in oklab, var(--module-exercise-fg) 70%, var(--module-theory-fg));
+  }
+  .vocab-usage-menu [data-usage-id="regional"] {
+    --usage-accent: color-mix(in oklab, var(--module-vocab-fg) 58%, var(--module-listen-fg));
+  }
+  .vocab-usage-menu [data-usage-id="figurative"] {
+    --usage-accent: color-mix(in oklab, var(--module-theory-fg) 58%, var(--module-speak-fg));
   }
 
   .vocab-usage-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
@@ -2695,10 +2849,15 @@
   .vocab-usage-menu [data-slot="dropdown-menu-item"][data-highlighted] {
     background: color-mix(
       in oklab,
-      var(--success-muted) 55%,
+      var(--usage-accent, var(--success)) 18%,
       transparent
     ) !important;
-    color: var(--success) !important;
+    border-color: color-mix(
+      in oklab,
+      var(--usage-accent, var(--success)) 46%,
+      transparent
+    ) !important;
+    color: var(--usage-accent, var(--success)) !important;
   }
 
   .vocab-custom-tag-menu [data-slot="dropdown-menu-separator"] {

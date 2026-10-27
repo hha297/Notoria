@@ -17,19 +17,20 @@
     "hideFilters": "Sembunyikan filter",
     "remove": "Hapus",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Tampilan",
+      "print": "Ramah cetak",
+      "printHint": "Halaman putih, teks gelap",
+      "theme": "Tema saat ini",
+      "themeHint": "Sesuai dengan tema terang atau gelap Anda",
+      "previewKicker": "Halaman contoh",
+      "previewTitle": "Judul dokumen",
+      "previewBody": "Teks tubuh menggunakan warna dan spasi yang dipilih.",
+      "previewCallout": "Panggilan dan aksen mengikuti warna modul.",
+      "fixedNote": "Tampilan tetap dalam file yang diekspor. Ekspor lagi untuk mengubahnya.",
+      "docxBackgroundNote": "Word dan aplikasi lainnya mungkin tidak menampilkan latar belakang halaman dengan cara yang sama, terutama saat mencetak."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Gulir ke atas",
+    "moreActions": "Lebih banyak tindakan"
   },
   "contentImport": {
     "title": {
@@ -157,26 +158,26 @@
       "plural": "Jamak"
     },
     "paradigmCases": {
-      "nominative": "Nominative",
-      "genitive": "Genitive",
-      "partitive": "Partitive",
-      "accusative": "Accusative",
-      "inessive": "Inessive",
-      "elative": "Elative",
-      "illative": "Illative",
-      "adessive": "Adessive",
-      "ablative": "Ablative",
-      "allative": "Allative",
-      "essive": "Essive",
-      "translative": "Translative",
-      "instructive": "Instructive",
-      "abessive": "Abessive",
-      "comitative": "Comitative"
+      "nominative": "Nominatif",
+      "genitive": "Genitif",
+      "partitive": "Partitif",
+      "accusative": "Akusatif",
+      "inessive": "Inesif",
+      "elative": "Elatif",
+      "illative": "Illatif",
+      "adessive": "Adesif",
+      "ablative": "Ablatif",
+      "allative": "Allatif",
+      "essive": "Esif",
+      "translative": "Translasi",
+      "instructive": "Instruktif",
+      "abessive": "Abesif",
+      "comitative": "Komitatif"
     }
   },
   "nav": {
     "dashboard": "Dasbor",
-    "inbox": "Capture",
+    "inbox": "Tangkap",
     "vocabulary": "Kosakata",
     "writing": "Menulis",
     "theory": "Teori",
@@ -198,7 +199,7 @@
   },
   "inbox": {
     "eyebrow": "Kumpulkan",
-    "title": "Capture",
+    "title": "Tangkap",
     "description": "Simpan catatan cepat, frasa, dan ide di sini — lalu ubah menjadi kosakata, teori, tulisan, atau latihan ketika Anda punya waktu.",
     "disabledNoWorkspace": "Buat ruang kerja sebelum menangkap.",
     "capture": "Tangkap",
@@ -472,34 +473,34 @@
     "viewMode": "Mode tampilan",
     "tagManager": {
       "open": "Kelola tag",
-      "eyebrow": "Tags",
+      "eyebrow": "Tag",
       "title": "Pengelola Tag",
-      "description": "Pilih tag, lalu tetapkan atau hapus dari kata. Kata yang sudah ditetapkan dan yang lain tetap di daftar terpisah.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Pilih tag, lalu tetapkan atau hapus dari kata-kata.",
+      "pageDescription": "Pilih Standar atau Kustom, pilih tag, lalu tambahkan atau hapus dari kata-kata.",
+      "disabledNoWorkspace": "Buat ruang kerja sebelum mengelola tag kosakata.",
+      "backToVocabulary": "Kembali ke kosakata",
+      "backToSettings": "Kembali ke pengaturan",
       "groupsLabel": "Grup tag standar",
       "tagsHeading": "Tag",
       "standardTagsHeading": "Tag standar",
       "customTagsHeading": "Tag khusus",
-      "customTagsHint": "Label yang Anda buat untuk organisasi sendiri — bukan kelas kata.",
+      "customTagsHint": "Label ruang kerja yang Anda buat — cari untuk menemukannya saat daftar panjang.",
       "emptyCustomTags": "Belum ada tag khusus. Buat saat mengedit kata.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Tidak ada tag kustom yang cocok dengan pencarian ini.",
+      "tagSearchPlaceholder": "Cari tag…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standar",
       "kindCustom": "Khusus",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Daftar kata",
+      "wordTabAssigned": "Bertag",
+      "wordTabOther": "Tanpa tag",
       "assignedHeading": "Kata dengan tag ini",
       "otherHeading": "Kata lainnya",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Pilih semua di halaman ini",
+      "clearSelection": "Hapus pilihan",
+      "selectionScopePage": "Memilih dari halaman ini ({count} dari {total})",
+      "selectionScopeFiltered": "Memilih dalam hasil pencarian saat ini",
       "searchPlaceholder": "Cari kata atau arti…",
       "wordCount": "{count}",
       "loading": "Memuat kosakata…",
@@ -509,13 +510,23 @@
       "emptyOther": "Semua kata sudah memiliki tag ini.",
       "emptyOtherSearch": "Tidak ada kata yang cocok untuk ditetapkan.",
       "selected": "{count} dipilih",
-      "addToTag": "Tambahkan ke tag",
-      "removeFromTag": "Hapus dari tag",
-      "applyAdd": "Tambahkan ke tag ({count})",
-      "applyRemove": "Hapus dari tag ({count})",
+      "addToTag": "Tambahkan tag",
+      "removeFromTag": "Hapus tag",
+      "applyAdd": "Tambahkan tag ({count})",
+      "applyRemove": "Hapus tag ({count})",
       "added": "Menambahkan {count} kata ke {tag}",
       "removed": "Menghapus {count} kata dari {tag}",
-      "error": "Tidak dapat memperbarui keanggotaan tag"
+      "error": "Tidak dapat memperbarui keanggotaan tag",
+      "systemsLabel": "Sistem tag",
+      "standardSystemTitle": "Standar",
+      "standardSystemMeta": "Topik dan penggunaan, ditampilkan secara terpisah",
+      "usageOptional": "Opsional",
+      "customSystemTitle": "Kustom",
+      "customSystemMeta": "{count, plural, one {# label} other {# label}}",
+      "customPickerLabel": "Pilih tag kustom",
+      "customPickerPlaceholder": "Pilih tag kustom…",
+      "customSearchPlaceholder": "Cari tag kustom…",
+      "pickTagFirst": "Pilih tag di atas untuk mengelola keanggotaan kata."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Diperbarui {time}",
@@ -584,11 +595,15 @@
         "notes": "Catatan",
         "updated": "Terakhir Diperbarui"
       }
-    }
+    },
+    "selectedCustomTags": "Tag yang dipilih",
+    "selectedSynonyms": "Sinonim yang dipilih",
+    "removeCustomTag": "Hapus {name}",
+    "pickerLoading": "Memuat…"
   },
   "tags": {
     "groups": {
-      "difficulty": "Level",
+      "difficulty": "Tingkat",
       "topic": "Topik",
       "grammar": "Penggunaan",
       "learningStatus": "Status belajar",
@@ -655,13 +670,13 @@
     }
   },
   "exercises": {
-    "title": "Exercise",
+    "title": "Latihan",
     "studio": "studio",
     "description": "Pilih mode belajar untuk melatih kosakata Anda.",
     "studioDescription": "Berlatih dari kosakata, catatan teori, atau materi yang diimpor — pilih sumber, lalu mulai sesi terfokus.",
     "startActivity": "Mulai",
     "unlockActivity": "Buka",
-    "practice": "practice",
+    "practice": "latihan",
     "editor": "editor",
     "edit": "Edit",
     "editDescription": "Perubahan disimpan otomatis setelah penyimpanan pertama.",
@@ -669,6 +684,11 @@
     "updated": "Diperbarui",
     "backToStudio": "Kembali ke exercises",
     "studyMode": "Mode belajar",
+    "questionTypeLabel": "Jenis pertanyaan",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Tingkat kesulitan",
       "easy": "Mudah",
@@ -683,9 +703,9 @@
     "sources": {
       "label": "Sumber latihan",
       "heading": "Sumber",
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
-      "import": "Import",
+      "vocabulary": "Kosakata",
+      "theory": "Teori",
+      "import": "Impor",
       "imported": "Diimpor",
       "lastUsed": "Terakhir digunakan",
       "selected": "Dipilih",
@@ -873,7 +893,7 @@
       "aiReady": "Latihan siap",
       "aiUnavailable": "Tidak dapat membuat pertanyaan AI saat ini.",
       "aiForbidden": "Latihan teori AI tersedia dengan Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Instruksi tambahan tersedia di Premium.",
       "aiDisabled": "Bantuan AI dinonaktifkan di Settings.",
       "feedback": {
         "correct": "Benar!",
@@ -927,20 +947,22 @@
         "why": "Mengapa",
         "complete": "Mengerti",
         "completeHint": "Anda dapat melanjutkan saat siap.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Mulai latihan",
+        "skipReviewAndStart": "Lewati tinjauan dan mulai latihan"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Tidak terdaftar",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# catatan} other {# catatan}}",
+        "selectAll": "Pilih semua",
+        "selectGroup": "Pilih catatan di {name}",
+        "expand": "Perluas {name}",
+        "collapse": "Liput {name}",
+        "selectedCount": "{count, plural, one {# teori terpilih} other {# teori terpilih}}",
+        "practiceSelected": "Latihan yang dipilih",
+        "clearSelection": "Hapus pilihan",
+        "subfolders": "{count, plural, one {# subfolder} other {# subfolder}}",
+        "selectedOne": "1 teori dipilih"
       }
     },
     "types": {
@@ -950,7 +972,7 @@
         "preview": "Balik · Nilai · Ulas",
         "previewHint": "Kata Finlandia",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "BALIK → NILAI → TINJAU"
       },
       "fill-in-blank": {
         "label": "Isian Kosong",
@@ -962,9 +984,9 @@
         "description": "Pilih arti atau kata yang benar — pengecoh berasal dari kosakata Anda.",
         "preview": "Arti mana yang cocok?",
         "previewPrompt": "Arti mana yang cocok?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "Orang Finlandia",
+        "previewB": "cuaca",
+        "previewC": "gedung"
       },
       "match-pairs": {
         "label": "Cocokkan Pasangan",
@@ -998,8 +1020,8 @@
       "startsWith": "Dimulai dengan “{letter}”",
       "revealPrompt": "Masih kesulitan? Anda dapat membuka jawaban lengkap.",
       "revealAnswer": "Buka Jawaban",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Petunjuk berikutnya",
+      "hintProgress": "Petunjuk {current} dari {total}"
     },
     "empty": {
       "noWordsTitle": "Belum ada kosakata",
@@ -1032,17 +1054,17 @@
       "shuffle": "Acak",
       "finish": "Selesai ronde",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Sumber pertanyaan",
+        "chooseAi": "Gunakan yang Dihasilkan AI",
+        "emptyTitle": "Tidak ada contoh yang disimpan yang dapat digunakan",
+        "emptyDescription": "Tambahkan kalimat contoh yang jelas mencakup setiap kata, sesuaikan filter Anda, atau beralih ke yang Dihasilkan AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Contoh yang disimpan",
+          "description": "Buat pertanyaan secara instan dari contoh kosakata Anda. Tidak ada waktu tunggu AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Dihasilkan AI",
+          "description": "Buat kalimat baru dari kosakata Anda dengan AI."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "Pembuatan latihan AI tersedia dengan Pro.",
       "disabled": "Bantuan AI dinonaktifkan di Settings.",
       "upgradeHint": "Free mencakup beberapa pembuatan latihan AI setiap hari. Pro menghapus batasnya.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Instruksi tambahan",
+      "additionalInstructionsPlaceholder": "Misalnya: Gunakan situasi restoran, jaga bahasa di level A2, dan jelaskan kesalahan dalam bahasa antarmuka Anda.",
+      "additionalInstructionsLocked": "Tingkatkan ke Premium untuk menyesuaikan jenis latihan yang didukung, menetapkan konteks kehidupan nyata, dan menambahkan instruksi Anda sendiri.",
+      "premiumRequired": "Instruksi tambahan tersedia di Premium.",
+      "presetLabel": "Preset",
+      "presetNone": "Tidak ada preset yang dipilih",
+      "presetApply": "Terapkan",
+      "presetSave": "Simpan preset",
+      "presetName": "Nama preset",
+      "presetDelete": "Hapus",
+      "presetSaved": "Preset disimpan",
+      "presetDeleted": "Preset dihapus",
+      "presetSaveFailed": "Tidak dapat menyimpan preset itu.",
       "emptyWords": "Tambahkan kata kosakata sebelum membuat pertanyaan.",
       "noneValid": "AI tidak dapat membuat pertanyaan yang valid untuk kata-kata ini. Coba lagi.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Sesuaikan konteks, gaya, atau fokus latihan Anda. Biarkan kosong untuk menggunakan pengaturan default.",
+      "presetUpdate": "Perbarui preset",
+      "presetUpdated": "Preset diperbarui",
+      "presetsTitle": "Preset yang disimpan",
+      "presetsHelper": "Preset menyimpan pengaturan latihan dan instruksi tambahan. Mereka tidak mengubah kosakata atau teori yang Anda pilih.",
+      "presetsEmpty": "Belum ada preset yang disimpan. Simpan pengaturan Anda saat ini untuk digunakan kembali nanti.",
+      "presetSaveAs": "Simpan sebagai preset",
+      "presetUpdateCurrent": "Perbarui dengan pengaturan saat ini",
+      "presetRename": "Ganti nama",
+      "presetManage": "Kelola preset",
+      "presetRenamed": "Preset diganti nama",
+      "presetSaveDialogTitle": "Simpan sebagai preset",
+      "presetSaveDialogDescription": "Beri nama preset ini untuk menggunakan kembali pengaturan latihan saat ini dan instruksi tambahan. Kosakata atau teori yang dipilih tidak disimpan.",
+      "presetRenameDialogTitle": "Ganti nama preset",
+      "presetRenameDialogDescription": "Pilih nama baru untuk preset ini.",
+      "presetDeleteDialogTitle": "Hapus preset?",
+      "presetDeleteDialogDescription": "Hapus “{name}”? Konfigurasi latihan Anda saat ini tetap seperti semula."
     },
     "session": {
       "complete": "Sesi selesai",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Coba lagi",
       "questionsLabel": "Pertanyaan",
       "correctLabel": "Benar",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Salah",
+      "unansweredLabel": "Belum dijawab",
       "reviewLabel": "Untuk diulas",
       "answeredProgress": "{answered} / {total} dijawab",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Periksa jawaban",
+      "nextQuestion": "Selanjutnya",
+      "viewResults": "Lihat hasil",
       "submitSet": "Kirim jawaban",
       "submitting": "Memeriksa…",
       "unansweredWarnTitle": "Pertanyaan belum dijawab",
@@ -1121,54 +1143,54 @@
       "unanswered": "Belum dijawab",
       "yourAnswer": "Jawaban Anda",
       "correctAnswer": "Jawaban yang benar",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Hanya {count} pertanyaan tersedia dari filter Anda saat ini.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Cara Anda berlatih",
+        "lockedHint": "Selesaikan atau mulai set baru untuk mengubah ini.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Satu per satu",
+          "description": "Lihat satu pertanyaan pada satu waktu. Periksa setelah setiap jawaban untuk umpan balik langsung."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Semua pertanyaan",
+          "description": "Lihat set lengkap, jawab dalam urutan apa pun, lalu kirim sekali untuk umpan balik."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Tinjau",
+        "allCorrect": "Sempurna — setiap pertanyaan benar.",
+        "summary": "{incorrect} salah · {unanswered} belum dijawab · {needsReview} untuk ditinjau",
+        "viewWrong": "Lihat jawaban yang salah",
+        "filtersLabel": "Filter pertanyaan",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Semua ({count})",
+          "needs_review": "Salah & belum dijawab ({count})",
+          "correct": "Benar ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Sebelumnya",
+        "nextWrong": "Selanjutnya",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} untuk ditinjau",
+        "floatLabel": "Navigasi jawaban yang salah",
+        "closeFloat": "Tampilkan semua jawaban"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% benar",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Set sempurna",
+          "body": "Setiap jawaban tepat. Fokus seperti itu layak untuk satu putaran lagi saat Anda siap."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Akhir yang kuat",
+          "body": "Anda jelas memahaminya — lihat kesalahan, lalu kunci dengan set baru."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Kerja bagus — teruskan",
+          "body": "Beberapa titik tersangkut adalah hal yang normal. Tinjau sekali, lalu coba lagi saat masih segar."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Hampir sampai",
+          "body": "Selesaikan yang belum dijawab terlebih dahulu — lalu skor akan memberi cerita yang lebih jelas."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "Pertanyaan dibuat dalam {language} (bahasa workspace).",
       "contextualEmptyTitle": "Buat pertanyaan kontekstual",
-      "contextualEmptyDescription": "Buat pertanyaan pilihan ganda isian kosong dari kosakata Anda.",
+      "contextualEmptyDescription": "Tambahkan instruksi opsional di bawah jika Anda mau, lalu tekan Hasilkan. Anda dapat membiarkan prompt kosong.",
       "contextualProDescription": "Pertanyaan AI kontekstual tersedia dengan Pro.",
       "unlockContextual": "Buka dengan Pro",
       "correct": "Benar!",
@@ -1202,8 +1224,8 @@
       "hint": "Pilih kata, lalu ketuk artinya",
       "complete": "Semua pasangan cocok — bagus!",
       "shuffle": "Acak kolom",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pasangan",
+      "continueRound": "Lanjutkan"
     },
     "typeAnswer": {
       "questionWord": "Apa artinya?",
@@ -1213,7 +1235,7 @@
         "contextual": "Kontekstual"
       },
       "contextualEmptyTitle": "Buat pertanyaan kontekstual",
-      "contextualEmptyDescription": "Buat prompt mengetik isian kosong dari kosakata Anda.",
+      "contextualEmptyDescription": "Tambahkan instruksi opsional di bawah jika Anda mau, lalu tekan Hasilkan. Anda dapat membiarkan prompt kosong.",
       "contextualProDescription": "Pertanyaan AI kontekstual tersedia dengan Pro.",
       "unlockContextual": "Buka dengan Pro",
       "placeholder": "Ketik jawaban Anda…",
@@ -1266,7 +1288,7 @@
     }
   },
   "writing": {
-    "title": "Writing",
+    "title": "Menulis",
     "studio": "studio",
     "description": "Buat lembar kerja dan prompt untuk bahasa yang Anda pelajari.",
     "disabledNoWorkspace": "Buat workspace sebelum menambahkan dokumen writing.",
@@ -1349,7 +1371,7 @@
     "deleteConfirmTitle": "Hapus writing ini?",
     "deleteConfirmDescription": "\"{title}\" akan dihapus secara permanen.",
     "newTitle": "Writing baru",
-    "editTitle": "Edit writing",
+    "editTitle": "Edit tulisan",
     "formDescription": "Beri nama, pilih jenis, lalu tulis.",
     "documentTitle": "Judul",
     "titlePlaceholder": "mis. Kisah Hidup Saya",
@@ -1451,7 +1473,7 @@
       "preparing": "Menyiapkan ekspor…",
       "writingFile": "Menyimpan file…",
       "progressCount": "{current} / {total}",
-      "documentHeading": "Writing",
+      "documentHeading": "Menulis",
       "titleLabel": "Judul",
       "descriptionLabel": "Deskripsi",
       "sectionLabel": "Bagian",
@@ -1543,77 +1565,77 @@
     "open": "Buka",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "Tangkap",
         "body": "Simpan kata, frasa, keraguan tata bahasa, atau ide menulis dalam hitungan detik — belum perlu memutuskan tempatnya. Tambahkan catatan atau sumber opsional, simpan di To process, lalu ubah capture menjadi Vocabulary, Theory, Writing, atau Exercise saat ada waktu. Item ditandai Processed hanya setelah Anda selesai membuat entri terkait."
       },
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Kosakata",
         "body": "Tambahkan kata dan frasa Anda sendiri beserta arti, kalimat contoh, pengucapan, dan tag. Atur menurut topik, tingkat, atau situasi — lalu gunakan kembali dalam latihan dan ulasan. Mulai dari kata sehari-hari, pelajaran, buku, atau media; pustaka Anda menjadi fondasi berlatih."
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teori",
         "body": "Simpan aturan tata bahasa, catatan pengucapan, penjelasan penggunaan, dan contoh pribadi dengan kata-kata Anda sendiri. Anggap Theory sebagai buku catatan referensi yang Anda buka kembali saat lupa. Semakin banyak Anda dokumentasikan, semakin kuat basis pengetahuan pribadi Anda."
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Latihan",
         "body": "Berlatih dengan flashcard, kuis, isian kosong, dan lainnya — dibangun dari kosakata dan teori Anda sendiri. Latihan tumbuh bersama pengetahuan yang Anda tambahkan. Semakin banyak materi yang disimpan, semakin berguna dan personal latihan Anda."
       },
       "writing": {
-        "title": "Writing",
+        "title": "Menulis",
         "body": "Susun teks dan buat rangkaian pertanyaan menggunakan topik serta kosakata Anda sendiri. Writing untuk aktif menggunakan apa yang dipelajari, bukan hanya menghafal. Dengan Pro, AI dapat memeriksa dan memperbaiki pekerjaan Anda, dan Anda dapat mengekspor materi saat diperlukan."
       },
       "listening": {
-        "title": "Listening",
+        "title": "Mendengarkan",
         "body": "Unggah audio atau video, dapatkan transkrip, dan jadikan pelajaran. Gunakan transkrip untuk menangkap kata dan ungkapan yang belum dikenal, lalu berlatih dengan konten nyata pilihan Anda. Bawa materi listening sendiri, bukan terbatas pada konten yang sudah ditentukan."
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Berbicara",
         "body": "Hubungi tutor AI lewat video dan berlatih berbicara secara alami dengan pengetahuan belajar Anda. Setelah setiap sesi, ulas transkrip dan umpan balik untuk melihat apa yang perlu ditingkatkan. Ini menutup siklus: belajar → berlatih → menggunakan → mengulas → meningkatkan."
       },
       "reading": {
-        "title": "Reading",
+        "title": "Membaca",
         "body": "Impor atau tempel teks, lalu buat latihan pemahaman — pilihan ganda, jawaban tertulis, dan benar / salah / tidak disebutkan. Free mencakup pembuatan dan penilaian AI terbatas setiap hari; Pro menaikkan batas harian, dan Premium tanpa batas."
       }
     },
     "modules": {
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Kosakata",
         "description": "Bank kata pribadi Anda untuk bahasa ini.",
         "how": "Tambahkan kata, tandai arti utama, dan lampirkan kalimat contoh. Gunakan tag dan pencarian untuk menemukannya nanti.",
         "cta": "Buka vocabulary"
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teori",
         "description": "Buku catatan tentang cara kerja bahasa — bukan latihan menulis.",
         "how": "Buat catatan, pilih kategori, dan kembali saat butuh menyegarkan ingatan.",
         "cta": "Buka theory"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Latihan",
         "description": "Sesi singkat yang dibangun dari kata yang sudah Anda simpan.",
         "how": "Tambahkan beberapa kata terlebih dahulu, lalu pilih mode. Kembali sering — beberapa menit tetap berarti.",
         "cta": "Buka exercises"
       },
       "writing": {
-        "title": "Writing",
+        "title": "Menulis",
         "description": "Dokumen kaya dan rangkaian pertanyaan yang dapat Anda buka kembali dan ekspor.",
-        "how": "Mulai draf, atur dengan folder, dan gunakan AI Pro untuk memeriksa atau memperbaiki teks Anda.",
+        "how": "Mulai draf, atur dengan folder, dan gunakan kuota AI rencana Anda untuk memeriksa atau meningkatkan teks Anda.",
         "cta": "Buka writing"
       },
       "listening": {
-        "title": "Listening",
+        "title": "Mendengarkan",
         "description": "Ubah audio atau video nyata menjadi pelajaran.",
-        "how": "Unggah klip dan buat transkrip di Free. Latihan listening yang dihasilkan termasuk dalam Pro.",
+        "how": "Unggah klip, hasilkan transkrip, dan bangun latihan mendengarkan dengan kuota AI yang termasuk dalam rencana Anda.",
         "cta": "Buka listening"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Berbicara",
         "description": "Percakapan video langsung dengan tutor AI.",
         "how": "Buat sesi dan bergabung dalam panggilan. Free mencakup satu pertemuan AI per hari, termasuk tutor.",
         "cta": "Buka speaking"
       },
       "reading": {
-        "title": "Reading",
+        "title": "Membaca",
         "description": "Teks dengan latihan pemahaman AI.",
         "how": "Impor atau tempel teks, buat pertanyaan, lalu berlatih dan ulas. Free punya batas AI harian; Pro memungkinkan 10/hari; Premium tanpa batas.",
         "cta": "Buka reading"
@@ -1648,13 +1670,13 @@
     "nextStepTitle": "Langkah berikutnya",
     "continueEmpty": "Belum ada yang dilanjutkan — tambahkan catatan teori, tulisan, pelajaran listening, atau sesi speaking dan akan muncul di sini.",
     "inbox": {
-      "title": "Capture",
+      "title": "Tangkap",
       "subtitle": "Catatan cepat yang menunggu diurutkan ke pustaka Anda.",
       "count": "{count, plural, =0 {Tidak ada yang menunggu} one {# item untuk diproses} other {# item untuk diproses}}",
       "cta": "Buka Capture"
     },
     "reviewLater": {
-      "title": "Review later",
+      "title": "Tinjau nanti",
       "subtitle": "Item yang Anda tandai untuk dilihat lagi.",
       "empty": "Tandai sesuatu dari vocabulary, theory, atau writing dan akan muncul di sini."
     },
@@ -1676,7 +1698,7 @@
         "updated": "Diperbarui",
         "completed": "Selesai",
         "processed": "Diproses",
-        "review_later_added": "Review later",
+        "review_later_added": "Tinjau nanti",
         "review_later_removed": "Tanda dihapus"
       }
     },
@@ -1876,7 +1898,7 @@
     "done": "Mengerti",
     "stepProgress": "{current} / {total}",
     "vocabulary": {
-      "title": "Vocabulary",
+      "title": "Kosakata",
       "description": "Tambahkan kata yang penting bagi Anda — lalu cari, atur, dan gunakan kembali di seluruh Notoria.",
       "cta": "Tambah kata",
       "steps": {
@@ -1938,7 +1960,7 @@
       }
     },
     "writing": {
-      "title": "Writing",
+      "title": "Menulis",
       "description": "Gunakan apa yang telah dipelajari dalam kalimat Anda sendiri — draf, rangkaian pertanyaan, dan tulisan yang dapat dibuka kembali.",
       "cta": "Mulai menulis",
       "steps": {
@@ -1977,7 +1999,7 @@
       }
     },
     "theory": {
-      "title": "Theory",
+      "title": "Teori",
       "description": "Simpan penjelasan yang ingin Anda ingat — tata bahasa, pengucapan, penggunaan, dan catatan pribadi.",
       "cta": "Tambah teori",
       "steps": {
@@ -2016,7 +2038,7 @@
       }
     },
     "exercise": {
-      "title": "Exercises",
+      "title": "Latihan",
       "description": "Ubah pengetahuan Anda menjadi latihan — flashcard, kuis, isian kosong, dan lainnya.",
       "cta": "Coba latihan",
       "steps": {
@@ -2031,7 +2053,7 @@
       }
     },
     "listening": {
-      "title": "Listening",
+      "title": "Mendengarkan",
       "description": "Bawa konten nyata yang ingin dipahami — unggah audio atau video, baca transkrip, dan belajar darinya.",
       "cta": "Buka listening",
       "steps": {
@@ -2066,7 +2088,7 @@
       }
     },
     "speaking": {
-      "title": "Speaking",
+      "title": "Berbicara",
       "description": "Berlatih menggunakan bahasa dalam percakapan — lalu ulas transkrip dan umpan balik.",
       "cta": "Mulai panggilan",
       "steps": {
@@ -2081,7 +2103,7 @@
       }
     },
     "reading": {
-      "title": "Reading",
+      "title": "Membaca",
       "description": "Impor atau tempel teks, buat latihan pemahaman, dan ulas hasil Anda.",
       "cta": "Buka reading",
       "steps": {
@@ -2120,7 +2142,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "Tangkap",
       "description": "Simpan potongan cepat — kata, keraguan, ide — lalu ubah menjadi item belajar nyata saat ada waktu.",
       "cta": "Mengerti",
       "steps": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Beberapa ruang kerja sudah ada untuk bahasa yang sama. Kontennya akan ditambahkan ke ruang kerja yang ada alih-alih membuat duplikat.",
         "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimpor.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Beberapa item yang ada memiliki nama yang sama. Impor akan menggunakan salah satu dari mereka secara deterministik dan membiarkan yang lainnya tidak berubah."
       },
       "cancel": "Batal",
       "confirm": "Impor data pembelajaran",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "Cadangan itu terlalu besar untuk diproses melalui halaman ini. Coba ekspor yang lebih kecil atau hubungi dukungan.",
         "notConfigured": "Penyimpanan file belum dikonfigurasi untuk impor cadangan."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Sudah ada di akun Anda",
+      "skippedInAccountHint": "Nama-nama ini cocok dengan item yang sudah Anda miliki. Mereka tidak akan diimpor lagi. Item baru di bawah workspace yang sama tetap diimpor.",
+      "skippedInBackupTitle": "Nama duplikat dalam cadangan ini",
+      "skippedInBackupHint": "File mencantumkan nama yang sama lebih dari sekali. Hanya salinan pertama dari setiap nama yang diimpor — ini normal bahkan di akun kosong.",
+      "skippedOtherTitle": "Tidak dapat diimpor"
     },
     "danger": {
       "title": "Tutup akun",
@@ -3184,7 +3206,7 @@
       "warningTitle": "Sebelum Anda melanjutkan",
       "warnings": {
         "workspaces": "Setiap ruang kerja dan semua data kosakata, teori, menulis, mendengarkan, dan berbicara akan dihapus.",
-        "billing": "Langganan Notoria Pro yang aktif akan dibatalkan segera.",
+        "billing": "Setiap langganan Notoria Pro atau Premium yang aktif akan dibatalkan segera.",
         "media": "Media yang diunggah dan foto profil Anda akan dihapus.",
         "permanent": "Tidak ada periode pemulihan setelah konfirmasi."
       },
@@ -3233,7 +3255,7 @@
     "upgrade": "Tingkatkan ke Pro",
     "manage": "Kelola langganan",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratis",
     "premiumBadge": "Premium",
     "renewsOn": "Diperpanjang pada {date}",
     "status": "Status: {status}",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "Jalur Belajar Pribadi",
       "personalizedRecommendations": "Rekomendasi yang dipersonalisasi",
       "crossModuleIntelligence": "Personalisasi lintas modul",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Instruksi latihan kustom"
     },
     "compare": {
       "heading": "Bandingkan paket",
@@ -3458,7 +3480,7 @@
       "feature": "Fitur",
       "current": "Saat ini",
       "capability": "Yang Anda dapatkan",
-      "free": "Free",
+      "free": "Gratis",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Termasuk di Free",
@@ -3598,7 +3620,7 @@
     "vocabulary": "Kosakata",
     "vocabularyEmpty": "Belum ada kata kosakata",
     "reviews": "Ulasan kartu flash",
-    "misses": "Again / Hard",
+    "misses": "Lagi / Sulit",
     "listening": "Mendengarkan",
     "speaking": "Berbicara",
     "writing": "Menulis",
@@ -3752,8 +3774,8 @@
       "practice": "Latih"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Lagi",
+      "HARD": "Sulit"
     },
     "status": {
       "MASTERED": "Dikuasai",
@@ -3792,7 +3814,7 @@
       "connections": "Pengetahuan Anda menjadi latihan",
       "philosophy": "Buku harian belajar Anda",
       "startHere": "Mulai di sini",
-      "inbox": "Capture"
+      "inbox": "Tangkap"
     },
     "welcome": {
       "title": "Apa itu Notoria?",
@@ -3962,7 +3984,7 @@
         "emphasis": "Bawa materi yang benar-benar ingin Anda pahami — berita, cerita, lembar kerja — dan ubah menjadi latihan yang menjadi milik buku harian Anda."
       },
       "inbox": {
-        "title": "Capture",
+        "title": "Tangkap",
         "intro": "Capture adalah zona drop cepat Anda — simpan sesuatu saat Anda menemukannya, lalu putuskan nanti di mana tempatnya.",
         "bullets": [
           "Simpan kata, frasa, keraguan tata bahasa, atau ide menulis dalam hitungan detik",
@@ -4041,16 +4063,16 @@
     }
   },
   "legal": {
-    "eyebrow": "Legal",
+    "eyebrow": "Hukum",
     "navLabel": "Halaman legal",
     "privacy": "Kebijakan Privasi",
     "terms": "Ketentuan Penggunaan",
     "privacyTitle": "Kebijakan Privasi",
     "termsTitle": "Ketentuan Penggunaan",
     "privacyDescription": "Bagaimana Notoria mengumpulkan, menggunakan, dan menghapus data pribadi serta konten belajar untuk ruang kerja belajar bahasa pribadinya.",
-    "termsDescription": "Ketentuan penggunaan ruang kerja belajar bahasa pribadi Notoria, akun, fitur AI, dan penagihan Notoria Pro.",
+    "termsDescription": "Syarat untuk menggunakan ruang belajar bahasa pribadi Notoria, akun, fitur AI, dan penagihan Pro atau Premium.",
     "updated": "Terakhir diperbarui {date}",
-    "updatedDate": "23 September 2026",
+    "updatedDate": "27 Oktober 2026",
     "backToSignIn": "Kembali ke masuk",
     "backHome": "Kembali ke Notoria",
     "authFooter": "Privasi · Ketentuan",
@@ -4071,7 +4093,7 @@
         "purposes": "Mengapa kami memproses data",
         "auth": "Akun dan masuk",
         "ai": "Fitur AI",
-        "payments": "Pembayaran (Notoria Pro)",
+        "payments": "Pembayaran (Pro dan Premium)",
         "processors": "Penyedia layanan",
         "cookies": "Cookie dan penyimpanan perangkat",
         "transfers": "Transfer internasional",
@@ -4095,7 +4117,7 @@
           "list": [
             "membuat atau menggunakan akun",
             "menyimpan materi di ruang kerja pribadi",
-            "berlangganan Notoria Pro",
+            "berlangganan Notoria Pro atau Premium",
             "menggunakan alat berbantuan AI opsional",
             "mengunggah media untuk mendengarkan atau profil",
             "menggunakan latihan berbicara",
@@ -4156,7 +4178,7 @@
               "basis": "Kontrak (Art. 6(1)(b))"
             },
             {
-              "purpose": "Menjalankan penagihan Notoria Pro dan status langganan melalui Stripe",
+              "purpose": "Menjalankan penagihan dan status langganan Notoria Pro dan Premium melalui Stripe",
               "basis": "Kontrak (Art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "Kode basis saat ini tidak menggunakan penyedia model bahasa besar lain selain OpenAI. OpenAI memproses data di bawah ketentuan dan kebijakan privasinya sendiri sebagai pemroses untuk fitur-fitur ini."
         },
         "payments": {
-          "title": "7. Pembayaran (Notoria Pro)",
+          "title": "7. Pembayaran (Pro dan Premium)",
           "p1": "Langganan berbayar ditangani oleh <strong>Stripe</strong>. Checkout, faktur, metode pembayaran, dan pembatalan berjalan melalui Stripe Checkout dan Stripe Customer Portal. Webhook Stripe memperbarui paket dan status Anda di Notoria.",
           "p2": "Stripe memproses data pembayaran sebagai penyedia pembayaran. Lihat dokumentasi privasi Stripe sendiri untuk penanganan kartu."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Checkout Notoria Pro, portal, dan status langganan"
+              "role": "Checkout Notoria Pro dan Premium, portal, dan status langganan"
             },
             {
               "provider": "Google",
@@ -4256,7 +4278,7 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
+              "cookie": "Cookie sesi Auth.js",
               "purpose": "Menjaga Anda tetap masuk (sesi JWT; penamaan default pustaka)",
               "code": false
             },
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ketentuan Penggunaan ini menjelaskan aturan penggunaan Notoria di <site>www.notoria.fi</site>. Mereka menggambarkan cara produk bekerja saat ini: ruang kerja belajar pribadi, penagihan Notoria Pro opsional melalui Stripe, dan fitur berbantuan AI. Bukan pengganti nasihat dari pengacara tentang situasi spesifik Anda.",
+      "intro": "Syarat Penggunaan ini menjelaskan aturan untuk menggunakan Notoria di <site>www.notoria.fi</site>. Mereka menggambarkan bagaimana produk bekerja saat ini: ruang belajar pribadi, penagihan Pro dan Premium opsional melalui Stripe, dan fitur yang dibantu AI. Mereka bukan pengganti nasihat dari pengacara tentang situasi spesifik Anda.",
       "tocTitle": "Di halaman ini",
       "tocAria": "Di halaman ini",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Penggunaan yang dapat diterima",
         "ip": "Kekayaan intelektual",
         "ai": "Output yang dihasilkan AI",
-        "plans": "Paket Free dan Notoria Pro",
+        "plans": "Rencana Gratis, Pro, dan Premium",
         "billing": "Langganan dan penagihan",
         "refunds": "Pengembalian dana dan hak konsumen",
         "availability": "Ketersediaan",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. Layanan",
           "p1": "Notoria adalah aplikasi web belajar bahasa pribadi. Anda dapat membuat ruang kerja dan menyimpan materi belajar seperti kosakata, catatan teori, menulis, latihan, pelajaran mendengarkan, dan sesi berbicara.",
-          "p2": "Beberapa fitur tersedia pada paket free. Notoria Pro membuka kemampuan tambahan seperti yang ditunjukkan di produk dan di halaman <account>Akun</account> Anda — termasuk Mendengarkan, Berbicara, alat belajar AI tertentu, impor latihan, dan format ekspor dokumen berbayar. Ketersediaan fitur dapat berubah seiring evolusi produk.",
+          "p2": "Area pembelajaran inti, termasuk Mendengarkan, Berbicara, dan Membaca, tersedia di setiap rencana. Pro dan Premium menambah kuota AI yang lebih tinggi dan impor/ekspor materi pembelajaran; Premium juga menambahkan pelatihan dan fitur praktik yang dipersonalisasi. Perbandingan saat ini ditampilkan di halaman <account>Akuntan</account> Anda. Ketersediaan fitur dapat berubah seiring evolusi produk.",
           "p3": "Notoria untuk belajar bahasa pribadi. Bukan sekolah, otoritas ujian, atau layanan nasihat profesional."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. Output yang dihasilkan AI",
           "p1": "Beberapa fitur dapat memeriksa, menyarankan, menghasilkan, mentranskripsi, merangkum, atau mengajar berdasarkan materi Anda. Output mungkin tidak lengkap, salah, atau tidak cocok untuk tujuan Anda. Anda tetap bertanggung jawab meninjau hasil AI sebelum mengandalkannya untuk belajar, ujian, penggunaan profesional, atau publikasi.",
           "p2": "Fitur AI mungkin tidak tersedia jika bantuan dimatikan di <settings>Pengaturan</settings>, jika paket Anda tidak mencakup alat tertentu, atau jika penyedia sementara tidak dapat dijangkau.",
-          "p3": "Tidak semua pembantu AI memerlukan Notoria Pro. Produk menunjukkan alat mana yang gratis dan mana yang membutuhkan Pro."
+          "p3": "Ketersediaan AI dan kuota harian bervariasi antara Gratis, Pro, dan Premium. Produk menunjukkan rencana dan kuota yang diperlukan untuk setiap alat."
         },
         "plans": {
-          "title": "8. Paket Free dan Notoria Pro",
+          "title": "8. Rencana Gratis, Pro, dan Premium",
           "p1": "Paket free mencakup latihan inti dengan kosakata Anda sendiri dan alat belajar terkait seperti yang ditunjukkan di produk.",
-          "p2": "Notoria Pro adalah langganan berbayar yang membuka fitur tambahan. Di produk saat ini, biasanya mencakup Mendengarkan, Berbicara, impor latihan, latihan bentuk kalimat, banyak alat belajar berbantuan AI, dan ekspor dokumen PDF/DOCX. Beberapa pembantu AI yang lebih ringan (seperti bantuan kosakata atau pemformatan editor tertentu) dapat tetap tersedia di paket free ketika bantuan AI diaktifkan.",
-          "p3": "Akses Pro terikat ke akun pengguna Anda, sehingga berlaku di seluruh ruang kerja di bawah akun tersebut. Akun dengan peran administrator mungkin memiliki akses tingkat Pro tanpa langganan Stripe pribadi.",
-          "p4": "Harga yang berlaku untuk pembelian Anda adalah harga yang ditampilkan di Stripe Checkout untuk paket Pro saat ini. Harga yang ditampilkan di tempat lain di produk (misalnya di Akun) hanya bersifat indikatif dan harus cocok dengan konfigurasi harga Stripe aktif."
+          "p2": "Pro dan Premium adalah langganan berbayar. Pro menambah kuota yang lebih tinggi atau tidak terbatas untuk banyak alat AI ditambah impor materi pembelajaran dan ekspor PDF/DOCX. Premium mencakup Pro dan menambahkan fitur yang dipersonalisasi seperti Pelatih Pembelajaran, profil pembelajaran pribadi, praktik adaptif, praktik berbasis kesalahan, dan instruksi latihan kustom. Halaman Akun menunjukkan perbandingan dan batasan saat ini.",
+          "p3": "Akses berbayar terikat pada akun pengguna Anda dan berlaku di seluruh ruang kerjanya. Akun dengan peran administrator mungkin memiliki akses tingkat berbayar tanpa langganan Stripe pribadi.",
+          "p4": "Harga yang berlaku adalah harga yang ditampilkan di Stripe Checkout untuk rencana Pro atau Premium yang dipilih. Setiap harga yang ditampilkan di tempat lain dalam produk (misalnya di Akun) hanya bersifat indikatif dan harus sesuai dengan konfigurasi harga Stripe yang aktif."
         },
         "billing": {
           "title": "9. Langganan, penagihan, dan pembatalan",
-          "list0": "Langganan Pro ditagih melalui <strong>Stripe</strong>",
-          "list1": "Anda dapat memulai checkout dari <account>Akun</account> atau dari kontrol Pro terkunci di aplikasi",
+          "list0": "Langganan Pro dan Premium ditagih melalui <strong>Stripe</strong>",
+          "list1": "Anda dapat memulai checkout atau mengubah rencana dari <account>Akuntan</account> atau dari kontrol berbayar yang terkunci di aplikasi",
           "list2": "Dari Akun, Anda dapat membuka Stripe Customer Portal untuk melihat faktur, memperbarui metode pembayaran, dan membatalkan langganan",
           "list3": "Pembatalan mengikuti perilaku Stripe Customer Portal untuk langganan Anda",
-          "p1": "Setelah Anda membatalkan, akses Pro berlanjut hanya selama status langganan Stripe Anda masih memberikan Pro di produk. Dalam implementasi saat ini, status yang diperlakukan sebagai Pro mencakup <code>active</code>, <code>trialing</code>, dan <code>past_due</code>. Ketika status tidak lagi memenuhi syarat, akun kembali ke paket free.",
-          "p2": "Jika pembayaran gagal, Stripe dapat memindahkan langganan ke <code>past_due</code> atau status lain. Notoria menyinkronkan status itu dari webhook Stripe. Selama status tetap <code>past_due</code>, fitur Pro tetap tersedia di bawah aturan akses saat ini; jika langganan kemudian dibatalkan atau tidak memenuhi syarat, akses Pro berakhir.",
+          "p1": "Setelah Anda membatalkan pembaruan, akses Pro atau Premium Anda saat ini akan berlanjut selama status langganan Stripe masih memenuhi syarat dalam produk. Status yang memenuhi syarat saat ini termasuk <code>aktif</code>, <code>trialing</code>, dan <code>past_due</code>. Ketika status tidak lagi memenuhi syarat, akun kembali ke Gratis.",
+          "p2": "Jika pembayaran gagal, Stripe dapat memindahkan langganan ke <code>past_due</code> atau status lain. Notoria menyinkronkan status itu dari webhook Stripe. Selama tetap <code>past_due</code>, rencana berbayar saat ini tetap tersedia di bawah aturan akses saat ini; jika kemudian menjadi dibatalkan atau tidak memenuhi syarat, akses berbayar berakhir.",
           "p3": "Menghapus akun Notoria Anda membatalkan langganan Stripe segera (upaya terbaik) sebagai bagian dari penghapusan akun. Itu berbeda dari membatalkan perpanjangan melalui Customer Portal sambil mempertahankan akun."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Penafian dan tanggung jawab",
           "p1": "Notoria disediakan atas dasar “sebagaimana tersedia” untuk belajar bahasa pribadi. Sejauh diizinkan oleh hukum yang berlaku, kami menafikan jaminan yang tidak diwajibkan oleh hukum.",
-          "p2": "Sejauh diizinkan oleh hukum yang berlaku, Notoria tidak bertanggung jawab atas kerusakan tidak langsung, insidental, khusus, konsekuensial, atau kehilangan data yang timbul dari penggunaan layanan atau ketergantungan pada output AI. Ketika tanggung jawab tidak dapat dikecualikan, dibatasi pada jumlah yang Anda bayar untuk Notoria Pro dalam tiga bulan sebelum klaim, atau jumlah lebih besar yang diwajibkan oleh hukum wajib.",
+          "p2": "Sejauh yang diizinkan oleh hukum yang berlaku, Notoria tidak bertanggung jawab atas kerusakan tidak langsung, insidental, khusus, konsekuensial, atau kehilangan data yang timbul dari penggunaan layanan Anda atau ketergantungan pada keluaran AI. Di mana tanggung jawab tidak dapat dikecualikan, itu dibatasi pada jumlah yang Anda bayar untuk Notoria Pro atau Premium dalam tiga bulan sebelum klaim, atau jumlah yang lebih besar yang diperlukan oleh hukum yang wajib.",
           "p3": "Batasan ini tidak mengecualikan tanggung jawab yang tidak diizinkan hukum Finlandia atau EU untuk dibatasi — termasuk tanggung jawab yang tidak dapat dilepaskan bagi konsumen, dan tanggung jawab atas kematian atau cedera pribadi yang disebabkan kelalaian bila aturan tersebut berlaku."
         },
         "changes": {
@@ -4482,7 +4504,7 @@
     "navLabel": "Tautan situs",
     "explore": "Jelajahi",
     "support": "Dukungan",
-    "legal": "Legal",
+    "legal": "Hukum",
     "howToUse": "Cara menggunakan",
     "about": "Tentang kami",
     "ourStory": "Cerita kami",
@@ -4528,9 +4550,9 @@
           "vocab": "Bangun bank kosakata pribadi dengan makna, contoh, dan tag",
           "practice": "Berlatih dengan latihan yang diambil dari kata dan catatan Anda sendiri",
           "create": "Tulis catatan teori dan karya menulis yang dapat Anda kunjungi kembali nanti",
-          "listenSpeak": "Ubah media menjadi latihan mendengarkan, dan berbicara dengan tutor AI di Pro"
+          "listenSpeak": "Ubah media menjadi latihan mendengarkan, dan gunakan kuota AI untuk transkripsi dan latihan berbicara"
         },
-        "note": "Beberapa alat AI, mendengarkan, berbicara, dan ekspor adalah bagian dari Notoria Pro. Paket free tetap mencakup latihan kosakata sehari-hari dan loop belajar inti."
+        "note": "Area pembelajaran inti tersedia di setiap rencana. Pro meningkatkan kuota AI dan menambahkan impor/ekspor materi pembelajaran; Premium menambahkan pelatihan dan praktik yang dipersonalisasi."
       },
       "ai": {
         "title": "AI, di mana membantu",
@@ -4656,7 +4678,7 @@
         "title": "Bagaimana area terhubung",
         "p1": "Capture adalah titik masuk cepat. Kosakata dan Teori adalah tempat materi menetap. Latihan mengubah materi itu menjadi praktik. Menulis, Mendengarkan, dan Berbicara membantu Anda menggunakan bahasa lebih aktif.",
         "p2": "Anda tidak harus bergerak melalui setiap area secara berurutan. Banyak orang tetap dengan kata dan latihan singkat untuk sementara.",
-        "p3": "Langkah alami berikutnya adalah menulis ketika Anda ingin menghasilkan bahasa dengan syarat sendiri, lalu mendengarkan dan berbicara ketika Anda ingin materi yang sama bekerja di telinga dan suara Anda — Mendengarkan dan Berbicara adalah bagian dari Notoria Pro.",
+        "p3": "Langkah selanjutnya yang alami adalah menulis ketika Anda ingin memproduksi bahasa dengan cara Anda sendiri, lalu mendengarkan dan berbicara ketika Anda ingin materi yang sama bekerja di telinga dan suara Anda. Area ini tersedia di setiap rencana; batas penggunaan AI bervariasi berdasarkan rencana.",
         "beat": "Kumpulkan dan pahami dulu. Gunakan dan bicara ketika materi siap meninggalkan halaman."
       },
       "areas": {
@@ -4680,18 +4702,18 @@
         },
         "listening": {
           "label": "Mendengarkan",
-          "body": "Ubah media menjadi latihan mendengarkan di ruang kerja Anda. Tersedia di Notoria Pro."
+          "body": "Ubah media menjadi latihan mendengarkan di ruang kerja Anda. Tersedia di setiap rencana; kuota transkripsi AI bervariasi berdasarkan rencana."
         },
         "speaking": {
           "label": "Berbicara",
-          "body": "Latihan langsung dengan tutor AI, berlandaskan bahasa yang Anda pelajari. Tersedia di Notoria Pro."
+          "body": "Latihan langsung dengan tutor AI, berlandaskan pada bahasa yang Anda pelajari. Tersedia di setiap rencana dengan kuota harian berbasis rencana."
         },
         "reading": {
           "label": "Membaca",
           "body": "Impor atau tempel bacaan, buat latihan pemahaman, dan tinjau hasil. Free mencakup batas AI harian; Pro dan Premium menaikkan atau menghapus batas itu."
         },
         "capture": {
-          "label": "Capture",
+          "label": "Tangkap",
           "body": "Zona drop cepat untuk potongan — kata, keraguan, dan ide — yang Anda proses ke Kosakata, Teori, Menulis, atau Latihan nanti. Capture dulu ketika Anda hanya punya sebentar; item tetap belum diproses sampai Anda selesai membuat entri tertaut."
         }
       },
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Bagaimana saya mengubah kata sandi atau menutup akun?",
-          "a": "Buka <account>Akun</account>. Anda dapat memperbarui kata sandi di sana jika menggunakan masuk email, mengelola Notoria Pro, mengekspor cadangan, atau menghapus akun secara permanen."
+          "a": "Buka <account>Akuntan</account>. Anda dapat memperbarui kata sandi Anda di sana jika Anda menggunakan masuk email, mengelola Pro atau Premium, mengekspor cadangan, atau menghapus akun Anda secara permanen. Menghapus akun juga segera membatalkan langganan Stripe yang aktif berdasarkan upaya terbaik; membatalkan pembaruan saja menjaga akun dan datanya."
         },
         "pro": {
           "q": "Bagaimana penagihan dan pembatalan bekerja?",
-          "a": "Notoria Pro ditagih melalui Stripe. Dari <account>Akun</account> Anda dapat meningkatkan, membuka portal pelanggan Stripe untuk mengelola metode pembayaran dan faktur, atau membatalkan perpanjangan."
+          "a": "Notoria Pro dan Premium ditagih melalui Stripe. Dari <account>Akuntan</account> Anda dapat berlangganan, beralih antara Pro dan Premium, mengelola metode pembayaran dan faktur, membatalkan pembaruan, atau melanjutkan pembatalan yang dijadwalkan. Membatalkan pembaruan menjaga akses hingga Stripe mengakhiri periode langganan yang memenuhi syarat; menghapus akun Anda terpisah dan membatalkan langganan segera berdasarkan upaya terbaik."
         },
         "proFeatures": {
-          "q": "Apa yang gratis, dan apa yang membutuhkan Notoria Pro?",
-          "a": "Latihan kosakata sehari-hari dan alat belajar terkait tersedia di paket free. Beberapa alat AI, mendengarkan, berbicara, dan fitur ekspor dokumen adalah bagian dari Notoria Pro. Bandingkan dan tingkatkan dari <account>Akun</account>."
+          "q": "Apa yang termasuk dalam Gratis, Pro, dan Premium?",
+          "a": "Gratis mencakup area pembelajaran inti dan kuota harian untuk alat AI yang didukung. Pro meningkatkan atau menghapus banyak batasan AI dan menambahkan impor materi pembelajaran serta ekspor PDF/DOCX. Premium mencakup Pro dan menambahkan pelatihan yang dipersonalisasi, profil pembelajaran, praktik adaptif dan berbasis kesalahan, serta instruksi latihan kustom. Lihat perbandingan langsung dan batasan saat ini di <account>Akuntan</account>."
         },
         "learning": {
           "q": "Bagaimana fitur belajar Notoria bekerja?",
@@ -4997,7 +5019,7 @@
         "admins": "Administrator",
         "testers": "Penguji",
         "suspended": "Ditangguhkan",
-        "contentTotal": "Content records"
+        "contentTotal": "Rekaman konten"
       },
       "quickAccess": "Akses cepat",
       "quickAccessLede": "Buka alat manajemen.",
@@ -5051,7 +5073,7 @@
         "updated": "Diperbarui",
         "emailVerified": "Email terverifikasi",
         "email": "Email",
-        "password": "Password"
+        "password": "Kata sandi"
       },
       "detail": {
         "account": "Akun",
@@ -5060,7 +5082,7 @@
         "actions": "Tindakan akun",
         "workspaces": "Ruang kerja",
         "workspacesLede": "Ruang kerja bahasa yang dimiliki pengguna ini.",
-        "danger": "Danger zone"
+        "danger": "Zona bahaya"
       },
       "actions": {
         "saveProfile": "Simpan nama",
@@ -5071,7 +5093,7 @@
         "delete": "Hapus akun",
         "grantTester": "Berikan peran penguji",
         "revokeTester": "Cabut peran penguji",
-        "create": "Create user"
+        "create": "Buat pengguna"
       },
       "confirm": {
         "grantAdmin": "Berikan akses admin ke akun ini?",
@@ -5089,11 +5111,11 @@
         "admin": "Administrator"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Buat pengguna",
+        "lede": "Sediakan akun dengan email dan kata sandi. Mereka dapat masuk segera."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratis",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5140,7 @@
         "owner": "Pemilik",
         "created": "Dibuat",
         "updated": "Diperbarui",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Email pemilik",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "Hapus ruang kerja ini dan semua konten belajar di dalamnya melalui kaskade basis data?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Buat workspace",
+        "lede": "Lampirkan workspace bahasa baru ke akun yang ada dengan email."
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "Ruang kerja",
         "created": "Dibuat",
         "updated": "Diperbarui",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Judul",
+        "word": "Kata",
+        "folderName": "Nama folder"
       },
       "detail": {
         "description": "Pemeriksaan metadata. Isi pribadi tidak dimuat otomatis.",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "Hapus catatan",
-        "saveTitle": "Save title"
+        "saveTitle": "Simpan judul"
       },
       "confirm": {
         "delete": "Hapus catatan ini? Baris anak terkait mengikuti aturan kaskade / set-null basis data."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Item tangkap menyimpan teks bebas. Pengeditan judul tidak didukung di sini — hapus jika rekaman harus dihapus."
     },
     "jobs": {
       "title": "Pekerjaan",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "Kode bahasa tidak valid.",
       "CONTENT_NOT_FOUND": "Catatan tidak ditemukan.",
       "INVALID_CONTENT_MODULE": "Modul konten tidak dikenal.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Email itu sudah terdaftar.",
+      "PASSWORD_TOO_WEAK": "Kata sandi tidak memenuhi persyaratan kekuatan.",
+      "CONTENT_TITLE_UNSUPPORTED": "Jenis konten ini tidak mendukung pengeditan judul."
     }
   }
 }

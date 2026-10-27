@@ -17,19 +17,20 @@
     "hideFilters": "Skrýt filtry",
     "remove": "Odebrat",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Vzhled",
+      "print": "Tiskově přívětivý",
+      "printHint": "Bílá stránka, tmavý text",
+      "theme": "Aktuální téma",
+      "themeHint": "Odpovídá vašemu světlému nebo tmavému tématu",
+      "previewKicker": "Ukázková stránka",
+      "previewTitle": "Název dokumentu",
+      "previewBody": "Text těla používá vybrané barvy a rozestupy.",
+      "previewCallout": "Poznámky a akcenty odpovídají barvě modulu.",
+      "fixedNote": "Vzhled je v exportovaném souboru pevně nastaven. Exportujte znovu pro jeho změnu.",
+      "docxBackgroundNote": "Word a další aplikace nemusí zobrazovat pozadí stránek stejným způsobem, zejména při tisku."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Přejít na začátek",
+    "moreActions": "Více akcí"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "Tato složka je zanořená příliš hluboko",
     "notFound": "Složka nenalezena",
     "nameTaken": "Složka nebo text s tímto názvem už existuje",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Přesunout do složky",
+    "dragTipBody": "Na počítači s myší nebo touchpadem přetáhněte položku na kartu složky pro její přesunutí. Můžete také použít ikonu přesunu u každé položky.",
+    "dragTipDismiss": "Zavřít tip",
+    "dragTipShow": "Jak přesunout do složek",
+    "dragTipDemo": "Přetáhněte položku na složku",
+    "dragTipCard": "Položka"
   },
   "theme": {
     "toggle": "Přepnout motiv",
@@ -472,34 +473,34 @@
     "viewMode": "Režim zobrazení",
     "tagManager": {
       "open": "Spravovat štítky",
-      "eyebrow": "Tags",
+      "eyebrow": "Štítky",
       "title": "Správce štítků",
-      "description": "Vyberte štítek a poté jej přiřaďte slovům nebo odeberte. Přiřazená a ostatní slova zůstávají v samostatných seznamech.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Vyberte štítek a přiřaďte ho nebo ho odeberte z slov.",
+      "pageDescription": "Vyberte Standardní nebo Vlastní, vyberte štítek a přidejte ho nebo ho odeberte ze slov.",
+      "disabledNoWorkspace": "Vytvořte pracovní prostor před správou štítků slovní zásoby.",
+      "backToVocabulary": "Zpět ke slovní zásobě",
+      "backToSettings": "Zpět do nastavení",
       "groupsLabel": "Standardní skupiny štítků",
       "tagsHeading": "Štítky",
       "standardTagsHeading": "Standardní štítky",
       "customTagsHeading": "Vlastní štítky",
-      "customTagsHint": "Štítky, které vytváříte pro vlastní organizaci — nejde o slovní druhy.",
+      "customTagsHint": "Štítky pracovního prostoru, které vytvoříte — hledejte je, když je seznam dlouhý.",
       "emptyCustomTags": "Zatím žádné vlastní štítky. Vytvořte je při úpravě slova.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Žádné vlastní štítky neodpovídají tomuto hledání.",
+      "tagSearchPlaceholder": "Hledat štítky…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standardní",
       "kindCustom": "Vlastní",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Seznamy slov",
+      "wordTabAssigned": "Označené",
+      "wordTabOther": "Neoznačené",
       "assignedHeading": "Slova s tímto štítkem",
       "otherHeading": "Ostatní slova",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Vybrat vše na této stránce",
+      "clearSelection": "Zrušit výběr",
+      "selectionScopePage": "Výběr z této stránky ({count} z {total})",
+      "selectionScopeFiltered": "Výběr v aktuálních výsledcích hledání",
       "searchPlaceholder": "Hledat slova nebo významy…",
       "wordCount": "{count}",
       "loading": "Načítání slovní zásoby…",
@@ -509,13 +510,23 @@
       "emptyOther": "Každé slovo už má tento štítek.",
       "emptyOtherSearch": "Žádná odpovídající slova k přiřazení.",
       "selected": "Vybráno: {count}",
-      "addToTag": "Přidat ke štítku",
-      "removeFromTag": "Odebrat ze štítku",
-      "applyAdd": "Přidat ke štítku ({count})",
-      "applyRemove": "Odebrat ze štítku ({count})",
+      "addToTag": "Přidat štítek",
+      "removeFromTag": "Odebrat štítek",
+      "applyAdd": "Přidat štítek ({count})",
+      "applyRemove": "Odebrat štítek ({count})",
       "added": "Ke štítku {tag} přidáno {count} slov",
       "removed": "Ze štítku {tag} odebráno {count} slov",
-      "error": "Členství ve štítku se nepodařilo aktualizovat"
+      "error": "Členství ve štítku se nepodařilo aktualizovat",
+      "systemsLabel": "Systémy štítků",
+      "standardSystemTitle": "Standardní",
+      "standardSystemMeta": "Téma a použití, zobrazeno odděleně",
+      "usageOptional": "Volitelné",
+      "customSystemTitle": "Vlastní",
+      "customSystemMeta": "{count, plural, one {# štítek} other {# štítků}}",
+      "customPickerLabel": "Vyberte vlastní štítek",
+      "customPickerPlaceholder": "Vyberte vlastní štítek…",
+      "customSearchPlaceholder": "Hledat vlastní štítky…",
+      "pickTagFirst": "Nejprve vyberte štítek výše pro správu členství ve slovech."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Aktualizováno {time}",
@@ -584,7 +595,11 @@
         "notes": "Poznámky",
         "updated": "Naposledy aktualizováno"
       }
-    }
+    },
+    "selectedCustomTags": "Vybrané štítky",
+    "selectedSynonyms": "Vybrané synonyma",
+    "removeCustomTag": "Odstranit {name}",
+    "pickerLoading": "Načítání…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "Aktualizováno",
     "backToStudio": "Zpět ke cvičením",
     "studyMode": "Režim studia",
+    "questionTypeLabel": "Typ otázky",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Obtížnost",
       "easy": "Snadná",
@@ -873,7 +893,7 @@
       "aiReady": "Praxe připravena",
       "aiUnavailable": "Otázky AI se momentálně nepodařilo vygenerovat.",
       "aiForbidden": "AI teoretická cvičení jsou dostupná s Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Další pokyny jsou k dispozici v Premium.",
       "aiDisabled": "AI asistence je vypnutá v Nastavení.",
       "feedback": {
         "correct": "Správně!",
@@ -927,20 +947,22 @@
         "why": "Proč",
         "complete": "Rozumím",
         "completeHint": "Můžete pokračovat, až budete připraveni.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Začít cvičení",
+        "skipReviewAndStart": "Přeskočit recenzi a začít cvičení"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Nepřiřazeno",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# poznámka} other {# poznámek}}",
+        "selectAll": "Vybrat vše",
+        "selectGroup": "Vybrat poznámky v {name}",
+        "expand": "Rozbalit {name}",
+        "collapse": "Sbalit {name}",
+        "selectedCount": "{count, plural, one {# vybraná teorie} other {# vybraných teorií}}",
+        "practiceSelected": "Procvičit vybrané",
+        "clearSelection": "Zrušit výběr",
+        "subfolders": "{count, plural, one {# podsložka} other {# podsložek}}",
+        "selectedOne": "1 teorie vybrána"
       }
     },
     "types": {
@@ -998,8 +1020,8 @@
       "startsWith": "Začíná na „{letter}“",
       "revealPrompt": "Stále nevíte? Můžete odhalit celou odpověď.",
       "revealAnswer": "Odhalit odpověď",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Další nápověda",
+      "hintProgress": "Nápověda {current} z {total}"
     },
     "empty": {
       "noWordsTitle": "Zatím žádná slovní zásoba",
@@ -1032,17 +1054,17 @@
       "shuffle": "Zamíchat",
       "finish": "Dokončit kolo",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Zdroj otázky",
+        "chooseAi": "Použít generované AI",
+        "emptyTitle": "Žádné použitelné uložené příklady",
+        "emptyDescription": "Přidejte příkladové věty, které jasně zahrnují každé slovo, upravte své filtry nebo přepněte na generované AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Uložené příklady",
+          "description": "Okamžitě vytvářejte otázky z příkladů vaší slovní zásoby. Žádné čekání na AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Generované AI",
+          "description": "Vytvářejte nové věty ze své slovní zásoby pomocí AI."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "Generování cvičení AI je dostupné s Pro.",
       "disabled": "AI asistence je vypnutá v Nastavení.",
       "upgradeHint": "Free zahrnuje několik generování cvičení AI denně. Pro limit odstraňuje.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Další pokyny",
+      "additionalInstructionsPlaceholder": "Například: Použijte situace z restaurace, udržujte jazyk na úrovni A2 a vysvětlete chyby ve vašem rozhraní.",
+      "additionalInstructionsLocked": "Upgradujte na Premium pro přizpůsobení podporovaných typů cvičení, nastavení reálného kontextu a přidání vlastních pokynů.",
+      "premiumRequired": "Další pokyny jsou k dispozici v Premium.",
+      "presetLabel": "Předvolby",
+      "presetNone": "Žádná předvolba není vybrána",
+      "presetApply": "Použít",
+      "presetSave": "Uložit předvolbu",
+      "presetName": "Název předvolby",
+      "presetDelete": "Smazat",
+      "presetSaved": "Předvolba uložena",
+      "presetDeleted": "Předvolba smazána",
+      "presetSaveFailed": "Nepodařilo se uložit tuto předvolbu.",
       "emptyWords": "Než budete generovat otázky, přidejte slova do slovní zásoby.",
       "noneValid": "AI nedokázala vytvořit platné otázky pro tato slova. Zkuste to znovu.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Přizpůsobte kontext, styl nebo zaměření vašeho cvičení. Nechte prázdné pro použití výchozích nastavení.",
+      "presetUpdate": "Aktualizovat předvolbu",
+      "presetUpdated": "Předvolba aktualizována",
+      "presetsTitle": "Uložené předvolby",
+      "presetsHelper": "Předvolby ukládají nastavení cvičení a další pokyny. Nemění vybranou slovní zásobu nebo teorie.",
+      "presetsEmpty": "Zatím nejsou uloženy žádné předvolby. Uložte svá aktuální nastavení pro jejich pozdější opětovné použití.",
+      "presetSaveAs": "Uložit jako předvolbu",
+      "presetUpdateCurrent": "Aktualizovat aktuální nastavení",
+      "presetRename": "Přejmenovat",
+      "presetManage": "Spravovat předvolbu",
+      "presetRenamed": "Předvolba přejmenována",
+      "presetSaveDialogTitle": "Uložit jako předvolbu",
+      "presetSaveDialogDescription": "Pojmenujte tuto předvolbu pro opětovné použití aktuálních nastavení cvičení a dalších pokynů. Vybraná slovní zásoba nebo teorie nejsou uloženy.",
+      "presetRenameDialogTitle": "Přejmenovat předvolbu",
+      "presetRenameDialogDescription": "Zvolte nové jméno pro tuto předvolbu.",
+      "presetDeleteDialogTitle": "Smazat předvolbu?",
+      "presetDeleteDialogDescription": "Smazat „{name}“? Vaše aktuální nastavení cvičení zůstává tak, jak je."
     },
     "session": {
       "complete": "Relace dokončena",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Zkusit znovu",
       "questionsLabel": "Otázky",
       "correctLabel": "Správně",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Nesprávně",
+      "unansweredLabel": "Nezodpovězeno",
       "reviewLabel": "K opakování",
       "answeredProgress": "{answered} / {total} zodpovězeno",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Zkontrolovat odpověď",
+      "nextQuestion": "Další",
+      "viewResults": "Zobrazit výsledky",
       "submitSet": "Odeslat odpovědi",
       "submitting": "Kontrola…",
       "unansweredWarnTitle": "Nezodpovězené otázky",
@@ -1121,54 +1143,54 @@
       "unanswered": "Nezodpovězeno",
       "yourAnswer": "Vaše odpověď",
       "correctAnswer": "Správná odpověď",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Pouze {count} otázek dostupných z vašich aktuálních filtrů.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Jak cvičíte",
+        "lockedHint": "Dokončete nebo začněte novou sadu, abyste to změnili.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Jedna po druhé",
+          "description": "Vidíte jednu otázku najednou. Zkontrolujte po každé odpovědi pro okamžitou zpětnou vazbu."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Všechny otázky",
+          "description": "Vidíte celou sadu, odpovídáte v libovolném pořadí a poté jednou odešlete pro zpětnou vazbu."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Přehled",
+        "allCorrect": "Dokonalé — každá otázka správná.",
+        "summary": "{incorrect} nesprávně · {unanswered} nezodpovězeno · {needsReview} k přezkoumání",
+        "viewWrong": "Zobrazit nesprávné odpovědi",
+        "filtersLabel": "Filtr otázky",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Vše ({count})",
+          "needs_review": "Nesprávné a nezodpovězené ({count})",
+          "correct": "Správné ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Předchozí",
+        "nextWrong": "Další",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} k přezkoumání",
+        "floatLabel": "Navigace nesprávných odpovědí",
+        "closeFloat": "Zobrazit všechny odpovědi"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% správně",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Dokonalá sada",
+          "body": "Každá odpověď byla správná. Takové soustředění si zaslouží další kolo, až budete připraveni."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Silný závěr",
+          "body": "Jasně to chápete — projděte si chyby, pak to upevněte s novou sadou."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Dobrá práce — pokračujte",
+          "body": "Několik zadrhnutí je normálních. Projděte si je jednou, pak to zkuste znovu, když jsou čerstvé."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Téměř tam",
+          "body": "Nejprve dokončete nezodpovězené — pak skóre ukáže jasnější příběh."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "Otázky jsou generovány v jazyce {language} (jazyk workspace).",
       "contextualEmptyTitle": "Generovat kontextové otázky",
-      "contextualEmptyDescription": "Vytvořte otázky s výběrem z možností a doplňováním mezer z vaší slovní zásoby.",
+      "contextualEmptyDescription": "Pokud chcete, přidejte volitelné pokyny níže a poté stiskněte Generovat. Můžete nechat výzvu prázdnou.",
       "contextualProDescription": "Kontextové otázky AI jsou dostupné s Pro.",
       "unlockContextual": "Odemknout s Pro",
       "correct": "Správně!",
@@ -1202,8 +1224,8 @@
       "hint": "Vyberte slovo a pak klepněte na jeho význam",
       "complete": "Všechny páry spárovány — skvělá práce!",
       "shuffle": "Zamíchat sloupce",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} párů",
+      "continueRound": "Pokračovat"
     },
     "typeAnswer": {
       "questionWord": "Jaký je význam?",
@@ -1213,7 +1235,7 @@
         "contextual": "Kontextové"
       },
       "contextualEmptyTitle": "Generovat kontextové otázky",
-      "contextualEmptyDescription": "Vytvořte podněty k psaní s doplňováním mezer z vaší slovní zásoby.",
+      "contextualEmptyDescription": "Pokud chcete, přidejte volitelné pokyny níže a poté stiskněte Generovat. Můžete nechat výzvu prázdnou.",
       "contextualProDescription": "Kontextové otázky AI jsou dostupné s Pro.",
       "unlockContextual": "Odemknout s Pro",
       "placeholder": "Napište odpověď…",
@@ -1521,7 +1543,7 @@
   "dashboard": {
     "overview": "Přehled",
     "your": "Váš",
-    "workspaceLabel": "workspace",
+    "workspaceLabel": "pracovní prostor",
     "description": "Soukromý studijní workspace pro jazyk, který vás zajímá — sbírejte slova, mějte teorii po ruce, procvičujte vlastními slovy a pak pište, poslouchejte a mluvte, dokud to nebude vaše.",
     "wordsSaved": "Uložená slova",
     "wordsReadyToPractice": "Slova připravená k procvičení",
@@ -1597,13 +1619,13 @@
       "writing": {
         "title": "Psaní",
         "description": "Rozšířené dokumenty a sady otázek, ke kterým se můžete vracet a exportovat je.",
-        "how": "Začněte koncept, organizujte složkami a s Pro AI kontrolujte nebo vylepšujte text.",
+        "how": "Začněte návrh, organizujte pomocí složek a využijte AI povolení vašeho plánu k kontrole nebo zlepšení vašeho textu.",
         "cta": "Otevřít psaní"
       },
       "listening": {
         "title": "Poslech",
         "description": "Přeměňte reálné audio nebo video na lekci.",
-        "how": "Nahrajte klip a vygenerujte přepis ve Free. Generovaná poslechová cvičení jsou součástí Pro.",
+        "how": "Nahrajte klip, vygenerujte přepis a vytvořte poslechovou praxi s AI povolením zahrnutým ve vašem plánu.",
         "cta": "Otevřít poslech"
       },
       "speaking": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Některé pracovní prostory již existují pro stejný jazyk. Jejich obsah bude přidán do stávajících pracovních prostorů místo vytváření duplicit.",
         "empty_backup": "Tato záloha neobsahuje žádná importovatelná učební data.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Některé existující položky sdílejí stejný název. Import použije jeden z nich deterministicky a ostatní ponechá beze změny."
       },
       "cancel": "Zrušit",
       "confirm": "Importovat učební data",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "Tato záloha je příliš velká ke zpracování na této stránce. Zkuste menší export nebo kontaktujte podporu.",
         "notConfigured": "Úložiště souborů pro import zálohy ještě není nastaveno."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Již ve vašem účtu",
+      "skippedInAccountHint": "Tyto názvy odpovídají položkám, které již máte. Nebudou znovu importovány. Nové položky pod stejným pracovním prostorem se stále importují.",
+      "skippedInBackupTitle": "Duplicitní názvy v této záloze",
+      "skippedInBackupHint": "Soubor uvádí stejný název více než jednou. Pouze první kopie každého názvu je importována — to je normální i na prázdném účtu.",
+      "skippedOtherTitle": "Nepodařilo se importovat"
     },
     "danger": {
       "title": "Uzavřít účet",
@@ -3184,7 +3206,7 @@
       "warningTitle": "Než budete pokračovat",
       "warnings": {
         "workspaces": "Budou smazány všechny pracovní prostory a veškerá data slovní zásoby, teorie, psaní, poslechu a mluvení.",
-        "billing": "Jakékoli aktivní předplatné Notoria Pro bude okamžitě zrušeno.",
+        "billing": "Jakékoli aktivní předplatné Notoria Pro nebo Premium bude okamžitě zrušeno.",
         "media": "Nahraná média a fotografie profilu budou odstraněny.",
         "permanent": "Po potvrzení neexistuje žádná lhůta pro obnovení."
       },
@@ -3233,7 +3255,7 @@
     "upgrade": "Upgradovat na Pro",
     "manage": "Spravovat předplatné",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Zdarma",
     "premiumBadge": "Premium",
     "renewsOn": "Obnovuje se {date}",
     "status": "Stav: {status}",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "Osobní cesta učení",
       "personalizedRecommendations": "Personalizovaná doporučení",
       "crossModuleIntelligence": "Personalizace napříč moduly",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Vlastní pokyny k cvičení"
     },
     "compare": {
       "heading": "Porovnat plány",
@@ -3458,7 +3480,7 @@
       "feature": "Funkce",
       "current": "Aktuální",
       "capability": "Co získáte",
-      "free": "Free",
+      "free": "Zdarma",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Zahrnuto ve Free",
@@ -3598,7 +3620,7 @@
     "vocabulary": "Slovní zásoba",
     "vocabularyEmpty": "Zatím žádná slova ve slovní zásobě",
     "reviews": "Opakování kartiček",
-    "misses": "Again / Hard",
+    "misses": "Znovu / Těžké",
     "listening": "Poslech",
     "speaking": "Mluvení",
     "writing": "Psaní",
@@ -3752,8 +3774,8 @@
       "practice": "Cvičit"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Znovu",
+      "HARD": "Těžké"
     },
     "status": {
       "MASTERED": "Zvládnuto",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "Zásady ochrany osobních údajů",
     "termsTitle": "Podmínky používání",
     "privacyDescription": "Jak Notoria shromažďuje, používá a maže osobní údaje a obsah učení pro svůj soukromý pracovní prostor pro učení jazyků.",
-    "termsDescription": "Podmínky používání soukromého pracovního prostoru Notoria pro učení jazyků, účtů, funkcí AI a fakturace Notoria Pro.",
+    "termsDescription": "Podmínky pro používání soukromého jazykového vzdělávacího pracovního prostoru Notoria, účtů, AI funkcí a Pro nebo Premium fakturace.",
     "updated": "Naposledy aktualizováno {date}",
-    "updatedDate": "23. září 2026",
+    "updatedDate": "27. října 2026",
     "backToSignIn": "Zpět k přihlášení",
     "backHome": "Zpět na Notoria",
     "authFooter": "Soukromí · Podmínky",
@@ -4071,7 +4093,7 @@
         "purposes": "Proč údaje zpracováváme",
         "auth": "Účty a přihlášení",
         "ai": "Funkce AI",
-        "payments": "Platby (Notoria Pro)",
+        "payments": "Platby (Pro a Premium)",
         "processors": "Poskytovatelé služeb",
         "cookies": "Cookies a úložiště zařízení",
         "transfers": "Mezinárodní předávání",
@@ -4095,7 +4117,7 @@
           "list": [
             "vytvoříte nebo používáte účet",
             "ukládáte materiál v soukromých pracovních prostorech",
-            "předplatíte Notoria Pro",
+            "přihlásit se k Notoria Pro nebo Premium",
             "používáte volitelné nástroje s podporou AI",
             "nahráváte média pro poslech nebo profil",
             "používáte cvičení mluvení",
@@ -4156,7 +4178,7 @@
               "basis": "Smlouva (čl. 6 odst. 1 písm. b)"
             },
             {
-              "purpose": "Provozovat fakturaci Notoria Pro a stav předplatného přes Stripe",
+              "purpose": "Spravovat fakturaci a stav předplatného Notoria Pro a Premium prostřednictvím Stripe",
               "basis": "Smlouva (čl. 6 odst. 1 písm. b)"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "Aktuální kódová základna nepoužívá jiné poskytovatele velkých jazykových modelů kromě OpenAI. OpenAI zpracovává údaje podle vlastních podmínek a zásad ochrany osobních údajů jako zpracovatel pro tyto funkce."
         },
         "payments": {
-          "title": "7. Platby (Notoria Pro)",
+          "title": "7. Platby (Pro a Premium)",
           "p1": "Placená předplatná zpracovává <strong>Stripe</strong>. Pokladna, faktury, platební metody a zrušení probíhají přes Stripe Checkout a Stripe Customer Portal. Webhooky Stripe aktualizují váš plán a stav v Notoria.",
           "p2": "Stripe zpracovává platební údaje jako poskytovatel plateb. Podrobnosti o práci s kartami viz vlastní dokumentace Stripe k ochraně osobních údajů."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Pokladna Notoria Pro, portál a stav předplatného"
+              "role": "Notoria Pro a Premium pokladna, portál a stav předplatného"
             },
             {
               "provider": "Google",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Tyto Podmínky používání vysvětlují pravidla používání Notoria na <site>www.notoria.fi</site>. Popisují, jak produkt dnes funguje: soukromé pracovní prostory pro učení, volitelná fakturace Notoria Pro přes Stripe a funkce s podporou AI. Nenahrazují radu právníka k vaší konkrétní situaci.",
+      "intro": "Tyto Podmínky používání vysvětlují pravidla pro používání Notoria na <site>www.notoria.fi</site>. Popisují, jak produkt funguje dnes: soukromé vzdělávací pracovní prostory, volitelná fakturace Pro a Premium prostřednictvím Stripe a funkce asistované AI. Nejsou náhradou za radu od právníka o vaší konkrétní situaci.",
       "tocTitle": "Na této stránce",
       "tocAria": "Na této stránce",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Přijatelné používání",
         "ip": "Duševní vlastnictví",
         "ai": "Výstup generovaný AI",
-        "plans": "Plán Free a Notoria Pro",
+        "plans": "Bezplatné, Pro a Premium plány",
         "billing": "Předplatné a fakturace",
         "refunds": "Vrácení peněz a spotřebitelská práva",
         "availability": "Dostupnost",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. Služba",
           "p1": "Notoria je soukromá webová aplikace pro učení jazyků. Můžete vytvářet pracovní prostory a uchovávat učební materiál, například slovní zásobu, teoretické poznámky, psaní, cvičení, lekce poslechu a session mluvení.",
-          "p2": "Některé funkce jsou dostupné v plánu Free. Notoria Pro odemyká další schopnosti, jak je ukázáno v produktu a na stránce <account>Účet</account> — včetně Poslechu, Mluvení, určitých AI studijních nástrojů, importu cvičení a placených formátů exportu dokumentů. Dostupnost funkcí se může měnit s vývojem produktu.",
+          "p2": "Hlavní oblasti učení, včetně Poslechu, Mluvení a Čtení, jsou dostupné na každém plánu. Pro a Premium přidávají vyšší AI povolení a import/export učebních materiálů; Premium také přidává personalizované koučování a cvičební funkce. Aktuální srovnání je zobrazeno na vaší <account>Účet</account> stránce. Dostupnost funkcí se může měnit, jak se produkt vyvíjí.",
           "p3": "Notoria je určena k osobnímu učení jazyků. Není školou, zkušebním úřadem ani službou profesionálního poradenství."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. Výstup generovaný AI",
           "p1": "Některé funkce mohou kontrolovat, navrhovat, generovat, přepisovat, shrnovat nebo tutorky vycházet z vašeho materiálu. Výstup může být neúplný, nesprávný nebo nevhodný pro váš cíl. Zůstáváte odpovědní za kontrolu výsledků AI, než se na ně spolehnete při studiu, zkouškách, profesionálním použití nebo zveřejnění.",
           "p2": "Funkce AI mohou být nedostupné, pokud je asistence vypnutá v <settings>Nastavení</settings>, pokud váš plán konkrétní nástroj nezahrnuje, nebo pokud je poskytovatel dočasně nedostupný.",
-          "p3": "Ne všechny AI pomocníky vyžadují Notoria Pro. Produkt ukazuje, které nástroje jsou zdarma a které potřebují Pro."
+          "p3": "Dostupnost AI a denní povolení se liší mezi Bezplatným, Pro a Premium. Produkt zobrazuje plán a povolení potřebné pro každý nástroj."
         },
         "plans": {
-          "title": "8. Plán Free a Notoria Pro",
+          "title": "8. Bezplatné, Pro a Premium plány",
           "p1": "Plán Free pokrývá základní cvičení s vlastní slovní zásobou a související studijní nástroje, jak je ukázáno v produktu.",
-          "p2": "Notoria Pro je placené předplatné, které odemyká další funkce. V aktuálním produktu to typicky zahrnuje Poslech, Mluvení, import cvičení, cvičení skládání vět, mnoho studijních nástrojů s AI a export dokumentů PDF/DOCX. Některé lehčí AI pomocníky (například určité pomůcky slovní zásoby nebo formátování editoru) mohou zůstat dostupné v plánu Free, když je AI asistence zapnutá.",
-          "p3": "Přístup Pro je vázán na váš uživatelský účet, takže platí napříč pracovními prostory pod tímto účtem. Účty s rolí administrátora mohou mít přístup na úrovni Pro bez osobního předplatného Stripe.",
-          "p4": "Cena, která platí pro váš nákup, je cena zobrazená ve Stripe Checkout pro aktuální plán Pro. Jakákoli cena zobrazená jinde v produktu (například na Účtu) je pouze indikativní a musí odpovídat aktivní konfiguraci ceny Stripe."
+          "p2": "Pro a Premium jsou placená předplatná. Pro zvyšuje nebo odstraňuje mnohá AI omezení a přidává import učebních materiálů a export PDF/DOCX. Premium zahrnuje Pro a přidává personalizované funkce, jako je Učitel učení, osobní profil učení, adaptivní praxe, praxe založená na chybách a vlastní pokyny pro cvičení. Stránka Účet zobrazuje aktuální srovnání a limity.",
+          "p3": "Placený přístup je vázán na váš uživatelský účet a platí napříč jeho pracovními prostory. Účty s administrátorskou rolí mohou mít přístup na úrovni placeného předplatného bez osobního předplatného Stripe.",
+          "p4": "Cena, která se vztahuje, je cena zobrazená na Stripe Checkout pro vybraný plán Pro nebo Premium. Jakákoli cena zobrazená jinde v produktu (například na Účtu) je pouze orientační a musí odpovídat aktivní konfiguraci ceny Stripe."
         },
         "billing": {
           "title": "9. Předplatné, fakturace a zrušení",
-          "list0": "Předplatná Pro se účtují přes <strong>Stripe</strong>",
-          "list1": "Pokladnu můžete spustit z <account>Účet</account> nebo ze zamčených ovládacích prvků Pro v aplikaci",
+          "list0": "Předplatné Pro a Premium jsou fakturována prostřednictvím <strong>Stripe</strong>",
+          "list1": "Můžete zahájit pokladnu nebo změnit plán z <account>Účet</account> nebo z uzamčených placených ovládacích prvků v aplikaci",
           "list2": "Z Účtu můžete otevřít Stripe Customer Portal pro zobrazení faktur, aktualizaci platebních metod a zrušení předplatného",
           "list3": "Zrušení se řídí chováním Stripe Customer Portal pro vaše předplatné",
-          "p1": "Po zrušení přístup Pro pokračuje pouze, dokud stav předplatného Stripe stále uděluje Pro v produktu. V aktuální implementaci stavy považované za Pro zahrnují <code>active</code>, <code>trialing</code> a <code>past_due</code>. Když stav již nekvalifikuje, účet se vrátí na plán Free.",
-          "p2": "Pokud platba selže, Stripe může přesunout předplatné do <code>past_due</code> nebo jiného stavu. Notoria synchronizuje tento stav z webhooků Stripe. Dokud stav zůstává <code>past_due</code>, funkce Pro zůstávají dostupné podle aktuálních pravidel přístupu; pokud předplatné později přejde na zrušené nebo jinak nezpůsobilé, přístup Pro končí.",
+          "p1": "Po zrušení obnovy pokračuje váš aktuální přístup Pro nebo Premium, dokud stav předplatného Stripe stále kvalifikuje v produktu. Kvalifikační stavy aktuálně zahrnují <code>active</code>, <code>trialing</code> a <code>past_due</code>. Když stav již neodpovídá, účet se vrátí k Bezplatnému.",
+          "p2": "Pokud platba selže, Stripe může přesunout předplatné do <code>past_due</code> nebo jiného stavu. Notoria synchronizuje tento stav z webhooků Stripe. Dokud zůstává <code>past_due</code>, aktuální placený plán zůstává dostupný podle současných pravidel přístupu; pokud se později stane zrušeným nebo jinak neplatným, placený přístup končí.",
           "p3": "Smazání účtu Notoria okamžitě zruší předplatné Stripe (best effort) jako součást smazání účtu. To je odlišné od zrušení obnovení přes Customer Portal při zachování účtu."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Vyloučení záruk a odpovědnost",
           "p1": "Notoria je poskytována na základě „jak je dostupná“ pro osobní učení jazyků. V nejširším rozsahu povoleném platným právem vylučujeme záruky, které právo nevyžaduje.",
-          "p2": "V nejširším rozsahu povoleném platným právem Notoria neodpovídá za nepřímé, nahodilé, zvláštní, následné škody ani škody ze ztráty dat vzniklé z používání služby nebo spoléhání na výstup AI. Kde nelze odpovědnost vyloučit, je omezena na částku, kterou jste za Notoria Pro zaplatili ve třech měsících před nárokem, nebo na jakoukoli vyšší částku vyžadovanou kogentním právem.",
+          "p2": "V maximálním rozsahu povoleném platným právem není Notoria odpovědná za nepřímé, náhodné, zvláštní, následné nebo ztráty dat vzniklé z vašeho používání služby nebo spoléhání se na výstup AI. Kde nelze vyloučit odpovědnost, je omezena na částku, kterou jste zaplatili za Notoria Pro nebo Premium v posledních třech měsících před nárokem, nebo jakoukoli větší částku požadovanou povinným právem.",
           "p3": "Tyto limity nevylučují odpovědnost, kterou finské nebo unijní právo omezit nedovoluje — včetně odpovědnosti, které se spotřebitelé nemohou vzdát, a odpovědnosti za smrt nebo újmu na zdraví způsobenou nedbalostí, kde taková pravidla platí."
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "Budujte osobní banku slovní zásoby s významy, příklady a štítky",
           "practice": "Cvičte s cvičeními z vašich vlastních slov a poznámek",
           "create": "Pište teoretické poznámky a texty, ke kterým se můžete vrátit",
-          "listenSpeak": "Přeměňte média na cvičení poslechu a mluvte s AI tutorem na Pro"
+          "listenSpeak": "Převádějte média na poslechovou praxi a využijte AI povolení pro přepis a mluvení."
         },
-        "note": "Některé nástroje AI, poslechu, mluvení a exportu jsou součástí Notoria Pro. Plán Free stále pokrývá každodenní cvičení slovní zásoby a základní smyčku studia."
+        "note": "Hlavní oblasti učení jsou dostupné na každém plánu. Pro zvyšuje AI povolení a přidává import/export učebních materiálů; Premium přidává personalizované koučování a praxi."
       },
       "ai": {
         "title": "AI tam, kde pomáhá",
@@ -4656,7 +4678,7 @@
         "title": "Jak se oblasti propojují",
         "p1": "Zachycení je rychlý vstupní bod. Slovní zásoba a Teorie jsou místa, kde materiál usedá. Cvičení ten materiál přeměňuje na praxi. Psaní, Poslech a Mluvení vám pomáhají jazyk používat aktivněji.",
         "p2": "Nemusíte procházet každou oblast v pořadí. Mnoho lidí zůstává u slov a krátkého cvičení delší dobu.",
-        "p3": "Přirozený další krok je psaní, když chcete produkovat jazyk vlastními podmínkami, pak poslech a mluvení, když má stejný materiál pracovat v uchu a hlase — Poslech a Mluvení jsou součástí Notoria Pro.",
+        "p3": "Přirozeným dalším krokem je psaní, když chcete produkovat jazyk podle svých podmínek, poté poslech a mluvení, když chcete, aby stejný materiál pracoval ve vašem uchu a hlase. Tyto oblasti jsou dostupné na každém plánu; limity používání AI se liší podle plánu.",
         "beat": "Nejdřív sbírejte a porozumějte. Používejte a mluvte, až je materiál připraven opustit stránku."
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "Poslech",
-          "body": "Přeměňte média na cvičení poslechu v pracovním prostoru. Dostupné na Notoria Pro."
+          "body": "Převádějte média na poslechovou praxi ve svém pracovním prostoru. Dostupné na každém plánu; povolení pro přepis AI se liší podle plánu."
         },
         "speaking": {
           "label": "Mluvení",
-          "body": "Živé cvičení s AI tutorem, zakotvené v jazyce, který studujete. Dostupné na Notoria Pro."
+          "body": "Živá praxe s AI lektorem, zakotvená v jazyce, který studujete. Dostupné na každém plánu s denním povolením založeným na plánu."
         },
         "reading": {
           "label": "Čtení",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Jak změním heslo nebo uzavřu účet?",
-          "a": "Otevřete <account>Účet</account>. Tam můžete aktualizovat heslo, pokud používáte přihlášení e-mailem, spravovat Notoria Pro, exportovat zálohu nebo trvale smazat účet."
+          "a": "Otevřete <account>Účet</account>. Můžete tam aktualizovat své heslo, pokud používáte přihlášení e-mailem, spravovat Pro nebo Premium, exportovat zálohu nebo trvale smazat svůj účet. Smazání účtu také okamžitě zruší jakékoli aktivní předplatné Stripe na základě nejlepšího úsilí; zrušení obnovy samo o sobě udržuje účet a jeho data."
         },
         "pro": {
           "q": "Jak funguje fakturace a zrušení?",
-          "a": "Notoria Pro se účtuje přes Stripe. Z <account>Účet</account> můžete upgradovat, otevřít zákaznický portál Stripe pro správu platebních metod a faktur, nebo zrušit obnovení."
+          "a": "Notoria Pro a Premium jsou fakturována prostřednictvím Stripe. Z <account>Účet</account> můžete předplatit, přepínat mezi Pro a Premium, spravovat platební metody a faktury, zrušit obnovu nebo obnovit naplánované zrušení. Zrušení obnovy udržuje přístup, dokud Stripe neskončí kvalifikační období předplatného; smazání vašeho účtu je samostatné a okamžitě zruší předplatné na základě nejlepšího úsilí."
         },
         "proFeatures": {
-          "q": "Co je zdarma a co potřebuje Notoria Pro?",
-          "a": "Každodenní cvičení slovní zásoby a související studijní nástroje jsou dostupné v plánu Free. Některé nástroje AI, poslech, mluvení a export dokumentů jsou součástí Notoria Pro. Porovnejte a upgradujte z <account>Účet</account>."
+          "q": "Co je zahrnuto v Bezplatném, Pro a Premium?",
+          "a": "Bezplatné zahrnuje hlavní oblasti učení a denní povolení pro podporované AI nástroje. Pro zvyšuje nebo odstraňuje mnohá AI omezení a přidává import učebních materiálů plus export PDF/DOCX. Premium zahrnuje Pro a přidává personalizované koučování, profil učení, adaptivní a praxi založenou na chybách a vlastní pokyny pro cvičení. Zobrazte živé srovnání a aktuální limity v <account>Účet</account>."
         },
         "learning": {
           "q": "Jak fungují funkce učení Notoria?",
@@ -4997,7 +5019,7 @@
         "admins": "Správci",
         "testers": "Testeři",
         "suspended": "Pozastavení",
-        "contentTotal": "Content records"
+        "contentTotal": "Záznamy obsahu"
       },
       "quickAccess": "Rychlý přístup",
       "quickAccessLede": "Přejít na nástroje správy.",
@@ -5007,14 +5029,14 @@
         "ops": "Provoz"
       },
       "charts": {
-        "signupsTitle": "New accounts",
-        "signupsLede": "Daily sign-ups over the last 14 UTC days.",
-        "activeTitle": "Active learners",
-        "activeLede": "Distinct learners with activity each day (14d).",
-        "rolesTitle": "Roles",
-        "rolesLede": "Share of accounts by role.",
-        "contentTitle": "Content mix",
-        "contentLede": "Stored records across learning modules."
+        "signupsTitle": "Nové účty",
+        "signupsLede": "Denní registrace za posledních 14 UTC dní.",
+        "activeTitle": "Aktivní studenti",
+        "activeLede": "Odlišní studenti s aktivitou každý den (14d).",
+        "rolesTitle": "Role",
+        "rolesLede": "Podíl účtů podle role.",
+        "contentTitle": "Obsahový mix",
+        "contentLede": "Uložené záznamy napříč vzdělávacími moduly."
       }
     },
     "users": {
@@ -5050,8 +5072,8 @@
         "created": "Registrace",
         "updated": "Aktualizováno",
         "emailVerified": "E-mail ověřen",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-mail",
+        "password": "Heslo"
       },
       "detail": {
         "account": "Účet",
@@ -5060,7 +5082,7 @@
         "actions": "Akce účtu",
         "workspaces": "Pracovní prostory",
         "workspacesLede": "Jazykové pracovní prostory vlastněné tímto uživatelem.",
-        "danger": "Danger zone"
+        "danger": "Nebezpečná zóna"
       },
       "actions": {
         "saveProfile": "Uložit jméno",
@@ -5071,7 +5093,7 @@
         "delete": "Smazat účet",
         "grantTester": "Udělít roli testera",
         "revokeTester": "Odebrat roli testera",
-        "create": "Create user"
+        "create": "Vytvořit uživatele"
       },
       "confirm": {
         "grantAdmin": "Udělit tomuto účtu přístup admina?",
@@ -5089,11 +5111,11 @@
         "admin": "Správce"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Vytvořit uživatele",
+        "lede": "Zprovozněte účet s e-mailem a heslem. Mohou se okamžitě přihlásit."
       },
       "plans": {
-        "free": "Free",
+        "free": "Zdarma",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5140,7 @@
         "owner": "Vlastník",
         "created": "Vytvořeno",
         "updated": "Aktualizováno",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "E-mail vlastníka",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "Smazat tento pracovní prostor a veškerý obsah učení uvnitř přes kaskády databáze?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Vytvořit pracovní prostor",
+        "lede": "Připojte nový jazykový pracovní prostor k existujícímu účtu pomocí e-mailu."
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "Pracovní prostor",
         "created": "Vytvořeno",
         "updated": "Aktualizováno",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Název",
+        "word": "Slovo",
+        "folderName": "Název složky"
       },
       "detail": {
         "description": "Kontrola metadat. Soukromá těla se nenačítají automaticky.",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "Smazat záznam",
-        "saveTitle": "Save title"
+        "saveTitle": "Uložit název"
       },
       "confirm": {
         "delete": "Smazat tento záznam? Související podřízené řádky se řídí pravidly kaskády / set-null databáze."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Zachyťte položky, které ukládají volný text. Úpravy názvu zde nejsou podporovány — smažte, pokud by měl být záznam odstraněn."
     },
     "jobs": {
       "title": "Úlohy",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "Neplatný kód jazyka.",
       "CONTENT_NOT_FOUND": "Záznam nenalezen.",
       "INVALID_CONTENT_MODULE": "Neznámý modul obsahu.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Tento e-mail je již registrován.",
+      "PASSWORD_TOO_WEAK": "Heslo nesplňuje požadavky na sílu.",
+      "CONTENT_TITLE_UNSUPPORTED": "Tento typ obsahu nepodporuje úpravy názvu."
     }
   }
 }

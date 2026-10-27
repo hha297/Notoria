@@ -17,19 +17,20 @@
     "open": "Öppna",
     "remove": "Ta bort",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Utseende",
+      "print": "Utskriftsvänlig",
+      "printHint": "Vit sida, mörk text",
+      "theme": "Aktuellt tema",
+      "themeHint": "Matchar ditt ljusa eller mörka tema",
+      "previewKicker": "Exempelsida",
+      "previewTitle": "Dokumenttitel",
+      "previewBody": "Brödtexten använder de valda färgerna och avstånden.",
+      "previewCallout": "Upplysningar och accenter följer modulens färg.",
+      "fixedNote": "Utseendet är fast i den exporterade filen. Exportera igen för att ändra det.",
+      "docxBackgroundNote": "Word och andra appar kanske inte visar sidbakgrunder på samma sätt, särskilt vid utskrift."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Scrolla till toppen",
+    "moreActions": "Fler åtgärder"
   },
   "contentImport": {
     "title": {
@@ -469,34 +470,34 @@
     "viewMode": "Visningsläge",
     "tagManager": {
       "open": "Hantera taggar",
-      "eyebrow": "Tags",
+      "eyebrow": "Taggar",
       "title": "Tagghanterare",
-      "description": "Välj en tagg och lägg till eller ta bort den från ord. Tilldelade och övriga ord visas i skilda listor.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Välj en tagg och tilldela eller ta bort den från ord.",
+      "pageDescription": "Välj Standard eller Anpassad, välj en tagg och lägg till eller ta bort den från ord.",
+      "disabledNoWorkspace": "Skapa en arbetsyta innan du hanterar vokabulärtaggar.",
+      "backToVocabulary": "Tillbaka till vokabulär",
+      "backToSettings": "Tillbaka till inställningar",
       "groupsLabel": "Standardtagggrupper",
       "tagsHeading": "Taggar",
       "standardTagsHeading": "Standardtaggar",
       "customTagsHeading": "Egna taggar",
-      "customTagsHint": "Etiketter du skapar för egen organisation — inte ordklasser.",
+      "customTagsHint": "Arbetsytsetiketter du skapar — sök för att hitta dem när listan är lång.",
       "emptyCustomTags": "Inga egna taggar ännu. Skapa dem när du redigerar ett ord.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Inga anpassade taggar matchar denna sökning.",
+      "tagSearchPlaceholder": "Sök taggar…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standard",
       "kindCustom": "Egen",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Ordlister",
+      "wordTabAssigned": "Taggad",
+      "wordTabOther": "Otaggad",
       "assignedHeading": "Ord med den här taggen",
       "otherHeading": "Övriga ord",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Välj alla på denna sida",
+      "clearSelection": "Rensa urval",
+      "selectionScopePage": "Väljer från denna sida ({count} av {total})",
+      "selectionScopeFiltered": "Väljer inom de aktuella sökresultaten",
       "searchPlaceholder": "Sök ord eller betydelser…",
       "wordCount": "{count}",
       "loading": "Laddar ordförråd…",
@@ -506,13 +507,23 @@
       "emptyOther": "Alla ord har redan den här taggen.",
       "emptyOtherSearch": "Inga matchande ord att tilldela.",
       "selected": "{count} markerade",
-      "addToTag": "Lägg till i tagg",
-      "removeFromTag": "Ta bort från tagg",
-      "applyAdd": "Lägg till i tagg ({count})",
-      "applyRemove": "Ta bort från tagg ({count})",
+      "addToTag": "Lägg till tagg",
+      "removeFromTag": "Ta bort tagg",
+      "applyAdd": "Lägg till tagg ({count})",
+      "applyRemove": "Ta bort tagg ({count})",
       "added": "Lade till {count} ord i {tag}",
       "removed": "Tog bort {count} ord från {tag}",
-      "error": "Kunde inte uppdatera taggmedlemskap"
+      "error": "Kunde inte uppdatera taggmedlemskap",
+      "systemsLabel": "Taggsystem",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Ämne och användning, visat separat",
+      "usageOptional": "Valfritt",
+      "customSystemTitle": "Anpassad",
+      "customSystemMeta": "{count, plural, one {# etikett} other {# etiketter}}",
+      "customPickerLabel": "Välj en anpassad tagg",
+      "customPickerPlaceholder": "Välj en anpassad tagg…",
+      "customSearchPlaceholder": "Sök anpassade taggar…",
+      "pickTagFirst": "Välj en tagg ovan för att hantera ordmedlemskap."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Uppdaterad {time} sedan",
@@ -584,7 +595,11 @@
     },
     "otherMeaningsPage": "{total} betydelser · sida {page} av {totalPages}",
     "otherMeaningsPrev": "Föregående",
-    "otherMeaningsNext": "Nästa"
+    "otherMeaningsNext": "Nästa",
+    "selectedCustomTags": "Valda taggar",
+    "selectedSynonyms": "Valda synonymer",
+    "removeCustomTag": "Ta bort {name}",
+    "pickerLoading": "Laddar…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "Uppdaterad",
     "backToStudio": "Tillbaka till övningar",
     "studyMode": "Studieläge",
+    "questionTypeLabel": "Frågetyp",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Svårighetsgrad",
       "easy": "Lätt",
@@ -873,7 +893,7 @@
       "aiReady": "Övning klar",
       "aiUnavailable": "Kunde inte generera AI-frågor just nu.",
       "aiForbidden": "AI-teoriövningar är tillgängliga med Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Ytterligare instruktioner finns tillgängliga på Premium.",
       "aiDisabled": "AI-hjälp är avstängd i Inställningar.",
       "feedback": {
         "correct": "Korrekt!",
@@ -927,20 +947,22 @@
         "why": "Varför",
         "complete": "Förstått",
         "completeHint": "Du kan gå vidare när du är redo.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Starta övning",
+        "skipReviewAndStart": "Hoppa över granskning och starta övning"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Oklassificerade",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# anteckning} other {# anteckningar}}",
+        "selectAll": "Välj alla",
+        "selectGroup": "Välj anteckningar i {name}",
+        "expand": "Expandera {name}",
+        "collapse": "Kollapsa {name}",
+        "selectedCount": "{count, plural, one {# teori vald} other {# teorier valda}}",
+        "practiceSelected": "Öva valda",
+        "clearSelection": "Rensa urval",
+        "subfolders": "{count, plural, one {# undermapp} other {# undermappar}}",
+        "selectedOne": "1 teori vald"
       }
     },
     "types": {
@@ -998,8 +1020,8 @@
       "startsWith": "Börjar med “{letter}”",
       "revealPrompt": "Fortfarande fast? Du kan avslöja hela svaret.",
       "revealAnswer": "Avslöja svaret",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Nästa ledtråd",
+      "hintProgress": "Ledtråd {current} av {total}"
     },
     "empty": {
       "noWordsTitle": "Inga ord ännu",
@@ -1032,17 +1054,17 @@
       "shuffle": "Blanda",
       "finish": "Avsluta rundan",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Frågekälla",
+        "chooseAi": "Använd AI-genererat",
+        "emptyTitle": "Inga användbara sparade exempel",
+        "emptyDescription": "Lägg till exempelmeningar som tydligt inkluderar varje ord, justera dina filter eller växla till AI-genererat.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Sparade exempel",
+          "description": "Bygg frågor direkt från dina vokabulärexempel. Ingen AI-väntan."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI-genererat",
+          "description": "Skapa nya meningar från din vokabulär med AI."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "AI-övningsgenerering är tillgänglig med Pro.",
       "disabled": "AI-hjälp är avstängd i Inställningar.",
       "upgradeHint": "AI-övningsgenerering är tillgänglig med Pro.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Ytterligare instruktioner",
+      "additionalInstructionsPlaceholder": "Till exempel: Använd restaurang-situationer, håll språket på A2-nivå och förklara misstag på ditt gränssnittsspråk.",
+      "additionalInstructionsLocked": "Uppgradera till Premium för att anpassa stödda övningstyper, ställa in en verklig kontext och lägga till egna instruktioner.",
+      "premiumRequired": "Ytterligare instruktioner finns tillgängliga på Premium.",
+      "presetLabel": "Förinställningar",
+      "presetNone": "Ingen förinställning vald",
+      "presetApply": "Tillämpa",
+      "presetSave": "Spara förinställning",
+      "presetName": "Förinställningsnamn",
+      "presetDelete": "Ta bort",
+      "presetSaved": "Förinställning sparad",
+      "presetDeleted": "Förinställning borttagen",
+      "presetSaveFailed": "Kunde inte spara den förinställningen.",
       "emptyWords": "Lägg till ordförrådsord innan du genererar frågor.",
       "noneValid": "AI kunde inte skapa giltiga frågor för dessa ord. Försök igen.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Anpassa kontexten, stilen eller fokus för din övning. Lämna tomt för att använda standardinställningarna.",
+      "presetUpdate": "Uppdatera förinställning",
+      "presetUpdated": "Förinställning uppdaterad",
+      "presetsTitle": "Sparade förinställningar",
+      "presetsHelper": "Förinställningar lagrar övningsinställningar och ytterligare instruktioner. De ändrar inte det valda ordförrådet eller teorierna.",
+      "presetsEmpty": "Inga sparade förinställningar ännu. Spara dina aktuella inställningar för att återanvända dem senare.",
+      "presetSaveAs": "Spara som förinställning",
+      "presetUpdateCurrent": "Uppdatera med aktuella inställningar",
+      "presetRename": "Döp om",
+      "presetManage": "Hantera förinställning",
+      "presetRenamed": "Förinställning döpt om",
+      "presetSaveDialogTitle": "Spara som förinställning",
+      "presetSaveDialogDescription": "Namnge denna förinställning för att återanvända de aktuella övningsinställningarna och ytterligare instruktioner. Valda ordförråd eller teorier lagras inte.",
+      "presetRenameDialogTitle": "Döp om förinställning",
+      "presetRenameDialogDescription": "Välj ett nytt namn för denna förinställning.",
+      "presetDeleteDialogTitle": "Ta bort förinställning?",
+      "presetDeleteDialogDescription": "Ta bort “{name}”? Din aktuella övningskonfiguration förblir som den är."
     },
     "session": {
       "complete": "Session komplett",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Försök igen",
       "questionsLabel": "Frågor",
       "correctLabel": "Korrekt",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Felaktig",
+      "unansweredLabel": "Obesvarad",
       "reviewLabel": "För att granska",
       "answeredProgress": "{answered} / {total} besvarade",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Kontrollera svar",
+      "nextQuestion": "Nästa",
+      "viewResults": "Visa resultat",
       "submitSet": "Skicka svar",
       "submitting": "Kontrollerar…",
       "unansweredWarnTitle": "Obesvarade frågor",
@@ -1121,54 +1143,54 @@
       "unanswered": "Ej besvarad",
       "yourAnswer": "Ditt svar",
       "correctAnswer": "Rätt svar",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Endast {count} frågor tillgängliga från dina aktuella filter.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Hur du övar",
+        "lockedHint": "Avsluta eller starta ett nytt set för att ändra detta.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "En i taget",
+          "description": "Se en fråga i taget. Kontrollera efter varje svar för omedelbar feedback."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Alla frågor",
+          "description": "Se hela setet, svara i valfri ordning, och skicka in en gång för feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Granska",
+        "allCorrect": "Perfekt — varje fråga korrekt.",
+        "summary": "{incorrect} felaktiga · {unanswered} obesvarade · {needsReview} att granska",
+        "viewWrong": "Visa felaktiga svar",
+        "filtersLabel": "Filtrera frågor",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Alla ({count})",
+          "needs_review": "Felaktiga & obesvarade ({count})",
+          "correct": "Korrekt ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Föregående",
+        "nextWrong": "Nästa",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} att granska",
+        "floatLabel": "Navigering av felaktiga svar",
+        "closeFloat": "Visa alla svar"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% korrekt",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Perfekt set",
+          "body": "Varje svar träffade. Den typen av fokus förtjänar en ny omgång när du är redo."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Stark avslutning",
+          "body": "Du förstår tydligt — skumma över missarna, och lås sedan in det med ett nytt set."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Bra arbete — fortsätt",
+          "body": "Några fastnade punkter är normala. Gå igenom dem en gång, och försök igen medan de är färska."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Nästan där",
+          "body": "Avsluta de obesvarade först — då kommer poängen att berätta en tydligare historia."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "Frågor genereras på {language} (arbetsytans språk).",
       "contextualEmptyTitle": "Generera kontextuella frågor",
-      "contextualEmptyDescription": "Skapa fyll-i-blanks flervalsfrågor från ditt ordförråd.",
+      "contextualEmptyDescription": "Lägg till valfria instruktioner nedan om du vill, och tryck sedan på Generera. Du kan lämna prompten tom.",
       "contextualProDescription": "Kontextuella AI-frågor är tillgängliga med Pro.",
       "unlockContextual": "Lås upp med Pro",
       "correct": "Korrekt!",
@@ -1202,8 +1224,8 @@
       "hint": "Välj ett ord, tryck sedan på dess betydelse",
       "complete": "Alla par matchade — bra jobbat!",
       "shuffle": "Blanda kolumner",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} par",
+      "continueRound": "Fortsätt"
     },
     "typeAnswer": {
       "questionWord": "Vad är betydelsen?",
@@ -1213,7 +1235,7 @@
         "contextual": "Kontextuell"
       },
       "contextualEmptyTitle": "Generera kontextuella frågor",
-      "contextualEmptyDescription": "Skapa fyll-i-blanks skrivpromptar från ditt ordförråd.",
+      "contextualEmptyDescription": "Lägg till valfria instruktioner nedan om du vill, och tryck sedan på Generera. Du kan lämna prompten tom.",
       "contextualProDescription": "Kontextuella AI-frågor är tillgängliga med Pro.",
       "unlockContextual": "Lås upp med Pro",
       "placeholder": "Skriv ditt svar…",
@@ -1597,13 +1619,13 @@
       "writing": {
         "title": "Skrivande",
         "description": "Rika dokument och frågeset som du kan återbesöka och exportera.",
-        "how": "Börja ett utkast, organisera med mappar och använd Pro AI för att kontrollera eller förbättra din text.",
+        "how": "Börja ett utkast, organisera med mappar och använd din plans AI-allowance för att kontrollera eller förbättra din text.",
         "cta": "Öppna skrivande"
       },
       "listening": {
         "title": "Lyssnande",
         "description": "Omvandla verkligt ljud eller video till en lektion.",
-        "how": "Ladda upp ett klipp och skapa en transkription på Free. Genererad lyssningsövning ingår i Pro.",
+        "how": "Ladda upp ett klipp, generera en transkription och bygg lyssningsövningar med AI-allowance som ingår i din plan.",
         "cta": "Öppna lyssnande"
       },
       "speaking": {
@@ -1869,7 +1891,7 @@
   },
   "tutorials": {
     "show": "Visa tutorial",
-    "showShort": "Tutorial",
+    "showShort": "Handledning",
     "guideLabel": "Guide",
     "next": "Nästa",
     "skip": "Hoppa över tutorial",
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Vissa arbetsytor finns redan för samma språk. Deras innehåll läggs till i dina befintliga arbetsytor i stället för att dupliceras.",
         "empty_backup": "Den här säkerhetskopian innehåller ingen importerbar inlärningsdata.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Vissa befintliga objekt delar samma namn. Importen kommer att återanvända ett av dem deterministiskt och lämna de andra oförändrade."
       },
       "cancel": "Avbryt",
       "confirm": "Importera inlärningsdata",
@@ -3164,15 +3186,15 @@
         "requestTooLarge": "Säkerhetskopian är för stor att bearbeta på den här sidan. Prova en mindre export eller kontakta support.",
         "notConfigured": "Fillagring är inte konfigurerad för import av säkerhetskopior ännu."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Redan i ditt konto",
+      "skippedInAccountHint": "Dessa namn matchar objekt du redan har. De kommer inte att importeras igen. Nya objekt under samma arbetsyta importeras fortfarande.",
+      "skippedInBackupTitle": "Duplicerade namn i denna säkerhetskopia",
+      "skippedInBackupHint": "Filen listar samma namn mer än en gång. Endast den första kopian av varje namn importeras — detta är normalt även på ett tomt konto.",
+      "skippedOtherTitle": "Kunde inte importera"
     },
     "danger": {
       "title": "Stäng konto",
-      "description": "Permanently delete your Notoria account and everything inside it.",
+      "description": "Radera ditt Notoria-konto och allt innehåll permanent.",
       "deleteTitle": "Ta bort mitt konto",
       "deleteHint": "Detta tar bort alla arbetsytor, lärandeinnehåll och fakturering för detta konto. Använd exporten ovan först om du vill behålla en kopia.",
       "deleteAction": "Ta bort konto"
@@ -3184,7 +3206,7 @@
       "warningTitle": "Innan du fortsätter",
       "warnings": {
         "workspaces": "Varje arbetsyta och all vokabulär, teori, skrivande, lyssnande och talande data kommer att raderas.",
-        "billing": "Eventuell aktiv Notoria Pro-prenumeration kommer att avbrytas omedelbart.",
+        "billing": "Eventuella aktiva Notoria Pro- eller Premium-prenumerationer kommer att avbrytas omedelbart.",
         "media": "Uppladdade medier och din profilbild kommer att tas bort.",
         "permanent": "Det finns ingen återhämtningsperiod efter bekräftelse."
       },
@@ -3195,7 +3217,7 @@
       "backupFailed": "Kunde inte förbereda din säkerhetskopia. Försök igen.",
       "confirmPhrase": "Radera mitt konto",
       "confirmLabel": "Skriv {phrase} för att bekräfta",
-      "confirm": "Permanently delete account",
+      "confirm": "Radera kontot permanent",
       "deleted": "Ditt konto har tagits bort",
       "failed": "Kunde inte ta bort ditt konto. Vänligen försök igen."
     }
@@ -3259,7 +3281,7 @@
     "confirmUpgradeTitle": "Byta till Premium?",
     "confirmUpgradeBody": "Premium ersätter Pro på din nuvarande prenumeration direkt. Stripe debiterar den proportionella mellanskillnaden omedelbart. Ingen andra prenumeration skapas. En schemalagd uppsägning tas bort.",
     "confirmDowngradeTitle": "Byta till Pro?",
-    "confirmDowngradeBody": "Pro ersätter Premium direkt. Stripe krediterar den proportionella mellanskillnaden omedelbart. Premium-funktioner upphör när Stripe bekräftar det nya priset. En schemalagd uppsägning tas bort.",
+    "confirmDowngradeBody": "Du behåller alla Premium-funktioner till {date}. Därefter fortsätter abonnemanget som Pro för 9,99 €/månad. Din nuvarande plan förblir Premium fram till dess.",
     "confirmCancelTitle": "Avsluta {plan}?",
     "confirmCancelBody": "Din {plan}-åtkomst gäller till {date}. Därefter går kontot över till Free. Du debiteras inte igen.",
     "cancelFeedbackLabel": "Varför avslutar du?",
@@ -3548,7 +3570,7 @@
       "personalLearningPath": "Personlig lärväg",
       "personalizedRecommendations": "Personliga rekommendationer",
       "crossModuleIntelligence": "Personalisering över moduler",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Anpassade övningsinstruktioner"
     }
   },
   "coach": {
@@ -3767,8 +3789,8 @@
       "practice": "Öva"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Igen",
+      "HARD": "Svår"
     }
   },
   "gettingStarted": {
@@ -4048,9 +4070,9 @@
     "privacyTitle": "Integritetspolicy",
     "termsTitle": "Användarvillkor",
     "privacyDescription": "Hur Notoria samlar in, använder och raderar personuppgifter och lärinnehåll för sin privata arbetsyta för språkinlärning.",
-    "termsDescription": "Villkor för att använda Notorias privata arbetsyta för språkinlärning, konton, AI-funktioner och Notoria Pro-fakturering.",
+    "termsDescription": "Villkor för användning av Notorias privata språkinlärningsarbetsyta, konton, AI-funktioner och Pro- eller Premium-fakturering.",
     "updated": "Senast uppdaterad {date}",
-    "updatedDate": "23 september 2026",
+    "updatedDate": "27 oktober 2026",
     "backToSignIn": "Tillbaka till inloggning",
     "backHome": "Tillbaka till Notoria",
     "authFooter": "Integritet · Villkor",
@@ -4071,7 +4093,7 @@
         "purposes": "Varför vi behandlar uppgifter",
         "auth": "Konton och inloggning",
         "ai": "AI-funktioner",
-        "payments": "Betalningar (Notoria Pro)",
+        "payments": "Betalningar (Pro och Premium)",
         "processors": "Tjänsteleverantörer",
         "cookies": "Cookies och lagring på enheten",
         "transfers": "Internationella överföringar",
@@ -4095,7 +4117,7 @@
           "list": [
             "skapar eller använder ett konto",
             "sparar material i privata arbetsytor",
-            "abonnerar på Notoria Pro",
+            "prenumerera på Notoria Pro eller Premium",
             "använder valfria AI-assisterade verktyg",
             "laddar upp media för lyssning eller profilbruk",
             "använder talövning",
@@ -4156,7 +4178,7 @@
               "basis": "Avtal (Art. 6(1)(b))"
             },
             {
-              "purpose": "Sköta fakturering och abonnemangsstatus för Notoria Pro via Stripe",
+              "purpose": "Köra Notoria Pro och Premium-fakturering och prenumerationsstatus via Stripe",
               "basis": "Avtal (Art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "Den nuvarande kodbasen använder inga andra leverantörer av stora språkmodeller än OpenAI. OpenAI behandlar uppgifter enligt sina egna villkor och sin integritetspolicy som personuppgiftsbiträde för dessa funktioner."
         },
         "payments": {
-          "title": "7. Betalningar (Notoria Pro)",
+          "title": "7. Betalningar (Pro och Premium)",
           "p1": "Betalda abonnemang hanteras av <strong>Stripe</strong>. Kassa, fakturor, betalningsmetoder och uppsägning sköts via Stripe Checkout och Stripe Customer Portal. Stripe-webhooks uppdaterar din plan och status i Notoria.",
           "p2": "Stripe behandlar betalningsuppgifter som betaltjänstleverantör. Se Stripes egen integritetsdokumentation för korthantering."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Kassa, portal och abonnemangsstatus för Notoria Pro"
+              "role": "Notoria Pro och Premium-kassa, portal och prenumerationsstatus"
             },
             {
               "provider": "Google",
@@ -4302,7 +4324,7 @@
         },
         "deletion": {
           "title": "12. Export och radering av konto",
-          "exportTitle": "Export",
+          "exportTitle": "Exportera",
           "exportP1": "Från <account>Konto</account> kan du ladda ner en JSON-säkerhetskopia av arbetsytor och lärinnehåll (inklusive ordförråd, teorianteckningar, övningar/skrivande, lyssningslektioner och talsessioner). Mediefiler refereras via URL i stället för att bäddas in som binära filer.",
           "exportP2": "Den nuvarande exporten innehåller inte alla kontorelaterade poster. Till exempel ingår inte flashcard-framsteg/repetitioner och källposter för övningsimport i JSON-säkerhetskopian. OAuth-tokens, lösenordshashar och Stripe-identifierare exporteras inte.",
           "deleteTitle": "Radera konto",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Dessa användarvillkor förklarar reglerna för att använda Notoria på <site>www.notoria.fi</site>. De beskriver hur produkten fungerar i dag: privata arbetsytor för inlärning, valfri Notoria Pro-fakturering via Stripe och AI-assisterade funktioner. De ersätter inte råd från en jurist om din specifika situation.",
+      "intro": "Dessa användarvillkor förklarar reglerna för att använda Notoria på <site>www.notoria.fi</site>. De beskriver hur produkten fungerar idag: privata inlärningsarbetsytor, valfri Pro- och Premium-fakturering via Stripe och AI-assisterade funktioner. De är inte en ersättning för råd från en advokat om din specifika situation.",
       "tocTitle": "På den här sidan",
       "tocAria": "På den här sidan",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Godtagbar användning",
         "ip": "Immateriella rättigheter",
         "ai": "AI-genererat innehåll",
-        "plans": "Gratisplan och Notoria Pro",
+        "plans": "Gratis, Pro och Premium-planer",
         "billing": "Abonnemang och fakturering",
         "refunds": "Återbetalningar och konsumenträttigheter",
         "availability": "Tillgänglighet",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. Tjänsten",
           "p1": "Notoria är en privat webbapp för språkinlärning. Du kan skapa arbetsytor och spara läromaterial såsom ordförråd, teorianteckningar, skrivande, övningar, lyssningslektioner och talsessioner.",
-          "p2": "Vissa funktioner är tillgängliga i gratisplanen. Notoria Pro låser upp ytterligare möjligheter enligt vad som visas i produkten och på din <account>Konto</account>-sida — inklusive Lyssning, Tal, vissa AI-studieverktyg, övningsimport och betalda exportformat för dokument. Vilka funktioner som är tillgängliga kan ändras när produkten utvecklas.",
+          "p2": "Kärninlärningsområden, inklusive Lyssnande, Talande och Läsning, är tillgängliga på varje plan. Pro och Premium lägger till högre AI-allowances och import/export av inlärningsmaterial; Premium lägger också till personlig coaching och övningsfunktioner. Den aktuella jämförelsen visas på din <account>konto</account>-sida.",
           "p3": "Notoria är avsett för personlig språkinlärning. Det är inte en skola, en examensmyndighet eller en tjänst för professionell rådgivning."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. AI-genererat innehåll",
           "p1": "Vissa funktioner kan kontrollera, föreslå, generera, transkribera, sammanfatta eller undervisa utifrån ditt material. Resultatet kan vara ofullständigt, felaktigt eller olämpligt för ditt syfte. Du ansvarar själv för att granska AI-resultat innan du förlitar dig på dem för studier, examina, professionellt bruk eller publicering.",
           "p2": "AI-funktioner kan vara otillgängliga om assistansen är avstängd i <settings>Inställningar</settings>, om din plan inte inkluderar ett visst verktyg, eller om en leverantör tillfälligt inte går att nå.",
-          "p3": "Alla AI-hjälpmedel kräver inte Notoria Pro. Produkten visar vilka verktyg som är gratis och vilka som kräver Pro."
+          "p3": "AI-tillgänglighet och dagliga allowances varierar mellan Gratis, Pro och Premium. Produkten visar den plan och allowance som krävs för varje verktyg."
         },
         "plans": {
-          "title": "8. Gratisplan och Notoria Pro",
+          "title": "8. Gratis, Pro och Premium-planer",
           "p1": "Gratisplanen täcker grundläggande övning med ditt eget ordförråd och relaterade studieverktyg enligt vad som visas i produkten.",
-          "p2": "Notoria Pro är ett betalt abonnemang som låser upp ytterligare funktioner. I den nuvarande produkten omfattar det vanligtvis Lyssning, Tal, övningsimport, meningsbyggnadsövning, många AI-assisterade studieverktyg och dokumentexport till PDF/DOCX. Vissa enklare AI-hjälpmedel (såsom vissa hjälpmedel för ordförråd eller formatering i redigeraren) kan fortsätta att vara tillgängliga i gratisplanen när AI-assistans är aktiverad.",
-          "p3": "Pro-åtkomst är kopplad till ditt användarkonto och gäller därför alla arbetsytor under det kontot. Konton med administratörsroll kan ha åtkomst på Pro-nivå utan ett personligt Stripe-abonnemang.",
-          "p4": "Det pris som gäller för ditt köp är det pris som visas i Stripe Checkout för den aktuella Pro-planen. Priser som visas någon annanstans i produkten (till exempel på Konto) är endast vägledande och måste överensstämma med den aktiva priskonfigurationen i Stripe."
+          "p2": "Pro och Premium är betalda prenumerationer. Pro lägger till högre eller obegränsade allowances för många AI-verktyg samt import av inlärningsmaterial och PDF/DOCX-export. Premium inkluderar Pro och lägger till personliga funktioner som Lärande Coach, personlig inlärningsprofil, adaptiv övning, felbaserad övning och anpassade övningsinstruktioner. Kontosidan visar den aktuella jämförelsen och begränsningarna.",
+          "p3": "Betald åtkomst är kopplad till ditt användarkonto och gäller över dess arbetsytor. Konton med administratörsroll kan ha betald åtkomst utan en personlig Stripe-prenumeration.",
+          "p4": "Det pris som gäller är det pris som visas vid Stripe Checkout för den valda Pro- eller Premium-planen. Eventuella priser som visas någon annanstans i produkten (till exempel på Konto) är endast indikativa och måste matcha den aktiva Stripe-priskonfigurationen."
         },
         "billing": {
           "title": "9. Abonnemang, fakturering och uppsägning",
-          "list0": "Pro-abonnemang faktureras via <strong>Stripe</strong>",
-          "list1": "Du kan starta kassan från <account>Konto</account> eller från låsta Pro-kontroller i appen",
+          "list0": "Pro och Premium-prenumerationer faktureras via <strong>Stripe</strong>",
+          "list1": "Du kan påbörja kassan eller ändra plan från <account>konto</account> eller från låsta betalda kontroller i appen",
           "list2": "Från Konto kan du öppna Stripe Customer Portal för att se fakturor, uppdatera betalningsmetoder och avsluta abonnemanget",
           "list3": "Uppsägning följer beteendet i Stripes Customer Portal för ditt abonnemang",
-          "p1": "Efter att du har sagt upp abonnemanget fortsätter Pro-åtkomsten endast så länge din Stripe-abonnemangsstatus fortfarande ger Pro i produkten. I den nuvarande implementationen räknas statusarna <code>active</code>, <code>trialing</code> och <code>past_due</code> som Pro. När statusen inte längre kvalificerar återgår kontot till gratisplanen.",
-          "p2": "Om en betalning misslyckas kan Stripe flytta abonnemanget till <code>past_due</code> eller en annan status. Notoria synkroniserar den statusen från Stripe-webhooks. Så länge statusen förblir <code>past_due</code> är Pro-funktionerna tillgängliga enligt de nuvarande åtkomstreglerna; om abonnemanget senare avslutas eller på annat sätt blir icke-berättigat upphör Pro-åtkomsten.",
+          "p1": "Efter att du har avbrutit förnyelsen fortsätter din nuvarande Pro- eller Premium-åtkomst så länge Stripe-prenumerationsstatus fortfarande kvalificerar sig i produkten. Kvalificerande statusar inkluderar för närvarande <code>aktiv</code>, <code>testar</code> och <code>förfallen</code>. När statusen inte längre kvalificerar sig återgår kontot till Gratis.",
+          "p2": "Om en betalning misslyckas kan Stripe flytta prenumerationen till <code>förfallen</code> eller en annan status. Notoria synkroniserar den statusen från Stripe-webhooks. Så länge den förblir <code>förfallen</code> är den aktuella betalda planen tillgänglig under de nuvarande åtkomstreglerna; om den senare blir avbruten eller på annat sätt inte berättigad, upphör betald åtkomst.",
           "p3": "Att radera ditt Notoria-konto avslutar Stripe-abonnemanget omedelbart (efter bästa förmåga) som en del av kontoraderingen. Det skiljer sig från att säga upp förnyelsen via Customer Portal och samtidigt behålla kontot."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Ansvarsfriskrivning och ansvar",
           "p1": "Notoria tillhandahålls ”i mån av tillgänglighet” för personlig språkinlärning. I den utsträckning tillämplig lag tillåter frånsäger vi oss garantier som inte krävs enligt lag.",
-          "p2": "I den utsträckning tillämplig lag tillåter ansvarar Notoria inte för indirekta skador, oförutsedda skador, särskilda skador, följdskador eller skador till följd av förlorade data som uppstår genom din användning av tjänsten eller ditt förlitande på AI-resultat. Där ansvar inte kan uteslutas är det begränsat till det belopp du betalat för Notoria Pro under de tre månaderna före anspråket, eller ett högre belopp om tvingande lag kräver det.",
+          "p2": "I den utsträckning som tillåts enligt tillämplig lag är Notoria inte ansvarig för indirekta, tillfälliga, särskilda, följd- eller förlorade dataskador som uppstår från din användning av tjänsten eller beroende av AI-utdata. Där ansvar inte kan uteslutas är det begränsat till det belopp du betalade för Notoria Pro eller Premium under de tre månaderna före kravet, eller något större belopp som krävs av tvingande lag.",
           "p3": "Dessa begränsningar utesluter inte ansvar som finsk eller EU-rättslig lagstiftning inte tillåter att begränsas — inklusive ansvar som inte kan avstås gentemot konsumenter, och ansvar för dödsfall eller personskada orsakad av vårdslöshet där sådana regler gäller."
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "Bygg en personlig ordbank med betydelser, exempel och taggar",
           "practice": "Öva med uppgifter hämtade från dina egna ord och anteckningar",
           "create": "Skriv teorianteckningar och skrivarbete du kan återvända till",
-          "listenSpeak": "Gör om media till lyssningsövning, och tala med en AI-tutor på Pro"
+          "listenSpeak": "Omvandla media till lyssningsövningar och använd AI-allowances för transkription och talövning"
         },
-        "note": "Vissa AI-, lyssnings-, tal- och exportverktyg ingår i Notoria Pro. Gratisplanen täcker fortfarande vardaglig ordförrådsövning och den centrala studieloopen."
+        "note": "Kärninlärningsområden är tillgängliga på varje plan. Pro höjer AI-allowances och lägger till import/export av inlärningsmaterial; Premium lägger till personlig coaching och övning."
       },
       "ai": {
         "title": "AI, där den hjälper",
@@ -4656,7 +4678,7 @@
         "title": "Hur områdena hänger ihop",
         "p1": "Fångst är den snabba ingången. Ordförråd och Teori är där materialet landar. Övning gör om materialet till träning. Skrivande, Lyssning och Tal hjälper dig använda språket mer aktivt.",
         "p2": "Du behöver inte gå igenom varje område i ordning. Många stannar länge vid ord och korta övningar.",
-        "p3": "Ett naturligt nästa steg är skrivande när du vill producera språk på egna villkor, sedan lyssning och tal när samma material ska fungera i örat och rösten — Listening och Speaking ingår i Notoria Pro.",
+        "p3": "Ett naturligt nästa steg är att skriva när du vill producera språk på dina egna villkor, och sedan lyssna och tala när du vill att samma material ska fungera i ditt öra och din röst. Dessa områden är tillgängliga på varje plan; AI-användningsgränser varierar beroende på plan.",
         "beat": "Samla och förstå först. Använd och tala när materialet är redo att lämna sidan."
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "Lyssnande",
-          "body": "Gör om media till lyssningsövning i din arbetsyta. Finns i Notoria Pro."
+          "body": "Omvandla media till lyssningsövningar i din arbetsyta. Tillgängligt på varje plan; AI-transkription allowances varierar beroende på plan."
         },
         "speaking": {
           "label": "Tala",
-          "body": "Liveövning med en AI-tutor, kopplad till språket du studerar. Finns i Notoria Pro."
+          "body": "Live-övning med en AI-tutor, förankrad i språket du studerar. Tillgängligt på varje plan med en planbaserad daglig allowance."
         },
         "capture": {
           "label": "Fångst",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Hur byter jag lösenord eller stänger mitt konto?",
-          "a": "Öppna <account>Konto</account>. Där kan du uppdatera lösenordet om du använder e-postinloggning, hantera Notoria Pro, exportera en säkerhetskopia eller permanent ta bort kontot."
+          "a": "Öppna <account>konto</account>. Du kan uppdatera ditt lösenord där om du använder e-postinloggning, hantera Pro eller Premium, exportera en säkerhetskopia eller permanent ta bort ditt konto. Att ta bort kontot avbryter också omedelbart eventuella aktiva Stripe-prenumerationer på bästa möjliga sätt; att bara avbryta förnyelsen behåller kontot och dess data."
         },
         "pro": {
           "q": "Hur fungerar fakturering och avbokning?",
-          "a": "Notoria Pro faktureras via Stripe. Från <account>Konto</account> kan du uppgradera, öppna Stripe-kundportalen för betalningsmetoder och fakturor, eller avbryta förnyelse."
+          "a": "Notoria Pro och Premium faktureras via Stripe. Från <account>konto</account> kan du prenumerera, växla mellan Pro och Premium, hantera betalningsmetoder och fakturor, avbryta förnyelsen eller återuppta en schemalagd avbokning. Att avbryta förnyelsen behåller åtkomst tills Stripe avslutar den berättigade prenumerationsperioden; att ta bort ditt konto är separat och avbryter prenumerationen omedelbart på bästa möjliga sätt."
         },
         "proFeatures": {
-          "q": "Vad är gratis, och vad kräver Notoria Pro?",
-          "a": "Vardaglig ordförrådsövning och relaterade studieverktyg finns i gratisplanen. Vissa AI-verktyg, lyssning, tal och dokumentexport ingår i Notoria Pro. Jämför och uppgradera från <account>Konto</account>."
+          "q": "Vad ingår i Gratis, Pro och Premium?",
+          "a": "Gratis inkluderar kärninlärningsområdena och dagliga allowances för stödda AI-verktyg. Pro höjer eller tar bort många AI-gränser och lägger till import av inlärningsmaterial samt PDF/DOCX-export. Premium inkluderar Pro och lägger till personlig coaching, en inlärningsprofil, adaptiv och felbaserad övning samt anpassade övningsinstruktioner. Se den aktuella jämförelsen och begränsningarna i <account>konto</account>."
         },
         "learning": {
           "q": "Hur fungerar Notorias inlärningsfunktioner?",
@@ -4939,12 +4961,12 @@
       "overview": "Översikt",
       "users": "Användare",
       "workspaces": "Arbetsytor",
-      "jobs": "Jobs",
-      "audit": "Audit",
+      "jobs": "Jobb",
+      "audit": "Granskning",
       "content": "Innehåll",
-      "contentLibrary": "Content library",
+      "contentLibrary": "Innehållsbibliotek",
       "backToApp": "Tillbaka till appen",
-      "openMenu": "Open admin menu",
+      "openMenu": "Öppna adminmeny",
       "openAdmin": "Administratörspanel"
     },
     "modules": {
@@ -4960,28 +4982,28 @@
     },
     "common": {
       "search": "Sök",
-      "clear": "Clear",
+      "clear": "Rensa",
       "filter": "Filtrera",
-      "previous": "Previous",
-      "next": "Next",
-      "pageOf": "Page {page} of {totalPages}",
-      "results": "{total} results",
-      "backToList": "Back to list",
-      "empty": "No results"
+      "previous": "Föregående",
+      "next": "Nästa",
+      "pageOf": "Sida {page} av {totalPages}",
+      "results": "{total} resultat",
+      "backToList": "Tillbaka till listan",
+      "empty": "Inga resultat"
     },
     "overview": {
-      "title": "Overview",
-      "description": "Live counts from application data. Time ranges use UTC calendar days. Active learners count distinct users with learning activity events — not logins.",
-      "metrics": "Metrics",
-      "recentAudit": "Recent admin actions",
-      "recentAuditLede": "Latest mutations from the audit trail.",
-      "viewAllAudit": "View audit log",
+      "title": "Översikt",
+      "description": "Liveantal från applikationsdata. Tidsintervall använder UTC-kalenderdagar. Aktiva inlärare räknar distinkta användare med lärandeaktivitets-händelser — inte inloggningar.",
+      "metrics": "Metrik",
+      "recentAudit": "Senaste adminåtgärder",
+      "recentAuditLede": "Senaste mutationer från revisionsspåret.",
+      "viewAllAudit": "Visa revisionslogg",
       "cards": {
-        "users": "Total users",
-        "newUsers7d": "New users (7d)",
-        "newUsers30d": "New users (30d)",
-        "activeUsers7d": "Active learners (7d)",
-        "workspaces": "Workspaces",
+        "users": "Totalt antal användare",
+        "newUsers7d": "Nya användare (7d)",
+        "newUsers30d": "Nya användare (30d)",
+        "activeUsers7d": "Aktiva inlärare (7d)",
+        "workspaces": "Arbetsytor",
         "vocabulary": "Vokabulär",
         "theory": "Teori",
         "writing": "Skrivande",
@@ -4990,14 +5012,14 @@
         "reading": "Läsning",
         "speaking": "Tala",
         "inbox": "Fångst",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports",
-        "runningJobs": "Running job locks",
-        "recentAudits7d": "Audit entries (7d)",
+        "failedListening": "Misslyckad lyssning",
+        "failedImports": "Misslyckade importer",
+        "runningJobs": "Körande jobb",
+        "recentAudits7d": "Revisionsposter (7d)",
         "admins": "Administratörer",
         "testers": "Testare",
         "suspended": "Avstängda",
-        "contentTotal": "Content records"
+        "contentTotal": "Innehållsposter"
       },
       "quickAccess": "Snabbåtkomst",
       "quickAccessLede": "Gå till hanteringsverktyg.",
@@ -5018,21 +5040,21 @@
       }
     },
     "users": {
-      "title": "Users",
+      "title": "Användare",
       "description": "Search accounts, change roles, suspend access, or delete with confirmation.",
-      "searchPlaceholder": "Search name or email…",
-      "empty": "No users match these filters.",
-      "selfGuard": "Safeguards prevent changing or deleting your own admin account here.",
+      "searchPlaceholder": "Sök namn eller e-post…",
+      "empty": "Inga användare matchar dessa filter.",
+      "selfGuard": "Skydd förhindrar att du ändrar eller tar bort ditt eget admin-konto här.",
       "columns": {
-        "user": "User",
-        "role": "Role",
+        "user": "Användare",
+        "role": "Roll",
         "status": "Status",
         "plan": "Plan",
-        "workspaces": "Workspaces",
-        "created": "Registered"
+        "workspaces": "Arbetsytor",
+        "created": "Registrerad"
       },
       "filters": {
-        "role": "Role",
+        "role": "Roll",
         "status": "Status",
         "allRoles": "Alla roller",
         "allStatuses": "Alla statusar"
@@ -5042,43 +5064,43 @@
         "suspended": "Suspenderad"
       },
       "fields": {
-        "id": "User id",
-        "name": "Name",
-        "role": "Role",
+        "id": "Användar-id",
+        "name": "Namn",
+        "role": "Roll",
         "status": "Status",
         "plan": "Plan",
-        "created": "Registered",
-        "updated": "Updated",
-        "emailVerified": "Email verified",
-        "email": "Email",
-        "password": "Password"
+        "created": "Registrerad",
+        "updated": "Uppdaterad",
+        "emailVerified": "E-post verifierad",
+        "email": "E-post",
+        "password": "Lösenord"
       },
       "detail": {
-        "account": "Account",
-        "usage": "Content counts",
-        "usageLede": "Owned records across learning modules.",
-        "actions": "Account actions",
-        "workspaces": "Workspaces",
-        "workspacesLede": "Language workspaces owned by this user.",
-        "danger": "Danger zone"
+        "account": "Konto",
+        "usage": "Innehållsantal",
+        "usageLede": "Ägda poster över lärande-moduler.",
+        "actions": "Kontohandlingar",
+        "workspaces": "Arbetsytor",
+        "workspacesLede": "Språkarbetsytor ägda av denna användare.",
+        "danger": "Farlig zon"
       },
       "actions": {
         "saveProfile": "Save name",
-        "grantAdmin": "Grant admin",
-        "revokeAdmin": "Revoke admin",
+        "grantAdmin": "Ge adminbehörighet",
+        "revokeAdmin": "Återkalla adminbehörighet",
         "suspend": "Suspend",
-        "restore": "Restore",
-        "delete": "Delete account",
+        "restore": "Återställ",
+        "delete": "Ta bort konto",
         "grantTester": "Ge testarroll",
         "revokeTester": "Ta bort testarroll",
-        "create": "Create user"
+        "create": "Skapa användare"
       },
       "confirm": {
-        "grantAdmin": "Grant admin access to this account?",
-        "revokeAdmin": "Revoke admin access? This fails if they are the last active admin.",
-        "suspend": "Suspend this account? They lose access on the next protected request.",
-        "restore": "Restore this account?",
-        "delete": "Permanently delete this account and cascaded learning data? This cannot be undone.",
+        "grantAdmin": "Ge adminåtkomst till detta konto?",
+        "revokeAdmin": "Återkalla adminåtkomst? Detta misslyckas om de är den sista aktiva admin.",
+        "suspend": "Suspenda detta konto? De förlorar åtkomst vid nästa skyddad begäran.",
+        "restore": "Återställ detta konto?",
+        "delete": "Vill du radera kontot och all tillhörande studiedata permanent? Det går inte att ångra.",
         "grantTester": "Ge testarroll? De får alla appfunktioner för QA; den sparade prenumerationen ändras inte.",
         "revokeTester": "Ta bort testarroll? Funktionsåtkomsten återgår till deras faktiska prenumeration."
       },
@@ -5089,163 +5111,163 @@
         "admin": "Administratör"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Skapa användare",
+        "lede": "Provisionera ett konto med en e-postadress och lösenord. De kan logga in omedelbart."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratis",
         "pro": "Pro",
         "premium": "Premium"
       }
     },
     "workspaces": {
-      "title": "Workspaces",
+      "title": "Arbetsytor",
       "description": "Inspect and manage language workspaces.",
-      "searchPlaceholder": "Search name, language, or owner email…",
-      "empty": "No workspaces match these filters.",
-      "createForUser": "Create workspace for this user",
+      "searchPlaceholder": "Sök namn, språk eller ägar-e-post…",
+      "empty": "Inga arbetsytor matchar dessa filter.",
+      "createForUser": "Skapa arbetsyta för denna användare",
       "columns": {
-        "name": "Name",
-        "language": "Language",
-        "owner": "Owner",
-        "updated": "Updated"
+        "name": "Namn",
+        "language": "Språk",
+        "owner": "Ägare",
+        "updated": "Uppdaterad"
       },
       "fields": {
-        "id": "Workspace id",
-        "name": "Name",
-        "nameOptional": "Optional display name",
-        "language": "Language",
-        "owner": "Owner",
-        "created": "Created",
-        "updated": "Updated",
-        "ownerEmail": "Owner email",
+        "id": "Arbetsyta-id",
+        "name": "Namn",
+        "nameOptional": "Valfritt visningsnamn",
+        "language": "Språk",
+        "owner": "Ägare",
+        "created": "Skapad",
+        "updated": "Uppdaterad",
+        "ownerEmail": "Ägar-e-post",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
-        "description": "Language: {language}",
-        "meta": "Workspace",
-        "actions": "Workspace actions",
-        "actionsLede": "Editing language must stay unique per owner. Deletion cascades learning content in this workspace."
+        "description": "Språk: {language}",
+        "meta": "Arbetsyta",
+        "actions": "Arbetsytaåtgärder",
+        "actionsLede": "Redigering av språk måste förbli unik per ägare. Borttagning kaskaderar lärandeinnehåll i denna arbetsyta."
       },
       "actions": {
-        "create": "Create workspace",
-        "save": "Save",
-        "delete": "Delete workspace"
+        "create": "Skapa arbetsyta",
+        "save": "Spara",
+        "delete": "Ta bort arbetsyta"
       },
       "confirm": {
-        "delete": "Delete this workspace and all learning content inside it via database cascades?"
+        "delete": "Ta bort denna arbetsyta och allt lärandeinnehåll inuti via databas-kaskader?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Skapa arbetsyta",
+        "lede": "Anslut en ny språkarbetsyta till ett befintligt konto via e-post."
       }
     },
     "content": {
       "description": "Lists show metadata only. Open a row for identifiers and status. Private bodies (transcripts, notes) are not loaded here by default.",
-      "searchPlaceholder": "Search titles…",
-      "empty": "No records match these filters.",
-      "listeningMediaNote": "Deleting a listening lesson removes the database row. External media cleanup is best-effort and is not performed by this admin action.",
+      "searchPlaceholder": "Sök titlar…",
+      "empty": "Inga poster matchar dessa filter.",
+      "listeningMediaNote": "Att ta bort en lyssningslektion tar bort databasraden. Rensning av extern media är bästa ansträngning och utförs inte av denna adminåtgärd.",
       "columns": {
-        "title": "Title",
+        "title": "Titel",
         "status": "Status",
-        "owner": "Owner",
-        "workspace": "Workspace",
-        "updated": "Updated"
+        "owner": "Ägare",
+        "workspace": "Arbetsyta",
+        "updated": "Uppdaterad"
       },
       "fields": {
         "id": "Id",
         "status": "Status",
-        "errorCode": "Error code",
-        "owner": "Owner",
-        "workspace": "Workspace",
-        "created": "Created",
-        "updated": "Updated",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "errorCode": "Felkod",
+        "owner": "Ägare",
+        "workspace": "Arbetsyta",
+        "created": "Skapad",
+        "updated": "Uppdaterad",
+        "title": "Titel",
+        "word": "Ord",
+        "folderName": "Mappnamn"
       },
       "detail": {
         "description": "Metadata inspection. Private bodies are not auto-loaded.",
-        "meta": "Record",
-        "metaLede": "Identifiers and status only.",
-        "actions": "Actions"
+        "meta": "Post",
+        "metaLede": "Identifierare och status endast.",
+        "actions": "Åtgärder"
       },
       "actions": {
-        "delete": "Delete record",
-        "saveTitle": "Save title"
+        "delete": "Ta bort post",
+        "saveTitle": "Spara titel"
       },
       "confirm": {
-        "delete": "Delete this record? Related child rows follow database cascade / set-null rules."
+        "delete": "Ta bort denna post? Relaterade barnrader följer databas-kaskad / set-null-regler."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Fånga objekt lagrar fritt text. Titelsredigering stöds inte här — ta bort om posten ska tas bort."
     },
     "jobs": {
-      "title": "Jobs",
-      "description": "Running locks and failed processing records. Statuses are read-only — do not force a failed job to appear successful.",
-      "searchPlaceholder": "Filter by title…",
-      "empty": "No jobs match these filters.",
+      "title": "Jobb",
+      "description": "Körande lås och misslyckade bearbetningsposter. Statusar är skrivskyddade — tvinga inte ett misslyckat jobb att verka framgångsrikt.",
+      "searchPlaceholder": "Filtrera efter titel…",
+      "empty": "Inga jobb matchar dessa filter.",
       "buckets": {
-        "attention": "Needs attention",
-        "running": "Running",
-        "failed": "Failed",
+        "attention": "Behöver uppmärksamhet",
+        "running": "Körande",
+        "failed": "Misslyckad",
         "all": "All",
-        "runningLocks": "Running locks",
-        "failedLocks": "Failed locks",
-        "failedListening": "Failed listening",
-        "failedImports": "Failed imports"
+        "runningLocks": "Körande lås",
+        "failedLocks": "Misslyckade lås",
+        "failedListening": "Misslyckad lyssning",
+        "failedImports": "Misslyckade importer"
       },
       "filters": {
-        "kind": "Kind",
-        "allKinds": "All kinds"
+        "kind": "Typ",
+        "allKinds": "Alla typer"
       },
       "kinds": {
-        "ai_lock": "AI lock",
-        "listening": "Listening",
-        "exercise_import": "Exercise import",
-        "lock": "AI lock",
-        "import": "Exercise import"
+        "ai_lock": "AI-lås",
+        "listening": "Lyssning",
+        "exercise_import": "Övningsimport",
+        "lock": "AI-lås",
+        "import": "Övningsimport"
       },
       "columns": {
-        "kind": "Kind",
-        "title": "Title",
+        "kind": "Typ",
+        "title": "Titel",
         "status": "Status",
-        "error": "Error",
-        "owner": "Owner",
-        "updated": "Updated"
+        "error": "Fel",
+        "owner": "Ägare",
+        "updated": "Uppdaterad"
       }
     },
     "audit": {
-      "title": "Audit log",
-      "description": "Read-only history of administrative mutations. Credentials and private bodies are never stored here.",
-      "searchPlaceholder": "Search action, entity, or actor email…",
-      "empty": "No audit entries yet.",
+      "title": "Revisionslogg",
+      "description": "Skrivskyddad historik av administrativa mutationer. Behörigheter och privata kroppar lagras aldrig här.",
+      "searchPlaceholder": "Sök åtgärd, enhet eller aktörse-post…",
+      "empty": "Inga revisionsposter ännu.",
       "columns": {
-        "when": "When",
-        "actor": "Actor",
-        "action": "Action",
-        "entity": "Entity",
-        "success": "Result"
+        "when": "När",
+        "actor": "Aktör",
+        "action": "Åtgärd",
+        "entity": "Enhet",
+        "success": "Resultat"
       },
       "success": {
         "yes": "OK",
-        "no": "Failed"
+        "no": "Misslyckades"
       }
     },
     "errors": {
-      "UNKNOWN": "Something went wrong. Try again.",
-      "LAST_ADMIN": "Cannot change the last active admin.",
-      "CANNOT_DEMOTE_SELF": "You cannot demote your own admin account.",
-      "CANNOT_SUSPEND_SELF": "You cannot suspend your own account.",
-      "CANNOT_DELETE_SELF": "You cannot delete your own account.",
-      "USER_NOT_FOUND": "User not found.",
-      "WORKSPACE_NOT_FOUND": "Workspace not found.",
-      "WORKSPACE_LANGUAGE_EXISTS": "This user already has a workspace for that language.",
-      "INVALID_LANGUAGE": "Invalid language code.",
-      "CONTENT_NOT_FOUND": "Record not found.",
-      "INVALID_CONTENT_MODULE": "Unknown content module.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "UNKNOWN": "Något gick fel. Försök igen.",
+      "LAST_ADMIN": "Kan inte ändra den sista aktiva admin.",
+      "CANNOT_DEMOTE_SELF": "Du kan inte nedgradera ditt eget admin-konto.",
+      "CANNOT_SUSPEND_SELF": "Du kan inte suspenda ditt eget konto.",
+      "CANNOT_DELETE_SELF": "Du kan inte ta bort ditt eget konto.",
+      "USER_NOT_FOUND": "Användare hittades inte.",
+      "WORKSPACE_NOT_FOUND": "Arbetsyta hittades inte.",
+      "WORKSPACE_LANGUAGE_EXISTS": "Denna användare har redan en arbetsyta för det språket.",
+      "INVALID_LANGUAGE": "Ogiltig språkkod.",
+      "CONTENT_NOT_FOUND": "Posten hittades inte.",
+      "INVALID_CONTENT_MODULE": "Okänt innehållsmodul.",
+      "EMAIL_EXISTS": "Den e-posten är redan registrerad.",
+      "PASSWORD_TOO_WEAK": "Lösenordet uppfyller inte styrkekrav.",
+      "CONTENT_TITLE_UNSUPPORTED": "Denna innehållstyp stöder inte titelsredigering."
     }
   }
 }

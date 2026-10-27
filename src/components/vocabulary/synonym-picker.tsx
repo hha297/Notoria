@@ -2,7 +2,7 @@
 
 import { useMemo, useRef, useState } from "react";
 import Link from "next/link";
-import { Loader2, Plus, X } from "lucide-react";
+import { Check, Languages, Loader2, Plus, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -360,6 +360,9 @@ export function SynonymPicker({
                 className={mx(composerStyles, "vocab-suggest-item")}
                 onClick={() => selectSynonym(option)}
               >
+                <span className={mx(composerStyles, "vocab-option-icon")}>
+                  <Languages />
+                </span>
                 <span className={mx(composerStyles, "vocab-suggest-body")}>
                   <span className={mx(composerStyles, "vocab-suggest-title")}>
                     {option.word}
@@ -369,6 +372,9 @@ export function SynonymPicker({
                       {option.meaning}
                     </span>
                   ) : null}
+                </span>
+                <span className={mx(composerStyles, "vocab-option-check")}>
+                  <Check />
                 </span>
               </button>
             );

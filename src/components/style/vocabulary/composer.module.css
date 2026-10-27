@@ -117,7 +117,6 @@
     background: transparent;
     backdrop-filter: none;
   }
-
 }
 
 @media (min-width: 640px) {
@@ -125,6 +124,94 @@
     grid-template-columns: 4.25rem minmax(0, 1fr);
     gap: 1.15rem 1.6rem;
   }
+}
+
+/* Picker ref B refinement: both boards share one row rhythm. */
+.vocab-composer-page #custom-tags-results,
+.vocab-composer-page #synonyms-results {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding: 0;
+  overflow: hidden auto;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item,
+.vocab-composer-page #synonyms-results .vocab-suggest-item {
+  min-height: 3.65rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 12%, var(--border));
+  border-radius: 0;
+  background: transparent;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item:last-child,
+.vocab-composer-page #synonyms-results .vocab-suggest-item:last-child {
+  border-bottom: 0;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item:hover,
+.vocab-composer-page
+  #custom-tags-results
+  .vocab-suggest-item[data-active="true"],
+.vocab-composer-page #synonyms-results .vocab-suggest-item:hover,
+.vocab-composer-page #synonyms-results .vocab-suggest-item[data-active="true"] {
+  background: color-mix(in oklab, var(--module-vocab-fg) 9%, transparent);
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-icon,
+.vocab-composer-page #synonyms-results .vocab-option-icon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  border-radius: 0.55rem;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item::before,
+.vocab-composer-page #synonyms-results .vocab-suggest-item::before {
+  display: none;
+}
+
+.vocab-composer-page .vocab-tag-option-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.vocab-composer-page .vocab-tag-option-title-row {
+  display: inline-flex;
+  width: fit-content;
+  max-width: 100%;
+  min-width: 0;
+  flex: 0 1 auto;
+  align-items: center;
+  gap: 0.3rem;
+}
+
+.vocab-composer-page .vocab-tag-option-name {
+  display: inline-flex;
+  min-width: 0;
+  flex: 0 1 auto;
+  align-items: center;
+  text-align: left;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-actions {
+  position: static;
+  display: flex;
+  flex: 0 0 auto;
+  margin: 0;
+  padding: 0;
+  background: transparent;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-check {
+  margin-left: auto;
 }
 
 .vocab-composer-section-index {
@@ -540,7 +627,11 @@
   font-weight: 650;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: color-mix(in oklab, var(--composer-accent) 70%, var(--muted-foreground));
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 70%,
+    var(--muted-foreground)
+  );
 }
 
 .vocab-search-shell {
@@ -627,7 +718,7 @@
   border-radius: 0.7rem;
   border: 1px solid transparent;
   background: transparent;
-  padding: 0.55rem 0.7rem;
+  padding: 1.75rem 0.7rem;
   text-align: left;
   color: var(--ink);
   cursor: pointer;
@@ -838,7 +929,11 @@
   border: 1px solid
     color-mix(in oklab, var(--composer-accent) 34%, var(--hairline-cloud));
   background: color-mix(in oklab, var(--surface-elevated) 78%, transparent);
-  color: color-mix(in oklab, var(--composer-accent) 72%, var(--muted-foreground));
+  color: color-mix(
+    in oklab,
+    var(--composer-accent) 72%,
+    var(--muted-foreground)
+  );
   transition:
     border-color 0.15s ease,
     background-color 0.15s ease,
@@ -847,7 +942,11 @@
 
 .vocab-usage-trigger:hover {
   border-color: color-mix(in oklab, var(--composer-accent) 58%, transparent);
-  background: color-mix(in oklab, var(--composer-accent) 18%, var(--surface-elevated));
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 18%,
+    var(--surface-elevated)
+  );
   color: var(--ink);
 }
 
@@ -866,8 +965,7 @@
   min-height: 1.45rem;
   padding: 0.15rem 0.3rem 0.15rem 0.55rem;
   border-radius: 0.45rem;
-  border: 1px solid
-    color-mix(in oklab, var(--composer-accent) 52%, transparent);
+  border: 1px solid color-mix(in oklab, var(--composer-accent) 52%, transparent);
   background: color-mix(
     in oklab,
     var(--composer-accent) 28%,
@@ -1434,14 +1532,22 @@
 .vocab-pos-option[data-highlighted] {
   border-color: color-mix(
     in oklab,
-    var(--vocab-pos-accent) 42%,
+    var(--vocab-pos-accent) 58%,
     transparent
   ) !important;
   background: color-mix(
     in oklab,
-    var(--vocab-pos-accent) 18%,
+    var(--vocab-pos-accent) 20%,
     transparent
   ) !important;
+  color: var(--vocab-pos-accent) !important;
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--vocab-pos-accent) 14%, transparent);
+}
+
+.vocab-pos-option:hover .vocab-pos-option-label,
+.vocab-pos-option:focus .vocab-pos-option-label,
+.vocab-pos-option[data-highlighted] .vocab-pos-option-label {
   color: var(--vocab-pos-accent) !important;
 }
 
@@ -1520,5 +1626,637 @@
     animation: none;
     transition: none;
     transform: none;
+  }
+}
+
+/* Add/edit word ref2: match the vocabulary detail command-card language. */
+.vocab-composer-page {
+  --composer-word: var(--module-vocab-fg);
+  --composer-meaning: var(--module-vocab-fg);
+  --composer-example: var(--module-vocab-fg);
+  --composer-extra: var(--module-vocab-fg);
+  width: 100%;
+  max-width: none;
+}
+
+.vocab-composer-page .vocab-composer-hero {
+  position: relative;
+  min-height: 11rem;
+  align-items: center;
+  margin: 0 0 0.25rem;
+  padding: clamp(1.35rem, 3vw, 2.1rem);
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 24%, var(--border));
+  border-radius: 1rem;
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--module-vocab-fg) 11%, var(--surface-elevated)),
+    color-mix(in oklab, var(--surface-elevated) 85%, transparent) 58%
+  );
+  box-shadow: 0 0.8rem 2rem color-mix(in oklab, black 7%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.3rem;
+  background: var(--module-vocab-fg);
+}
+
+.vocab-composer-page .vocab-composer-hero::after {
+  content: "";
+  position: absolute;
+  top: -5rem;
+  right: -3rem;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid color-mix(in oklab, var(--module-vocab-fg) 16%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2.5rem color-mix(in oklab, var(--module-vocab-fg) 3%, transparent),
+    0 0 0 5rem color-mix(in oklab, var(--module-vocab-fg) 2%, transparent);
+  pointer-events: none;
+}
+
+.vocab-composer-page .vocab-composer-hero > * {
+  position: relative;
+  z-index: 1;
+}
+
+.vocab-composer-page .vocab-composer-lang {
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 34%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-fg) 10%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-section {
+  --composer-accent: var(--module-vocab-fg);
+  padding: 0;
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 15%, var(--border));
+  border-radius: 0.85rem;
+  background: color-mix(in oklab, var(--surface-elevated) 72%, transparent);
+  box-shadow: inset 0 1px 0 color-mix(in oklab, white 3%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-section-grid,
+.vocab-composer-page
+  .vocab-composer-section[data-composer="word"]
+  .vocab-composer-section-grid {
+  display: grid;
+  grid-template-columns: 3.25rem minmax(0, 1fr);
+  gap: 0;
+  align-items: stretch;
+}
+
+.vocab-composer-page .vocab-composer-section-index {
+  display: flex;
+  min-height: 3.25rem;
+  align-items: center;
+  justify-content: center;
+  margin: 0;
+  padding: 0;
+  border-right: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 12%, var(--border));
+  background: color-mix(in oklab, var(--module-vocab-fg) 7%, transparent);
+  color: var(--module-vocab-fg);
+  font-size: 1rem;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+}
+
+.vocab-composer-page .vocab-composer-section-main {
+  gap: 0;
+}
+
+.vocab-composer-page .vocab-composer-section-head {
+  min-height: 3.25rem;
+  align-items: center;
+  padding: 0.7rem 1rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 12%, var(--border));
+  background: color-mix(in oklab, var(--module-vocab-fg) 5%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-section-title,
+.vocab-composer-page .vocab-composer-kicker {
+  color: var(--module-vocab-fg);
+}
+
+.vocab-composer-page .vocab-composer-section-body {
+  width: 100%;
+  padding: 1rem;
+}
+
+.vocab-composer-page .vocab-composer-word-field {
+  border-radius: 0.7rem;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 4%,
+    var(--surface-elevated)
+  );
+  box-shadow: inset 3px 0 0 var(--module-vocab-fg);
+}
+
+.vocab-composer-page .vocab-composer-item,
+.vocab-composer-page .vocab-composer-panel,
+.vocab-composer-page .vocab-notes-editor {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 22%,
+    var(--hairline-cloud)
+  ) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 4%,
+    var(--surface-elevated)
+  ) !important;
+}
+
+.vocab-composer-page .vocab-composer-item-primary {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 62%,
+    var(--border)
+  ) !important;
+  background:
+    linear-gradient(
+      105deg,
+      color-mix(in oklab, var(--module-vocab-fg) 16%, transparent),
+      color-mix(in oklab, var(--module-vocab-fg) 7%, transparent) 48%,
+      transparent 82%
+    ),
+    color-mix(
+      in oklab,
+      var(--module-vocab-fg) 9%,
+      var(--surface-elevated)
+    ) !important;
+  box-shadow:
+    inset 3px 0 0 color-mix(in oklab, var(--module-vocab-fg) 78%, transparent),
+    inset 0 1px 0 color-mix(in oklab, var(--module-vocab-fg) 18%, transparent),
+    0 0 0 1px color-mix(in oklab, var(--module-vocab-fg) 8%, transparent),
+    0 0.45rem 1.2rem color-mix(in oklab, var(--module-vocab-fg) 6%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-item-primary:focus-within {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 76%,
+    var(--border)
+  ) !important;
+  box-shadow:
+    inset 3px 0 0 var(--module-vocab-fg),
+    0 0 0 3px color-mix(in oklab, var(--module-vocab-fg) 13%, transparent),
+    0 0.55rem 1.35rem color-mix(in oklab, var(--module-vocab-fg) 8%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-item-primary .vocab-composer-index {
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 34%, transparent);
+  background: color-mix(in oklab, var(--module-vocab-fg) 24%, transparent);
+  color: color-mix(in oklab, var(--module-vocab-fg) 86%, white);
+  box-shadow: 0 0 0 3px
+    color-mix(in oklab, var(--module-vocab-fg) 7%, transparent);
+}
+
+.vocab-composer-page
+  .vocab-composer-item-primary
+  .vocab-composer-field {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 38%,
+    var(--hairline-cloud)
+  ) !important;
+}
+
+.vocab-composer-page .vocab-composer-star-primary {
+  color: var(--module-vocab-fg) !important;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 11%,
+    transparent
+  ) !important;
+}
+
+.vocab-composer-page .vocab-composer-actions {
+  margin-top: 0.25rem !important;
+  padding: 0.9rem 0 0 !important;
+  border-top: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 14%, transparent);
+}
+
+.vocab-composer-page .vocab-composer-submit {
+  background: var(--module-vocab-fg) !important;
+  color: var(--background) !important;
+}
+
+@media (max-width: 639px) {
+  .vocab-composer-page .vocab-composer-hero {
+    min-height: 0;
+    padding: 1.15rem 1rem 1.25rem 1.2rem;
+    border-radius: 0.75rem;
+  }
+
+  .vocab-composer-page .vocab-composer-hero::after {
+    display: none;
+  }
+
+  .vocab-composer-page .vocab-composer-section-grid,
+  .vocab-composer-page
+    .vocab-composer-section[data-composer="word"]
+    .vocab-composer-section-grid {
+    grid-template-columns: 2.6rem minmax(0, 1fr);
+  }
+
+  .vocab-composer-page .vocab-composer-section-index {
+    min-height: 2.9rem;
+    font-size: 0.62rem;
+  }
+
+  .vocab-composer-page .vocab-composer-section-body {
+    padding: 0.75rem;
+  }
+}
+
+/* Match 02/03 to Tags: full-width header, inset content rows. */
+.vocab-composer-page
+  .vocab-composer-section[data-composer="meaning"]
+  .vocab-composer-section-body,
+.vocab-composer-page
+  .vocab-composer-section[data-composer="example"]
+  .vocab-composer-section-body {
+  padding: 0 0 1rem;
+}
+
+.vocab-composer-page
+  .vocab-composer-section[data-composer="meaning"]
+  .vocab-composer-block
+  > .vocab-composer-section-head,
+.vocab-composer-page
+  .vocab-composer-section[data-composer="example"]
+  .vocab-composer-block
+  > .vocab-composer-section-head {
+  width: 100%;
+  margin: 0 0 1rem;
+  padding: 0.85rem 1rem;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 12%, var(--border));
+  background: color-mix(in oklab, var(--module-vocab-fg) 5%, transparent);
+}
+
+.vocab-composer-page
+  .vocab-composer-section[data-composer="meaning"]
+  .vocab-composer-item,
+.vocab-composer-page
+  .vocab-composer-section[data-composer="example"]
+  .vocab-composer-item {
+  margin-inline: 1rem;
+}
+
+/* Picker result boards: compact cards, without changing the search controls. */
+.vocab-composer-page #custom-tags-results,
+.vocab-composer-page #synonyms-results {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  align-content: start;
+  gap: 0.5rem;
+  max-height: min(18rem, 50svh);
+  padding: 0.65rem;
+  border-radius: 0.8rem;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 3%,
+    var(--surface-elevated)
+  );
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item,
+.vocab-composer-page #synonyms-results .vocab-suggest-item {
+  position: relative;
+  min-height: 3.25rem;
+  padding: 0.7rem 0.8rem 0.7rem 1rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 13%, var(--border));
+  border-radius: 0.65rem;
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 3%,
+    var(--surface-elevated)
+  );
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item::before,
+.vocab-composer-page #synonyms-results .vocab-suggest-item::before {
+  content: "";
+  position: absolute;
+  inset: 0.65rem auto 0.65rem 0.45rem;
+  width: 2px;
+  border-radius: 999px;
+  background: color-mix(in oklab, var(--module-vocab-fg) 28%, transparent);
+  opacity: 0;
+  transition: opacity 150ms ease;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item:hover,
+.vocab-composer-page #synonyms-results .vocab-suggest-item:hover {
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 34%, var(--border));
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 8%,
+    var(--surface-elevated)
+  );
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item:hover::before,
+.vocab-composer-page #synonyms-results .vocab-suggest-item:hover::before,
+.vocab-composer-page
+  #custom-tags-results
+  .vocab-suggest-item[data-active="true"]::before,
+.vocab-composer-page
+  #synonyms-results
+  .vocab-suggest-item[data-active="true"]::before {
+  opacity: 1;
+}
+
+.vocab-composer-page
+  #custom-tags-results
+  .vocab-suggest-item[data-active="true"],
+.vocab-composer-page #synonyms-results .vocab-suggest-item[data-active="true"] {
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 46%, var(--border));
+  background: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 14%,
+    var(--surface-elevated)
+  );
+  box-shadow: none;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-body {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 0.18rem;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-meta {
+  width: 100%;
+  font-size: 0.76rem;
+}
+
+.vocab-composer-page .vocab-option-main {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  gap: 0.7rem;
+  text-align: left;
+}
+
+.vocab-composer-page .vocab-option-icon {
+  display: inline-flex;
+  width: 2rem;
+  height: 2rem;
+  flex: 0 0 2rem;
+  align-items: center;
+  justify-content: center;
+  border-radius: 0.55rem;
+  background: color-mix(in oklab, var(--module-vocab-fg) 10%, transparent);
+  color: color-mix(in oklab, var(--module-vocab-fg) 78%, var(--ink));
+}
+
+.vocab-composer-page .vocab-option-icon svg {
+  width: 0.9rem;
+  height: 0.9rem;
+}
+
+.vocab-composer-page .vocab-option-copy {
+  display: flex;
+  min-width: 0;
+  flex: 1 1 auto;
+  flex-direction: column;
+}
+
+.vocab-composer-page .vocab-option-kind {
+  color: var(--muted-foreground);
+  font-size: 0.66rem;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+  text-transform: uppercase;
+}
+
+.vocab-composer-page .vocab-option-check {
+  display: inline-flex;
+  width: 1.35rem;
+  height: 1.35rem;
+  flex: 0 0 1.35rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 24%, var(--border));
+  border-radius: 999px;
+  color: transparent;
+}
+
+.vocab-composer-page .vocab-option-check svg {
+  width: 0.75rem;
+  height: 0.75rem;
+  stroke-width: 3;
+}
+
+.vocab-composer-page
+  .vocab-suggest-item[data-active="true"]
+  .vocab-option-check {
+  border-color: var(--module-vocab-fg);
+  background: var(--module-vocab-fg);
+  color: var(--background);
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-empty,
+.vocab-composer-page #synonyms-results .vocab-suggest-empty,
+.vocab-composer-page
+  #custom-tags-results
+  .vocab-suggest-item[data-create="true"],
+.vocab-composer-page #synonyms-results .vocab-suggest-item[data-create="true"] {
+  grid-column: 1 / -1;
+}
+
+@media (max-width: 767px) {
+  .vocab-composer-page #custom-tags-results,
+  .vocab-composer-page #synonyms-results {
+    grid-template-columns: minmax(0, 1fr);
+  }
+}
+
+/* Picker ref B: tag tiles + dictionary-style synonym rows. */
+.vocab-composer-page #custom-tags-results {
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 0.4rem;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item {
+  min-height: 4rem;
+  padding: 0.9rem 1.1rem;
+  align-items: center;
+  transition: none;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-item::before {
+  display: none;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-main {
+  gap: 0.55rem;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-icon {
+  width: 2rem;
+  height: 2rem;
+  flex-basis: 2rem;
+  align-self: center;
+  border-radius: 999px;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-kind {
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-actions {
+  position: static !important;
+  z-index: auto;
+  inset: auto !important;
+  flex: 0 0 auto;
+  align-items: center;
+  align-self: center;
+  margin: 0 !important;
+  padding: 0;
+  border-radius: 0;
+  background: transparent;
+  transition: none;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-action {
+  display: inline-flex;
+  width: 1.4rem !important;
+  min-width: 1.4rem !important;
+  max-width: 1.4rem !important;
+  height: 1.4rem !important;
+  min-height: 1.4rem !important;
+  max-height: 1.4rem !important;
+  flex-basis: 1.4rem !important;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-suggest-action svg {
+  width: 0.85rem;
+  height: 0.85rem;
+}
+
+.vocab-composer-page #custom-tags-results .vocab-option-check {
+  align-self: center;
+}
+
+.vocab-tag-dialog-input {
+  min-height: 2.75rem;
+  border: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 58%, var(--border)) !important;
+  background: color-mix(
+    in oklab,
+    var(--surface-elevated) 88%,
+    var(--module-vocab-bg)
+  ) !important;
+  box-shadow: inset 0 1px 0 color-mix(in oklab, white 4%, transparent);
+}
+
+.vocab-tag-dialog-input:hover {
+  border-color: color-mix(
+    in oklab,
+    var(--module-vocab-fg) 78%,
+    var(--border)
+  ) !important;
+}
+
+.vocab-tag-dialog-input:focus-visible {
+  border-color: var(--module-vocab-fg) !important;
+  box-shadow: 0 0 0 2px
+    color-mix(in oklab, var(--module-vocab-fg) 20%, transparent) !important;
+}
+
+.vocab-composer-page #synonyms-results {
+  grid-template-columns: minmax(0, 1fr);
+  gap: 0;
+  padding: 0;
+  overflow: hidden auto;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-item {
+  min-height: 3.65rem;
+  padding: 0.65rem 0.9rem;
+  border: 0;
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 12%, var(--border));
+  border-radius: 0;
+  background: transparent;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-item:last-child {
+  border-bottom: 0;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-item::before,
+.vocab-composer-page #synonyms-results .vocab-option-icon {
+  display: none;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-body {
+  display: grid;
+  grid-template-columns: minmax(8rem, 0.38fr) minmax(0, 1fr);
+  align-items: center;
+  gap: 1rem;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-title {
+  font-size: 0.95rem;
+  font-weight: 700;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-meta {
+  padding-left: 1rem;
+  border-left: 1px solid
+    color-mix(in oklab, var(--module-vocab-fg) 16%, var(--border));
+  font-size: 0.8rem;
+  white-space: normal;
+}
+
+.vocab-composer-page #synonyms-results .vocab-suggest-item:hover,
+.vocab-composer-page #synonyms-results .vocab-suggest-item[data-active="true"] {
+  border-color: color-mix(in oklab, var(--module-vocab-fg) 16%, var(--border));
+  background: color-mix(in oklab, var(--module-vocab-fg) 9%, transparent);
+}
+
+@media (max-width: 900px) {
+  .vocab-composer-page #custom-tags-results {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+}
+
+@media (max-width: 639px) {
+  .vocab-composer-page #custom-tags-results {
+    grid-template-columns: minmax(0, 1fr);
+  }
+
+  .vocab-composer-page #synonyms-results .vocab-suggest-body {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 0.2rem;
+  }
+
+  .vocab-composer-page #synonyms-results .vocab-suggest-meta {
+    padding-left: 0;
+    border-left: 0;
   }
 }

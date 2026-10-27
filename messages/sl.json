@@ -30,7 +30,7 @@
       "fixedNote": "Videz je fiksen v izvoženi datoteki. Izvozite znova, da ga spremenite.",
       "docxBackgroundNote": "Word in druge aplikacije morda ne bodo prikazale ozadij strani na isti način, še posebej pri tisku."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Pomakni se na vrh"
   },
   "contentImport": {
     "title": {
@@ -301,7 +301,7 @@
     "dragTipDismiss": "Odbaci savjet",
     "dragTipShow": "Kako da predete v fascikle",
     "dragTipDemo": "Prevucite stavku v fasciklu",
-    "dragTipCard": "Item"
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Spremeni temu",
@@ -473,34 +473,34 @@
     "viewMode": "Način prikaza",
     "tagManager": {
       "open": "Upravljaj oznakama",
-      "eyebrow": "Tags",
+      "eyebrow": "Oznake",
       "title": "Upravljanje oznakama",
-      "description": "Izberite oznaku, nato je dodelite ali odstranite s besede. Dodeljene in ostale besede ostanejo v odvojenim listama.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Izberi oznako, nato jo dodeli ali odstrani iz besed.",
+      "pageDescription": "Izberi standardno ali prilagojeno, izberi oznako, nato jo dodaj ali odstrani iz besed.",
+      "disabledNoWorkspace": "Ustvari delovno okolje, preden upravljaš z oznakami besed.",
+      "backToVocabulary": "Nazaj k besedišču",
+      "backToSettings": "Nazaj k nastavitvam",
       "groupsLabel": "Standardne grupe oznaka",
       "tagsHeading": "Oznake",
       "standardTagsHeading": "Standardne oznake",
       "customTagsHeading": "Prilagodene oznake",
-      "customTagsHint": "Oznake ki jih ustvarite za lastno organizacijo — niso vrste besede.",
+      "customTagsHint": "Oznake delovnega okolja, ki jih ustvariš — išči, da jih najdeš, ko je seznam dolg.",
       "emptyCustomTags": "Še ni prilagodenih oznaka. Ustvarite jih pri uredivanju besede.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nobena prilagojena oznaka ne ustreza temu iskanju.",
+      "tagSearchPlaceholder": "Išči oznake…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standardna",
       "kindCustom": "Prilagodena",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Seznami besed",
+      "wordTabAssigned": "Oznakovane",
+      "wordTabOther": "Brez oznake",
       "assignedHeading": "Besede s tem oznakom",
       "otherHeading": "Ostale besede",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Izberi vse na tej strani",
+      "clearSelection": "Počisti izbiro",
+      "selectionScopePage": "Izbira iz te strani ({count} od {total})",
+      "selectionScopeFiltered": "Izbira znotraj trenutnih iskalnih rezultatov",
       "searchPlaceholder": "Išči besede ali pomeni…",
       "wordCount": "{count}",
       "loading": "Nalaganje besedišča…",
@@ -510,13 +510,23 @@
       "emptyOther": "Vsaka beseda več ima to oznaku.",
       "emptyOtherSearch": "Ni podudarnih besede za dodjelu.",
       "selected": "{count} izbrano",
-      "addToTag": "Dodaj oznaku",
-      "removeFromTag": "Odstrani oznaku",
-      "applyAdd": "Dodaj oznaku ({count})",
-      "applyRemove": "Odstrani oznaku ({count})",
+      "addToTag": "Dodaj oznako",
+      "removeFromTag": "Odstrani oznako",
+      "applyAdd": "Dodaj oznako ({count})",
+      "applyRemove": "Odstrani oznako ({count})",
       "added": "Dodano {count} beseda(i) v {tag}",
       "removed": "Uklonjeno {count} beseda(i) iz {tag}",
-      "error": "Posodabljanje pripadnosti oznaci ni uspelo"
+      "error": "Posodabljanje pripadnosti oznaci ni uspelo",
+      "systemsLabel": "Sistemi oznak",
+      "standardSystemTitle": "Standardno",
+      "standardSystemMeta": "Tema in uporaba, prikazano ločeno",
+      "usageOptional": "Neobvezno",
+      "customSystemTitle": "Prilagojeno",
+      "customSystemMeta": "{count, plural, one {# oznaka} other {# oznak}}",
+      "customPickerLabel": "Izberi prilagojeno oznako",
+      "customPickerPlaceholder": "Izberi prilagojeno oznako…",
+      "customSearchPlaceholder": "Išči prilagojene oznake…",
+      "pickTagFirst": "Najprej izberi oznako zgoraj, da upravljaš članstvo besed."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Posodobljeno {time}",
@@ -585,7 +595,11 @@
         "notes": "Opombe",
         "updated": "Zadnja sprememba"
       }
-    }
+    },
+    "selectedCustomTags": "Izbrane oznake",
+    "selectedSynonyms": "Izbrani sinonimi",
+    "removeCustomTag": "Odstrani {name}",
+    "pickerLoading": "Nalagam…"
   },
   "tags": {
     "groups": {
@@ -670,6 +684,11 @@
     "updated": "Posodobljeno",
     "backToStudio": "Nazaj na vaje",
     "studyMode": "Način učenja",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Težina",
       "easy": "Lahko",
@@ -941,7 +960,9 @@
         "collapse": "Skupi {name}",
         "selectedCount": "{count, plural, one {# teorija izabrana} other {# teorija izbrano}}",
         "practiceSelected": "Ni izabrana nijedna praksa",
-        "clearSelection": "Izbriši izbor"
+        "clearSelection": "Izbriši izbor",
+        "subfolders": "{count, plural, one {# podmapa} other {# podmap}}",
+        "selectedOne": "1 teorija izbrana"
       }
     },
     "types": {
@@ -1033,17 +1054,17 @@
       "shuffle": "Promešaj",
       "finish": "Dokončaj rundu",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Vir vprašanja",
+        "chooseAi": "Uporabi AI generirano",
+        "emptyTitle": "Brez uporabnih shranjenih primerov",
+        "emptyDescription": "Dodaj primerne stavke, ki jasno vključujejo vsako besedo, prilagodi svoje filtre ali preklopi na AI generirano.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Shranjeni primeri",
+          "description": "Takoj zgradi vprašanja iz svojih primerov besedišča. Brez čakanja na AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI generirano",
+          "description": "Ustvari sveže stavke iz svojega besedišča z AI."
         }
       }
     },
@@ -1100,14 +1121,14 @@
       "tryAgain": "Poskusi znova",
       "questionsLabel": "Pitanja",
       "correctLabel": "Točno",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Napačno",
+      "unansweredLabel": "Nep odgovarjeno",
       "reviewLabel": "Za pregled",
       "answeredProgress": "{answered} / {total} odgovoreno",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Preveri odgovor",
+      "nextQuestion": "Naslednje",
+      "viewResults": "Poglej rezultate",
       "submitSet": "Pošalji odgovore",
       "submitting": "Provjera…",
       "unansweredWarnTitle": "Neodgovorena vprašanj",
@@ -1122,54 +1143,54 @@
       "unanswered": "Ne odgovoreno",
       "yourAnswer": "Vaš odgovor",
       "correctAnswer": "Točan odgovor",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Na voljo je le {count} vprašanj iz trenutnih filtrov.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Kako vadiš",
+        "lockedHint": "Dokončaj ali začni nov niz, da spremeniš to.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Ena za drugo",
+          "description": "Glej eno vprašanje naenkrat. Preveri po vsakem odgovoru za takojšnje povratne informacije."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Vsa vprašanja",
+          "description": "Glej celoten niz, odgovarjaj v poljubnem vrstnem redu, nato pa oddaj enkrat za povratne informacije."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Pregled",
+        "allCorrect": "Popolno — vsak odgovor pravilen.",
+        "summary": "{incorrect} napačnih · {unanswered} neodgovorjenih · {needsReview} za pregled",
+        "viewWrong": "Poglej napačne odgovore",
+        "filtersLabel": "Filtriraj vprašanja",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Vse ({count})",
+          "needs_review": "Napačna & neodgovorjena ({count})",
+          "correct": "Pravilno ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Prejšnje",
+        "nextWrong": "Naslednje",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} za pregled",
+        "floatLabel": "Navigacija po napačnih odgovorih",
+        "closeFloat": "Prikaži vse odgovore"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% pravilno",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Popoln niz",
+          "body": "Vsak odgovor je bil pravilen. Takšna osredotočenost si zasluži še en krog, ko si pripravljen."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Močan zaključek",
+          "body": "Očitno ti gre — preglej zamude, nato pa to utrdi s svežim nizom."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Dobra dela — nadaljuj",
+          "body": "Nekaj zastojev je normalnih. Preglej jih enkrat, nato poskusi znova, ko so še sveži."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Skoraj tam",
+          "body": "Najprej dokončaj neodgovorjena vprašanja — nato bo rezultat povedal jasnejšo zgodbo."
         }
       }
     },
@@ -1182,7 +1203,7 @@
       },
       "contextualLanguageHint": "Pitanja se generišu na jeziku {language} (jezik delovnega prostora).",
       "contextualEmptyTitle": "Ustvari kontekstualna vprašanj",
-      "contextualEmptyDescription": "Ustvarite vprašanj višestrukog izbora s izpolnjevanjem praznina iz besedišča.",
+      "contextualEmptyDescription": "Dodaj neobvezna navodila spodaj, če želiš, nato pritisni Ustvari. Lahko pustiš poziv prazen.",
       "contextualProDescription": "Kontekstualna AI vprašanj na voljo su uz Pro.",
       "unlockContextual": "Otključaj uz Pro",
       "correct": "Točno!",
@@ -1203,8 +1224,8 @@
       "hint": "Izberite beseda, nato dodirnite njeno pomen",
       "complete": "Vsi parovi su upareni — odličan posao!",
       "shuffle": "Promešaj stolpci",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} parov",
+      "continueRound": "Nadaljuj"
     },
     "typeAnswer": {
       "questionWord": "Šta je pomen?",
@@ -1214,7 +1235,7 @@
         "contextual": "Kontekstualno"
       },
       "contextualEmptyTitle": "Ustvari kontekstualna vprašanj",
-      "contextualEmptyDescription": "Ustvarite upite za tasternje s izpolnjevanjem praznina iz besedišča.",
+      "contextualEmptyDescription": "Dodaj neobvezna navodila spodaj, če želiš, nato pritisni Ustvari. Lahko pustiš poziv prazen.",
       "contextualProDescription": "Kontekstualna AI vprašanj na voljo su uz Pro.",
       "unlockContextual": "Otključaj uz Pro",
       "placeholder": "Vpišite odgovor…",
@@ -1598,13 +1619,13 @@
       "writing": {
         "title": "Pisanje",
         "description": "Bogati dokumenti in setovi vprašanj ki lahko znova otvoriti in izvesti.",
-        "how": "Začnite nacrt, organizujte folderima in uporabite Pro AI da preverite ali poboljšate besedilo.",
+        "how": "Začni osnutek, organiziraj z mapami in uporabi AI dodelitev svojega načrta za preverjanje ali izboljšanje svojega besedila.",
         "cta": "Odpri pisanje"
       },
       "listening": {
         "title": "Poslušanje",
         "description": "Pretvorite stvarni audio ali video v lekciju.",
-        "how": "Naložite snimak in generišite transkript na besplatnom planu. Generisana vaja slušanja del je Pro plana.",
+        "how": "Naloži posnetek, ustvari transkript in zgradi poslušalsko prakso z AI dodelitvijo, vključeno v tvoj načrt.",
         "cta": "Odpri poslušanje"
       },
       "speaking": {
@@ -3120,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Neki radni prostori več postoje za isti jezik. Njihov vsebina bodo dodan v postoječe radne prostore umjesto kreiranja duplikata.",
         "empty_backup": "Ova sigurnosna kopija ne vsebuje uvozne podatke za učenje.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Nekateri obstoječi elementi delijo isto ime. Uvoz bo deterministično ponovno uporabil enega od njih in pustil druge nespremenjene."
       },
       "cancel": "Prekliči",
       "confirm": "Uvozi podatke za učenje",
@@ -3165,11 +3186,11 @@
         "requestTooLarge": "Ta sigurnosna kopija je prevelika za obdelavo putem ove strani. Poskusite manji izvoz ali kontaktirajte podršku.",
         "notConfigured": "Skladište datoteka še ne konfigurisano za uvoz sigurnosne kope."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Že v vašem računu",
+      "skippedInAccountHint": "Ta imena se ujemajo z elementi, ki jih že imate. Ne bodo ponovno uvoženi. Novi elementi pod isto delovno površino se še vedno uvozijo.",
+      "skippedInBackupTitle": "Podvojena imena v tem varnostnem kopiranju",
+      "skippedInBackupHint": "Datoteka navaja isto ime več kot enkrat. Uvožen bo le prvi izvod vsakega imena — to je normalno tudi na praznem računu.",
+      "skippedOtherTitle": "Uvoz ni bil mogoč"
     },
     "danger": {
       "title": "Zapri račun",
@@ -3185,7 +3206,7 @@
       "warningTitle": "Pre nastavka",
       "warnings": {
         "workspaces": "Vsak delovni prostor in sav besedišče, teorija, pisanje, poslušanje in govor bodo obrisani.",
-        "billing": "Vsaka aktivna Notoria Pro pretplata bodo odmah otkazana.",
+        "billing": "Vsaka aktivna naročnina Notoria Pro ali Premium bo takoj preklicana.",
         "media": "Otpremljeni mediji in fotografija profila bodo uklonjeni.",
         "permanent": "Nakon potvrde ni perioda oporavka."
       },
@@ -3234,7 +3255,7 @@
     "upgrade": "Nadgradite na Pro",
     "manage": "Upravljajte pretplatom",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Brezplačno",
     "premiumBadge": "Premium",
     "renewsOn": "Obnavlja se {date}",
     "status": "Stanje: {status}",
@@ -3459,7 +3480,7 @@
       "feature": "Funkcija",
       "current": "Trenutno",
       "capability": "Šta dobijate",
-      "free": "Free",
+      "free": "Brezplačno",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Uključeno v Free",
@@ -3599,7 +3620,7 @@
     "vocabulary": "Besedišče",
     "vocabularyEmpty": "Še ni besede v besedišču",
     "reviews": "Ponavljanja flash kartica",
-    "misses": "Again / Hard",
+    "misses": "Ponovno / Težko",
     "listening": "Poslušanje",
     "speaking": "Govorjenje",
     "writing": "Pisanje",
@@ -3753,8 +3774,8 @@
       "practice": "Vadi"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Ponovno",
+      "HARD": "Težko"
     },
     "status": {
       "MASTERED": "Savladano",
@@ -3799,23 +3820,23 @@
       "title": "Šta je Notoria?",
       "lead": "Notoria je vaš privatni dnevnik učenja.",
       "paragraphs": [
-        "Think of it as a notebook for your language journey — except everything you write down can become part of your practice.",
-        "There is no predefined curriculum you have to follow. There is no \"correct\" way to use your workspace. There is no teacher watching over your shoulder. Nobody is grading your notes."
+        "Zamislite si to kot zvezek za vašo jezikovno pot — razen vse, kar zapišete, lahko postane del vaše prakse.",
+        "Ni vnaprej določenega učnega načrta, ki bi ga morali slediti. Ni \"pravilnega\" načina za uporabo vaše delovne površine. Ni učitelja, ki bi vas opazoval. Nihče ne ocenjuje vaših opomb."
       ],
       "examplesIntro": "Vi odlučujete šta pripada v Notoriu. Na primer, lahko:",
       "examples": [
-        "Write down a word you heard today",
-        "Save a grammar rule you finally understood",
-        "Add an example sentence that makes sense to you",
-        "Upload a video you want to study",
-        "Write about something you want to practice saying"
+        "Zapišite besedo, ki ste jo danes slišali",
+        "Shrani pravilo slovnice, ki ste ga končno razumeli",
+        "Dodajte primer stavka, ki vam daje smisel",
+        "Naložite video, ki ga želite študirati",
+        "Napišite o nečem, kar želite vaditi"
       ],
       "overTime": "S vremenom ti mali dijelovi postaju vaša osobna baza jezičkog znanja.",
       "noWrongWay": {
         "title": "Ni pravog ali pogrešnog načina da gradite dnevnik.",
         "paragraphs": [
-          "Your learning diary is yours. You don't have to organize everything perfectly. You don't have to use every feature. You don't have to follow a particular learning method.",
-          "Use Notoria in whatever way makes learning easier and more meaningful to you. The goal is not to create a perfect database — the goal is to create a learning space that actually belongs to you."
+          "Vaš učni dnevnik je vaš. Ni vam treba vsega popolnoma organizirati. Ni vam treba uporabiti vseh funkcij. Ni vam treba slediti določenemu učnemu načinu.",
+          "Uporabite Notorio na način, ki vam olajša in naredi učenje bolj smiselno. Cilj ni ustvariti popolno bazo podatkov — cilj je ustvariti učni prostor, ki dejansko pripada vam."
         ]
       }
     },
@@ -3861,19 +3882,19 @@
         "title": "Besedišče",
         "intro": "Besedišče je vaša osobna biblioteka besede — temelj svega ostalog v Notoriji.",
         "bullets": [
-          "Add words and phrases you actually encounter",
-          "Include meanings, translations, and example sentences",
-          "Add pronunciation notes when helpful",
-          "Use tags to organize by topic, level, situation, or anything that helps you find words later",
-          "Reuse vocabulary in exercises and review sessions"
+          "Dodajte besede in fraze, s katerimi se dejansko srečujete",
+          "Vključite pomen, prevode in primerne stavke",
+          "Dodajte opombe o izgovorjavi, ko je to koristno",
+          "Uporabite oznake za organizacijo po temi, ravni, situaciji ali čemerkoli, kar vam pomaga kasneje najti besede",
+          "Ponovno uporabite besedišče v vajah in pregledih"
         ],
         "body": "Umjesto učenja napamet s generičke liste besede, gradite knjižnico ki odražava vaš stvarni put učenja.",
         "exampleIntro": "Na primer, danes slišite finsku beseda „varata“:",
         "examples": [
-          "Word: varata",
-          "Meaning: to book / reserve",
-          "Example: Haluan varata ajan.",
-          "Tag: Daily life"
+          "Beseda: varata",
+          "Pomen: rezervirati",
+          "Primer: Haluan varata ajan.",
+          "Oznaka: Dnevno življenje"
         ],
         "exampleNote": "Ta beseda je zdaj del vašega ličnog Notoria znanja — spremna za ponavljanje in vajo.",
         "emphasis": "Ne dodajte vsako besedo koju vidite. Dodajte besede ki su značajne VAMA."
@@ -3882,11 +3903,11 @@
         "title": "Teorija",
         "intro": "Teorija je vaša osobna jezička referenca — mjesto za čuvanje znanja ki želite zapomniti si.",
         "bullets": [
-          "Grammar rules and patterns",
-          "Pronunciation notes",
-          "Usage explanations",
-          "Examples and personal notes",
-          "Things you repeatedly forget"
+          "Pravila in vzorci slovnice",
+          "Opombe o izgovorjavi",
+          "Razlage uporabe",
+          "Primeri in osebne opombe",
+          "Stvari, ki jih nenehno pozabljate"
         ],
         "body": "Pišite razlage svojim besedami. Gramatička opomba ne mora zvučati kot udžbenik. Če vam jednostavno razlaga ima smisla, to je dobro razlaga za vaš dnevnik.",
         "emphasis": "Teorija je kot referentna bilježnica kojoj se vračate kad god nekaj pozabite."
@@ -3896,11 +3917,11 @@
         "intro": "Vaje vam omogučavaju da aktivno vježbate znanje ki ste prikupili.",
         "bullets": [
           "Flashcards",
-          "Quizzes and multiple choice",
-          "Fill-in-the-blank exercises",
-          "Vocabulary practice from your saved words",
-          "Grammar practice from your theory notes",
-          "Other formats based on your own material"
+          "Kviz in več možnosti",
+          "Vaje za dopolnitev",
+          "Praksa besedišča iz vaših shranjenih besed",
+          "Praksa slovnice iz vaših teoretičnih opomb",
+          "Drugi formati na podlagi vašega materiala"
         ],
         "emphasis": "Vrednost dolazi iz vježbanja VAŠEG znanja — ne nasumičnog besedišča s generičkog kursa, več besede in pojmova ki ste lično odlučili da su važne."
       },
@@ -3908,13 +3929,13 @@
         "title": "Pisanje",
         "intro": "Pisanje je mjesto kjer pasivno znanje postaje aktivna upotreba jezika.",
         "bullets": [
-          "Draft texts on topics you care about",
-          "Create question sets for yourself",
-          "Practice using vocabulary you've learned",
-          "Experiment with new grammar",
-          "Review and improve your writing over time",
-          "With Pro: use AI to check and improve your work",
-          "Export your writing when you need it"
+          "Osnutki besedil o temah, ki so vam pomembne",
+          "Ustvarite nabor vprašanj za sebe",
+          "Vadite uporabo besedišča, ki ste se ga naučili",
+          "Eksperimentirajte z novo slovnico",
+          "Preglejte in izboljšajte svoje pisanje skozi čas",
+          "S Pro: uporabite AI za preverjanje in izboljšanje svojega dela",
+          "Izvozite svoje pisanje, ko ga potrebujete"
         ],
         "emphasis": "Vaše pisanje ne mora biti savršeno. Poenta je koristiti jezik, praviti napake, primetiti šta še ne veste in poboljšavati se s vremenom."
       },
@@ -3922,19 +3943,19 @@
         "title": "Poslušanje",
         "intro": "Poslušanje vam omogučava da proučavate stvarni vsebina ki birate — ne samo unapred definisane lekce.",
         "bullets": [
-          "Upload audio or video",
-          "Generate a transcript",
-          "Study the transcript line by line",
-          "Turn the material into a lesson",
-          "Discover vocabulary and expressions from real content"
+          "Naložite avdio ali video",
+          "Ustvarite transkript",
+          "Študirajte transkript vrstico po vrstici",
+          "Pretvorite material v lekcijo",
+          "Odkrijte besedišče in izraze iz resničnih vsebin"
         ],
         "body": "Vnesite v Notoriu nekaj kaj VI stvarno želite razumeti:",
         "examples": [
-          "A YouTube video",
-          "A conversation recording",
-          "A podcast episode",
-          "A lecture",
-          "Any other learning material"
+          "YouTube video",
+          "Posnetek pogovora",
+          "Epizoda podcasta",
+          "Predavanje",
+          "Kakršno koli drugo učni material"
         ],
         "emphasis": "Vi kontrolišete vsebina. Notoria vam pomaže da ga razumete in učite se iz njega."
       },
@@ -3942,11 +3963,11 @@
         "title": "Govorjenje",
         "intro": "Govorjenje je aktivni razgovorni del vašega puta učenja.",
         "bullets": [
-          "Talk with an AI tutor through video",
-          "Practice speaking naturally",
-          "Use vocabulary and knowledge you've collected",
-          "Review the conversation transcript afterward",
-          "Read feedback and identify areas to improve"
+          "Pogovarjajte se z AI tutorjem preko videa",
+          "Vadite naravno govorjenje",
+          "Uporabite besedišče in znanje, ki ste ga zbrali",
+          "Preglejte transkript pogovora kasneje",
+          "Preberite povratne informacije in identificirajte področja za izboljšanje"
         ],
         "emphasis": "Govorjenje ne mora biti savršeno. Svrha je vaditi koriščenje jezika v realističnoj situaciji — nato učiti se iz onoga kaj se dogodilo."
       },
@@ -3954,11 +3975,11 @@
         "title": "Branje",
         "intro": "Branje pretvori tekstove ki birate v vajo razumevanja.",
         "bullets": [
-          "Paste text or upload PDF/DOCX passages",
-          "Generate multiple-choice, written, or true/false/not stated questions",
-          "Practice and review answers with AI grading for written responses",
-          "Save useful words from the passage into Vocabulary",
-          "Organize passages with folders"
+          "Prilepite besedilo ali naložite PDF/DOCX odlomke",
+          "Ustvarite vprašanja z več možnostmi, pisna ali resnično/napačno/ne navedeno",
+          "Vadite in preglejte odgovore z AI ocenjevanjem za pisne odgovore",
+          "Shrani koristne besede iz odlomka v besedišče",
+          "Organizirajte odlomke s mapami"
         ],
         "emphasis": "Vnesite gradivo ki stvarno želite razumeti — vesti, priče, delovne liste — in pretvorite ga v vajo ki pripada vašem dnevniku."
       },
@@ -3966,20 +3987,20 @@
         "title": "Zberi",
         "intro": "Capture je brza zona za odlaganje — hranite nekaj v trenutku kad ga sretnete, nato pozneje odlučite kam sodi.",
         "bullets": [
-          "Save a word, phrase, grammar doubt, or writing idea in seconds",
-          "Add an optional note or source for context",
-          "Keep items in To process until you are ready",
-          "Turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time",
-          "An item is marked Processed only after you finish creating that linked entry"
+          "Shrani besedo, frazo, dvom o slovnici ali idejo za pisanje v nekaj sekundah",
+          "Dodajte neobvezno opombo ali vir za kontekst",
+          "Obdržite elemente v 'Za obdelavo', dokler niste pripravljeni",
+          "Pretvorite zajem v besedišče, teorijo, pisanje ali vajo, ko imate čas",
+          "Element je označen kot obdelan šele, ko končate ustvarjanje povezanega vnosa"
         ],
         "body": "Capture sedi na početku petlje: prvo prikupite, nato organizujte. Ne treba vam savršena kategorija v trenutku — treba vam spremljena misao.",
         "emphasis": "Če imate samo deset sekundi, Capture je dovoljan. Sortiranje lahko počakati.",
         "exampleIntro": "Na primer, slišite frazu v autobusu in imate samo trenutek:",
         "examples": [
-          "Content: varata aika",
-          "Note: heard on the bus — booking an appointment",
-          "Source: daily life",
-          "Later: process into Vocabulary with meaning and an example"
+          "Vsebina: varata aika",
+          "Opomba: slišano v avtobusu — rezervacija termina",
+          "Vir: dnevno življenje",
+          "Kasneje: obdelajte v besedišče s pomenom in primerom"
         ],
         "exampleNote": "Opomba je sigurna v Capture. Kad imate pet mirnih minuta, pošaljite je v Besedišče (ali Teoriju / Pisanje) in dokončajte unos — tek tada je Obradeno."
       }
@@ -3996,11 +4017,11 @@
         "addMore": "Dodajte več znanja"
       },
       "paragraphs": [
-        "Capture holds the scraps until you are ready to place them.",
-        "What you collect in Vocabulary and Theory becomes the source for your exercises.",
-        "Writing and Listening help you use and understand the language in new contexts.",
-        "Speaking puts it all into active conversation.",
-        "Review closes the loop — and each review often leads to new words and notes to add."
+        "Zajem drži odpadke, dokler niste pripravljeni, da jih postavite.",
+        "Kar zberete v besedišču in teoriji postane vir za vaše vaje.",
+        "Pisanje in poslušanje vam pomagata uporabljati in razumeti jezik v novih kontekstih.",
+        "Govori vse to v aktivnem pogovoru.",
+        "Pregled zaključi krog — in vsak pregled pogosto vodi do novih besed in opomb, ki jih je treba dodati."
       ],
       "highlight": "Kaj več znanja dodate ki vam je važno, to korisnija in ličnija postaje vaša vaja."
     },
@@ -4008,17 +4029,17 @@
       "title": "To je vaš dnevnik.",
       "lead": "Notoria je alat za vaš proces učenja — ne test koliko dobro učite se.",
       "dontNeed": [
-        "You don't need to make your notes perfect",
-        "You don't need to worry about whether your tags are \"correct\"",
-        "You don't need to write textbook-quality explanations",
-        "You don't need to finish every exercise",
-        "You don't need to use every feature"
+        "Ni vam treba, da so vaše opombe popolne",
+        "Ni vam treba skrbeti, ali so vaše oznake \"pravilne\"",
+        "Ni vam treba pisati razlag, ki so kakovosti učbenika",
+        "Ni vam treba končati vsake vaje",
+        "Ni vam treba uporabiti vseh funkcij"
       ],
       "canDo": [
-        "You can change your mind.",
-        "You can reorganize things.",
-        "You can make mistakes.",
-        "You can learn at your own pace."
+        "Lahko spremenite svoje mnenje.",
+        "Lahko reorganizirate stvari.",
+        "Lahko naredite napake.",
+        "Lahko se učite s svojo hitrostjo."
       ],
       "quote": "Niko ne ocjenjuje vaš dnevnik. Gradite ga za sebe."
     },
@@ -4049,9 +4070,9 @@
     "privacyTitle": "Politika privatnosti",
     "termsTitle": "Uvjeti koriščenja",
     "privacyDescription": "Kako Notoria prikuplja, uporablja in briše osobne podatke in vsebina učenja za privatni delovni prostor za učenje jezika.",
-    "termsDescription": "Uvjeti koriščenja Notorinog privatnog delovnega prostora za učenje jezika, računa, AI funkcija in naplate Notoria Pro.",
+    "termsDescription": "Pogoji za uporabo Notoriainega zasebnega delovnega okolja za učenje jezikov, računov, AI funkcij in Pro ali Premium obračunavanja.",
     "updated": "Poslednje posodabljanje {date}",
-    "updatedDate": "23. septembar 2026.",
+    "updatedDate": "27. oktober 2026",
     "backToSignIn": "Nazaj na prijavu",
     "backHome": "Nazaj na Notoriu",
     "authFooter": "Privatnost · Uvjeti",
@@ -4072,7 +4093,7 @@
         "purposes": "Zašto obradujemo podatke",
         "auth": "Računi in prijava",
         "ai": "AI funkce",
-        "payments": "Plačanja (Notoria Pro)",
+        "payments": "Plačila (Pro in Premium)",
         "processors": "Pružatelji usluga",
         "cookies": "Kolačiči in skladište uredaja",
         "transfers": "Medunarodni prenosi",
@@ -4094,13 +4115,13 @@
           "title": "2. Šta ova politika pokriva",
           "p1": "Pokriva osobne podatke in vsebina učenja obradene kad:",
           "list": [
-            "create or use an account",
-            "save material in private workspaces",
-            "subscribe to Notoria Pro",
-            "use optional AI-assisted tools",
-            "upload media for listening or profile use",
-            "use speaking practice",
-            "send feedback or contact us"
+            "ustvarite ali uporabite račun",
+            "shranite gradivo v zasebne delovne površine",
+            "naroči se na Notoria Pro ali Premium",
+            "uporabite neobvezna orodja z AI",
+            "naložite medije za poslušanje ali uporabo profila",
+            "uporabite prakso govora",
+            "pošljite povratne informacije ali nas kontaktirajte"
           ],
           "p2": "Trenutni kod aplikace ne vključuje trečestranački SDK za marketinšku analitiku ali oglašavanje. Ne tvrdimo da koristimo trackere ki nisu prisutni v proizvodu."
         },
@@ -4110,11 +4131,11 @@
           "accountAuth": {
             "title": "Račun in autentifikacija",
             "list": [
-              "Name and email address",
-              "Password hash for email/password accounts (passwords are never stored in plain text)",
-              "Google account identifiers and OAuth tokens if you sign in with Google",
-              "Optional profile photo (avatar)",
-              "Account role and created/updated timestamps"
+              "Ime in e-poštni naslov",
+              "Hash gesla za račune z e-pošto/geslom (gesla nikoli niso shranjena v navadnem besedilu)",
+              "Identifikatorji Google računa in OAuth žetoni, če se prijavite z Google",
+              "Neobvezna profilna slika (avatar)",
+              "Vloga računa in časovni žigi ustvarjanja/posodabljanja"
             ]
           },
           "learningContent": {
@@ -4125,8 +4146,8 @@
           "subscription": {
             "title": "Metapodaci pretplate in plačanja",
             "list": [
-              "Plan (free or Pro) and subscription status",
-              "Stripe customer and subscription identifiers, and current period end when applicable"
+              "Načrt (brezplačen ali Pro) in status naročnine",
+              "Identifikatorji strank in naročnin Stripe ter trenutni konec obdobja, kadar je to primerno"
             ],
             "p1": "Brojevi kartica in tajne načina plačanja ostanejo kod Stripea. Notoria čuva samo metapodatke naplate potrebne da odrazi vaš Pro status."
           },
@@ -4149,32 +4170,32 @@
           },
           "rows": [
             {
-              "purpose": "Provide accounts, workspaces, and your saved learning material",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Zagotovite račune, delovne površine in vaše shranjeno učni material",
+              "basis": "Pogodba (čl. 6(1)(b))"
             },
             {
-              "purpose": "Authenticate you (email/password or Google) and reset passwords",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Avtentificirajte vas (e-pošta/geslo ali Google) in ponastavite gesla",
+              "basis": "Pogodba (čl. 6(1)(b))"
             },
             {
-              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Upravljaj Notoria Pro in Premium obračunavanje ter status naročnine preko Stripe",
+              "basis": "Pogodba (čl. 6(1)(b))"
             },
             {
-              "purpose": "Optional AI help, listening transcription, and speaking practice when you use those features",
-              "basis": "Contract (Art. 6(1)(b)); preference controls where available"
+              "purpose": "Neobvezna pomoč AI, transkripcija poslušanja in praksa govora, ko uporabljate te funkcije",
+              "basis": "Pogodba (čl. 6(1)(b)); nadzor preferenc, kjer je to mogoče"
             },
             {
-              "purpose": "Keep the service secure and reliable (abuse prevention, debugging)",
-              "basis": "Legitimate interests (Art. 6(1)(f))"
+              "purpose": "Ohranite storitev varno in zanesljivo (preprečevanje zlorab, odpravljanje napak)",
+              "basis": "Legitimni interesi (čl. 6(1)(f))"
             },
             {
-              "purpose": "Respond to support and feedback messages",
-              "basis": "Legitimate interests / contract, depending on the request"
+              "purpose": "Odgovorite na sporočila za podporo in povratne informacije",
+              "basis": "Legitimni interesi / pogodba, odvisno od zahteve"
             },
             {
-              "purpose": "Comply with legal obligations",
-              "basis": "Legal obligation (Art. 6(1)(c))"
+              "purpose": "Upoštevajte pravne obveznosti",
+              "basis": "Pravna obveznost (čl. 6(1)(c))"
             }
           ],
           "p1": "Če vam treba formalna opomba o pravnoj osnovi za odredenu aktivnost, pišite na <contact>contact@notoria.fi</contact>."
@@ -4192,7 +4213,7 @@
           "p4": "Trenutni codebase ne uporablja druge pružatelje velikih jezičkih modela osim OpenAI. OpenAI obraduje podatke prema vlastitim uslovima in politici privatnosti kot procesor za ove funkce."
         },
         "payments": {
-          "title": "7. Plačanja (Notoria Pro)",
+          "title": "7. Plačila (Pro in Premium)",
           "p1": "Plačene pretplate obraduje <strong>Stripe</strong>. Naplata, fakture, načini plačanja in otkazivanje idu kroz Stripe Checkout in Stripe Customer Portal. Stripe webhookovi ažuriraju vaš plan in status v Notoriji.",
           "p2": "Stripe obraduje podatke o plačanju kot pružatelj plačanja. Oglejte si Stripeovu lastno dokumentaciju privatnosti za rukovanje karticama."
         },
@@ -4205,44 +4226,44 @@
           },
           "rows": [
             {
-              "provider": "PostgreSQL database (production documented as Neon)",
-              "role": "Account and learning data"
+              "provider": "PostgreSQL baza podatkov (proizvodnja dokumentirana kot Neon)",
+              "role": "Podatki o računu in učenju"
             },
             {
               "provider": "Vercel",
-              "role": "Application hosting (configured region includes Frankfurt / fra1)"
+              "role": "Gostovanje aplikacij (konfigurirana regija vključuje Frankfurt / fra1)"
             },
             {
               "provider": "Cloudinary",
-              "role": "Avatars, listening media, editor images, and exercise-import files"
+              "role": "Avatari, mediji za poslušanje, slike urejevalnika in datoteke za uvoz vaj"
             },
             {
               "provider": "AssemblyAI",
-              "role": "Transcription of listening audio"
+              "role": "Transkripcija avdio poslušanja"
             },
             {
               "provider": "Stream Video",
-              "role": "Live speaking call audio/video transport; session fields such as recording URLs only if a recording event is later received. New calls do not use Stream transcription."
+              "role": "Prenos zvoka/videa za klice govora; polja seje, kot so URL-ji posnetkov, le če je kasneje prejet dogodek snemanja. Novi klici ne uporabljajo transkripcije Stream."
             },
             {
               "provider": "OpenAI",
-              "role": "Optional AI assistance, speaking-tutor realtime audio, and speaking-call transcription (gpt-4o-transcribe)"
+              "role": "Neobvezna pomoč AI, transkripcija zvoka govora v realnem času in transkripcija klicev govora (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
-              "role": "Password-reset email and Support feedback delivery"
+              "role": "E-pošta za ponastavitev gesla in dostava povratnih informacij za podporo"
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro checkout, portal, and subscription status"
+              "role": "Notoria Pro in Premium blagajna, portal in status naročnine"
             },
             {
               "provider": "Google",
-              "role": "OAuth sign-in when you choose Google; web fonts for the UI"
+              "role": "OAuth prijava, ko izberete Google; spletne pisave za uporabniški vmesnik"
             },
             {
               "provider": "Dicebear",
-              "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
+              "role": "Generirane slike avatarjev, uporabljene v sejah govora (iz semena imena; nobeno geslo računa ni poslano)"
             }
           ],
           "p2": "Transkripti poziva za govorjenje snimaju se s OpenAI Realtime (gpt-4o-transcribe) tokom sesije in čuvaju na serveru. Stream transkripcija in titlovi su isključeni za nove pozive. Snimanje je isključeno pri kreiranju poziva; URL zabeležka se čuva samo če proizvod pozneje primi dogadaj spremnosti zabeležka od Streama."
@@ -4257,28 +4278,28 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
-              "purpose": "Keeps you signed in (JWT session; library default naming)",
+              "cookie": "Auth.js sejne piškotke",
+              "purpose": "Ohranja vas prijavljenega (JWT seja; privzeto poimenovanje knjižnice)",
               "code": false
             },
             {
               "cookie": "notoria-locale",
-              "purpose": "UI language",
+              "purpose": "Jezik uporabniškega vmesnika",
               "code": true
             },
             {
               "cookie": "notoria-workspace",
-              "purpose": "Active workspace",
+              "purpose": "Aktivna delovna površina",
               "code": true
             },
             {
               "cookie": "notoria-ai-preferences",
-              "purpose": "AI assistance preferences",
+              "purpose": "Preference za pomoč AI",
               "code": true
             },
             {
               "cookie": "sidebar_state",
-              "purpose": "Sidebar open/closed preference",
+              "purpose": "Preference odprto/zaprto stranske vrstice",
               "code": true
             }
           ],
@@ -4294,10 +4315,10 @@
         "retention": {
           "title": "11. Koliko dugo čuvamo podatke",
           "list": [
-            "Account and learning data are kept while your account remains open so you can use the service",
-            "Password-reset tokens expire after 30 minutes",
-            "Subscription metadata is kept as needed to reflect your current Pro status and Stripe billing relationship",
-            "Support and feedback emails are retained as long as needed to handle your request and related follow-up"
+            "Podatki o računu in učenju se hranijo, dokler vaš račun ostane odprt, da lahko uporabljate storitev",
+            "Žetoni za ponastavitev gesla potečejo po 30 minutah",
+            "Metapodatki naročnine se hranijo, kolikor je potrebno, da odražajo vaš trenutni Pro status in razmerje z obračunavanjem Stripe",
+            "E-poštna sporočila za podporo in povratne informacije se hranijo, dokler je potrebno za obravnavo vaše zahteve in povezanih nadaljnjih ukrepov"
           ],
           "p1": "Tačni prozori zadržavanja rezervnih kopija za infrastrukturne pružatelje nisu hardkodirani v aplikaciji in lahko pratiti njihove operativne prakse. Kontaktirajte nas če vam treba pojašnjenje za zahtjev za brisanje."
         },
@@ -4309,9 +4330,9 @@
           "deleteTitle": "Brisanje računa",
           "deleteP1": "Račun lahko trajno izbrisati iz <account>Računa</account>. Kad brisanje uspe, Notoria:",
           "deleteList": [
-            "deletes your user record and cascaded learning data from Notoria’s database",
-            "cancels and removes related Stripe customer data where Stripe is configured (best effort)",
-            "destroys avatar media and listening-lesson media that the deletion flow is implemented to remove from Cloudinary"
+            "izbriše vaš uporabniški zapis in kaskadne podatke o učenju iz Notoria baze podatkov",
+            "prekliče in odstrani povezane podatke strank Stripe, kjer je Stripe konfiguriran (najboljši trud)",
+            "uniči medije avatarjev in medije za lekcije poslušanja, ki jih postopek brisanja implementira za odstranitev iz Cloudinary"
           ],
           "deleteP2": "Trenutni tok brisanja ne tvrdi da automatski čisti vsak artefakt treče strane. Posebno, neki Cloudinary asseti (kot slike uredivača ali datoteke uvoza vaj) in Stream artefakti poziva za govorjenje lahko ostati podložni tim pružateljima dok se ne očiste odvojeno ali ne očiste prema njihovim rasporedima.",
           "deleteP3": "Nakon brisanja, ograničene rezidualne kope lahko takoder kratko ostati v enkriptovanim rezervnim kopijama ali logovima dok se ti sistemi ne rotiraju. Če nekaj konkretno ostane nakon brisanja računa, pišite na <contact>contact@notoria.fi</contact>."
@@ -4320,12 +4341,12 @@
           "title": "13. Vaša prava (GDPR)",
           "p1": "Če ste v EU/EEA ali ste inače zaštičeni GDPR-om, lahko imati pravo da:",
           "list": [
-            "access your personal data",
-            "correct inaccurate data",
-            "erase data (including by deleting your account)",
-            "restrict or object to certain processing",
-            "receive a portable copy of data you provided (see Export above)",
-            "withdraw consent where processing is based on consent"
+            "dostop do vaših osebnih podatkov",
+            "popraviti netočne podatke",
+            "izbrisati podatke (vključno z brisanjem vašega računa)",
+            "omejiti ali nasprotovati določenemu obdelovanju",
+            "prejeti prenosljivo kopijo podatkov, ki ste jih posredovali (glejte Izvoz zgoraj)",
+            "preklicati soglasje, kjer je obdelava temelji na soglasju"
           ],
           "listComplaint": "podnesete žalbu nadzornom organu — v Finskoj, Office of the Data Protection Ombudsman (<ombudsman>tietosuoja.fi</ombudsman>)",
           "p2": "Da ostvarite ova prava, pišite na <contact>contact@notoria.fi</contact>. Morda bomo morati potvrditi da zahtjev dolazi od vlasnika računa."
@@ -4348,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ovi Uvjeti koriščenja objašnjavaju pravila koriščenja Notore na <site>www.notoria.fi</site>. Opisuju kako proizvod danes funkcioniše: privatni radni prostori za učenje, neobavezna naplata Notoria Pro putem Stripea in AI funkce. Nisu zamjena za savjet advokata o vaši konkretnoj situaciji.",
+      "intro": "Ti Pogoji uporabe pojasnjujejo pravila za uporabo Notoria na <site>www.notoria.fi</site>. Opisujejo, kako izdelek deluje danes: zasebna učna delovna okolja, neobvezno Pro in Premium obračunavanje preko Stripe ter funkcije, podprte z AI. Niso nadomestilo za nasvet od odvetnika glede tvoje specifične situacije.",
       "tocTitle": "Na tej strani",
       "tocAria": "Na tej strani",
       "toc": {
@@ -4359,7 +4380,7 @@
         "acceptable-use": "Prihvatljiva upotreba",
         "ip": "Intelektualno vlasništvo",
         "ai": "AI-generisani izlaz",
-        "plans": "Free plan in Notoria Pro",
+        "plans": "Brezplačni, Pro in Premium načrti",
         "billing": "Pretplata in naplata",
         "refunds": "Povrati in potrošačka prava",
         "availability": "Dostupnost",
@@ -4378,16 +4399,16 @@
         "service": {
           "title": "2. Usluga",
           "p1": "Notoria je privatna web aplikacija za učenje jezika. Lahko kreirati radne prostore in čuvati učno gradivo kot kaj su besedišče, teoretične opombe, pisanje, vaje, lekce slušanja in sesije govorenja.",
-          "p2": "Neke funkce dostupne su na free planu. Notoria Pro otključava dodatne mogučnosti kako je prikazano v proizvodu in na strani <account>Račun</account> — uključujuči Poslušanje, Govorjenje, odredene AI alate za učenje, uvoz vaj in plačene formate izvoza dokumentov. Dostupnost funkcija lahko se menjati kako proizvod evoluira.",
+          "p2": "Osrednja učna področja, vključno z poslušanjem, govorom in branjem, so na voljo v vsakem načrtu. Pro in Premium dodata višje AI dodelitve in uvoz/izvoz učnih materialov; Premium dodaja tudi personalizirano usposabljanje in funkcije prakse. Trenutna primerjava je prikazana na tvoji <account>Račun</account> strani. Razpoložljivost funkcij se lahko spremeni, ko se izdelek razvija.",
           "p3": "Notoria je za lično učenje jezika. Ne škola, ispitna institucija ni usluga profesionalnog nasvetov."
         },
         "accounts": {
           "title": "3. Računi",
           "list": [
-            "Provide accurate account information",
-            "Keep your password and account access secure",
-            "Sign in with email and password, or with Google when Google sign-in is available",
-            "Use Notoria only if you are able to enter into a binding agreement under applicable law"
+            "Zagotovite točne informacije o računu",
+            "Ohranite svoje geslo in dostop do računa varno",
+            "Prijavite se z e-pošto in geslom ali z Google, ko je prijava z Google na voljo",
+            "Uporabite Notorio le, če ste sposobni skleniti zavezujočo pogodbo v skladu z veljavno zakonodajo"
           ],
           "p1": "Proizvod ne implementira odvojeni age-gate. Če smatrate da je račun kreiran brez odgovarajučeg ovlaštenja, kontaktirajte <contact>contact@notoria.fi</contact>.",
           "p2": "Obavestite nas na <contact>contact@notoria.fi</contact> če mislete da je vaš račun ugrožen."
@@ -4402,12 +4423,12 @@
           "title": "5. Prihvatljiva upotreba",
           "p1": "Slažete se da nečete:",
           "list": [
-            "break the law or infringe others’ rights",
-            "attempt to access other users’ private workspaces or accounts",
-            "probe, overload, or disrupt the service, APIs, or related infrastructure",
-            "abuse AI, transcription, listening, or speaking features in ways that harm others or circumvent plan limits through fraud",
-            "reverse engineer the service except where mandatory local law allows",
-            "misrepresent your identity to Stripe, Google, or Notoria support"
+            "kršiti zakon ali kršiti pravice drugih",
+            "poskusiti dostopati do zasebnih delovnih površin ali računov drugih uporabnikov",
+            "preiskovati, preobremeniti ali motiti storitev, API-je ali povezano infrastrukturo",
+            "zlorabiti AI, transkripcijo, poslušanje ali funkcije govora na načine, ki škodujejo drugim ali obidejo omejitve načrta s prevaro",
+            "obrniti storitev, razen kjer to dovoljuje obvezno lokalno pravo",
+            "zavajati svojo identiteto za Stripe, Google ali podporo Notoria"
           ]
         },
         "ip": {
@@ -4419,23 +4440,23 @@
           "title": "7. AI-generisani izlaz",
           "p1": "Neke funkce lahko proveravati, predlagati, generisati, transkribovati, sažimati ali tutorirati na osnovu vašega gradiva. Izlaz lahko biti nepotpun, netačan ali neprikladan za vaš cilj. Ostajete odgovorni za brskanje AI rezultata pre oslanjanja na njih za učenje, ispite, profesionalnu upotrebu ali objavu.",
           "p2": "AI funkce lahko biti nedostupne če je pomoč izključena v <settings>Nastavitvah</settings>, če vaš plan ne vključuje odredeni alat ali če je pružatelj privremeno ni na voljo.",
-          "p3": "Ne vsi AI pomagači zahtevaju Notoria Pro. Proizvod pokazuje ki alati su besplatni a ki trebaju Pro."
+          "p3": "Razpoložljivost AI in dnevne dodelitve se razlikujejo med brezplačnimi, Pro in Premium. Izdelek prikazuje načrt in dodelitev, zahtevano za vsako orodje."
         },
         "plans": {
-          "title": "8. Free plan in Notoria Pro",
+          "title": "8. Brezplačni, Pro in Premium načrti",
           "p1": "Free plan pokriva osnovnu vajo s vlastitim besediščem in povezanim alatima za učenje kako je prikazano v proizvodu.",
-          "p2": "Notoria Pro je plačena pretplata ki otključava dodatne funkce. V trenutnom proizvodu to tipično vključuje Poslušanje, Govorjenje, uvoz vaj, vajo sastavi-stavek, mnoge AI alate za učenje in PDF/DOCX izvoz dokumentov. Neki lakši AI pomagači (kot odredene pomoči za besedišče ali oblikovanje uredivača) lahko ostati dostupni na free planu kad je AI pomoč uključena.",
-          "p3": "Pro pristup vezan je za vaš korisnički račun, pa se primjenjuje na radne prostore pod tim računom. Računi s administratorskom ulogom lahko imati Pro-raven pristupa brez osobne Stripe pretplate.",
-          "p4": "Cena ki se primjenjuje na vašo kupovinu je cena prikazana na Stripe Checkoutu za trenutni Pro plan. Vsaka cena prikazana drugdje v proizvodu (na primer na Računu) samo je indikativna in mora odgovarati aktivnoj Stripe konfiguraciji cene."
+          "p2": "Pro in Premium sta plačani naročnini. Pro doda višje ali neomejene dodelitve za številna AI orodja ter uvoz učnih materialov in izvoz PDF/DOCX. Premium vključuje Pro in dodaja personalizirane funkcije, kot so Učni trener, osebni učni profil, prilagodljiva praksa, praksa na podlagi napak in prilagojena navodila za vaje. Stran Račun prikazuje trenutno primerjavo in omejitve.",
+          "p3": "Plačan dostop je vezan na tvoj uporabniški račun in velja za vsa njegova delovna okolja. Računi z vlogo skrbnika imajo lahko dostop na plačani ravni brez osebne naročnine Stripe.",
+          "p4": "Cena, ki velja, je cena, prikazana na Stripe Checkout za izbrani Pro ali Premium načrt. Kakršna koli cena, prikazana drugje v izdelku (na primer na Računu), je le informativna in mora ustrezati aktivni konfiguraciji cene Stripe."
         },
         "billing": {
           "title": "9. Pretplata, naplata in otkazivanje",
-          "list0": "Pro pretplate se naplačuju putem <strong>Stripea</strong>",
-          "list1": "Checkout lahko pokrenuti iz <account>Računa</account> ali iz zaključanih Pro kontrola v aplikaciji",
+          "list0": "Pro in Premium naročnine se obračunavajo preko <strong>Stripe</strong>",
+          "list1": "Začeti lahko blagajno ali spremeniti načrt iz <account>Račun</account> ali iz zaklenjenih plačanih kontrol v aplikaciji",
           "list2": "Iz Računa lahko otvoriti Stripe Customer Portal da vidite fakture, ažurirate načine plačanja in otkažete pretplatu",
           "list3": "Otkazivanje prati ponašanje Stripe Customer Portala za vašo pretplatu",
-          "p1": "Nakon otkazivanja, Pro pristup se nastavlja samo dok Stripe status pretplate in dalje daje Pro v proizvodu. V trenutnoj implementaciji statusi tretirani kot Pro uključuju <code>active</code>, <code>trialing</code> in <code>past_due</code>. Kad status več ne kvalifikuje, račun se vrača na free plan.",
-          "p2": "Če plačanje ne uspe, Stripe lahko premakniti pretplatu na <code>past_due</code> ali drugi status. Notoria sinhronizuje ta status iz Stripe webhookova. Dok status ostane <code>past_due</code>, Pro funkce ostanejo dostupne prema trenutnim pravilima pristupa; če pretplata pozneje postane cancelled ali inače nepodobna, Pro pristup prestaje.",
+          "p1": "Ko prekličeš obnovitev, tvoj trenutni dostop Pro ali Premium traja, dokler status naročnine Stripe še kvalificira v izdelku. Kvalificirani statusi trenutno vključujejo <code>active</code>, <code>trialing</code> in <code>past_due</code>. Ko status več ne kvalificira, se račun vrne na brezplačno.",
+          "p2": "Če plačilo ne uspe, lahko Stripe premakne naročnino v <code>past_due</code> ali drug status. Notoria sinhronizira ta status iz Stripe webhookov. Dokler ostaja <code>past_due</code>, trenutni plačani načrt ostaja na voljo pod trenutnimi pravili dostopa; če postane preklican ali drugače neprimeren, dostop do plačila preneha.",
           "p3": "Brisanje Notoria računa odmah otkazuje Stripe pretplatu (best effort) kot del brisanja računa. To je drugače od otkazivanja obnove putem Customer Portala uz zadržavanje računa."
         },
         "refunds": {
@@ -4456,7 +4477,7 @@
         "liability": {
           "title": "13. Odricanje in odgovornost",
           "p1": "Notoria se pruža na osnovi „kako je na voljo“ za lično učenje jezika. V največoj mjeri dozvoljenoj primjenjivim pravom, odričemo se garancija ki zakon ne zahteva.",
-          "p2": "U največoj mjeri dozvoljenoj primjenjivim pravom, Notoria ne odgovorna za indirektne, slučajne, posebne, posljedične ali štete zbog gubitka podataka ki proističu iz koriščenja usluge ali oslanjanja na AI izlaz. Kjer se odgovornost ni mogoče isključiti, ograničena je na iznos ki ste platili za Notoria Pro v tri meseca pre potraživanja ali na veči iznos ki zahteva obvezno pravo.",
+          "p2": "V največji možni meri, ki jo dovoljuje veljavna zakonodaja, Notoria ne odgovarja za posredne, naključne, posebne, posledične ali izgubljene podatke, ki izhajajo iz tvoje uporabe storitve ali zanašanja na izhod AI. Kjer odgovornosti ni mogoče izključiti, je omejena na znesek, ki si ga plačal za Notoria Pro ali Premium v treh mesecih pred zahtevkom, ali kakršen koli večji znesek, ki ga zahteva obvezno pravo.",
           "p3": "Ova ograničenja ne isključuju odgovornost koju finsko ali EU pravo ne dozvoljava da se ograniči — uključujuči odgovornost ki se ne da odreči za potrošače in odgovornost za smrt ali tjelesnu povredu uzrokovanu nemarom kjer se takva pravila primjenjuju."
         },
         "changes": {
@@ -4529,9 +4550,9 @@
           "vocab": "Gradite osebno banku besedišča s pomeni, primeri in oznakama",
           "practice": "Vadite s vajami izvučenim iz vaših besede in zapiskov",
           "create": "Pišite teoretične opombe in tekstove kojima se lahko vrniti",
-          "listenSpeak": "Pretvorite mede v vajo slušanja in govorite s AI tutorom na Pro"
+          "listenSpeak": "Pretvori medije v prakso poslušanja in uporabi AI dodelitve za transkripcijo in prakso govora"
         },
-        "note": "Neki AI, poslušanje, govorjenje in alati za izvoz del su Notoria Pro. Besplatni plan in dalje pokriva svakodnevnu vajo besedišča in osnovnu petlju učenja."
+        "note": "Osrednja učna področja so na voljo v vsakem načrtu. Pro povečuje AI dodelitve in dodaja uvoz/izvoz učnih materialov; Premium dodaja personalizirano usposabljanje in prakso."
       },
       "ai": {
         "title": "AI, kjer pomaže",
@@ -4657,7 +4678,7 @@
         "title": "Kako se područja povezuju",
         "p1": "Capture je brza ulazna točka. Besedišče in Teorija su kjer se gradivo smješta. Vaja pretvori tega gradiva v praksu. Pisanje, Poslušanje in Govorjenje pomažu da jezik uporabite aktivne.",
         "p2": "Ne morate prolaziti kroz svako područje redom. Mnogi neko vrijeme ostanu uz besede in kratku vajo.",
-        "p3": "Prirodan naslednji korak je pisanje kad želite proizvoditi jezik na svoje uslove, nato poslušanje in govorjenje kad želite da isti gradivo radi v uhu in glasu — Poslušanje in Govorjenje su del Notoria Pro.",
+        "p3": "Naravni naslednji korak je pisanje, ko želiš ustvariti jezik po svojih pravilih, nato poslušanje in govor, ko želiš, da isti material deluje v tvojem ušesu in glasu. Ta področja so na voljo v vsakem načrtu; omejitve uporabe AI se razlikujejo po načrtu.",
         "beat": "Prvo prikupljajte in razumijte. Uporabite in govorite kad je gradivo spreman da napusti stranicu."
       },
       "areas": {
@@ -4681,11 +4702,11 @@
         },
         "listening": {
           "label": "Poslušanje",
-          "body": "Pretvorite mede v vajo slušanja v delovnem prostoru. Na voljo na Notoria Pro."
+          "body": "Pretvori medije v prakso poslušanja v svojem delovnem okolju. Na voljo v vsakem načrtu; dodelitve AI transkripcije se razlikujejo po načrtu."
         },
         "speaking": {
           "label": "Govorjenje",
-          "body": "Živa vaja s AI tutorom, utemeljena na jeziku ki učite se. Na voljo na Notoria Pro."
+          "body": "Živa praksa z AI tutorjem, zasidrana v jeziku, ki se ga učiš. Na voljo v vsakem načrtu z dodelitvijo na podlagi načrta."
         },
         "reading": {
           "label": "Branje",
@@ -4735,15 +4756,15 @@
         },
         "account": {
           "q": "Kako promenim lozinku ali zatvorim račun?",
-          "a": "Odprite <account>Račun</account>. Tu lahko ažurirati lozinku če uporabite prijavu e-mailom, upravljati Notoria Pro, izvesti rezervnu kopiju ali trajno izbrisati račun."
+          "a": "Odpri <account>Račun</account>. Tam lahko posodobiš svojo geslo, če uporabljaš prijavo z e-pošto, upravljaš Pro ali Premium, izvoziš varnostno kopijo ali trajno izbrišeš svoj račun. Izbris računa tudi takoj prekliče vsako aktivno naročnino Stripe na najboljši možni način; samo preklic obnove ohranja račun in njegove podatke."
         },
         "pro": {
           "q": "Kako funkcionišu naplata in otkazivanje?",
-          "a": "Notoria Pro se naplačuje preko Stripea. Iz <account>Računa</account> lahko nadograditi, otvoriti Stripe korisnički portal za upravljanje načinima plačanja in fakturama ali otkazati obnovu."
+          "a": "Notoria Pro in Premium se obračunavajo preko Stripe. Iz <account>Račun</account> se lahko naročiš, preklapljaš med Pro in Premium, upravljaš plačilne metode in račune, prekličeš obnovitev ali nadaljuješ načrtovano preklicanje. Preklic obnove ohranja dostop, dokler Stripe ne konča upravičenega obdobja naročnine; izbris tvojega računa je ločen in prekliče naročnino takoj na najboljši možni način."
         },
         "proFeatures": {
-          "q": "Šta je besplatno, a šta treba Notoria Pro?",
-          "a": "Svakodnevna vaja besedišča in povezani alati za učenje dostupni su na besplatnom planu. Neki AI alati, poslušanje, govorjenje in izvoz dokumentov del su Notoria Pro. Uporedite in nadgradite iz <account>Računa</account>."
+          "q": "Kaj je vključeno v Brezplačno, Pro in Premium?",
+          "a": "Brezplačno vključuje osrednja učna področja in dnevne dodelitve za podprta AI orodja. Pro povečuje ali odstranjuje številne omejitve AI in dodaja uvoz učnih materialov ter izvoz PDF/DOCX. Premium vključuje Pro in dodaja personalizirano usposabljanje, učni profil, prilagodljivo in prakso na podlagi napak ter prilagojena navodila za vaje. Oglej si živo primerjavo in trenutne omejitve v <account>Račun</account>."
         },
         "learning": {
           "q": "Kako funkcionišu Notorine funkce učenja?",
@@ -4989,7 +5010,7 @@
         "signupsLede": "Dnevne registracije v poslednjih 14 UTC dana.",
         "activeTitle": "Aktivni učenici",
         "activeLede": "Jedinstveni učenici z aktivnošču svakog dana (14d).",
-        "rolesTitle": "Roles",
+        "rolesTitle": "Vloge",
         "rolesLede": "Udeo naloge po ulozi.",
         "contentTitle": "Sastav vsebine",
         "contentLede": "Spremljeni zapisi kroz module za učenje."
@@ -5053,7 +5074,7 @@
         "suspended": "Suspendovan"
       },
       "plans": {
-        "free": "Free",
+        "free": "Brezplačno",
         "pro": "Pro",
         "premium": "Premium"
       },
@@ -5157,7 +5178,7 @@
       "fields": {
         "id": "Id",
         "title": "Naslov",
-        "word": "Word",
+        "word": "Beseda",
         "folderName": "Ime fascikle",
         "status": "Stanje",
         "errorCode": "Kod napake",

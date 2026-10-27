@@ -62,9 +62,10 @@ export async function summarizeSpeakingSession(input: {
   }
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-terra",
+    reasoning_effort: "none",
     temperature: 0.3,
-    max_tokens: AI_OUTPUT_TOKENS.speakingSummary,
+    max_completion_tokens: AI_OUTPUT_TOKENS.speakingSummary,
     messages: [
       {
         role: "system",

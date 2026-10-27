@@ -1,9 +1,5 @@
 import { z } from "zod";
-import {
-  AI_INPUT_LIMITS,
-  AI_OUTPUT_TOKENS,
-  clipForAi,
-} from "@/lib/ai/bounds";
+import { AI_INPUT_LIMITS, AI_OUTPUT_TOKENS, clipForAi } from "@/lib/ai/bounds";
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ReadingError, toReadingError } from "@/lib/reading/errors";
@@ -88,9 +84,10 @@ export async function gradeWrittenAnswers(input: {
   try {
     const client = getOpenAIClient();
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
+      reasoning_effort: "none",
       temperature: 0.2,
-      max_tokens: AI_OUTPUT_TOKENS.readingGrade,
+      max_completion_tokens: AI_OUTPUT_TOKENS.readingGrade,
       response_format: { type: "json_object" },
       messages: [
         {

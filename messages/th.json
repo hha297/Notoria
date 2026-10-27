@@ -17,19 +17,20 @@
     "hideFilters": "ซ่อนตัวกรอง",
     "remove": "นำออก",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "รูปลักษณ์",
+      "print": "เหมาะสำหรับการพิมพ์",
+      "printHint": "หน้าขาว, ตัวอักษรเข้ม",
+      "theme": "ธีมปัจจุบัน",
+      "themeHint": "ตรงกับธีมสว่างหรือมืดของคุณ",
+      "previewKicker": "หน้าตัวอย่าง",
+      "previewTitle": "ชื่อเอกสาร",
+      "previewBody": "ข้อความหลักใช้สีและระยะห่างที่เลือก",
+      "previewCallout": "การเน้นและสีเสริมตามสีของโมดูล",
+      "fixedNote": "รูปลักษณ์ถูกกำหนดในไฟล์ที่ส่งออก ส่งออกอีกครั้งเพื่อเปลี่ยนแปลง",
+      "docxBackgroundNote": "Word และแอปอื่นอาจไม่แสดงพื้นหลังหน้าในลักษณะเดียวกัน โดยเฉพาะเมื่อพิมพ์"
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "เลื่อนขึ้นไปด้านบน",
+    "moreActions": "การกระทำเพิ่มเติม"
   },
   "contentImport": {
     "title": {
@@ -157,21 +158,21 @@
       "plural": "พหูพจน์"
     },
     "paradigmCases": {
-      "nominative": "Nominative",
-      "genitive": "Genitive",
-      "partitive": "Partitive",
-      "accusative": "Accusative",
-      "inessive": "Inessive",
-      "elative": "Elative",
-      "illative": "Illative",
-      "adessive": "Adessive",
-      "ablative": "Ablative",
-      "allative": "Allative",
-      "essive": "Essive",
-      "translative": "Translative",
-      "instructive": "Instructive",
-      "abessive": "Abessive",
-      "comitative": "Comitative"
+      "nominative": "รูปประธาน",
+      "genitive": "รูปแสดงความเป็นเจ้าของ",
+      "partitive": "รูปแสดงส่วน",
+      "accusative": "รูปกรรม",
+      "inessive": "รูปแสดงสถานที่",
+      "elative": "รูปแสดงการออกจาก",
+      "illative": "รูปแสดงการเข้าไป",
+      "adessive": "รูปแสดงการอยู่",
+      "ablative": "รูปแสดงการเคลื่อนที่ออก",
+      "allative": "รูปแสดงการเคลื่อนที่ไป",
+      "essive": "รูปแสดงสถานะ",
+      "translative": "รูปแสดงการเปลี่ยนแปลง",
+      "instructive": "รูปแสดงการสอน",
+      "abessive": "รูปแสดงการขาด",
+      "comitative": "รูปแสดงการร่วม"
     }
   },
   "nav": {
@@ -295,12 +296,12 @@
     "tooDeep": "โฟลเดอร์นี้ซ้อนกันลึกเกินไป",
     "notFound": "ไม่พบโฟลเดอร์",
     "nameTaken": "มีโฟลเดอร์หรืองานเขียนที่ใช้ชื่อนี้อยู่แล้ว",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "ย้ายไปยังโฟลเดอร์",
+    "dragTipBody": "บนคอมพิวเตอร์ที่มีเมาส์หรือแทร็คแพด ให้ลากชิ้นงานไปยังการ์ดโฟลเดอร์เพื่อย้าย คุณยังสามารถใช้ไอคอนย้ายในแต่ละรายการได้",
+    "dragTipDismiss": "ปิดเคล็ดลับ",
+    "dragTipShow": "วิธีการย้ายไปยังโฟลเดอร์",
+    "dragTipDemo": "ลากรายการไปยังโฟลเดอร์",
+    "dragTipCard": "รายการ"
   },
   "theme": {
     "toggle": "สลับธีม",
@@ -472,34 +473,34 @@
     "viewMode": "โหมดการแสดงผล",
     "tagManager": {
       "open": "จัดการแท็ก",
-      "eyebrow": "Tags",
+      "eyebrow": "แท็ก",
       "title": "ตัวจัดการแท็ก",
-      "description": "เลือกแท็ก จากนั้นกำหนดหรือนำออกจากคำ คำที่กำหนดแล้วและคำอื่นๆ จะแยกอยู่ในรายการต่างกัน",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "เลือกแท็ก จากนั้นกำหนดหรือเอาออกจากคำ",
+      "pageDescription": "เลือกมาตรฐานหรือกำหนดเอง เลือกแท็ก จากนั้นเพิ่มหรือลบออกจากคำ",
+      "disabledNoWorkspace": "สร้างพื้นที่ทำงานก่อนจัดการแท็กคำศัพท์",
+      "backToVocabulary": "กลับไปที่คำศัพท์",
+      "backToSettings": "กลับไปที่การตั้งค่า",
       "groupsLabel": "กลุ่มแท็กมาตรฐาน",
       "tagsHeading": "แท็ก",
       "standardTagsHeading": "แท็กมาตรฐาน",
       "customTagsHeading": "แท็กกำหนดเอง",
-      "customTagsHint": "ป้ายที่คุณสร้างเพื่อจัดระเบียบเอง — ไม่ใช่ชนิดของคำ",
+      "customTagsHint": "ป้ายชื่อที่คุณสร้างในพื้นที่ทำงาน — ค้นหาเพื่อหาพวกมันเมื่อรายการยาว",
       "emptyCustomTags": "ยังไม่มีแท็กกำหนดเอง สร้างเมื่อแก้ไขคำ",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "ไม่มีแท็กกำหนดเองที่ตรงกับการค้นหานี้",
+      "tagSearchPlaceholder": "ค้นหาแท็ก…",
       "wordsHeading": "{tag}",
       "kindStandard": "มาตรฐาน",
       "kindCustom": "กำหนดเอง",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "รายการคำ",
+      "wordTabAssigned": "ติดแท็ก",
+      "wordTabOther": "ไม่ติดแท็ก",
       "assignedHeading": "คำที่มีแท็กนี้",
       "otherHeading": "คำอื่นๆ",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "เลือกทั้งหมดในหน้านี้",
+      "clearSelection": "ล้างการเลือก",
+      "selectionScopePage": "เลือกจากหน้านี้ ({count} จาก {total})",
+      "selectionScopeFiltered": "เลือกจากผลการค้นหาปัจจุบัน",
       "searchPlaceholder": "ค้นหาคำหรือความหมาย…",
       "wordCount": "{count}",
       "loading": "กำลังโหลดคำศัพท์…",
@@ -509,13 +510,23 @@
       "emptyOther": "ทุกคำมีแท็กนี้อยู่แล้ว",
       "emptyOtherSearch": "ไม่พบคำที่ตรงกันที่จะกำหนด",
       "selected": "เลือกแล้ว {count} รายการ",
-      "addToTag": "เพิ่มลงในแท็ก",
-      "removeFromTag": "นำออกจากแท็ก",
-      "applyAdd": "เพิ่มลงในแท็ก ({count})",
-      "applyRemove": "นำออกจากแท็ก ({count})",
+      "addToTag": "เพิ่มแท็ก",
+      "removeFromTag": "ลบแท็ก",
+      "applyAdd": "เพิ่มแท็ก ({count})",
+      "applyRemove": "ลบแท็ก ({count})",
       "added": "เพิ่ม {count} คำไปยัง {tag} แล้ว",
       "removed": "นำ {count} คำออกจาก {tag} แล้ว",
-      "error": "ไม่สามารถอัปเดตสมาชิกแท็กได้"
+      "error": "ไม่สามารถอัปเดตสมาชิกแท็กได้",
+      "systemsLabel": "ระบบแท็ก",
+      "standardSystemTitle": "มาตรฐาน",
+      "standardSystemMeta": "หัวข้อและการใช้งาน แสดงแยกต่างหาก",
+      "usageOptional": "ไม่บังคับ",
+      "customSystemTitle": "กำหนดเอง",
+      "customSystemMeta": "{count, plural, one {# แท็ก} other {# แท็ก}}",
+      "customPickerLabel": "เลือกแท็กกำหนดเอง",
+      "customPickerPlaceholder": "เลือกแท็กกำหนดเอง…",
+      "customSearchPlaceholder": "ค้นหาแท็กกำหนดเอง…",
+      "pickTagFirst": "เลือกแท็กด้านบนเพื่อจัดการสมาชิกคำ"
     },
     "moreTags": "+{count}",
     "updatedAgo": "อัปเดต {time}",
@@ -584,7 +595,11 @@
         "notes": "บันทึก",
         "updated": "อัปเดตล่าสุด"
       }
-    }
+    },
+    "selectedCustomTags": "แท็กที่เลือก",
+    "selectedSynonyms": "คำพ้องที่เลือก",
+    "removeCustomTag": "ลบ {name}",
+    "pickerLoading": "กำลังโหลด…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "อัปเดตแล้ว",
     "backToStudio": "กลับไปแบบฝึกหัด",
     "studyMode": "โหมดการศึกษา",
+    "questionTypeLabel": "ประเภทคำถาม",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "ระดับความยาก",
       "easy": "ง่าย",
@@ -873,7 +893,7 @@
       "aiReady": "การฝึกพร้อมแล้ว",
       "aiUnavailable": "ไม่สามารถสร้างคำถาม AI ได้ในขณะนี้",
       "aiForbidden": "แบบฝึกหัดทฤษฎีด้วย AI มีให้กับ Pro",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "คำแนะนำเพิ่มเติมมีให้ใน Premium",
       "aiDisabled": "ความช่วยเหลือ AI ถูกปิดใน Settings",
       "feedback": {
         "correct": "ถูกต้อง!",
@@ -927,20 +947,22 @@
         "why": "เหตุผล",
         "complete": "เข้าใจแล้ว",
         "completeHint": "คุณไปต่อได้เมื่อพร้อม",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "เริ่มการฝึก",
+        "skipReviewAndStart": "ข้ามการตรวจสอบและเริ่มการฝึก"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "ไม่มีการจัดเก็บ",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# หมายเหตุ} other {# หมายเหตุ}}",
+        "selectAll": "เลือกทั้งหมด",
+        "selectGroup": "เลือกหมายเหตุใน {name}",
+        "expand": "ขยาย {name}",
+        "collapse": "ย่อ {name}",
+        "selectedCount": "{count, plural, one {# ทฤษฎีที่เลือก} other {# ทฤษฎีที่เลือก}}",
+        "practiceSelected": "ฝึกที่เลือก",
+        "clearSelection": "ล้างการเลือก",
+        "subfolders": "{count, plural, one {# โฟลเดอร์ย่อย} other {# โฟลเดอร์ย่อย}}",
+        "selectedOne": "เลือกทฤษฎี 1 รายการ"
       }
     },
     "types": {
@@ -948,9 +970,9 @@
         "label": "บัตรคำ",
         "description": "พลิกบัตรเพื่อศึกษาคำและความหมายพร้อมการให้คะแนนแบบทบทวนแบบเว้นระยะ",
         "preview": "พลิก · ให้คะแนน · ทบทวน",
-        "previewHint": "Finnish word",
+        "previewHint": "คำในภาษาฟินแลนด์",
         "previewWord": "suomalainen",
-        "previewFlow": "FLIP → RATE → REVIEW"
+        "previewFlow": "พลิก → ให้คะแนน → ตรวจสอบ"
       },
       "fill-in-blank": {
         "label": "เติมคำในช่องว่าง",
@@ -962,18 +984,18 @@
         "description": "เลือกความหมายหรือคำที่ถูกต้อง — ตัวเลือกหลอกมาจากคำศัพท์ของคุณ",
         "preview": "ความหมายใดที่เข้ากัน?",
         "previewPrompt": "ความหมายใดที่เข้ากัน?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "คนฟินแลนด์",
+        "previewB": "สภาพอากาศ",
+        "previewC": "อาคาร"
       },
       "match-pairs": {
         "label": "จับคู่",
         "description": "จับคู่คำกับความหมายในตารางแบบ Quizlet",
         "preview": "คำ ↔ ความหมาย",
         "previewLeft": "talo",
-        "previewRight": "house",
+        "previewRight": "บ้าน",
         "previewLeftB": "koti",
-        "previewRightB": "home"
+        "previewRightB": "บ้าน"
       },
       "type-answer": {
         "label": "พิมพ์คำตอบ",
@@ -998,8 +1020,8 @@
       "startsWith": "ขึ้นต้นด้วย “{letter}”",
       "revealPrompt": "ยังติดอยู่ใช่ไหม? คุณเปิดดูคำตอบเต็มได้",
       "revealAnswer": "เปิดดูคำตอบ",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "เคล็ดลับถัดไป",
+      "hintProgress": "เคล็ดลับ {current} จาก {total}"
     },
     "empty": {
       "noWordsTitle": "ยังไม่มีคำศัพท์",
@@ -1032,17 +1054,17 @@
       "shuffle": "สลับลำดับ",
       "finish": "จบรอบ",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "แหล่งที่มาของคำถาม",
+        "chooseAi": "ใช้ AI ที่สร้างขึ้น",
+        "emptyTitle": "ไม่มีตัวอย่างที่บันทึกไว้ที่ใช้งานได้",
+        "emptyDescription": "เพิ่มประโยคตัวอย่างที่ชัดเจนซึ่งรวมแต่ละคำ ปรับแต่งตัวกรองของคุณ หรือเปลี่ยนไปใช้ AI ที่สร้างขึ้น",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "ตัวอย่างที่บันทึกไว้",
+          "description": "สร้างคำถามทันทีจากตัวอย่างคำศัพท์ของคุณ ไม่มีการรอ AI"
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI ที่สร้างขึ้น",
+          "description": "สร้างประโยคใหม่จากคำศัพท์ของคุณด้วย AI"
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "การสร้างแบบฝึกหัดด้วย AI มีให้กับ Pro",
       "disabled": "ความช่วยเหลือ AI ถูกปิดใน Settings",
       "upgradeHint": "Free รวมการสร้างแบบฝึกหัดด้วย AI ได้วันละไม่กี่ครั้ง Pro ยกเลิกขีดจำกัด",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "คำแนะนำเพิ่มเติม",
+      "additionalInstructionsPlaceholder": "ตัวอย่าง: ใช้สถานการณ์ในร้านอาหาร, รักษาภาษาให้อยู่ในระดับ A2, และอธิบายข้อผิดพลาดในภาษาที่คุณใช้ในอินเตอร์เฟซ",
+      "additionalInstructionsLocked": "อัปเกรดเป็น Premium เพื่อปรับแต่งประเภทการฝึกที่รองรับ, ตั้งบริบทในชีวิตจริง, และเพิ่มคำแนะนำของคุณเอง",
+      "premiumRequired": "คำแนะนำเพิ่มเติมมีให้ใน Premium",
+      "presetLabel": "การตั้งค่า",
+      "presetNone": "ไม่มีการตั้งค่าเลือก",
+      "presetApply": "ใช้",
+      "presetSave": "บันทึกการตั้งค่า",
+      "presetName": "ชื่อการตั้งค่า",
+      "presetDelete": "ลบ",
+      "presetSaved": "บันทึกการตั้งค่าแล้ว",
+      "presetDeleted": "ลบการตั้งค่าแล้ว",
+      "presetSaveFailed": "ไม่สามารถบันทึกการตั้งค้านั้นได้",
       "emptyWords": "เพิ่มคำศัพท์ก่อนสร้างคำถาม",
       "noneValid": "AI ไม่สามารถสร้างคำถามที่ถูกต้องสำหรับคำเหล่านี้ได้ ลองอีกครั้ง",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "ปรับแต่งบริบท, สไตล์, หรือจุดสนใจของการฝึกของคุณ ทิ้งว่างไว้เพื่อใช้การตั้งค่าเริ่มต้น",
+      "presetUpdate": "อัปเดตการตั้งค่า",
+      "presetUpdated": "อัปเดตการตั้งค่าแล้ว",
+      "presetsTitle": "การตั้งค่าที่บันทึก",
+      "presetsHelper": "การตั้งค่าที่บันทึกเก็บการตั้งค่าการฝึกและคำแนะนำเพิ่มเติม ไม่เปลี่ยนคำศัพท์หรือทฤษฎีที่คุณเลือก",
+      "presetsEmpty": "ยังไม่มีการตั้งค่าที่บันทึก บันทึกการตั้งค่าปัจจุบันของคุณเพื่อใช้ซ้ำในภายหลัง",
+      "presetSaveAs": "บันทึกเป็นการตั้งค่า",
+      "presetUpdateCurrent": "อัปเดตด้วยการตั้งค่าปัจจุบัน",
+      "presetRename": "เปลี่ยนชื่อ",
+      "presetManage": "จัดการการตั้งค่า",
+      "presetRenamed": "เปลี่ยนชื่อการตั้งค่าแล้ว",
+      "presetSaveDialogTitle": "บันทึกเป็นการตั้งค่า",
+      "presetSaveDialogDescription": "ตั้งชื่อการตั้งค้านี้เพื่อใช้การตั้งค่าการฝึกปัจจุบันและคำแนะนำเพิ่มเติม คำศัพท์หรือทฤษฎีที่เลือกจะไม่ถูกเก็บ",
+      "presetRenameDialogTitle": "เปลี่ยนชื่อการตั้งค่า",
+      "presetRenameDialogDescription": "เลือกชื่อใหม่สำหรับการตั้งค้านี้",
+      "presetDeleteDialogTitle": "ลบการตั้งค่า?",
+      "presetDeleteDialogDescription": "ลบ “{name}”? การกำหนดค่าการฝึกปัจจุบันของคุณจะยังคงอยู่เช่นเดิม"
     },
     "session": {
       "complete": "เซสชันเสร็จสมบูรณ์",
@@ -1099,14 +1121,14 @@
       "tryAgain": "ลองอีกครั้ง",
       "questionsLabel": "คำถาม",
       "correctLabel": "ถูก",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "ไม่ถูกต้อง",
+      "unansweredLabel": "ยังไม่ได้ตอบ",
       "reviewLabel": "ต้องทบทวน",
       "answeredProgress": "ตอบแล้ว {answered} / {total}",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "ตรวจสอบคำตอบ",
+      "nextQuestion": "ถัดไป",
+      "viewResults": "ดูผลลัพธ์",
       "submitSet": "ส่งคำตอบ",
       "submitting": "กำลังตรวจ…",
       "unansweredWarnTitle": "คำถามที่ยังไม่ได้ตอบ",
@@ -1121,54 +1143,54 @@
       "unanswered": "ยังไม่ได้ตอบ",
       "yourAnswer": "คำตอบของคุณ",
       "correctAnswer": "คำตอบที่ถูก",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "มีคำถามเพียง {count} รายการจากตัวกรองปัจจุบันของคุณ",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "วิธีที่คุณฝึก",
+        "lockedHint": "ทำให้เสร็จสิ้นหรือเริ่มชุดใหม่เพื่อเปลี่ยนแปลงนี้",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "ทีละข้อ",
+          "description": "ดูคำถามทีละข้อ ตรวจสอบหลังจากแต่ละคำตอบเพื่อรับข้อเสนอแนะแบบทันที"
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "คำถามทั้งหมด",
+          "description": "ดูชุดทั้งหมด ตอบในลำดับใดก็ได้ จากนั้นส่งครั้งเดียวเพื่อรับข้อเสนอแนะแบบทันที"
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "ทบทวน",
+        "allCorrect": "สมบูรณ์แบบ — ทุกคำถามถูกต้อง",
+        "summary": "{incorrect} ไม่ถูกต้อง · {unanswered} ยังไม่ได้ตอบ · {needsReview} ต้องทบทวน",
+        "viewWrong": "ดูคำตอบที่ผิด",
+        "filtersLabel": "กรองคำถาม",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "ทั้งหมด ({count})",
+          "needs_review": "ผิด & ยังไม่ได้ตอบ ({count})",
+          "correct": "ถูกต้อง ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "ก่อนหน้า",
+        "nextWrong": "ถัดไป",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} ต้องทบทวน",
+        "floatLabel": "การนำทางคำตอบที่ผิด",
+        "closeFloat": "แสดงคำตอบทั้งหมด"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% ถูกต้อง",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "ชุดที่สมบูรณ์แบบ",
+          "body": "ทุกคำตอบถูกต้อง ความมุ่งมั่นแบบนี้สมควรได้รับรอบถัดไปเมื่อคุณพร้อม"
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "จบได้ดี",
+          "body": "คุณชัดเจนว่าทำได้ — ดูจุดที่พลาดแล้วล็อคมันด้วยชุดใหม่"
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "ทำได้ดี — ทำต่อไป",
+          "body": "จุดที่ติดขัดบางจุดเป็นเรื่องปกติ ทบทวนมันสักครั้งแล้วลองอีกครั้งเมื่อมันสดใหม่"
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "เกือบถึงแล้ว",
+          "body": "ทำให้เสร็จสิ้นคำถามที่ยังไม่ได้ตอบก่อน — จากนั้นคะแนนจะบอกเรื่องราวที่ชัดเจนขึ้น"
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "คำถามถูกสร้างเป็นภาษา {language} (ภาษาของพื้นที่ทำงาน)",
       "contextualEmptyTitle": "สร้างคำถามตามบริบท",
-      "contextualEmptyDescription": "สร้างคำถามเลือกตอบแบบเติมคำในช่องว่างจากคำศัพท์ของคุณ",
+      "contextualEmptyDescription": "เพิ่มคำแนะนำที่ไม่บังคับด้านล่างหากคุณต้องการ จากนั้นกดสร้าง คุณสามารถปล่อยให้คำถามว่าง",
       "contextualProDescription": "คำถาม AI ตามบริบทมีให้กับ Pro",
       "unlockContextual": "ปลดล็อกด้วย Pro",
       "correct": "ถูกต้อง!",
@@ -1202,8 +1224,8 @@
       "hint": "เลือกคำ แล้วแตะความหมาย",
       "complete": "จับคู่ครบทุกคู่แล้ว — ยอดเยี่ยม!",
       "shuffle": "สลับคอลัมน์",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} คู่",
+      "continueRound": "ดำเนินการต่อ"
     },
     "typeAnswer": {
       "questionWord": "ความหมายคืออะไร?",
@@ -1213,7 +1235,7 @@
         "contextual": "ตามบริบท"
       },
       "contextualEmptyTitle": "สร้างคำถามตามบริบท",
-      "contextualEmptyDescription": "สร้างคำถามพิมพ์แบบเติมคำในช่องว่างจากคำศัพท์ของคุณ",
+      "contextualEmptyDescription": "เพิ่มคำแนะนำที่ไม่บังคับด้านล่างหากคุณต้องการ จากนั้นกดสร้าง คุณสามารถปล่อยให้คำถามว่าง",
       "contextualProDescription": "คำถาม AI ตามบริบทมีให้กับ Pro",
       "unlockContextual": "ปลดล็อกด้วย Pro",
       "placeholder": "พิมพ์คำตอบของคุณ…",
@@ -1543,77 +1565,77 @@
     "open": "เปิด",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "จับภาพ",
         "body": "บันทึกคำ วลี ข้อสงสัยไวยากรณ์ หรือไอเดียการเขียนได้ในไม่กี่วินาที — ยังไม่ต้องตัดสินใจว่าจะอยู่หมวดไหน เพิ่มบันทึกหรือแหล่งที่มาได้ตามต้องการ เก็บรายการไว้ใน To process แล้วเปลี่ยนเป็น Vocabulary, Theory, Writing หรือ Exercise เมื่อมีเวลา รายการจะถูกทำเครื่องหมาย Processed หลังคุณสร้างรายการที่เชื่อมโยงเสร็จเท่านั้น"
       },
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "คำศัพท์",
         "body": "เพิ่มคำและวลีของคุณเองพร้อมความหมาย ประโยคตัวอย่าง การออกเสียง และแท็ก จัดกลุ่มตามหัวข้อ ระดับ หรือสถานการณ์ — แล้วนำไปใช้ในแบบฝึกหัดและการทบทวน เริ่มจากคำในชีวิตประจำวัน บทเรียน หนังสือ หรือสื่อ คลังของคุณจะเป็นรากฐานของการฝึก"
       },
       "theory": {
-        "title": "Theory",
+        "title": "ทฤษฎี",
         "body": "บันทึกกฎไวยากรณ์ โน้ตการออกเสียง คำอธิบายการใช้ภาษา และตัวอย่างส่วนตัวด้วยคำของคุณเอง ลองคิดว่า Theory เป็นสมุดอ้างอิงที่คุณกลับมาเปิดเมื่อลืม ยิ่งบันทึกมาก ความรู้ส่วนตัวก็ยิ่งแข็งแรง"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "การฝึก",
         "body": "ฝึกด้วยบัตรคำ ควิซ เติมคำในช่องว่าง และอื่นๆ — สร้างจากคำศัพท์และทฤษฎีของคุณเอง แบบฝึกหัดเติบโตตามความรู้ที่คุณเพิ่ม ยิ่งบันทึกมาก การฝึกยิ่งมีประโยชน์และเป็นส่วนตัว"
       },
       "writing": {
-        "title": "Writing",
+        "title": "การเขียน",
         "body": "ร่างข้อความและสร้างชุดคำถามจากหัวข้อกับคำศัพท์ของคุณเอง Writing คือการใช้สิ่งที่เรียนอย่างกระตือรือร้น ไม่ใช่แค่ท่องจำ ด้วย Pro AI สามารถตรวจและปรับปรุงงานของคุณ และคุณสามารถส่งออกสื่อได้เมื่อต้องการ"
       },
       "listening": {
-        "title": "Listening",
+        "title": "การฟัง",
         "body": "อัปโหลดเสียงหรือวิดีโอ สร้างถอดเสียง และเปลี่ยนเป็นบทเรียน ใช้ถอดเสียงจับคำและสำนวนที่ไม่คุ้นเคย แล้วฝึกกับเนื้อหาจริงที่คุณเลือก นำสื่อการฟังของคุณเองมาใช้แทนการถูกจำกัดด้วยเนื้อหาสำเร็จรูป"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "การพูด",
         "body": "โทรหาติวเตอร์ AI แบบวิดีโอและฝึกพูดอย่างเป็นธรรมชาติด้วยความรู้การเรียนรู้ของคุณเอง หลังแต่ละเซสชัน ทบทวนถอดเสียงและข้อเสนอแนะเพื่อดูสิ่งที่ควรปรับปรุง นี่คือวงจรปิด: เรียน → ฝึก → ใช้ → ทบทวน → พัฒนา"
       },
       "reading": {
-        "title": "Reading",
+        "title": "การอ่าน",
         "body": "นำเข้าหรือวางข้อความ แล้วสร้างแบบฝึกความเข้าใจ — เลือกตอบ เขียนตอบ และถูก / ผิด / ไม่ระบุ Free มีโควตาการสร้างและตรวจด้วย AI ต่อวันจำกัด Pro เพิ่มโควตาต่อวัน และ Premium ไม่จำกัด"
       }
     },
     "modules": {
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "คำศัพท์",
         "description": "คลังคำส่วนตัวสำหรับภาษานี้",
         "how": "เพิ่มคำ ทำเครื่องหมายความหมายหลัก และแนบประโยคตัวอย่าง ใช้แท็กและการค้นหาเพื่อหาคำในภายหลัง",
         "cta": "เปิดคำศัพท์"
       },
       "theory": {
-        "title": "Theory",
+        "title": "ทฤษฎี",
         "description": "สมุดบันทึกว่าภาษาทำงานอย่างไร — ไม่ใช่การฝึกเขียน",
         "how": "สร้างโน้ต เลือกหมวดหมู่ และกลับมาเมื่อต้องการทบทวน",
         "cta": "เปิดทฤษฎี"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "การฝึก",
         "description": "เซสชันสั้นๆ จากคำที่คุณบันทึกไว้แล้ว",
         "how": "เพิ่มคำสักสองสามคำก่อน แล้วเลือกโหมด กลับมาบ่อยๆ — สองสามนาทีก็ยังนับ",
         "cta": "เปิดแบบฝึกหัด"
       },
       "writing": {
-        "title": "Writing",
+        "title": "การเขียน",
         "description": "เอกสารแบบสมบูรณ์และชุดคำถามที่คุณกลับมาดูและส่งออกได้",
-        "how": "เริ่มร่าง จัดด้วยโฟลเดอร์ และใช้ Pro AI เพื่อตรวจหรือปรับปรุงข้อความ",
+        "how": "เริ่มร่าง จัดระเบียบด้วยโฟลเดอร์ และใช้การอนุญาต AI ของแผนของคุณเพื่อตรวจสอบหรือปรับปรุงข้อความของคุณ",
         "cta": "เปิดงานเขียน"
       },
       "listening": {
-        "title": "Listening",
+        "title": "การฟัง",
         "description": "เปลี่ยนเสียงหรือวิดีโอจริงเป็นบทเรียน",
-        "how": "อัปโหลดคลิปและสร้างถอดเสียงบน Free การฝึกฟังที่สร้างให้เป็นส่วนหนึ่งของ Pro",
+        "how": "อัปโหลดคลิป สร้างถอดความ และสร้างการฝึกฟังด้วยการอนุญาต AI ที่รวมอยู่ในแผนของคุณ",
         "cta": "เปิดการฟัง"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "การพูด",
         "description": "สนทนาวิดีโอสดกับติวเตอร์ AI",
         "how": "สร้างเซสชันแล้วเข้าร่วมการโทร Free รวมการประชุม AI วันละหนึ่งครั้ง รวมติวเตอร์",
         "cta": "เปิดการพูด"
       },
       "reading": {
-        "title": "Reading",
+        "title": "การอ่าน",
         "description": "ข้อความพร้อมแบบฝึกความเข้าใจด้วย AI",
         "how": "นำเข้าหรือวางข้อความ สร้างคำถาม แล้วฝึกและทบทวน Free มีโควตา AI ต่อวัน Pro ได้ 10/วัน Premium ไม่จำกัด",
         "cta": "เปิดการอ่าน"
@@ -1648,7 +1670,7 @@
     "nextStepTitle": "ขั้นตอนถัดไป",
     "continueEmpty": "ยังไม่มีอะไรให้ทำต่อ — เพิ่มโน้ตทฤษฎี ชิ้นงานเขียน บทเรียนฟัง หรือเซสชันพูด แล้วจะปรากฏที่นี่",
     "inbox": {
-      "title": "Capture",
+      "title": "จับภาพ",
       "subtitle": "บันทึกด่วนที่รอจัดเข้าคลังของคุณ",
       "count": "{count, plural, =0 {ไม่มีรายการรอ} one {# รายการที่ต้องประมวลผล} other {# รายการที่ต้องประมวลผล}}",
       "cta": "เปิด Capture"
@@ -2120,7 +2142,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "จับภาพ",
       "description": "บันทึกเศษข้อมูลอย่างรวดเร็ว — คำ ข้อสงสัย ไอเดีย — แล้วเปลี่ยนเป็นรายการเรียนจริงเมื่อมีเวลา",
       "cta": "เข้าใจแล้ว",
       "steps": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "มีพื้นที่ทำงานสำหรับภาษาเดียวกันอยู่แล้ว เนื้อหาจะถูกเพิ่มเข้าไปในพื้นที่ทำงานที่มีอยู่แทนการสร้างซ้ำ",
         "empty_backup": "ข้อมูลสำรองนี้ไม่มีข้อมูลการเรียนรู้ที่นำเข้าได้",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "บางรายการที่มีอยู่แชร์ชื่อเดียวกัน การนำเข้าจะใช้หนึ่งในนั้นอย่างแน่นอนและปล่อยให้รายการอื่นไม่เปลี่ยนแปลง"
       },
       "cancel": "ยกเลิก",
       "confirm": "นำเข้าข้อมูลการเรียนรู้",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "ข้อมูลสำรองนั้นใหญ่เกินไปที่จะประมวลผลผ่านหน้านี้ ลองส่งออกที่เล็กกว่าหรือติดต่อฝ่ายสนับสนุน",
         "notConfigured": "ยังไม่ได้ตั้งค่าที่เก็บไฟล์สำหรับการนำเข้าข้อมูลสำรอง"
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "อยู่ในบัญชีของคุณแล้ว",
+      "skippedInAccountHint": "ชื่อเหล่านี้ตรงกับรายการที่คุณมีอยู่แล้ว จะไม่ถูกนำเข้ามาอีก รายการใหม่ภายใต้พื้นที่ทำงานเดียวกันยังคงนำเข้า",
+      "skippedInBackupTitle": "ชื่อซ้ำในแบ็คอัพนี้",
+      "skippedInBackupHint": "ไฟล์มีชื่อเดียวกันมากกว่าหนึ่งครั้ง การนำเข้าจะใช้สำเนาแรกของแต่ละชื่อ — นี่เป็นเรื่องปกติแม้ในบัญชีที่ว่างเปล่า",
+      "skippedOtherTitle": "ไม่สามารถนำเข้า"
     },
     "danger": {
       "title": "ปิดบัญชี",
@@ -3184,7 +3206,7 @@
       "warningTitle": "ก่อนดำเนินการต่อ",
       "warnings": {
         "workspaces": "ทุกพื้นที่ทำงาน รวมถึงข้อมูลคำศัพท์ ทฤษฎี การเขียน การฟัง และการพูดจะถูกลบ",
-        "billing": "การสมัครสมาชิก Notoria Pro ที่ใช้งานอยู่จะถูกยกเลิกทันที",
+        "billing": "การสมัคร Notoria Pro หรือ Premium ที่ใช้งานอยู่จะถูกยกเลิกทันที",
         "media": "สื่อที่อัปโหลดและรูปโปรไฟล์จะถูกลบ",
         "permanent": "ไม่มีระยะเวลากู้คืนหลังยืนยัน"
       },
@@ -3233,8 +3255,8 @@
     "upgrade": "อัปเกรดเป็น Pro",
     "manage": "จัดการการสมัครสมาชิก",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "ฟรี",
+    "premiumBadge": "พรีเมียม",
     "renewsOn": "ต่ออายุในวันที่ {date}",
     "status": "สถานะ: {status}",
     "monthlyPrice": "{price} / เดือน",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "เส้นทางการเรียนรู้ส่วนบุคคล",
       "personalizedRecommendations": "คำแนะนำส่วนบุคคล",
       "crossModuleIntelligence": "การปรับแต่งข้ามโมดูล",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "คำแนะนำการฝึกแบบกำหนดเอง"
     },
     "compare": {
       "heading": "เปรียบเทียบแผน",
@@ -3458,9 +3480,9 @@
       "feature": "ฟีเจอร์",
       "current": "ปัจจุบัน",
       "capability": "สิ่งที่คุณได้",
-      "free": "Free",
+      "free": "ฟรี",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "พรีเมียม",
       "freeIncludes": "รวมใน Free",
       "proUnlocks": "Pro เพิ่ม",
       "premiumAdds": "Premium เพิ่ม",
@@ -3552,7 +3574,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "พรีเมียม",
     "title": "การเรียนรู้",
     "highlight": "โค้ช",
     "description": "มุมมองส่วนบุคคลว่าคุณเรียนอย่างไร และควรโฟกัสอะไรต่อไป",
@@ -3598,7 +3620,7 @@
     "vocabulary": "คำศัพท์",
     "vocabularyEmpty": "ยังไม่มีคำศัพท์",
     "reviews": "การทบทวนแฟลชการ์ด",
-    "misses": "Again / Hard",
+    "misses": "อีกครั้ง / ยาก",
     "listening": "การฟัง",
     "speaking": "การพูด",
     "writing": "การเขียน",
@@ -3752,8 +3774,8 @@
       "practice": "ฝึก"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "อีกครั้ง",
+      "HARD": "ยาก"
     },
     "status": {
       "MASTERED": "เชี่ยวชาญแล้ว",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "นโยบายความเป็นส่วนตัว",
     "termsTitle": "ข้อกำหนดการใช้งาน",
     "privacyDescription": "วิธีที่ Notoria เก็บ ใช้ และลบข้อมูลส่วนบุคคลและเนื้อหาการเรียนรู้สำหรับพื้นที่ทำงานภาษาส่วนตัว",
-    "termsDescription": "ข้อกำหนดสำหรับการใช้พื้นที่ทำงานภาษาส่วนตัวของ Notoria บัญชี ฟีเจอร์ AI และการเรียกเก็บเงิน Notoria Pro",
+    "termsDescription": "ข้อกำหนดในการใช้พื้นที่การเรียนรู้ภาษาส่วนตัวของ Notoria บัญชี ฟีเจอร์ AI และการเรียกเก็บเงิน Pro หรือ Premium",
     "updated": "อัปเดตล่าสุด {date}",
-    "updatedDate": "23 กันยายน 2026",
+    "updatedDate": "27 ตุลาคม 2026",
     "backToSignIn": "กลับไปเข้าสู่ระบบ",
     "backHome": "กลับไปที่ Notoria",
     "authFooter": "ความเป็นส่วนตัว · ข้อกำหนด",
@@ -4071,7 +4093,7 @@
         "purposes": "เหตุผลที่เราประมวลผลข้อมูล",
         "auth": "บัญชีและการเข้าสู่ระบบ",
         "ai": "ฟีเจอร์ AI",
-        "payments": "การชำระเงิน (Notoria Pro)",
+        "payments": "การชำระเงิน (Pro และ Premium)",
         "processors": "ผู้ให้บริการ",
         "cookies": "คุกกี้และการจัดเก็บบนอุปกรณ์",
         "transfers": "การโอนข้อมูลระหว่างประเทศ",
@@ -4095,7 +4117,7 @@
           "list": [
             "สร้างหรือใช้บัญชี",
             "บันทึกเนื้อหาในพื้นที่ทำงานส่วนตัว",
-            "สมัคร Notoria Pro",
+            "สมัคร Notoria Pro หรือ Premium",
             "ใช้เครื่องมือช่วยด้วย AI (ไม่บังคับ)",
             "อัปโหลดสื่อสำหรับการฟังหรือโปรไฟล์",
             "ใช้การฝึกพูด",
@@ -4156,7 +4178,7 @@
               "basis": "สัญญา (Art. 6(1)(b))"
             },
             {
-              "purpose": "ดำเนินการเรียกเก็บเงิน Notoria Pro และสถานะการสมัครสมาชิกผ่าน Stripe",
+              "purpose": "ดำเนินการเรียกเก็บเงินและสถานะการสมัคร Notoria Pro และ Premium ผ่าน Stripe",
               "basis": "สัญญา (Art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "โค้ดเบสปัจจุบันไม่ได้ใช้ผู้ให้บริการโมเดลภาษาขนาดใหญ่อื่นนอกจาก OpenAI OpenAI ประมวลผลข้อมูลภายใต้ข้อกำหนดและนโยบายความเป็นส่วนตัวของตนเองในฐานะผู้ประมวลผลสำหรับฟีเจอร์เหล่านี้"
         },
         "payments": {
-          "title": "7. การชำระเงิน (Notoria Pro)",
+          "title": "7. การชำระเงิน (Pro และ Premium)",
           "p1": "การสมัครสมาชิกแบบชำระเงินจัดการโดย <strong>Stripe</strong> การชำระเงิน ใบแจ้งหนี้ วิธีการชำระเงิน และการยกเลิกทำงานผ่าน Stripe Checkout และ Stripe Customer Portal เว็บฮุคของ Stripe อัปเดตแผนและสถานะของคุณใน Notoria",
           "p2": "Stripe ประมวลผลข้อมูลการชำระเงินในฐานะผู้ให้บริการชำระเงิน ดูเอกสารความเป็นส่วนตัวของ Stripe สำหรับการจัดการบัตร"
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "การชำระเงิน พอร์ทัล และสถานะการสมัครสมาชิก Notoria Pro"
+              "role": "การชำระเงิน Notoria Pro และ Premium, พอร์ทัล และสถานะการสมัคร"
             },
             {
               "provider": "Google",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "ข้อกำหนดการใช้งานเหล่านี้อธิบายกฎการใช้ Notoria ที่ <site>www.notoria.fi</site> อธิบายวิธีที่ผลิตภัณฑ์ทำงานในปัจจุบัน: พื้นที่ทำงานการเรียนรู้ส่วนตัว การเรียกเก็บเงิน Notoria Pro ไม่บังคับผ่าน Stripe และฟีเจอร์ช่วยด้วย AI ไม่ใช่สิ่งทดแทนคำแนะนำจากทนายความเกี่ยวกับสถานการณ์เฉพาะของคุณ",
+      "intro": "ข้อกำหนดการใช้งานเหล่านี้อธิบายกฎสำหรับการใช้ Notoria ที่ <site>www.notoria.fi</site> พวกเขาอธิบายวิธีการทำงานของผลิตภัณฑ์ในปัจจุบัน: พื้นที่การเรียนรู้ส่วนตัว การเรียกเก็บเงิน Pro และ Premium ที่ไม่บังคับผ่าน Stripe และฟีเจอร์ที่ช่วยด้วย AI พวกเขาไม่ใช่ทางเลือกสำหรับคำแนะนำจากทนายความเกี่ยวกับสถานการณ์เฉพาะของคุณ",
       "tocTitle": "ในหน้านี้",
       "tocAria": "ในหน้านี้",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "การใช้งานที่ยอมรับได้",
         "ip": "ทรัพย์สินทางปัญญา",
         "ai": "ผลลัพธ์ที่สร้างโดย AI",
-        "plans": "แผนฟรีและ Notoria Pro",
+        "plans": "แผนฟรี Pro และ Premium",
         "billing": "การสมัครสมาชิกและการเรียกเก็บเงิน",
         "refunds": "การคืนเงินและสิทธิ์ผู้บริโภค",
         "availability": "ความพร้อมใช้งาน",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. บริการ",
           "p1": "Notoria เป็นเว็บแอปเรียนภาษาส่วนตัว คุณสามารถสร้างพื้นที่ทำงานและเก็บสื่อการเรียนรู้ เช่น คำศัพท์ บันทึกทฤษฎี การเขียน แบบฝึกหัด บทเรียนการฟัง และเซสชันการพูด",
-          "p2": "บางฟีเจอร์ใช้ได้ในแผนฟรี Notoria Pro ปลดล็อกความสามารถเพิ่มเติมตามที่แสดงในผลิตภัณฑ์และในหน้า <account>บัญชี</account> ของคุณ — รวมถึงการฟัง การพูด เครื่องมือศึกษา AI บางอย่าง การนำเข้าแบบฝึกหัด และรูปแบบส่งออกเอกสารแบบชำระเงิน ความพร้อมใช้งานของฟีเจอร์อาจเปลี่ยนเมื่อผลิตภัณฑ์พัฒนา",
+          "p2": "พื้นที่การเรียนรู้หลัก รวมถึงการฟัง การพูด และการอ่าน มีให้ในทุกแผน Pro และ Premium เพิ่มการอนุญาต AI ที่สูงขึ้นและการนำเข้า/ส่งออกวัสดุการเรียนรู้; Premium ยังเพิ่มการฝึกสอนส่วนบุคคลและฟีเจอร์การฝึกซ้อม การเปรียบเทียบปัจจุบันจะแสดงในหน้า <account>บัญชี</account> ของคุณ ความพร้อมใช้งานของฟีเจอร์อาจเปลี่ยนแปลงได้เมื่อผลิตภัณฑ์พัฒนา",
           "p3": "Notoria สำหรับการเรียนภาษาส่วนบุคคล ไม่ใช่โรงเรียน หน่วยงานสอบ หรือบริการให้คำแนะนำวิชาชีพ"
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. ผลลัพธ์ที่สร้างโดย AI",
           "p1": "บางฟีเจอร์สามารถตรวจ แนะนำ สร้าง ถอดเสียง สรุป หรือติวเตอร์จากเนื้อหาของคุณ ผลลัพธ์อาจไม่สมบูรณ์ ไม่ถูกต้อง หรือไม่เหมาะกับเป้าหมายของคุณ คุณยังคงรับผิดชอบในการตรวจผลลัพธ์ AI ก่อนพึ่งพาสำหรับการเรียน การสอบ การใช้งานวิชาชีพ หรือการเผยแพร่",
           "p2": "ฟีเจอร์ AI อาจไม่พร้อมใช้งานหากปิดความช่วยเหลือใน <settings>การตั้งค่า</settings> หากแผนของคุณไม่รวมเครื่องมือนั้น หรือหากผู้ให้บริการเข้าถึงไม่ได้ชั่วคราว",
-          "p3": "ไม่ใช่ตัวช่วย AI ทั้งหมดที่ต้องใช้ Notoria Pro ผลิตภัณฑ์แสดงว่าเครื่องมือใดฟรีและเครื่องมือใดต้องใช้ Pro"
+          "p3": "ความพร้อมใช้งานของ AI และการอนุญาตรายวันแตกต่างกันระหว่างฟรี Pro และ Premium ผลิตภัณฑ์จะแสดงแผนและการอนุญาตที่ต้องการสำหรับแต่ละเครื่องมือ"
         },
         "plans": {
-          "title": "8. แผนฟรีและ Notoria Pro",
+          "title": "8. แผนฟรี Pro และ Premium",
           "p1": "แผนฟรีครอบคลุมการฝึกหลักด้วยคำศัพท์ของคุณเองและเครื่องมือศึกษาที่เกี่ยวข้องตามที่แสดงในผลิตภัณฑ์",
-          "p2": "Notoria Pro เป็นการสมัครสมาชิกแบบชำระเงินที่ปลดล็อกฟีเจอร์เพิ่มเติม ในผลิตภัณฑ์ปัจจุบัน โดยทั่วไปรวมถึงการฟัง การพูด การนำเข้าแบบฝึกหัด การฝึกสร้างประโยค เครื่องมือศึกษาช่วยด้วย AI จำนวนมาก และการส่งออกเอกสาร PDF/DOCX ตัวช่วย AI ที่เบากว่าบางอย่าง (เช่น ความช่วยเหลือคำศัพท์หรือการจัดรูปแบบในตัวแก้ไขบางอย่าง) อาจยังใช้ได้ในแผนฟรีเมื่อเปิดความช่วยเหลือ AI",
-          "p3": "สิทธิ์ Pro ผูกกับบัญชีผู้ใช้ของคุณ จึงใช้ได้กับพื้นที่ทำงานภายใต้บัญชีนั้น บัญชีที่มีบทบาทผู้ดูแลอาจมีสิทธิ์ระดับ Pro โดยไม่ต้องสมัครสมาชิก Stripe ส่วนบุคคล",
-          "p4": "ราคาที่ใช้กับการซื้อของคุณคือราคาที่แสดงใน Stripe Checkout สำหรับแผน Pro ปัจจุบัน ราคาที่แสดงที่อื่นในผลิตภัณฑ์ (เช่น ในบัญชี) เป็นเพียงข้อมูลอ้างอิงและต้องตรงกับการกำหนดราคา Stripe ที่ใช้งานอยู่"
+          "p2": "Pro และ Premium เป็นการสมัครสมาชิกที่ต้องชำระเงิน Pro เพิ่มการอนุญาตที่สูงขึ้นหรือไม่จำกัดสำหรับเครื่องมือ AI หลายตัวพร้อมการนำเข้าเนื้อหาการเรียนรู้และการส่งออก PDF/DOCX Premium รวม Pro และเพิ่มฟีเจอร์ส่วนบุคคล เช่น โค้ชการเรียนรู้ โปรไฟล์การเรียนรู้ การฝึกซ้อมที่ปรับตามความต้องการ การฝึกซ้อมตามข้อผิดพลาด และคำแนะนำการออกกำลังกายที่กำหนดเอง หน้า บัญชี แสดงการเปรียบเทียบปัจจุบันและขีดจำกัด",
+          "p3": "การเข้าถึงที่ต้องชำระเงินจะผูกติดอยู่กับบัญชีผู้ใช้ของคุณและใช้ได้กับพื้นที่ทำงานทั้งหมด บัญชีที่มีบทบาทผู้ดูแลระบบอาจมีการเข้าถึงระดับที่ต้องชำระเงินโดยไม่ต้องสมัครสมาชิก Stripe ส่วนบุคคล",
+          "p4": "ราคาที่ใช้คือราคาที่แสดงที่ Stripe Checkout สำหรับแผน Pro หรือ Premium ที่เลือก ราคาที่แสดงที่อื่นในผลิตภัณฑ์ (เช่น ในบัญชี) เป็นเพียงการแสดงให้เห็นและต้องตรงกับการกำหนดราคาที่ใช้งานอยู่ของ Stripe"
         },
         "billing": {
           "title": "9. การสมัครสมาชิก การเรียกเก็บเงิน และการยกเลิก",
-          "list0": "การสมัครสมาชิก Pro เรียกเก็บผ่าน <strong>Stripe</strong>",
-          "list1": "คุณสามารถเริ่มการชำระเงินจาก <account>บัญชี</account> หรือจากตัวควบคุม Pro ที่ล็อกอยู่ในแอป",
+          "list0": "การสมัครสมาชิก Pro และ Premium จะถูกเรียกเก็บเงินผ่าน <strong>Stripe</strong>",
+          "list1": "คุณสามารถเริ่มการชำระเงินหรือเปลี่ยนแผนจาก <account>บัญชี</account> หรือจากการควบคุมที่ต้องชำระเงินที่ถูกล็อคในแอป",
           "list2": "จากบัญชี คุณสามารถเปิด Stripe Customer Portal เพื่อดูใบแจ้งหนี้ อัปเดตวิธีการชำระเงิน และยกเลิกการสมัครสมาชิก",
           "list3": "การยกเลิกเป็นไปตามพฤติกรรมของ Stripe Customer Portal สำหรับการสมัครสมาชิกของคุณ",
-          "p1": "หลังคุณยกเลิก สิทธิ์ Pro จะดำเนินต่อเฉพาะขณะที่สถานะการสมัครสมาชิก Stripe ยังให้สิทธิ์ Pro ในผลิตภัณฑ์ ในการใช้งานปัจจุบัน สถานะที่ถือว่าเป็น Pro รวมถึง <code>active</code>, <code>trialing</code> และ <code>past_due</code> เมื่อสถานะไม่เข้าเกณฑ์อีกต่อไป บัญชีจะกลับไปแผนฟรี",
-          "p2": "หากการชำระเงินล้มเหลว Stripe อาจย้ายการสมัครสมาชิกไปเป็น <code>past_due</code> หรือสถานะอื่น Notoria ซิงก์สถานะนั้นจากเว็บฮุคของ Stripe ขณะที่สถานะยังเป็น <code>past_due</code> ฟีเจอร์ Pro ยังใช้ได้ตามกฎการเข้าถึงปัจจุบัน หากการสมัครสมาชิกกลายเป็นถูกยกเลิกหรือไม่มีสิทธิ์ในภายหลัง สิทธิ์ Pro จะสิ้นสุด",
+          "p1": "หลังจากที่คุณยกเลิกการต่ออายุ การเข้าถึง Pro หรือ Premium ปัจจุบันของคุณจะยังคงดำเนินต่อไปในขณะที่สถานะการสมัครสมาชิก Stripe ยังคงมีคุณสมบัติในผลิตภัณฑ์ สถานะที่มีคุณสมบัติในปัจจุบันรวมถึง <code>active</code>, <code>trialing</code> และ <code>past_due</code> เมื่อสถานะไม่ตรงตามคุณสมบัติอีกต่อไป บัญชีจะกลับไปเป็นฟรี",
+          "p2": "หากการชำระเงินล้มเหลว Stripe อาจย้ายการสมัครสมาชิกไปยัง <code>past_due</code> หรือสถานะอื่น ๆ Notoria จะซิงค์สถานะนั้นจากเว็บฮุคของ Stripe ขณะที่ยังคงอยู่ใน <code>past_due</code> แผนที่ต้องชำระเงินปัจจุบันจะยังคงมีให้ภายใต้กฎการเข้าถึงปัจจุบัน; หากภายหลังกลายเป็นยกเลิกหรือไม่มีคุณสมบัติอื่น ๆ การเข้าถึงที่ต้องชำระเงินจะสิ้นสุด",
           "p3": "การลบบัญชี Notoria ของคุณจะยกเลิกการสมัครสมาชิก Stripe ทันที (พยายามอย่างดีที่สุด) เป็นส่วนของการลบบัญชี ซึ่งต่างจากการยกเลิกการต่ออายุผ่าน Customer Portal ในขณะที่ยังเก็บบัญชีไว้"
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. ข้อจำกัดความรับผิดชอบและความรับผิด",
           "p1": "Notoria ให้บริการบนพื้นฐาน \"ตามที่มี\" สำหรับการเรียนภาษาส่วนบุคคล ในขอบเขตสูงสุดที่กฎหมายที่ใช้บังคับอนุญาต เราปฏิเสธการรับประกันที่ไม่ใช่ข้อบังคับตามกฎหมาย",
-          "p2": "ในขอบเขตสูงสุดที่กฎหมายที่ใช้บังคับอนุญาต Notoria ไม่รับผิดต่อความเสียหายทางอ้อม โดยบังเอิญ พิเศษ ต่อเนื่อง หรือข้อมูลสูญหายที่เกิดจากการใช้บริการของคุณหรือการพึ่งพาผลลัพธ์ AI เมื่อไม่สามารถยกเว้นความรับผิดได้ จะจำกัดอยู่ที่จำนวนที่คุณจ่ายสำหรับ Notoria Pro ในสามเดือนก่อนการเรียกร้อง หรือจำนวนที่สูงกว่าที่กฎหมายบังคับกำหนด",
+          "p2": "ในขอบเขตสูงสุดที่กฎหมายที่บังคับใช้อนุญาต Notoria จะไม่รับผิดชอบต่อความเสียหายทางอ้อม ความเสียหายที่เกิดขึ้นโดยบังเอิญ ความเสียหายพิเศษ ความเสียหายที่เกิดขึ้นตามผล หรือความเสียหายจากข้อมูลที่สูญหายที่เกิดจากการใช้บริการหรือการพึ่งพาผลลัพธ์จาก AI ในกรณีที่ไม่สามารถยกเว้นความรับผิดชอบได้ จะถูกจำกัดอยู่ที่จำนวนเงินที่คุณจ่ายสำหรับ Notoria Pro หรือ Premium ในสามเดือนก่อนการเรียกร้อง หรือจำนวนเงินที่มากกว่าที่กฎหมายบังคับใช้กำหนด",
           "p3": "ขีดจำกัดเหล่านี้ไม่ยกเว้นความรับผิดที่กฎหมายฟินแลนด์หรือ EU ไม่อนุญาตให้จำกัด — รวมถึงความรับผิดที่ผู้บริโภคไม่สามารถสละได้ และความรับผิดต่อการเสียชีวิตหรือการบาดเจ็บส่วนบุคคลที่เกิดจากความประมาทเมื่อกฎดังกล่าวใช้บังคับ"
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "สร้างคลังคำศัพท์ส่วนตัวพร้อมความหมาย ตัวอย่าง และแท็ก",
           "practice": "ฝึกด้วยแบบฝึกหัดจากคำและบันทึกของคุณเอง",
           "create": "เขียนบันทึกทฤษฎีและงานเขียนที่กลับมาดูได้ภายหลัง",
-          "listenSpeak": "เปลี่ยนสื่อเป็นการฝึกฟัง และพูดกับติวเตอร์ AI บน Pro"
+          "listenSpeak": "เปลี่ยนสื่อให้เป็นการฝึกฟัง และใช้การอนุญาต AI สำหรับการถอดความและการฝึกพูด"
         },
-        "note": "เครื่องมือ AI การฟัง การพูด และการส่งออกบางอย่างเป็นส่วนของ Notoria Pro แผนฟรียังครอบคลุมการฝึกคำศัพท์ประจำวันและวงจรการเรียนหลัก"
+        "note": "พื้นที่การเรียนรู้หลักมีให้ในทุกแผน Pro เพิ่มการอนุญาต AI และเพิ่มการนำเข้า/ส่งออกวัสดุการเรียนรู้; Premium เพิ่มการฝึกสอนส่วนบุคคลและการฝึกซ้อม"
       },
       "ai": {
         "title": "AI ในที่ที่ช่วยได้",
@@ -4656,7 +4678,7 @@
         "title": "พื้นที่ต่าง ๆ เชื่อมกันอย่างไร",
         "p1": "บันทึกด่วนคือจุดเข้าด่วน คำศัพท์และทฤษฎีคือที่ที่เนื้อหาตกผลึก แบบฝึกหัดเปลี่ยนเนื้อหานั้นเป็นการฝึก การเขียน การฟัง และการพูดช่วยให้คุณใช้ภาษาอย่างแข็งขันมากขึ้น",
         "p2": "คุณไม่จำเป็นต้องเดินผ่านทุกพื้นที่ตามลำดับ หลายคนอยู่กับคำและการฝึกสั้น ๆ อยู่พักหนึ่ง",
-        "p3": "ก้าวถัดไปตามธรรมชาติคือการเขียนเมื่อคุณอยากผลิตภาษาด้วยเงื่อนไขของตัวเอง จากนั้นการฟังและการพูดเมื่ออยากให้เนื้อหาเดียวกันทำงานในหูและเสียงของคุณ — การฟังและการพูดเป็นส่วนของ Notoria Pro",
+        "p3": "ขั้นตอนถัดไปตามธรรมชาติคือการเขียนเมื่อคุณต้องการผลิตภาษาในแบบของคุณเอง จากนั้นฟังและพูดเมื่อคุณต้องการให้เนื้อหาเดียวกันทำงานในหูและเสียงของคุณ พื้นที่เหล่านี้มีให้ในทุกแผน; ขีดจำกัดการใช้งาน AI แตกต่างกันไปตามแผน",
         "beat": "เก็บและเข้าใจก่อน ใช้และพูดเมื่อเนื้อหาพร้อมออกจากหน้า"
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "การฟัง",
-          "body": "เปลี่ยนสื่อเป็นการฝึกฟังในพื้นที่ทำงานของคุณ มีใน Notoria Pro"
+          "body": "เปลี่ยนสื่อให้เป็นการฝึกฟังในพื้นที่ทำงานของคุณ มีให้ในทุกแผน; การอนุญาตการถอดความ AI แตกต่างกันไปตามแผน"
         },
         "speaking": {
           "label": "การพูด",
-          "body": "ฝึกสดกับติวเตอร์ AI อิงภาษาที่คุณกำลังศึกษา มีใน Notoria Pro"
+          "body": "การฝึกสดกับติวเตอร์ AI ที่มีพื้นฐานในภาษาที่คุณกำลังศึกษา มีให้ในทุกแผนพร้อมการอนุญาตรายวันตามแผน"
         },
         "reading": {
           "label": "การอ่าน",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "ฉันเปลี่ยนรหัสผ่านหรือปิดบัญชีได้อย่างไร?",
-          "a": "เปิด <account>บัญชี</account> คุณอัปเดตรหัสผ่านได้ที่นั่นหากใช้การเข้าสู่ระบบด้วยอีเมล จัดการ Notoria Pro ส่งออกข้อมูลสำรอง หรือลบบัญชีอย่างถาวร"
+          "a": "เปิด <account>บัญชี</account> คุณสามารถอัปเดตรหัสผ่านที่นั่นหากคุณใช้การลงชื่อเข้าใช้ด้วยอีเมล จัดการ Pro หรือ Premium ส่งออกสำรอง หรือลบบัญชีของคุณอย่างถาวร การลบบัญชียังยกเลิกการสมัคร Stripe ที่ใช้งานอยู่ทันทีตามความพยายามที่ดีที่สุด; การยกเลิกการต่ออายุเพียงอย่างเดียวจะเก็บบัญชีและข้อมูลของมันไว้"
         },
         "pro": {
           "q": "การเรียกเก็บเงินและการยกเลิกทำงานอย่างไร?",
-          "a": "Notoria Pro เรียกเก็บผ่าน Stripe จาก <account>บัญชี</account> คุณสามารถอัปเกรด เปิดพอร์ทัลลูกค้า Stripe เพื่อจัดการวิธีการชำระเงินและใบแจ้งหนี้ หรือยกเลิกการต่ออายุ"
+          "a": "Notoria Pro และ Premium จะถูกเรียกเก็บเงินผ่าน Stripe จาก <account>บัญชี</account> คุณสามารถสมัครสมาชิก สลับระหว่าง Pro และ Premium จัดการวิธีการชำระเงินและใบแจ้งหนี้ ยกเลิกการต่ออายุ หรือคืนสถานะการยกเลิกที่กำหนดไว้ การยกเลิกการต่ออายุจะเก็บการเข้าถึงจนกว่า Stripe จะสิ้นสุดระยะเวลาการสมัครสมาชิกที่มีคุณสมบัติ; การลบบัญชีของคุณเป็นเรื่องแยกต่างหากและยกเลิกการสมัครสมาชิกทันทีตามความพยายามที่ดีที่สุด"
         },
         "proFeatures": {
-          "q": "อะไรฟรี และอะไรต้องใช้ Notoria Pro?",
-          "a": "การฝึกคำศัพท์ประจำวันและเครื่องมือศึกษาที่เกี่ยวข้องใช้ได้ในแผนฟรี เครื่องมือ AI การฟัง การพูด และการส่งออกเอกสารบางอย่างเป็นส่วนของ Notoria Pro เปรียบเทียบและอัปเกรดจาก <account>บัญชี</account>"
+          "q": "มีอะไรบ้างในแผนฟรี Pro และ Premium?",
+          "a": "ฟรีรวมถึงพื้นที่การเรียนรู้หลักและการอนุญาตรายวันสำหรับเครื่องมือ AI ที่สนับสนุน Pro เพิ่มการอนุญาต AI หลายตัวและเพิ่มการนำเข้าวัสดุการเรียนรู้พร้อมการส่งออก PDF/DOCX Premium รวม Pro และเพิ่มการฝึกสอนส่วนบุคคล โปรไฟล์การเรียนรู้ การฝึกซ้อมที่ปรับตามความต้องการ การฝึกซ้อมตามข้อผิดพลาด และคำแนะนำการออกกำลังกายที่กำหนดเอง ดูการเปรียบเทียบสดและขีดจำกัดปัจจุบันใน <account>บัญชี</account>."
         },
         "learning": {
           "q": "ฟีเจอร์การเรียนรู้ของ Notoria ทำงานอย่างไร?",
@@ -4997,7 +5019,7 @@
         "admins": "ผู้ดูแลระบบ",
         "testers": "ผู้ทดสอบ",
         "suspended": "ระงับ",
-        "contentTotal": "Content records"
+        "contentTotal": "บันทึกเนื้อหา"
       },
       "quickAccess": "ทางลัด",
       "quickAccessLede": "ไปที่เครื่องมือจัดการ",
@@ -5050,8 +5072,8 @@
         "created": "ลงทะเบียน",
         "updated": "อัปเดต",
         "emailVerified": "ยืนยันอีเมลแล้ว",
-        "email": "Email",
-        "password": "Password"
+        "email": "อีเมล",
+        "password": "รหัสผ่าน"
       },
       "detail": {
         "account": "บัญชี",
@@ -5060,7 +5082,7 @@
         "actions": "การดำเนินการบัญชี",
         "workspaces": "พื้นที่ทำงาน",
         "workspacesLede": "พื้นที่ทำงานภาษาที่เป็นของของผู้ใช้นี้",
-        "danger": "Danger zone"
+        "danger": "โซนอันตราย"
       },
       "actions": {
         "saveProfile": "บันทึกชื่อ",
@@ -5071,7 +5093,7 @@
         "delete": "ลบบัญชี",
         "grantTester": "ให้บทบาทผู้ทดสอบ",
         "revokeTester": "ถอนบทบาทผู้ทดสอบ",
-        "create": "Create user"
+        "create": "สร้างผู้ใช้"
       },
       "confirm": {
         "grantAdmin": "ให้สิทธิ์ผู้ดูแลแก่บัญชีนี้หรือไม่?",
@@ -5089,13 +5111,13 @@
         "admin": "ผู้ดูแลระบบ"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "สร้างผู้ใช้",
+        "lede": "จัดเตรียมบัญชีด้วยอีเมลและรหัสผ่าน พวกเขาสามารถลงชื่อเข้าใช้ได้ทันที"
       },
       "plans": {
-        "free": "Free",
+        "free": "ฟรี",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "พรีเมียม"
       }
     },
     "workspaces": {
@@ -5118,7 +5140,7 @@
         "owner": "เจ้าของ",
         "created": "สร้างเมื่อ",
         "updated": "อัปเดต",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "อีเมลเจ้าของ",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "ลบพื้นที่ทำงานนี้และเนื้อหาการเรียนทั้งหมดภายในผ่าน cascade ของฐานข้อมูลหรือไม่?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "สร้างพื้นที่ทำงาน",
+        "lede": "แนบพื้นที่ทำงานภาษาที่ใหม่กับบัญชีที่มีอยู่โดยอีเมล"
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "พื้นที่ทำงาน",
         "created": "สร้างเมื่อ",
         "updated": "อัปเดต",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "ชื่อเรื่อง",
+        "word": "คำ",
+        "folderName": "ชื่อโฟลเดอร์"
       },
       "detail": {
         "description": "การตรวจสอบเมตาดาตา เนื้อหาส่วนตัวจะไม่โหลดอัตโนมัติ",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "ลบรายการ",
-        "saveTitle": "Save title"
+        "saveTitle": "บันทึกชื่อเรื่อง"
       },
       "confirm": {
         "delete": "ลบรายการนี้หรือไม่? แถวลูกที่เกี่ยวข้องจะเป็นไปตามกฎ cascade / set-null ของฐานข้อมูล"
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "จับภาพรายการเก็บข้อความแบบอิสระ การแก้ไขชื่อเรื่องไม่รองรับที่นี่ — ลบหากบันทึกควรถูกลบ"
     },
     "jobs": {
       "title": "งาน",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "รหัสภาษาไม่ถูกต้อง",
       "CONTENT_NOT_FOUND": "ไม่พบรายการ",
       "INVALID_CONTENT_MODULE": "โมดูลเนื้อหาที่ไม่รู้จัก",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "อีเมลนี้ถูกลงทะเบียนแล้ว",
+      "PASSWORD_TOO_WEAK": "รหัสผ่านไม่ตรงตามข้อกำหนดความแข็งแรง",
+      "CONTENT_TITLE_UNSUPPORTED": "ประเภทเนื้อหานี้ไม่รองรับการแก้ไขชื่อเรื่อง"
     }
   }
 }

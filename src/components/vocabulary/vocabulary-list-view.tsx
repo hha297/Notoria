@@ -76,7 +76,7 @@ function VocabularyListItem({
         data-vocab-pos={pos || "none"}
         className={mx(
           featureStyles,
-          "vocab-module group grid gap-2.5 px-3 py-3.5 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-3 sm:gap-x-4 sm:px-3.5 sm:py-4",
+          "vocab-module group grid gap-2.5 px-3 pt-3.5 pb-2.5 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-3 sm:gap-x-4 sm:px-3.5 sm:pt-4 sm:pb-3",
         )}
       >
         <p
@@ -105,7 +105,8 @@ function VocabularyListItem({
           </h3>
           <VocabularyMeaningPreview
             word={word}
-            className="mt-1 max-w-xl text-sm leading-snug text-muted-foreground"
+            variant="list"
+            className="mt-2.5 max-w-2xl"
           />
           {word.tags.length > 0 ? (
             <div className="mt-2 min-w-0">

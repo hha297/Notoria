@@ -6,7 +6,7 @@ import { FileText, ImageIcon, Link2, Lock, Type, Upload } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
-import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
+import { AiProcessingOverlay } from "@/components/exercises/ai-processing-progress";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
@@ -79,13 +79,11 @@ export function ImportMaterialForm() {
   const [mode, setMode] = useState<SourceMode>("image");
   const [url, setUrl] = useState("");
   const [text, setText] = useState("");
-  const [title, setTitle] = useState("");
   const [dragOver, setDragOver] = useState(false);
 
   function resetFormFields() {
     setUrl("");
     setText("");
-    setTitle("");
     if (inputRef.current) inputRef.current.value = "";
   }
 
@@ -161,7 +159,6 @@ export function ImportMaterialForm() {
       const mimeType = resolveImportMime(file);
       const fallbackTitle =
         file.name.replace(/\.[^.]+$/, "") || t("pastedImageTitle");
-      const resolvedTitle = title.trim() || fallbackTitle;
       const displayName = file.name || fallbackTitle;
 
       setUploadProgress({
@@ -205,7 +202,7 @@ export function ImportMaterialForm() {
           filePublicId: uploaded.publicId,
           mimeType,
           originalFilename: file.name || `${fallbackTitle}.bin`,
-          title: resolvedTitle,
+          title: fallbackTitle,
           byteSize: file.size,
         });
 
@@ -234,7 +231,6 @@ export function ImportMaterialForm() {
       setStage,
       setUploadProgress,
       t,
-      title,
     ],
   );
 
@@ -254,8 +250,8 @@ export function ImportMaterialForm() {
           blob instanceof File && blob.name
             ? blob
             : new File([blob], `pasted-image.${ext}`, {
-              type: item.type || "image/png",
-            });
+                type: item.type || "image/png",
+              });
         setMode("image");
         void processFile(file, { requireImage: true });
         return;
@@ -282,7 +278,6 @@ export function ImportMaterialForm() {
     try {
       const formData = new FormData();
       formData.set("url", trimmed);
-      if (title.trim()) formData.set("title", title.trim());
       const created = await createExerciseImportFromUrl(formData);
       await runPostUploadPipeline(created.id);
     } catch (error) {
@@ -301,7 +296,7 @@ export function ImportMaterialForm() {
 
     const file = new File(
       [trimmed],
-      `${(title.trim() || "imported-text").slice(0, 80)}.txt`,
+      "imported-text.txt",
       { type: "text/plain" },
     );
     await processFile(file);
@@ -381,25 +376,8 @@ export function ImportMaterialForm() {
         </p>
       </div>
 
-      <div className={cn(mx(importStyles, "import-title-wash"), "space-y-2")}>
-        <Label htmlFor="import-title" className="text-[0.68rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
-          {t("titleLabel")}
-        </Label>
-        <Input
-          id="import-title"
-          value={title}
-          onChange={(e) => setTitle(e.target.value)}
-          placeholder={t("titlePlaceholder")}
-          disabled={isBusy}
-          className={cn(
-            mx(importStyles, "import-field-wash"),
-            "h-11 rounded-none border-0 border-b border-hairline-cloud px-0 shadow-none focus-visible:border-(--import-mode-fg) focus-visible:ring-0",
-          )}
-        />
-      </div>
-
       {showProcessing ? (
-        <AiProcessingProgress
+        <AiProcessingOverlay
           state={processing}
           pipeline="import"
           onCancel={
@@ -411,16 +389,22 @@ export function ImportMaterialForm() {
               : undefined
           }
           onDismissError={
-            processing.stage === "error"
-              ? () => resetProcessing()
-              : undefined
+            processing.stage === "error" ? () => resetProcessing() : undefined
           }
         />
       ) : mode === "url" ? (
-        <div className={mx(importStyles, "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10")}>
+        <div
+          className={mx(
+            importStyles,
+            "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10",
+          )}
+        >
           <StageDecor />
           <div className="relative space-y-2">
-            <Label htmlFor="import-url" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
+            <Label
+              htmlFor="import-url"
+              className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase"
+            >
               {t("urlLabel")}
             </Label>
             <Input
@@ -453,10 +437,18 @@ export function ImportMaterialForm() {
           </QuotaLockButton>
         </div>
       ) : mode === "text" ? (
-        <div className={mx(importStyles, "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10")}>
+        <div
+          className={mx(
+            importStyles,
+            "import-stage import-dropzone space-y-5 rounded-md px-5 py-8 sm:px-7 sm:py-10",
+          )}
+        >
           <StageDecor />
           <div className="relative space-y-2">
-            <Label htmlFor="import-text" className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase">
+            <Label
+              htmlFor="import-text"
+              className="text-[0.68rem] font-semibold tracking-[0.16em] text-(--import-mode-fg) uppercase"
+            >
               {t("textLabel")}
             </Label>
             <Textarea
@@ -548,7 +540,9 @@ export function ImportMaterialForm() {
                     ? t("dropImageTitle")
                     : t("dropFileTitle")}
               </p>
-              <p className="text-sm text-muted-foreground">{t("dropDescription")}</p>
+              <p className="text-sm text-muted-foreground">
+                {t("dropDescription")}
+              </p>
             </div>
             <p className="relative max-w-md text-xs leading-5 text-muted-foreground">
               {mode === "image" ? t("pasteHint") : t("supportedFiles")}
@@ -583,9 +577,24 @@ export function ImportMaterialForm() {
 function StageDecor() {
   return (
     <div aria-hidden className={mx(theoryStyles, "theory-decor")}>
-      <span className={mx(theoryStyles, "theory-blob top-[-24%] left-[8%] size-36 bg-(--import-mode-fg)")} />
-      <span className={mx(theoryStyles, "theory-blob right-[4%] bottom-[-30%] size-32 bg-(--exercise-accent)")} />
-      <span className={mx(theoryStyles, "theory-diamond top-5 right-7 text-(--import-mode-fg)")} />
+      <span
+        className={mx(
+          theoryStyles,
+          "theory-blob top-[-24%] left-[8%] size-36 bg-(--import-mode-fg)",
+        )}
+      />
+      <span
+        className={mx(
+          theoryStyles,
+          "theory-blob right-[4%] bottom-[-30%] size-32 bg-(--exercise-accent)",
+        )}
+      />
+      <span
+        className={mx(
+          theoryStyles,
+          "theory-diamond top-5 right-7 text-(--import-mode-fg)",
+        )}
+      />
     </div>
   );
 }

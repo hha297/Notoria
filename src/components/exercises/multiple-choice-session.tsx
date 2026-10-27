@@ -30,6 +30,11 @@ import { cn } from "@/lib/utils";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
 import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
+import {
   CONTEXTUAL_AI_BATCH,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
 } from "@/lib/exercises/contextual-ai-types";
@@ -105,6 +110,19 @@ export function MultipleChoiceSession({
     [filteredWords],
   );
   const isContextual = studyMode === "contextual";
+  const draftIdentity = useMemo(
+    () => ({
+      scope: `workspace:${workspaceId}:multiple_choice`,
+      config: JSON.stringify({
+        difficulty,
+        uiLocale,
+        language: language ?? null,
+        filters,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    }),
+    [additionalInstructions, difficulty, filters, language, uiLocale, workspaceId],
+  );
 
   const practiceQuestions = useMemo(() => {
     if (!activeIds) return questions;
@@ -200,6 +218,8 @@ export function MultipleChoiceSession({
   const startContextualSession = useCallback(async () => {
     if (filteredWords.length < 2) return;
 
+    const mayRestore = questions.length === 0;
+
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
     const sampledWords = pickDistinctContextualWords(
@@ -226,6 +246,27 @@ export function MultipleChoiceSession({
     setStage("generating");
 
     try {
+      if (mayRestore) {
+        const restored = await loadExerciseDraft<MultipleChoiceQuestion>(
+          draftIdentity,
+        );
+        const eligibleIds = new Set(filteredWords.map((word) => word.id));
+        const valid = (restored ?? []).filter(
+          (question) =>
+            question?.id &&
+            question.prompt &&
+            question.options?.length === 4 &&
+            question.options.includes(question.correctOption) &&
+            eligibleIds.has(question.wordId),
+        );
+        if (valid.length > 0) {
+          setQuestions(valid);
+          completeProcessing();
+          afterNewSet();
+          window.setTimeout(() => resetProcessing(), 350);
+          return;
+        }
+      }
       const distractorPool = [
         ...new Set(
           filteredWords
@@ -299,6 +340,7 @@ export function MultipleChoiceSession({
       }
 
       setStage("saving");
+      await saveExerciseDraft(draftIdentity, nextQuestions);
       setQuestions(nextQuestions);
       completeProcessing();
       afterNewSet();
@@ -312,12 +354,14 @@ export function MultipleChoiceSession({
     commitAndBeginNext,
     completeProcessing,
     difficulty,
+    draftIdentity,
     exerciseQuota.message,
     exerciseQuota.refreshQuotas,
     fail,
     filteredWords,
     language,
     openUpgrade,
+    questions.length,
     resetAttempt,
     resetProcessing,
     setStage,
@@ -381,6 +425,7 @@ export function MultipleChoiceSession({
   );
 
   const handleSubmit = () => {
+    if (isContextual) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const question of practiceQuestions) {
@@ -577,50 +622,23 @@ export function MultipleChoiceSession({
         </p>
       ) : null}
 
-      <ExerciseProgressHeader
-        current={progressCurrent}
-        total={progressTotal}
-        progressLabel={
-          submitted
-            ? tSession("score", {
-                correct: score.correct,
-                total: score.total,
-              })
-            : oneByOne
-              ? tSession("questionProgress", {
-                  current: Math.min(
-                    checkedCount + 1,
-                    Math.max(totalQuestionCount, 1),
-                  ),
-                  total: totalQuestionCount,
-                })
-              : tSession("answeredProgress", {
-                  answered: answeredCount,
-                  total: totalQuestionCount,
-                })
-        }
-        scoreLabel={
-          submitted
-            ? t("score", {
-                correct: score.correct,
-                answered: score.total,
-              })
-            : undefined
-        }
-        progressValue={
-          submitted
-            ? score.total
-              ? (score.correct / score.total) * 100
-              : 0
-            : oneByOne
-              ? totalQuestionCount
-                ? (checkedCount / totalQuestionCount) * 100
-                : 0
-              : totalQuestionCount
-                ? (answeredCount / totalQuestionCount) * 100
-                : 0
-        }
-      />
+      {submitted ? (
+        <ExerciseProgressHeader
+          current={progressCurrent}
+          total={progressTotal}
+          progressLabel={tSession("score", {
+            correct: score.correct,
+            total: score.total,
+          })}
+          scoreLabel={t("score", {
+            correct: score.correct,
+            answered: score.total,
+          })}
+          progressValue={
+            score.total ? (score.correct / score.total) * 100 : 0
+          }
+        />
+      ) : null}
 
       {submitted ? (
         <ExerciseSetReviewNav
@@ -680,6 +698,8 @@ export function MultipleChoiceSession({
             isLast={isLastQuestion}
             canCheck={currentCanCheck}
             submitting={submitting}
+            progressCurrent={progressCurrent}
+            progressTotal={progressTotal}
             onCheck={handleCheckOne}
             onNext={goNextQuestion}
             onViewResults={handleViewResults}

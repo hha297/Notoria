@@ -17,19 +17,20 @@
     "hideFilters": "Skjul filtre",
     "remove": "Fjern",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Utseende",
+      "print": "Utskriftsvennlig",
+      "printHint": "Hvit side, mørk tekst",
+      "theme": "Nåværende tema",
+      "themeHint": "Matcher ditt lyse eller mørke tema",
+      "previewKicker": "Prøveside",
+      "previewTitle": "Dokumenttittel",
+      "previewBody": "Brødteksten bruker de valgte fargene og avstandene.",
+      "previewCallout": "Uthevinger og aksenter følger modulens farge.",
+      "fixedNote": "Utseendet er fast i den eksporterte filen. Eksporter igjen for å endre det.",
+      "docxBackgroundNote": "Word og andre apper viser kanskje ikke sidebakgrunner på samme måte, spesielt ved utskrift."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Scroll til toppen",
+    "moreActions": "Flere handlinger"
   },
   "contentImport": {
     "title": {
@@ -472,34 +473,34 @@
     "viewMode": "Visningsmodus",
     "tagManager": {
       "open": "Administrer tagger",
-      "eyebrow": "Tags",
+      "eyebrow": "Merker",
       "title": "Taggbehandling",
-      "description": "Velg en tagg, og tilordne eller fjern den fra ord. Tilordnede og andre ord ligger i separate lister.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Velg et merke, og tildel eller fjern det fra ord.",
+      "pageDescription": "Velg Standard eller Tilpasset, velg et merke, og legg til eller fjern det fra ord.",
+      "disabledNoWorkspace": "Opprett et arbeidsområde før du administrerer vokabularmerker.",
+      "backToVocabulary": "Tilbake til vokabular",
+      "backToSettings": "Tilbake til innstillinger",
       "groupsLabel": "Standard tagggrupper",
       "tagsHeading": "Tagger",
       "standardTagsHeading": "Standardtagger",
       "customTagsHeading": "Egne tagger",
-      "customTagsHint": "Etiketter du lager for egen organisering — ikke ordklasser.",
+      "customTagsHint": "Arbeidsområdemerker du oppretter — søk for å finne dem når listen er lang.",
       "emptyCustomTags": "Ingen egne tagger ennå. Opprett dem når du redigerer et ord.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Ingen tilpassede merker samsvarer med dette søket.",
+      "tagSearchPlaceholder": "Søk etter merker…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standard",
       "kindCustom": "Egen",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Ordlistene",
+      "wordTabAssigned": "Merket",
+      "wordTabOther": "Umerket",
       "assignedHeading": "Ord med denne taggen",
       "otherHeading": "Andre ord",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Velg alle på denne siden",
+      "clearSelection": "Fjern valg",
+      "selectionScopePage": "Velger fra denne siden ({count} av {total})",
+      "selectionScopeFiltered": "Velger innenfor de nåværende søkeresultatene",
       "searchPlaceholder": "Søk etter ord eller betydninger…",
       "wordCount": "{count}",
       "loading": "Laster ordforråd…",
@@ -509,13 +510,23 @@
       "emptyOther": "Alle ord har allerede denne taggen.",
       "emptyOtherSearch": "Ingen matchende ord å tilordne.",
       "selected": "{count} valgt",
-      "addToTag": "Legg til i tagg",
-      "removeFromTag": "Fjern fra tagg",
-      "applyAdd": "Legg til i tagg ({count})",
-      "applyRemove": "Fjern fra tagg ({count})",
+      "addToTag": "Legg til merke",
+      "removeFromTag": "Fjern merke",
+      "applyAdd": "Legg til merke ({count})",
+      "applyRemove": "Fjern merke ({count})",
       "added": "La til {count} ord i {tag}",
       "removed": "Fjernet {count} ord fra {tag}",
-      "error": "Kunne ikke oppdatere taggtilordning"
+      "error": "Kunne ikke oppdatere taggtilordning",
+      "systemsLabel": "Merkeordninger",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Emne og bruk, vist separat",
+      "usageOptional": "Valgfritt",
+      "customSystemTitle": "Tilpasset",
+      "customSystemMeta": "{count, plural, one {# merke} other {# merker}}",
+      "customPickerLabel": "Velg et tilpasset merke",
+      "customPickerPlaceholder": "Velg et tilpasset merke…",
+      "customSearchPlaceholder": "Søk etter tilpassede merker…",
+      "pickTagFirst": "Velg et merke ovenfor for å administrere ordmedlemskap."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Oppdatert {time}",
@@ -584,7 +595,11 @@
         "notes": "Notater",
         "updated": "Sist oppdatert"
       }
-    }
+    },
+    "selectedCustomTags": "Valgte merker",
+    "selectedSynonyms": "Valgte synonymer",
+    "removeCustomTag": "Fjern {name}",
+    "pickerLoading": "Laster…"
   },
   "tags": {
     "groups": {
@@ -655,20 +670,25 @@
     }
   },
   "exercises": {
-    "title": "Exercise",
+    "title": "Øvelse",
     "studio": "studio",
     "description": "Velg en studiemodus for å øve på vocabulary.",
     "studioDescription": "Øv fra vocabulary, teorinotater eller importert materiale — velg en kilde, og start deretter en fokusert økt.",
     "startActivity": "Start",
     "unlockActivity": "Lås opp",
     "practice": "øving",
-    "editor": "editor",
+    "editor": "redigerer",
     "edit": "Rediger",
     "editDescription": "Endringer lagres automatisk etter første lagring.",
     "noWorkspace": "Opprett en arbeidsplass før du starter øvelser.",
     "updated": "Oppdatert",
     "backToStudio": "Tilbake til øvelser",
     "studyMode": "Studiemodus",
+    "questionTypeLabel": "Spørsmålstype",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Vanskelighetsgrad",
       "easy": "Lett",
@@ -683,8 +703,8 @@
     "sources": {
       "label": "Øvelseskilde",
       "heading": "Kilde",
-      "vocabulary": "Vocabulary",
-      "theory": "Theory",
+      "vocabulary": "Ordforråd",
+      "theory": "Teori",
       "import": "Import",
       "imported": "Importert",
       "lastUsed": "Sist brukt",
@@ -873,7 +893,7 @@
       "aiReady": "Øving klar",
       "aiUnavailable": "Kunne ikke generere AI-spørsmål akkurat nå.",
       "aiForbidden": "AI theory-øvelser er tilgjengelige med Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Ytterligere instruksjoner er tilgjengelige på Premium.",
       "aiDisabled": "AI-assistanse er slått av i Innstillinger.",
       "feedback": {
         "correct": "Riktig!",
@@ -927,20 +947,22 @@
         "why": "Hvorfor",
         "complete": "Forstått",
         "completeHint": "Du kan gå videre når du er klar.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Start øvelse",
+        "skipReviewAndStart": "Hopp over gjennomgang og start øvelse"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Uklassifisert",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# notat} other {# notater}}",
+        "selectAll": "Velg alle",
+        "selectGroup": "Velg notater i {name}",
+        "expand": "Utvid {name}",
+        "collapse": "Kollaps {name}",
+        "selectedCount": "{count, plural, one {# teori valgt} other {# teorier valgt}}",
+        "practiceSelected": "Øv på valgte",
+        "clearSelection": "Fjern valg",
+        "subfolders": "{count, plural, one {# undermappe} other {# undermapper}}",
+        "selectedOne": "1 teori valgt"
       }
     },
     "types": {
@@ -998,8 +1020,8 @@
       "startsWith": "Starter med «{letter}»",
       "revealPrompt": "Sitter du fortsatt fast? Du kan vise hele svaret.",
       "revealAnswer": "Vis svar",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Neste hint",
+      "hintProgress": "Hint {current} av {total}"
     },
     "empty": {
       "noWordsTitle": "Ingen vocabulary ennå",
@@ -1032,17 +1054,17 @@
       "shuffle": "Bland",
       "finish": "Avslutt runde",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Kildespørsmål",
+        "chooseAi": "Bruk AI-generert",
+        "emptyTitle": "Ingen brukbare lagrede eksempler",
+        "emptyDescription": "Legg til eksempelsetninger som tydelig inkluderer hvert ord, juster filtrene dine, eller bytt til AI-generert.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Lagrede eksempler",
+          "description": "Bygg spørsmål umiddelbart fra vokabulareksmpelene dine. Ingen AI ventetid."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI-generert",
+          "description": "Lag friske setninger fra vokabularet ditt med AI."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "AI-øvelsesgenerering er tilgjengelig med Pro.",
       "disabled": "AI-assistanse er slått av i Innstillinger.",
       "upgradeHint": "Free inkluderer noen AI-øvelsesgenereringer hver dag. Pro fjerner grensen.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Ytterligere instruksjoner",
+      "additionalInstructionsPlaceholder": "For eksempel: Bruk restaurantsituasjoner, hold språket på A2-nivå, og forklar feil på ditt grensesnittsspråk.",
+      "additionalInstructionsLocked": "Oppgrader til Premium for å tilpasse støttede øvelsestyper, sette en virkelighetsnær kontekst, og legge til egne instruksjoner.",
+      "premiumRequired": "Ytterligere instruksjoner er tilgjengelige på Premium.",
+      "presetLabel": "Forhåndsinnstillinger",
+      "presetNone": "Ingen forhåndsinnstilling valgt",
+      "presetApply": "Bruk",
+      "presetSave": "Lagre forhåndsinnstilling",
+      "presetName": "Navn på forhåndsinnstilling",
+      "presetDelete": "Slett",
+      "presetSaved": "Forhåndsinnstilling lagret",
+      "presetDeleted": "Forhåndsinnstilling slettet",
+      "presetSaveFailed": "Kunne ikke lagre den forhåndsinnstillingen.",
       "emptyWords": "Legg til vocabulary-ord før du genererer spørsmål.",
       "noneValid": "AI kunne ikke lage gyldige spørsmål for disse ordene. Prøv igjen.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Tilpass konteksten, stilen eller fokuset på øvelsen din. La stå tomt for å bruke standardinnstillingene.",
+      "presetUpdate": "Oppdater forhåndsinnstilling",
+      "presetUpdated": "Forhåndsinnstilling oppdatert",
+      "presetsTitle": "Lagrede forhåndsinnstillinger",
+      "presetsHelper": "Forhåndsinnstillinger lagrer øvelsesinnstillinger og ytterligere instruksjoner. De endrer ikke ordforrådet eller teoriene du har valgt.",
+      "presetsEmpty": "Ingen lagrede forhåndsinnstillinger ennå. Lagre dine nåværende innstillinger for å gjenbruke dem senere.",
+      "presetSaveAs": "Lagre som forhåndsinnstilling",
+      "presetUpdateCurrent": "Oppdater med nåværende innstillinger",
+      "presetRename": "Gi nytt navn",
+      "presetManage": "Administrer forhåndsinnstilling",
+      "presetRenamed": "Forhåndsinnstilling omdøpt",
+      "presetSaveDialogTitle": "Lagre som forhåndsinnstilling",
+      "presetSaveDialogDescription": "Gi denne forhåndsinnstillingen et navn for å gjenbruke de nåværende øvelsesinnstillingene og ytterligere instruksjoner. Valgt ordforråd eller teorier lagres ikke.",
+      "presetRenameDialogTitle": "Gi nytt navn til forhåndsinnstilling",
+      "presetRenameDialogDescription": "Velg et nytt navn for denne forhåndsinnstillingen.",
+      "presetDeleteDialogTitle": "Slette forhåndsinnstilling?",
+      "presetDeleteDialogDescription": "Slette “{name}”? Din nåværende øvelseskonfigurasjon forblir som den er."
     },
     "session": {
       "complete": "Økten er fullført",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Prøv igjen",
       "questionsLabel": "Spørsmål",
       "correctLabel": "Riktige",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Feil",
+      "unansweredLabel": "Ubesvart",
       "reviewLabel": "Til gjennomgang",
       "answeredProgress": "{answered} / {total} besvart",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Sjekk svar",
+      "nextQuestion": "Neste",
+      "viewResults": "Se resultater",
       "submitSet": "Send inn svar",
       "submitting": "Sjekker…",
       "unansweredWarnTitle": "Ubesvarte spørsmål",
@@ -1121,54 +1143,54 @@
       "unanswered": "Ikke besvart",
       "yourAnswer": "Ditt svar",
       "correctAnswer": "Riktig svar",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Bare {count} spørsmål tilgjengelig fra dine nåværende filtre.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Hvordan du øver",
+        "lockedHint": "Fullfør eller start et nytt sett for å endre dette.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "En etter en",
+          "description": "Se ett spørsmål om gangen. Sjekk etter hvert svar for umiddelbar tilbakemelding."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Alle spørsmål",
+          "description": "Se hele settet, svar i vilkårlig rekkefølge, og send inn én gang for tilbakemelding."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Gjennomgå",
+        "allCorrect": "Perfekt — hvert spørsmål korrekt.",
+        "summary": "{incorrect} feil · {unanswered} ubesvarte · {needsReview} til gjennomgang",
+        "viewWrong": "Se feil svar",
+        "filtersLabel": "Filtrer spørsmål",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Alle ({count})",
+          "needs_review": "Feil & ubesvarte ({count})",
+          "correct": "Korrekte ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Forrige",
+        "nextWrong": "Neste",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} til gjennomgang",
+        "floatLabel": "Navigering av feil svar",
+        "closeFloat": "Vis alle svar"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% korrekt",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Perfekt sett",
+          "body": "Hver svar traff. Den typen fokus fortjener en ny runde når du er klar."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Sterk avslutning",
+          "body": "Du forstår tydeligvis — skim over feilene, og lås det inn med et nytt sett."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Godt arbeid — fortsett",
+          "body": "Noen fastlåste punkter er normale. Gå gjennom dem én gang, og prøv igjen mens de er ferske."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Nesten der",
+          "body": "Fullfør de ubesvarte først — så vil poengene fortelle en klarere historie."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "Spørsmål genereres på {language} (arbeidsplassens språk).",
       "contextualEmptyTitle": "Generer kontekstuelle spørsmål",
-      "contextualEmptyDescription": "Lag fyll-inn-blank-flervalgsspørsmål fra vocabulary.",
+      "contextualEmptyDescription": "Legg til valgfri instruksjon nedenfor hvis du vil, og trykk deretter Generer. Du kan la prompten stå tom.",
       "contextualProDescription": "Kontekstuelle AI-spørsmål er tilgjengelige med Pro.",
       "unlockContextual": "Lås opp med Pro",
       "correct": "Riktig!",
@@ -1202,8 +1224,8 @@
       "hint": "Velg et ord, og trykk deretter på betydningen",
       "complete": "Alle par matchet — flott jobbet!",
       "shuffle": "Bland kolonner",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} par",
+      "continueRound": "Fortsett"
     },
     "typeAnswer": {
       "questionWord": "Hva er betydningen?",
@@ -1213,7 +1235,7 @@
         "contextual": "Kontekstuell"
       },
       "contextualEmptyTitle": "Generer kontekstuelle spørsmål",
-      "contextualEmptyDescription": "Lag fyll-inn-blank-skriveoppgaver fra vocabulary.",
+      "contextualEmptyDescription": "Legg til valgfri instruksjon nedenfor hvis du vil, og trykk deretter Generer. Du kan la prompten stå tom.",
       "contextualProDescription": "Kontekstuelle AI-spørsmål er tilgjengelige med Pro.",
       "unlockContextual": "Lås opp med Pro",
       "placeholder": "Skriv svaret ditt…",
@@ -1231,7 +1253,7 @@
       "finish": "Avslutt runde"
     },
     "formSentence": {
-      "vocabularyLabel": "Vocabulary",
+      "vocabularyLabel": "Ordforråd",
       "meaningLabel": "Betydning",
       "prompt": "Skriv en fullstendig setning med dette vocabulary.",
       "placeholder": "Skriv en fullstendig setning…",
@@ -1266,7 +1288,7 @@
     }
   },
   "writing": {
-    "title": "Writing",
+    "title": "Skriving",
     "studio": "studio",
     "description": "Opprett arbeidsark og oppgaver for språket du lærer.",
     "disabledNoWorkspace": "Opprett en arbeidsplass før du legger til skrivedokumenter.",
@@ -1391,7 +1413,7 @@
       "types": {
         "grammar": "Grammatikk",
         "spelling": "Rettstavning",
-        "vocabulary": "Vocabulary",
+        "vocabulary": "Ordforråd",
         "style": "Stil",
         "clarity": "Klarhet"
       },
@@ -1451,7 +1473,7 @@
       "preparing": "Forbereder eksport…",
       "writingFile": "Lagrer fil…",
       "progressCount": "{current} / {total}",
-      "documentHeading": "Writing",
+      "documentHeading": "Skriving",
       "titleLabel": "Tittel",
       "descriptionLabel": "Beskrivelse",
       "sectionLabel": "Seksjon",
@@ -1543,77 +1565,77 @@
     "open": "Åpne",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "Fangst",
         "body": "Slipp inn et ord, en frase, en grammatikktvil eller en skriveidé på sekunder — du trenger ikke bestemme hvor det hører hjemme ennå. Legg til et valgfritt notat eller kilde, behold elementer under Til behandling, og gjør en capture om til Vocabulary, Theory, Writing eller Exercise når du har tid. Et element merkes som Behandlet først når du er ferdig med å opprette den tilknyttede oppføringen."
       },
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Ordforråd",
         "body": "Legg til egne ord og fraser med betydninger, eksempelsetninger, uttale og tagger. Organiser etter emne, nivå eller situasjon — og gjenbruk dem i øvelser og repetisjon. Start med ord fra hverdagen, timer, bøker eller media; biblioteket ditt blir grunnlaget for øving."
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teori",
         "body": "Lagre grammatikkregler, uttalenotater, bruksforklaringer og personlige eksempler med egne ord. Tenk på Theory som en oppslagsbok du går tilbake til når du glemmer noe. Jo mer du dokumenterer, desto sterkere blir den personlige kunnskapsbasen."
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Øvelse",
         "body": "Øv med flashcards, quizer, fyll inn blanke felt og mer — bygget fra ditt eget vokabular og teori. Øvelser vokser med kunnskapen du legger til. Jo mer materiale du lagrer, desto mer nyttig og personlig blir øvingen."
       },
       "writing": {
-        "title": "Writing",
+        "title": "Skriving",
         "body": "Skriv utkast og lag spørsmålssett med egne emner og vokabular. Writing handler om å bruke det du lærer aktivt, ikke bare å memorere. Med Pro kan AI sjekke og forbedre arbeidet ditt, og du kan eksportere materiale når du trenger det."
       },
       "listening": {
-        "title": "Listening",
+        "title": "Lytting",
         "body": "Last opp lyd eller video, få et transcript, og gjør det om til en leksjon. Bruk transcriptet til å fange ukjente ord og uttrykk, og øv med ekte innhold du velger selv. Ta med eget lyttemateriale i stedet for å være begrenset til forhåndsdefinert innhold."
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Tale",
         "body": "Ring en AI-tutor på video og øv på å snakke naturlig med din egen læringskunnskap. Etter hver økt kan du se gjennom transcript og tilbakemelding for å se hva du bør forbedre. Dette lukker loopen: lær → øv → bruk → gjennomgå → forbedre."
       },
       "reading": {
-        "title": "Reading",
+        "title": "Lesing",
         "body": "Importer eller lim inn tekster, og generer forståelsesøving — flervalg, skriftlige svar og sant / usant / ikke oppgitt. Free inkluderer begrenset AI-generering og retting hver dag; Pro hever dagsgrensen, og Premium er ubegrenset."
       }
     },
     "modules": {
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Ordforråd",
         "description": "Din personlige ordliste for dette språket.",
         "how": "Legg til et ord, merk primære betydninger, og knytt eksempelsetninger. Bruk tagger og søk for å finne dem senere.",
         "cta": "Åpne vocabulary"
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teori",
         "description": "En notatbok for hvordan språket fungerer — ikke skriveøving.",
         "how": "Opprett et notat, velg en kategori, og kom tilbake når du trenger en oppfriskning.",
         "cta": "Åpne theory"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Øvelse",
         "description": "Korte økter bygget fra ordene du allerede har lagret.",
         "how": "Legg til noen ord først, og velg deretter en modus. Kom ofte tilbake — noen minutter teller også.",
         "cta": "Åpne øvelser"
       },
       "writing": {
-        "title": "Writing",
+        "title": "Skriving",
         "description": "Rike dokumenter og spørsmålssett du kan gå tilbake til og eksportere.",
-        "how": "Start et utkast, organiser med mapper, og bruk Pro AI til å sjekke eller forbedre teksten.",
+        "how": "Start et utkast, organiser med mapper, og bruk AI-kvoten i planen din for å sjekke eller forbedre teksten din.",
         "cta": "Åpne writing"
       },
       "listening": {
-        "title": "Listening",
+        "title": "Lytting",
         "description": "Gjør ekte lyd eller video om til en leksjon.",
-        "how": "Last opp et klipp og generer et transcript på Free. Generert lytteøving er en del av Pro.",
+        "how": "Last opp et klipp, generer et transkript, og bygg lytteøvelser med AI-kvoten inkludert i planen din.",
         "cta": "Åpne listening"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Tale",
         "description": "Live videosamtale med en AI-tutor.",
         "how": "Opprett en økt og bli med i samtalen. Free inkluderer ett AI-møte per dag, tutor inkludert.",
         "cta": "Åpne speaking"
       },
       "reading": {
-        "title": "Reading",
+        "title": "Lesing",
         "description": "Tekster med AI-forståelsesøving.",
         "how": "Importer eller lim inn en tekst, generer spørsmål, og øv og gjennomgå. Free har en daglig AI-grense; Pro tillater 10/dag; Premium er ubegrenset.",
         "cta": "Åpne reading"
@@ -1648,7 +1670,7 @@
     "nextStepTitle": "Neste steg",
     "continueEmpty": "Ingenting å ta opp igjen ennå — legg til et teorinotat, skrivearbeid, lytteleksjon eller taleøkt, så dukker det opp her.",
     "inbox": {
-      "title": "Capture",
+      "title": "Fangst",
       "subtitle": "Raske notater som venter på å sorteres inn i biblioteket ditt.",
       "count": "{count, plural, =0 {Ingenting venter} one {# element å behandle} other {# elementer å behandle}}",
       "cta": "Åpne Capture"
@@ -1870,13 +1892,13 @@
   "tutorials": {
     "show": "Vis veiledning",
     "showShort": "Veiledning",
-    "guideLabel": "Guide",
+    "guideLabel": "Veiledning",
     "next": "Neste",
     "skip": "Hopp over veiledning",
     "done": "Skjønner",
     "stepProgress": "{current} / {total}",
     "vocabulary": {
-      "title": "Vocabulary",
+      "title": "Ordforråd",
       "description": "Legg til ord som betyr noe for deg — søk, organiser og gjenbruk dem på tvers av Notoria.",
       "cta": "Legg til et ord",
       "steps": {
@@ -1938,7 +1960,7 @@
       }
     },
     "writing": {
-      "title": "Writing",
+      "title": "Skriving",
       "description": "Bruk det du har lært i egne setninger — utkast, spørsmålssett og stykker du kan gå tilbake til.",
       "cta": "Begynn å skrive",
       "steps": {
@@ -1977,7 +1999,7 @@
       }
     },
     "theory": {
-      "title": "Theory",
+      "title": "Teori",
       "description": "Behold forklaringene du vil huske — grammatikk, uttale, bruk og personlige notater.",
       "cta": "Legg til theory",
       "steps": {
@@ -2031,7 +2053,7 @@
       }
     },
     "listening": {
-      "title": "Listening",
+      "title": "Lytting",
       "description": "Ta med ekte innhold du vil forstå — last opp lyd eller video, les transcriptet, og studer ut fra det.",
       "cta": "Åpne listening",
       "steps": {
@@ -2066,7 +2088,7 @@
       }
     },
     "speaking": {
-      "title": "Speaking",
+      "title": "Tale",
       "description": "Øv på å bruke språket i samtale — se deretter gjennom transcript og tilbakemelding.",
       "cta": "Start en samtale",
       "steps": {
@@ -2081,7 +2103,7 @@
       }
     },
     "reading": {
-      "title": "Reading",
+      "title": "Lesing",
       "description": "Importer eller lim inn tekster, generer forståelsesøving, og se gjennom resultatene.",
       "cta": "Åpne reading",
       "steps": {
@@ -2120,7 +2142,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "Fangst",
       "description": "Lagre fragmenter raskt — ord, tvil, ideer — og gjør dem om til ekte studieelementer når du har et øyeblikk.",
       "cta": "Skjønner",
       "steps": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Noen arbeidsområder finnes allerede for samme språk. Innholdet legges til i eksisterende arbeidsområder i stedet for å opprette duplikater.",
         "empty_backup": "Denne sikkerhetskopien inneholder ingen importerbare læringsdata.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Noen eksisterende elementer deler samme navn. Importen vil gjenbruke ett av dem deterministisk og la de andre være uendret."
       },
       "cancel": "Avbryt",
       "confirm": "Importer læringsdata",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "Den sikkerhetskopien er for stor til å behandles via denne siden. Prøv en mindre eksport eller kontakt support.",
         "notConfigured": "Fillagring er ikke konfigurert for sikkerhetskopiimport ennå."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Allerede i kontoen din",
+      "skippedInAccountHint": "Disse navnene samsvarer med elementer du allerede har. De vil ikke bli importert igjen. Nye elementer under samme arbeidsområde importeres fortsatt.",
+      "skippedInBackupTitle": "Dupliserte navn i denne sikkerhetskopien",
+      "skippedInBackupHint": "Filene lister opp det samme navnet mer enn én gang. Bare den første kopien av hvert navn importeres — dette er normalt selv på en tom konto.",
+      "skippedOtherTitle": "Kunne ikke importere"
     },
     "danger": {
       "title": "Steng konto",
@@ -3184,7 +3206,7 @@
       "warningTitle": "Før du fortsetter",
       "warnings": {
         "workspaces": "Alle arbeidsområder og alle ordforråd-, teori-, skrive-, lytte- og taledata blir slettet.",
-        "billing": "Eventuelt aktivt Notoria Pro-abonnement kanselleres umiddelbart.",
+        "billing": "Enhver aktiv Notoria Pro- eller Premium-abonnement vil bli kansellert umiddelbart.",
         "media": "Opplastede medier og profilbildet ditt blir fjernet.",
         "permanent": "Det er ingen gjenopprettingsperiode etter bekreftelse."
       },
@@ -3233,7 +3255,7 @@
     "upgrade": "Oppgrader til Pro",
     "manage": "Administrer abonnement",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratis",
     "premiumBadge": "Premium",
     "renewsOn": "Fornyes {date}",
     "status": "Status: {status}",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "Personlig læringssti",
       "personalizedRecommendations": "Personlige anbefalinger",
       "crossModuleIntelligence": "Personalisering på tvers av moduler",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Egendefinerte øvelsesinstruksjoner"
     },
     "compare": {
       "heading": "Sammenlign planer",
@@ -3458,7 +3480,7 @@
       "feature": "Funksjon",
       "current": "Nåværende",
       "capability": "Det du får",
-      "free": "Free",
+      "free": "Gratis",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Inkludert på Free",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "Personvernerklæring",
     "termsTitle": "Bruksvilkår",
     "privacyDescription": "Hvordan Notoria samler inn, bruker og sletter personopplysninger og læringsinnhold for sitt private språklæringsarbeidsområde.",
-    "termsDescription": "Vilkår for bruk av Notorias private språklæringsarbeidsområde, kontoer, AI-funksjoner og Notoria Pro-fakturering.",
+    "termsDescription": "Vilkår for bruk av Notorias private språk-læringsarbeidsområde, kontoer, AI-funksjoner, og Pro- eller Premium-fakturering.",
     "updated": "Sist oppdatert {date}",
-    "updatedDate": "23. september 2026",
+    "updatedDate": "27. oktober 2026",
     "backToSignIn": "Tilbake til innlogging",
     "backHome": "Tilbake til Notoria",
     "authFooter": "Personvern · Vilkår",
@@ -4071,7 +4093,7 @@
         "purposes": "Hvorfor vi behandler data",
         "auth": "Kontoer og innlogging",
         "ai": "AI-funksjoner",
-        "payments": "Betalinger (Notoria Pro)",
+        "payments": "Betalinger (Pro og Premium)",
         "processors": "Tjenesteleverandører",
         "cookies": "Informasjonskapsler og enhetslagring",
         "transfers": "Internasjonale overføringer",
@@ -4095,7 +4117,7 @@
           "list": [
             "oppretter eller bruker en konto",
             "lagrer materiale i private arbeidsområder",
-            "abonnerer på Notoria Pro",
+            "abonnere på Notoria Pro eller Premium",
             "bruker valgfrie AI-assisterte verktøy",
             "laster opp media for lytting eller profilbruk",
             "bruker muntlig øving",
@@ -4156,7 +4178,7 @@
               "basis": "Avtale (art. 6(1)(b))"
             },
             {
-              "purpose": "Kjøre Notoria Pro-fakturering og abonnementsstatus via Stripe",
+              "purpose": "Kjøre Notoria Pro og Premium fakturering og abonnementsstatus via Stripe",
               "basis": "Avtale (art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "Den nåværende kodebasen bruker ikke andre store språkmodellleverandører enn OpenAI. OpenAI behandler data under egne vilkår og personvernregler som behandler for disse funksjonene."
         },
         "payments": {
-          "title": "7. Betalinger (Notoria Pro)",
+          "title": "7. Betalinger (Pro og Premium)",
           "p1": "Betalte abonnementer håndteres av <strong>Stripe</strong>. Checkout, fakturaer, betalingsmetoder og avbestilling kjører via Stripe Checkout og Stripe Customer Portal. Stripe-webhooks oppdaterer planen og statusen din i Notoria.",
           "p2": "Stripe behandler betalingsdata som betalingsleverandør. Se Stripes egen personverndokumentasjon for korthandtering."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro-checkout, portal og abonnementsstatus"
+              "role": "Notoria Pro og Premium utsjekk, portal, og abonnementsstatus"
             },
             {
               "provider": "Google",
@@ -4256,7 +4278,7 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
+              "cookie": "Auth.js sesjonskake",
               "purpose": "Holder deg innlogget (JWT-økt; bibliotekets standardnavngiving)",
               "code": false
             },
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Disse bruksvilkårene forklarer reglene for bruk av Notoria på <site>www.notoria.fi</site>. De beskriver hvordan produktet fungerer i dag: private læringsarbeidsområder, valgfri Notoria Pro-fakturering via Stripe og AI-assisterte funksjoner. De er ikke en erstatning for råd fra en advokat om din spesifikke situasjon.",
+      "intro": "Disse vilkårene for bruk forklarer reglene for bruk av Notoria på <site>www.notoria.fi</site>. De beskriver hvordan produktet fungerer i dag: private læringsarbeidsområder, valgfri Pro- og Premium-fakturering gjennom Stripe, og AI-assisterte funksjoner. De er ikke en erstatning for råd fra en advokat om din spesifikke situasjon.",
       "tocTitle": "På denne siden",
       "tocAria": "På denne siden",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Akseptabel bruk",
         "ip": "Immaterielle rettigheter",
         "ai": "AI-generert output",
-        "plans": "Free-plan og Notoria Pro",
+        "plans": "Gratis, Pro, og Premium planer",
         "billing": "Abonnement og fakturering",
         "refunds": "Refusjoner og forbrukerrettigheter",
         "availability": "Tilgjengelighet",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. Tjenesten",
           "p1": "Notoria er en privat språklæringsnettapp. Du kan opprette arbeidsområder og beholde læringsmateriale som ordforråd, teorinotater, skriving, øvelser, lyttingsleksjoner og muntlige økter.",
-          "p2": "Noen funksjoner er tilgjengelige på free-planen. Notoria Pro låser opp ytterligere muligheter som vist i produktet og på <account>Konto</account>-siden din — inkludert Lytting, Muntlig, visse AI-studieverktøy, øvelsesimport og betalte dokumenteksportformater. Funksjonstilgjengelighet kan endres etter hvert som produktet utvikler seg.",
+          "p2": "Kjerne læringsområder, inkludert Lytting, Snakking, og Lesing, er tilgjengelige på hver plan. Pro og Premium legger til høyere AI-kvoter og læringsmateriale import/eksport; Premium legger også til personlig coaching og øvingsfunksjoner. Den nåværende sammenligningen vises på din <account>Konto</account> side. Funksjonstilgjengelighet kan endres etter hvert som produktet utvikler seg.",
           "p3": "Notoria er for personlig språklæring. Det er ikke en skole, eksamensmyndighet eller profesjonell rådgivningstjeneste."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. AI-generert output",
           "p1": "Noen funksjoner kan sjekke, foreslå, generere, transkribere, oppsummere eller veilede basert på materialet ditt. Output kan være ufullstendig, feilaktig eller uegnet for målet ditt. Du forblir ansvarlig for å gjennomgå AI-resultater før du stoler på dem til studier, eksamener, profesjonell bruk eller publisering.",
           "p2": "AI-funksjoner kan være utilgjengelige hvis assistanse er slått av i <settings>Innstillinger</settings>, hvis planen din ikke inkluderer et bestemt verktøy, eller hvis en leverandør midlertidig er utilgjengelig.",
-          "p3": "Ikke alle AI-hjelpere krever Notoria Pro. Produktet viser hvilke verktøy som er gratis og hvilke som trenger Pro."
+          "p3": "AI-tilgjengelighet og daglige kvoter varierer mellom Gratis, Pro, og Premium. Produktet viser planen og kvoten som kreves for hvert verktøy."
         },
         "plans": {
-          "title": "8. Free-plan og Notoria Pro",
+          "title": "8. Gratis, Pro, og Premium planer",
           "p1": "Free-planen dekker kjerneøving med ditt eget ordforråd og relaterte studieverktøy som vist i produktet.",
-          "p2": "Notoria Pro er et betalt abonnement som låser opp ytterligere funksjoner. I det nåværende produktet inkluderer det typisk Lytting, Muntlig, øvelsesimport, lag-en-setning-øving, mange AI-assisterte studieverktøy og PDF/DOCX-dokumenteksport. Noen lettere AI-hjelpere (som visse ordforråds- eller editorformateringshjelpemidler) kan forbli tilgjengelige på free-planen når AI-assistanse er aktivert.",
-          "p3": "Pro-tilgang er knyttet til brukerkontoen din, så den gjelder på tvers av arbeidsområdene under den kontoen. Kontoer med en administratorrolle kan ha Pro-nivå tilgang uten et personlig Stripe-abonnement.",
-          "p4": "Prisen som gjelder for kjøpet ditt er prisen vist ved Stripe Checkout for den nåværende Pro-planen. Enhver pris vist andre steder i produktet (for eksempel på Konto) er kun veiledende og må matche den aktive Stripe-priskonfigurasjonen."
+          "p2": "Pro og Premium er betalte abonnementer. Pro legger til høyere eller ubegrensede kvoter for mange AI-verktøy pluss læringsmateriale import og PDF/DOCX eksport. Premium inkluderer Pro og legger til personlige funksjoner som Læringscoach, personlig læringsprofil, adaptiv praksis, feilbasert praksis, og tilpassede øvingsinstruksjoner. Konto-siden viser den nåværende sammenligningen og grensene.",
+          "p3": "Betalt tilgang er knyttet til brukerkontoen din og gjelder på tvers av arbeidsområdene. Kontoer med administratorrolle kan ha betalt tilgang uten et personlig Stripe-abonnement.",
+          "p4": "Prisen som gjelder er prisen som vises ved Stripe Checkout for den valgte Pro- eller Premium-planen. Enhver pris som vises andre steder i produktet (for eksempel på Konto) er kun indikativ og må samsvare med den aktive Stripe prisinnstillingen."
         },
         "billing": {
           "title": "9. Abonnement, fakturering og avbestilling",
-          "list0": "Pro-abonnementer faktureres gjennom <strong>Stripe</strong>",
-          "list1": "Du kan starte checkout fra <account>Konto</account> eller fra låste Pro-kontroller i appen",
+          "list0": "Pro og Premium abonnementer faktureres gjennom <strong>Stripe</strong>",
+          "list1": "Du kan starte utsjekk eller endre plan fra <account>Konto</account> eller fra låste betalte kontroller i appen",
           "list2": "Fra Konto kan du åpne Stripe Customer Portal for å se fakturaer, oppdatere betalingsmetoder og avbestille abonnementet",
           "list3": "Avbestilling følger Stripes Customer Portal-oppførsel for abonnementet ditt",
-          "p1": "Etter at du avbestiller, fortsetter Pro-tilgang bare mens Stripe-abonnementsstatusen din fortsatt gir Pro i produktet. I den nåværende implementeringen inkluderer statuser som behandles som Pro <code>active</code>, <code>trialing</code> og <code>past_due</code>. Når statusen ikke lenger kvalifiserer, går kontoen tilbake til free-planen.",
-          "p2": "Hvis en betaling mislykkes, kan Stripe flytte abonnementet til <code>past_due</code> eller en annen status. Notoria synkroniserer den statusen fra Stripe-webhooks. Mens statusen forblir <code>past_due</code>, forblir Pro-funksjoner tilgjengelige under de nåværende tilgangsreglene; hvis abonnementet senere blir kansellert eller på annen måte ikke kvalifiserer, opphører Pro-tilgang.",
+          "p1": "Etter at du har kansellert fornyelsen, fortsetter din nåværende Pro- eller Premium-tilgang så lenge Stripe-abonnementsstatus fortsatt kvalifiserer i produktet. Kvalifiserende statuser inkluderer for øyeblikket <code>aktiv</code>, <code>prøveperiode</code>, og <code>forfalt</code>. Når statusen ikke lenger kvalifiserer, går kontoen tilbake til Gratis.",
+          "p2": "Hvis en betaling mislykkes, kan Stripe flytte abonnementet til <code>forfalt</code> eller en annen status. Notoria synkroniserer den statusen fra Stripe webhooks. Mens det forblir <code>forfalt</code>, forblir den nåværende betalte planen tilgjengelig under de nåværende tilgangsreglene; hvis det senere blir kansellert eller på annen måte ikke kvalifisert, avsluttes betalt tilgang.",
           "p3": "Sletting av Notoria-kontoen din avbryter Stripe-abonnementet umiddelbart (best effort) som del av kontoslettingen. Det er forskjellig fra å avbryte fornyelse gjennom Customer Portal mens du beholder kontoen."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Ansvarsfraskrivelse og ansvar",
           "p1": "Notoria tilbys på «som tilgjengelig»-basis for personlig språklæring. I den utstrekning det er tillatt etter gjeldende lov, fraskriver vi oss garantier som ikke kreves ved lov.",
-          "p2": "I den utstrekning det er tillatt etter gjeldende lov, er Notoria ikke ansvarlig for indirekte, tilfeldige, spesielle, følgeskader eller tap av data som oppstår fra din bruk av tjenesten eller tillit til AI-output. Der ansvar ikke kan utelukkes, er det begrenset til beløpet du betalte for Notoria Pro i de tre månedene før kravet, eller ethvert større beløp som kreves av ufravikelig lov.",
+          "p2": "I den grad det er tillatt av gjeldende lov, er Notoria ikke ansvarlig for indirekte, tilfeldige, spesielle, følgeskader, eller tap av data som oppstår fra din bruk av tjenesten eller avhengighet av AI-utdata. Der ansvar ikke kan utelukkes, er det begrenset til beløpet du betalte for Notoria Pro eller Premium i de tre månedene før kravet, eller et større beløp som kreves av obligatorisk lov.",
           "p3": "Disse begrensningene utelukker ikke ansvar som finsk eller EU-lov ikke tillater begrenset — inkludert ansvar som ikke kan fraskrives for forbrukere, og ansvar for død eller personskade forårsaket av uaktsomhet der slike regler gjelder."
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "Bygg en personlig ordforrådsbank med betydninger, eksempler og tagger",
           "practice": "Øv med øvelser hentet fra dine egne ord og notater",
           "create": "Skriv teorinotater og skrivearbeid du kan gå tilbake til senere",
-          "listenSpeak": "Gjør media om til lyttingsøving, og snakk med en AI-veileder på Pro"
+          "listenSpeak": "Gjør media til lytteøvelser, og bruk AI-kvoter for transkripsjon og taleøvelser"
         },
-        "note": "Noen AI-, lyttings-, muntlig- og eksportverktøy er en del av Notoria Pro. Free-planen dekker fortsatt hverdagsordforrådsøving og den grunnleggende studieløkken."
+        "note": "Kjerne læringsområder er tilgjengelige på hver plan. Pro øker AI-kvotene og legger til læringsmateriale import/eksport; Premium legger til personlig coaching og øving."
       },
       "ai": {
         "title": "AI, der det hjelper",
@@ -4656,7 +4678,7 @@
         "title": "Hvordan områdene henger sammen",
         "p1": "Fangst er det raske inngangspunktet. Ordforråd og Teori er der materialet lander. Øvelse gjør det materialet om til øving. Skriving, Lytting og Muntlig hjelper deg å bruke språket mer aktivt.",
         "p2": "Du trenger ikke gå gjennom hvert område i rekkefølge. Mange blir hos ord og kort øving en stund.",
-        "p3": "Et naturlig neste steg er skriving når du vil produsere språk på egne premisser, deretter lytting og muntlig når du vil at det samme materialet skal fungere i øret og stemmen — Lytting og Muntlig er en del av Notoria Pro.",
+        "p3": "Et naturlig neste steg er skriving når du vil produsere språk på dine egne vilkår, deretter lytting og snakking når du vil at det samme materialet skal fungere i øret og stemmen din. Disse områdene er tilgjengelige på hver plan; AI-bruksgrenser varierer etter plan.",
         "beat": "Samle og forstå først. Bruk og snakk når materialet er klart til å forlate siden."
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "Lytting",
-          "body": "Gjør media om til lyttingsøving i arbeidsområdet ditt. Tilgjengelig på Notoria Pro."
+          "body": "Gjør media til lytteøvelser i arbeidsområdet ditt. Tilgjengelig på hver plan; AI transkripsjonskvoter varierer etter plan."
         },
         "speaking": {
           "label": "Muntlig",
-          "body": "Live øving med en AI-veileder, forankret i språket du studerer. Tilgjengelig på Notoria Pro."
+          "body": "Live øvelse med en AI-lærer, forankret i språket du studerer. Tilgjengelig på hver plan med en planbasert daglig kvote."
         },
         "reading": {
           "label": "Lesing",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Hvordan endrer jeg passordet eller lukker kontoen?",
-          "a": "Åpne <account>Konto</account>. Der kan du oppdatere passordet hvis du bruker e-postinnlogging, administrere Notoria Pro, eksportere en sikkerhetskopi eller slette kontoen permanent."
+          "a": "Åpne <account>Konto</account>. Du kan oppdatere passordet ditt der hvis du bruker e-postinnlogging, administrere Pro eller Premium, eksportere en sikkerhetskopi, eller permanent slette kontoen din. Sletting av kontoen kansellerer også umiddelbart eventuelle aktive Stripe-abonnementer på best-effort basis; kansellering av fornyelse alene beholder kontoen og dataene dens."
         },
         "pro": {
           "q": "Hvordan fungerer fakturering og avbestilling?",
-          "a": "Notoria Pro faktureres gjennom Stripe. Fra <account>Konto</account> kan du oppgradere, åpne Stripe-kundeportalen for å administrere betalingsmetoder og fakturaer, eller avbryte fornyelse."
+          "a": "Notoria Pro og Premium faktureres gjennom Stripe. Fra <account>Konto</account> kan du abonnere, bytte mellom Pro og Premium, administrere betalingsmetoder og fakturaer, kansellere fornyelse, eller gjenoppta en planlagt kansellering. Kansellering av fornyelse holder tilgang til Stripe avslutter den kvalifiserte abonnementsperioden; sletting av kontoen din er separat og kansellerer abonnementet umiddelbart på best-effort basis."
         },
         "proFeatures": {
-          "q": "Hva er gratis, og hva trenger Notoria Pro?",
-          "a": "Hverdagsordforrådsøving og relaterte studieverktøy er tilgjengelige på free-planen. Noen AI-verktøy, lytting, muntlig og dokumenteksportfunksjoner er en del av Notoria Pro. Sammenlign og oppgrader fra <account>Konto</account>."
+          "q": "Hva er inkludert med Gratis, Pro, og Premium?",
+          "a": "Gratis inkluderer de kjerne læringsområdene og daglige kvoter for støttede AI-verktøy. Pro hever eller fjerner mange AI-grenser og legger til læringsmateriale import pluss PDF/DOCX eksport. Premium inkluderer Pro og legger til personlig coaching, en læringsprofil, adaptiv og feilbasert praksis, og tilpassede øvingsinstruksjoner. Se den live sammenligningen og nåværende grenser i <account>Konto</account>."
         },
         "learning": {
           "q": "Hvordan fungerer Notorias læringsfunksjoner?",
@@ -4997,7 +5019,7 @@
         "admins": "Administratorer",
         "testers": "Testbrukere",
         "suspended": "Suspenderte",
-        "contentTotal": "Content records"
+        "contentTotal": "Innholdsoppføringer"
       },
       "quickAccess": "Hurtigtilgang",
       "quickAccessLede": "Gå til administrasjonsverktøy.",
@@ -5050,8 +5072,8 @@
         "created": "Registrert",
         "updated": "Oppdatert",
         "emailVerified": "E-post bekreftet",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-post",
+        "password": "Passord"
       },
       "detail": {
         "account": "Konto",
@@ -5060,7 +5082,7 @@
         "actions": "Kontohandlinger",
         "workspaces": "Arbeidsområder",
         "workspacesLede": "Språkarbeidsområder eid av denne brukeren.",
-        "danger": "Danger zone"
+        "danger": "Farlig sone"
       },
       "actions": {
         "saveProfile": "Lagre navn",
@@ -5071,7 +5093,7 @@
         "delete": "Slett konto",
         "grantTester": "Gi testbruker-rolle",
         "revokeTester": "Fjern testbruker-rolle",
-        "create": "Create user"
+        "create": "Opprett bruker"
       },
       "confirm": {
         "grantAdmin": "Gi admin-tilgang til denne kontoen?",
@@ -5089,11 +5111,11 @@
         "admin": "Administrator"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Opprett bruker",
+        "lede": "Opprett en konto med en e-postadresse og passord. De kan logge inn umiddelbart."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratis",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5140,7 @@
         "owner": "Eier",
         "created": "Opprettet",
         "updated": "Oppdatert",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Eier e-post",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "Slette dette arbeidsområdet og alt læringsinnhold i det via database-kaskader?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Opprett arbeidsområde",
+        "lede": "Knytt et nytt språk arbeidsområde til en eksisterende konto via e-post."
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "Arbeidsområde",
         "created": "Opprettet",
         "updated": "Oppdatert",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Tittel",
+        "word": "Ord",
+        "folderName": "Mappenavn"
       },
       "detail": {
         "description": "Inspeksjon av metadata. Private innhold lastes ikke automatisk.",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "Slett post",
-        "saveTitle": "Save title"
+        "saveTitle": "Lagre tittel"
       },
       "confirm": {
         "delete": "Slette denne posten? Relaterte underliggende rader følger database-kaskade- / set-null-regler."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Fangstobjekter lagrer fritekst. Tittelredigering støttes ikke her — slett hvis posten skal fjernes."
     },
     "jobs": {
       "title": "Jobber",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "Ugyldig språkkode.",
       "CONTENT_NOT_FOUND": "Post ikke funnet.",
       "INVALID_CONTENT_MODULE": "Ukjent innholdsmodul.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Den e-posten er allerede registrert.",
+      "PASSWORD_TOO_WEAK": "Passordet oppfyller ikke styrkekravene.",
+      "CONTENT_TITLE_UNSUPPORTED": "Denne innholdstypen støtter ikke tittelredigering."
     }
   }
 }

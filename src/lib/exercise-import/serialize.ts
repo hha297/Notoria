@@ -8,6 +8,7 @@ import type {
   ExerciseImportListItem,
 } from "@/lib/exercise-import/types";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
+import { resolveTheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 function isRecord(value: unknown): value is Record<string, unknown> {
   return typeof value === "object" && value !== null && !Array.isArray(value);
@@ -34,6 +35,7 @@ export function toImportListItem(
     updatedAt: row.updatedAt.toISOString(),
     sourceUrl: row.sourceUrl,
     originalFilename: row.originalFilename,
+    questionType: resolveTheoryQuestionType(row.questionType),
   };
 }
 

@@ -17,19 +17,20 @@
     "hideFilters": "फ़िल्टर छिपाएँ",
     "remove": "हटाएँ",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "दृश्य",
+      "print": "प्रिंट-फ्रेंडली",
+      "printHint": "सफेद पृष्ठ, गहरा पाठ",
+      "theme": "वर्तमान थीम",
+      "themeHint": "आपकी हल्की या गहरी थीम से मेल खाता है",
+      "previewKicker": "नमूना पृष्ठ",
+      "previewTitle": "दस्तावेज़ शीर्षक",
+      "previewBody": "शरीर पाठ चयनित रंगों और स्थानों का उपयोग करता है।",
+      "previewCallout": "कॉलआउट और उच्चारण मॉड्यूल रंग का पालन करते हैं।",
+      "fixedNote": "दृश्य निर्यातित फ़ाइल में स्थिर है। इसे बदलने के लिए फिर से निर्यात करें।",
+      "docxBackgroundNote": "Word और अन्य ऐप्स पृष्ठ पृष्ठभूमियों को एक ही तरीके से नहीं दिखा सकते, विशेष रूप से प्रिंट करते समय।"
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "ऊपर स्क्रॉल करें",
+    "moreActions": "अधिक क्रियाएँ"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "यह फ़ोल्डर बहुत गहराई तक नेस्ट किया गया है",
     "notFound": "फ़ोल्डर नहीं मिला",
     "nameTaken": "यह नाम पहले से किसी फ़ोल्डर या लेखन में उपयोग हो रहा है",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "एक फ़ोल्डर में स्थानांतरित करें",
+    "dragTipBody": "कंप्यूटर पर माउस या ट्रैकपैड के साथ, एक टुकड़े को फ़ोल्डर कार्ड पर खींचें। आप प्रत्येक आइटम पर मूव आइकन का भी उपयोग कर सकते हैं।",
+    "dragTipDismiss": "टिप को बंद करें",
+    "dragTipShow": "फ़ोल्डरों में कैसे स्थानांतरित करें",
+    "dragTipDemo": "आइटम को फ़ोल्डर पर खींचें",
+    "dragTipCard": "आइटम"
   },
   "theme": {
     "toggle": "थीम बदलें",
@@ -472,34 +473,34 @@
     "viewMode": "प्रदर्शन मोड",
     "tagManager": {
       "open": "टैग प्रबंधित करें",
-      "eyebrow": "Tags",
+      "eyebrow": "टैग",
       "title": "टैग प्रबंधक",
-      "description": "एक टैग चुनें, फिर शब्दों से उसे असाइन करें या हटाएँ। असाइन किए गए और अन्य शब्द अलग सूचियों में रहते हैं।",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "एक टैग चुनें, फिर इसे शब्दों से असाइन या हटाएं।",
+      "pageDescription": "मानक या कस्टम चुनें, एक टैग चुनें, फिर इसे शब्दों से जोड़ें या हटाएं।",
+      "disabledNoWorkspace": "शब्दावली टैग प्रबंधित करने से पहले एक कार्यक्षेत्र बनाएं।",
+      "backToVocabulary": "शब्दावली पर वापस जाएं",
+      "backToSettings": "सेटिंग्स पर वापस जाएं",
       "groupsLabel": "मानक टैग समूह",
       "tagsHeading": "टैग",
       "standardTagsHeading": "मानक टैग",
       "customTagsHeading": "कस्टम टैग",
-      "customTagsHint": "आपके स्वयं के संगठन के लिए बनाए गए लेबल — शब्द भेद नहीं।",
+      "customTagsHint": "आपके द्वारा बनाए गए कार्यक्षेत्र लेबल — जब सूची लंबी हो तो उन्हें खोजें।",
       "emptyCustomTags": "अभी कोई कस्टम टैग नहीं। शब्द संपादित करते समय बनाएँ।",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "इस खोज से मेल खाने वाले कोई कस्टम टैग नहीं हैं।",
+      "tagSearchPlaceholder": "टैग खोजें…",
       "wordsHeading": "{tag}",
       "kindStandard": "मानक",
       "kindCustom": "कस्टम",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "शब्द सूची",
+      "wordTabAssigned": "टैग किया गया",
+      "wordTabOther": "बिना टैग किया गया",
       "assignedHeading": "इस टैग वाले शब्द",
       "otherHeading": "अन्य शब्द",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "इस पृष्ठ पर सभी चुनें",
+      "clearSelection": "चयन साफ करें",
+      "selectionScopePage": "इस पृष्ठ से चयनित ({count} में से {total})",
+      "selectionScopeFiltered": "वर्तमान खोज परिणामों के भीतर चयनित",
       "searchPlaceholder": "शब्द या अर्थ खोजें…",
       "wordCount": "{count}",
       "loading": "शब्दावली लोड हो रही है…",
@@ -509,13 +510,23 @@
       "emptyOther": "हर शब्द में पहले से यह टैग है।",
       "emptyOtherSearch": "असाइन करने के लिए कोई मिलान वाला शब्द नहीं।",
       "selected": "{count} चयनित",
-      "addToTag": "टैग में जोड़ें",
-      "removeFromTag": "टैग से हटाएँ",
-      "applyAdd": "टैग में जोड़ें ({count})",
-      "applyRemove": "टैग से हटाएँ ({count})",
+      "addToTag": "टैग जोड़ें",
+      "removeFromTag": "टैग हटाएं",
+      "applyAdd": "टैग जोड़ें ({count})",
+      "applyRemove": "टैग हटाएं ({count})",
       "added": "{tag} में {count} शब्द जोड़े गए",
       "removed": "{tag} से {count} शब्द हटाए गए",
-      "error": "टैग सदस्यता अपडेट नहीं हो सकी"
+      "error": "टैग सदस्यता अपडेट नहीं हो सकी",
+      "systemsLabel": "टैग सिस्टम",
+      "standardSystemTitle": "मानक",
+      "standardSystemMeta": "विषय और उपयोग, अलग-अलग दिखाए गए",
+      "usageOptional": "वैकल्पिक",
+      "customSystemTitle": "कस्टम",
+      "customSystemMeta": "{count, plural, one {# लेबल} other {# लेबल}}",
+      "customPickerLabel": "एक कस्टम टैग चुनें",
+      "customPickerPlaceholder": "एक कस्टम टैग चुनें…",
+      "customSearchPlaceholder": "कस्टम टैग खोजें…",
+      "pickTagFirst": "शब्द सदस्यता प्रबंधित करने के लिए ऊपर एक टैग चुनें।"
     },
     "moreTags": "+{count}",
     "updatedAgo": "{time} अपडेट किया गया",
@@ -584,7 +595,11 @@
         "notes": "नोट्स",
         "updated": "अंतिम अपडेट"
       }
-    }
+    },
+    "selectedCustomTags": "चुने हुए टैग",
+    "selectedSynonyms": "चुने हुए पर्यायवाची",
+    "removeCustomTag": "{name} हटाएं",
+    "pickerLoading": "लोड हो रहा है…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "अपडेट किया गया",
     "backToStudio": "अभ्यास पर वापस",
     "studyMode": "अध्ययन मोड",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "कठिनाई",
       "easy": "आसान",
@@ -873,7 +893,7 @@
       "aiReady": "अभ्यास तैयार",
       "aiUnavailable": "अभी AI प्रश्न नहीं बनाए जा सके।",
       "aiForbidden": "AI सिद्धांत अभ्यास Pro के साथ उपलब्ध हैं।",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "अतिरिक्त निर्देश प्रीमियम पर उपलब्ध हैं।",
       "aiDisabled": "सेटिंग्स में AI सहायता बंद है।",
       "feedback": {
         "correct": "सही!",
@@ -927,20 +947,22 @@
         "why": "क्यों",
         "complete": "ठीक है",
         "completeHint": "जब तैयार हों, आगे बढ़ सकते हैं।",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "व्यायाम शुरू करें",
+        "skipReviewAndStart": "समीक्षा छोड़ें और व्यायाम शुरू करें"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "अनफाइल्ड",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# नोट} other {# नोट्स}}",
+        "selectAll": "सभी चुनें",
+        "selectGroup": "{name} में नोट्स चुनें",
+        "expand": "{name} का विस्तार करें",
+        "collapse": "{name} को संकुचित करें",
+        "selectedCount": "{count, plural, one {# सिद्धांत चयनित} other {# सिद्धांत चयनित}}",
+        "practiceSelected": "चयनित का अभ्यास करें",
+        "clearSelection": "चयन साफ करें",
+        "subfolders": "{count, plural, one {# उपफोल्डर} other {# उपफोल्डर}}",
+        "selectedOne": "1 सिद्धांत चुना गया"
       }
     },
     "types": {
@@ -948,7 +970,7 @@
         "label": "फ्लैशकार्ड",
         "description": "स्पेस्ड-रिपीटिशन रेटिंग के साथ शब्द और अर्थ अध्ययन करने के लिए कार्ड पलटें।",
         "preview": "पलटें · रेट करें · समीक्षा",
-        "previewHint": "Finnish word",
+        "previewHint": "फिनिश शब्द",
         "previewWord": "suomalainen",
         "previewFlow": "FLIP → RATE → REVIEW"
       },
@@ -962,9 +984,9 @@
         "description": "सही अर्थ या शब्द चुनें — विकर्षक आपकी शब्दावली से आते हैं।",
         "preview": "कौन सा अर्थ उपयुक्त है?",
         "previewPrompt": "कौन सा अर्थ उपयुक्त है?",
-        "previewA": "Finnish person",
-        "previewB": "weather",
-        "previewC": "building"
+        "previewA": "फिनिश व्यक्ति",
+        "previewB": "मौसम",
+        "previewC": "भवन"
       },
       "match-pairs": {
         "label": "जोड़े मिलाएँ",
@@ -998,8 +1020,8 @@
       "startsWith": "“{letter}” से शुरू होता है",
       "revealPrompt": "अभी भी अटक गए? आप पूरा उत्तर दिखा सकते हैं।",
       "revealAnswer": "उत्तर दिखाएँ",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "अगला संकेत",
+      "hintProgress": "संकेत {current} का {total}"
     },
     "empty": {
       "noWordsTitle": "अभी कोई शब्दावली नहीं",
@@ -1032,17 +1054,17 @@
       "shuffle": "शफ़ल करें",
       "finish": "राउंड समाप्त करें",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "प्रश्न स्रोत",
+        "chooseAi": "AI जनित का उपयोग करें",
+        "emptyTitle": "कोई उपयोगी सहेजे गए उदाहरण नहीं",
+        "emptyDescription": "ऐसे उदाहरण वाक्य जोड़ें जो स्पष्ट रूप से प्रत्येक शब्द को शामिल करते हैं, अपने फ़िल्टर समायोजित करें, या AI जनित पर स्विच करें।",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "सहेजे गए उदाहरण",
+          "description": "अपने शब्दावली उदाहरणों से तुरंत प्रश्न बनाएं। AI की प्रतीक्षा नहीं।"
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI जनित",
+          "description": "AI के साथ अपनी शब्दावली से नए वाक्य बनाएं।"
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "AI अभ्यास निर्माण Pro के साथ उपलब्ध है।",
       "disabled": "सेटिंग्स में AI सहायता बंद है।",
       "upgradeHint": "Free में प्रतिदिन कुछ AI अभ्यास निर्माण शामिल हैं। Pro सीमा हटाता है।",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "अतिरिक्त निर्देश",
+      "additionalInstructionsPlaceholder": "उदाहरण के लिए: रेस्तरां की स्थितियों का उपयोग करें, भाषा को A2 स्तर पर रखें, और अपनी इंटरफेस भाषा में गलतियों को समझाएं।",
+      "additionalInstructionsLocked": "समर्थित व्यायाम प्रकारों को अनुकूलित करने, वास्तविक जीवन का संदर्भ सेट करने और अपने निर्देश जोड़ने के लिए प्रीमियम में अपग्रेड करें।",
+      "premiumRequired": "अतिरिक्त निर्देश प्रीमियम पर उपलब्ध हैं।",
+      "presetLabel": "प्रीसेट",
+      "presetNone": "कोई प्रीसेट चयनित नहीं",
+      "presetApply": "लागू करें",
+      "presetSave": "प्रीसेट सहेजें",
+      "presetName": "प्रीसेट नाम",
+      "presetDelete": "हटाएं",
+      "presetSaved": "प्रीसेट सहेजा गया",
+      "presetDeleted": "प्रीसेट हटा दिया गया",
+      "presetSaveFailed": "उस प्रीसेट को सहेजने में असफल।",
       "emptyWords": "प्रश्न बनाने से पहले शब्दावली शब्द जोड़ें।",
       "noneValid": "AI इन शब्दों के लिए मान्य प्रश्न नहीं बना सका। पुनः प्रयास करें।",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "अपने व्यायाम का संदर्भ, शैली या ध्यान अनुकूलित करें। डिफ़ॉल्ट सेटिंग्स का उपयोग करने के लिए खाली छोड़ दें।",
+      "presetUpdate": "प्रीसेट अपडेट करें",
+      "presetUpdated": "प्रीसेट अपडेट किया गया",
+      "presetsTitle": "सहेजे गए प्रीसेट",
+      "presetsHelper": "प्रीसेट व्यायाम सेटिंग्स और अतिरिक्त निर्देशों को संग्रहीत करते हैं। ये आपके द्वारा चयनित शब्दावली या सिद्धांतों को नहीं बदलते।",
+      "presetsEmpty": "अभी तक कोई सहेजा गया प्रीसेट नहीं है। अपने वर्तमान सेटिंग्स को सहेजें ताकि बाद में उनका पुन: उपयोग किया जा सके।",
+      "presetSaveAs": "प्रीसेट के रूप में सहेजें",
+      "presetUpdateCurrent": "वर्तमान सेटिंग्स के साथ अपडेट करें",
+      "presetRename": "नाम बदलें",
+      "presetManage": "प्रीसेट प्रबंधित करें",
+      "presetRenamed": "प्रीसेट का नाम बदल दिया गया",
+      "presetSaveDialogTitle": "प्रीसेट के रूप में सहेजें",
+      "presetSaveDialogDescription": "इस प्रीसेट का नाम दें ताकि वर्तमान व्यायाम सेटिंग्स और अतिरिक्त निर्देशों का पुन: उपयोग किया जा सके। चयनित शब्दावली या सिद्धांत संग्रहीत नहीं हैं।",
+      "presetRenameDialogTitle": "प्रीसेट का नाम बदलें",
+      "presetRenameDialogDescription": "इस प्रीसेट के लिए एक नया नाम चुनें।",
+      "presetDeleteDialogTitle": "प्रीसेट हटाएं?",
+      "presetDeleteDialogDescription": "“{name}” हटाएं? आपकी वर्तमान व्यायाम कॉन्फ़िगरेशन वैसी ही रहेगी।"
     },
     "session": {
       "complete": "सत्र पूर्ण",
@@ -1099,14 +1121,14 @@
       "tryAgain": "फिर से प्रयास करें",
       "questionsLabel": "प्रश्न",
       "correctLabel": "सही",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "गलत",
+      "unansweredLabel": "उत्तर नहीं दिया गया",
       "reviewLabel": "समीक्षा के लिए",
       "answeredProgress": "{answered} / {total} उत्तर दिए गए",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "उत्तर जांचें",
+      "nextQuestion": "अगला",
+      "viewResults": "परिणाम देखें",
       "submitSet": "उत्तर जमा करें",
       "submitting": "जाँच हो रही है…",
       "unansweredWarnTitle": "अनुत्तरित प्रश्न",
@@ -1121,54 +1143,54 @@
       "unanswered": "उत्तर नहीं दिया",
       "yourAnswer": "आपका उत्तर",
       "correctAnswer": "सही उत्तर",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "आपके वर्तमान फ़िल्टर से केवल {count} प्रश्न उपलब्ध हैं।",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "आप कैसे अभ्यास करते हैं",
+        "lockedHint": "इसे बदलने के लिए एक नया सेट पूरा करें या शुरू करें।",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "एक-एक करके",
+          "description": "एक समय में एक प्रश्न देखें। प्रत्येक उत्तर के बाद तुरंत फीडबैक के लिए जांचें।"
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "सभी प्रश्न",
+          "description": "पूर्ण सेट देखें, किसी भी क्रम में उत्तर दें, फिर फीडबैक के लिए एक बार सबमिट करें।"
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "समीक्षा",
+        "allCorrect": "संपूर्ण — हर प्रश्न सही।",
+        "summary": "{incorrect} गलत · {unanswered} उत्तर नहीं दिया गया · {needsReview} की समीक्षा करने के लिए",
+        "viewWrong": "गलत उत्तर देखें",
+        "filtersLabel": "प्रश्न फ़िल्टर करें",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "सभी ({count})",
+          "needs_review": "गलत और उत्तर नहीं दिए गए ({count})",
+          "correct": "सही ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "पिछला",
+        "nextWrong": "अगला",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} की समीक्षा करने के लिए",
+        "floatLabel": "गलत उत्तरों का नेविगेशन",
+        "closeFloat": "सभी उत्तर दिखाएं"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% सही",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "संपूर्ण सेट",
+          "body": "हर उत्तर सही। इस तरह की एकाग्रता के लिए एक और दौर deserves जब आप तैयार हों।"
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "मजबूत समाप्ति",
+          "body": "आप स्पष्ट रूप से इसे समझ रहे हैं — चूक को स्किम करें, फिर एक नए सेट के साथ इसे लॉक करें।"
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "अच्छा काम — जारी रखें",
+          "body": "कुछ अटकने वाले बिंदु सामान्य हैं। उन्हें एक बार समीक्षा करें, फिर ताजा रहते हुए फिर से प्रयास करें।"
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "लगभग वहाँ",
+          "body": "पहले उत्तर नहीं दिए गए प्रश्नों को पूरा करें — फिर स्कोर एक स्पष्ट कहानी बताएगा।"
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "प्रश्न {language} में बनाए जाते हैं (वर्कस्पेस भाषा)।",
       "contextualEmptyTitle": "प्रासंगिक प्रश्न बनाएँ",
-      "contextualEmptyDescription": "अपनी शब्दावली से रिक्त स्थान भरने वाले बहुविकल्पी प्रश्न बनाएँ।",
+      "contextualEmptyDescription": "यदि आप चाहें तो नीचे वैकल्पिक निर्देश जोड़ें, फिर जनरेट पर क्लिक करें। आप प्रॉम्प्ट को खाली छोड़ सकते हैं।",
       "contextualProDescription": "प्रासंगिक AI प्रश्न Pro के साथ उपलब्ध हैं।",
       "unlockContextual": "Pro से अनलॉक करें",
       "correct": "सही!",
@@ -1202,8 +1224,8 @@
       "hint": "एक शब्द चुनें, फिर उसके अर्थ पर टैप करें",
       "complete": "सभी जोड़े मिलाए गए — बहुत अच्छा!",
       "shuffle": "कॉलम शफ़ल करें",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} जोड़े",
+      "continueRound": "जारी रखें"
     },
     "typeAnswer": {
       "questionWord": "अर्थ क्या है?",
@@ -1213,7 +1235,7 @@
         "contextual": "प्रासंगिक"
       },
       "contextualEmptyTitle": "प्रासंगिक प्रश्न बनाएँ",
-      "contextualEmptyDescription": "अपनी शब्दावली से रिक्त स्थान भरने वाले टाइपिंग प्रॉम्प्ट बनाएँ।",
+      "contextualEmptyDescription": "यदि आप चाहें तो नीचे वैकल्पिक निर्देश जोड़ें, फिर जनरेट पर क्लिक करें। आप प्रॉम्प्ट को खाली छोड़ सकते हैं।",
       "contextualProDescription": "प्रासंगिक AI प्रश्न Pro के साथ उपलब्ध हैं।",
       "unlockContextual": "Pro से अनलॉक करें",
       "placeholder": "अपना उत्तर टाइप करें…",
@@ -1543,77 +1565,77 @@
     "open": "खोलें",
     "steps": {
       "inbox": {
-        "title": "Capture",
+        "title": "कैप्चर",
         "body": "एक शब्द, वाक्यांश, व्याकरण संदेह या लेखन विचार सेकंडों में डालें — अभी तय करने की ज़रूरत नहीं कि वह कहाँ जाएगा। वैकल्पिक नोट या स्रोत जोड़ें, आइटम को To process में रखें, फिर जब समय हो तो कैप्चर को Vocabulary, Theory, Writing या Exercise में बदलें। आइटम Processed तभी चिह्नित होता है जब आप वह लिंक किया गया एंट्री बना लेते हैं।"
       },
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "शब्दावली",
         "body": "अर्थ, उदाहरण वाक्य, उच्चारण और टैग के साथ अपने शब्द और वाक्यांश जोड़ें। विषय, स्तर या स्थिति के अनुसार व्यवस्थित करें — फिर उन्हें अभ्यास और पुनरावलोकन में पुनः उपयोग करें। दैनिक जीवन, पाठ, किताबों या मीडिया से शब्दों से शुरू करें; आपकी लाइब्रेरी अभ्यास की नींव बन जाती है।"
       },
       "theory": {
-        "title": "Theory",
+        "title": "सिद्धांत",
         "body": "व्याकरण नियम, उच्चारण नोट्स, प्रयोग की व्याख्याएँ और व्यक्तिगत उदाहरण अपने शब्दों में सहेजें। Theory को एक संदर्भ नोटबुक समझें, जहाँ आप कुछ भूलने पर लौटते हैं। जितना अधिक आप दस्तावेज़ करते हैं, आपका व्यक्तिगत ज्ञान आधार उतना मज़बूत होता है।"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "व्यायाम",
         "body": "फ्लैशकार्ड, क्विज़, रिक्त स्थान भरें और अन्य तरीकों से अभ्यास करें — आपकी अपनी शब्दावली और सिद्धांत से निर्मित। अभ्यास आपके जोड़े गए ज्ञान के साथ बढ़ते हैं। जितनी अधिक सामग्री आप सहेजते हैं, आपका अभ्यास उतना उपयोगी और व्यक्तिगत बनता है।"
       },
       "writing": {
-        "title": "Writing",
+        "title": "लेखन",
         "body": "अपने विषयों और शब्दावली का उपयोग करके पाठ ड्राफ़्ट करें और प्रश्न सेट बनाएँ। Writing केवल याद रखने के लिए नहीं, बल्कि जो आप सीखते हैं उसका सक्रिय उपयोग करने के लिए है। Pro के साथ, AI आपके काम की जाँच और सुधार कर सकता है, और आवश्यकता पड़ने पर आप सामग्री निर्यात कर सकते हैं।"
       },
       "listening": {
-        "title": "Listening",
+        "title": "सुनना",
         "body": "ऑडियो या वीडियो अपलोड करें, ट्रांसक्रिप्ट प्राप्त करें, और उसे पाठ में बदलें। अपरिचित शब्द और अभिव्यक्ति पकड़ने के लिए ट्रांसक्रिप्ट का उपयोग करें, फिर अपनी चुनी हुई वास्तविक सामग्री से अभ्यास करें। पूर्वनिर्धारित सामग्री तक सीमित रहने के बजाय अपनी श्रवण सामग्री लाएँ।"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "बोलना",
         "body": "वीडियो पर AI ट्यूटर को कॉल करें और अपने सीखने के ज्ञान के साथ स्वाभाविक रूप से बोलने का अभ्यास करें। प्रत्येक सत्र के बाद, सुधार के लिए ट्रांसक्रिप्ट और प्रतिक्रिया देखें। यह चक्र पूरा होता है: सीखें → अभ्यास करें → उपयोग करें → समीक्षा करें → सुधारें।"
       },
       "reading": {
-        "title": "Reading",
+        "title": "पढ़ना",
         "body": "गद्यांश आयात या पेस्ट करें, फिर समझ अभ्यास बनाएँ — बहुविकल्पी, लिखित उत्तर, और सत्य / असत्य / उल्लेख नहीं। Free में प्रतिदिन सीमित AI निर्माण और मूल्यांकन शामिल है; Pro दैनिक सीमा बढ़ाता है, और Premium असीमित है।"
       }
     },
     "modules": {
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "शब्दावली",
         "description": "इस भाषा के लिए आपका व्यक्तिगत शब्द भंडार।",
         "how": "एक शब्द जोड़ें, प्राथमिक अर्थ चिह्नित करें, और उदाहरण वाक्य जोड़ें। बाद में खोजने के लिए टैग और खोज का उपयोग करें।",
         "cta": "शब्दावली खोलें"
       },
       "theory": {
-        "title": "Theory",
+        "title": "सिद्धांत",
         "description": "भाषा कैसे काम करती है — इसकी नोटबुक, लेखन अभ्यास नहीं।",
         "how": "एक नोट बनाएँ, श्रेणी चुनें, और जब ताज़ा करने की ज़रूरत हो तब वापस आएँ।",
         "cta": "सिद्धांत खोलें"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "व्यायाम",
         "description": "आपके पहले से सहेजे शब्दों से बने छोटे सत्र।",
         "how": "पहले कुछ शब्द जोड़ें, फिर एक मोड चुनें। अक्सर वापस आएँ — कुछ मिनट भी मायने रखते हैं।",
         "cta": "अभ्यास खोलें"
       },
       "writing": {
-        "title": "Writing",
+        "title": "लेखन",
         "description": "रिच दस्तावेज़ और प्रश्न सेट जिन्हें आप दोबारा देख और निर्यात कर सकते हैं।",
-        "how": "एक ड्राफ़्ट शुरू करें, फ़ोल्डर से व्यवस्थित करें, और अपने पाठ की जाँच या सुधार के लिए Pro AI का उपयोग करें।",
+        "how": "एक ड्राफ्ट शुरू करें, फ़ोल्डरों के साथ व्यवस्थित करें, और अपने योजना के AI भत्ते का उपयोग करके अपने पाठ की जांच या सुधार करें।",
         "cta": "लेखन खोलें"
       },
       "listening": {
-        "title": "Listening",
+        "title": "सुनना",
         "description": "वास्तविक ऑडियो या वीडियो को पाठ में बदलें।",
-        "how": "एक क्लिप अपलोड करें और Free पर ट्रांसक्रिप्ट बनाएँ। जनरेट किया गया श्रवण अभ्यास Pro का हिस्सा है।",
+        "how": "एक क्लिप अपलोड करें, एक ट्रांसक्रिप्ट जनरेट करें, और अपने योजना में शामिल AI भत्ते के साथ सुनने का अभ्यास बनाएं।",
         "cta": "श्रवण खोलें"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "बोलना",
         "description": "AI ट्यूटर के साथ लाइव वीडियो वार्तालाप।",
         "how": "एक सत्र बनाएँ और कॉल में शामिल हों। Free में प्रतिदिन एक AI मीटिंग शामिल है, ट्यूटर सहित।",
         "cta": "मौखिक अभ्यास खोलें"
       },
       "reading": {
-        "title": "Reading",
+        "title": "पढ़ना",
         "description": "AI समझ अभ्यास वाले गद्यांश।",
         "how": "पाठ आयात या पेस्ट करें, प्रश्न बनाएँ, फिर अभ्यास और समीक्षा करें। Free की दैनिक AI सीमा है; Pro में 10/दिन; Premium असीमित है।",
         "cta": "पठन खोलें"
@@ -1648,7 +1670,7 @@
     "nextStepTitle": "अगला कदम",
     "continueEmpty": "अभी फिर से शुरू करने के लिए कुछ नहीं — एक सिद्धांत नोट, लेखन रचना, श्रवण पाठ या मौखिक सत्र जोड़ें और वह यहाँ दिखेगा।",
     "inbox": {
-      "title": "Capture",
+      "title": "कैप्चर",
       "subtitle": "आपकी लाइब्रेरी में छाँटे जाने की प्रतीक्षा में त्वरित नोट्स।",
       "count": "{count, plural, =0 {कुछ प्रतीक्षा में नहीं} one {# आइटम प्रोसेस करना है} other {# आइटम प्रोसेस करने हैं}}",
       "cta": "Capture खोलें"
@@ -2120,7 +2142,7 @@
       }
     },
     "inbox": {
-      "title": "Capture",
+      "title": "कैप्चर",
       "description": "अंश तेज़ी से सहेजें — शब्द, संदेह, विचार — फिर जब समय मिले तो उन्हें वास्तविक अध्ययन आइटम में बदलें।",
       "cta": "ठीक है",
       "steps": {
@@ -2268,12 +2290,12 @@
         "taskManager": "ब्राउज़र टास्क मैनेजर",
         "altClose": "विंडो बंद करें",
         "altTab": "ऐप बदलें",
-        "winExplorer": "File Explorer",
+        "winExplorer": "फाइल एक्सप्लोरर",
         "winDesktop": "डेस्कटॉप दिखाएँ",
         "winLock": "PC लॉक करें",
         "winRun": "Run डायलॉग",
-        "winSettings": "Windows Settings",
-        "winTaskView": "Task view",
+        "winSettings": "Windows सेटिंग्स",
+        "winTaskView": "कार्य दृश्य",
         "winClipboard": "क्लिपबोर्ड इतिहास"
       },
       "actions": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "समान भाषा के लिए कुछ वर्कस्पेस पहले से मौजूद हैं। उनकी सामग्री डुप्लिकेट बनाने के बजाय आपके मौजूदा वर्कस्पेस में जोड़ी जाएगी।",
         "empty_backup": "इस बैकअप में कोई आयात योग्य सीखने का डेटा नहीं है।",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "कुछ मौजूदा आइटम एक ही नाम साझा करते हैं। आयात एक को निश्चित रूप से पुन: उपयोग करेगा और अन्य को अपरिवर्तित छोड़ देगा।"
       },
       "cancel": "रद्द करें",
       "confirm": "सीखने का डेटा आयात करें",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "वह बैकअप इस पेज से प्रसंस्कृत करने के लिए बहुत बड़ा है। छोटा निर्यात आज़माएँ या सहायता से संपर्क करें।",
         "notConfigured": "बैकअप आयात के लिए फ़ाइल संग्रहण अभी कॉन्फ़िगर नहीं है।"
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "आपके खाते में पहले से मौजूद",
+      "skippedInAccountHint": "ये नाम उन आइटम से मेल खाते हैं जो आपके पास पहले से हैं। इन्हें फिर से आयात नहीं किया जाएगा। समान कार्यक्षेत्र के तहत नए आइटम अभी भी आयात होते हैं।",
+      "skippedInBackupTitle": "इस बैकअप में डुप्लिकेट नाम",
+      "skippedInBackupHint": "फ़ाइल एक ही नाम को एक से अधिक बार सूचीबद्ध करती है। प्रत्येक नाम की केवल पहली प्रति आयात की जाती है - यह एक खाली खाते पर भी सामान्य है।",
+      "skippedOtherTitle": "आयात नहीं कर सका"
     },
     "danger": {
       "title": "खाता बंद करें",
@@ -3184,7 +3206,7 @@
       "warningTitle": "जारी रखने से पहले",
       "warnings": {
         "workspaces": "प्रत्येक वर्कस्पेस और सभी शब्दावली, सिद्धांत, लेखन, सुनना और बोलना डेटा हटा दिया जाएगा।",
-        "billing": "कोई भी सक्रिय Notoria Pro सदस्यता तुरंत रद्द हो जाएगी।",
+        "billing": "कोई भी सक्रिय Notoria Pro या प्रीमियम सदस्यता तुरंत रद्द कर दी जाएगी।",
         "media": "अपलोड किया गया मीडिया और आपकी प्रोफ़ाइल फ़ोटो हटा दी जाएगी।",
         "permanent": "पुष्टि के बाद कोई पुनर्प्राप्ति अवधि नहीं है।"
       },
@@ -3233,8 +3255,8 @@
     "upgrade": "Pro में अपग्रेड करें",
     "manage": "सदस्यता प्रबंधित करें",
     "proBadge": "Pro",
-    "freeBadge": "Free",
-    "premiumBadge": "Premium",
+    "freeBadge": "मुफ्त",
+    "premiumBadge": "प्रीमियम",
     "renewsOn": "{date} को नवीनीकरण",
     "status": "स्थिति: {status}",
     "monthlyPrice": "{price} / माह",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "व्यक्तिगत लर्निंग पथ",
       "personalizedRecommendations": "व्यक्तिगत सुझाव",
       "crossModuleIntelligence": "क्रॉस-मॉड्यूल वैयक्तिकरण",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "कस्टम व्यायाम निर्देश"
     },
     "compare": {
       "heading": "प्लान तुलना करें",
@@ -3458,9 +3480,9 @@
       "feature": "सुविधा",
       "current": "वर्तमान",
       "capability": "आपको क्या मिलता है",
-      "free": "Free",
+      "free": "मुफ्त",
       "pro": "Pro",
-      "premium": "Premium",
+      "premium": "प्रीमियम",
       "freeIncludes": "Free में शामिल",
       "proUnlocks": "Pro जोड़ता है",
       "premiumAdds": "Premium जोड़ता है",
@@ -3552,7 +3574,7 @@
     }
   },
   "coach": {
-    "eyebrow": "Premium",
+    "eyebrow": "प्रीमियम",
     "title": "लर्निंग",
     "highlight": "कोच",
     "description": "आप कैसे सीख रहे हैं और आगे किस पर ध्यान दें — इसका एक व्यक्तिगत दृश्य।",
@@ -3598,7 +3620,7 @@
     "vocabulary": "शब्दावली",
     "vocabularyEmpty": "अभी कोई शब्दावली शब्द नहीं",
     "reviews": "फ्लैशकार्ड समीक्षाएँ",
-    "misses": "Again / Hard",
+    "misses": "फिर से / कठिन",
     "listening": "श्रवण",
     "speaking": "बोलना",
     "writing": "लेखन",
@@ -3752,8 +3774,8 @@
       "practice": "अभ्यास"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "फिर से",
+      "HARD": "कठिन"
     },
     "status": {
       "MASTERED": "मास्टर",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "गोपनीयता नीति",
     "termsTitle": "उपयोग की शर्तें",
     "privacyDescription": "Notoria अपने निजी भाषा-शिक्षण कार्यक्षेत्र के लिए व्यक्तिगत डेटा और लर्निंग सामग्री कैसे एकत्र, उपयोग और हटाता है।",
-    "termsDescription": "Notoria के निजी भाषा-शिक्षण कार्यक्षेत्र, खातों, AI सुविधाओं और Notoria Pro बिलिंग के उपयोग की शर्तें।",
+    "termsDescription": "Notoria के निजी भाषा-सीखने कार्यक्षेत्र, खातों, AI सुविधाओं, और Pro या प्रीमियम बिलिंग के उपयोग के लिए शर्तें।",
     "updated": "अंतिम अपडेट {date}",
-    "updatedDate": "23 सितंबर 2026",
+    "updatedDate": "27 अक्टूबर 2026",
     "backToSignIn": "साइन इन पर वापस जाएँ",
     "backHome": "Notoria पर वापस जाएँ",
     "authFooter": "गोपनीयता · शर्तें",
@@ -4071,7 +4093,7 @@
         "purposes": "हम डेटा क्यों प्रोसेस करते हैं",
         "auth": "खाते और साइन-इन",
         "ai": "AI सुविधाएँ",
-        "payments": "भुगतान (Notoria Pro)",
+        "payments": "भुगतान (Pro और प्रीमियम)",
         "processors": "सेवा प्रदाता",
         "cookies": "कुकीज़ और डिवाइस स्टोरेज",
         "transfers": "अंतरराष्ट्रीय स्थानांतरण",
@@ -4095,7 +4117,7 @@
           "list": [
             "खाता बनाते या उपयोग करते हैं",
             "निजी कार्यक्षेत्र में सामग्री सहेजते हैं",
-            "Notoria Pro की सदस्यता लेते हैं",
+            "Notoria Pro या प्रीमियम की सदस्यता लें",
             "वैकल्पिक AI-सहायता उपकरण उपयोग करते हैं",
             "श्रवण या प्रोफ़ाइल उपयोग के लिए मीडिया अपलोड करते हैं",
             "बोलना अभ्यास उपयोग करते हैं",
@@ -4156,7 +4178,7 @@
               "basis": "अनुबंध (Art. 6(1)(b))"
             },
             {
-              "purpose": "Stripe के माध्यम से Notoria Pro बिलिंग और सदस्यता स्थिति चलाना",
+              "purpose": "Stripe के माध्यम से Notoria Pro और प्रीमियम बिलिंग और सदस्यता स्थिति चलाना",
               "basis": "अनुबंध (Art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "वर्तमान कोडबेस OpenAI के अलावा अन्य बड़े-भाषा-मॉडल प्रदाताओं का उपयोग नहीं करता। OpenAI इन सुविधाओं के लिए प्रोसेसर के रूप में अपनी शर्तों और गोपनीयता नीति के तहत डेटा प्रोसेस करता है।"
         },
         "payments": {
-          "title": "7. भुगतान (Notoria Pro)",
+          "title": "7. भुगतान (Pro और प्रीमियम)",
           "p1": "सशुल्क सदस्यताएँ <strong>Stripe</strong> द्वारा संभाली जाती हैं। चेकआउट, चालान, भुगतान विधियाँ और रद्दीकरण Stripe Checkout और Stripe Customer Portal के माध्यम से चलते हैं। Stripe वेबहुक Notoria में आपके प्लान और स्थिति अपडेट करते हैं।",
           "p2": "Stripe भुगतान प्रदाता के रूप में भुगतान डेटा प्रोसेस करता है। कार्ड हैंडलिंग के लिए Stripe का स्वयं का गोपनीयता दस्तावेज़ देखें।"
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro चेकआउट, पोर्टल, और सदस्यता स्थिति"
+              "role": "Notoria Pro और प्रीमियम चेकआउट, पोर्टल, और सदस्यता स्थिति"
             },
             {
               "provider": "Google",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "ये उपयोग की शर्तें <site>www.notoria.fi</site> पर Notoria उपयोग के नियम बताती हैं। वे वर्णन करती हैं कि उत्पाद आज कैसे काम करता है: निजी लर्निंग कार्यक्षेत्र, Stripe के माध्यम से वैकल्पिक Notoria Pro बिलिंग, और AI-सहायता सुविधाएँ। वे आपकी विशिष्ट स्थिति के बारे में वकील की सलाह का विकल्प नहीं हैं।",
+      "intro": "ये उपयोग की शर्तें Notoria का उपयोग करने के नियमों को स्पष्ट करती हैं <site>www.notoria.fi</site> पर। वे बताते हैं कि उत्पाद आज कैसे काम करता है: निजी सीखने के कार्यक्षेत्र, Stripe के माध्यम से वैकल्पिक Pro और प्रीमियम बिलिंग, और AI-सहायता प्राप्त सुविधाएँ। ये आपके विशेष स्थिति के बारे में वकील से सलाह का विकल्प नहीं हैं।",
       "tocTitle": "इस पेज पर",
       "tocAria": "इस पेज पर",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "स्वीकार्य उपयोग",
         "ip": "बौद्धिक संपदा",
         "ai": "AI-जनित आउटपुट",
-        "plans": "Free प्लान और Notoria Pro",
+        "plans": "फ्री, Pro, और प्रीमियम योजनाएँ",
         "billing": "सदस्यता और बिलिंग",
         "refunds": "रिफ़ंड और उपभोक्ता अधिकार",
         "availability": "उपलब्धता",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. सेवा",
           "p1": "Notoria एक निजी भाषा-शिक्षण वेब ऐप है। आप कार्यक्षेत्र बना सकते हैं और शब्दावली, थ्योरी नोट्स, लेखन, अभ्यास, श्रवण पाठ और बोलना सत्र जैसी लर्निंग सामग्री रख सकते हैं।",
-          "p2": "कुछ सुविधाएँ free प्लान पर उपलब्ध हैं। Notoria Pro अतिरिक्त क्षमताएँ खोलता है जैसा उत्पाद में और आपके <account>खाता</account> पेज पर दिखाया जाता है — श्रवण, बोलना, कुछ AI अध्ययन उपकरण, अभ्यास आयात, और सशुल्क दस्तावेज़ निर्यात प्रारूप सहित। उत्पाद के विकास के साथ सुविधा उपलब्धता बदल सकती है।",
+          "p2": "मुख्य सीखने के क्षेत्र, जिसमें सुनना, बोलना, और पढ़ना शामिल हैं, हर योजना पर उपलब्ध हैं। Pro और प्रीमियम अधिक AI भत्ते और सीखने की सामग्री आयात/निर्यात जोड़ते हैं; प्रीमियम व्यक्तिगत कोचिंग और अभ्यास सुविधाएँ भी जोड़ता है। वर्तमान तुलना आपके <account>खाता</account> पृष्ठ पर दिखाई जाती है। सुविधा की उपलब्धता उत्पाद के विकास के साथ बदल सकती है।",
           "p3": "Notoria व्यक्तिगत भाषा सीखने के लिए है। यह स्कूल, परीक्षा प्राधिकरण, या पेशेवर सलाह सेवा नहीं है।"
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. AI-जनित आउटपुट",
           "p1": "कुछ सुविधाएँ आपकी सामग्री के आधार पर जाँच, सुझाव, निर्माण, ट्रांसक्राइब, सारांश, या ट्यूटरिंग कर सकती हैं। आउटपुट अधूरा, गलत, या आपके लक्ष्य के लिए अनुपयुक्त हो सकता है। अध्ययन, परीक्षा, पेशेवर उपयोग, या प्रकाशन के लिए उन पर निर्भर होने से पहले AI परिणामों की समीक्षा आपकी ज़िम्मेदारी रहती है।",
           "p2": "AI सुविधाएँ अनुपलब्ध हो सकती हैं यदि <settings>सेटिंग्स</settings> में सहायता बंद है, यदि आपके प्लान में कोई विशेष उपकरण शामिल नहीं है, या यदि प्रदाता अस्थायी रूप से पहुँच योग्य नहीं है।",
-          "p3": "सभी AI सहायक को Notoria Pro की आवश्यकता नहीं। उत्पाद दिखाता है कौन से उपकरण मुफ़्त हैं और किन्हें Pro चाहिए।"
+          "p3": "AI की उपलब्धता और दैनिक भत्ते फ्री, Pro, और प्रीमियम के बीच भिन्न होते हैं। उत्पाद प्रत्येक उपकरण के लिए आवश्यक योजना और भत्ता दिखाता है।"
         },
         "plans": {
-          "title": "8. Free प्लान और Notoria Pro",
+          "title": "8. फ्री, Pro, और प्रीमियम योजनाएँ",
           "p1": "Free प्लान आपकी स्वयं की शब्दावली और संबंधित अध्ययन उपकरणों के साथ मुख्य अभ्यास कवर करता है जैसा उत्पाद में दिखाया जाता है।",
-          "p2": "Notoria Pro एक सशुल्क सदस्यता है जो अतिरिक्त सुविधाएँ खोलती है। वर्तमान उत्पाद में, इसमें आमतौर पर श्रवण, बोलना, अभ्यास आयात, वाक्य-बनाएँ अभ्यास, कई AI-सहायता अध्ययन उपकरण, और PDF/DOCX दस्तावेज़ निर्यात शामिल हैं। कुछ हल्के AI सहायक (जैसे कुछ शब्दावली या एडिटर फ़ॉर्मेटिंग सहायता) AI सहायता सक्षम होने पर free प्लान पर उपलब्ध रह सकते हैं।",
-          "p3": "Pro पहुँच आपके उपयोगकर्ता खाते से जुड़ी है, इसलिए वह उस खाते के अंतर्गत कार्यक्षेत्रों पर लागू होती है। प्रशासक भूमिका वाले खातों के पास व्यक्तिगत Stripe सदस्यता के बिना Pro-स्तरीय पहुँच हो सकती है।",
-          "p4": "आपकी खरीदारी पर लागू कीमत वर्तमान Pro प्लान के लिए Stripe Checkout पर दिखाई गई कीमत है। उत्पाद में कहीं और दिखाई गई कोई कीमत (उदाहरण के लिए खाता पर) केवल सांकेतिक है और सक्रिय Stripe कीमत कॉन्फ़िगरेशन से मेल खानी चाहिए।"
+          "p2": "Pro और प्रीमियम भुगतान की गई सदस्यताएँ हैं। Pro कई AI उपकरणों के लिए उच्च या असीमित भत्ते जोड़ता है, साथ ही सीखने की सामग्री आयात और PDF/DOCX निर्यात। प्रीमियम Pro को शामिल करता है और व्यक्तिगत सुविधाएँ जोड़ता है जैसे कि लर्निंग कोच, व्यक्तिगत सीखने की प्रोफ़ाइल, अनुकूलनशील अभ्यास, गलती-आधारित अभ्यास, और कस्टम व्यायाम निर्देश। खाता पृष्ठ वर्तमान तुलना और सीमाएँ दिखाता है।",
+          "p3": "भुगतान किया गया एक्सेस आपके उपयोगकर्ता खाते से जुड़ा होता है और इसके कार्यक्षेत्रों में लागू होता है। व्यवस्थापक भूमिका वाले खातों में व्यक्तिगत Stripe सदस्यता के बिना भुगतान स्तर का एक्सेस हो सकता है।",
+          "p4": "जो मूल्य लागू होता है वह Stripe चेकआउट पर चयनित Pro या प्रीमियम योजना के लिए दिखाया गया मूल्य है। उत्पाद में कहीं और दिखाया गया कोई भी मूल्य (उदाहरण के लिए खाता पर) केवल संकेतात्मक है और सक्रिय Stripe मूल्य कॉन्फ़िगरेशन से मेल खाना चाहिए।"
         },
         "billing": {
           "title": "9. सदस्यता, बिलिंग और रद्दीकरण",
-          "list0": "Pro सदस्यताएँ <strong>Stripe</strong> के माध्यम से बिल होती हैं",
-          "list1": "आप <account>खाता</account> से या ऐप में लॉक Pro नियंत्रणों से चेकआउट शुरू कर सकते हैं",
+          "list0": "Pro और प्रीमियम सदस्यताएँ <strong>Stripe</strong> के माध्यम से बिल की जाती हैं",
+          "list1": "आप <account>खाता</account> से चेकआउट शुरू कर सकते हैं या योजना बदल सकते हैं या ऐप में लॉक किए गए भुगतान नियंत्रण से",
           "list2": "खाता से, आप चालान देखने, भुगतान विधियाँ अपडेट करने और सदस्यता रद्द करने के लिए Stripe Customer Portal खोल सकते हैं",
           "list3": "रद्दीकरण आपकी सदस्यता के लिए Stripe Customer Portal व्यवहार का पालन करता है",
-          "p1": "रद्द करने के बाद, Pro पहुँच केवल तब तक जारी रहती है जब आपकी Stripe सदस्यता स्थिति अभी भी उत्पाद में Pro देती है। वर्तमान कार्यान्वयन में, Pro मानी जाने वाली स्थितियों में <code>active</code>, <code>trialing</code>, और <code>past_due</code> शामिल हैं। जब स्थिति योग्य नहीं रहती, खाता free प्लान पर लौटता है।",
-          "p2": "यदि भुगतान विफल होता है, Stripe सदस्यता को <code>past_due</code> या अन्य स्थिति में ले जा सकता है। Notoria उस स्थिति को Stripe वेबहुक से सिंक करता है। जब तक स्थिति <code>past_due</code> रहती है, वर्तमान पहुँच नियमों के तहत Pro सुविधाएँ उपलब्ध रहती हैं; यदि सदस्यता बाद में रद्द या अन्यथा अयोग्य हो जाती है, तो Pro पहुँच समाप्त हो जाती है।",
+          "p1": "जब आप नवीनीकरण रद्द करते हैं, तो आपकी वर्तमान Pro या प्रीमियम एक्सेस तब तक जारी रहती है जब तक Stripe सदस्यता स्थिति उत्पाद में योग्य रहती है। योग्य स्थितियों में वर्तमान में <code>active</code>, <code>trialing</code>, और <code>past_due</code> शामिल हैं। जब स्थिति अब योग्य नहीं रहती, तो खाता फ्री पर लौटता है।",
+          "p2": "यदि कोई भुगतान विफल होता है, तो Stripe सदस्यता को <code>past_due</code> या किसी अन्य स्थिति में स्थानांतरित कर सकता है। Notoria उस स्थिति को Stripe वेबहुक से समन्वयित करता है। जब तक यह <code>past_due</code> रहता है, वर्तमान भुगतान योजना वर्तमान एक्सेस नियमों के तहत उपलब्ध रहती है; यदि यह बाद में रद्द हो जाती है या अन्यथा अयोग्य हो जाती है, तो भुगतान एक्सेस समाप्त हो जाता है।",
           "p3": "अपना Notoria खाता हटाने से खाता हटाने के हिस्से के रूप में Stripe सदस्यता तुरंत रद्द होती है (सर्वोत्तम प्रयास)। यह खाता रखते हुए Customer Portal के माध्यम से नवीनीकरण रद्द करने से अलग है।"
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. अस्वीकरण और दायित्व",
           "p1": "Notoria व्यक्तिगत भाषा सीखने के लिए “जैसा उपलब्ध” आधार पर प्रदान किया जाता है। लागू कानून द्वारा अनुमत अधिकतम सीमा तक, हम उन वारंटी को अस्वीकार करते हैं जो कानून द्वारा आवश्यक नहीं हैं।",
-          "p2": "लागू कानून द्वारा अनुमत अधिकतम सीमा तक, Notoria सेवा के आपके उपयोग या AI आउटपुट पर निर्भरता से उत्पन्न अप्रत्यक्ष, आकस्मिक, विशेष, परिणामी, या खोए-डेटा नुकसान के लिए उत्तरदायी नहीं है। जहाँ दायित्व बाहर नहीं किया जा सकता, यह दावे से पहले तीन महीनों में Notoria Pro के लिए आपके द्वारा भुगतान की गई राशि, या अनिवार्य कानून द्वारा आवश्यक किसी अधिक राशि तक सीमित है।",
+          "p2": "लागू कानून द्वारा अनुमत अधिकतम सीमा तक, Notoria अप्रत्यक्ष, आकस्मिक, विशेष, परिणामी, या खोए हुए डेटा के नुकसान के लिए उत्तरदायी नहीं है जो आपकी सेवा के उपयोग या AI आउटपुट पर निर्भरता से उत्पन्न होते हैं। जहां उत्तरदायित्व को बाहर नहीं किया जा सकता, यह उस राशि तक सीमित है जो आपने Notoria Pro या प्रीमियम के लिए दावे से पहले तीन महीनों में भुगतान की थी, या किसी भी अधिक राशि की आवश्यकता जो अनिवार्य कानून द्वारा आवश्यक है।",
           "p3": "ये सीमाएँ उस दायित्व को बाहर नहीं करतीं जिसे फ़िनिश या EU कानून सीमित करने की अनुमति नहीं देता — उपभोक्ताओं के लिए न छोड़े जा सकने वाले दायित्व सहित, और जहाँ ऐसे नियम लागू हों वहाँ लापरवाही से मृत्यु या व्यक्तिगत चोट का दायित्व।"
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "अर्थ, उदाहरण और टैग के साथ व्यक्तिगत शब्दावली बैंक बनाएँ",
           "practice": "अपने शब्दों और नोट्स से बने अभ्यासों से अभ्यास करें",
           "create": "थ्योरी नोट्स और लेखन कार्य लिखें जिन पर बाद में लौट सकें",
-          "listenSpeak": "मीडिया को श्रवण अभ्यास में बदलें, और Pro पर AI ट्यूटर से बोलें"
+          "listenSpeak": "मीडिया को सुनने के अभ्यास में बदलें, और ट्रांसक्रिप्शन और बोलने के अभ्यास के लिए AI भत्तों का उपयोग करें"
         },
-        "note": "कुछ AI, श्रवण, बोलना और निर्यात उपकरण Notoria Pro का हिस्सा हैं। Free प्लान अभी भी रोज़ाना शब्दावली अभ्यास और मुख्य अध्ययन लूप कवर करता है।"
+        "note": "मुख्य सीखने के क्षेत्र हर योजना पर उपलब्ध हैं। Pro AI भत्तों को बढ़ाता है और सीखने की सामग्री आयात/निर्यात जोड़ता है; प्रीमियम व्यक्तिगत कोचिंग और अभ्यास जोड़ता है।"
       },
       "ai": {
         "title": "AI, जहाँ मदद करता है",
@@ -4656,7 +4678,7 @@
         "title": "क्षेत्र कैसे जुड़ते हैं",
         "p1": "कैप्चर त्वरित प्रवेश बिंदु है। शब्दावली और थ्योरी जहाँ सामग्री बसती है। अभ्यास उस सामग्री को अभ्यास में बदलता है। लेखन, श्रवण और बोलना भाषा का अधिक सक्रिय उपयोग करने में मदद करते हैं।",
         "p2": "हर क्षेत्र को क्रम से पार करने की ज़रूरत नहीं। बहुत लोग कुछ समय शब्दों और छोटे अभ्यास के साथ रहते हैं।",
-        "p3": "प्राकृतिक अगला कदम लेखन है जब आप अपनी शर्तों पर भाषा उत्पादन करना चाहते हैं, फिर श्रवण और बोलना जब चाहते हैं कि वही सामग्री कान और आवाज़ में काम करे — श्रवण और बोलना Notoria Pro का हिस्सा हैं।",
+        "p3": "जब आप अपनी शर्तों पर भाषा उत्पन्न करना चाहते हैं, तो लेखन एक स्वाभाविक अगला कदम है, फिर सुनना और बोलना जब आप चाहते हैं कि वही सामग्री आपके कान और आवाज में काम करे। ये क्षेत्र हर योजना पर उपलब्ध हैं; AI उपयोग सीमाएँ योजना के अनुसार भिन्न होती हैं।",
         "beat": "पहले एकत्र और समझें। जब सामग्री पेज छोड़ने के लिए तैयार हो, उपयोग और बोलना।"
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "श्रवण",
-          "body": "अपने कार्यक्षेत्र में मीडिया को श्रवण अभ्यास में बदलें। Notoria Pro पर उपलब्ध।"
+          "body": "अपने कार्यक्षेत्र में मीडिया को सुनने के अभ्यास में बदलें। हर योजना पर उपलब्ध; AI ट्रांसक्रिप्शन भत्ते योजना के अनुसार भिन्न होते हैं।"
         },
         "speaking": {
           "label": "बोलना",
-          "body": "उस भाषा से जुड़े AI ट्यूटर के साथ लाइव अभ्यास जिसे आप पढ़ रहे हैं। Notoria Pro पर उपलब्ध।"
+          "body": "एक AI ट्यूटर के साथ लाइव अभ्यास, जिस भाषा का आप अध्ययन कर रहे हैं उसमें आधारित। हर योजना पर उपलब्ध है जिसमें योजना आधारित दैनिक भत्ता है।"
         },
         "reading": {
           "label": "पठन",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "मैं पासवर्ड कैसे बदलूँ या खाता कैसे बंद करूँ?",
-          "a": "<account>खाता</account> खोलें। यदि आप ईमेल साइन-इन उपयोग करते हैं तो वहाँ पासवर्ड अपडेट कर सकते हैं, Notoria Pro प्रबंधित कर सकते हैं, बैकअप निर्यात कर सकते हैं, या खाता स्थायी रूप से हटा सकते हैं।"
+          "a": "<account>खाता</account> खोलें। यदि आप ईमेल साइन-इन का उपयोग करते हैं तो आप वहां अपना पासवर्ड अपडेट कर सकते हैं, Pro या प्रीमियम प्रबंधित कर सकते हैं, बैकअप निर्यात कर सकते हैं, या अपने खाते को स्थायी रूप से हटा सकते हैं। खाते को हटाने से तुरंत किसी भी सक्रिय Stripe सदस्यता को रद्द कर दिया जाता है, सर्वोत्तम प्रयास के आधार पर; केवल नवीनीकरण को रद्द करना खाते और इसके डेटा को बनाए रखता है।"
         },
         "pro": {
           "q": "बिलिंग और रद्दीकरण कैसे काम करते हैं?",
-          "a": "Notoria Pro Stripe के माध्यम से बिल होता है। <account>खाता</account> से आप अपग्रेड कर सकते हैं, भुगतान विधियाँ और चालान प्रबंधित करने के लिए Stripe ग्राहक पोर्टल खोल सकते हैं, या नवीनीकरण रद्द कर सकते हैं।"
+          "a": "Notoria Pro और प्रीमियम Stripe के माध्यम से बिल की जाती हैं। <account>खाता</account> से आप सदस्यता ले सकते हैं, Pro और प्रीमियम के बीच स्विच कर सकते हैं, भुगतान विधियों और चालानों का प्रबंधन कर सकते हैं, नवीनीकरण रद्द कर सकते हैं, या अनुसूचित रद्दीकरण को फिर से शुरू कर सकते हैं। नवीनीकरण को रद्द करने से Stripe योग्य सदस्यता अवधि समाप्त होने तक एक्सेस बना रहता है; आपके खाते को हटाना अलग है और सर्वोत्तम प्रयास के आधार पर सदस्यता को तुरंत रद्द करता है।"
         },
         "proFeatures": {
-          "q": "क्या मुफ़्त है, और किसे Notoria Pro चाहिए?",
-          "a": "रोज़ाना शब्दावली अभ्यास और संबंधित अध्ययन उपकरण free प्लान पर उपलब्ध हैं। कुछ AI उपकरण, श्रवण, बोलना और दस्तावेज़ निर्यात सुविधाएँ Notoria Pro का हिस्सा हैं। <account>खाता</account> से तुलना और अपग्रेड करें।"
+          "q": "फ्री, Pro, और प्रीमियम में क्या शामिल है?",
+          "a": "फ्री में मुख्य सीखने के क्षेत्र और समर्थित AI उपकरणों के लिए दैनिक भत्ते शामिल हैं। Pro कई AI सीमाओं को बढ़ाता है या हटा देता है और सीखने की सामग्री आयात और PDF/DOCX निर्यात जोड़ता है। प्रीमियम Pro को शामिल करता है और व्यक्तिगत कोचिंग, एक सीखने की प्रोफ़ाइल, अनुकूलनशील और गलती-आधारित अभ्यास, और कस्टम व्यायाम निर्देश जोड़ता है। <account>खाता</account> में लाइव तुलना और वर्तमान सीमाएँ देखें।"
         },
         "learning": {
           "q": "Notoria की लर्निंग सुविधाएँ कैसे काम करती हैं?",
@@ -4997,7 +5019,7 @@
         "admins": "प्रशासक",
         "testers": "परीक्षक",
         "suspended": "निलंबित",
-        "contentTotal": "Content records"
+        "contentTotal": "सामग्री रिकॉर्ड"
       },
       "quickAccess": "त्वरित पहुँच",
       "quickAccessLede": "प्रबंधन टूल पर जाएँ।",
@@ -5050,8 +5072,8 @@
         "created": "पंजीकृत",
         "updated": "अपडेट",
         "emailVerified": "ईमेल सत्यापित",
-        "email": "Email",
-        "password": "Password"
+        "email": "ईमेल",
+        "password": "पासवर्ड"
       },
       "detail": {
         "account": "खाता",
@@ -5060,7 +5082,7 @@
         "actions": "खाता कार्रवाइयाँ",
         "workspaces": "कार्यक्षेत्र",
         "workspacesLede": "इस उपयोगकर्ता के स्वामित्व वाले भाषा कार्यक्षेत्र।",
-        "danger": "Danger zone"
+        "danger": "खतरे का क्षेत्र"
       },
       "actions": {
         "saveProfile": "नाम सहेजें",
@@ -5071,7 +5093,7 @@
         "delete": "खाता हटाएँ",
         "grantTester": "परीक्षक भूमिका दें",
         "revokeTester": "परीक्षक भूमिका हटाएँ",
-        "create": "Create user"
+        "create": "उपयोगकर्ता बनाएं"
       },
       "confirm": {
         "grantAdmin": "इस खाते को एडमिन पहुँच दें?",
@@ -5089,13 +5111,13 @@
         "admin": "प्रशासक"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "उपयोगकर्ता बनाएं",
+        "lede": "ईमेल और पासवर्ड के साथ एक खाता प्रदान करें। वे तुरंत साइन इन कर सकते हैं।"
       },
       "plans": {
-        "free": "Free",
+        "free": "मुफ्त",
         "pro": "Pro",
-        "premium": "Premium"
+        "premium": "प्रीमियम"
       }
     },
     "workspaces": {
@@ -5118,7 +5140,7 @@
         "owner": "स्वामी",
         "created": "बनाया गया",
         "updated": "अपडेट",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "स्वामी ईमेल",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "इस कार्यक्षेत्र और उसके अंदर की सभी लर्निंग सामग्री को डेटाबेस कैस्केड के माध्यम से हटाएँ?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "कार्यक्षेत्र बनाएं",
+        "lede": "ईमेल द्वारा एक मौजूदा खाते से एक नई भाषा कार्यक्षेत्र संलग्न करें।"
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "कार्यक्षेत्र",
         "created": "बनाया गया",
         "updated": "अपडेट",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "शीर्षक",
+        "word": "शब्द",
+        "folderName": "फ़ोल्डर का नाम"
       },
       "detail": {
         "description": "मेटाडेटा निरीक्षण। निजी सामग्री स्वतः लोड नहीं होती।",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "रिकॉर्ड हटाएँ",
-        "saveTitle": "Save title"
+        "saveTitle": "शीर्षक सहेजें"
       },
       "confirm": {
         "delete": "इस रिकॉर्ड को हटाएँ? संबंधित चाइल्ड पंक्तियाँ डेटाबेस कैस्केड / set-null नियमों का पालन करती हैं।"
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "कैप्चर आइटम स्वतंत्र पाठ संग्रहीत करते हैं। शीर्षक संपादन यहां समर्थित नहीं है - यदि रिकॉर्ड को हटाना है तो हटा दें।"
     },
     "jobs": {
       "title": "जॉब्स",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "अमान्य भाषा कोड।",
       "CONTENT_NOT_FOUND": "रिकॉर्ड नहीं मिला।",
       "INVALID_CONTENT_MODULE": "अज्ञात सामग्री मॉड्यूल।",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "यह ईमेल पहले से पंजीकृत है।",
+      "PASSWORD_TOO_WEAK": "पासवर्ड ताकत की आवश्यकताओं को पूरा नहीं करता।",
+      "CONTENT_TITLE_UNSUPPORTED": "यह सामग्री प्रकार शीर्षक संपादन का समर्थन नहीं करता।"
     }
   }
 }

@@ -684,6 +684,11 @@
     "updated": "Updated",
     "backToStudio": "Back to exercises",
     "studyMode": "Study mode",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Difficulty",
       "easy": "Easy",
@@ -1614,13 +1619,13 @@
       "writing": {
         "title": "Writing",
         "description": "Rich documents and question sets you can revisit and export.",
-        "how": "Start a draft, organize with folders, and use Pro AI to check or improve your text.",
+        "how": "Start a draft, organize with folders, and use your plan's AI allowance to check or improve your text.",
         "cta": "Open writing"
       },
       "listening": {
         "title": "Listening",
         "description": "Turn real audio or video into a lesson.",
-        "how": "Upload a clip and generate a transcript on Free. Generated listening practice is part of Pro.",
+        "how": "Upload a clip, generate a transcript, and build listening practice with the AI allowance included in your plan.",
         "cta": "Open listening"
       },
       "speaking": {
@@ -3201,7 +3206,7 @@
       "warningTitle": "Before you continue",
       "warnings": {
         "workspaces": "Every workspace and all vocabulary, theory, writing, listening, and speaking data will be deleted.",
-        "billing": "Any active Notoria Pro subscription will be canceled immediately.",
+        "billing": "Any active Notoria Pro or Premium subscription will be canceled immediately.",
         "media": "Uploaded media and your profile photo will be removed.",
         "permanent": "There is no recovery period after confirmation."
       },
@@ -4065,9 +4070,9 @@
     "privacyTitle": "Privacy Policy",
     "termsTitle": "Terms of Use",
     "privacyDescription": "How Notoria collects, uses, and deletes personal data and learning content for its private language-learning workspace.",
-    "termsDescription": "Terms for using Notoria’s private language-learning workspace, accounts, AI features, and Notoria Pro billing.",
+    "termsDescription": "Terms for using Notoria’s private language-learning workspace, accounts, AI features, and Pro or Premium billing.",
     "updated": "Last updated {date}",
-    "updatedDate": "23 September 2026",
+    "updatedDate": "27 October 2026",
     "backToSignIn": "Back to sign in",
     "backHome": "Back to Notoria",
     "authFooter": "Privacy · Terms",
@@ -4088,7 +4093,7 @@
         "purposes": "Why we process data",
         "auth": "Accounts and sign-in",
         "ai": "AI features",
-        "payments": "Payments (Notoria Pro)",
+        "payments": "Payments (Pro and Premium)",
         "processors": "Service providers",
         "cookies": "Cookies and device storage",
         "transfers": "International transfers",
@@ -4112,7 +4117,7 @@
           "list": [
             "create or use an account",
             "save material in private workspaces",
-            "subscribe to Notoria Pro",
+            "subscribe to Notoria Pro or Premium",
             "use optional AI-assisted tools",
             "upload media for listening or profile use",
             "use speaking practice",
@@ -4173,7 +4178,7 @@
               "basis": "Contract (Art. 6(1)(b))"
             },
             {
-              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
+              "purpose": "Run Notoria Pro and Premium billing and subscription status via Stripe",
               "basis": "Contract (Art. 6(1)(b))"
             },
             {
@@ -4208,7 +4213,7 @@
           "p4": "The current codebase does not use other large-language-model providers besides OpenAI. OpenAI processes data under its own terms and privacy policy as a processor for these features."
         },
         "payments": {
-          "title": "7. Payments (Notoria Pro)",
+          "title": "7. Payments (Pro and Premium)",
           "p1": "Paid subscriptions are handled by <strong>Stripe</strong>. Checkout, invoices, payment methods, and cancellation run through Stripe Checkout and the Stripe Customer Portal. Stripe webhooks update your plan and status in Notoria.",
           "p2": "Stripe processes payment data as a payment provider. See Stripe’s own privacy documentation for card handling."
         },
@@ -4250,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro checkout, portal, and subscription status"
+              "role": "Notoria Pro and Premium checkout, portal, and subscription status"
             },
             {
               "provider": "Google",
@@ -4364,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "These Terms of Use explain the rules for using Notoria at <site>www.notoria.fi</site>. They describe how the product works today: private learning workspaces, optional Notoria Pro billing through Stripe, and AI-assisted features. They are not a substitute for advice from a lawyer about your specific situation.",
+      "intro": "These Terms of Use explain the rules for using Notoria at <site>www.notoria.fi</site>. They describe how the product works today: private learning workspaces, optional Pro and Premium billing through Stripe, and AI-assisted features. They are not a substitute for advice from a lawyer about your specific situation.",
       "tocTitle": "On this page",
       "tocAria": "On this page",
       "toc": {
@@ -4375,7 +4380,7 @@
         "acceptable-use": "Acceptable use",
         "ip": "Intellectual property",
         "ai": "AI-generated output",
-        "plans": "Free plan and Notoria Pro",
+        "plans": "Free, Pro, and Premium plans",
         "billing": "Subscription and billing",
         "refunds": "Refunds and consumer rights",
         "availability": "Availability",
@@ -4394,7 +4399,7 @@
         "service": {
           "title": "2. The service",
           "p1": "Notoria is a private language-learning web app. You can create workspaces and keep learning material such as vocabulary, theory notes, writing, exercises, listening lessons, and speaking sessions.",
-          "p2": "Some features are available on the free plan. Notoria Pro unlocks additional capabilities as shown in the product and on your <account>Account</account> page — including Listening, Speaking, certain AI study tools, exercise import, and paid document export formats. Feature availability can change as the product evolves.",
+          "p2": "Core learning areas, including Listening, Speaking, and Reading, are available on every plan. Pro and Premium add higher AI allowances and learning-material import/export; Premium also adds personalised coaching and practice features. The current comparison is shown on your <account>Account</account> page. Feature availability can change as the product evolves.",
           "p3": "Notoria is for personal language learning. It is not a school, exam authority, or professional advice service."
         },
         "accounts": {
@@ -4435,23 +4440,23 @@
           "title": "7. AI-generated output",
           "p1": "Some features can check, suggest, generate, transcribe, summarise, or tutor based on your material. Output may be incomplete, incorrect, or unsuitable for your goal. You remain responsible for reviewing AI results before relying on them for study, exams, professional use, or publication.",
           "p2": "AI features may be unavailable if assistance is turned off in <settings>Settings</settings>, if your plan does not include a particular tool, or if a provider is temporarily unreachable.",
-          "p3": "Not all AI helpers require Notoria Pro. The product shows which tools are free and which need Pro."
+          "p3": "AI availability and daily allowances vary between Free, Pro, and Premium. The product shows the plan and allowance required for each tool."
         },
         "plans": {
-          "title": "8. Free plan and Notoria Pro",
+          "title": "8. Free, Pro, and Premium plans",
           "p1": "The free plan covers core practice with your own vocabulary and related study tools as shown in the product.",
-          "p2": "Notoria Pro is a paid subscription that unlocks additional features. In the current product, that typically includes Listening, Speaking, exercise import, form-a-sentence practice, many AI-assisted study tools, and PDF/DOCX document export. Some lighter AI helpers (such as certain vocabulary or editor formatting aids) may remain available on the free plan when AI assistance is enabled.",
-          "p3": "Pro access is tied to your user account, so it applies across the workspaces under that account. Accounts with an administrator role may have Pro-level access without a personal Stripe subscription.",
-          "p4": "The price that applies to your purchase is the price shown at Stripe Checkout for the current Pro plan. Any price shown elsewhere in the product (for example on Account) is indicative only and must match the active Stripe price configuration."
+          "p2": "Pro and Premium are paid subscriptions. Pro adds higher or unlimited allowances for many AI tools plus learning-material import and PDF/DOCX export. Premium includes Pro and adds personalised features such as the Learning Coach, personal learning profile, adaptive practice, mistake-based practice, and custom exercise instructions. The Account page shows the current comparison and limits.",
+          "p3": "Paid access is tied to your user account and applies across its workspaces. Accounts with an administrator role may have paid-level access without a personal Stripe subscription.",
+          "p4": "The price that applies is the price shown at Stripe Checkout for the selected Pro or Premium plan. Any price shown elsewhere in the product (for example on Account) is indicative only and must match the active Stripe price configuration."
         },
         "billing": {
           "title": "9. Subscription, billing, and cancellation",
-          "list0": "Pro subscriptions are billed through <strong>Stripe</strong>",
-          "list1": "You can start checkout from <account>Account</account> or from locked Pro controls in the app",
+          "list0": "Pro and Premium subscriptions are billed through <strong>Stripe</strong>",
+          "list1": "You can start checkout or change plan from <account>Account</account> or from locked paid controls in the app",
           "list2": "From Account, you can open the Stripe Customer Portal to view invoices, update payment methods, and cancel the subscription",
           "list3": "Cancellation follows Stripe’s Customer Portal behaviour for your subscription",
-          "p1": "After you cancel, Pro access continues only while your Stripe subscription status still grants Pro in the product. In the current implementation, statuses treated as Pro include <code>active</code>, <code>trialing</code>, and <code>past_due</code>. When the status no longer qualifies, the account returns to the free plan.",
-          "p2": "If a payment fails, Stripe may move the subscription to <code>past_due</code> or another status. Notoria syncs that status from Stripe webhooks. While the status remains <code>past_due</code>, Pro features stay available under the current access rules; if the subscription later becomes cancelled or otherwise ineligible, Pro access ends.",
+          "p1": "After you cancel renewal, your current Pro or Premium access continues while the Stripe subscription status still qualifies in the product. Qualifying statuses currently include <code>active</code>, <code>trialing</code>, and <code>past_due</code>. When the status no longer qualifies, the account returns to Free.",
+          "p2": "If a payment fails, Stripe may move the subscription to <code>past_due</code> or another status. Notoria syncs that status from Stripe webhooks. While it remains <code>past_due</code>, the current paid plan stays available under the present access rules; if it later becomes cancelled or otherwise ineligible, paid access ends.",
           "p3": "Deleting your Notoria account cancels the Stripe subscription immediately (best effort) as part of account deletion. That is different from cancelling renewal through the Customer Portal while keeping the account."
         },
         "refunds": {
@@ -4472,7 +4477,7 @@
         "liability": {
           "title": "13. Disclaimer and liability",
           "p1": "Notoria is provided on an “as available” basis for personal language learning. To the fullest extent permitted by applicable law, we disclaim warranties that are not required by law.",
-          "p2": "To the fullest extent permitted by applicable law, Notoria is not liable for indirect, incidental, special, consequential, or lost-data damages arising from your use of the service or reliance on AI output. Where liability cannot be excluded, it is limited to the amount you paid for Notoria Pro in the three months before the claim, or any greater amount required by mandatory law.",
+          "p2": "To the fullest extent permitted by applicable law, Notoria is not liable for indirect, incidental, special, consequential, or lost-data damages arising from your use of the service or reliance on AI output. Where liability cannot be excluded, it is limited to the amount you paid for Notoria Pro or Premium in the three months before the claim, or any greater amount required by mandatory law.",
           "p3": "These limits do not exclude liability that Finnish or EU law does not allow to be limited — including liability that cannot be waived for consumers, and liability for death or personal injury caused by negligence where such rules apply."
         },
         "changes": {
@@ -4545,9 +4550,9 @@
           "vocab": "Build a personal vocabulary bank with meanings, examples, and tags",
           "practice": "Practise with exercises drawn from your own words and notes",
           "create": "Write theory notes and writing work you can revisit later",
-          "listenSpeak": "Turn media into listening practice, and speak with an AI tutor on Pro"
+          "listenSpeak": "Turn media into listening practice, and use AI allowances for transcription and speaking practice"
         },
-        "note": "Some AI, listening, speaking, and export tools are part of Notoria Pro. The free plan still covers everyday vocabulary practice and the core study loop."
+        "note": "Core learning areas are available on every plan. Pro raises AI allowances and adds learning-material import/export; Premium adds personalised coaching and practice."
       },
       "ai": {
         "title": "AI, where it helps",
@@ -4673,7 +4678,7 @@
         "title": "How the areas connect",
         "p1": "Capture is the quick entry point. Vocabulary and Theory are where material settles. Exercise turns that material into practice. Writing, Listening, and Speaking help you use the language more actively.",
         "p2": "You do not have to move through every area in order. Many people stay with words and short practice for a while.",
-        "p3": "A natural next step is writing when you want to produce language on your own terms, then listening and speaking when you want the same material to work in your ear and voice — Listening and Speaking are part of Notoria Pro.",
+        "p3": "A natural next step is writing when you want to produce language on your own terms, then listening and speaking when you want the same material to work in your ear and voice. These areas are available on every plan; AI usage limits vary by plan.",
         "beat": "Collect and understand first. Use and speak when the material is ready to leave the page."
       },
       "areas": {
@@ -4697,11 +4702,11 @@
         },
         "listening": {
           "label": "Listening",
-          "body": "Turn media into listening practice in your workspace. Available on Notoria Pro."
+          "body": "Turn media into listening practice in your workspace. Available on every plan; AI transcription allowances vary by plan."
         },
         "speaking": {
           "label": "Speaking",
-          "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on Notoria Pro."
+          "body": "Live practice with an AI tutor, grounded in the language you are studying. Available on every plan with a plan-based daily allowance."
         },
         "reading": {
           "label": "Reading",
@@ -4751,15 +4756,15 @@
         },
         "account": {
           "q": "How do I change my password or close my account?",
-          "a": "Open <account>Account</account>. You can update your password there if you use email sign-in, manage Notoria Pro, export a backup, or permanently delete your account."
+          "a": "Open <account>Account</account>. You can update your password there if you use email sign-in, manage Pro or Premium, export a backup, or permanently delete your account. Deleting the account also immediately cancels any active Stripe subscription on a best-effort basis; cancelling renewal alone keeps the account and its data."
         },
         "pro": {
           "q": "How do billing and cancellation work?",
-          "a": "Notoria Pro is billed through Stripe. From <account>Account</account> you can upgrade, open the Stripe customer portal to manage payment methods and invoices, or cancel renewal."
+          "a": "Notoria Pro and Premium are billed through Stripe. From <account>Account</account> you can subscribe, switch between Pro and Premium, manage payment methods and invoices, cancel renewal, or resume a scheduled cancellation. Cancelling renewal keeps access until Stripe ends the eligible subscription period; deleting your account is separate and cancels the subscription immediately on a best-effort basis."
         },
         "proFeatures": {
-          "q": "What is free, and what needs Notoria Pro?",
-          "a": "Everyday vocabulary practice and related study tools are available on the free plan. Some AI tools, listening, speaking, and document export features are part of Notoria Pro. Compare and upgrade from <account>Account</account>."
+          "q": "What is included with Free, Pro, and Premium?",
+          "a": "Free includes the core learning areas and daily allowances for supported AI tools. Pro raises or removes many AI limits and adds learning-material import plus PDF/DOCX export. Premium includes Pro and adds personalised coaching, a learning profile, adaptive and mistake-based practice, and custom exercise instructions. See the live comparison and current limits in <account>Account</account>."
         },
         "learning": {
           "q": "How do Notoria’s learning features work?",

@@ -138,8 +138,8 @@
 }
 
 .nav-link[data-nav="inbox"] {
-  --nav-route-bg: var(--module-home-bg);
-  --nav-route-fg: var(--module-home-fg);
+  --nav-route-bg: var(--module-inbox-bg);
+  --nav-route-fg: var(--module-inbox-fg);
 }
 
 .nav-link[data-nav="vocabulary"] {
@@ -178,8 +178,8 @@
 }
 
 .nav-link[data-nav="coach"] {
-  --nav-route-bg: color-mix(in oklab, var(--accent-lime) 26%, var(--surface));
-  --nav-route-fg: color-mix(in oklab, var(--accent-lime) 78%, var(--ink));
+  --nav-route-bg: var(--module-coach-bg);
+  --nav-route-fg: var(--module-coach-fg);
 }
 
 .nav-link[data-nav="guide"] {
@@ -197,10 +197,7 @@
   --nav-route-fg: var(--module-settings-fg);
 }
 
-/*
-  User button follows the current page accent (same family as sidebar chrome),
-  not a fixed slate — so Writing/Theory/… tint the trigger + menu.
-*/
+/* User card follows the active route accent, matching the surrounding chrome. */
 .nav-account-trigger {
   border-color: color-mix(
     in oklab,
@@ -209,7 +206,7 @@
   ) !important;
   background-color: color-mix(
     in oklab,
-    var(--page-accent-soft) 38%,
+    var(--page-accent-soft) 20%,
     transparent
   ) !important;
   background-image: none !important;
@@ -232,7 +229,7 @@
   ) !important;
   background-color: color-mix(
     in oklab,
-    var(--page-accent-soft) 58%,
+    var(--page-accent-soft) 32%,
     var(--surface-elevated)
   ) !important;
   box-shadow: inset 2px 0 0 var(--page-accent);
@@ -246,7 +243,7 @@
   ) !important;
   background-color: color-mix(
     in oklab,
-    var(--page-accent-soft) 68%,
+    var(--page-accent-soft) 42%,
     var(--surface-elevated)
   ) !important;
   box-shadow:

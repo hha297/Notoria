@@ -35,7 +35,7 @@ export function ExerciseDisplayModePicker({
         {t("label")}
       </legend>
       <div
-        className="mt-2 grid gap-2 sm:grid-cols-2"
+        className="mt-1.5 grid gap-1.5 sm:mt-2 sm:grid-cols-2 sm:gap-2"
         role="radiogroup"
         aria-label={t("label")}
       >
@@ -50,7 +50,7 @@ export function ExerciseDisplayModePicker({
               disabled={disabled}
               onClick={() => onChange(mode)}
               className={cn(
-                "rounded-xl border px-3.5 py-3 text-left transition-[border-color,background-color,box-shadow]",
+                "rounded-xl border px-3 py-2.5 text-left transition-[border-color,background-color,box-shadow] sm:px-3.5 sm:py-3",
                 selected
                   ? "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-[inset_0_0_0_1px_var(--exercise-accent)]"
                   : "exercise-panel hover:border-(--exercise-accent)/40 hover:bg-(--page-accent-hover)",
@@ -60,7 +60,7 @@ export function ExerciseDisplayModePicker({
               <span className="block font-heading text-sm font-semibold text-ink">
                 {t(`${mode}.title`)}
               </span>
-              <span className="mt-1 block text-xs leading-relaxed text-muted-foreground">
+              <span className="mt-0.5 block text-xs leading-snug text-muted-foreground sm:mt-1 sm:leading-relaxed">
                 {t(`${mode}.description`)}
               </span>
             </button>

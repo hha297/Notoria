@@ -121,7 +121,7 @@ const NAV_GROUPS: NavGroup[] = [
         icon: Inbox,
         match: "prefix",
         route: "inbox",
-        tint: "text-module-home-fg",
+        tint: "text-module-inbox-fg",
       },
     ],
   },
@@ -173,7 +173,7 @@ const NAV_GROUPS: NavGroup[] = [
         icon: Sparkles,
         match: "prefix",
         route: "coach",
-        tint: "text-accent-lime",
+        tint: "text-module-coach-fg",
       },
       {
         href: "/getting-started",

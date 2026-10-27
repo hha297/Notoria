@@ -386,8 +386,8 @@
 
 .inbox-card,
 .inbox-grid-card {
-  --inbox-accent: var(--module-home-fg);
-  --inbox-wash: var(--module-home-bg);
+  --inbox-accent: var(--module-inbox-fg);
+  --inbox-wash: var(--module-inbox-bg);
   border-radius: 1rem;
   border: 1px solid
     color-mix(in oklab, var(--inbox-accent) 26%, var(--hairline-cloud));
@@ -428,8 +428,8 @@
 
 .inbox-card[data-status="processed"],
 .inbox-grid-card[data-status="processed"] {
-  --inbox-accent: color-mix(in oklab, var(--muted-foreground) 70%, var(--module-home-fg));
-  --inbox-wash: color-mix(in oklab, var(--surface-muted) 55%, var(--module-home-bg));
+  --inbox-accent: color-mix(in oklab, var(--muted-foreground) 70%, var(--module-inbox-fg));
+  --inbox-wash: color-mix(in oklab, var(--surface-muted) 55%, var(--module-inbox-bg));
 }
 
 .inbox-card-row {

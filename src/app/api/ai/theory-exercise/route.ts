@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { authErrorResponse } from "@/lib/auth/http";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
-import { getTheoryNote } from "@/lib/actions/theory";
+import { getTheoryNoteForExercise } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
 import { locales } from "@/i18n/config";
@@ -15,7 +15,7 @@ import {
   exerciseJobInProgressResponse,
   runExclusiveExerciseGeneration,
 } from "@/lib/exercises/next-set-job";
-import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
+import { theoryQuestionTypeSchema } from "@/lib/theory-exercises/question-type";
 
 export const runtime = "nodejs";
 /** Match `AI_DEADLINES_MS.theoryGenerate` with a little headroom. */
@@ -27,6 +27,7 @@ const bodySchema = z.object({
   /** Website UI locale for sentenceMeaning. */
   uiLocale: z.enum(locales).optional(),
   additionalInstructions: z.string().trim().max(2_000).optional().nullable(),
+  questionType: theoryQuestionTypeSchema.optional().default("fill_blank"),
   nextSet: exerciseNextSetMetaSchema.optional(),
 });
 
@@ -49,7 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const note = await getTheoryNote(parsed.data.theoryId);
+  const note = await getTheoryNoteForExercise(parsed.data.theoryId);
   if (!note) {
     return NextResponse.json({ ok: false, code: "NOT_FOUND" }, { status: 404 });
   }
@@ -77,7 +78,7 @@ export async function POST(request: Request) {
   const nextSet = parsed.data.nextSet;
   const sessionId = nextSet?.sessionId ?? `oneshot-${user.id}`;
   const sequence = nextSet?.sequence ?? 0;
-  const count = parsed.data.count ?? DEFAULT_NEXT_SET_COUNT;
+  const count = parsed.data.count ?? 15;
   const revision =
     note.updatedAt instanceof Date
       ? note.updatedAt.toISOString()
@@ -92,7 +93,7 @@ export async function POST(request: Request) {
         sessionId,
         sourceIds: [note.id],
         sourceRevisions: [revision],
-        mode: "theory",
+        mode: `theory:${parsed.data.questionType}`,
         difficulty: null,
         language: null,
         uiLocale: parsed.data.uiLocale ?? null,
@@ -119,6 +120,7 @@ export async function POST(request: Request) {
           studyLanguage: workspace?.language,
           uiLanguage: uiLocaleEnglishName(uiLocale),
           additionalInstructions: gated.text,
+          questionType: parsed.data.questionType,
         });
       },
     });

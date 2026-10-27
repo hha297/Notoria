@@ -195,7 +195,6 @@ function LessonOpening({
     <header
       className={cn(
         "theory-zone-hero relative -mx-[var(--studio-main-pad,1rem)] px-4 py-5 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:px-7",
-        compact ? "sm:py-8" : "sm:py-11",
       )}
     >
       <LessonDecor tone="hero" />

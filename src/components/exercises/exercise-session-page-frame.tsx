@@ -23,9 +23,9 @@ export function ExerciseSessionPageFrame({
   return (
     <div
       data-exercise={slug}
-      className="w-full min-w-0 space-y-6 pt-1 sm:space-y-8"
+      className="w-full min-w-0 max-w-full space-y-4 pt-0.5 sm:space-y-7 sm:pt-1"
     >
-      <header className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between sm:gap-6">
+      <header className="flex min-w-0 flex-col gap-2 sm:flex-row sm:items-end sm:justify-between sm:gap-5">
         <div className="min-w-0 space-y-2">
           <Link
             href={backHref}

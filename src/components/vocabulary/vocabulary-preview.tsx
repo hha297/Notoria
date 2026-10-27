@@ -1,14 +1,13 @@
 "use client";
 
-import { useState } from "react";
 import Link from "next/link";
-import { ArrowLeft, Pencil, Star } from "lucide-react";
+import { ArrowLeft, Pencil } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useTranslations } from "next-intl";
 import { ReviewLaterButton } from "@/components/review-later/review-later-button";
 import { Button } from "@/components/ui/button";
 import { useRegisterShortcutAction } from "@/components/preferences/shortcut-actions";
-import { MeaningUsageBadges } from "@/components/vocabulary/meaning-usage-badges";
+import { VocabularyMeaningPreview } from "@/components/vocabulary/vocabulary-meaning-preview";
 import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import detailStyles from "@/components/style/workspace/detail.module.css";
@@ -20,9 +19,6 @@ import {
 } from "@/lib/vocabulary/notes-content";
 import { getTagLabel, PARTS_OF_SPEECH } from "@/lib/vocabulary-tags";
 import type { VocabularySynonymRef } from "@/lib/vocabulary/synonyms";
-import { cn } from "@/lib/utils";
-
-const OTHER_MEANINGS_PAGE_SIZE = 5;
 
 type VocabularyPreviewProps = {
   id: string;
@@ -70,25 +66,7 @@ export function VocabularyPreview({
     router.push(`/vocabulary/${id}/edit`);
   });
 
-  const [otherPage, setOtherPage] = useState(1);
-
   const sortedMeanings = [...meanings].sort((a, b) => a.sortOrder - b.sortOrder);
-  const primaryMeanings = sortedMeanings.filter(
-    (meaning) => meaning.isPrimary !== false,
-  );
-  const otherMeanings = sortedMeanings.filter(
-    (meaning) => meaning.isPrimary === false,
-  );
-  const otherTotalPages = Math.max(
-    1,
-    Math.ceil(otherMeanings.length / OTHER_MEANINGS_PAGE_SIZE),
-  );
-  const safeOtherPage = Math.min(otherPage, otherTotalPages);
-  const otherPageStart = (safeOtherPage - 1) * OTHER_MEANINGS_PAGE_SIZE;
-  const pagedOtherMeanings = otherMeanings.slice(
-    otherPageStart,
-    otherPageStart + OTHER_MEANINGS_PAGE_SIZE,
-  );
   const sortedExamples = [...examples].sort((a, b) => a.sortOrder - b.sortOrder);
 
   const knownPos =
@@ -100,42 +78,6 @@ export function VocabularyPreview({
     ? tPos(knownPos)
     : partOfSpeech?.trim() || null;
   const posKey = knownPos ?? "other";
-
-  function renderMeaningList(
-    items: typeof sortedMeanings,
-    opts?: { muted?: boolean; showStar?: boolean; indexOffset?: number },
-  ) {
-    const indexOffset = opts?.indexOffset ?? 0;
-    return (
-      <ol className={mx(lexiconStyles, "vocab-preview-list")}>
-        {items.map((meaning, index) => (
-          <li
-            key={meaning.id}
-            className={cn(
-              mx(lexiconStyles, "vocab-preview-item"),
-              opts?.muted && mx(lexiconStyles, "vocab-preview-item-muted"),
-            )}
-          >
-            <span className={mx(lexiconStyles, "vocab-preview-index")} aria-hidden>
-              {String(indexOffset + index + 1).padStart(2, "0")}
-            </span>
-            {opts?.showStar ? (
-              <Star
-                className={mx(lexiconStyles, "vocab-preview-star")}
-                aria-hidden
-              />
-            ) : null}
-            <span className={mx(lexiconStyles, "vocab-preview-copy")}>
-              <span className="inline-flex min-w-0 flex-wrap items-baseline gap-x-2 gap-y-1">
-                <span>{meaning.meaning}</span>
-                <MeaningUsageBadges labels={meaning.usageLabels} />
-              </span>
-            </span>
-          </li>
-        ))}
-      </ol>
-    );
-  }
 
   return (
     <div
@@ -184,7 +126,12 @@ export function VocabularyPreview({
         {partOfSpeechLabel || tags.length > 0 ? (
           <div className={mx(detailStyles, "meta")}>
             {partOfSpeechLabel ? (
-              <span className={mx(detailStyles, "tag")}>{partOfSpeechLabel}</span>
+              <span
+                data-tag-tone="card"
+                className={mx(detailStyles, "tag")}
+              >
+                {partOfSpeechLabel}
+              </span>
             ) : null}
             {tags.map((item) => (
               <span
@@ -206,66 +153,28 @@ export function VocabularyPreview({
 
       <div className={mx(detailStyles, "body")}>
         <div className={mx(lexiconStyles, "vocab-preview-stages")}>
-          {primaryMeanings.length > 0 ? (
-            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+          {sortedMeanings.length > 0 ? (
+            <section
+              className={mx(lexiconStyles, "vocab-preview-stage")}
+              data-vocab-section="meanings"
+            >
               <p className="writing-kicker writing-stage-kicker">
-                {t("primaryMeanings")}
+                {t("meanings")}
               </p>
-              {renderMeaningList(primaryMeanings, { showStar: true })}
-            </section>
-          ) : null}
-
-          {otherMeanings.length > 0 ? (
-            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
-              <p className="writing-kicker writing-stage-kicker">
-                {t("otherMeanings")}
-              </p>
-              {renderMeaningList(pagedOtherMeanings, {
-                muted: true,
-                indexOffset: (safeOtherPage - 1) * OTHER_MEANINGS_PAGE_SIZE,
-              })}
-              {otherMeanings.length > OTHER_MEANINGS_PAGE_SIZE ? (
-                <div className={mx(lexiconStyles, "vocab-preview-pager")}>
-                  <p className={mx(lexiconStyles, "vocab-preview-pager-meta")}>
-                    {t("otherMeaningsPage", {
-                      page: safeOtherPage,
-                      totalPages: otherTotalPages,
-                      total: otherMeanings.length,
-                    })}
-                  </p>
-                  <div className={mx(lexiconStyles, "vocab-preview-pager-controls")}>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      disabled={safeOtherPage <= 1}
-                      onClick={() =>
-                        setOtherPage((page) => Math.max(1, page - 1))
-                      }
-                    >
-                      {t("otherMeaningsPrev")}
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="outline"
-                      size="sm"
-                      disabled={safeOtherPage >= otherTotalPages}
-                      onClick={() =>
-                        setOtherPage((page) =>
-                          Math.min(otherTotalPages, page + 1),
-                        )
-                      }
-                    >
-                      {t("otherMeaningsNext")}
-                    </Button>
-                  </div>
-                </div>
-              ) : null}
+              <VocabularyMeaningPreview
+                word={{ meanings: sortedMeanings }}
+                variant="list"
+                limit={sortedMeanings.length}
+                clamp={false}
+              />
             </section>
           ) : null}
 
           {sortedExamples.length > 0 ? (
-            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+            <section
+              className={mx(lexiconStyles, "vocab-preview-stage")}
+              data-vocab-section="examples"
+            >
               <p className="writing-kicker writing-stage-kicker">{t("examples")}</p>
               <ol className={mx(lexiconStyles, "vocab-preview-list")}>
                 {sortedExamples.map((example, index) => (
@@ -288,7 +197,9 @@ export function VocabularyPreview({
                           <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
                             {t("exampleMeaning")}
                           </span>
-                          {example.meaning.trim()}
+                          <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
+                            {example.meaning.trim()}
+                          </span>
                         </p>
                       ) : null}
                       {example.notes?.trim() ? (
@@ -296,7 +207,9 @@ export function VocabularyPreview({
                           <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
                             {t("exampleNotes")}
                           </span>
-                          {example.notes.trim()}
+                          <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
+                            {example.notes.trim()}
+                          </span>
                         </p>
                       ) : null}
                     </div>
@@ -307,7 +220,10 @@ export function VocabularyPreview({
           ) : null}
 
           {notes && !isNotesDocEmpty(parseVocabularyNotes(notes)) ? (
-            <section className={mx(lexiconStyles, "vocab-preview-stage")}>
+            <section
+              className={mx(lexiconStyles, "vocab-preview-stage")}
+              data-vocab-section="notes"
+            >
               <p className="writing-kicker writing-stage-kicker">{t("notes")}</p>
               <div className={mx(lexiconStyles, "vocab-preview-notes")}>
                 <VocabularyNotesContent notes={notes} />

@@ -159,7 +159,7 @@ function DropdownMenuCheckboxItem({
       data-slot="dropdown-menu-checkbox-item"
       data-inset={inset}
       className={cn(
-        "menu-item-surface relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none focus:text-page-accent data-highlighted:text-page-accent focus:**:text-page-accent data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "menu-item-surface relative flex min-h-9 cursor-pointer items-center gap-2 rounded-md border border-transparent py-2 pr-8 pl-2.5 text-sm outline-hidden select-none focus:border-page-accent-border focus:text-page-accent data-highlighted:border-page-accent-border data-highlighted:text-page-accent focus:**:text-page-accent data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       checked={checked}
@@ -201,7 +201,7 @@ function DropdownMenuRadioItem({
       data-slot="dropdown-menu-radio-item"
       data-inset={inset}
       className={cn(
-        "menu-item-surface relative flex cursor-default items-center gap-1.5 rounded-md py-1 pr-8 pl-1.5 text-sm outline-hidden select-none focus:text-page-accent data-highlighted:text-page-accent focus:**:text-page-accent data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
+        "menu-item-surface relative flex min-h-9 cursor-pointer items-center gap-2 rounded-md border border-transparent py-2 pr-8 pl-2.5 text-sm outline-hidden select-none focus:border-page-accent-border focus:text-page-accent data-highlighted:border-page-accent-border data-highlighted:text-page-accent focus:**:text-page-accent data-inset:pl-7 data-disabled:pointer-events-none data-disabled:opacity-50 [&_svg]:pointer-events-none [&_svg]:shrink-0 [&_svg:not([class*='size-'])]:size-4",
         className
       )}
       {...props}

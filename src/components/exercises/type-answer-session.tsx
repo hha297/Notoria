@@ -28,6 +28,11 @@ import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
+import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
 import { CONTEXTUAL_AI_BATCH } from "@/lib/exercises/contextual-ai-types";
 import { pickDistinctContextualWords } from "@/lib/exercises/contextual-word-pick";
 import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
@@ -97,6 +102,19 @@ export function TypeAnswerSession({
     [filteredWords],
   );
   const isContextual = studyMode === "contextual";
+  const draftIdentity = useMemo(
+    () => ({
+      scope: `workspace:${workspaceId}:type_answer`,
+      config: JSON.stringify({
+        difficulty,
+        uiLocale,
+        language: language ?? null,
+        filters,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    }),
+    [additionalInstructions, difficulty, filters, language, uiLocale, workspaceId],
+  );
 
   const practiceItems = useMemo(() => {
     if (!activeIds) return items;
@@ -192,6 +210,8 @@ export function TypeAnswerSession({
   const startContextualSession = useCallback(async () => {
     if (filteredWords.length < 2) return;
 
+    const mayRestore = items.length === 0;
+
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
     const sampledWords = pickDistinctContextualWords(
@@ -217,6 +237,26 @@ export function TypeAnswerSession({
     setStage("generating");
 
     try {
+      if (mayRestore) {
+        const restored = await loadExerciseDraft<TypeAnswerItem>(draftIdentity);
+        const eligibleIds = new Set(filteredWords.map((word) => word.id));
+        const valid = (restored ?? []).filter(
+          (item) =>
+            item?.id &&
+            item.prompt &&
+            item.answerDisplay &&
+            Array.isArray(item.acceptableAnswers) &&
+            item.acceptableAnswers.length > 0 &&
+            eligibleIds.has(item.wordId),
+        );
+        if (valid.length > 0) {
+          setItems(valid);
+          completeProcessing();
+          afterNewSet();
+          window.setTimeout(() => resetProcessing(), 350);
+          return;
+        }
+      }
       const languageCode =
         language && language.trim().length >= 2
           ? language.trim().slice(0, 16)
@@ -278,6 +318,7 @@ export function TypeAnswerSession({
       }
 
       setStage("saving");
+      await saveExerciseDraft(draftIdentity, nextItems);
       setItems(nextItems);
       completeProcessing();
       afterNewSet();
@@ -291,10 +332,12 @@ export function TypeAnswerSession({
     commitAndBeginNext,
     completeProcessing,
     difficulty,
+    draftIdentity,
     exerciseQuota.message,
     exerciseQuota.refreshQuotas,
     fail,
     filteredWords,
+    items.length,
     language,
     openUpgrade,
     resetAttempt,
@@ -358,6 +401,7 @@ export function TypeAnswerSession({
   );
 
   const handleSubmit = () => {
+    if (isContextual) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const item of practiceItems) {
@@ -554,50 +598,23 @@ export function TypeAnswerSession({
         </p>
       ) : null}
 
-      <ExerciseProgressHeader
-        current={progressCurrent}
-        total={progressTotal}
-        progressLabel={
-          submitted
-            ? tSession("score", {
-                correct: score.correct,
-                total: score.total,
-              })
-            : oneByOne
-              ? tSession("questionProgress", {
-                  current: Math.min(
-                    checkedCount + 1,
-                    Math.max(totalQuestionCount, 1),
-                  ),
-                  total: totalQuestionCount,
-                })
-              : tSession("answeredProgress", {
-                  answered: answeredCount,
-                  total: totalQuestionCount,
-                })
-        }
-        scoreLabel={
-          submitted
-            ? t("score", {
-                correct: score.correct,
-                answered: score.total,
-              })
-            : undefined
-        }
-        progressValue={
-          submitted
-            ? score.total
-              ? (score.correct / score.total) * 100
-              : 0
-            : oneByOne
-              ? totalQuestionCount
-                ? (checkedCount / totalQuestionCount) * 100
-                : 0
-              : totalQuestionCount
-                ? (answeredCount / totalQuestionCount) * 100
-                : 0
-        }
-      />
+      {submitted ? (
+        <ExerciseProgressHeader
+          current={progressCurrent}
+          total={progressTotal}
+          progressLabel={tSession("score", {
+            correct: score.correct,
+            total: score.total,
+          })}
+          scoreLabel={t("score", {
+            correct: score.correct,
+            answered: score.total,
+          })}
+          progressValue={
+            score.total ? (score.correct / score.total) * 100 : 0
+          }
+        />
+      ) : null}
 
       {submitted ? (
         <ExerciseSetReviewNav
@@ -651,6 +668,8 @@ export function TypeAnswerSession({
             isLast={isLastQuestion}
             canCheck={currentCanCheck}
             submitting={submitting}
+            progressCurrent={progressCurrent}
+            progressTotal={progressTotal}
             onCheck={handleCheckOne}
             onNext={goNextQuestion}
             onViewResults={handleViewResults}

@@ -13,7 +13,7 @@ import { mx } from "@/lib/css-module";
 
 type CoachStreakCardProps = {
   streak: CoachLearningStreak;
-  /** home = dashboard home teal; coach = accent lime (default) */
+  /** home = dashboard home teal; coach = coach cyan (default) */
   variant?: "coach" | "home";
 };
 

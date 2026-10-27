@@ -628,7 +628,9 @@ export function VocabularyForm({
       className={mx(
         composerStyles,
         "vocab-composer",
-        isModal ? "space-y-6" : "flex flex-col gap-0",
+        isModal
+          ? "vocab-composer-modal space-y-6"
+          : "vocab-composer-page flex flex-col gap-4",
       )}
     >
       {!isModal ? (

@@ -30,7 +30,7 @@
       "fixedNote": "Išvaizda eksportuotame faile yra fiksuota. Norėdami pakeisti, eksportuokite dar kartą.",
       "docxBackgroundNote": "Word ir kitos programos gali kitaip rodyti lapo foną, ypač spausdinant."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Slinkti į viršų"
   },
   "contentImport": {
     "title": {
@@ -473,34 +473,34 @@
     "viewMode": "Rodymo režimas",
     "tagManager": {
       "open": "Tvarkyti žymas",
-      "eyebrow": "Tags",
+      "eyebrow": "Žymės",
       "title": "Žymų tvarkyklė",
-      "description": "Pasirinkite žymą, tada priskirkite arba pašalinkite ją iš žodžių. Priskirti ir kiti žodžiai lieka atskiruose sąrašuose.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Pasirinkite žymę, tada priskirkite arba pašalinkite ją iš žodžių.",
+      "pageDescription": "Pasirinkite standartinę arba pasirinktą, pasirinkite žymę, tada pridėkite arba pašalinkite ją iš žodžių.",
+      "disabledNoWorkspace": "Sukurkite darbo erdvę prieš valdydami žodyną.",
+      "backToVocabulary": "Grįžti į žodyną",
+      "backToSettings": "Grįžti į nustatymus",
       "groupsLabel": "Standartinės žymų grupės",
       "tagsHeading": "Žymos",
       "standardTagsHeading": "Standartinės žymos",
       "customTagsHeading": "Pasirinktinės žymos",
-      "customTagsHint": "Etiketės, kurias kuriate savo tvarkai — ne kalbos dalys.",
+      "customTagsHint": "Darbo erdvės etiketės, kurias sukuriate — ieškokite, kad jas rastumėte, kai sąrašas ilgas.",
       "emptyCustomTags": "Dar nėra pasirinktinių žymų. Kurkite jas redaguodami žodį.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nėra jokių pasirinktų žymių, atitinkančių šią paiešką.",
+      "tagSearchPlaceholder": "Ieškoti žymių…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standartinė",
       "kindCustom": "Pasirinktinė",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Žodžių sąrašai",
+      "wordTabAssigned": "Pažymėti",
+      "wordTabOther": "Nepažymėti",
       "assignedHeading": "Žodžiai su šia žyma",
       "otherHeading": "Kiti žodžiai",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Pasirinkti visus šioje puslapio",
+      "clearSelection": "Išvalyti pasirinkimą",
+      "selectionScopePage": "Pasirinkta iš šio puslapio ({count} iš {total})",
+      "selectionScopeFiltered": "Pasirinkta pagal dabartinius paieškos rezultatus",
       "searchPlaceholder": "Ieškoti žodžių ar reikšmių…",
       "wordCount": "{count}",
       "loading": "Įkeliamas žodynas…",
@@ -510,13 +510,23 @@
       "emptyOther": "Kiekvienas žodis jau turi šią žymą.",
       "emptyOtherSearch": "Nėra atitinkančių žodžių priskyrimui.",
       "selected": "Pasirinkta: {count}",
-      "addToTag": "Pridėti prie žymos",
-      "removeFromTag": "Pašalinti iš žymos",
-      "applyAdd": "Pridėti prie žymos ({count})",
-      "applyRemove": "Pašalinti iš žymos ({count})",
+      "addToTag": "Pridėti žymę",
+      "removeFromTag": "Pašalinti žymę",
+      "applyAdd": "Pridėti žymę ({count})",
+      "applyRemove": "Pašalinti žymę ({count})",
       "added": "Pridėta žodžių prie {tag}: {count}",
       "removed": "Pašalinta žodžių iš {tag}: {count}",
-      "error": "Nepavyko atnaujinti žymos narystės"
+      "error": "Nepavyko atnaujinti žymos narystės",
+      "systemsLabel": "Žymų sistemos",
+      "standardSystemTitle": "Standartinė",
+      "standardSystemMeta": "Tema ir naudojimas, rodomi atskirai",
+      "usageOptional": "Pasirinktinai",
+      "customSystemTitle": "Pasirinktinė",
+      "customSystemMeta": "{count, plural, one {# žymė} other {# žymių}}",
+      "customPickerLabel": "Pasirinkite pasirinktą žymę",
+      "customPickerPlaceholder": "Pasirinkite pasirinktą žymę…",
+      "customSearchPlaceholder": "Ieškoti pasirinktų žymių…",
+      "pickTagFirst": "Pasirinkite žymę aukščiau, kad valdytumėte žodžių narystę."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Atnaujinta {time}",
@@ -585,7 +595,11 @@
         "notes": "Pastabos",
         "updated": "Paskutinį kartą atnaujinta"
       }
-    }
+    },
+    "selectedCustomTags": "Pasirinkti žymės",
+    "selectedSynonyms": "Pasirinkti sinonimai",
+    "removeCustomTag": "Pašalinti {name}",
+    "pickerLoading": "Kraunama…"
   },
   "tags": {
     "groups": {
@@ -670,6 +684,11 @@
     "updated": "Atnaujinta",
     "backToStudio": "Atgal į pratimus",
     "studyMode": "Studijų režimas",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Sunkumas",
       "easy": "Lengva",
@@ -941,7 +960,9 @@
         "collapse": "Sutraukti {name}",
         "selectedCount": "{count, plural, one {# teorija pasirinkta} other {# teorijų pasirinkta}}",
         "practiceSelected": "Pasirinkta praktika",
-        "clearSelection": "Išvalyti pasirinkimą"
+        "clearSelection": "Išvalyti pasirinkimą",
+        "subfolders": "{count, plural, one {# poaplankis} other {# poaplankių}}",
+        "selectedOne": "1 teorija pasirinkta"
       }
     },
     "types": {
@@ -956,7 +977,7 @@
       "fill-in-blank": {
         "label": "Įrašyti atsakymą pačiam",
         "description": "Užpildykite sakinių pavyzdžius trūkstamu žodyno žodžiu.",
-        "preview": "Minulla on uusi ______."
+        "preview": "Minulla on nauja ______."
       },
       "multiple-choice": {
         "label": "Daug pasirinkimų",
@@ -1033,17 +1054,17 @@
       "shuffle": "Išmaišyti",
       "finish": "Baigti raundą",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Klausimo šaltinis",
+        "chooseAi": "Naudoti AI sugeneruotą",
+        "emptyTitle": "Nėra naudojamų išsaugotų pavyzdžių",
+        "emptyDescription": "Pridėkite pavyzdinius sakinius, kurie aiškiai apima kiekvieną žodį, koreguokite filtrus arba pereikite prie AI sugeneruoto.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Išsaugoti pavyzdžiai",
+          "description": "Kurkite klausimus iš karto iš savo žodyno pavyzdžių. Nėra AI laukimo."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI sugeneruota",
+          "description": "Kurkite naujus sakinius iš savo žodyno su AI."
         }
       }
     },
@@ -1100,14 +1121,14 @@
       "tryAgain": "Bandyti dar kartą",
       "questionsLabel": "Klausimai",
       "correctLabel": "Teisingas",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Neteisingai",
+      "unansweredLabel": "Neatsakyta",
       "reviewLabel": "Bus peržiūrėta",
       "answeredProgress": "{answered} / {total} atsakė",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Patikrinti atsakymą",
+      "nextQuestion": "Kitas",
+      "viewResults": "Peržiūrėti rezultatus",
       "submitSet": "Pateikti atsakymus",
       "submitting": "Tikrinama",
       "unansweredWarnTitle": "Neatsakyti klausimai",
@@ -1122,54 +1143,54 @@
       "unanswered": "Neatsakyta:",
       "yourAnswer": "Atsakymas",
       "correctAnswer": "Teisingas atsakymasName",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Iš jūsų dabartinių filtrų yra tik {count} klausimų.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Kaip praktikuojate",
+        "lockedHint": "Baikite arba pradėkite naują rinkinį, kad pakeistumėte tai.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Po vieną",
+          "description": "Matykite po vieną klausimą. Patikrinkite po kiekvieno atsakymo, kad gautumėte momentinį atsiliepimą."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Visi klausimai",
+          "description": "Matykite visą rinkinį, atsakykite bet kokia tvarka, tada pateikite vieną kartą atsiliepimui."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Peržiūra",
+        "allCorrect": "Puiku — kiekvienas klausimas teisingas.",
+        "summary": "{incorrect} neteisingi · {unanswered} neatsakyti · {needsReview} peržiūrėti",
+        "viewWrong": "Peržiūrėti neteisingus atsakymus",
+        "filtersLabel": "Filtruoti klausimus",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Visi ({count})",
+          "needs_review": "Neteisingi & neatsakyti ({count})",
+          "correct": "Teisingi ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Ankstesnis",
+        "nextWrong": "Kitas",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} peržiūrėti",
+        "floatLabel": "Neteisingų atsakymų navigacija",
+        "closeFloat": "Rodyti visus atsakymus"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% teisingai",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Puikus rinkinys",
+          "body": "Kiekvienas atsakymas buvo teisingas. Toks dėmesys nusipelno dar vieno rato, kai būsite pasiruošę."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Stiprus pabaiga",
+          "body": "Aiškiai suprantate — peržvelkite praleistus, tada užfiksuokite su nauju rinkiniu."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Gerai padirbėta — tęskite",
+          "body": "Keletas užstrigusių taškų yra normalu. Peržiūrėkite juos kartą, tada bandykite dar kartą, kol jie švieži."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Beveik ten",
+          "body": "Pabaikite neatsakytus klausimus pirmiausia — tada rezultatas pasakys aiškesnę istoriją."
         }
       }
     },
@@ -1182,7 +1203,7 @@
       },
       "contextualLanguageHint": "Klausimai generuojami {language} (darbo erdvos kalba).",
       "contextualEmptyTitle": "Generuoti kontekstinius klausimus",
-      "contextualEmptyDescription": "Sukurkite užpildytus klausimus su keliais atsakymų variantais iš savo žodyno.",
+      "contextualEmptyDescription": "Pridėkite pasirinktinius nurodymus žemiau, jei norite, tada paspauskite Generuoti. Galite palikti užklausą tuščią.",
       "contextualProDescription": "Su Pro galimi kontekstiniai DI klausimai.",
       "unlockContextual": "Atrakinkite naudodami „Pro“.",
       "correct": "Teisingai!",
@@ -1203,8 +1224,8 @@
       "hint": "Pasirinkite žodį, tada palieskite jo reikšmę",
       "complete": "Visos poros suderintos — šauniai padirbėta!",
       "shuffle": "Maišyti stulpelius",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} porų",
+      "continueRound": "Tęsti"
     },
     "typeAnswer": {
       "questionWord": "Ką tai reiškia?",
@@ -1214,7 +1235,7 @@
         "contextual": "kontekstinis"
       },
       "contextualEmptyTitle": "Generuoti kontekstinius klausimus",
-      "contextualEmptyDescription": "Sukurkite užpildykite tuščius tekstinius raginimus iš savo žodyno.",
+      "contextualEmptyDescription": "Pridėkite pasirinktinius nurodymus žemiau, jei norite, tada paspauskite Generuoti. Galite palikti užklausą tuščią.",
       "contextualProDescription": "Su Pro galimi kontekstiniai DI klausimai.",
       "unlockContextual": "Atrakinkite naudodami „Pro“.",
       "placeholder": "Įveskite Jūsų atsakymą",
@@ -1598,13 +1619,13 @@
       "writing": {
         "title": "Rašymas",
         "description": "Turtingi dokumentai ir klausimų rinkiniai, kuriuos galite peržiūrėti ir eksportuoti.",
-        "how": "Pradėkite juodraštį, tvarkykite aplankais ir naudokite Pro DI tekstui tikrinti ar tobulinti.",
+        "how": "Pradėkite juodraštį, organizuokite su aplankais ir naudokite savo plano AI limitą, kad patikrintumėte arba patobulintumėte savo tekstą.",
         "cta": "Atidaryti rašymą"
       },
       "listening": {
         "title": "Klausymas",
         "description": "Paverskite tikrą garsą ar vaizdą pamoka.",
-        "how": "Įkelkite įrašą ir nemokamai sugeneruokite transkripciją. Sugeneruota klausymo praktika — Pro dalis.",
+        "how": "Įkelkite klipą, sugeneruokite transkripciją ir kurkite klausymo praktiką su AI limitu, įtrauktu į jūsų planą.",
         "cta": "Atidaryti klausymą"
       },
       "speaking": {
@@ -3120,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Kai kurios darbo erdvės tai pačiai kalbai jau egzistuoja. Jų turinys bus pridėtas į esamas erdves, o ne kuriami dublikatai.",
         "empty_backup": "Šioje atsarginėje kopijoje nėra importuojamų mokymosi duomenų.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Kai kurie esami elementai turi tą patį pavadinimą. Importas naudos vieną iš jų deterministiškai ir paliks kitus nepakeistus."
       },
       "cancel": "Atšaukti",
       "confirm": "Importuoti mokymosi duomenis",
@@ -3165,11 +3186,11 @@
         "requestTooLarge": "Atsarginė kopija per didelė apdoroti šiame puslapyje. Bandykite mažesnį eksportą arba susisiekite su pagalba.",
         "notConfigured": "Failų saugykla atsarginių kopijų importui dar nesukonfigūruota."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Jau jūsų paskyroje",
+      "skippedInAccountHint": "Šie pavadinimai atitinka elementus, kuriuos jau turite. Jie nebus importuoti dar kartą. Nauji elementai toje pačioje darbo erdvėje vis tiek bus importuoti.",
+      "skippedInBackupTitle": "Dublikatai šiame atsarginiame kopijavime",
+      "skippedInBackupHint": "Failas nurodo tą patį pavadinimą daugiau nei vieną kartą. Tik pirmas kiekvieno pavadinimo egzempliorius bus importuotas — tai normalu net tuščioje paskyroje.",
+      "skippedOtherTitle": "Nepavyko importuoti"
     },
     "danger": {
       "title": "Uždaryti paskyrą",
@@ -3185,7 +3206,7 @@
       "warningTitle": "Prieš tęsiant",
       "warnings": {
         "workspaces": "Bus ištrinta kiekviena darbo erdvė ir visi žodyno, teorijos, rašymo, klausymo bei kalbėjimo duomenys.",
-        "billing": "Bet kokia aktyvi Notoria Pro prenumerata bus iš karto atšaukta.",
+        "billing": "Bet kuri aktyvi Notoria Pro arba Premium prenumerata bus nedelsiant atšaukta.",
         "media": "Įkelta medija ir profilio nuotrauka bus pašalinta.",
         "permanent": "Po patvirtinimo atkūrimo laikotarpio nėra."
       },
@@ -3234,7 +3255,7 @@
     "upgrade": "Pereiti prie Pro",
     "manage": "Tvarkyti prenumeratą",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Nemokamai",
     "premiumBadge": "Premium",
     "renewsOn": "Atsinaujina {date}",
     "status": "Būsena: {status}",
@@ -3459,7 +3480,7 @@
       "feature": "Funkcija",
       "current": "Dabartinis",
       "capability": "Ką gaunate",
-      "free": "Free",
+      "free": "Nemokamai",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Įtraukta į Free",
@@ -3599,7 +3620,7 @@
     "vocabulary": "Žodynas",
     "vocabularyEmpty": "Dar nėra žodyno žodžių",
     "reviews": "Kortelių kartojimai",
-    "misses": "Again / Hard",
+    "misses": "Vėl / Sunku",
     "listening": "Klausymas",
     "speaking": "Kalbėjimas",
     "writing": "Rašymas",
@@ -3753,7 +3774,7 @@
       "practice": "Praktika"
     },
     "rating": {
-      "AGAIN": "Again",
+      "AGAIN": "Vėl",
       "HARD": "Sunku"
     },
     "status": {
@@ -4049,9 +4070,9 @@
     "privacyTitle": "Privatumo politika",
     "termsTitle": "Naudojimo sąlygos",
     "privacyDescription": "Kaip Notoria renka, naudoja ir ištrina asmens duomenis bei mokymosi turinį privačioje kalbų mokymosi darbo erdvėje.",
-    "termsDescription": "Sąlygos, kaip naudoti Notoria privačią kalbų mokymosi darbo erdvę, paskyras, DI funkcijas ir Notoria Pro atsiskaitymą.",
+    "termsDescription": "Sąlygos, susijusios su Notoria privačios kalbos mokymosi darbo erdvės, paskyrų, AI funkcijų ir Pro arba Premium apmokėjimo naudojimu.",
     "updated": "Paskutinį kartą atnaujinta {date}",
-    "updatedDate": "2026 m. rugsėjo 23 d.",
+    "updatedDate": "2026 m. spalio 27 d.",
     "backToSignIn": "Atgal į prisijungimą",
     "backHome": "Atgal į Notoria",
     "authFooter": "Privatumas · Sąlygos",
@@ -4072,7 +4093,7 @@
         "purposes": "Kodėl tvarkome duomenis",
         "auth": "Paskyros ir prisijungimas",
         "ai": "DI funkcijos",
-        "payments": "Mokėjimai (Notoria Pro)",
+        "payments": "Mokėjimai (Pro ir Premium)",
         "processors": "Paslaugų teikėjai",
         "cookies": "Slapukai ir įrenginio saugykla",
         "transfers": "Tarptautiniai perdavimai",
@@ -4096,7 +4117,7 @@
           "list": [
             "kuriate ar naudojate paskyrą",
             "saugote medžiagą privačiose darbo erdvėse",
-            "prenumeruojate Notoria Pro",
+            "užsiprenumeruoti Notoria Pro arba Premium",
             "naudojate neprivalomus DI padedamus įrankius",
             "įkeliate mediją klausymui ar profiliui",
             "naudojate kalbėjimo praktiką",
@@ -4157,7 +4178,7 @@
               "basis": "Sutartis (6 str. 1 d. b p.)"
             },
             {
-              "purpose": "Vykdyti Notoria Pro atsiskaitymą ir prenumeratos būseną per Stripe",
+              "purpose": "Vykdyti Notoria Pro ir Premium apmokėjimą bei prenumeratos būseną per Stripe",
               "basis": "Sutartis (6 str. 1 d. b p.)"
             },
             {
@@ -4192,7 +4213,7 @@
           "p4": "Dabartinėje kodų bazėje nenaudojami kiti didžiųjų kalbos modelių teikėjai be OpenAI. OpenAI tvarko duomenis pagal savo sąlygas ir privatumo politiką kaip šių funkcijų tvarkytojas."
         },
         "payments": {
-          "title": "7. Mokėjimai (Notoria Pro)",
+          "title": "7. Mokėjimai (Pro ir Premium)",
           "p1": "Mokamas prenumeratas tvarko <strong>Stripe</strong>. Atsiskaitymas, sąskaitos, mokėjimo priemonės ir atšaukimas vyksta per Stripe Checkout ir Stripe Klientų portalą. Stripe webhook'ai atnaujina planą ir būseną Notoria.",
           "p2": "Stripe tvarko mokėjimo duomenis kaip mokėjimo teikėjas. Kortelių tvarkymui žr. Stripe privatumo dokumentaciją."
         },
@@ -4234,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro atsiskaitymas, portalas ir prenumeratos būsena"
+              "role": "Notoria Pro ir Premium atsiskaitymas, portalas ir prenumeratos būsena"
             },
             {
               "provider": "Google",
@@ -4348,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Šios Naudojimo sąlygos paaiškina Notoria naudojimo taisykles adresu <site>www.notoria.fi</site>. Jos aprašo, kaip produktas veikia šiandien: privačios mokymosi darbo erdvės, neprivalomas Notoria Pro atsiskaitymas per Stripe ir DI padedamos funkcijos. Jos nėra teisininko patarimo jūsų konkrečiai situacijai pakaitalas.",
+      "intro": "Šios naudojimo sąlygos paaiškina taisykles, kaip naudotis Notoria svetainėje <site>www.notoria.fi</site>. Jos aprašo, kaip produktas veikia šiandien: privatūs mokymosi darbo erdvės, pasirinktiniai Pro ir Premium apmokėjimai per Stripe ir AI pagalbos funkcijos. Jos nėra teisinės konsultacijos pakaitalas dėl jūsų konkrečios situacijos.",
       "tocTitle": "Šiame puslapyje",
       "tocAria": "Šiame puslapyje",
       "toc": {
@@ -4359,7 +4380,7 @@
         "acceptable-use": "Priimtinas naudojimas",
         "ip": "Intelektinė nuosavybė",
         "ai": "DI sugeneruota išvestis",
-        "plans": "Nemokamas planas ir Notoria Pro",
+        "plans": "Nemokami, Pro ir Premium planai",
         "billing": "Prenumerata ir atsiskaitymas",
         "refunds": "Grąžinimai ir vartotojų teisės",
         "availability": "Prieinamumas",
@@ -4378,7 +4399,7 @@
         "service": {
           "title": "2. Paslauga",
           "p1": "Notoria — privati kalbų mokymosi žiniatinklio programa. Galite kurti darbo erdves ir laikyti mokymosi medžiagą: žodyną, teorijos užrašus, rašymą, pratimus, klausymo pamokas ir kalbėjimo sesijas.",
-          "p2": "Kai kurios funkcijos prieinamos nemokamame plane. Notoria Pro atrakina papildomas galimybes, kaip parodyta produkte ir <account>Paskyros</account> puslapyje — įskaitant Klausymą, Kalbėjimą, tam tikrus DI mokymosi įrankius, pratimų importą ir mokamus dokumentų eksporto formatus. Funkcijų prieinamumas gali keistis produktui tobulėjant.",
+          "p2": "Pagrindinės mokymosi sritys, įskaitant klausymą, kalbėjimą ir skaitymą, yra prieinamos kiekviename plane. Pro ir Premium prideda didesnius AI limitus ir mokymosi medžiagos importą/eksportą; Premium taip pat prideda asmeninį mokymą ir praktiką. Dabartinis palyginimas rodomas jūsų <account>Paskyros</account> puslapyje. Funkcijų prieinamumas gali keistis, kai produktas vystosi.",
           "p3": "Notoria skirta asmeniniam kalbų mokymuisi. Tai nėra mokykla, egzaminų institucija ar profesionalių patarimų paslauga."
         },
         "accounts": {
@@ -4419,23 +4440,23 @@
           "title": "7. DI sugeneruota išvestis",
           "p1": "Kai kurios funkcijos gali tikrinti, siūlyti, generuoti, transkribuoti, apibendrinti ar mokyti pagal jūsų medžiagą. Išvestis gali būti neišsami, netiksli ar netinkama jūsų tikslui. Lieka atsakingi peržiūrėti DI rezultatus prieš remdamiesi jais mokymuisi, egzaminams, profesiniam naudojimui ar publikavimui.",
           "p2": "DI funkcijos gali būti neprieinamos, jei pagalba išjungta <settings>Nustatymuose</settings>, jei planas neapima konkretaus įrankio arba jei teikėjas laikinai nepasiekiamas.",
-          "p3": "Ne visiems DI pagalbininkams reikia Notoria Pro. Produktas rodo, kurie įrankiai nemokami, o kuriems reikia Pro."
+          "p3": "AI prieinamumas ir kasdieniai limitai skiriasi tarp Nemokamo, Pro ir Premium. Produktas rodo planą ir limitą, reikalingą kiekvienam įrankiui."
         },
         "plans": {
-          "title": "8. Nemokamas planas ir Notoria Pro",
+          "title": "8. Nemokami, Pro ir Premium planai",
           "p1": "Nemokamas planas apima pagrindinę praktiką su jūsų žodynu ir susijusiais mokymosi įrankiais, kaip parodyta produkte.",
-          "p2": "Notoria Pro — mokama prenumerata, atrakinanti papildomas funkcijas. Dabartiniame produkte tai paprastai apima Klausymą, Kalbėjimą, pratimų importą, sakinio sudarymo praktiką, daugelį DI padedamų mokymosi įrankių ir PDF/DOCX dokumentų eksportą. Kai kurie lengvesni DI pagalbininkai (pvz. tam tikra žodyno ar redaktoriaus formatavimo pagalba) gali likti prieinami nemokamame plane, kai DI pagalba įjungta.",
-          "p3": "Pro prieiga susieta su naudotojo paskyra, todėl taikoma visoms tos paskyros darbo erdvėms. Paskyros su administratoriaus role gali turėti Pro lygio prieigą be asmeninės Stripe prenumeratos.",
-          "p4": "Jūsų pirkimui taikoma kaina yra ta, kuri rodoma Stripe Checkout dabartiniam Pro planui. Bet kokia kaina, rodoma kitur produkte (pvz. Paskyroje), yra tik orientacinė ir turi atitikti aktyvią Stripe kainos konfigūraciją."
+          "p2": "Pro ir Premium yra mokamos prenumeratos. Pro prideda didesnius arba neribotus limitus daugeliui AI įrankių, taip pat mokymosi medžiagos importą ir PDF/DOCX eksportą. Premium apima Pro ir prideda asmenines funkcijas, tokias kaip Mokymosi treneris, asmeninis mokymosi profilis, adaptatyvi praktika, klaidų pagrindu vykdoma praktika ir pasirinktinių pratybų nurodymai. Paskyros puslapis rodo dabartinį palyginimą ir limitus.",
+          "p3": "Mokama prieiga yra susijusi su jūsų vartotojo paskyra ir taikoma visose jos darbo erdvėse. Paskyros, turinčios administratoriaus vaidmenį, gali turėti mokamos prieigos lygį be asmeninės Stripe prenumeratos.",
+          "p4": "Kaina, kuri taikoma, yra kaina, rodoma Stripe Checkout už pasirinktą Pro arba Premium planą. Bet kuri kaina, rodoma kitur produkte (pavyzdžiui, Paskyroje), yra tik orientacinė ir turi atitikti aktyvią Stripe kainų konfigūraciją."
         },
         "billing": {
           "title": "9. Prenumerata, atsiskaitymas ir atšaukimas",
-          "list0": "Pro prenumeratos atsiskaitomos per <strong>Stripe</strong>",
-          "list1": "Atsiskaitymą galite pradėti iš <account>Paskyros</account> arba iš užrakintų Pro valdiklių programoje",
+          "list0": "Pro ir Premium prenumeratos apmokestinamos per <strong>Stripe</strong>",
+          "list1": "Galite pradėti atsiskaitymą arba pakeisti planą iš <account>Paskyros</account> arba iš užrakintų mokamų valdymo funkcijų programoje",
           "list2": "Iš Paskyros galite atidaryti Stripe Klientų portalą sąskaitoms peržiūrėti, mokėjimo priemonėms atnaujinti ir prenumeratai atšaukti",
           "list3": "Atšaukimas seka Stripe Klientų portalo elgseną jūsų prenumeratai",
-          "p1": "Atšaukus Pro prieiga tęsiasi tik kol Stripe prenumeratos būsena vis dar suteikia Pro produkte. Dabartinėje įgyvendinime kaip Pro traktuojamos būsenos <code>active</code>, <code>trialing</code> ir <code>past_due</code>. Kai būsena nebeatitinka, paskyra grįžta į nemokamą planą.",
-          "p2": "Jei mokėjimas nepavyksta, Stripe gali perkelti prenumeratą į <code>past_due</code> ar kitą būseną. Notoria sinchronizuoja tą būseną iš Stripe webhook'ų. Kol būsena lieka <code>past_due</code>, Pro funkcijos lieka prieinamos pagal dabartines prieigos taisykles; jei prenumerata vėliau tampa atšaukta ar kitaip netinkama, Pro prieiga baigiasi.",
+          "p1": "Atšaukus atnaujinimą, jūsų dabartinė Pro arba Premium prieiga tęsiasi, kol Stripe prenumeratos būsena vis dar atitinka produktą. Atitinkančios būsenos šiuo metu apima <code>active</code>, <code>trialing</code> ir <code>past_due</code>. Kai būsena nebeatitinka, paskyra grįžta į Nemokamą.",
+          "p2": "Jei mokėjimas nepavyksta, Stripe gali perkelti prenumeratą į <code>past_due</code> arba kitą būseną. Notoria sinchronizuoja tą būseną iš Stripe webhook'ų. Kol ji lieka <code>past_due</code>, dabartinis mokamas planas lieka prieinamas pagal esamas prieigos taisykles; jei vėliau jis tampa atšauktas arba kitaip netinkamas, mokama prieiga baigiasi.",
           "p3": "Ištrynus Notoria paskyrą Stripe prenumerata atšaukiama iš karto (geriausiomis pastangomis) kaip paskyros ištrynimo dalis. Tai skiriasi nuo atnaujinimo atšaukimo per Klientų portalą paliekant paskyrą."
         },
         "refunds": {
@@ -4456,7 +4477,7 @@
         "liability": {
           "title": "13. Atsakomybės apribojimas",
           "p1": "Notoria teikiama „kaip prieinama“ asmeniniam kalbų mokymuisi. Kiek leidžia taikoma teisė, atsisakome garantijų, kurių įstatymas nereikalauja.",
-          "p2": "Kiek leidžia taikoma teisė, Notoria neatsako už netiesioginius, atsitiktinius, specialiuosius, pasekminius ar prarastų duomenų nuostolius, kylančius iš paslaugos naudojimo ar rėmimosi DI išvestimi. Kai atsakomybės negalima atmesti, ji ribojama suma, kurią sumokėjote už Notoria Pro per tris mėnesius prieš pretenziją, arba bet kokia didesne suma, kurios reikalauja privaloma teisė.",
+          "p2": "Kiek leidžia taikomi įstatymai, Notoria nėra atsakinga už netiesioginius, atsitiktinius, specialius, pasekminius ar prarastų duomenų nuostolius, kylančius dėl jūsų naudojimosi paslauga arba pasikliaujant AI rezultatais. Kai atsakomybė negali būti atmesta, ji yra ribojama iki sumos, kurią sumokėjote už Notoria Pro arba Premium per tris mėnesius prieš pretenziją, arba bet kokios didesnės sumos, reikalaujamos pagal privalomus įstatymus.",
           "p3": "Šie apribojimai neatmeta atsakomybės, kurios Suomijos ar ES teisė neleidžia riboti — įskaitant atsakomybę, kurios vartotojai negali atsisakyti, ir atsakomybę už mirtį ar asmens sužalojimą dėl neatsargumo, kai tokios taisyklės taikomos."
         },
         "changes": {
@@ -4529,9 +4550,9 @@
           "vocab": "Kurti asmeninį žodyno banką su reikšmėmis, pavyzdžiais ir žymomis",
           "practice": "Praktikuotis pratimais iš savo žodžių ir užrašų",
           "create": "Rašyti teorijos užrašus ir rašymo darbus, prie kurių grįšite vėliau",
-          "listenSpeak": "Paversti mediją klausymo praktika ir kalbėti su DI mokytoju Pro"
+          "listenSpeak": "Paverskite mediją klausymo praktika ir naudokite AI limitus transkripcijai ir kalbėjimo praktikai"
         },
-        "note": "Kai kurie DI, klausymo, kalbėjimo ir eksporto įrankiai — Notoria Pro dalis. Nemokamas planas vis tiek dengia kasdienę žodyno praktiką ir pagrindinį mokymosi ciklą."
+        "note": "Pagrindinės mokymosi sritys yra prieinamos kiekviename plane. Pro didina AI limitus ir prideda mokymosi medžiagos importą/eksportą; Premium prideda asmeninį mokymą ir praktiką."
       },
       "ai": {
         "title": "DI, kur padeda",
@@ -4657,7 +4678,7 @@
         "title": "Kaip sritys susijungia",
         "p1": "„Užfiksuoti“ — greitas įėjimo taškas. Žodynas ir Teorija — kur medžiaga įsitvirtina. Pratimas paverčia tą medžiagą praktika. Rašymas, Klausymas ir Kalbėjimas padeda aktyviau vartoti kalbą.",
         "p2": "Nereikia eiti per kiekvieną sritį eilės tvarka. Daugelis kurį laiką lieka prie žodžių ir trumpos praktikos.",
-        "p3": "Natūralus kitas žingsnis — rašymas, kai norite kurti kalbą savo sąlygomis, tada klausymas ir kalbėjimas, kai norite, kad ta pati medžiaga veiktų ausyje ir balse — Klausymas ir Kalbėjimas yra Notoria Pro dalis.",
+        "p3": "Natūralus kitas žingsnis yra rašymas, kai norite kurti kalbą savo sąlygomis, tada klausymas ir kalbėjimas, kai norite, kad tas pats medžiaga dirbtų jūsų ausyje ir balsu. Šios sritys yra prieinamos kiekviename plane; AI naudojimo limitai skiriasi pagal planą.",
         "beat": "Pirmiausia rinkite ir supraskite. Vartokite ir kalbėkite, kai medžiaga pasiruošusi palikti puslapį."
       },
       "areas": {
@@ -4681,11 +4702,11 @@
         },
         "listening": {
           "label": "Klausymas",
-          "body": "Paverskite mediją klausymo praktika darbo erdvėje. Prieinama su Notoria Pro."
+          "body": "Paverskite mediją klausymo praktika savo darbo erdvėje. Prieinama kiekviename plane; AI transkripcijos limitai skiriasi pagal planą."
         },
         "speaking": {
           "label": "Kalbėjimas",
-          "body": "Tiesioginė praktika su DI mokytoju, grindžiama mokoma kalba. Prieinama su Notoria Pro."
+          "body": "Gyva praktika su AI mokytoju, pagrįsta kalba, kurią studijuojate. Prieinama kiekviename plane su plano pagrindu nustatytu kasdieniu limitu."
         },
         "reading": {
           "label": "Skaitymas",
@@ -4735,15 +4756,15 @@
         },
         "account": {
           "q": "Kaip pakeisti slaptažodį ar uždaryti paskyrą?",
-          "a": "Atidarykite <account>Paskyrą</account>. Ten galite atnaujinti slaptažodį, jei jungiatės el. paštu, tvarkyti Notoria Pro, eksportuoti atsarginę kopiją ar visam laikui ištrinti paskyrą."
+          "a": "Atidarykite <account>Paskyrą</account>. Ten galite atnaujinti savo slaptažodį, jei naudojate el. pašto prisijungimą, valdyti Pro arba Premium, eksportuoti atsarginę kopiją arba visam laikui ištrinti savo paskyrą. Paskyros ištrynimas taip pat nedelsiant atšaukia bet kurią aktyvią Stripe prenumeratą geriausiu atveju; atšaukus atnaujinimą, paskyra ir jos duomenys išlieka."
         },
         "pro": {
           "q": "Kaip veikia atsiskaitymas ir atšaukimas?",
-          "a": "Notoria Pro atsiskaitoma per Stripe. Iš <account>Paskyros</account> galite atnaujinti, atidaryti Stripe klientų portalą mokėjimo priemonėms ir sąskaitoms tvarkyti arba atšaukti atnaujinimą."
+          "a": "Notoria Pro ir Premium apmokestinamos per Stripe. Iš <account>Paskyros</account> galite užsiprenumeruoti, pereiti tarp Pro ir Premium, valdyti mokėjimo metodus ir sąskaitas, atšaukti atnaujinimą arba atnaujinti suplanuotą atšaukimą. Atšaukus atnaujinimą, prieiga išlieka, kol Stripe baigia tinkamą prenumeratos laikotarpį; paskyros ištrynimas yra atskiras ir nedelsiant atšaukia prenumeratą geriausiu atveju."
         },
         "proFeatures": {
-          "q": "Kas nemokama, o kam reikia Notoria Pro?",
-          "a": "Kasdienė žodyno praktika ir susiję mokymosi įrankiai prieinami nemokamame plane. Kai kurie DI įrankiai, klausymas, kalbėjimas ir dokumentų eksportas — Notoria Pro dalis. Palyginkite ir atnaujinkite iš <account>Paskyros</account>."
+          "q": "Kas įtraukta į Nemokamą, Pro ir Premium?",
+          "a": "Nemokamas apima pagrindines mokymosi sritis ir kasdienius limitus palaikomiems AI įrankiams. Pro didina arba pašalina daugelį AI limitų ir prideda mokymosi medžiagos importą bei PDF/DOCX eksportą. Premium apima Pro ir prideda asmeninį mokymą, mokymosi profilį, adaptatyvią ir klaidų pagrindu vykdomą praktiką bei pasirinktinius pratybų nurodymus. Žiūrėkite gyvą palyginimą ir dabartinius limitus <account>Paskyroje</account>."
         },
         "learning": {
           "q": "Kaip veikia Notoria mokymosi funkcijos?",
@@ -5053,7 +5074,7 @@
         "suspended": "Sustabdyti"
       },
       "plans": {
-        "free": "Free",
+        "free": "Nemokamai",
         "pro": "Pro",
         "premium": "Premium"
       },

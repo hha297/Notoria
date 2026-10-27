@@ -5,6 +5,7 @@ import {
   NEXT_SET_POLL_MAX_MS,
 } from "@/lib/exercises/next-set-fingerprint";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 export type TheoryExerciseAiClientFailure = {
   ok: false;
@@ -45,6 +46,7 @@ export async function requestTheoryExerciseAi(
     count?: number;
     uiLocale?: string;
     additionalInstructions?: string | null;
+    questionType?: TheoryQuestionType;
     nextSet?: ExerciseNextSetMeta;
   },
   options?: { signal?: AbortSignal; poll?: boolean },

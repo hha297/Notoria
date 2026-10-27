@@ -83,7 +83,7 @@ export function CallConnect({
   if (!client || !call) {
     return (
       <div className="flex min-h-[50vh] items-center justify-center">
-        <Loader2 className="size-8 animate-spin text-accent-lime" />
+        <Loader2 className="size-8 animate-spin text-module-speak-fg" />
       </div>
     );
   }

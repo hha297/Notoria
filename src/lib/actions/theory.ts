@@ -123,6 +123,22 @@ export async function getTheoryNote(id: string) {
   return note;
 }
 
+/**
+ * Exercise links can outlive a workspace switch in another tab. Keep the
+ * ownership boundary, but do not turn an otherwise valid practice URL into a
+ * 404 solely because the active-workspace cookie changed after the picker was
+ * rendered.
+ */
+export async function getTheoryNoteForExercise(id: string) {
+  const userId = await getCurrentUserId();
+
+  return (
+    (await db.query.grammarNotes.findFirst({
+      where: and(eq(grammarNotes.id, id), eq(grammarNotes.userId, userId)),
+    })) ?? null
+  );
+}
+
 export async function createTheoryNote(
   data: TheoryFormValues,
   options?: { folderId?: string | null },

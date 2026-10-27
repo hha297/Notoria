@@ -30,7 +30,7 @@
       "fixedNote": "Nakapirmi ang hitsura sa naka-export na file. Mag-export ulit para baguhin ito.",
       "docxBackgroundNote": "Maaaring hindi ipakita ng Word at iba pang app ang background ng pahina sa parehong paraan, lalo na kapag nagpi-print."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Mag-scroll pataas"
   },
   "contentImport": {
     "title": {
@@ -158,21 +158,21 @@
       "plural": "Maramihan"
     },
     "paradigmCases": {
-      "nominative": "Nominative",
-      "genitive": "Genitive",
-      "partitive": "Partitive",
-      "accusative": "Accusative",
-      "inessive": "Inessive",
-      "elative": "Elative",
-      "illative": "Illative",
-      "adessive": "Adessive",
-      "ablative": "Ablative",
-      "allative": "Allative",
-      "essive": "Essive",
-      "translative": "Translative",
-      "instructive": "Instructive",
-      "abessive": "Abessive",
-      "comitative": "Comitative"
+      "nominative": "Nominatibo",
+      "genitive": "Genetiko",
+      "partitive": "Partitibo",
+      "accusative": "Aksusativo",
+      "inessive": "Inessivo",
+      "elative": "Elativo",
+      "illative": "Illativo",
+      "adessive": "Adesibo",
+      "ablative": "Ablativo",
+      "allative": "Allativo",
+      "essive": "Essivo",
+      "translative": "Translativo",
+      "instructive": "Instructibo",
+      "abessive": "Abessibo",
+      "comitative": "Comitativo"
     }
   },
   "nav": {
@@ -305,8 +305,8 @@
   },
   "theme": {
     "toggle": "Palitan ang tema",
-    "light": "Light",
-    "dark": "Dark"
+    "light": "Liwanag",
+    "dark": "Madilim"
   },
   "header": {
     "createWorkspace": "Gumawa ng workspace",
@@ -473,34 +473,34 @@
     "viewMode": "Mode ng display",
     "tagManager": {
       "open": "Pamahalaan ang mga tag",
-      "eyebrow": "Tags",
+      "eyebrow": "Mga tag",
       "title": "Tagapamahala ng Tag",
-      "description": "Pumili ng tag, tapos italaga o alisin ito sa mga salita. Magkahiwalay ang naka-assign at iba pang mga salita.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Pumili ng tag, pagkatapos ay italaga o tanggalin ito mula sa mga salita.",
+      "pageDescription": "Pumili ng Standard o Custom, pumili ng tag, pagkatapos ay idagdag o tanggalin ito mula sa mga salita.",
+      "disabledNoWorkspace": "Lumikha ng workspace bago pamahalaan ang mga tag ng bokabularyo.",
+      "backToVocabulary": "Bumalik sa bokabularyo",
+      "backToSettings": "Bumalik sa mga setting",
       "groupsLabel": "Standard na mga grupo ng tag",
       "tagsHeading": "Mga tag",
       "standardTagsHeading": "Standard na mga tag",
       "customTagsHeading": "Custom na mga tag",
-      "customTagsHint": "Mga label na ginagawa mo para sa sarili mong organisasyon — hindi bahagi ng pananalita.",
+      "customTagsHint": "Mga label ng workspace na nilikha mo — maghanap upang mahanap ang mga ito kapag mahaba ang listahan.",
       "emptyCustomTags": "Wala pang custom na tag. Gumawa ng mga ito kapag nag-e-edit ng salita.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Walang mga custom na tag na tumutugma sa paghahanap na ito.",
+      "tagSearchPlaceholder": "Maghanap ng mga tag…",
       "wordsHeading": "{tag}",
-      "kindStandard": "Standard",
-      "kindCustom": "Custom",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "kindStandard": "Pamantayan",
+      "kindCustom": "Pasadya",
+      "wordTabsLabel": "Mga listahan ng salita",
+      "wordTabAssigned": "Nakatag",
+      "wordTabOther": "Walang tag",
       "assignedHeading": "Mga salitang may tag na ito",
       "otherHeading": "Iba pang mga salita",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Pumili ng lahat sa pahinang ito",
+      "clearSelection": "I-clear ang pagpili",
+      "selectionScopePage": "Pumipili mula sa pahinang ito ({count} ng {total})",
+      "selectionScopeFiltered": "Pumipili sa loob ng kasalukuyang mga resulta ng paghahanap",
       "searchPlaceholder": "Maghanap ng mga salita o kahulugan…",
       "wordCount": "{count}",
       "loading": "Nilo-load ang bokabularyo…",
@@ -510,13 +510,23 @@
       "emptyOther": "Lahat ng salita ay may tag na ito na.",
       "emptyOtherSearch": "Walang tumutugmang salita na itatalaga.",
       "selected": "{count} ang napili",
-      "addToTag": "Idagdag sa tag",
-      "removeFromTag": "Alisin sa tag",
-      "applyAdd": "Idagdag sa tag ({count})",
-      "applyRemove": "Alisin sa tag ({count})",
+      "addToTag": "Idagdag ang tag",
+      "removeFromTag": "Tanggalin ang tag",
+      "applyAdd": "Idagdag ang tag ({count})",
+      "applyRemove": "Tanggalin ang tag ({count})",
       "added": "Idinagdag ang {count} (na) salita sa {tag}",
       "removed": "Inalis ang {count} (na) salita mula sa {tag}",
-      "error": "Hindi ma-update ang membership ng tag"
+      "error": "Hindi ma-update ang membership ng tag",
+      "systemsLabel": "Mga sistema ng tag",
+      "standardSystemTitle": "Pamantayan",
+      "standardSystemMeta": "Paksa at paggamit, ipinapakita nang hiwalay",
+      "usageOptional": "Opsyonal",
+      "customSystemTitle": "Pasadya",
+      "customSystemMeta": "{count, plural, one {# label} other {# labels}}",
+      "customPickerLabel": "Pumili ng custom na tag",
+      "customPickerPlaceholder": "Pumili ng custom na tag…",
+      "customSearchPlaceholder": "Maghanap ng mga custom na tag…",
+      "pickTagFirst": "Pumili ng tag sa itaas upang pamahalaan ang pagiging miyembro ng salita."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Na-update {time}",
@@ -585,7 +595,11 @@
         "notes": "Mga Tala",
         "updated": "Huling Na-update"
       }
-    }
+    },
+    "selectedCustomTags": "Napiling mga tag",
+    "selectedSynonyms": "Napiling mga kasingkahulugan",
+    "removeCustomTag": "Tanggalin ang {name}",
+    "pickerLoading": "Naglo-load…"
   },
   "tags": {
     "groups": {
@@ -652,7 +666,7 @@
       "conjunction": "Pangatnig",
       "interjection": "Padamdam",
       "article": "Artikulo",
-      "determiner": "Determiner"
+      "determiner": "Tumutukoy"
     }
   },
   "exercises": {
@@ -670,6 +684,11 @@
     "updated": "Na-update",
     "backToStudio": "Bumalik sa mga ehersisyo",
     "studyMode": "Mode ng pag-aaral",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Kahirapan",
       "easy": "Madali",
@@ -683,7 +702,7 @@
     },
     "sources": {
       "label": "Source ng ehersisyo",
-      "heading": "Source",
+      "heading": "Pinagmulan",
       "vocabulary": "Bokabularyo",
       "theory": "Teorya",
       "import": "I-import",
@@ -941,7 +960,9 @@
         "collapse": "I-collapse ang {name}",
         "selectedCount": "{count, plural, one {# teorya ang napili} other {# (na) teorya ang napili}}",
         "practiceSelected": "Sanayin ang napili",
-        "clearSelection": "I-clear ang seleksyon"
+        "clearSelection": "I-clear ang seleksyon",
+        "subfolders": "{count, plural, one {# subfolder} other {# subfolders}}",
+        "selectedOne": "1 teorya ang napili"
       }
     },
     "types": {
@@ -1033,17 +1054,17 @@
       "shuffle": "I-shuffle",
       "finish": "Tapusin ang round",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Pinagmulan ng tanong",
+        "chooseAi": "Gumamit ng AI Generated",
+        "emptyTitle": "Walang magagamit na na-save na halimbawa",
+        "emptyDescription": "Magdagdag ng mga halimbawa ng pangungusap na malinaw na naglalaman ng bawat salita, ayusin ang iyong mga filter, o lumipat sa AI Generated.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Na-save na mga halimbawa",
+          "description": "Bumuo ng mga tanong agad mula sa iyong mga halimbawa ng bokabularyo. Walang paghihintay sa AI."
         },
         "ai-generated": {
           "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "description": "Lumikha ng mga bagong pangungusap mula sa iyong bokabularyo gamit ang AI."
         }
       }
     },
@@ -1100,14 +1121,14 @@
       "tryAgain": "Subukan ulit",
       "questionsLabel": "Mga tanong",
       "correctLabel": "Tama",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Mali",
+      "unansweredLabel": "Hindi nasagot",
       "reviewLabel": "Ire-review",
       "answeredProgress": "{answered} / {total} ang nasagot",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Suriin ang sagot",
+      "nextQuestion": "Susunod",
+      "viewResults": "Tingnan ang mga resulta",
       "submitSet": "I-submit ang mga sagot",
       "submitting": "Sinusuri…",
       "unansweredWarnTitle": "Mga hindi nasagot na tanong",
@@ -1122,54 +1143,54 @@
       "unanswered": "Hindi nasagot",
       "yourAnswer": "Sagot mo",
       "correctAnswer": "Tamang sagot",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Tanging {count} mga tanong ang available mula sa iyong kasalukuyang mga filter.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Paano ka nag-eensayo",
+        "lockedHint": "Tapusin o simulan ang isang bagong set upang baguhin ito.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Isa-isa",
+          "description": "Tingnan ang isang tanong sa isang pagkakataon. Suriin pagkatapos ng bawat sagot para sa agarang feedback."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Lahat ng mga tanong",
+          "description": "Tingnan ang buong set, sagutin sa anumang pagkakasunod-sunod, pagkatapos ay isumite nang isang beses para sa feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Suriin",
+        "allCorrect": "Perpekto — bawat tanong ay tama.",
+        "summary": "{incorrect} mali · {unanswered} hindi nasagot · {needsReview} upang suriin",
+        "viewWrong": "Tingnan ang maling sagot",
+        "filtersLabel": "I-filter ang mga tanong",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Lahat ({count})",
+          "needs_review": "Mali at hindi nasagot ({count})",
+          "correct": "Tama ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Nakaraang",
+        "nextWrong": "Susunod",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} upang suriin",
+        "floatLabel": "Nabigasyon ng maling sagot",
+        "closeFloat": "Ipakita ang lahat ng sagot"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% tama",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Perpektong set",
+          "body": "Bawat sagot ay tama. Ang ganitong uri ng pokus ay nararapat sa isa pang round kapag handa ka na."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Malakas na pagtatapos",
+          "body": "Malinaw na naiintindihan mo — balikan ang mga pagkakamali, pagkatapos ay itaga ito sa isang bagong set."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Magandang trabaho — magpatuloy",
+          "body": "Ang ilang mga hadlang ay normal. Suriin ang mga ito nang isang beses, pagkatapos ay subukan muli habang sariwa pa ang mga ito."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Halos nandiyan na",
+          "body": "Tapusin ang mga hindi nasagot muna — pagkatapos ay ang iskor ay magbibigay ng mas malinaw na kwento."
         }
       }
     },
@@ -1182,7 +1203,7 @@
       },
       "contextualLanguageHint": "Binubuo ang mga tanong sa {language} (wika ng workspace).",
       "contextualEmptyTitle": "Bumuo ng kontekstwal na mga tanong",
-      "contextualEmptyDescription": "Gumawa ng fill-in-the-blank multiple choice na mga tanong mula sa bokabularyo mo.",
+      "contextualEmptyDescription": "Magdagdag ng opsyonal na mga tagubilin sa ibaba kung nais mo, pagkatapos ay pindutin ang Generate. Maaari mong iwanang walang laman ang prompt.",
       "contextualProDescription": "Available ang kontekstwal na AI questions sa Pro.",
       "unlockContextual": "I-unlock gamit ang Pro",
       "correct": "Tama!",
@@ -1203,8 +1224,8 @@
       "hint": "Pumili ng salita, tapos i-tap ang kahulugan nito",
       "complete": "Naitugma ang lahat ng pares — magaling!",
       "shuffle": "I-shuffle ang mga column",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pares",
+      "continueRound": "Magpatuloy"
     },
     "typeAnswer": {
       "questionWord": "Ano ang kahulugan?",
@@ -1214,7 +1235,7 @@
         "contextual": "Kontekstwal"
       },
       "contextualEmptyTitle": "Bumuo ng kontekstwal na mga tanong",
-      "contextualEmptyDescription": "Gumawa ng fill-in-the-blank typing prompts mula sa bokabularyo mo.",
+      "contextualEmptyDescription": "Magdagdag ng opsyonal na mga tagubilin sa ibaba kung nais mo, pagkatapos ay pindutin ang Generate. Maaari mong iwanang walang laman ang prompt.",
       "contextualProDescription": "Available ang kontekstwal na AI questions sa Pro.",
       "unlockContextual": "I-unlock gamit ang Pro",
       "placeholder": "I-type ang sagot mo…",
@@ -1548,73 +1569,73 @@
         "body": "I-drop ang isang salita, parirala, pagdududa sa gramatika, o ideya sa pagsulat sa loob ng ilang segundo — hindi mo pa kailangang magdesisyon kung saan ito nababagay. Magdagdag ng opsyonal na tala o pinagmulan, panatilihin ang mga item sa To process, pagkatapos ay gawing Vocabulary, Theory, Writing, o Exercise ang isang capture kapag mayroon kang oras. Ang isang item ay minarkahan bilang Processed lamang pagkatapos mong matapos ang paglikha ng nakaugnay na entry."
       },
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Bokabularyo",
         "body": "Magdagdag ng iyong sariling mga salita at parirala na may mga kahulugan, halimbawa ng mga pangungusap, pagbigkas, at mga tag. Ayusin ayon sa paksa, antas, o sitwasyon — pagkatapos ay gamitin muli ang mga ito sa mga ehersisyo at pagsusuri. Magsimula sa mga salita mula sa pang-araw-araw na buhay, mga aralin, mga libro, o media; ang iyong aklatan ay nagiging pundasyon para sa pagsasanay."
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teorya",
         "body": "I-save ang mga patakaran sa gramatika, mga tala sa pagbigkas, mga paliwanag sa paggamit, at mga personal na halimbawa sa iyong sariling mga salita. Isipin ang Theory bilang isang reference notebook na maaari mong balikan tuwing nakakalimutan mo ang isang bagay. Mas marami kang idinadokumento, mas lumalakas ang iyong personal na kaalaman."
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Ehersisyo",
         "body": "Magsanay gamit ang mga flashcard, quizzes, fill-in-the-blank, at iba pa — na nabuo mula sa iyong sariling vocabulary at theory. Ang mga ehersisyo ay lumalaki kasama ng kaalaman na iyong idinadagdag. Mas marami kang materyal na nai-save, mas nagiging kapaki-pakinabang at personalized ang iyong pagsasanay."
       },
       "writing": {
-        "title": "Writing",
+        "title": "Pagsusulat",
         "body": "Mag-draft ng mga teksto at lumikha ng mga set ng tanong gamit ang iyong sariling mga paksa at vocabulary. Ang pagsusulat ay para sa aktibong paggamit ng iyong natutunan, hindi lamang sa pagmememorya nito. Sa Pro, maaaring suriin at pagbutihin ng AI ang iyong trabaho, at maaari mong i-export ang mga materyales kapag kinakailangan."
       },
       "listening": {
-        "title": "Listening",
+        "title": "Pakikinig",
         "body": "I-upload ang audio o video, kumuha ng transcript, at gawing aralin ito. Gamitin ang transcript upang mahuli ang mga hindi pamilyar na salita at ekspresyon, pagkatapos ay magsanay gamit ang totoong nilalaman na pinili mo. Magdala ng iyong sariling mga materyales sa pakikinig sa halip na ma-limitahan sa mga predefined na nilalaman."
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Pagsasalita",
         "body": "Tumawag sa isang AI tutor sa video at magsanay ng pagsasalita nang natural gamit ang iyong sariling kaalaman sa pag-aaral. Pagkatapos ng bawat sesyon, suriin ang transcript at feedback upang makita kung ano ang dapat pagbutihin. Isinasara nito ang loop: matuto → magsanay → gamitin → suriin → pagbutihin."
       },
       "reading": {
-        "title": "Reading",
+        "title": "Pagbasa",
         "body": "Mag-import o mag-paste ng mga sipi, pagkatapos ay bumuo ng pagsasanay sa pag-unawa — multiple choice, nakasulat na mga sagot, at totoo / mali / hindi nakasaad. Ang Free ay may limitadong AI generation at grading bawat araw; ang Pro ay nagtaas ng limitasyon sa araw, at ang Premium ay walang limitasyon."
       }
     },
     "modules": {
       "vocabulary": {
-        "title": "Vocabulary",
+        "title": "Bokabularyo",
         "description": "Ang iyong personal na bangko ng salita para sa wikang ito.",
         "how": "Magdagdag ng isang salita, markahan ang mga pangunahing kahulugan, at ikabit ang mga halimbawa ng pangungusap. Gumamit ng mga tag at paghahanap upang mahanap ang mga ito sa ibang pagkakataon.",
         "cta": "Buksan ang vocabulary"
       },
       "theory": {
-        "title": "Theory",
+        "title": "Teorya",
         "description": "Isang notebook para sa kung paano gumagana ang wika — hindi pagsasanay sa pagsusulat.",
         "how": "Lumikha ng isang tala, pumili ng kategorya, at bumalik kapag kailangan mo ng refresher.",
         "cta": "Buksan ang theory"
       },
       "exercises": {
-        "title": "Exercise",
+        "title": "Ehersisyo",
         "description": "Maikling sesyon na nabuo mula sa mga salitang nai-save mo na.",
         "how": "Magdagdag ng ilang mga salita muna, pagkatapos ay pumili ng isang mode. Bumalik nang madalas — ang ilang minuto ay may halaga pa rin.",
         "cta": "Buksan ang exercises"
       },
       "writing": {
-        "title": "Writing",
+        "title": "Pagsusulat",
         "description": "Mayamang mga dokumento at set ng tanong na maaari mong balikan at i-export.",
-        "how": "Magsimula ng draft, ayusin gamit ang mga folder, at gamitin ang Pro AI upang suriin o pagbutihin ang iyong teksto.",
+        "how": "Magsimula ng draft, ayusin gamit ang mga folder, at gamitin ang AI allowance ng iyong plano upang suriin o pagbutihin ang iyong teksto.",
         "cta": "Buksan ang writing"
       },
       "listening": {
-        "title": "Listening",
+        "title": "Pakikinig",
         "description": "Gawing aralin ang totoong audio o video.",
-        "how": "I-upload ang isang clip at bumuo ng transcript sa Free. Ang nabuo na pagsasanay sa pakikinig ay bahagi ng Pro.",
+        "how": "I-upload ang isang clip, bumuo ng transcript, at bumuo ng pagsasanay sa pakikinig gamit ang AI allowance na kasama sa iyong plano.",
         "cta": "Buksan ang listening"
       },
       "speaking": {
-        "title": "Speaking",
+        "title": "Pagsasalita",
         "description": "Live na pag-uusap sa video kasama ang isang AI tutor.",
         "how": "Lumikha ng isang sesyon at sumali sa tawag. Ang Free ay may kasamang isang AI meeting bawat araw, kasama ang tutor.",
         "cta": "Buksan ang speaking"
       },
       "reading": {
-        "title": "Reading",
+        "title": "Pagbasa",
         "description": "Mga sipi na may AI comprehension practice.",
         "how": "Mag-import o mag-paste ng isang teksto, bumuo ng mga tanong, pagkatapos ay magsanay at suriin. Ang Free ay may limitadong AI bawat araw; ang Pro ay nagpapahintulot ng 10/araw; ang Premium ay walang limitasyon.",
         "cta": "Buksan ang reading"
@@ -3120,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Ang ilang workspace ay umiiral na para sa parehong wika. Ang kanilang nilalaman ay idaragdag sa iyong umiiral na mga workspace sa halip na lumikha ng mga duplicate.",
         "empty_backup": "Ang backup na ito ay walang anumang ma-import na data sa pag-aaral.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Ang ilang umiiral na mga item ay may parehong pangalan. Ang import ay muling gagamit ng isa sa kanila nang tiyak at iiwan ang iba na hindi nagbabago."
       },
       "cancel": "Kanselahin",
       "confirm": "I-import ang data sa pag-aaral",
@@ -3165,11 +3186,11 @@
         "requestTooLarge": "Ang backup na iyon ay masyadong malaki upang iproseso sa pahinang ito. Subukan ang mas maliit na export o makipag-ugnayan sa suporta.",
         "notConfigured": "Ang pag-iimbak ng file ay hindi pa nakatakda para sa pag-import ng backup."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Nasa iyong account na",
+      "skippedInAccountHint": "Ang mga pangalang ito ay tumutugma sa mga item na mayroon ka na. Hindi sila mai-import muli. Ang mga bagong item sa ilalim ng parehong workspace ay mai-import pa rin.",
+      "skippedInBackupTitle": "Mga duplicate na pangalan sa backup na ito",
+      "skippedInBackupHint": "Ang file ay naglilista ng parehong pangalan nang higit sa isang beses. Tanging ang unang kopya ng bawat pangalan ang mai-import — normal ito kahit sa isang walang laman na account.",
+      "skippedOtherTitle": "Hindi ma-import"
     },
     "danger": {
       "title": "Isara ang akaunt",
@@ -3185,7 +3206,7 @@
       "warningTitle": "Bago ka magpatuloy",
       "warnings": {
         "workspaces": "Bawat workspace at lahat ng bokabularyo, teorya, pagsusulat, pakikinig, at data sa pagsasalita ay tatanggalin.",
-        "billing": "Anumang aktibong subscription sa Notoria Pro ay agad na kakanselahin.",
+        "billing": "Anumang aktibong Notoria Pro o Premium subscription ay agad na kakanselahin.",
         "media": "Ang mga na-upload na media at ang iyong profile photo ay aalisin.",
         "permanent": "Walang panahon ng pagbawi pagkatapos ng kumpirmasyon."
       },
@@ -4049,9 +4070,9 @@
     "privacyTitle": "Patakaran sa Privacy",
     "termsTitle": "Mga Tuntunin ng Paggamit",
     "privacyDescription": "Paano kinokolekta, ginagamit, at binubura ng Notoria ang personal na data at nilalaman sa pag-aaral para sa pribadong workspace sa pag-aaral ng wika.",
-    "termsDescription": "Mga tuntunin para sa paggamit ng pribadong workspace sa pag-aaral ng wika ng Notoria, mga account, mga tampok ng AI, at pagsingil ng Notoria Pro.",
+    "termsDescription": "Mga tuntunin para sa paggamit ng pribadong workspace ng pag-aaral ng wika ng Notoria, mga account, mga tampok ng AI, at Pro o Premium billing.",
     "updated": "Huling na-update {date}",
-    "updatedDate": "23 Setyembre 2026",
+    "updatedDate": "27 Oktubre 2026",
     "backToSignIn": "Bumalik sa pag-sign in",
     "backHome": "Bumalik sa Notoria",
     "authFooter": "Privacy · Mga Tuntunin",
@@ -4072,7 +4093,7 @@
         "purposes": "Bakit namin pinoproseso ang data",
         "auth": "Mga account at pag-sign in",
         "ai": "Mga tampok ng AI",
-        "payments": "Mga pagbabayad (Notoria Pro)",
+        "payments": "Mga Pagbabayad (Pro at Premium)",
         "processors": "Mga tagapagbigay ng serbisyo",
         "cookies": "Cookies at imbakan ng device",
         "transfers": "Internasyonal na paglilipat",
@@ -4096,7 +4117,7 @@
           "list": [
             "lumikha o gumamit ng account",
             "mag-save ng materyal sa mga pribadong workspace",
-            "mag-subscribe sa Notoria Pro",
+            "mag-subscribe sa Notoria Pro o Premium",
             "gumamit ng mga opsyonal na tool na may tulong ng AI",
             "mag-upload ng media para sa pakikinig o paggamit ng profile",
             "gumamit ng pagsasanay sa pagsasalita",
@@ -4157,7 +4178,7 @@
               "basis": "Kontrata (Art. 6(1)(b))"
             },
             {
-              "purpose": "Patakbuhin ang pagsingil ng Notoria Pro at katayuan ng subscription sa pamamagitan ng Stripe",
+              "purpose": "Patakbuhin ang Notoria Pro at Premium billing at katayuan ng subscription sa pamamagitan ng Stripe",
               "basis": "Kontrata (Art. 6(1)(b))"
             },
             {
@@ -4192,7 +4213,7 @@
           "p4": "Ang kasalukuyang codebase ay hindi gumagamit ng ibang mga provider ng large-language-model maliban sa OpenAI. Pinoproseso ng OpenAI ang data sa ilalim ng sarili nitong mga tuntunin at patakaran sa privacy bilang isang processor para sa mga tampok na ito."
         },
         "payments": {
-          "title": "7. Mga pagbabayad (Notoria Pro)",
+          "title": "7. Mga Pagbabayad (Pro at Premium)",
           "p1": "Ang mga bayad na subscription ay pinangangasiwaan ng <strong>Stripe</strong>. Ang checkout, mga invoice, mga paraan ng pagbabayad, at pagkansela ay dumadaan sa Stripe Checkout at ang Stripe Customer Portal. Ang mga webhook ng Stripe ay nag-a-update ng iyong plano at katayuan sa Notoria.",
           "p2": "Pinoproseso ng Stripe ang data ng pagbabayad bilang isang provider ng pagbabayad. Tingnan ang sariling dokumentasyon ng privacy ng Stripe para sa paghawak ng card."
         },
@@ -4234,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro checkout, portal, at katayuan ng subscription"
+              "role": "Notoria Pro at Premium checkout, portal, at katayuan ng subscription"
             },
             {
               "provider": "Google",
@@ -4348,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ang mga Tuntunin ng Paggamit na ito ay nagpapaliwanag ng mga patakaran para sa paggamit ng Notoria sa <site>www.notoria.fi</site>. Inilarawan nila kung paano gumagana ang produkto ngayon: mga pribadong workspace sa pag-aaral, opsyonal na pagsingil ng Notoria Pro sa pamamagitan ng Stripe, at mga tampok na may tulong ng AI. Hindi sila kapalit ng payo mula sa isang abogado tungkol sa iyong tiyak na sitwasyon.",
+      "intro": "Ang mga Tuntunin ng Paggamit na ito ay nagpapaliwanag ng mga patakaran para sa paggamit ng Notoria sa <site>www.notoria.fi</site>. Inilalarawan nila kung paano gumagana ang produkto ngayon: mga pribadong workspace sa pag-aaral, opsyonal na Pro at Premium billing sa pamamagitan ng Stripe, at mga tampok na tinutulungan ng AI. Hindi sila kapalit ng payo mula sa isang abogado tungkol sa iyong tiyak na sitwasyon.",
       "tocTitle": "Sa pahinang ito",
       "tocAria": "Sa pahinang ito",
       "toc": {
@@ -4359,7 +4380,7 @@
         "acceptable-use": "Tanggap na paggamit",
         "ip": "Intelektwal na ari-arian",
         "ai": "Output na ginawa ng AI",
-        "plans": "Libre na plano at Notoria Pro",
+        "plans": "Libre, Pro, at Premium na mga plano",
         "billing": "Subscription at pagbabayad",
         "refunds": "Mga refund at karapatan ng mamimili",
         "availability": "Pagiging available",
@@ -4378,7 +4399,7 @@
         "service": {
           "title": "2. Ang serbisyo",
           "p1": "Ang Notoria ay isang pribadong web app sa pag-aaral ng wika. Maaari kang lumikha ng mga workspace at mag-imbak ng mga materyal sa pag-aaral tulad ng bokabularyo, mga tala ng teorya, pagsusulat, mga ehersisyo, mga aralin sa pakikinig, at mga session sa pagsasalita.",
-          "p2": "Ang ilang mga tampok ay magagamit sa libreng plano. Ang Notoria Pro ay nag-unlock ng karagdagang mga kakayahan gaya ng ipinapakita sa produkto at sa iyong <account>Account</account> na pahina — kasama ang Pakikinig, Pagsasalita, ilang mga tool sa pag-aaral na may tulong ng AI, pag-import ng ehersisyo, at mga bayad na format ng pag-export ng dokumento. Ang availability ng mga tampok ay maaaring magbago habang umuunlad ang produkto.",
+          "p2": "Ang mga pangunahing lugar ng pag-aaral, kabilang ang Pakikinig, Pagsasalita, at Pagbasa, ay available sa bawat plano. Ang Pro at Premium ay nagdaragdag ng mas mataas na AI allowances at pag-import/export ng materyal sa pag-aaral; ang Premium ay nagdaragdag din ng personalized coaching at mga tampok sa pagsasanay. Ang kasalukuyang paghahambing ay ipinapakita sa iyong <account>Account</account> na pahina. Maaaring magbago ang availability ng mga tampok habang umuunlad ang produkto.",
           "p3": "Ang Notoria ay para sa personal na pag-aaral ng wika. Hindi ito isang paaralan, awtoridad sa pagsusulit, o serbisyo ng propesyonal na payo."
         },
         "accounts": {
@@ -4419,23 +4440,23 @@
           "title": "7. Output na ginawa ng AI",
           "p1": "Ang ilang mga tampok ay maaaring suriin, magmungkahi, lumikha, mag-transcribe, mag-summarize, o magturo batay sa iyong materyal. Ang output ay maaaring hindi kumpleto, mali, o hindi angkop para sa iyong layunin. Ikaw ang mananagot para sa pagsusuri ng mga resulta ng AI bago umasa sa mga ito para sa pag-aaral, pagsusulit, propesyonal na paggamit, o publikasyon.",
           "p2": "Ang mga tampok ng AI ay maaaring hindi magamit kung ang tulong ay naka-off sa <settings>Mga Setting</settings>, kung ang iyong plano ay hindi kasama ang isang partikular na tool, o kung ang isang provider ay pansamantalang hindi maabot.",
-          "p3": "Hindi lahat ng AI helpers ay nangangailangan ng Notoria Pro. Ipinapakita ng produkto kung aling mga tool ang libre at aling mga kailangan ng Pro."
+          "p3": "Ang availability ng AI at pang-araw-araw na allowances ay nag-iiba sa pagitan ng Libre, Pro, at Premium. Ipinapakita ng produkto ang plano at allowance na kinakailangan para sa bawat tool."
         },
         "plans": {
-          "title": "8. Libre na plano at Notoria Pro",
+          "title": "8. Libre, Pro, at Premium na mga plano",
           "p1": "Sinasaklaw ng libreng plano ang pangunahing pagsasanay gamit ang iyong sariling bokabularyo at mga kaugnay na tool sa pag-aaral gaya ng ipinapakita sa produkto.",
-          "p2": "Ang Notoria Pro ay isang bayad na subscription na nag-unlock ng karagdagang mga tampok. Sa kasalukuyang produkto, karaniwang kasama dito ang Pakikinig, Pagsasalita, pag-import ng ehersisyo, pagsasanay sa pagbuo ng pangungusap, maraming mga tool sa pag-aaral na may tulong ng AI, at PDF/DOCX na pag-export ng dokumento. Ang ilang mas magagaan na AI helpers (tulad ng ilang bokabularyo o mga tulong sa pag-format ng editor) ay maaaring manatiling magagamit sa libreng plano kapag naka-enable ang tulong ng AI.",
-          "p3": "Ang Pro access ay nakatali sa iyong user account, kaya ito ay nalalapat sa lahat ng workspace sa ilalim ng account na iyon. Ang mga account na may tungkulin ng administrator ay maaaring magkaroon ng Pro-level access nang walang personal na subscription sa Stripe.",
-          "p4": "Ang presyo na nalalapat sa iyong pagbili ay ang presyo na ipinapakita sa Stripe Checkout para sa kasalukuyang Pro plan. Anumang presyo na ipinapakita sa ibang bahagi ng produkto (halimbawa sa Account) ay indicative lamang at dapat tumugma sa aktibong configuration ng presyo ng Stripe."
+          "p2": "Ang Pro at Premium ay mga bayad na subscription. Ang Pro ay nagdaragdag ng mas mataas o walang limitasyong allowances para sa maraming AI tools kasama ang pag-import ng materyal sa pag-aaral at PDF/DOCX export. Ang Premium ay kasama ang Pro at nagdaragdag ng mga personalized na tampok tulad ng Learning Coach, personal na profile sa pag-aaral, adaptive practice, mistake-based practice, at mga custom na tagubilin sa ehersisyo. Ipinapakita ng pahina ng Account ang kasalukuyang paghahambing at mga limitasyon.",
+          "p3": "Ang bayad na access ay nakatali sa iyong user account at nalalapat sa lahat ng workspace nito. Ang mga account na may papel na administrator ay maaaring magkaroon ng bayad na access nang walang personal na subscription sa Stripe.",
+          "p4": "Ang presyo na nalalapat ay ang presyo na ipinapakita sa Stripe Checkout para sa napiling Pro o Premium na plano. Anumang presyo na ipinapakita sa ibang bahagi ng produkto (halimbawa sa Account) ay pahiwatig lamang at dapat tumugma sa aktibong configuration ng presyo ng Stripe."
         },
         "billing": {
           "title": "9. Subscription, pagbabayad, at pagkansela",
-          "list0": "Ang mga Pro subscription ay sinisingil sa pamamagitan ng <strong>Stripe</strong>",
-          "list1": "Maaari mong simulan ang checkout mula sa <account>Account</account> o mula sa mga naka-lock na Pro controls sa app",
+          "list0": "Ang Pro at Premium na mga subscription ay sinisingil sa pamamagitan ng <strong>Stripe</strong>",
+          "list1": "Maaari kang magsimula ng checkout o magbago ng plano mula sa <account>Account</account> o mula sa naka-lock na bayad na mga kontrol sa app",
           "list2": "Mula sa Account, maaari mong buksan ang Stripe Customer Portal upang tingnan ang mga invoice, i-update ang mga paraan ng pagbabayad, at kanselahin ang subscription",
           "list3": "Ang pagkansela ay sumusunod sa pag-uugali ng Customer Portal ng Stripe para sa iyong subscription",
-          "p1": "Pagkatapos mong kanselahin, ang Pro access ay magpapatuloy lamang habang ang katayuan ng iyong subscription sa Stripe ay nagbibigay pa rin ng Pro sa produkto. Sa kasalukuyang implementasyon, ang mga status na itinuturing na Pro ay kinabibilangan ng <code>active</code>, <code>trialing</code>, at <code>past_due</code>. Kapag ang status ay hindi na kwalipikado, ang account ay babalik sa libreng plano.",
-          "p2": "Kung ang isang pagbabayad ay nabigo, maaaring ilipat ng Stripe ang subscription sa <code>past_due</code> o ibang status. Ang Notoria ay nag-sync ng status na iyon mula sa mga webhook ng Stripe. Habang ang status ay nananatiling <code>past_due</code>, ang mga tampok ng Pro ay mananatiling magagamit sa ilalim ng kasalukuyang mga patakaran sa access; kung ang subscription ay mamaya ay nagiging nakansela o kung hindi man ay hindi kwalipikado, ang Pro access ay magtatapos.",
+          "p1": "Matapos mong kanselahin ang renewal, ang iyong kasalukuyang Pro o Premium access ay magpapatuloy habang ang katayuan ng subscription sa Stripe ay kwalipikado pa sa produkto. Ang mga kwalipikadong katayuan ay kasalukuyang kinabibilangan ng <code>active</code>, <code>trialing</code>, at <code>past_due</code>. Kapag ang katayuan ay hindi na kwalipikado, ang account ay babalik sa Libre.",
+          "p2": "Kung mabigo ang isang pagbabayad, maaaring ilipat ng Stripe ang subscription sa <code>past_due</code> o ibang katayuan. Sinusunod ng Notoria ang katayuang iyon mula sa mga webhook ng Stripe. Habang ito ay nananatiling <code>past_due</code>, ang kasalukuyang bayad na plano ay mananatiling available sa ilalim ng kasalukuyang mga patakaran sa access; kung ito ay kalaunan ay maging nakansela o hindi kwalipikado, magtatapos ang bayad na access.",
           "p3": "Ang pagtanggal ng iyong Notoria account ay agad na nagkansela ng subscription sa Stripe (best effort) bilang bahagi ng pagtanggal ng account. Iba ito sa pagkansela ng renewal sa pamamagitan ng Customer Portal habang pinapanatili ang account."
         },
         "refunds": {
@@ -4456,7 +4477,7 @@
         "liability": {
           "title": "13. Disclaimer at pananagutan",
           "p1": "Ang Notoria ay ibinibigay sa isang 'as available' na batayan para sa personal na pag-aaral ng wika. Sa pinakamalawak na lawak na pinapayagan ng naaangkop na batas, tinatanggihan namin ang mga warranty na hindi kinakailangan ng batas.",
-          "p2": "Sa pinakamalawak na lawak na pinapayagan ng naaangkop na batas, ang Notoria ay hindi mananagot para sa hindi tuwirang, incidental, espesyal, consequential, o mga pinsala sa nawalang data na nagmumula sa iyong paggamit ng serbisyo o pag-asa sa output ng AI. Kung saan ang pananagutan ay hindi maaaring ibukod, ito ay limitado sa halagang iyong binayaran para sa Notoria Pro sa tatlong buwan bago ang paghahabol, o anumang mas malaking halaga na kinakailangan ng mandatory law.",
+          "p2": "Sa pinakamalawak na lawak na pinapayagan ng naaangkop na batas, ang Notoria ay hindi mananagot para sa hindi tuwirang, incidental, espesyal, consequential, o mga pinsala sa nawalang data na nagmumula sa iyong paggamit ng serbisyo o pag-asa sa output ng AI. Kung saan ang pananagutan ay hindi maaaring ibukod, ito ay limitado sa halagang iyong binayaran para sa Notoria Pro o Premium sa tatlong buwan bago ang paghahabol, o anumang mas malaking halaga na kinakailangan ng mandatory na batas.",
           "p3": "Ang mga limitasyong ito ay hindi nagbubukod ng pananagutan na hindi pinapayagan ng Finnish o EU law na limitahan — kabilang ang pananagutan na hindi maaaring i-waive para sa mga mamimili, at pananagutan para sa pagkamatay o personal na pinsala na dulot ng kapabayaan kung saan ang mga patakarang iyon ay nalalapat."
         },
         "changes": {
@@ -4482,12 +4503,12 @@
   "footer": {
     "navLabel": "Mga link ng site",
     "explore": "Tuklasin",
-    "support": "Support",
+    "support": "Suporta",
     "legal": "Legal",
     "howToUse": "Paano Gamitin",
     "about": "Tungkol Sa Amin",
     "ourStory": "Ang Aming Kuwento",
-    "supportLink": "Support",
+    "supportLink": "Suporta",
     "contactUs": "Makipag-ugnayan Sa Amin",
     "privacy": "Patakaran sa Privacy",
     "terms": "Mga Tuntunin sa Paggamit",
@@ -4529,9 +4550,9 @@
           "vocab": "Bumuo ng isang personal na bokabularyo na may mga kahulugan, halimbawa, at mga tag",
           "practice": "Magsanay gamit ang mga ehersisyong hinango mula sa iyong sariling mga salita at tala",
           "create": "Sumulat ng mga teoryang tala at mga gawaing pagsusulat na maaari mong balikan mamaya",
-          "listenSpeak": "Gawing pakikinig na pagsasanay ang media, at makipag-usap sa isang AI tutor sa Pro"
+          "listenSpeak": "Gawing pagsasanay sa pakikinig ang media, at gamitin ang mga allowance ng AI para sa transcription at pagsasanay sa pagsasalita"
         },
-        "note": "Ang ilang mga tool sa AI, pakikinig, pagsasalita, at pag-export ay bahagi ng Notoria Pro. Ang libreng plano ay sumasaklaw pa rin sa pang-araw-araw na pagsasanay sa bokabularyo at ang pangunahing loop ng pag-aaral."
+        "note": "Ang mga pangunahing lugar ng pag-aaral ay available sa bawat plano. Ang Pro ay nagdaragdag ng mga allowance ng AI at nagdaragdag ng pag-import/export ng materyal sa pag-aaral; ang Premium ay nagdaragdag ng personalized coaching at pagsasanay."
       },
       "ai": {
         "title": "AI, kung saan ito nakakatulong",
@@ -4657,7 +4678,7 @@
         "title": "Paano nag-uugnay ang mga bahagi",
         "p1": "Ang Capture ay ang mabilis na entry point. Ang Bokabularyo at Teorya ay kung saan nananatili ang materyal. Ang Ehersisyo ay ginagawang pagsasanay ang materyal na iyon. Ang Pagsusulat, Pakikinig, at Pagsasalita ay tumutulong sa iyo na gamitin ang wika nang mas aktibo.",
         "p2": "Hindi mo kailangang dumaan sa bawat bahagi sa pagkakasunod-sunod. Maraming tao ang nananatili sa mga salita at maikling pagsasanay sa loob ng ilang panahon.",
-        "p3": "Isang natural na susunod na hakbang ay ang pagsusulat kapag nais mong gumawa ng wika sa iyong sariling mga termino, pagkatapos ay pakikinig at pagsasalita kapag nais mong ang parehong materyal ay gumana sa iyong tainga at boses — Ang Pakikinig at Pagsasalita ay bahagi ng Notoria Pro.",
+        "p3": "Isang natural na susunod na hakbang ang pagsusulat kapag nais mong makabuo ng wika sa iyong sariling mga termino, pagkatapos ay pakikinig at pagsasalita kapag nais mong ang parehong materyal ay gumana sa iyong tainga at boses. Ang mga lugar na ito ay available sa bawat plano; ang mga limitasyon sa paggamit ng AI ay nag-iiba ayon sa plano.",
         "beat": "Kolektahin at unawain muna. Gamitin at sabihin kapag handa na ang materyal na umalis sa pahina."
       },
       "areas": {
@@ -4681,11 +4702,11 @@
         },
         "listening": {
           "label": "Pakikinig",
-          "body": "Gawing pakikinig na pagsasanay ang media sa iyong workspace. Available sa Notoria Pro."
+          "body": "Gawing pagsasanay sa pakikinig ang media sa iyong workspace. Available sa bawat plano; ang mga allowance sa transcription ng AI ay nag-iiba ayon sa plano."
         },
         "speaking": {
           "label": "Pagsasalita",
-          "body": "Live na pagsasanay kasama ang isang AI tutor, nakabatay sa wikang iyong pinag-aaralan. Available sa Notoria Pro."
+          "body": "Live na pagsasanay kasama ang isang AI tutor, nakabatay sa wika na iyong pinag-aaralan. Available sa bawat plano na may batay sa plano na pang-araw-araw na allowance."
         },
         "reading": {
           "label": "Pagbasa",
@@ -4735,15 +4756,15 @@
         },
         "account": {
           "q": "Paano ko mababago ang aking password o isasara ang aking account?",
-          "a": "Buksan ang <account>Account</account>. Maaari mong i-update ang iyong password doon kung gumagamit ka ng email sign-in, pamahalaan ang Notoria Pro, i-export ang backup, o permanenteng tanggalin ang iyong account."
+          "a": "Buksan ang <account>Account</account>. Maaari mong i-update ang iyong password doon kung gumagamit ka ng email sign-in, pamahalaan ang Pro o Premium, i-export ang backup, o permanenteng tanggalin ang iyong account. Ang pagtanggal ng account ay agad na kakanselahin ang anumang aktibong subscription sa Stripe sa pinakamahusay na pagsisikap; ang pagkansela ng renewal lamang ay nagpapanatili ng account at mga data nito."
         },
         "pro": {
           "q": "Paano gumagana ang pagbabayad at pagkansela?",
-          "a": "Ang Notoria Pro ay sinisingil sa pamamagitan ng Stripe. Mula sa <account>Account</account> maaari mong i-upgrade, buksan ang Stripe customer portal upang pamahalaan ang mga paraan ng pagbabayad at mga invoice, o kanselahin ang renewal."
+          "a": "Ang Notoria Pro at Premium ay sinisingil sa pamamagitan ng Stripe. Mula sa <account>Account</account> maaari kang mag-subscribe, lumipat sa pagitan ng Pro at Premium, pamahalaan ang mga paraan ng pagbabayad at mga invoice, kanselahin ang renewal, o ipagpatuloy ang isang naka-iskedyul na pagkansela. Ang pagkansela ng renewal ay nagpapanatili ng access hanggang sa matapos ng Stripe ang kwalipikadong panahon ng subscription; ang pagtanggal ng iyong account ay hiwalay at agad na kakanselahin ang subscription sa pinakamahusay na pagsisikap."
         },
         "proFeatures": {
-          "q": "Ano ang libre, at ano ang nangangailangan ng Notoria Pro?",
-          "a": "Ang pang-araw-araw na pagsasanay sa bokabularyo at mga kaugnay na tool sa pag-aaral ay available sa libreng plano. Ang ilang mga tool sa AI, pakikinig, pagsasalita, at mga tampok sa pag-export ng dokumento ay bahagi ng Notoria Pro. Ihambing at i-upgrade mula sa <account>Account</account>."
+          "q": "Ano ang kasama sa Libre, Pro, at Premium?",
+          "a": "Ang Libre ay kasama ang mga pangunahing lugar ng pag-aaral at pang-araw-araw na allowances para sa mga suportadong AI tools. Ang Pro ay nagdaragdag o nag-aalis ng maraming limitasyon sa AI at nagdaragdag ng pag-import ng materyal sa pag-aaral kasama ang PDF/DOCX export. Ang Premium ay kasama ang Pro at nagdaragdag ng personalized coaching, isang learning profile, adaptive at mistake-based practice, at mga custom na tagubilin sa ehersisyo. Tingnan ang live na paghahambing at kasalukuyang mga limitasyon sa <account>Account</account>."
         },
         "learning": {
           "q": "Paano gumagana ang mga tampok sa pag-aaral ng Notoria?",

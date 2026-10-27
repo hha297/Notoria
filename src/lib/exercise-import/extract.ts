@@ -138,9 +138,10 @@ const imageExtractor: ContentExtractor = {
     }
     const client = getOpenAIClient();
     const completion = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
+      reasoning_effort: "none",
       temperature: 0.1,
-      max_tokens: AI_OUTPUT_TOKENS.importVision,
+      max_completion_tokens: AI_OUTPUT_TOKENS.importVision,
       messages: [
         {
           role: "system",

@@ -30,6 +30,17 @@ type AiProcessingProgressProps = {
   onDismissError?: () => void;
 };
 
+export function AiProcessingOverlay(props: AiProcessingProgressProps) {
+  return (
+    <div className="fixed inset-0 z-50 grid place-items-center overflow-y-auto bg-background/82 p-4 backdrop-blur-sm sm:p-6">
+      <AiProcessingProgress
+        {...props}
+        className={cn("w-full max-w-xl shadow-xl", props.className)}
+      />
+    </div>
+  );
+}
+
 const STAGE_MESSAGE_KEYS = {
   uploading: "stages.uploading",
   extracting: "stages.extracting",

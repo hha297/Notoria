@@ -7,7 +7,7 @@ import { toast } from "sonner";
 import { ArrowRight, RotateCcw, Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
-import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
+import { AiProcessingOverlay } from "@/components/exercises/ai-processing-progress";
 import { ExerciseAdditionalInstructions } from "@/components/exercises/exercise-additional-instructions";
 import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
 import { ExerciseOneByOneBar } from "@/components/exercises/exercise-one-by-one-bar";
@@ -20,7 +20,10 @@ import {
 import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
-import { TheoryLessonStudy, type TheoryLessonView } from "@/components/exercises/theory/theory-lesson-study";
+import {
+  TheoryLessonStudy,
+  type TheoryLessonView,
+} from "@/components/exercises/theory/theory-lesson-study";
 import { TheoryMultipleChoiceCard } from "@/components/exercises/theory/theory-multiple-choice-card";
 import { TheoryTransformationCard } from "@/components/exercises/theory/theory-transformation-card";
 import { Button } from "@/components/ui/button";
@@ -30,8 +33,18 @@ import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
+import { regenerateExerciseImportQuestionType } from "@/lib/actions/exercise-import";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
-import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
+import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
+import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
+import {
+  isNonEmptyAnswer,
+  type SetQuestionResult,
+} from "@/lib/exercises/set-attempt";
 import { shuffleArray } from "@/lib/exercises/utils";
 import { requestTheoryExerciseAi } from "@/lib/theory-exercises/ai-client";
 import {
@@ -42,10 +55,23 @@ import {
   answersMatchAny,
   filterPersistedTheoryExercises,
 } from "@/lib/theory-exercises/generate-ai";
-import type { TheoryExercise, TheoryExerciseSession } from "@/lib/theory-exercises/types";
+import type {
+  TheoryExercise,
+  TheoryExerciseSession,
+} from "@/lib/theory-exercises/types";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+import { TheoryQuestionTypePicker } from "@/components/exercises/theory-question-type-picker";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
+
+const PROGRESS_STAGE_DWELL_MS = 260;
+
+function dwellOnProgressStage() {
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, PROGRESS_STAGE_DWELL_MS);
+  });
+}
 
 type TheoryNextPayload = {
   theoryIds: string[];
@@ -59,6 +85,11 @@ type TheoryExerciseSessionViewProps = {
    * Used by Import sessions.
    */
   practiceOnly?: boolean;
+  /** Allows an already-completed Import session to regenerate in another format. */
+  importPractice?: {
+    id: string;
+    questionType: TheoryQuestionType;
+  };
   /** Extra theory ids selected in the studio picker (same workspace). */
   alsoTheoryIds?: string[];
 };
@@ -94,9 +125,11 @@ function gradeTheorySet(
 export function TheoryExerciseSessionView({
   session,
   practiceOnly = false,
+  importPractice,
   alsoTheoryIds = [],
 }: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
+  const tExercises = useTranslations("exercises");
   const tSession = useTranslations("exercises.session");
   const { openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
@@ -114,10 +147,13 @@ export function TheoryExerciseSessionView({
       description: session.description,
       beats,
     });
-  const [phase, setPhase] = useState<"overview" | "quick" | "practice">(
-    () => (hasLesson ? "overview" : "practice"),
+  const [phase, setPhase] = useState<"overview" | "quick" | "practice">(() =>
+    hasLesson ? "overview" : "practice",
   );
   const [additionalInstructions, setAdditionalInstructions] = useState("");
+  const [questionType, setQuestionType] = useState<TheoryQuestionType>(
+    importPractice?.questionType ?? "fill_blank",
+  );
   const {
     state: processing,
     setStage,
@@ -140,6 +176,19 @@ export function TheoryExerciseSessionView({
     [practiceItems],
   );
 
+  const isCompleteAnswer = useCallback(
+    (questionId: string, value: unknown) => {
+      const item = practiceItems.find(
+        (candidate) => candidate.id === questionId,
+      );
+      if (!item) return false;
+      return item.type === "fill_blank"
+        ? isSlotAnswerComplete(value, [item.answer, ...item.acceptedAnswers])
+        : isNonEmptyAnswer(value);
+    },
+    [practiceItems],
+  );
+
   const {
     answers,
     phase: attemptPhase,
@@ -156,7 +205,7 @@ export function TheoryExerciseSessionView({
     submit,
     checkOne,
     markSubmitted,
-  } = useExerciseSetAttempt({ questionIds });
+  } = useExerciseSetAttempt({ questionIds, isAnswered: isCompleteAnswer });
 
   const {
     displayMode,
@@ -186,6 +235,7 @@ export function TheoryExerciseSessionView({
     checkedCount,
     questionIdPrefix: "theory-q",
     setAnchorId: "theory-set-top",
+    isAnswered: isCompleteAnswer,
   });
 
   const loadItems = useCallback(
@@ -208,13 +258,27 @@ export function TheoryExerciseSessionView({
     ].slice(0, 3);
     const perTheory =
       theoryIds.length === 1
-        ? DEFAULT_NEXT_SET_COUNT
-        : Math.max(
-            4,
-            Math.ceil(DEFAULT_NEXT_SET_COUNT / theoryIds.length),
-          );
+        ? 15
+        : Math.max(4, Math.ceil(DEFAULT_NEXT_SET_COUNT / theoryIds.length));
     return { theoryIds, perTheory };
   }, [alsoTheoryIds, session.theoryId]);
+
+  const draftIdentity = useMemo(() => {
+    const theoryIds = [
+      session.theoryId,
+      ...alsoTheoryIds.filter((id) => id !== session.theoryId),
+    ]
+      .slice(0, 3)
+      .sort();
+    return {
+      scope: `theory:${theoryIds.join(",")}`,
+      config: JSON.stringify({
+        questionType,
+        uiLocale,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    };
+  }, [additionalInstructions, alsoTheoryIds, questionType, session.theoryId, uiLocale]);
 
   const {
     sessionId,
@@ -236,8 +300,8 @@ export function TheoryExerciseSessionView({
             theoryId,
             count: payload.perTheory,
             uiLocale,
-            additionalInstructions:
-              additionalInstructions.trim() || undefined,
+            additionalInstructions: additionalInstructions.trim() || undefined,
+            questionType,
             nextSet: {
               sessionId: meta.sessionId,
               // Offset per theory so multi-source merges stay unique per sequence.
@@ -261,6 +325,7 @@ export function TheoryExerciseSessionView({
       return { ok: true, result: merged };
     },
     applyResult: (nextItems) => {
+      void saveExerciseDraft(draftIdentity, nextItems);
       loadItems(nextItems, true);
     },
   });
@@ -271,8 +336,10 @@ export function TheoryExerciseSessionView({
       regenerate?: boolean;
       showProgress?: boolean;
       signal?: AbortSignal;
+      questionType?: TheoryQuestionType;
     }) => {
       const showProgress = options?.showProgress !== false;
+      const requestedQuestionType = options?.questionType ?? questionType;
       const targetSequence =
         options?.sequence ?? (items.length > 0 ? sequence + 1 : sequence);
       const payload = buildTheoryPayload();
@@ -280,9 +347,7 @@ export function TheoryExerciseSessionView({
         setStage("preparing", { title: session.theoryTitle });
         setStage("generating", { title: session.theoryTitle });
       }
-      const controller = options?.signal
-        ? null
-        : new AbortController();
+      const controller = options?.signal ? null : new AbortController();
       const signal = options?.signal ?? controller!.signal;
       // Stay above the server interactive deadline so the UI does not abort
       // a request that is about to succeed.
@@ -290,6 +355,25 @@ export function TheoryExerciseSessionView({
         ? window.setTimeout(() => controller.abort(), 110_000)
         : null;
       try {
+        if (!options?.regenerate && targetSequence === 0) {
+          const restored = await loadExerciseDraft<TheoryExercise>(draftIdentity);
+          const valid = filterPersistedTheoryExercises(restored ?? []);
+          if (valid.length > 0) {
+            if (showProgress) {
+              setStage("validating");
+              await dwellOnProgressStage();
+              setStage("saving");
+              await dwellOnProgressStage();
+            }
+            loadItems(valid, true);
+            markGeneratedSequence(targetSequence);
+            if (showProgress) {
+              completeProcessing();
+              window.setTimeout(() => resetProcessing(), 350);
+            }
+            return true;
+          }
+        }
         const merged: TheoryExercise[] = [];
         for (const [index, theoryId] of payload.theoryIds.entries()) {
           const result = await requestTheoryExerciseAi(
@@ -299,6 +383,7 @@ export function TheoryExerciseSessionView({
               uiLocale,
               additionalInstructions:
                 additionalInstructions.trim() || undefined,
+              questionType: requestedQuestionType,
               nextSet: {
                 sessionId,
                 sequence: targetSequence * 10 + index,
@@ -339,8 +424,11 @@ export function TheoryExerciseSessionView({
         }
         if (showProgress) {
           setStage("validating");
+          await dwellOnProgressStage();
           setStage("saving");
         }
+        await saveExerciseDraft(draftIdentity, merged);
+        if (showProgress) await dwellOnProgressStage();
         loadItems(merged, true);
         markGeneratedSequence(targetSequence);
         if (showProgress) {
@@ -363,6 +451,7 @@ export function TheoryExerciseSessionView({
     [
       additionalInstructions,
       buildTheoryPayload,
+      draftIdentity,
       completeProcessing,
       exerciseQuota,
       fail,
@@ -370,6 +459,7 @@ export function TheoryExerciseSessionView({
       loadItems,
       markGeneratedSequence,
       openUpgrade,
+      questionType,
       resetProcessing,
       sequence,
       session.theoryTitle,
@@ -377,6 +467,87 @@ export function TheoryExerciseSessionView({
       setStage,
       t,
       uiLocale,
+    ],
+  );
+
+  const regenerateImportQuestionType = useCallback(
+    async (next: TheoryQuestionType) => {
+      if (!importPractice) return;
+      const previous = questionType;
+      setQuestionType(next);
+      setStage("preparing", { title: session.theoryTitle });
+      setStage("generating", { title: session.theoryTitle });
+
+      try {
+        const result = await regenerateExerciseImportQuestionType(
+          importPractice.id,
+          next,
+        );
+        setStage("validating");
+        await dwellOnProgressStage();
+        if (
+          result.questionType !== next ||
+          result.exercises.some((exercise) => exercise.type !== next)
+        ) {
+          throw new Error("QUESTION_TYPE_MISMATCH");
+        }
+        setStage("saving");
+        await dwellOnProgressStage();
+        setQuestionType(result.questionType);
+        loadItems(result.exercises, true);
+        completeProcessing();
+        toast.success(tExercises("import.ready"));
+        window.setTimeout(() => resetProcessing(), 350);
+      } catch {
+        setQuestionType(previous);
+        fail(tExercises("import.errors.GENERATION_FAILED"));
+      }
+    },
+    [
+      completeProcessing,
+      fail,
+      importPractice,
+      loadItems,
+      questionType,
+      resetProcessing,
+      session.theoryTitle,
+      setStage,
+      tExercises,
+    ],
+  );
+
+  const handleQuestionTypeChange = useCallback(
+    (next: TheoryQuestionType) => {
+      if (next === questionType) return;
+      if (importPractice) {
+        void regenerateImportQuestionType(next);
+        return;
+      }
+      setQuestionType(next);
+
+      if (items.length > 0) {
+        // The visible set belongs to the old format. Clear it immediately and
+        // regenerate in the same interaction so the selector has an immediate
+        // effect instead of only changing a future set.
+        setItems([]);
+        setActiveIds(null);
+        resetAttempt();
+        afterNewSet();
+        void generateWithAi({
+          questionType: next,
+          regenerate: true,
+          showProgress: true,
+        });
+      }
+    },
+    [
+      afterNewSet,
+      generateWithAi,
+      importPractice,
+      items.length,
+      questionType,
+      regenerateImportQuestionType,
+      resetAttempt,
     ],
   );
 
@@ -414,7 +585,7 @@ export function TheoryExerciseSessionView({
     if (practiceOnly || items.length === 0) return;
     resetForNewActiveSet(sequence);
     // eslint-disable-next-line react-hooks/exhaustive-deps -- only invalidate on config
-  }, [additionalInstructions, alsoTheoryIds.join("|")]);
+  }, [additionalInstructions, questionType, alsoTheoryIds.join("|")]);
 
   useEffect(() => {
     const filtered = filterPersistedTheoryExercises(session.items);
@@ -450,6 +621,7 @@ export function TheoryExerciseSessionView({
   );
 
   const handleSubmit = () => {
+    if (!practiceOnly) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers, ids) => {
       const subset = practiceItems.filter((item) => ids.includes(item.id));
       return gradeTheorySet(subset, currentAnswers);
@@ -472,13 +644,26 @@ export function TheoryExerciseSessionView({
     [practiceItems],
   );
 
+  const questionTypeControl =
+    practiceOnly && !importPractice ? null : (
+      <TheoryQuestionTypePicker
+        value={questionType}
+        onChange={handleQuestionTypeChange}
+        disabled={generating}
+        label={tExercises("questionTypeLabel")}
+      />
+    );
+
   const instructionsField = practiceOnly ? null : (
-    <ExerciseAdditionalInstructions
-      scope="theory"
-      value={additionalInstructions}
-      onChange={setAdditionalInstructions}
-      disabled={generating}
-    />
+    <div className="space-y-5">
+      {questionTypeControl}
+      <ExerciseAdditionalInstructions
+        scope="theory"
+        value={additionalInstructions}
+        onChange={setAdditionalInstructions}
+        disabled={generating}
+      />
+    </div>
   );
 
   const lessonView: TheoryLessonView | null =
@@ -494,8 +679,8 @@ export function TheoryExerciseSessionView({
       processing.stage === "completed")
   ) {
     return (
-      <div data-exercise="theory" className="mx-auto max-w-xl py-6">
-        <AiProcessingProgress
+      <div data-exercise="theory">
+        <AiProcessingOverlay
           state={processing}
           pipeline="aiGenerate"
           onRetry={
@@ -504,9 +689,7 @@ export function TheoryExerciseSessionView({
               : undefined
           }
           onDismissError={
-            processing.stage === "error"
-              ? () => resetProcessing()
-              : undefined
+            processing.stage === "error" ? () => resetProcessing() : undefined
           }
         />
       </div>
@@ -515,7 +698,11 @@ export function TheoryExerciseSessionView({
 
   if (hasLesson && lessonView) {
     return (
-      <div data-exercise="theory" data-theory-category={session.category} className="min-w-0">
+      <div
+        data-exercise="theory"
+        data-theory-category={session.category}
+        className="min-w-0"
+      >
         <TheoryLessonStudy
           title={session.theoryTitle}
           category={session.category}
@@ -577,7 +764,10 @@ export function TheoryExerciseSessionView({
               >
                 {t("generateAi")}
               </QuotaLockButton>
-              <LinkButton href={`/theory/${session.theoryId}/edit`} variant="outline">
+              <LinkButton
+                href={`/theory/${session.theoryId}/edit`}
+                variant="outline"
+              >
                 {t("editTheory")}
               </LinkButton>
               <LinkButton href="/exercises" variant="outline">
@@ -592,11 +782,13 @@ export function TheoryExerciseSessionView({
 
   if (generating || processing.stage === "error") {
     return (
-      <AiProcessingProgress
+      <AiProcessingOverlay
         state={processing}
         pipeline="aiGenerate"
         onRetry={
-          processing.stage === "error" ? () => void generateWithAi() : undefined
+          processing.stage === "error" && !importPractice
+            ? () => void generateWithAi()
+            : undefined
         }
         onDismissError={
           processing.stage === "error" ? () => resetProcessing() : undefined
@@ -617,11 +809,13 @@ export function TheoryExerciseSessionView({
     <div
       data-exercise="theory"
       data-theory-category={session.category}
-      className={mx(featureStyles, "theory-practice-stage -mx-[var(--studio-main-pad,1rem)] space-y-5 px-4 py-4 sm:-mx-[var(--studio-main-pad,1.5rem)] sm:space-y-8 sm:px-6 sm:py-9")}
+      className={mx(
+        featureStyles,
+        "theory-practice-stage w-full min-w-0 max-w-full space-y-5 sm:space-y-6",
+      )}
     >
       <div id="theory-set-top" className="scroll-mt-24" />
-      <div className="space-y-4">
-        {instructionsField}
+      <div className="min-w-0 space-y-3 sm:space-y-4">
         <div className="min-w-0">
           <p className="text-[0.68rem] font-semibold tracking-[0.2em] text-(--exercise-accent) uppercase">
             {submitted ? tSession("resultsTitle") : t("lesson.nowPractice")}
@@ -640,6 +834,10 @@ export function TheoryExerciseSessionView({
           ) : null}
         </div>
 
+        {questionTypeControl ? (
+          <div className="min-w-0">{questionTypeControl}</div>
+        ) : null}
+
         <ExerciseDisplayModePicker
           value={displayMode}
           onChange={setDisplayMode}
@@ -655,52 +853,23 @@ export function TheoryExerciseSessionView({
         ) : null}
 
         <div className="flex flex-wrap items-end justify-between gap-2">
-          <div className="min-w-0 flex-1">
-            <ExerciseProgressHeader
-              progressLabel={
-                submitted
-                  ? tSession("score", {
-                      correct: score.correct,
-                      total: score.total,
-                    })
-                  : oneByOne
-                    ? tSession("questionProgress", {
-                        current: Math.min(
-                          checkedCount + 1,
-                          Math.max(totalQuestionCount, 1),
-                        ),
-                        total: totalQuestionCount,
-                      })
-                    : tSession("answeredProgress", {
-                        answered: answeredCount,
-                        total: totalQuestionCount,
-                      })
-              }
-              current={progressCurrent}
-              total={progressTotal}
-              scoreLabel={
-                submitted
-                  ? t("score", {
-                      correct: score.correct,
-                      answered: score.total,
-                    })
-                  : undefined
-              }
-              progressValue={
-                submitted
-                  ? total
-                    ? (score.correct / total) * 100
-                    : 0
-                  : oneByOne
-                    ? totalQuestionCount
-                      ? (checkedCount / totalQuestionCount) * 100
-                      : 0
-                    : totalQuestionCount
-                      ? (answeredCount / totalQuestionCount) * 100
-                      : 0
-              }
-            />
-          </div>
+          {submitted ? (
+            <div className="min-w-0 flex-1">
+              <ExerciseProgressHeader
+                current={progressCurrent}
+                total={progressTotal}
+                progressLabel={tSession("score", {
+                  correct: score.correct,
+                  total: score.total,
+                })}
+                scoreLabel={t("score", {
+                  correct: score.correct,
+                  answered: score.total,
+                })}
+                progressValue={total ? (score.correct / total) * 100 : 0}
+              />
+            </div>
+          ) : null}
           <div className="flex items-center gap-2">
             {!practiceOnly ? (
               <QuotaLockButton
@@ -753,7 +922,9 @@ export function TheoryExerciseSessionView({
           const item = itemsById.get(id);
           if (!item) return null;
           const value =
-            typeof answers[item.id] === "string" ? String(answers[item.id]) : "";
+            typeof answers[item.id] === "string"
+              ? String(answers[item.id])
+              : "";
           const result = results[item.id];
           const correct = Boolean(result?.correct);
           const unanswered = Boolean(result?.unanswered);
@@ -812,6 +983,8 @@ export function TheoryExerciseSessionView({
             isLast={isLastQuestion}
             canCheck={currentCanCheck}
             submitting={submitting}
+            progressCurrent={progressCurrent}
+            progressTotal={progressTotal}
             onCheck={handleCheckOne}
             onNext={goNextQuestion}
             onViewResults={handleViewResults}
@@ -822,6 +995,9 @@ export function TheoryExerciseSessionView({
             totalQuestionCount={totalQuestionCount}
             unansweredCount={unansweredIds.length}
             submitting={submitting}
+            disabled={unansweredIds.some(
+              (id) => itemsById.get(id)?.type === "fill_blank",
+            )}
             onSubmit={handleSubmit}
             onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
           />

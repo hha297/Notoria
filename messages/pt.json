@@ -17,19 +17,20 @@
     "hideFilters": "Ocultar filtros",
     "remove": "Remover",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Aparência",
+      "print": "Impressão amigável",
+      "printHint": "Página branca, texto escuro",
+      "theme": "Tema atual",
+      "themeHint": "Combina com seu tema claro ou escuro",
+      "previewKicker": "Página de amostra",
+      "previewTitle": "Título do documento",
+      "previewBody": "O texto do corpo usa as cores e espaçamentos selecionados.",
+      "previewCallout": "Chamadas e acentos seguem a cor do módulo.",
+      "fixedNote": "A aparência está fixa no arquivo exportado. Exporte novamente para alterá-la.",
+      "docxBackgroundNote": "O Word e outros aplicativos podem não mostrar os fundos das páginas da mesma forma, especialmente ao imprimir."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Voltar ao topo",
+    "moreActions": "Mais ações"
   },
   "contentImport": {
     "title": {
@@ -474,32 +475,32 @@
       "open": "Gerir etiquetas",
       "eyebrow": "Tags",
       "title": "Gestor de etiquetas",
-      "description": "Escolha uma etiqueta e depois atribua-a ou remova-a das palavras. As palavras atribuídas e as restantes ficam em listas separadas.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Escolha uma tag e, em seguida, atribua ou remova-a de palavras.",
+      "pageDescription": "Escolha Padrão ou Personalizada, escolha uma tag e, em seguida, adicione ou remova-a de palavras.",
+      "disabledNoWorkspace": "Crie um espaço de trabalho antes de gerenciar tags de vocabulário.",
+      "backToVocabulary": "Voltar ao vocabulário",
+      "backToSettings": "Voltar às configurações",
       "groupsLabel": "Grupos de etiquetas padrão",
       "tagsHeading": "Etiquetas",
       "standardTagsHeading": "Etiquetas padrão",
       "customTagsHeading": "Etiquetas personalizadas",
-      "customTagsHint": "Rótulos que cria para a sua própria organização — não são classes gramaticais.",
+      "customTagsHint": "Rótulos de espaço de trabalho que você cria — pesquise para encontrá-los quando a lista estiver longa.",
       "emptyCustomTags": "Ainda não há etiquetas personalizadas. Crie-as ao editar uma palavra.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nenhuma tag personalizada corresponde a esta pesquisa.",
+      "tagSearchPlaceholder": "Pesquisar tags…",
       "wordsHeading": "{tag}",
       "kindStandard": "Padrão",
       "kindCustom": "Personalizada",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Listas de palavras",
+      "wordTabAssigned": "Marcadas",
+      "wordTabOther": "Desmarcadas",
       "assignedHeading": "Palavras com esta etiqueta",
       "otherHeading": "Outras palavras",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Selecionar tudo nesta página",
+      "clearSelection": "Limpar seleção",
+      "selectionScopePage": "Selecionando desta página ({count} de {total})",
+      "selectionScopeFiltered": "Selecionando dentro dos resultados da pesquisa atual",
       "searchPlaceholder": "Pesquisar palavras ou significados…",
       "wordCount": "{count}",
       "loading": "A carregar o vocabulário…",
@@ -509,13 +510,23 @@
       "emptyOther": "Todas as palavras já têm esta etiqueta.",
       "emptyOtherSearch": "Nenhuma palavra correspondente para atribuir.",
       "selected": "{count} selecionadas",
-      "addToTag": "Adicionar à etiqueta",
-      "removeFromTag": "Remover da etiqueta",
-      "applyAdd": "Adicionar à etiqueta ({count})",
-      "applyRemove": "Remover da etiqueta ({count})",
+      "addToTag": "Adicionar tag",
+      "removeFromTag": "Remover tag",
+      "applyAdd": "Adicionar tag ({count})",
+      "applyRemove": "Remover tag ({count})",
       "added": "Adicionada(s) {count} palavra(s) a {tag}",
       "removed": "Removida(s) {count} palavra(s) de {tag}",
-      "error": "Não foi possível atualizar a associação da etiqueta"
+      "error": "Não foi possível atualizar a associação da etiqueta",
+      "systemsLabel": "Sistemas de tags",
+      "standardSystemTitle": "Padrão",
+      "standardSystemMeta": "Tópico e uso, mostrados separadamente",
+      "usageOptional": "Opcional",
+      "customSystemTitle": "Personalizada",
+      "customSystemMeta": "{count, plural, one {# etiqueta} other {# etiquetas}}",
+      "customPickerLabel": "Escolha uma tag personalizada",
+      "customPickerPlaceholder": "Selecione uma tag personalizada…",
+      "customSearchPlaceholder": "Pesquisar tags personalizadas…",
+      "pickTagFirst": "Escolha uma tag acima para gerenciar a associação de palavras."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Atualizado {time}",
@@ -584,7 +595,11 @@
         "notes": "Notas",
         "updated": "Última atualização"
       }
-    }
+    },
+    "selectedCustomTags": "Tags selecionadas",
+    "selectedSynonyms": "Sinônimos selecionados",
+    "removeCustomTag": "Remover {name}",
+    "pickerLoading": "Carregando…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "Atualizado",
     "backToStudio": "Voltar aos exercícios",
     "studyMode": "Modo de estudo",
+    "questionTypeLabel": "Tipo de pergunta",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Dificuldade",
       "easy": "Fácil",
@@ -873,7 +893,7 @@
       "aiReady": "Prática pronta",
       "aiUnavailable": "Não foi possível gerar perguntas com IA de momento.",
       "aiForbidden": "Os exercícios de teoria com IA estão disponíveis com Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Instruções adicionais estão disponíveis no Premium.",
       "aiDisabled": "A assistência de IA está desativada nas Definições.",
       "feedback": {
         "correct": "Correto!",
@@ -927,20 +947,22 @@
         "why": "Porquê",
         "complete": "Compreendido",
         "completeHint": "Pode avançar quando estiver pronto.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Iniciar exercício",
+        "skipReviewAndStart": "Pular revisão e iniciar exercício"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Não arquivados",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# nota} other {# notas}}",
+        "selectAll": "Selecionar tudo",
+        "selectGroup": "Selecionar notas em {name}",
+        "expand": "Expandir {name}",
+        "collapse": "Recolher {name}",
+        "selectedCount": "{count, plural, one {# teoria selecionada} other {# teorias selecionadas}}",
+        "practiceSelected": "Praticar selecionados",
+        "clearSelection": "Limpar seleção",
+        "subfolders": "{count, plural, one {# subpasta} other {# subpastas}}",
+        "selectedOne": "1 teoria selecionada"
       }
     },
     "types": {
@@ -998,8 +1020,8 @@
       "startsWith": "Começa por “{letter}”",
       "revealPrompt": "Ainda com dificuldades? Pode revelar a resposta completa.",
       "revealAnswer": "Revelar resposta",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Próxima dica",
+      "hintProgress": "Dica {current} de {total}"
     },
     "empty": {
       "noWordsTitle": "Ainda sem vocabulário",
@@ -1032,17 +1054,17 @@
       "shuffle": "Baralhar",
       "finish": "Terminar ronda",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Fonte da pergunta",
+        "chooseAi": "Usar gerado por IA",
+        "emptyTitle": "Nenhum exemplo salvo utilizável",
+        "emptyDescription": "Adicione frases de exemplo que incluam claramente cada palavra, ajuste seus filtros ou mude para gerado por IA.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Exemplos salvos",
+          "description": "Crie perguntas instantaneamente a partir dos seus exemplos de vocabulário. Sem espera de IA."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Gerado por IA",
+          "description": "Crie frases novas a partir do seu vocabulário com IA."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "A geração de exercícios com IA está disponível com Pro.",
       "disabled": "A assistência de IA está desativada nas Definições.",
       "upgradeHint": "Free inclui algumas gerações de exercícios com IA por dia. Pro remove o limite.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Instruções adicionais",
+      "additionalInstructionsPlaceholder": "Por exemplo: Use situações de restaurante, mantenha a linguagem no nível A2 e explique os erros na sua língua de interface.",
+      "additionalInstructionsLocked": "Atualize para o Premium para personalizar os tipos de exercícios suportados, definir um contexto da vida real e adicionar suas próprias instruções.",
+      "premiumRequired": "Instruções adicionais estão disponíveis no Premium.",
+      "presetLabel": "Predefinições",
+      "presetNone": "Nenhuma predefinição selecionada",
+      "presetApply": "Aplicar",
+      "presetSave": "Salvar predefinição",
+      "presetName": "Nome da predefinição",
+      "presetDelete": "Excluir",
+      "presetSaved": "Predefinição salva",
+      "presetDeleted": "Predefinição excluída",
+      "presetSaveFailed": "Não foi possível salvar essa predefinição.",
       "emptyWords": "Adicione palavras de vocabulário antes de gerar perguntas.",
       "noneValid": "A IA não conseguiu criar perguntas válidas para estas palavras. Tente novamente.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Personalize o contexto, estilo ou foco do seu exercício. Deixe em branco para usar as configurações padrão.",
+      "presetUpdate": "Atualizar predefinição",
+      "presetUpdated": "Predefinição atualizada",
+      "presetsTitle": "Predefinições salvas",
+      "presetsHelper": "As predefinições armazenam configurações de exercícios e instruções adicionais. Elas não alteram o vocabulário ou teorias que você selecionou.",
+      "presetsEmpty": "Ainda não há predefinições salvas. Salve suas configurações atuais para reutilizá-las depois.",
+      "presetSaveAs": "Salvar como predefinição",
+      "presetUpdateCurrent": "Atualizar com as configurações atuais",
+      "presetRename": "Renomear",
+      "presetManage": "Gerenciar predefinição",
+      "presetRenamed": "Predefinição renomeada",
+      "presetSaveDialogTitle": "Salvar como predefinição",
+      "presetSaveDialogDescription": "Nomeie esta predefinição para reutilizar as configurações atuais do exercício e instruções adicionais. O vocabulário ou teorias selecionados não são armazenados.",
+      "presetRenameDialogTitle": "Renomear predefinição",
+      "presetRenameDialogDescription": "Escolha um novo nome para esta predefinição.",
+      "presetDeleteDialogTitle": "Excluir predefinição?",
+      "presetDeleteDialogDescription": "Excluir “{name}”? Sua configuração atual do exercício permanece como está."
     },
     "session": {
       "complete": "Sessão concluída",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Tentar novamente",
       "questionsLabel": "Perguntas",
       "correctLabel": "Corretas",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Incorreto",
+      "unansweredLabel": "Sem resposta",
       "reviewLabel": "A rever",
       "answeredProgress": "{answered} / {total} respondidas",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Verificar resposta",
+      "nextQuestion": "Próxima",
+      "viewResults": "Ver resultados",
       "submitSet": "Submeter respostas",
       "submitting": "A verificar…",
       "unansweredWarnTitle": "Perguntas sem resposta",
@@ -1121,54 +1143,54 @@
       "unanswered": "Sem resposta",
       "yourAnswer": "A sua resposta",
       "correctAnswer": "Resposta correta",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Apenas {count} perguntas disponíveis com seus filtros atuais.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Como você pratica",
+        "lockedHint": "Termine ou comece um novo conjunto para mudar isso.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Um por um",
+          "description": "Veja uma pergunta de cada vez. Verifique após cada resposta para feedback imediato."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Todas as perguntas",
+          "description": "Veja o conjunto completo, responda em qualquer ordem e, em seguida, envie uma vez para feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Revisar",
+        "allCorrect": "Perfeito — todas as perguntas corretas.",
+        "summary": "{incorrect} incorretas · {unanswered} sem resposta · {needsReview} para revisar",
+        "viewWrong": "Ver respostas erradas",
+        "filtersLabel": "Filtrar perguntas",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Todas ({count})",
+          "needs_review": "Erradas e sem resposta ({count})",
+          "correct": "Corretas ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Anterior",
+        "nextWrong": "Próximo",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} para revisar",
+        "floatLabel": "Navegação de respostas erradas",
+        "closeFloat": "Mostrar todas as respostas"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% correto",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Conjunto perfeito",
+          "body": "Cada resposta foi correta. Esse tipo de foco merece outra rodada quando você estiver pronto."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Finalização forte",
+          "body": "Você claramente está entendendo — revise os erros e, em seguida, fixe com um novo conjunto."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Bom trabalho — continue",
+          "body": "Alguns pontos difíceis são normais. Revise-os uma vez e, em seguida, tente novamente enquanto ainda estão frescos."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Quase lá",
+          "body": "Termine os que estão sem resposta primeiro — então a pontuação contará uma história mais clara."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "As perguntas são geradas em {language} (língua do espaço de trabalho).",
       "contextualEmptyTitle": "Gerar perguntas contextuais",
-      "contextualEmptyDescription": "Crie perguntas de escolha múltipla de preencher espaços a partir do seu vocabulário.",
+      "contextualEmptyDescription": "Adicione instruções opcionais abaixo, se desejar, e pressione Gerar. Você pode deixar o prompt vazio.",
       "contextualProDescription": "As perguntas contextuais com IA estão disponíveis com Pro.",
       "unlockContextual": "Desbloquear com Pro",
       "correct": "Correto!",
@@ -1202,8 +1224,8 @@
       "hint": "Selecione uma palavra e depois toque no seu significado",
       "complete": "Todos os pares associados — excelente!",
       "shuffle": "Baralhar colunas",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pares",
+      "continueRound": "Continuar"
     },
     "typeAnswer": {
       "questionWord": "Qual é o significado?",
@@ -1213,7 +1235,7 @@
         "contextual": "Contextual"
       },
       "contextualEmptyTitle": "Gerar perguntas contextuais",
-      "contextualEmptyDescription": "Crie prompts de escrita de preencher espaços a partir do seu vocabulário.",
+      "contextualEmptyDescription": "Adicione instruções opcionais abaixo, se desejar, e pressione Gerar. Você pode deixar o prompt vazio.",
       "contextualProDescription": "As perguntas contextuais com IA estão disponíveis com Pro.",
       "unlockContextual": "Desbloquear com Pro",
       "placeholder": "Escreva a sua resposta…",
@@ -1597,13 +1619,13 @@
       "writing": {
         "title": "Escrita",
         "description": "Documentos ricos e conjuntos de perguntas que pode revisitar e exportar.",
-        "how": "Comece um rascunho, organize com pastas e use a IA Pro para verificar ou melhorar o texto.",
+        "how": "Comece um rascunho, organize com pastas e use a cota de IA do seu plano para verificar ou melhorar seu texto.",
         "cta": "Abrir escrita"
       },
       "listening": {
         "title": "Compreensão oral",
         "description": "Transforme áudio ou vídeo real numa lição.",
-        "how": "Carregue um clip e gere uma transcrição no Free. A prática de compreensão oral gerada faz parte do Pro.",
+        "how": "Carregue um clipe, gere uma transcrição e construa prática de escuta com a cota de IA incluída no seu plano.",
         "cta": "Abrir compreensão oral"
       },
       "speaking": {
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Alguns espaços de trabalho já existem para a mesma língua. O respetivo conteúdo será adicionado aos espaços de trabalho existentes em vez de criar duplicados.",
         "empty_backup": "Esta cópia de segurança não contém dados de aprendizagem importáveis.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Alguns itens existentes compartilham o mesmo nome. A importação reutilizará um deles de forma determinística e deixará os outros inalterados."
       },
       "cancel": "Cancelar",
       "confirm": "Importar dados de aprendizagem",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "Essa cópia de segurança é demasiado grande para processar nesta página. Experimente uma exportação mais pequena ou contacte o apoio.",
         "notConfigured": "O armazenamento de ficheiros ainda não está configurado para a importação de cópias de segurança."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Já está na sua conta",
+      "skippedInAccountHint": "Esses nomes correspondem a itens que você já possui. Eles não serão importados novamente. Novos itens sob o mesmo espaço de trabalho ainda serão importados.",
+      "skippedInBackupTitle": "Nomes duplicados neste backup",
+      "skippedInBackupHint": "O arquivo lista o mesmo nome mais de uma vez. Apenas a primeira cópia de cada nome é importada — isso é normal mesmo em uma conta vazia.",
+      "skippedOtherTitle": "Não foi possível importar"
     },
     "danger": {
       "title": "Encerrar conta",
@@ -3184,7 +3206,7 @@
       "warningTitle": "Antes de continuar",
       "warnings": {
         "workspaces": "Todos os espaços de trabalho e todos os dados de vocabulário, teoria, escrita, compreensão oral e oralidade serão eliminados.",
-        "billing": "Qualquer subscrição Notoria Pro ativa será cancelada imediatamente.",
+        "billing": "Qualquer assinatura ativa do Notoria Pro ou Premium será cancelada imediatamente.",
         "media": "Os multimédia carregados e a sua fotografia de perfil serão removidos.",
         "permanent": "Não existe período de recuperação após a confirmação."
       },
@@ -3233,7 +3255,7 @@
     "upgrade": "Atualizar para Pro",
     "manage": "Gerir subscrição",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratuito",
     "premiumBadge": "Premium",
     "renewsOn": "Renova em {date}",
     "status": "Estado: {status}",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "Percurso pessoal de aprendizagem",
       "personalizedRecommendations": "Recomendações personalizadas",
       "crossModuleIntelligence": "Personalização entre módulos",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Instruções personalizadas para exercícios"
     },
     "compare": {
       "heading": "Comparar planos",
@@ -3458,7 +3480,7 @@
       "feature": "Funcionalidade",
       "current": "Atual",
       "capability": "O que obtém",
-      "free": "Free",
+      "free": "Gratuito",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Incluído no Free",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "Política de privacidade",
     "termsTitle": "Termos de utilização",
     "privacyDescription": "Como a Notoria recolhe, utiliza e elimina dados pessoais e conteúdo de aprendizagem no seu espaço de trabalho privado de aprendizagem de línguas.",
-    "termsDescription": "Termos para utilizar o espaço de trabalho privado de aprendizagem de línguas da Notoria, contas, funcionalidades de IA e faturação do Notoria Pro.",
+    "termsDescription": "Termos para uso do espaço de aprendizado privado da Notoria, contas, recursos de IA e cobrança Pro ou Premium.",
     "updated": "Última atualização {date}",
-    "updatedDate": "23 de setembro de 2026",
+    "updatedDate": "27 de outubro de 2026",
     "backToSignIn": "Voltar ao início de sessão",
     "backHome": "Voltar à Notoria",
     "authFooter": "Privacidade · Termos",
@@ -4071,7 +4093,7 @@
         "purposes": "Porque processamos dados",
         "auth": "Contas e início de sessão",
         "ai": "Funcionalidades de IA",
-        "payments": "Pagamentos (Notoria Pro)",
+        "payments": "Pagamentos (Pro e Premium)",
         "processors": "Prestadores de serviços",
         "cookies": "Cookies e armazenamento no dispositivo",
         "transfers": "Transferências internacionais",
@@ -4095,7 +4117,7 @@
           "list": [
             "cria ou utiliza uma conta",
             "guarda material em espaços de trabalho privados",
-            "subscreve o Notoria Pro",
+            "assinar o Notoria Pro ou Premium",
             "utiliza ferramentas opcionais assistidas por IA",
             "carrega multimédia para audição ou perfil",
             "utiliza a prática de expressão oral",
@@ -4156,7 +4178,7 @@
               "basis": "Contrato (Art. 6.º, n.º 1, alínea b))"
             },
             {
-              "purpose": "Executar a faturação e o estado da subscrição do Notoria Pro via Stripe",
+              "purpose": "Executar a cobrança e o status de assinatura do Notoria Pro e Premium via Stripe",
               "basis": "Contrato (Art. 6.º, n.º 1, alínea b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "A base de código atual não utiliza outros fornecedores de modelos de linguagem de grande escala além da OpenAI. A OpenAI processa dados segundo os seus próprios termos e política de privacidade como processador destas funcionalidades."
         },
         "payments": {
-          "title": "7. Pagamentos (Notoria Pro)",
+          "title": "7. Pagamentos (Pro e Premium)",
           "p1": "As subscrições pagas são tratadas pelo <strong>Stripe</strong>. A compra, as faturas, os métodos de pagamento e o cancelamento decorrem através do Stripe Checkout e do Portal de Cliente Stripe. Os webhooks do Stripe atualizam o seu plano e estado na Notoria.",
           "p2": "O Stripe processa dados de pagamento como prestador de pagamentos. Consulte a documentação de privacidade do Stripe para o tratamento de cartões."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Checkout, portal e estado da subscrição do Notoria Pro"
+              "role": "Checkout, portal e status de assinatura do Notoria Pro e Premium"
             },
             {
               "provider": "Google",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Estes Termos de utilização explicam as regras de utilização da Notoria em <site>www.notoria.fi</site>. Descrevem como o produto funciona hoje: espaços de trabalho privados de aprendizagem, faturação opcional do Notoria Pro através do Stripe e funcionalidades assistidas por IA. Não substituem aconselhamento de um advogado sobre a sua situação específica.",
+      "intro": "Estes Termos de Uso explicam as regras para usar o Notoria em <site>www.notoria.fi</site>. Eles descrevem como o produto funciona hoje: espaços de aprendizado privados, cobrança opcional Pro e Premium através do Stripe e recursos assistidos por IA. Eles não substituem o aconselhamento de um advogado sobre sua situação específica.",
       "tocTitle": "Nesta página",
       "tocAria": "Nesta página",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Utilização aceitável",
         "ip": "Propriedade intelectual",
         "ai": "Resultados gerados por IA",
-        "plans": "Plano Free e Notoria Pro",
+        "plans": "Planos Gratuitos, Pro e Premium",
         "billing": "Subscrição e faturação",
         "refunds": "Reembolsos e direitos do consumidor",
         "availability": "Disponibilidade",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. O serviço",
           "p1": "A Notoria é uma aplicação web privada de aprendizagem de línguas. Pode criar espaços de trabalho e guardar material de aprendizagem como vocabulário, notas de teoria, escrita, exercícios, lições de audição e sessões de expressão oral.",
-          "p2": "Algumas funcionalidades estão disponíveis no plano gratuito. O Notoria Pro desbloqueia capacidades adicionais conforme mostrado no produto e na sua página <account>Conta</account> — incluindo Audição, Expressão oral, certas ferramentas de estudo com IA, importação de exercícios e formatos pagos de exportação de documentos. A disponibilidade das funcionalidades pode mudar à medida que o produto evolui.",
+          "p2": "Áreas de aprendizado principais, incluindo Escuta, Fala e Leitura, estão disponíveis em todos os planos. Pro e Premium adicionam cotas de IA mais altas e importação/exportação de materiais de aprendizado; o Premium também adiciona recursos de coaching personalizado e prática. A comparação atual é mostrada na sua página de <account>Conta</account>. A disponibilidade de recursos pode mudar à medida que o produto evolui.",
           "p3": "A Notoria destina-se à aprendizagem pessoal de línguas. Não é uma escola, autoridade de exames ou serviço de aconselhamento profissional."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. Resultados gerados por IA",
           "p1": "Algumas funcionalidades podem verificar, sugerir, gerar, transcrever, resumir ou tutorar com base no seu material. Os resultados podem ser incompletos, incorretos ou inadequados para o seu objetivo. Continua a ser responsável por rever os resultados de IA antes de neles confiar para estudo, exames, uso profissional ou publicação.",
           "p2": "As funcionalidades de IA podem estar indisponíveis se a assistência estiver desligada em <settings>Definições</settings>, se o seu plano não incluir uma ferramenta particular ou se um prestador estiver temporariamente inacessível.",
-          "p3": "Nem todos os auxiliares de IA exigem Notoria Pro. O produto mostra quais as ferramentas gratuitas e quais as que precisam de Pro."
+          "p3": "A disponibilidade de IA e as cotas diárias variam entre Gratuito, Pro e Premium. O produto mostra o plano e a cota necessários para cada ferramenta."
         },
         "plans": {
-          "title": "8. Plano Free e Notoria Pro",
+          "title": "8. Planos Gratuitos, Pro e Premium",
           "p1": "O plano gratuito cobre a prática essencial com o seu próprio vocabulário e ferramentas de estudo relacionadas conforme mostrado no produto.",
-          "p2": "O Notoria Pro é uma subscrição paga que desbloqueia funcionalidades adicionais. No produto atual, isso inclui tipicamente Audição, Expressão oral, importação de exercícios, prática de formar frases, muitas ferramentas de estudo assistidas por IA e exportação de documentos PDF/DOCX. Alguns auxiliares de IA mais leves (como certos auxiliares de vocabulário ou de formatação do editor) podem permanecer disponíveis no plano gratuito quando a assistência de IA estiver ativada.",
-          "p3": "O acesso Pro está ligado à sua conta de utilizador, pelo que se aplica a todos os espaços de trabalho dessa conta. Contas com função de administrador podem ter acesso de nível Pro sem uma subscrição Stripe pessoal.",
-          "p4": "O preço aplicável à sua compra é o preço mostrado no Stripe Checkout para o plano Pro atual. Qualquer preço mostrado noutro local do produto (por exemplo em Conta) é apenas indicativo e deve corresponder à configuração ativa de preços Stripe."
+          "p2": "Pro e Premium são assinaturas pagas. Pro adiciona cotas mais altas ou ilimitadas para muitas ferramentas de IA, além de importação de materiais de aprendizado e exportação em PDF/DOCX. Premium inclui Pro e adiciona recursos personalizados, como o Coach de Aprendizado, perfil de aprendizado pessoal, prática adaptativa, prática baseada em erros e instruções de exercícios personalizadas. A página da Conta mostra a comparação atual e os limites.",
+          "p3": "O acesso pago está vinculado à sua conta de usuário e se aplica a todos os seus espaços de trabalho. Contas com um papel de administrador podem ter acesso a nível pago sem uma assinatura pessoal do Stripe.",
+          "p4": "O preço que se aplica é o preço mostrado no Checkout do Stripe para o plano Pro ou Premium selecionado. Qualquer preço mostrado em outro lugar no produto (por exemplo, na Conta) é apenas indicativo e deve corresponder à configuração de preço ativa do Stripe."
         },
         "billing": {
           "title": "9. Subscrição, faturação e cancelamento",
-          "list0": "As subscrições Pro são faturadas através do <strong>Stripe</strong>",
-          "list1": "Pode iniciar a compra a partir de <account>Conta</account> ou a partir de controlos Pro bloqueados na aplicação",
+          "list0": "As assinaturas Pro e Premium são cobradas através do <strong>Stripe</strong>",
+          "list1": "Você pode iniciar o checkout ou mudar de plano a partir da <account>Conta</account> ou dos controles pagos bloqueados no aplicativo",
           "list2": "Em Conta, pode abrir o Portal de Cliente Stripe para ver faturas, atualizar métodos de pagamento e cancelar a subscrição",
           "list3": "O cancelamento segue o comportamento do Portal de Cliente Stripe para a sua subscrição",
-          "p1": "Após cancelar, o acesso Pro continua apenas enquanto o estado da sua subscrição Stripe ainda conceder Pro no produto. Na implementação atual, os estados tratados como Pro incluem <code>active</code>, <code>trialing</code> e <code>past_due</code>. Quando o estado deixar de qualificar, a conta regressa ao plano gratuito.",
-          "p2": "Se um pagamento falhar, o Stripe pode passar a subscrição para <code>past_due</code> ou outro estado. A Notoria sincroniza esse estado a partir dos webhooks do Stripe. Enquanto o estado permanecer <code>past_due</code>, as funcionalidades Pro continuam disponíveis segundo as regras de acesso atuais; se a subscrição mais tarde for cancelada ou de outro modo inelegível, o acesso Pro termina.",
+          "p1": "Após cancelar a renovação, seu acesso atual ao Pro ou Premium continua enquanto o status da assinatura do Stripe ainda qualificar no produto. Os status qualificáveis atualmente incluem <code>ativo</code>, <code>em teste</code> e <code>atrasado</code>. Quando o status não qualificar mais, a conta retorna ao Gratuito.",
+          "p2": "Se um pagamento falhar, o Stripe pode mover a assinatura para <code>atrasado</code> ou outro status. O Notoria sincroniza esse status a partir dos webhooks do Stripe. Enquanto permanecer <code>atrasado</code>, o plano pago atual permanece disponível sob as regras de acesso atuais; se mais tarde se tornar cancelado ou de outra forma inelegível, o acesso pago termina.",
           "p3": "Eliminar a sua conta Notoria cancela a subscrição Stripe imediatamente (na medida do possível) como parte da eliminação da conta. Isso é diferente de cancelar a renovação através do Portal de Cliente mantendo a conta."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Exclusão de responsabilidade e responsabilidade",
           "p1": "A Notoria é fornecida numa base «conforme disponível» para aprendizagem pessoal de línguas. Na máxima medida permitida pela legislação aplicável, excluímos garantias que não sejam exigidas por lei.",
-          "p2": "Na máxima medida permitida pela legislação aplicável, a Notoria não é responsável por danos indiretos, incidentais, especiais, consequenciais ou por perda de dados decorrentes da sua utilização do serviço ou da confiança em resultados de IA. Quando a responsabilidade não puder ser excluída, fica limitada ao montante que pagou pelo Notoria Pro nos três meses anteriores ao pedido, ou a qualquer montante superior exigido por lei obrigatória.",
+          "p2": "Na máxima extensão permitida pela lei aplicável, o Notoria não é responsável por danos indiretos, incidentais, especiais, consequenciais ou de perda de dados decorrentes do seu uso do serviço ou da confiança na saída da IA. Onde a responsabilidade não pode ser excluída, é limitada ao valor que você pagou pelo Notoria Pro ou Premium nos três meses anteriores à reclamação, ou qualquer valor maior exigido pela lei obrigatória.",
           "p3": "Estes limites não excluem responsabilidade que a lei finlandesa ou da UE não permita limitar — incluindo responsabilidade que não possa ser renunciada para consumidores, e responsabilidade por morte ou lesões corporais causadas por negligência quando tais regras se apliquem."
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "Construa um banco pessoal de vocabulário com significados, exemplos e etiquetas",
           "practice": "Pratique com exercícios retirados das suas próprias palavras e notas",
           "create": "Escreva notas de teoria e trabalhos de escrita a que possa voltar mais tarde",
-          "listenSpeak": "Transforme multimédia em prática de audição e fale com um tutor de IA no Pro"
+          "listenSpeak": "Transforme mídia em prática de escuta e use cotas de IA para transcrição e prática de fala"
         },
-        "note": "Algumas ferramentas de IA, audição, expressão oral e exportação fazem parte do Notoria Pro. O plano gratuito continua a cobrir a prática quotidiana de vocabulário e o ciclo essencial de estudo."
+        "note": "Áreas de aprendizado principais estão disponíveis em todos os planos. Pro aumenta as cotas de IA e adiciona importação/exportação de materiais de aprendizado; Premium adiciona coaching personalizado e prática."
       },
       "ai": {
         "title": "IA, onde ajuda",
@@ -4656,7 +4678,7 @@
         "title": "Como as áreas se ligam",
         "p1": "A Captura é o ponto de entrada rápido. O Vocabulário e a Teoria são onde o material se assenta. O Exercício transforma esse material em prática. A Escrita, a Audição e a Expressão oral ajudam-no a usar a língua de forma mais ativa.",
         "p2": "Não tem de passar por todas as áreas por ordem. Muitas pessoas ficam com as palavras e a prática curta durante algum tempo.",
-        "p3": "Um passo natural seguinte é a escrita quando quer produzir língua nos seus próprios termos, depois a audição e a expressão oral quando quer que o mesmo material funcione no ouvido e na voz — a Audição e a Expressão oral fazem parte do Notoria Pro.",
+        "p3": "Um próximo passo natural é escrever quando você quer produzir linguagem em seus próprios termos, depois ouvir e falar quando você quer que o mesmo material funcione em seu ouvido e voz. Essas áreas estão disponíveis em todos os planos; os limites de uso de IA variam por plano.",
         "beat": "Primeiro recolha e compreenda. Use e fale quando o material estiver pronto para sair da página."
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "Audição",
-          "body": "Transforme multimédia em prática de audição no seu espaço de trabalho. Disponível no Notoria Pro."
+          "body": "Transforme mídia em prática de escuta em seu espaço de trabalho. Disponível em todos os planos; as cotas de transcrição de IA variam por plano."
         },
         "speaking": {
           "label": "Expressão oral",
-          "body": "Prática ao vivo com um tutor de IA, assente na língua que está a estudar. Disponível no Notoria Pro."
+          "body": "Prática ao vivo com um tutor de IA, fundamentada na língua que você está estudando. Disponível em todos os planos com uma cota diária baseada no plano."
         },
         "reading": {
           "label": "Leitura",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Como altero a palavra-passe ou encerro a minha conta?",
-          "a": "Abra <account>Conta</account>. Pode atualizar a palavra-passe aí se usar início de sessão por e-mail, gerir o Notoria Pro, exportar uma cópia de segurança ou eliminar permanentemente a sua conta."
+          "a": "Abra <account>Conta</account>. Você pode atualizar sua senha lá se usar login por e-mail, gerenciar Pro ou Premium, exportar um backup ou excluir permanentemente sua conta. Excluir a conta também cancela imediatamente qualquer assinatura ativa do Stripe com base no melhor esforço; cancelar a renovação mantém a conta e seus dados."
         },
         "pro": {
           "q": "Como funcionam a faturação e o cancelamento?",
-          "a": "O Notoria Pro é faturado através do Stripe. Em <account>Conta</account> pode atualizar, abrir o portal de cliente do Stripe para gerir métodos de pagamento e faturas, ou cancelar a renovação."
+          "a": "Notoria Pro e Premium são cobrados através do Stripe. A partir da <account>Conta</account>, você pode assinar, alternar entre Pro e Premium, gerenciar métodos de pagamento e faturas, cancelar a renovação ou retomar um cancelamento agendado. Cancelar a renovação mantém o acesso até que o Stripe termine o período de assinatura elegível; excluir sua conta é separado e cancela a assinatura imediatamente com base no melhor esforço."
         },
         "proFeatures": {
-          "q": "O que é gratuito e o que precisa de Notoria Pro?",
-          "a": "A prática quotidiana de vocabulário e as ferramentas de estudo relacionadas estão disponíveis no plano gratuito. Algumas ferramentas de IA, audição, expressão oral e exportação de documentos fazem parte do Notoria Pro. Compare e atualize em <account>Conta</account>."
+          "q": "O que está incluído no Gratuito, Pro e Premium?",
+          "a": "Gratuito inclui as áreas principais de aprendizado e cotas diárias para ferramentas de IA suportadas. Pro aumenta ou remove muitos limites de IA e adiciona importação de materiais de aprendizado, além de exportação em PDF/DOCX. Premium inclui Pro e adiciona coaching personalizado, um perfil de aprendizado, prática adaptativa e baseada em erros, e instruções de exercícios personalizadas. Veja a comparação ao vivo e os limites atuais na <account>Conta</account>."
         },
         "learning": {
           "q": "Como funcionam as funcionalidades de aprendizagem da Notoria?",
@@ -4997,7 +5019,7 @@
         "admins": "Administradores",
         "testers": "Testadores",
         "suspended": "Suspensos",
-        "contentTotal": "Content records"
+        "contentTotal": "Registros de conteúdo"
       },
       "quickAccess": "Acesso rápido",
       "quickAccessLede": "Ir para as ferramentas de gestão.",
@@ -5050,8 +5072,8 @@
         "created": "Registado",
         "updated": "Atualizado",
         "emailVerified": "E-mail verificado",
-        "email": "Email",
-        "password": "Password"
+        "email": "E-mail",
+        "password": "Senha"
       },
       "detail": {
         "account": "Conta",
@@ -5060,7 +5082,7 @@
         "actions": "Ações da conta",
         "workspaces": "Espaços de trabalho",
         "workspacesLede": "Espaços de trabalho de língua pertencentes a este utilizador.",
-        "danger": "Danger zone"
+        "danger": "Zona de perigo"
       },
       "actions": {
         "saveProfile": "Guardar nome",
@@ -5071,7 +5093,7 @@
         "delete": "Eliminar conta",
         "grantTester": "Conceder testador",
         "revokeTester": "Revogar testador",
-        "create": "Create user"
+        "create": "Criar usuário"
       },
       "confirm": {
         "grantAdmin": "Conceder acesso de administrador a esta conta?",
@@ -5089,11 +5111,11 @@
         "admin": "Administrador"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Criar usuário",
+        "lede": "Provisione uma conta com um e-mail e senha. Eles podem fazer login imediatamente."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratuito",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5140,7 @@
         "owner": "Proprietário",
         "created": "Criado",
         "updated": "Atualizado",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "E-mail do proprietário",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "Eliminar este espaço de trabalho e todo o conteúdo de aprendizagem nele contido através das cascatas da base de dados?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Criar espaço de trabalho",
+        "lede": "Anexe um novo espaço de trabalho de idioma a uma conta existente por e-mail."
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "Espaço de trabalho",
         "created": "Criado",
         "updated": "Atualizado",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Título",
+        "word": "Palavra",
+        "folderName": "Nome da pasta"
       },
       "detail": {
         "description": "Inspeção de metadados. Os corpos privados não são carregados automaticamente.",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "Eliminar registo",
-        "saveTitle": "Save title"
+        "saveTitle": "Salvar título"
       },
       "confirm": {
         "delete": "Eliminar este registo? As linhas filhas relacionadas seguem as regras de cascata / set-null da base de dados."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Capture itens que armazenam texto livre. A edição de título não é suportada aqui — exclua se o registro deve ser removido."
     },
     "jobs": {
       "title": "Tarefas",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "Código de língua inválido.",
       "CONTENT_NOT_FOUND": "Registo não encontrado.",
       "INVALID_CONTENT_MODULE": "Módulo de conteúdo desconhecido.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Esse e-mail já está registrado.",
+      "PASSWORD_TOO_WEAK": "A senha não atende aos requisitos de força.",
+      "CONTENT_TITLE_UNSUPPORTED": "Este tipo de conteúdo não suporta edição de título."
     }
   }
 }

@@ -4,6 +4,7 @@ import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
+import { CharacterSlotInput } from "@/components/exercises/character-slot-input";
 import { TheoryPracticeFeedback } from "@/components/exercises/theory/theory-practice-feedback";
 import {
   buildCanonicalCompletedSentence,
@@ -86,7 +87,6 @@ export function TheoryFillBlankCard({
     sentence: scrubbed.sentence,
     completedSentence: canonicalCompleted,
   });
-  const blankMinWidth = Math.min(Math.max(item.answer.length + 2, 6), 16);
   const trailingPunctuation = /^[.!?…]+$/.test(suffixText.trim())
     ? suffixText.trim()
     : "";
@@ -143,13 +143,11 @@ export function TheoryFillBlankCard({
             >
               <span
                 className={cn(
-                  "relative inline-flex max-w-full min-w-26 items-end justify-center border-b-2 px-1.5 transition-colors duration-200",
-                  !submitted &&
-                    "border-(--exercise-accent) has-focus-visible:border-b-[3px]",
+                  "relative inline-flex max-w-full items-end justify-center px-1.5 transition-colors duration-200",
                   submitted && isCorrect && "border-success",
                   submitted && !isCorrect && "border-error",
+                  submitted && "border-b-2",
                 )}
-                style={{ minWidth: `${blankMinWidth}ch` }}
               >
                 {submitted ? (
                   <span
@@ -161,20 +159,13 @@ export function TheoryFillBlankCard({
                     {filledText || "\u00a0"}
                   </span>
                 ) : (
-                  <input
+                  <CharacterSlotInput
                     value={value}
-                    onChange={(event) => onChange(event.target.value)}
-                    autoComplete="off"
-                    autoCorrect="off"
-                    autoCapitalize="off"
-                    spellCheck={false}
+                    answers={[item.answer, ...item.acceptedAnswers]}
+                    onChange={onChange}
                     name={`theory-blank-${item.id}`}
-                    aria-label={`${number}. ${t("fillPlaceholder")}`}
-                    placeholder="?"
-                    data-1p-ignore
-                    data-lpignore="true"
-                    data-form-type="other"
-                    className="h-[1.15em] w-full max-w-full bg-transparent p-0 text-center text-[1em] leading-none font-heading font-semibold tracking-tight text-(--exercise-accent) caret-(--exercise-accent) outline-none placeholder:text-(--exercise-accent)/30"
+                    ariaLabel={`${number}. ${t("fillPlaceholder")}`}
+                    className="text-(--exercise-accent)"
                   />
                 )}
               </span>

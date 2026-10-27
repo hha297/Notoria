@@ -1,10 +1,10 @@
 "use client";
 
-import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { Check, Sparkles, XCircle } from "lucide-react";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
+import { CharacterSlotInput } from "@/components/exercises/character-slot-input";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import {
   blankMeaningHintFromItem,
@@ -144,6 +144,7 @@ export function FillBlankStage({
                 ) : null}
                 <BlankSlot
                   value={input}
+                  answers={item.acceptableAnswers}
                   filledText={filledText}
                   revealed={revealed}
                   peeked={peeked}
@@ -216,6 +217,7 @@ export function FillBlankStage({
 
 function BlankSlot({
   value,
+  answers,
   filledText,
   revealed,
   peeked,
@@ -227,6 +229,7 @@ function BlankSlot({
   onChange,
 }: {
   value: string;
+  answers: readonly string[];
   filledText: string;
   revealed: boolean;
   peeked: boolean;
@@ -237,7 +240,6 @@ function BlankSlot({
   deferCheck: boolean;
   onChange: (value: string) => void;
 }) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const tone = revealed
     ? peeked
       ? "reveal"
@@ -245,13 +247,6 @@ function BlankSlot({
         ? "success"
         : "error"
     : "idle";
-  const displayLength = revealed ? filledText.length : value.length;
-  const widthCh = Math.min(28, Math.max(8, displayLength + 1));
-
-  useEffect(() => {
-    if (!deferCheck && !revealed) inputRef.current?.focus();
-  }, [deferCheck, revealed]);
-
   return (
     <span
       className={cn(
@@ -261,12 +256,11 @@ function BlankSlot({
     >
       <span
         className={cn(
-          "relative inline-flex max-w-full min-w-26 items-end justify-center border-b-2 px-1.5 transition-colors duration-200",
-          tone === "idle" &&
-            "border-(--exercise-accent) has-focus-visible:border-b-[3px]",
+          "relative inline-flex max-w-full items-end justify-center px-1.5 transition-colors duration-200",
           tone === "success" && "border-success",
           tone === "error" && "border-error",
           tone === "reveal" && "border-(--exercise-accent)",
+          revealed && "border-b-2",
         )}
       >
         {revealed ? (
@@ -287,28 +281,15 @@ function BlankSlot({
             ) : null}
           </motion.span>
         ) : (
-          <input
-            ref={inputRef}
-            type="text"
-            inputMode="text"
+          <CharacterSlotInput
             value={value}
-            onChange={(event) => onChange(event.target.value)}
-            autoComplete="off"
-            autoCorrect="off"
-            autoCapitalize="none"
-            spellCheck={false}
-            aria-label={placeholder}
-            className="h-[1.15em] max-w-full bg-transparent p-0 text-center text-[1em] leading-none font-heading font-semibold tracking-tight text-(--exercise-accent) caret-(--exercise-accent) outline-none placeholder:text-(--exercise-accent)/30"
-            style={{ width: `${widthCh}ch` }}
+            answers={answers}
+            onChange={onChange}
+            ariaLabel={placeholder}
+            autoFocus={!deferCheck}
+            className="text-(--exercise-accent)"
           />
         )}
-        <span
-          aria-hidden
-          className={cn(
-            "pointer-events-none absolute inset-x-0 -bottom-0.5 h-2 bg-(--exercise-accent)/20 blur-[6px] transition-opacity duration-200",
-            revealed || value ? "opacity-0" : "opacity-100",
-          )}
-        />
       </span>
       {cue ? (
         <span className="mt-2 max-w-[min(100%,16rem)] text-center text-sm leading-snug font-medium text-muted-foreground wrap-anywhere">

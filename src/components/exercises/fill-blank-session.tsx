@@ -29,6 +29,11 @@ import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { isValidLocale } from "@/i18n/config";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
+import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
 import type { ExerciseAiFillBlank, ExerciseAiWordInput } from "@/lib/exercises/ai-types";
 import {
   fillBlankExerciseToItem,
@@ -36,6 +41,7 @@ import {
 } from "@/lib/exercises/ai-validate";
 import { pickFillBlankAiWords, toExerciseAiWord } from "@/lib/exercises/ai-words";
 import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
+import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
 import {
   buildFillBlankItems,
   type FillBlankItem,
@@ -126,6 +132,14 @@ export function FillBlankSession({
     [practiceItems],
   );
 
+  const isCompleteAnswer = useCallback(
+    (questionId: string, value: unknown) => {
+      const item = practiceItems.find((candidate) => candidate.id === questionId);
+      return Boolean(item && isSlotAnswerComplete(value, item.acceptableAnswers));
+    },
+    [practiceItems],
+  );
+
   const {
     answers,
     phase: attemptPhase,
@@ -142,7 +156,7 @@ export function FillBlankSession({
     submit,
     checkOne,
     markSubmitted,
-  } = useExerciseSetAttempt({ questionIds });
+  } = useExerciseSetAttempt({ questionIds, isAnswered: isCompleteAnswer });
 
   const {
     displayMode,
@@ -172,6 +186,7 @@ export function FillBlankSession({
     checkedCount,
     questionIdPrefix: "fb-q",
     setAnchorId: "fb-set-top",
+    isAnswered: isCompleteAnswer,
   });
 
   const hasSession = items.length > 0;
@@ -311,6 +326,20 @@ export function FillBlankSession({
     [afterNewSet, resetAttempt],
   );
 
+  const draftIdentity = useMemo(
+    () => ({
+      scope: `workspace:${workspaceId}:fill_blank`,
+      config: JSON.stringify({
+        difficulty,
+        uiLocale,
+        language: language ?? null,
+        filters,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    }),
+    [additionalInstructions, difficulty, filters, language, uiLocale, workspaceId],
+  );
+
   const buildNextPayload = useCallback((): FillBlankNextPayload | null => {
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
@@ -374,6 +403,7 @@ export function FillBlankSession({
       return { ok: true, result: nextItems };
     },
     applyResult: (items) => {
+      void saveExerciseDraft(draftIdentity, items);
       applyGeneratedItems(items);
     },
   });
@@ -404,6 +434,27 @@ export function FillBlankSession({
         setStage("generating");
       }
       try {
+        if (!options?.regenerate && targetSequence === 0 && !aiItems) {
+          const restored = await loadExerciseDraft<FillBlankItem>(draftIdentity);
+          const eligibleIds = new Set(filteredWords.map((word) => word.id));
+          const valid = (restored ?? []).filter(
+            (item) =>
+              item?.id &&
+              item.word &&
+              Array.isArray(item.acceptableAnswers) &&
+              item.acceptableAnswers.length > 0 &&
+              eligibleIds.has(item.wordId),
+          );
+          if (valid.length > 0) {
+            applyGeneratedItems(valid);
+            markGeneratedSequence(targetSequence);
+            if (showProgress) {
+              completeProcessing();
+              window.setTimeout(() => resetProcessing(), 350);
+            }
+            return true;
+          }
+        }
         const result = await requestExerciseAi(
           {
             exerciseType: "fill-in-blank",
@@ -455,6 +506,7 @@ export function FillBlankSession({
         }
 
         if (showProgress) setStage("saving");
+        await saveExerciseDraft(draftIdentity, nextItems);
         applyGeneratedItems(nextItems);
         markGeneratedSequence(targetSequence);
         if (showProgress) {
@@ -477,6 +529,7 @@ export function FillBlankSession({
       buildNextPayload,
       completeProcessing,
       difficulty,
+      draftIdentity,
       exerciseQuota,
       fail,
       filteredWords,
@@ -542,6 +595,7 @@ export function FillBlankSession({
   );
 
   const handleSubmit = () => {
+    if (usingAiGenerated) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const item of practiceItems) {
@@ -685,50 +739,23 @@ export function FillBlankSession({
             </p>
           ) : null}
 
-          <ExerciseProgressHeader
-            current={progressCurrent}
-            total={progressTotal}
-            progressLabel={
-              submitted
-                ? tSession("score", {
-                    correct: score.correct,
-                    total: score.total,
-                  })
-                : oneByOne
-                  ? tSession("questionProgress", {
-                      current: Math.min(
-                        checkedCount + 1,
-                        Math.max(totalQuestionCount, 1),
-                      ),
-                      total: totalQuestionCount,
-                    })
-                  : tSession("answeredProgress", {
-                      answered: answeredCount,
-                      total: totalQuestionCount,
-                    })
-            }
-            scoreLabel={
-              submitted
-                ? t("score", {
-                    correct: score.correct,
-                    answered: score.total,
-                  })
-                : undefined
-            }
-            progressValue={
-              submitted
-                ? score.total
-                  ? (score.correct / score.total) * 100
-                  : 0
-                : oneByOne
-                  ? totalQuestionCount
-                    ? (checkedCount / totalQuestionCount) * 100
-                    : 0
-                  : totalQuestionCount
-                    ? (answeredCount / totalQuestionCount) * 100
-                    : 0
-            }
-          />
+          {submitted ? (
+            <ExerciseProgressHeader
+              current={progressCurrent}
+              total={progressTotal}
+              progressLabel={tSession("score", {
+                correct: score.correct,
+                total: score.total,
+              })}
+              scoreLabel={t("score", {
+                correct: score.correct,
+                answered: score.total,
+              })}
+              progressValue={
+                score.total ? (score.correct / score.total) * 100 : 0
+              }
+            />
+          ) : null}
 
           {submitted ? (
             <ExerciseSetReviewNav
@@ -786,6 +813,8 @@ export function FillBlankSession({
                 isLast={isLastQuestion}
                 canCheck={currentCanCheck}
                 submitting={submitting}
+                progressCurrent={progressCurrent}
+                progressTotal={progressTotal}
                 onCheck={handleCheckOne}
                 onNext={goNextQuestion}
                 onViewResults={handleViewResults}
@@ -796,6 +825,7 @@ export function FillBlankSession({
                 totalQuestionCount={totalQuestionCount}
                 unansweredCount={unansweredIds.length}
                 submitting={submitting}
+                disabled={unansweredIds.length > 0}
                 onSubmit={handleSubmit}
                 onJumpToUnanswered={() => jumpToUnanswered(unansweredIds)}
               />

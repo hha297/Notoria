@@ -30,7 +30,7 @@
       "fixedNote": "Penampilan ditetapkan dalam fail yang dieksport. Eksport semula untuk mengubahnya.",
       "docxBackgroundNote": "Word dan aplikasi lain mungkin tidak memaparkan latar belakang halaman dengan cara yang sama, terutamanya semasa mencetak."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Tatal ke atas"
   },
   "contentImport": {
     "title": {
@@ -473,34 +473,34 @@
     "viewMode": "Mode tampilan",
     "tagManager": {
       "open": "Kelola tag",
-      "eyebrow": "Tags",
+      "eyebrow": "Tag",
       "title": "Pengelola Tag",
-      "description": "Pilih tag, lalu tetapkan atau padam dari kata. Kata yang sudah ditetapkan dan yang lain tetap di daftar terpisah.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Pilih tag, kemudian tetapkan atau buang dari perkataan.",
+      "pageDescription": "Pilih Standard atau Kustom, pilih tag, kemudian tambah atau buang dari perkataan.",
+      "disabledNoWorkspace": "Buat ruang kerja sebelum mengurus tag kosa kata.",
+      "backToVocabulary": "Kembali ke kosa kata",
+      "backToSettings": "Kembali ke tetapan",
       "groupsLabel": "Grup tag standar",
       "tagsHeading": "Tag",
       "standardTagsHeading": "Tag standar",
       "customTagsHeading": "Tag khusus",
-      "customTagsHint": "Label yang anda buat untuk organisasi sendiri — bukan kelas kata.",
+      "customTagsHint": "Label ruang kerja yang anda buat — cari untuk menemuinya apabila senarai panjang.",
       "emptyCustomTags": "Belum ada tag khusus. Buat saat mengedit kata.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Tiada tag kustom yang sepadan dengan carian ini.",
+      "tagSearchPlaceholder": "Cari tag…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standar",
       "kindCustom": "Khusus",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Senarai perkataan",
+      "wordTabAssigned": "Ditag",
+      "wordTabOther": "Tidak ditag",
       "assignedHeading": "Kata dengan tag ini",
       "otherHeading": "Kata lainnya",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Pilih semua di halaman ini",
+      "clearSelection": "Bersihkan pilihan",
+      "selectionScopePage": "Memilih dari halaman ini ({count} dari {total})",
+      "selectionScopeFiltered": "Memilih dalam hasil carian semasa",
       "searchPlaceholder": "Cari kata atau makna…",
       "wordCount": "{count}",
       "loading": "Memuat kosa kata…",
@@ -510,13 +510,23 @@
       "emptyOther": "Semua kata sudah memiliki tag ini.",
       "emptyOtherSearch": "Tiada kata yang cocok untuk ditetapkan.",
       "selected": "{count} dipilih",
-      "addToTag": "Tambahkan ke tag",
-      "removeFromTag": "Padam dari tag",
-      "applyAdd": "Tambahkan ke tag ({count})",
-      "applyRemove": "Padam dari tag ({count})",
+      "addToTag": "Tambah tag",
+      "removeFromTag": "Buang tag",
+      "applyAdd": "Tambah tag ({count})",
+      "applyRemove": "Buang tag ({count})",
       "added": "Menambahkan {count} kata ke {tag}",
       "removed": "Memadam {count} kata dari {tag}",
-      "error": "Tidak dapat mengemas kini keanggotaan tag"
+      "error": "Tidak dapat mengemas kini keanggotaan tag",
+      "systemsLabel": "Sistem tag",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Topik dan penggunaan, ditunjukkan secara berasingan",
+      "usageOptional": "Pilihan",
+      "customSystemTitle": "Kustom",
+      "customSystemMeta": "{count, plural, one {# label} other {# labels}}",
+      "customPickerLabel": "Pilih tag kustom",
+      "customPickerPlaceholder": "Pilih tag kustom…",
+      "customSearchPlaceholder": "Cari tag kustom…",
+      "pickTagFirst": "Pilih tag di atas untuk mengurus keanggotaan perkataan."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Dikemas kini {time}",
@@ -585,7 +595,11 @@
         "notes": "Nota",
         "updated": "Terakhir Dikemas kini"
       }
-    }
+    },
+    "selectedCustomTags": "Tag yang dipilih",
+    "selectedSynonyms": "Sinonim yang dipilih",
+    "removeCustomTag": "Buang {name}",
+    "pickerLoading": "Memuat…"
   },
   "tags": {
     "groups": {
@@ -662,7 +676,7 @@
     "studioDescription": "Berlatih dari kosa kata, nota teori, atau bahan yang diimport — pilih sumber, lalu mula sesi terfokus.",
     "startActivity": "Mula",
     "unlockActivity": "Buka",
-    "practice": "practice",
+    "practice": "latihan",
     "editor": "editor",
     "edit": "Edit",
     "editDescription": "Perubahan disimpan automatik setelah penyimpanan pertama.",
@@ -670,6 +684,11 @@
     "updated": "Dikemas kini",
     "backToStudio": "Kembali ke exercises",
     "studyMode": "Mode belajar",
+    "questionTypeLabel": "Jenis soalan",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Tingkat kesulitan",
       "easy": "Mudah",
@@ -941,7 +960,9 @@
         "collapse": "Runtuhkan {name}",
         "selectedCount": "{count, plural, one {# teori dipilih} other {# teori dipilih}}",
         "practiceSelected": "Latih yang dipilih",
-        "clearSelection": "Kosongkan pilihan"
+        "clearSelection": "Kosongkan pilihan",
+        "subfolders": "{count, plural, one {# subfolder} other {# subfolders}}",
+        "selectedOne": "1 teori dipilih"
       }
     },
     "types": {
@@ -956,7 +977,7 @@
       "fill-in-blank": {
         "label": "Isian Kosong",
         "description": "Lengkapi kalimat contoh dengan kata kosa kata yang hilang.",
-        "preview": "Minulla on uusi ______."
+        "preview": "Minulla on baru ______."
       },
       "multiple-choice": {
         "label": "Pilihan Ganda",
@@ -1033,17 +1054,17 @@
       "shuffle": "Acak",
       "finish": "Selesai ronde",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Sumber soalan",
+        "chooseAi": "Gunakan AI yang Dihasilkan",
+        "emptyTitle": "Tiada contoh yang disimpan yang boleh digunakan",
+        "emptyDescription": "Tambah ayat contoh yang jelas mengandungi setiap perkataan, sesuaikan penapis anda, atau beralih ke AI yang Dihasilkan.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Contoh yang disimpan",
+          "description": "Bina soalan dengan segera dari contoh kosa kata anda. Tiada menunggu AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "AI yang Dihasilkan",
+          "description": "Cipta ayat baru dari kosa kata anda dengan AI."
         }
       }
     },
@@ -1100,14 +1121,14 @@
       "tryAgain": "Cuba lagi",
       "questionsLabel": "Soalan",
       "correctLabel": "Benar",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Salah",
+      "unansweredLabel": "Tidak dijawab",
       "reviewLabel": "Untuk disemak",
       "answeredProgress": "{answered} / {total} dijawab",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Semak jawapan",
+      "nextQuestion": "Seterusnya",
+      "viewResults": "Lihat keputusan",
       "submitSet": "Hantar jawapan",
       "submitting": "Memeriksa…",
       "unansweredWarnTitle": "Soalan belum dijawab",
@@ -1122,54 +1143,54 @@
       "unanswered": "Belum dijawab",
       "yourAnswer": "Jawapan Anda",
       "correctAnswer": "Jawapan yang benar",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Hanya {count} soalan tersedia dari penapis semasa anda.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Cara anda berlatih",
+        "lockedHint": "Selesaikan atau mulakan set baru untuk mengubah ini.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Satu demi satu",
+          "description": "Lihat satu soalan pada satu masa. Semak selepas setiap jawapan untuk maklum balas segera."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Semua soalan",
+          "description": "Lihat set penuh, jawab dalam sebarang urutan, kemudian hantar sekali untuk maklum balas."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Semak",
+        "allCorrect": "Sempurna — setiap soalan betul.",
+        "summary": "{incorrect} salah · {unanswered} tidak dijawab · {needsReview} untuk disemak",
+        "viewWrong": "Lihat jawapan salah",
+        "filtersLabel": "Tapis soalan",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Semua ({count})",
+          "needs_review": "Salah & tidak dijawab ({count})",
+          "correct": "Betul ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Sebelum",
+        "nextWrong": "Seterusnya",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} untuk disemak",
+        "floatLabel": "Navigasi jawapan salah",
+        "closeFloat": "Tunjukkan semua jawapan"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% betul",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Set sempurna",
+          "body": "Setiap jawapan tepat. Fokus seperti itu layak untuk satu pusingan lagi apabila anda bersedia."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Akhir yang kuat",
+          "body": "Anda jelas memahaminya — semak yang salah, kemudian kunci dengan set baru."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Kerja yang baik — teruskan",
+          "body": "Beberapa titik yang terperangkap adalah normal. Semak sekali, kemudian cuba lagi semasa ia masih segar."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Hampir sampai",
+          "body": "Selesaikan yang tidak dijawab terlebih dahulu — kemudian skor akan menceritakan kisah yang lebih jelas."
         }
       }
     },
@@ -1182,7 +1203,7 @@
       },
       "contextualLanguageHint": "Soalan dicipta dalam {language} (bahasa workspace).",
       "contextualEmptyTitle": "Buat soalan kontekstual",
-      "contextualEmptyDescription": "Buat soalan pilihan ganda isian kosong dari kosa kata anda.",
+      "contextualEmptyDescription": "Tambah arahan pilihan di bawah jika anda mahu, kemudian tekan Hasilkan. Anda boleh membiarkan arahan kosong.",
       "contextualProDescription": "Soalan AI kontekstual tersedia dengan Pro.",
       "unlockContextual": "Buka dengan Pro",
       "correct": "Benar!",
@@ -1203,8 +1224,8 @@
       "hint": "Pilih kata, lalu ketuk maknanya",
       "complete": "Semua pasangan cocok — bagus!",
       "shuffle": "Acak kolom",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} pasangan",
+      "continueRound": "Teruskan"
     },
     "typeAnswer": {
       "questionWord": "Apa maknanya?",
@@ -1214,7 +1235,7 @@
         "contextual": "Kontekstual"
       },
       "contextualEmptyTitle": "Buat soalan kontekstual",
-      "contextualEmptyDescription": "Buat prompt mengetik isian kosong dari kosa kata anda.",
+      "contextualEmptyDescription": "Tambah arahan pilihan di bawah jika anda mahu, kemudian tekan Hasilkan. Anda boleh membiarkan arahan kosong.",
       "contextualProDescription": "Soalan AI kontekstual tersedia dengan Pro.",
       "unlockContextual": "Buka dengan Pro",
       "placeholder": "Ketik jawapan Anda…",
@@ -1598,13 +1619,13 @@
       "writing": {
         "title": "Penulisan",
         "description": "Dokumen kaya dan rangkaian soalan yang dapat anda buka kembali dan eksport.",
-        "how": "Mula draf, atur dengan folder, dan gunakan AI Pro untuk memeriksa atau memperbaiki teks anda.",
+        "how": "Mulakan draf, atur dengan folder, dan gunakan kuota AI rancangan anda untuk menyemak atau memperbaiki teks anda.",
         "cta": "Buka writing"
       },
       "listening": {
         "title": "Pendengaran",
         "description": "Ubah audio atau video nyata menjadi pelajaran.",
-        "how": "Muat naik klip dan buat transkrip di Free. Latihan listening yang dihasilkan termasuk dalam Pro.",
+        "how": "Muat naik klip, hasilkan transkrip, dan bina latihan mendengar dengan kuota AI yang termasuk dalam rancangan anda.",
         "cta": "Buka listening"
       },
       "speaking": {
@@ -3120,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Beberapa ruang kerja sudah ada untuk bahasa yang sama. Kandungannya akan ditambahkan ke ruang kerja yang ada alih-alih mencipta duplikat.",
         "empty_backup": "Cadangan ini tidak berisi data pembelajaran yang dapat diimport.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Beberapa item yang ada berkongsi nama yang sama. Import akan menggunakan salah satu daripadanya secara deterministik dan membiarkan yang lain tidak berubah."
       },
       "cancel": "Batal",
       "confirm": "Import data pembelajaran",
@@ -3165,11 +3186,11 @@
         "requestTooLarge": "Cadangan itu terlalu besar untuk diproses melalui halaman ini. Cuba eksport yang lebih kecil atau hubungi dukungan.",
         "notConfigured": "Penyimpanan file belum dikonfigurasi untuk import cadangan."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Sudah ada dalam akaun anda",
+      "skippedInAccountHint": "Nama-nama ini sepadan dengan item yang sudah anda miliki. Mereka tidak akan diimport lagi. Item baru di bawah workspace yang sama masih akan diimport.",
+      "skippedInBackupTitle": "Nama duplikat dalam sandaran ini",
+      "skippedInBackupHint": "Fail ini menyenaraikan nama yang sama lebih dari sekali. Hanya salinan pertama setiap nama yang diimport — ini adalah normal walaupun pada akaun kosong.",
+      "skippedOtherTitle": "Tidak dapat diimport"
     },
     "danger": {
       "title": "Tutup akaun",
@@ -3185,7 +3206,7 @@
       "warningTitle": "Sebelum anda melanjutkan",
       "warnings": {
         "workspaces": "Setiap ruang kerja dan semua data kosa kata, teori, menulis, mendengar, dan bercakap akan dipadam.",
-        "billing": "Langganan Notoria Pro yang aktif akan dibatalkan segera.",
+        "billing": "Sebarang langganan Notoria Pro atau Premium yang aktif akan dibatalkan serta-merta.",
         "media": "Media yang dimuat naik dan foto profil anda akan dipadam.",
         "permanent": "Tiada periode pemulihan setelah pengesahan."
       },
@@ -3599,7 +3620,7 @@
     "vocabulary": "Kosa kata",
     "vocabularyEmpty": "Belum ada kata kosa kata",
     "reviews": "Ulasan kad flash",
-    "misses": "Again / Hard",
+    "misses": "Sekali lagi / Sukar",
     "listening": "Mendengar",
     "speaking": "Bercakap",
     "writing": "Menulis",
@@ -3753,8 +3774,8 @@
       "practice": "Latih"
     },
     "rating": {
-      "AGAIN": "Again",
-      "HARD": "Hard"
+      "AGAIN": "Sekali lagi",
+      "HARD": "Sukar"
     },
     "status": {
       "MASTERED": "Dikuasai",
@@ -3799,23 +3820,23 @@
       "title": "Apa itu Notoria?",
       "lead": "Notoria adalah buku harian belajar pribadi anda.",
       "paragraphs": [
-        "Think of it as a notebook for your language journey — except everything you write down can become part of your practice.",
-        "There is no predefined curriculum you have to follow. There is no \"correct\" way to use your workspace. There is no teacher watching over your shoulder. Nobody is grading your notes."
+        "Anggap ini sebagai buku nota untuk perjalanan bahasa anda — kecuali segala yang anda tulis boleh menjadi sebahagian daripada latihan anda.",
+        "Tiada kurikulum yang telah ditetapkan yang perlu anda ikuti. Tiada cara \"betul\" untuk menggunakan workspace anda. Tiada guru yang memantau anda. Tiada siapa yang menilai nota anda."
       ],
       "examplesIntro": "Anda yang memutuskan apa yang log masuk ke Notoria. Misalnya, anda dapat:",
       "examples": [
-        "Write down a word you heard today",
-        "Save a grammar rule you finally understood",
-        "Add an example sentence that makes sense to you",
-        "Upload a video you want to study",
-        "Write about something you want to practice saying"
+        "Tulis perkataan yang anda dengar hari ini",
+        "Simpan peraturan tatabahasa yang akhirnya anda fahami",
+        "Tambah ayat contoh yang masuk akal bagi anda",
+        "Muat naik video yang ingin anda pelajari",
+        "Tulis tentang sesuatu yang ingin anda latih untuk diucapkan"
       ],
       "overTime": "Seiring waktu, potongan-potongan kecil ini menjadi basis pengetahuan bahasa pribadi anda.",
       "noWrongWay": {
         "title": "Tiada cara yang benar atau salah untuk membangun buku harian anda.",
         "paragraphs": [
-          "Your learning diary is yours. You don't have to organize everything perfectly. You don't have to use every feature. You don't have to follow a particular learning method.",
-          "Use Notoria in whatever way makes learning easier and more meaningful to you. The goal is not to create a perfect database — the goal is to create a learning space that actually belongs to you."
+          "Diari pembelajaran anda adalah milik anda. Anda tidak perlu mengatur segala-galanya dengan sempurna. Anda tidak perlu menggunakan setiap ciri. Anda tidak perlu mengikuti kaedah pembelajaran tertentu.",
+          "Gunakan Notoria dengan cara yang memudahkan pembelajaran dan lebih bermakna bagi anda. Matlamatnya bukan untuk mencipta pangkalan data yang sempurna — matlamatnya adalah untuk mencipta ruang pembelajaran yang benar-benar milik anda."
         ]
       }
     },
@@ -3861,19 +3882,19 @@
         "title": "Kosa kata",
         "intro": "Kosa kata adalah perpustakaan kata pribadi anda — fondasi dari segala yang lain di Notoria.",
         "bullets": [
-          "Add words and phrases you actually encounter",
-          "Include meanings, translations, and example sentences",
-          "Add pronunciation notes when helpful",
-          "Use tags to organize by topic, level, situation, or anything that helps you find words later",
-          "Reuse vocabulary in exercises and review sessions"
+          "Tambah perkataan dan frasa yang anda temui",
+          "Sertakan makna, terjemahan, dan ayat contoh",
+          "Tambah nota sebutan apabila perlu",
+          "Gunakan tag untuk mengatur mengikut topik, tahap, situasi, atau apa sahaja yang membantu anda mencari perkataan kemudian",
+          "Gunakan semula kosa kata dalam latihan dan sesi semakan"
         ],
         "body": "Alih-alih menghafal dari daftar kata generik, anda membangun perpustakaan yang mencerminkan perjalanan belajar nyata anda.",
         "exampleIntro": "Misalnya, anda mendengar kata Finlandia \"varata\" hari ini:",
         "examples": [
-          "Word: varata",
-          "Meaning: to book / reserve",
-          "Example: Haluan varata ajan.",
-          "Tag: Daily life"
+          "Perkataan: varata",
+          "Makna: untuk menempah / menyimpan",
+          "Contoh: Haluan varata ajan.",
+          "Tag: Kehidupan seharian"
         ],
         "exampleNote": "Kata itu kini bagian dari pengetahuan Notoria pribadi anda — siap untuk disemak dan dilatih.",
         "emphasis": "Jangan tambahkan setiap kata yang anda lihat. Tambahkan kata yang bermakna bagi ANDA."
@@ -3882,11 +3903,11 @@
         "title": "Teori",
         "intro": "Teori adalah referensi bahasa pribadi anda — tempat menyimpan pengetahuan yang ingin anda ingat.",
         "bullets": [
-          "Grammar rules and patterns",
-          "Pronunciation notes",
-          "Usage explanations",
-          "Examples and personal notes",
-          "Things you repeatedly forget"
+          "Peraturan dan pola tatabahasa",
+          "Nota sebutan",
+          "Penjelasan penggunaan",
+          "Contoh dan nota peribadi",
+          "Perkara yang anda sering lupa"
         ],
         "body": "Tulis penjelasan dengan kata-kata anda sendiri. Nota tata bahasa tidak harus terdengar seperti buku teks. Jika penjelasan sederhana masuk akal bagi anda, itu penjelasan yang baik untuk buku harian anda.",
         "emphasis": "Teori seperti buku nota referensi yang anda buka kembali setiap kali lupa sesuatu."
@@ -3895,12 +3916,12 @@
         "title": "Latihan",
         "intro": "Latihan memungkinkan anda secara aktif mempraktikkan pengetahuan yang telah dikumpulkan.",
         "bullets": [
-          "Flashcards",
-          "Quizzes and multiple choice",
-          "Fill-in-the-blank exercises",
-          "Vocabulary practice from your saved words",
-          "Grammar practice from your theory notes",
-          "Other formats based on your own material"
+          "Kad imbas",
+          "Kuiz dan pilihan berganda",
+          "Latihan isi tempat kosong",
+          "Latihan kosa kata dari perkataan yang anda simpan",
+          "Latihan tatabahasa dari nota teori anda",
+          "Format lain berdasarkan bahan anda sendiri"
         ],
         "emphasis": "Nilainya datang dari melatih pengetahuan ANDA — bukan kosa kata acak dari kursus generik, melainkan kata dan konsep yang secara pribadi anda anggap penting."
       },
@@ -3908,13 +3929,13 @@
         "title": "Menulis",
         "intro": "Menulis adalah tempat pengetahuan pasif menjadi penggunaan bahasa aktif.",
         "bullets": [
-          "Draft texts on topics you care about",
-          "Create question sets for yourself",
-          "Practice using vocabulary you've learned",
-          "Experiment with new grammar",
-          "Review and improve your writing over time",
-          "With Pro: use AI to check and improve your work",
-          "Export your writing when you need it"
+          "Draf teks tentang topik yang anda pedulikan",
+          "Buat set soalan untuk diri sendiri",
+          "Latih menggunakan kosa kata yang telah anda pelajari",
+          "Cuba tatabahasa baru",
+          "Semak dan tingkatkan penulisan anda dari semasa ke semasa",
+          "Dengan Pro: gunakan AI untuk memeriksa dan meningkatkan kerja anda",
+          "Eksport penulisan anda apabila anda memerlukannya"
         ],
         "emphasis": "Tulisan anda tidak harus sempurna. Intinya adalah menggunakan bahasa, mencipta ralat, menyadari apa yang belum anda ketahui, dan meningkat seiring waktu."
       },
@@ -3922,19 +3943,19 @@
         "title": "Mendengar",
         "intro": "Mendengar memungkinkan anda mempelajari kandungan nyata yang anda pilih — bukan hanya pelajaran yang sudah ditentukan.",
         "bullets": [
-          "Upload audio or video",
-          "Generate a transcript",
-          "Study the transcript line by line",
-          "Turn the material into a lesson",
-          "Discover vocabulary and expressions from real content"
+          "Muat naik audio atau video",
+          "Hasilkan transkrip",
+          "Belajar transkrip baris demi baris",
+          "Tukar bahan menjadi pelajaran",
+          "Temui kosa kata dan ungkapan dari kandungan sebenar"
         ],
         "body": "Bawa sesuatu yang ANDA benar-benar ingin pahami ke Notoria:",
         "examples": [
-          "A YouTube video",
-          "A conversation recording",
-          "A podcast episode",
-          "A lecture",
-          "Any other learning material"
+          "Video YouTube",
+          "Rakaman perbualan",
+          "Episod podcast",
+          "Kuliah",
+          "Apa-apa bahan pembelajaran lain"
         ],
         "emphasis": "Anda yang mengontrol kandungan. Notoria membantu anda memahami dan belajar darinya."
       },
@@ -3942,11 +3963,11 @@
         "title": "Bercakap",
         "intro": "Bercakap adalah bagian perbualan aktif dari perjalanan belajar anda.",
         "bullets": [
-          "Talk with an AI tutor through video",
-          "Practice speaking naturally",
-          "Use vocabulary and knowledge you've collected",
-          "Review the conversation transcript afterward",
-          "Read feedback and identify areas to improve"
+          "Bercakap dengan tutor AI melalui video",
+          "Latih bercakap secara semula jadi",
+          "Gunakan kosa kata dan pengetahuan yang telah anda kumpulkan",
+          "Semak transkrip perbualan selepas itu",
+          "Baca maklum balas dan kenal pasti kawasan untuk diperbaiki"
         ],
         "emphasis": "Bercakap tidak perlu sempurna. Tujuannya adalah melatih penggunaan bahasa dalam situasi realistis — lalu belajar dari apa yang terjadi."
       },
@@ -3954,11 +3975,11 @@
         "title": "Membaca",
         "intro": "Membaca mengubah teks yang anda pilih menjadi latihan pemahaman.",
         "bullets": [
-          "Paste text or upload PDF/DOCX passages",
-          "Generate multiple-choice, written, or true/false/not stated questions",
-          "Practice and review answers with AI grading for written responses",
-          "Save useful words from the passage into Vocabulary",
-          "Organize passages with folders"
+          "Tampal teks atau muat naik petikan PDF/DOCX",
+          "Hasilkan soalan pilihan berganda, bertulis, atau benar/salah/tidak dinyatakan",
+          "Latih dan semak jawapan dengan penilaian AI untuk jawapan bertulis",
+          "Simpan perkataan berguna dari petikan ke dalam Kosa Kata",
+          "Atur petikan dengan folder"
         ],
         "emphasis": "Bawa bahan yang benar-benar ingin anda pahami — berita, cerita, lembaran kerja — dan ubah menjadi latihan yang menjadi milik buku harian anda."
       },
@@ -3966,20 +3987,20 @@
         "title": "Tangkap",
         "intro": "Capture adalah zona drop cepat anda — simpan sesuatu saat anda menjumpainya, lalu putuskan nanti di mana tempatnya.",
         "bullets": [
-          "Save a word, phrase, grammar doubt, or writing idea in seconds",
-          "Add an optional note or source for context",
-          "Keep items in To process until you are ready",
-          "Turn a capture into Vocabulary, Theory, Writing, or Exercise when you have time",
-          "An item is marked Processed only after you finish creating that linked entry"
+          "Simpan perkataan, frasa, keraguan tatabahasa, atau idea penulisan dalam beberapa saat",
+          "Tambah nota atau sumber pilihan untuk konteks",
+          "Simpan item dalam Untuk diproses sehingga anda bersedia",
+          "Tukar tangkapan menjadi Kosa Kata, Teori, Penulisan, atau Latihan apabila anda mempunyai masa",
+          "Item ditandakan Diproses hanya selepas anda selesai mencipta entri yang berkaitan"
         ],
         "body": "Capture berada di awal loop: kumpulkan dulu, organisasikan kemudian. anda tidak perlu kategori yang sempurna saat itu — anda perlu pikiran yang tersimpan.",
         "emphasis": "Jika anda hanya punya sepuluh saat, capture sudah cukup. Pengurutan boleh menunggu.",
         "exampleIntro": "Misalnya, anda mendengar frasa di bus dan hanya punya sebentar:",
         "examples": [
-          "Content: varata aika",
-          "Note: heard on the bus — booking an appointment",
-          "Source: daily life",
-          "Later: process into Vocabulary with meaning and an example"
+          "Kandungan: varata aika",
+          "Nota: didengar di bas — menempah janji",
+          "Sumber: kehidupan seharian",
+          "Kemudian: proses menjadi Kosa Kata dengan makna dan contoh"
         ],
         "exampleNote": "Potongan itu aman di Capture. Saat anda punya lima minit tenang, hantar ke Kosa kata (atau Teori / Menulis) dan selesaikan entri — baru setelah itu ditandai Processed."
       }
@@ -3996,11 +4017,11 @@
         "addMore": "Tambah lebih banyak pengetahuan"
       },
       "paragraphs": [
-        "Capture holds the scraps until you are ready to place them.",
-        "What you collect in Vocabulary and Theory becomes the source for your exercises.",
-        "Writing and Listening help you use and understand the language in new contexts.",
-        "Speaking puts it all into active conversation.",
-        "Review closes the loop — and each review often leads to new words and notes to add."
+        "Capture menyimpan serpihan sehingga anda bersedia untuk meletakkannya.",
+        "Apa yang anda kumpulkan dalam Kosa Kata dan Teori menjadi sumber untuk latihan anda.",
+        "Penulisan dan Pendengaran membantu anda menggunakan dan memahami bahasa dalam konteks baru.",
+        "Bercakap meletakkan semuanya dalam perbualan aktif.",
+        "Semakan menutup lingkaran — dan setiap semakan sering membawa kepada perkataan dan nota baru untuk ditambah."
       ],
       "highlight": "Semakin banyak pengetahuan yang anda tambahkan yang penting bagi anda, semakin berguna dan personal latihan anda."
     },
@@ -4008,17 +4029,17 @@
       "title": "Ini buku harian anda.",
       "lead": "Notoria adalah alat untuk proses belajar anda — bukan ujian seberapa baik anda belajar.",
       "dontNeed": [
-        "You don't need to make your notes perfect",
-        "You don't need to worry about whether your tags are \"correct\"",
-        "You don't need to write textbook-quality explanations",
-        "You don't need to finish every exercise",
-        "You don't need to use every feature"
+        "Anda tidak perlu menjadikan nota anda sempurna",
+        "Anda tidak perlu risau tentang sama ada tag anda \"betul\"",
+        "Anda tidak perlu menulis penjelasan berkualiti buku teks",
+        "Anda tidak perlu menyelesaikan setiap latihan",
+        "Anda tidak perlu menggunakan setiap ciri"
       ],
       "canDo": [
-        "You can change your mind.",
-        "You can reorganize things.",
-        "You can make mistakes.",
-        "You can learn at your own pace."
+        "Anda boleh mengubah fikiran anda.",
+        "Anda boleh menyusun semula perkara.",
+        "Anda boleh membuat kesilapan.",
+        "Anda boleh belajar pada kadar anda sendiri."
       ],
       "quote": "Tiada yang menilai buku harian anda. anda membangunnya untuk diri sendiri."
     },
@@ -4049,9 +4070,9 @@
     "privacyTitle": "Kebijakan Privasi",
     "termsTitle": "Ketentuan Penggunaan",
     "privacyDescription": "Bagaimana Notoria mengumpulkan, menggunakan, dan memadam data pribadi serta kandungan belajar untuk ruang kerja belajar bahasa pribadinya.",
-    "termsDescription": "Ketentuan penggunaan ruang kerja belajar bahasa pribadi Notoria, akaun, fitur AI, dan penagihan Notoria Pro.",
+    "termsDescription": "Terma untuk menggunakan ruang kerja pembelajaran bahasa peribadi Notoria, akaun, ciri AI, dan penagihan Pro atau Premium.",
     "updated": "Terakhir dikemas kini {date}",
-    "updatedDate": "23 September 2026",
+    "updatedDate": "27 Oktober 2026",
     "backToSignIn": "Kembali ke masuk",
     "backHome": "Kembali ke Notoria",
     "authFooter": "Privasi · Ketentuan",
@@ -4072,7 +4093,7 @@
         "purposes": "Mengapa kami memproses data",
         "auth": "Akaun dan masuk",
         "ai": "Fitur AI",
-        "payments": "Pembayaran (Notoria Pro)",
+        "payments": "Pembayaran (Pro dan Premium)",
         "processors": "Penyedia layanan",
         "cookies": "Cookie dan penyimpanan perangkat",
         "transfers": "Transfer internasional",
@@ -4094,13 +4115,13 @@
           "title": "2. Cakupan kebijakan ini",
           "p1": "Mencakup data pribadi dan kandungan belajar yang diproses ketika Anda:",
           "list": [
-            "create or use an account",
-            "save material in private workspaces",
-            "subscribe to Notoria Pro",
-            "use optional AI-assisted tools",
-            "upload media for listening or profile use",
-            "use speaking practice",
-            "send feedback or contact us"
+            "membuat atau menggunakan akaun",
+            "menyimpan bahan dalam workspace peribadi",
+            "melanggan Notoria Pro atau Premium",
+            "menggunakan alat bantu AI pilihan",
+            "memuat naik media untuk pendengaran atau penggunaan profil",
+            "menggunakan latihan bercakap",
+            "menghantar maklum balas atau menghubungi kami"
           ],
           "p2": "Kode aplikasi saat ini tidak menyertakan SDK analitik pemasaran atau iklan pihak ketiga. Kami tidak mengklaim menggunakan pelacak yang tiada di produk."
         },
@@ -4110,11 +4131,11 @@
           "accountAuth": {
             "title": "Akaun dan autentikasi",
             "list": [
-              "Name and email address",
-              "Password hash for email/password accounts (passwords are never stored in plain text)",
-              "Google account identifiers and OAuth tokens if you sign in with Google",
-              "Optional profile photo (avatar)",
-              "Account role and created/updated timestamps"
+              "Nama dan alamat emel",
+              "Hash kata laluan untuk akaun emel/kata laluan (kata laluan tidak pernah disimpan dalam teks biasa)",
+              "Pengenal pasti akaun Google dan token OAuth jika anda log masuk dengan Google",
+              "Foto profil pilihan (avatar)",
+              "Peranan akaun dan cap waktu dibuat/dikemas kini"
             ]
           },
           "learningContent": {
@@ -4125,8 +4146,8 @@
           "subscription": {
             "title": "Metadata langganan dan pembayaran",
             "list": [
-              "Plan (free or Pro) and subscription status",
-              "Stripe customer and subscription identifiers, and current period end when applicable"
+              "Pelan (percuma atau Pro) dan status langganan",
+              "Pengenal pasti pelanggan dan langganan Stripe, dan akhir tempoh semasa jika berkenaan"
             ],
             "p1": "Nomor kad dan rahasia metode pembayaran tetap di Stripe. Notoria hanya menyimpan metadata penagihan yang diperlukan untuk mencerminkan status Pro anda."
           },
@@ -4149,32 +4170,32 @@
           },
           "rows": [
             {
-              "purpose": "Provide accounts, workspaces, and your saved learning material",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Menyediakan akaun, workspace, dan bahan pembelajaran yang anda simpan",
+              "basis": "Kontrak (Art. 6(1)(b))"
             },
             {
-              "purpose": "Authenticate you (email/password or Google) and reset passwords",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Mengesahkan anda (emel/kata laluan atau Google) dan menetapkan semula kata laluan",
+              "basis": "Kontrak (Art. 6(1)(b))"
             },
             {
-              "purpose": "Run Notoria Pro billing and subscription status via Stripe",
-              "basis": "Contract (Art. 6(1)(b))"
+              "purpose": "Mengendalikan penagihan dan status langganan Notoria Pro dan Premium melalui Stripe",
+              "basis": "Kontrak (Art. 6(1)(b))"
             },
             {
-              "purpose": "Optional AI help, listening transcription, and speaking practice when you use those features",
-              "basis": "Contract (Art. 6(1)(b)); preference controls where available"
+              "purpose": "Bantuan AI pilihan, transkripsi pendengaran, dan latihan bercakap apabila anda menggunakan ciri tersebut",
+              "basis": "Kontrak (Art. 6(1)(b)); kawalan pilihan di mana tersedia"
             },
             {
-              "purpose": "Keep the service secure and reliable (abuse prevention, debugging)",
-              "basis": "Legitimate interests (Art. 6(1)(f))"
+              "purpose": "Menjaga perkhidmatan selamat dan boleh dipercayai (pencegahan penyalahgunaan, pengesanan ralat)",
+              "basis": "Kepentingan yang sah (Art. 6(1)(f))"
             },
             {
-              "purpose": "Respond to support and feedback messages",
-              "basis": "Legitimate interests / contract, depending on the request"
+              "purpose": "Menjawab mesej sokongan dan maklum balas",
+              "basis": "Kepentingan yang sah / kontrak, bergantung kepada permintaan"
             },
             {
-              "purpose": "Comply with legal obligations",
-              "basis": "Legal obligation (Art. 6(1)(c))"
+              "purpose": "Mematuhi kewajipan undang-undang",
+              "basis": "Kewajipan undang-undang (Art. 6(1)(c))"
             }
           ],
           "p1": "Jika anda memerlukan nota dasar hukum formal untuk aktivitas tertentu, e-mel <contact>contact@notoria.fi</contact>."
@@ -4192,7 +4213,7 @@
           "p4": "Kode basis saat ini tidak menggunakan penyedia model bahasa besar lain selain OpenAI. OpenAI memproses data di bawah ketentuan dan kebijakan privasinya sendiri sebagai pemroses untuk fitur-fitur ini."
         },
         "payments": {
-          "title": "7. Pembayaran (Notoria Pro)",
+          "title": "7. Pembayaran (Pro dan Premium)",
           "p1": "Langganan berbayar ditangani oleh <strong>Stripe</strong>. Checkout, faktur, metode pembayaran, dan pembatalan berjalan melalui Stripe Checkout dan Stripe Customer Portal. Webhook Stripe mengemas kini pakej dan status anda di Notoria.",
           "p2": "Stripe memproses data pembayaran sebagai penyedia pembayaran. Lihat dokumentasi privasi Stripe sendiri untuk penanganan kad."
         },
@@ -4205,44 +4226,44 @@
           },
           "rows": [
             {
-              "provider": "PostgreSQL database (production documented as Neon)",
-              "role": "Account and learning data"
+              "provider": "Pangkalan data PostgreSQL (produksi didokumenkan sebagai Neon)",
+              "role": "Data akaun dan pembelajaran"
             },
             {
               "provider": "Vercel",
-              "role": "Application hosting (configured region includes Frankfurt / fra1)"
+              "role": "Penghosan aplikasi (kawasan yang dikonfigurasikan termasuk Frankfurt / fra1)"
             },
             {
               "provider": "Cloudinary",
-              "role": "Avatars, listening media, editor images, and exercise-import files"
+              "role": "Avatar, media pendengaran, gambar editor, dan fail import latihan"
             },
             {
               "provider": "AssemblyAI",
-              "role": "Transcription of listening audio"
+              "role": "Transkripsi audio pendengaran"
             },
             {
               "provider": "Stream Video",
-              "role": "Live speaking call audio/video transport; session fields such as recording URLs only if a recording event is later received. New calls do not use Stream transcription."
+              "role": "Pengangkutan audio/video panggilan bercakap secara langsung; medan sesi seperti URL rakaman hanya jika acara rakaman diterima kemudian. Panggilan baru tidak menggunakan transkripsi Stream."
             },
             {
               "provider": "OpenAI",
-              "role": "Optional AI assistance, speaking-tutor realtime audio, and speaking-call transcription (gpt-4o-transcribe)"
+              "role": "Bantuan AI pilihan, audio masa nyata tutor bercakap, dan transkripsi panggilan bercakap (gpt-4o-transcribe)"
             },
             {
               "provider": "Resend",
-              "role": "Password-reset email and Support feedback delivery"
+              "role": "E-mel menetapkan semula kata laluan dan penghantaran maklum balas Sokongan"
             },
             {
               "provider": "Stripe",
-              "role": "Notoria Pro checkout, portal, and subscription status"
+              "role": "Pembayaran Notoria Pro dan Premium, portal, dan status langganan"
             },
             {
               "provider": "Google",
-              "role": "OAuth sign-in when you choose Google; web fonts for the UI"
+              "role": "Log masuk OAuth apabila anda memilih Google; fon web untuk UI"
             },
             {
               "provider": "Dicebear",
-              "role": "Generated avatar images used in speaking sessions (from a name seed; no account password is sent)"
+              "role": "Imej avatar yang dihasilkan digunakan dalam sesi bercakap (dari benih nama; tiada kata laluan akaun dihantar)"
             }
           ],
           "p2": "Transkrip panggilan bercakap ditangkap dengan OpenAI Realtime (gpt-4o-transcribe) selama sesi dan disimpan di sisi server. Transkripsi dan teks Stream dinyahaktifkan untuk panggilan baru. Rekaman dinyahaktifkan saat pembuatan panggilan; URL rekaman hanya disimpan jika produk kemudian menerima peristiwa siap-rekaman dari Stream."
@@ -4257,28 +4278,28 @@
           },
           "rows": [
             {
-              "cookie": "Auth.js session cookie",
-              "purpose": "Keeps you signed in (JWT session; library default naming)",
+              "cookie": "Kuki sesi Auth.js",
+              "purpose": "Menjaga anda log masuk (JWT sesi; penamaan lalai perpustakaan)",
               "code": false
             },
             {
               "cookie": "notoria-locale",
-              "purpose": "UI language",
+              "purpose": "Bahasa UI",
               "code": true
             },
             {
               "cookie": "notoria-workspace",
-              "purpose": "Active workspace",
+              "purpose": "Workspace aktif",
               "code": true
             },
             {
               "cookie": "notoria-ai-preferences",
-              "purpose": "AI assistance preferences",
+              "purpose": "Pilihan bantuan AI",
               "code": true
             },
             {
               "cookie": "sidebar_state",
-              "purpose": "Sidebar open/closed preference",
+              "purpose": "Keutamaan sidebar terbuka/tertutup",
               "code": true
             }
           ],
@@ -4294,10 +4315,10 @@
         "retention": {
           "title": "11. Berapa lama kami menyimpan data",
           "list": [
-            "Account and learning data are kept while your account remains open so you can use the service",
-            "Password-reset tokens expire after 30 minutes",
-            "Subscription metadata is kept as needed to reflect your current Pro status and Stripe billing relationship",
-            "Support and feedback emails are retained as long as needed to handle your request and related follow-up"
+            "Data akaun dan pembelajaran disimpan selagi akaun anda tetap dibuka supaya anda boleh menggunakan perkhidmatan",
+            "Token menetapkan semula kata laluan tamat selepas 30 minit",
+            "Metadata langganan disimpan mengikut keperluan untuk mencerminkan status Pro semasa anda dan hubungan pengebilan Stripe",
+            "E-mel sokongan dan maklum balas disimpan selagi diperlukan untuk menangani permintaan anda dan susulan berkaitan"
           ],
           "p1": "Jendela retensi cadangan yang tepat untuk penyedia infrastruktur tidak dikodekan keras di aplikasi dan dapat mengikuti praktik operasional penyedia tersebut. Hubungi kami jika anda memerlukan klarifikasi untuk permintaan pengpadaman."
         },
@@ -4309,9 +4330,9 @@
           "deleteTitle": "Padam akaun",
           "deleteP1": "Anda dapat memadam akaun secara kekal dari <account>Akaun</account>. Ketika pengpadaman berjaya, Notoria:",
           "deleteList": [
-            "deletes your user record and cascaded learning data from Notoria’s database",
-            "cancels and removes related Stripe customer data where Stripe is configured (best effort)",
-            "destroys avatar media and listening-lesson media that the deletion flow is implemented to remove from Cloudinary"
+            "memadam rekod pengguna anda dan data pembelajaran yang berkaitan dari pangkalan data Notoria",
+            "membatalkan dan mengeluarkan data pelanggan Stripe yang berkaitan di mana Stripe dikonfigurasikan (usaha terbaik)",
+            "memusnahkan media avatar dan media pelajaran pendengaran yang aliran pemadaman dilaksanakan untuk mengeluarkan dari Cloudinary"
           ],
           "deleteP2": "Alur pengpadaman saat ini tidak mengklaim membersihkan setiap artefak pihak ketiga secara automatik. Khususnya, beberapa aset Cloudinary (seperti gambar editor atau file import latihan) dan artefak panggilan bercakap Stream mungkin tetap tunduk pada penyedia tersebut sampai dibersihkan secara terpisah atau dibersihkan sesuai jadwal mereka sendiri.",
           "deleteP3": "Setelah pengpadaman, salinan residual terhad juga dapat tetap ada sebentar di cadangan terenkripsi atau log sampai sistem tersebut berputar. Jika sesuatu yang spesifik tetap ada setelah anda memadam akaun, e-mel <contact>contact@notoria.fi</contact>."
@@ -4320,12 +4341,12 @@
           "title": "13. Hak anda (GDPR)",
           "p1": "Jika anda berada di EU/EEA atau dilindungi GDPR, anda mungkin memiliki hak untuk:",
           "list": [
-            "access your personal data",
-            "correct inaccurate data",
-            "erase data (including by deleting your account)",
-            "restrict or object to certain processing",
-            "receive a portable copy of data you provided (see Export above)",
-            "withdraw consent where processing is based on consent"
+            "mengakses data peribadi anda",
+            "membetulkan data yang tidak tepat",
+            "memadam data (termasuk dengan memadam akaun anda)",
+            "menyekat atau membantah pemprosesan tertentu",
+            "menerima salinan mudah alih data yang anda berikan (lihat Eksport di atas)",
+            "menarik balik persetujuan di mana pemprosesan berdasarkan persetujuan"
           ],
           "listComplaint": "mengajukan keluhan kepada otoritas pengawas — di Finlandia, Office of the Data Protection Ombudsman (<ombudsman>tietosuoja.fi</ombudsman>)",
           "p2": "Untuk menggunakan hak-hak ini, e-mel <contact>contact@notoria.fi</contact>. Kami mungkin perlu memverifikasi bahwa permintaan berasal dari pemegang akaun."
@@ -4348,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Ketentuan Penggunaan ini menjelaskan aturan penggunaan Notoria di <site>www.notoria.fi</site>. Mereka menggambarkan cara produk bekerja saat ini: ruang kerja belajar pribadi, penagihan Notoria Pro pilihan melalui Stripe, dan fitur berbantuan AI. Bukan pengganti nasihat dari pengacara tentang situasi spesifik anda.",
+      "intro": "Terma Penggunaan ini menerangkan peraturan untuk menggunakan Notoria di <site>www.notoria.fi</site>. Ia menerangkan bagaimana produk berfungsi hari ini: ruang kerja pembelajaran peribadi, penagihan Pro dan Premium yang pilihan melalui Stripe, dan ciri yang dibantu AI. Ia bukan pengganti nasihat daripada peguam tentang situasi khusus anda.",
       "tocTitle": "Di halaman ini",
       "tocAria": "Di halaman ini",
       "toc": {
@@ -4359,7 +4380,7 @@
         "acceptable-use": "Penggunaan yang dapat diterima",
         "ip": "Kekayaan intelektual",
         "ai": "Output yang dihasilkan AI",
-        "plans": "Pakej Free dan Notoria Pro",
+        "plans": "Rancangan Percuma, Pro, dan Premium",
         "billing": "Langganan dan penagihan",
         "refunds": "Pengembalian dana dan hak konsumen",
         "availability": "Ketersediaan",
@@ -4378,16 +4399,16 @@
         "service": {
           "title": "2. Layanan",
           "p1": "Notoria adalah aplikasi web belajar bahasa pribadi. anda dapat mencipta ruang kerja dan menyimpan bahan pembelajaran seperti kosa kata, nota teori, menulis, latihan, pelajaran mendengar, dan sesi bercakap.",
-          "p2": "Beberapa fitur tersedia pada pakej free. Notoria Pro membuka kemampuan tambahan seperti yang ditunjukkan di produk dan di halaman <account>Akaun</account> anda — termasuk Mendengar, Bercakap, alat belajar AI tertentu, import latihan, dan format eksport dokumen berbayar. Ketersediaan fitur dapat berubah seiring evolusi produk.",
+          "p2": "Kawasan pembelajaran teras, termasuk Mendengar, Bertutur, dan Membaca, tersedia pada setiap rancangan. Pro dan Premium menambah kuota AI yang lebih tinggi dan import/ekspor bahan pembelajaran; Premium juga menambah pembelajaran peribadi dan ciri latihan. Perbandingan semasa ditunjukkan di halaman <account>Akaun</account> anda. Ketersediaan ciri boleh berubah apabila produk berkembang.",
           "p3": "Notoria untuk belajar bahasa pribadi. Bukan sekolah, otoritas ujian, atau layanan nasihat profesional."
         },
         "accounts": {
           "title": "3. Akaun",
           "list": [
-            "Provide accurate account information",
-            "Keep your password and account access secure",
-            "Sign in with email and password, or with Google when Google sign-in is available",
-            "Use Notoria only if you are able to enter into a binding agreement under applicable law"
+            "Memberikan maklumat akaun yang tepat",
+            "Menjaga kata laluan dan akses akaun anda selamat",
+            "Log masuk dengan emel dan kata laluan, atau dengan Google apabila log masuk Google tersedia",
+            "Gunakan Notoria hanya jika anda mampu untuk memasuki perjanjian yang mengikat di bawah undang-undang yang berkenaan"
           ],
           "p1": "Produk tidak mengimplementasikan gerbang usia terpisah. Jika anda yakin akaun dicipta tanpa otoritas yang sesuai, hubungi <contact>contact@notoria.fi</contact>.",
           "p2": "Beritahu kami di <contact>contact@notoria.fi</contact> jika anda merasa akaun anda telah disusupi."
@@ -4402,12 +4423,12 @@
           "title": "5. Penggunaan yang dapat diterima",
           "p1": "Anda setuju untuk tidak:",
           "list": [
-            "break the law or infringe others’ rights",
-            "attempt to access other users’ private workspaces or accounts",
-            "probe, overload, or disrupt the service, APIs, or related infrastructure",
-            "abuse AI, transcription, listening, or speaking features in ways that harm others or circumvent plan limits through fraud",
-            "reverse engineer the service except where mandatory local law allows",
-            "misrepresent your identity to Stripe, Google, or Notoria support"
+            "melanggar undang-undang atau melanggar hak orang lain",
+            "mencuba mengakses workspace atau akaun peribadi pengguna lain",
+            "menyiasat, membebankan, atau mengganggu perkhidmatan, API, atau infrastruktur berkaitan",
+            "menyalahgunakan AI, transkripsi, pendengaran, atau ciri bercakap dengan cara yang membahayakan orang lain atau mengelak had pelan melalui penipuan",
+            "membalikkan rekayasa perkhidmatan kecuali di mana undang-undang tempatan yang mandatori membenarkan",
+            "menyalahgunakan identiti anda kepada Stripe, Google, atau sokongan Notoria"
           ]
         },
         "ip": {
@@ -4419,23 +4440,23 @@
           "title": "7. Output yang dihasilkan AI",
           "p1": "Beberapa fitur dapat memeriksa, menyarankan, menghasilkan, mentranskripsi, merangkum, atau mengajar berdasarkan bahan anda. Output mungkin tidak lengkap, salah, atau tidak cocok untuk tujuan anda. anda tetap bertanggung jawab menyemak hasil AI sebelum mengandalkannya untuk belajar, ujian, penggunaan profesional, atau publikasi.",
           "p2": "Fitur AI mungkin tidak tersedia jika bantuan dimatikan di <settings>Tetapan</settings>, jika pakej anda tidak mencakup alat tertentu, atau jika penyedia sementara tidak dapat dijangkau.",
-          "p3": "Tidak semua pembantu AI memerlukan Notoria Pro. Produk menunjukkan alat mana yang percuma dan mana yang membutuhkan Pro."
+          "p3": "Ketersediaan AI dan kuota harian berbeza antara Percuma, Pro, dan Premium. Produk menunjukkan rancangan dan kuota yang diperlukan untuk setiap alat."
         },
         "plans": {
-          "title": "8. Pakej Free dan Notoria Pro",
+          "title": "8. Rancangan Percuma, Pro, dan Premium",
           "p1": "Pakej free mencakup latihan inti dengan kosa kata anda sendiri dan alat belajar terkait seperti yang ditunjukkan di produk.",
-          "p2": "Notoria Pro adalah langganan berbayar yang membuka fitur tambahan. Di produk saat ini, biasanya mencakup Mendengar, Bercakap, import latihan, latihan bentuk kalimat, banyak alat belajar berbantuan AI, dan eksport dokumen PDF/DOCX. Beberapa pembantu AI yang lebih ringan (seperti bantuan kosa kata atau pemformatan editor tertentu) dapat tetap tersedia di pakej free ketika bantuan AI diaktifkan.",
-          "p3": "Akses Pro terikat ke akaun pengguna anda, sehingga berlaku di seluruh ruang kerja di bawah akaun tersebut. Akaun dengan peran administrator mungkin memiliki akses tingkat Pro tanpa langganan Stripe pribadi.",
-          "p4": "Harga yang berlaku untuk pembelian anda adalah harga yang dipaparkan di Stripe Checkout untuk pakej Pro saat ini. Harga yang dipaparkan di tempat lain di produk (misalnya di Akaun) hanya bersifat indikatif dan harus cocok dengan konfigurasi harga Stripe aktif."
+          "p2": "Pro dan Premium adalah langganan berbayar. Pro menambah kuota yang lebih tinggi atau tanpa had untuk banyak alat AI serta import bahan pembelajaran dan eksport PDF/DOCX. Premium termasuk Pro dan menambah ciri peribadi seperti Jurulatih Pembelajaran, profil pembelajaran peribadi, latihan adaptif, latihan berasaskan kesilapan, dan arahan latihan kustom. Halaman Akaun menunjukkan perbandingan dan had semasa.",
+          "p3": "Akses berbayar terikat kepada akaun pengguna anda dan terpakai di seluruh ruang kerjanya. Akaun dengan peranan pentadbir mungkin mempunyai akses tahap berbayar tanpa langganan Stripe peribadi.",
+          "p4": "Harga yang terpakai adalah harga yang ditunjukkan di Stripe Checkout untuk rancangan Pro atau Premium yang dipilih. Sebarang harga yang ditunjukkan di tempat lain dalam produk (contohnya di Akaun) hanya bersifat indikatif dan mesti sepadan dengan konfigurasi harga Stripe yang aktif."
         },
         "billing": {
           "title": "9. Langganan, penagihan, dan pembatalan",
-          "list0": "Langganan Pro ditagih melalui <strong>Stripe</strong>",
-          "list1": "Anda dapat memulakan checkout dari <account>Akaun</account> atau dari kontrol Pro terkunci di aplikasi",
+          "list0": "Langganan Pro dan Premium ditagih melalui <strong>Stripe</strong>",
+          "list1": "Anda boleh memulakan pembayaran atau menukar rancangan dari <account>Akaun</account> atau dari kawalan berbayar yang terkunci dalam aplikasi",
           "list2": "Dari Akaun, anda dapat membuka Stripe Customer Portal untuk melihat faktur, mengemas kini metode pembayaran, dan membatalkan langganan",
           "list3": "Pembatalan mengikuti perilaku Stripe Customer Portal untuk langganan Anda",
-          "p1": "Setelah anda membatalkan, akses Pro berlanjut hanya selama status langganan Stripe anda masih memberikan Pro di produk. Dalam implementasi saat ini, status yang diperlakukan sebagai Pro mencakup <code>active</code>, <code>trialing</code>, dan <code>past_due</code>. Ketika status tidak lagi memenuhi syarat, akaun kembali ke pakej free.",
-          "p2": "Jika pembayaran gagal, Stripe dapat memindahkan langganan ke <code>past_due</code> atau status lain. Notoria menyinkronkan status itu dari webhook Stripe. Selama status tetap <code>past_due</code>, fitur Pro tetap tersedia di bawah aturan akses saat ini; jika langganan kemudian dibatalkan atau tidak memenuhi syarat, akses Pro berakhir.",
+          "p1": "Setelah anda membatalkan pembaharuan, akses Pro atau Premium semasa anda akan diteruskan selagi status langganan Stripe masih layak dalam produk. Status yang layak kini termasuk <code>active</code>, <code>trialing</code>, dan <code>past_due</code>. Apabila status tidak lagi layak, akaun akan kembali ke Percuma.",
+          "p2": "Jika pembayaran gagal, Stripe mungkin memindahkan langganan ke <code>past_due</code> atau status lain. Notoria menyelaraskan status itu dari webhook Stripe. Selagi ia kekal <code>past_due</code>, rancangan berbayar semasa tetap tersedia di bawah peraturan akses yang sedia ada; jika ia kemudian dibatalkan atau tidak layak, akses berbayar akan berakhir.",
           "p3": "Memadam akaun Notoria anda membatalkan langganan Stripe segera (upaya terbaik) sebagai bagian dari pengpadaman akaun. Itu berbeza dari membatalkan perpanjangan melalui Customer Portal sambil mempertahankan akaun."
         },
         "refunds": {
@@ -4456,7 +4477,7 @@
         "liability": {
           "title": "13. Penafian dan tanggung jawab",
           "p1": "Notoria disediakan atas dasar “sebagaimana tersedia” untuk belajar bahasa pribadi. Sejauh dibenarkan oleh hukum yang berlaku, kami menafikan jaminan yang tidak diwajibkan oleh hukum.",
-          "p2": "Sejauh dibenarkan oleh hukum yang berlaku, Notoria tidak bertanggung jawab atas kerusakan tidak langsung, insidental, khusus, konsekuensial, atau kehilangan data yang timbul dari penggunaan layanan atau ketergantungan pada output AI. Ketika tanggung jawab tidak dapat dikecualikan, dihadi pada jumlah yang anda bayar untuk Notoria Pro dalam tiga bulan sebelum klaim, atau jumlah lebih besar yang diwajibkan oleh hukum wajib.",
+          "p2": "Sejauh mana yang dibenarkan oleh undang-undang yang berkenaan, Notoria tidak bertanggungjawab atas kerosakan tidak langsung, insidental, khas, akibat, atau kehilangan data yang timbul daripada penggunaan perkhidmatan atau bergantung pada output AI. Di mana tanggungjawab tidak dapat dikecualikan, ia terhad kepada jumlah yang anda bayar untuk Notoria Pro atau Premium dalam tiga bulan sebelum tuntutan, atau sebarang jumlah yang lebih besar yang diperlukan oleh undang-undang mandatori.",
           "p3": "Hadan ini tidak mengecualikan tanggung jawab yang tidak dibenarkan hukum Finlandia atau EU untuk dihadi — termasuk tanggung jawab yang tidak dapat dilepaskan bagi konsumen, dan tanggung jawab atas kematian atau cedera pribadi yang disebabkan kelalaian bila aturan tersebut berlaku."
         },
         "changes": {
@@ -4529,9 +4550,9 @@
           "vocab": "Bangun bank kosa kata pribadi dengan makna, contoh, dan tag",
           "practice": "Berlatih dengan latihan yang diambil dari kata dan nota anda sendiri",
           "create": "Tulis nota teori dan karya menulis yang dapat anda kunjungi kembali nanti",
-          "listenSpeak": "Ubah media menjadi latihan mendengar, dan bercakap dengan tutor AI di Pro"
+          "listenSpeak": "Tukar media menjadi latihan mendengar, dan gunakan kuota AI untuk transkripsi dan latihan bertutur"
         },
-        "note": "Beberapa alat AI, mendengar, bercakap, dan eksport adalah bagian dari Notoria Pro. Pakej free tetap mencakup latihan kosa kata sehari-hari dan loop belajar inti."
+        "note": "Kawasan pembelajaran teras tersedia pada setiap rancangan. Pro meningkatkan kuota AI dan menambah import/ekspor bahan pembelajaran; Premium menambah pembelajaran peribadi dan latihan."
       },
       "ai": {
         "title": "AI, di mana membantu",
@@ -4657,7 +4678,7 @@
         "title": "Bagaimana area terhubung",
         "p1": "Capture adalah titik masuk cepat. Kosa kata dan Teori adalah tempat bahan menetap. Latihan mengubah bahan itu menjadi praktik. Menulis, Mendengar, dan Bercakap membantu anda menggunakan bahasa lebih aktif.",
         "p2": "Anda tidak harus bergerak melalui setiap area secara berurutan. Banyak orang tetap dengan kata dan latihan singkat untuk sementara.",
-        "p3": "Langkah alami seterusnya adalah menulis ketika anda ingin menghasilkan bahasa dengan syarat sendiri, lalu mendengar dan bercakap ketika anda ingin bahan yang sama bekerja di telinga dan suara anda — Mendengar dan Bercakap adalah bagian dari Notoria Pro.",
+        "p3": "Langkah seterusnya yang semula jadi adalah menulis apabila anda ingin menghasilkan bahasa dengan cara anda sendiri, kemudian mendengar dan bertutur apabila anda ingin bahan yang sama berfungsi di telinga dan suara anda. Kawasan ini tersedia pada setiap rancangan; had penggunaan AI berbeza mengikut rancangan.",
         "beat": "Kumpulkan dan pahami dulu. Gunakan dan bicara ketika bahan siap meninggalkan halaman."
       },
       "areas": {
@@ -4681,11 +4702,11 @@
         },
         "listening": {
           "label": "Mendengar",
-          "body": "Ubah media menjadi latihan mendengar di ruang kerja anda. Tersedia di Notoria Pro."
+          "body": "Tukar media menjadi latihan mendengar di ruang kerja anda. Tersedia pada setiap rancangan; kuota transkripsi AI berbeza mengikut rancangan."
         },
         "speaking": {
           "label": "Bercakap",
-          "body": "Latihan langsung dengan tutor AI, berlandaskan bahasa yang anda pelajari. Tersedia di Notoria Pro."
+          "body": "Latihan langsung dengan tutor AI, berasaskan bahasa yang anda pelajari. Tersedia pada setiap rancangan dengan kuota harian berdasarkan rancangan."
         },
         "reading": {
           "label": "Membaca",
@@ -4735,15 +4756,15 @@
         },
         "account": {
           "q": "Bagaimana saya mengubah kata laluan atau menutup akaun?",
-          "a": "Buka <account>Akaun</account>. anda dapat mengemas kini kata laluan di sana jika menggunakan masuk e-mel, mengelola Notoria Pro, mengeksport cadangan, atau memadam akaun secara kekal."
+          "a": "Buka <account>Akaun</account>. Anda boleh mengemas kini kata laluan anda di sana jika anda menggunakan log masuk email, mengurus Pro atau Premium, mengeksport sandaran, atau memadamkan akaun anda secara kekal. Memadamkan akaun juga serta-merta membatalkan sebarang langganan Stripe yang aktif berdasarkan usaha terbaik; membatalkan pembaharuan sahaja mengekalkan akaun dan datanya."
         },
         "pro": {
           "q": "Bagaimana penagihan dan pembatalan bekerja?",
-          "a": "Notoria Pro ditagih melalui Stripe. Dari <account>Akaun</account> anda dapat menaik taraf, membuka portal pelanggan Stripe untuk mengelola metode pembayaran dan faktur, atau membatalkan perpanjangan."
+          "a": "Notoria Pro dan Premium ditagih melalui Stripe. Dari <account>Akaun</account> anda boleh melanggan, bertukar antara Pro dan Premium, mengurus kaedah pembayaran dan invois, membatalkan pembaharuan, atau menyambung semula pembatalan yang dijadualkan. Membatalkan pembaharuan mengekalkan akses sehingga Stripe mengakhiri tempoh langganan yang layak; memadamkan akaun anda adalah berasingan dan membatalkan langganan serta-merta berdasarkan usaha terbaik."
         },
         "proFeatures": {
-          "q": "Apa yang percuma, dan apa yang membutuhkan Notoria Pro?",
-          "a": "Latihan kosa kata sehari-hari dan alat belajar terkait tersedia di pakej free. Beberapa alat AI, mendengar, bercakap, dan fitur eksport dokumen adalah bagian dari Notoria Pro. Bandingkan dan naik taraf dari <account>Akaun</account>."
+          "q": "Apa yang termasuk dengan Percuma, Pro, dan Premium?",
+          "a": "Percuma termasuk kawasan pembelajaran teras dan kuota harian untuk alat AI yang disokong. Pro meningkatkan atau menghapuskan banyak had AI dan menambah import bahan pembelajaran serta eksport PDF/DOCX. Premium termasuk Pro dan menambah pembelajaran peribadi, profil pembelajaran, latihan adaptif dan berasaskan kesilapan, serta arahan latihan kustom. Lihat perbandingan langsung dan had semasa di <account>Akaun</account>."
         },
         "learning": {
           "q": "Bagaimana fitur belajar Notoria bekerja?",

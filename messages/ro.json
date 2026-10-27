@@ -17,19 +17,20 @@
     "hideFilters": "Ascundeți filtrele",
     "remove": "Eliminați",
     "exportAppearance": {
-      "label": "Appearance",
-      "print": "Print-friendly",
-      "printHint": "White page, dark text",
-      "theme": "Current theme",
-      "themeHint": "Matches your light or dark theme",
-      "previewKicker": "Sample page",
-      "previewTitle": "Document title",
-      "previewBody": "Body text uses the selected colors and spacing.",
-      "previewCallout": "Callouts and accents follow the module color.",
-      "fixedNote": "Appearance is fixed in the exported file. Export again to change it.",
-      "docxBackgroundNote": "Word and other apps may not show page backgrounds the same way, especially when printing."
+      "label": "Aspect",
+      "print": "Prietenos cu imprimanta",
+      "printHint": "Pagini albe, text întunecat",
+      "theme": "Tema curentă",
+      "themeHint": "Se potrivește cu tema ta deschisă sau închisă",
+      "previewKicker": "Pagină de probă",
+      "previewTitle": "Titlul documentului",
+      "previewBody": "Textul corpului folosește culorile și spațierea selectate.",
+      "previewCallout": "Notificările și accentele urmează culoarea modulului.",
+      "fixedNote": "Aspectul este fixat în fișierul exportat. Exportă din nou pentru a-l schimba.",
+      "docxBackgroundNote": "Word și alte aplicații pot să nu afișeze fundalurile paginilor în același mod, mai ales la imprimare."
     },
-    "scrollToTop": "Scroll to top"
+    "scrollToTop": "Derulați în sus",
+    "moreActions": "Mai multe acțiuni"
   },
   "contentImport": {
     "title": {
@@ -295,12 +296,12 @@
     "tooDeep": "Acest folder este imbricat prea adânc",
     "notFound": "Folderul nu a fost găsit",
     "nameTaken": "Un folder sau o scriere folosește deja acest nume",
-    "dragTipTitle": "Move into a folder",
-    "dragTipBody": "On a computer with a mouse or trackpad, drag a piece onto a folder card to move it. You can also use the move icon on each item.",
-    "dragTipDismiss": "Dismiss tip",
-    "dragTipShow": "How to move into folders",
-    "dragTipDemo": "Drag item onto folder",
-    "dragTipCard": "Item"
+    "dragTipTitle": "Mută într-un folder",
+    "dragTipBody": "Pe un computer cu mouse sau trackpad, trage un element pe un card de folder pentru a-l muta. Poți folosi și pictograma de mutare de pe fiecare element.",
+    "dragTipDismiss": "Respinge sfatul",
+    "dragTipShow": "Cum să muți în foldere",
+    "dragTipDemo": "Trage elementul pe folder",
+    "dragTipCard": "Element"
   },
   "theme": {
     "toggle": "Comutați tema",
@@ -472,34 +473,34 @@
     "viewMode": "Mod de afișare",
     "tagManager": {
       "open": "Gestionați etichetele",
-      "eyebrow": "Tags",
+      "eyebrow": "Etichete",
       "title": "Manager de etichete",
-      "description": "Alegeți o etichetă, apoi atribuiți-o sau eliminați-o de pe cuvinte. Cuvintele atribuite și celelalte rămân în liste separate.",
-      "pageDescription": "Choose a tag on the left, then add or remove it from words in the list. Switch tabs to work with tagged or untagged words.",
-      "disabledNoWorkspace": "Create a workspace before managing vocabulary tags.",
-      "backToVocabulary": "Back to vocabulary",
-      "backToSettings": "Back to settings",
+      "description": "Alegeți o etichetă, apoi atribuiți-o sau eliminați-o din cuvinte.",
+      "pageDescription": "Alegeți Standard sau Personalizat, selectați o etichetă, apoi adăugați-o sau eliminați-o din cuvinte.",
+      "disabledNoWorkspace": "Creați un spațiu de lucru înainte de a gestiona etichetele de vocabular.",
+      "backToVocabulary": "Înapoi la vocabular",
+      "backToSettings": "Înapoi la setări",
       "groupsLabel": "Grupuri standard de etichete",
       "tagsHeading": "Etichete",
       "standardTagsHeading": "Etichete standard",
       "customTagsHeading": "Etichete personalizate",
-      "customTagsHint": "Etichete pe care le creați pentru organizarea dumneavoastră — nu părți de vorbire.",
+      "customTagsHint": "Etichete de spațiu de lucru pe care le creați — căutați pentru a le găsi când lista este lungă.",
       "emptyCustomTags": "Nicio etichetă personalizată încă. Creați-le când editați un cuvânt.",
-      "emptyTagSearch": "No tags match this search.",
-      "tagSearchPlaceholder": "Search tags…",
+      "emptyTagSearch": "Nici o etichetă personalizată nu se potrivește cu această căutare.",
+      "tagSearchPlaceholder": "Căutați etichete…",
       "wordsHeading": "{tag}",
       "kindStandard": "Standard",
       "kindCustom": "Personalizat",
-      "wordTabsLabel": "Word lists",
-      "wordTabAssigned": "Tagged",
-      "wordTabOther": "Untagged",
+      "wordTabsLabel": "Liste de cuvinte",
+      "wordTabAssigned": "Etichetate",
+      "wordTabOther": "Fără etichete",
       "assignedHeading": "Cuvinte cu această etichetă",
       "otherHeading": "Alte cuvinte",
       "sectionCount": "{count}",
-      "selectAllVisible": "Select all on this page",
-      "clearSelection": "Clear selection",
-      "selectionScopePage": "Selecting from this page ({count} of {total})",
-      "selectionScopeFiltered": "Selecting within the current search results",
+      "selectAllVisible": "Selectați toate cele de pe această pagină",
+      "clearSelection": "Ștergeți selecția",
+      "selectionScopePage": "Selectare din această pagină ({count} din {total})",
+      "selectionScopeFiltered": "Selectare în cadrul rezultatelor căutării curente",
       "searchPlaceholder": "Căutați cuvinte sau sensuri…",
       "wordCount": "{count}",
       "loading": "Se încarcă vocabularul…",
@@ -509,13 +510,23 @@
       "emptyOther": "Fiecare cuvânt are deja această etichetă.",
       "emptyOtherSearch": "Niciun cuvânt potrivit de atribuit.",
       "selected": "{count} selectate",
-      "addToTag": "Adăugați la etichetă",
-      "removeFromTag": "Eliminați de pe etichetă",
-      "applyAdd": "Adăugați la etichetă ({count})",
-      "applyRemove": "Eliminați de pe etichetă ({count})",
+      "addToTag": "Adăugați etichetă",
+      "removeFromTag": "Eliminați eticheta",
+      "applyAdd": "Adăugați etichetă ({count})",
+      "applyRemove": "Eliminați eticheta ({count})",
       "added": "Au fost adăugate {count} cuvânt(e) la {tag}",
       "removed": "Au fost eliminate {count} cuvânt(e) de pe {tag}",
-      "error": "Nu s-a putut actualiza apartenența la etichetă"
+      "error": "Nu s-a putut actualiza apartenența la etichetă",
+      "systemsLabel": "Sisteme de etichete",
+      "standardSystemTitle": "Standard",
+      "standardSystemMeta": "Subiect și utilizare, afișate separat",
+      "usageOptional": "Opțional",
+      "customSystemTitle": "Personalizat",
+      "customSystemMeta": "{count, plural, one {# etichetă} other {# etichete}}",
+      "customPickerLabel": "Alegeți o etichetă personalizată",
+      "customPickerPlaceholder": "Selectați o etichetă personalizată…",
+      "customSearchPlaceholder": "Căutați etichete personalizate…",
+      "pickTagFirst": "Alegeți o etichetă mai sus pentru a gestiona apartenența cuvintelor."
     },
     "moreTags": "+{count}",
     "updatedAgo": "Actualizat {time}",
@@ -584,7 +595,11 @@
         "notes": "Note",
         "updated": "Ultima actualizare"
       }
-    }
+    },
+    "selectedCustomTags": "Etichete selectate",
+    "selectedSynonyms": "Sinonime selectate",
+    "removeCustomTag": "Eliminați {name}",
+    "pickerLoading": "Se încarcă…"
   },
   "tags": {
     "groups": {
@@ -669,6 +684,11 @@
     "updated": "Actualizat",
     "backToStudio": "Înapoi la exerciții",
     "studyMode": "Mod de studiu",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Dificultate",
       "easy": "Ușor",
@@ -873,7 +893,7 @@
       "aiReady": "Practică gata",
       "aiUnavailable": "Nu s-au putut genera întrebări cu IA momentan.",
       "aiForbidden": "Exercițiile de teorie cu IA sunt disponibile cu Pro.",
-      "aiPremiumRequired": "Additional instructions are available on Premium.",
+      "aiPremiumRequired": "Informații suplimentare sunt disponibile pe Premium.",
       "aiDisabled": "Asistența IA este dezactivată în Setări.",
       "feedback": {
         "correct": "Corect!",
@@ -927,20 +947,22 @@
         "why": "De ce",
         "complete": "Am înțeles",
         "completeHint": "Puteți continua când sunteți pregătit.",
-        "startExercise": "Start exercise",
-        "skipReviewAndStart": "Skip review and start exercise"
+        "startExercise": "Începe exercițiul",
+        "skipReviewAndStart": "Sari peste revizuire și începe exercițiul"
       },
       "folders": {
-        "unfiled": "Unfiled",
+        "unfiled": "Nefoliate",
         "joiner": " → ",
-        "count": "{count, plural, one {# note} other {# notes}}",
-        "selectAll": "Select all",
-        "selectGroup": "Select notes in {name}",
-        "expand": "Expand {name}",
-        "collapse": "Collapse {name}",
-        "selectedCount": "{count, plural, one {# theory selected} other {# theories selected}}",
-        "practiceSelected": "Practice selected",
-        "clearSelection": "Clear selection"
+        "count": "{count, plural, one {# notă} other {# note}}",
+        "selectAll": "Selectează tot",
+        "selectGroup": "Selectează notele din {name}",
+        "expand": "Extinde {name}",
+        "collapse": "Colapsează {name}",
+        "selectedCount": "{count, plural, one {# teorie selectată} other {# teorii selectate}}",
+        "practiceSelected": "Exersează selecția",
+        "clearSelection": "Șterge selecția",
+        "subfolders": "{count, plural, one {# subfolder} other {# subfoldere}}",
+        "selectedOne": "1 teorie selectată"
       }
     },
     "types": {
@@ -998,8 +1020,8 @@
       "startsWith": "Începe cu „{letter}”",
       "revealPrompt": "Tot blocat? Puteți dezvălui răspunsul complet.",
       "revealAnswer": "Dezvăluiți răspunsul",
-      "nextHint": "Next hint",
-      "hintProgress": "Hint {current} of {total}"
+      "nextHint": "Următoarea sugestie",
+      "hintProgress": "Sugestia {current} din {total}"
     },
     "empty": {
       "noWordsTitle": "Niciun vocabular încă",
@@ -1032,17 +1054,17 @@
       "shuffle": "Amestecați",
       "finish": "Încheiați runda",
       "source": {
-        "label": "Question source",
-        "chooseAi": "Use AI Generated",
-        "emptyTitle": "No usable saved examples",
-        "emptyDescription": "Add example sentences that clearly include each word, adjust your filters, or switch to AI Generated.",
+        "label": "Sursa întrebării",
+        "chooseAi": "Utilizați generat de AI",
+        "emptyTitle": "Nici un exemplu salvat utilizabil",
+        "emptyDescription": "Adăugați propoziții exemplu care includ clar fiecare cuvânt, ajustați filtrele sau comutați la generat de AI.",
         "saved-examples": {
-          "title": "Saved examples",
-          "description": "Build questions instantly from your vocabulary examples. No AI wait."
+          "title": "Exemple salvate",
+          "description": "Construiți întrebări instantaneu din exemplele dvs. de vocabular. Fără așteptare AI."
         },
         "ai-generated": {
-          "title": "AI Generated",
-          "description": "Create fresh sentences from your vocabulary with AI."
+          "title": "Generat de AI",
+          "description": "Creați propoziții noi din vocabularul dvs. cu AI."
         }
       }
     },
@@ -1059,38 +1081,38 @@
       "forbidden": "Generarea exercițiilor cu IA este disponibilă cu Pro.",
       "disabled": "Asistența IA este dezactivată în Setări.",
       "upgradeHint": "Planul Free include câteva generări de exerciții cu IA pe zi. Pro elimină limita.",
-      "additionalInstructions": "Additional instructions",
-      "additionalInstructionsPlaceholder": "For example: Use restaurant situations, keep the language at A2 level, and explain mistakes in your interface language.",
-      "additionalInstructionsLocked": "Upgrade to Premium to customize supported exercise types, set a real-life context, and add your own instructions.",
-      "premiumRequired": "Additional instructions are available on Premium.",
-      "presetLabel": "Presets",
-      "presetNone": "No preset selected",
-      "presetApply": "Apply",
-      "presetSave": "Save preset",
-      "presetName": "Preset name",
-      "presetDelete": "Delete",
-      "presetSaved": "Preset saved",
-      "presetDeleted": "Preset deleted",
-      "presetSaveFailed": "Could not save that preset.",
+      "additionalInstructions": "Informații suplimentare",
+      "additionalInstructionsPlaceholder": "De exemplu: Folosește situații de restaurant, menține limba la nivelul A2 și explică greșelile în limba ta de interfață.",
+      "additionalInstructionsLocked": "Upgradează la Premium pentru a personaliza tipurile de exerciții suportate, a stabili un context real și a adăuga propriile instrucțiuni.",
+      "premiumRequired": "Informații suplimentare sunt disponibile pe Premium.",
+      "presetLabel": "Presetări",
+      "presetNone": "Nicio presetare selectată",
+      "presetApply": "Aplică",
+      "presetSave": "Salvează presetarea",
+      "presetName": "Numele presetării",
+      "presetDelete": "Șterge",
+      "presetSaved": "Presetare salvată",
+      "presetDeleted": "Presetare ștearsă",
+      "presetSaveFailed": "Nu s-a putut salva acea presetare.",
       "emptyWords": "Adăugați cuvinte de vocabular înainte de a genera întrebări.",
       "noneValid": "IA nu a putut crea întrebări valide pentru aceste cuvinte. Încercați din nou.",
-      "additionalInstructionsHelper": "Customize the context, style, or focus of your exercise. Leave blank to use the default settings.",
-      "presetUpdate": "Update preset",
-      "presetUpdated": "Preset updated",
-      "presetsTitle": "Saved presets",
-      "presetsHelper": "Presets store exercise settings and additional instructions. They do not change the vocabulary or theories you selected.",
-      "presetsEmpty": "No saved presets yet. Save your current settings to reuse them later.",
-      "presetSaveAs": "Save as preset",
-      "presetUpdateCurrent": "Update with current settings",
-      "presetRename": "Rename",
-      "presetManage": "Manage preset",
-      "presetRenamed": "Preset renamed",
-      "presetSaveDialogTitle": "Save as preset",
-      "presetSaveDialogDescription": "Name this preset to reuse the current exercise settings and additional instructions. Selected vocabulary or theories are not stored.",
-      "presetRenameDialogTitle": "Rename preset",
-      "presetRenameDialogDescription": "Choose a new name for this preset.",
-      "presetDeleteDialogTitle": "Delete preset?",
-      "presetDeleteDialogDescription": "Delete “{name}”? Your current exercise configuration stays as it is."
+      "additionalInstructionsHelper": "Personalizează contextul, stilul sau focalizarea exercițiului tău. Lasă liber pentru a folosi setările implicite.",
+      "presetUpdate": "Actualizează presetarea",
+      "presetUpdated": "Presetare actualizată",
+      "presetsTitle": "Presetări salvate",
+      "presetsHelper": "Presetările stochează setările exercițiului și informațiile suplimentare. Ele nu schimbă vocabularul sau teoriile pe care le-ai selectat.",
+      "presetsEmpty": "Nu există presetări salvate încă. Salvează setările tale curente pentru a le reutiliza mai târziu.",
+      "presetSaveAs": "Salvează ca presetare",
+      "presetUpdateCurrent": "Actualizează cu setările curente",
+      "presetRename": "Renumește",
+      "presetManage": "Gestionează presetarea",
+      "presetRenamed": "Presetare redenumită",
+      "presetSaveDialogTitle": "Salvează ca presetare",
+      "presetSaveDialogDescription": "Numește această presetare pentru a reutiliza setările curente ale exercițiului și informațiile suplimentare. Vocabularul sau teoriile selectate nu sunt stocate.",
+      "presetRenameDialogTitle": "Renumește presetarea",
+      "presetRenameDialogDescription": "Alege un nou nume pentru această presetare.",
+      "presetDeleteDialogTitle": "Șterge presetarea?",
+      "presetDeleteDialogDescription": "Ștergi „{name}”? Configurarea curentă a exercițiului rămâne așa cum este."
     },
     "session": {
       "complete": "Sesiune finalizată",
@@ -1099,14 +1121,14 @@
       "tryAgain": "Încercați din nou",
       "questionsLabel": "Întrebări",
       "correctLabel": "Corecte",
-      "incorrectLabel": "Incorrect",
-      "unansweredLabel": "Unanswered",
+      "incorrectLabel": "Incorect",
+      "unansweredLabel": "Nesolicitat",
       "reviewLabel": "De revizuit",
       "answeredProgress": "{answered} / {total} răspunsuri",
       "questionProgress": "{current} / {total}",
-      "checkAnswer": "Check answer",
-      "nextQuestion": "Next",
-      "viewResults": "View results",
+      "checkAnswer": "Verificați răspunsul",
+      "nextQuestion": "Următoarea",
+      "viewResults": "Vizualizați rezultatele",
       "submitSet": "Trimiteți răspunsurile",
       "submitting": "Se verifică…",
       "unansweredWarnTitle": "Întrebări fără răspuns",
@@ -1121,54 +1143,54 @@
       "unanswered": "Fără răspuns",
       "yourAnswer": "Răspunsul dumneavoastră",
       "correctAnswer": "Răspuns corect",
-      "shortSetNote": "Only {count} questions available from your current filters.",
+      "shortSetNote": "Numai {count} întrebări disponibile din filtrele dvs. curente.",
       "displayMode": {
-        "label": "How you practice",
-        "lockedHint": "Finish or start a new set to change this.",
+        "label": "Cum exersați",
+        "lockedHint": "Finalizați sau începeți un nou set pentru a schimba asta.",
         "one_by_one": {
-          "title": "One by one",
-          "description": "See one question at a time. Check after each answer for immediate feedback."
+          "title": "Câte una",
+          "description": "Vedeți o întrebare pe rând. Verificați după fiecare răspuns pentru feedback imediat."
         },
         "all_questions": {
-          "title": "All questions",
-          "description": "See the full set, answer in any order, then submit once for feedback."
+          "title": "Toate întrebările",
+          "description": "Vedeți setul complet, răspundeți în orice ordine, apoi trimiteți o dată pentru feedback."
         }
       },
       "review": {
-        "title": "Review",
-        "allCorrect": "Perfect — every question correct.",
-        "summary": "{incorrect} incorrect · {unanswered} unanswered · {needsReview} to review",
-        "viewWrong": "View wrong answers",
-        "filtersLabel": "Filter questions",
+        "title": "Revizuire",
+        "allCorrect": "Perfect — fiecare întrebare corectă.",
+        "summary": "{incorrect} incorecte · {unanswered} nesolicitate · {needsReview} de revizuit",
+        "viewWrong": "Vizualizați răspunsurile greșite",
+        "filtersLabel": "Filtrați întrebările",
         "filter": {
-          "all": "All ({count})",
-          "needs_review": "Wrong & unanswered ({count})",
-          "correct": "Correct ({count})"
+          "all": "Toate ({count})",
+          "needs_review": "Greșite & nesolicitate ({count})",
+          "correct": "Corecte ({count})"
         },
-        "prevWrong": "Previous",
-        "nextWrong": "Next",
+        "prevWrong": "Anterior",
+        "nextWrong": "Următor",
         "wrongPosition": "{current} / {total}",
-        "toReviewCount": "{count} to review",
-        "floatLabel": "Wrong answers navigation",
-        "closeFloat": "Show all answers"
+        "toReviewCount": "{count} de revizuit",
+        "floatLabel": "Navigare răspunsuri greșite",
+        "closeFloat": "Arată toate răspunsurile"
       },
-      "scorePercent": "{percent}% correct",
+      "scorePercent": "{percent}% corecte",
       "result": {
         "perfect": {
-          "headline": "Perfect set",
-          "body": "Every answer landed. That kind of focus deserves another round when you’re ready."
+          "headline": "Set perfect",
+          "body": "Fiecare răspuns a fost corect. Un astfel de focus merită o altă rundă când sunteți gata."
         },
         "strong": {
-          "headline": "Strong finish",
-          "body": "You’re clearly getting it — skim the misses, then lock it in with a fresh set."
+          "headline": "Finalizare puternică",
+          "body": "Se vede că înțelegeți — treceți peste greșeli, apoi fixați-le cu un set nou."
         },
         "mixed": {
-          "headline": "Good work — keep going",
-          "body": "A few stuck points are normal. Review them once, then try again while they’re fresh."
+          "headline": "Lucru bun — continuați",
+          "body": "Câteva puncte blocate sunt normale. Revizuiți-le o dată, apoi încercați din nou când sunt proaspete."
         },
         "unanswered": {
-          "headline": "Almost there",
-          "body": "Finish the unanswered ones first — then the score will tell a clearer story."
+          "headline": "Aproape acolo",
+          "body": "Finalizați întâi cele nesolicitate — apoi scorul va spune o poveste mai clară."
         }
       }
     },
@@ -1181,7 +1203,7 @@
       },
       "contextualLanguageHint": "Întrebările sunt generate în {language} (limba spațiului de lucru).",
       "contextualEmptyTitle": "Generați întrebări contextuale",
-      "contextualEmptyDescription": "Creați întrebări cu alegere multiplă de tip completare spații din vocabular.",
+      "contextualEmptyDescription": "Adăugați instrucțiuni opționale mai jos dacă doriți, apoi apăsați Generați. Puteți lăsa promptul gol.",
       "contextualProDescription": "Întrebările contextuale cu IA sunt disponibile cu Pro.",
       "unlockContextual": "Deblocați cu Pro",
       "correct": "Corect!",
@@ -1202,8 +1224,8 @@
       "hint": "Selectați un cuvânt, apoi atingeți sensul său",
       "complete": "Toate perechile au fost asociate — bravo!",
       "shuffle": "Amestecați coloanele",
-      "pairsProgress": "{matched} / {total} pairs",
-      "continueRound": "Continue"
+      "pairsProgress": "{matched} / {total} perechi",
+      "continueRound": "Continuați"
     },
     "typeAnswer": {
       "questionWord": "Care este sensul?",
@@ -1213,7 +1235,7 @@
         "contextual": "Contextual"
       },
       "contextualEmptyTitle": "Generați întrebări contextuale",
-      "contextualEmptyDescription": "Creați prompturi de tastare de tip completare spații din vocabular.",
+      "contextualEmptyDescription": "Adăugați instrucțiuni opționale mai jos dacă doriți, apoi apăsați Generați. Puteți lăsa promptul gol.",
       "contextualProDescription": "Întrebările contextuale cu IA sunt disponibile cu Pro.",
       "unlockContextual": "Deblocați cu Pro",
       "placeholder": "Introduceți răspunsul…",
@@ -1404,7 +1426,7 @@
     "section": "Secțiune",
     "sectionTitlePlaceholder": "Titlul secțiunii (opțional)",
     "question": "Întrebare",
-    "prompt": "Prompt",
+    "prompt": "Provocare",
     "promptPlaceholder": "Unde v-ați născut?",
     "exampleAnswer": "Răspuns-model",
     "exampleAnswerPlaceholder": "Răspuns-model opțional…",
@@ -1597,13 +1619,13 @@
       "writing": {
         "title": "Scriere",
         "description": "Documente îmbogățite și seturi de întrebări pe care le puteți redeschide și exporta.",
-        "how": "Începeți o schiță, organizați cu dosare și folosiți IA Pro pentru a verifica sau îmbunătăți textul.",
+        "how": "Începeți un draft, organizați cu foldere și utilizați alocația AI a planului dvs. pentru a verifica sau îmbunătăți textul.",
         "cta": "Deschideți scrierea"
       },
       "listening": {
         "title": "Ascultare",
         "description": "Transformați audio sau video real într-o lecție.",
-        "how": "Încărcați un fragment și generați o transcriere pe Free. Practica de ascultare generată face parte din Pro.",
+        "how": "Încărcați un clip, generați un transcript și construiți practică de ascultare cu alocația AI inclusă în planul dvs.",
         "cta": "Deschideți ascultarea"
       },
       "speaking": {
@@ -2268,7 +2290,7 @@
         "taskManager": "Manager de activități al browserului",
         "altClose": "Închide fereastra",
         "altTab": "Comută aplicațiile",
-        "winExplorer": "File Explorer",
+        "winExplorer": "Explorator de fișiere",
         "winDesktop": "Afișează desktopul",
         "winLock": "Blochează PC-ul",
         "winRun": "Dialog Executare",
@@ -3119,7 +3141,7 @@
       "warnings": {
         "workspace_language_reuse": "Unele spații de lucru există deja pentru aceeași limbă. Conținutul lor va fi adăugat în spațiile de lucru existente în loc să se creeze duplicate.",
         "empty_backup": "Această copie de rezervă nu conține date de învățare importabile.",
-        "ambiguous_name_match": "Some existing items share the same name. Import will reuse one of them deterministically and leave the others unchanged."
+        "ambiguous_name_match": "Unele elemente existente împărtășesc același nume. Importul va reutiliza unul dintre ele determinist și va lăsa celelalte neschimbate."
       },
       "cancel": "Anulați",
       "confirm": "Importați datele de învățare",
@@ -3164,11 +3186,11 @@
         "requestTooLarge": "Această copie de rezervă este prea mare pentru a fi procesată pe această pagină. Încercați un export mai mic sau contactați asistența.",
         "notConfigured": "Stocarea fișierelor nu este încă configurată pentru importul copiilor de rezervă."
       },
-      "skippedInAccountTitle": "Already in your account",
-      "skippedInAccountHint": "These names match items you already have. They will not be imported again. New items under the same workspace still import.",
-      "skippedInBackupTitle": "Duplicate names in this backup",
-      "skippedInBackupHint": "The file lists the same name more than once. Only the first copy of each name is imported — this is normal even on an empty account.",
-      "skippedOtherTitle": "Could not import"
+      "skippedInAccountTitle": "Deja în contul tău",
+      "skippedInAccountHint": "Aceste nume se potrivesc cu elementele pe care le ai deja. Ele nu vor fi importate din nou. Elementele noi din același spațiu de lucru se importă în continuare.",
+      "skippedInBackupTitle": "Nume duplicate în această copie de rezervă",
+      "skippedInBackupHint": "Fișierul listează același nume de mai multe ori. Numai prima copie a fiecărui nume este importată — acest lucru este normal chiar și pe un cont gol.",
+      "skippedOtherTitle": "Nu s-a putut importa"
     },
     "danger": {
       "title": "Închideți contul",
@@ -3184,7 +3206,7 @@
       "warningTitle": "Înainte de a continua",
       "warnings": {
         "workspaces": "Fiecare spațiu de lucru și toate datele de vocabular, teorie, scriere, ascultare și vorbire vor fi șterse.",
-        "billing": "Orice abonament Notoria Pro activ va fi anulat imediat.",
+        "billing": "Orice abonament activ Notoria Pro sau Premium va fi anulat imediat.",
         "media": "Media încărcată și fotografia de profil vor fi eliminate.",
         "permanent": "Nu există perioadă de recuperare după confirmare."
       },
@@ -3233,7 +3255,7 @@
     "upgrade": "Treceți la Pro",
     "manage": "Gestionați abonamentul",
     "proBadge": "Pro",
-    "freeBadge": "Free",
+    "freeBadge": "Gratuit",
     "premiumBadge": "Premium",
     "renewsOn": "Se reînnoiește pe {date}",
     "status": "Stare: {status}",
@@ -3449,7 +3471,7 @@
       "personalLearningPath": "Parcurs personal de învățare",
       "personalizedRecommendations": "Recomandări personalizate",
       "crossModuleIntelligence": "Personalizare între module",
-      "exerciseCustomInstructions": "Custom exercise instructions"
+      "exerciseCustomInstructions": "Instrucțiuni personalizate pentru exerciții"
     },
     "compare": {
       "heading": "Comparați planurile",
@@ -3458,7 +3480,7 @@
       "feature": "Funcție",
       "current": "Actual",
       "capability": "Ce primiți",
-      "free": "Free",
+      "free": "Gratuit",
       "pro": "Pro",
       "premium": "Premium",
       "freeIncludes": "Inclus în Free",
@@ -4048,9 +4070,9 @@
     "privacyTitle": "Politica de confidențialitate",
     "termsTitle": "Termeni de utilizare",
     "privacyDescription": "Cum Notoria colectează, folosește și șterge datele personale și conținutul de învățare pentru spațiul său privat de învățare a limbilor.",
-    "termsDescription": "Termeni pentru utilizarea spațiului privat Notoria de învățare a limbilor, a conturilor, a funcțiilor AI și a facturării Notoria Pro.",
+    "termsDescription": "Termeni pentru utilizarea spațiului privat de învățare a limbilor Notoria, conturi, funcții AI și facturare Pro sau Premium.",
     "updated": "Ultima actualizare {date}",
-    "updatedDate": "23 septembrie 2026",
+    "updatedDate": "27 octombrie 2026",
     "backToSignIn": "Înapoi la autentificare",
     "backHome": "Înapoi la Notoria",
     "authFooter": "Confidențialitate · Termeni",
@@ -4071,7 +4093,7 @@
         "purposes": "De ce prelucrăm date",
         "auth": "Conturi și autentificare",
         "ai": "Funcții AI",
-        "payments": "Plăți (Notoria Pro)",
+        "payments": "Plăți (Pro și Premium)",
         "processors": "Furnizori de servicii",
         "cookies": "Cookie-uri și stocare pe dispozitiv",
         "transfers": "Transferuri internaționale",
@@ -4095,7 +4117,7 @@
           "list": [
             "creați sau folosiți un cont",
             "salvați material în spații de lucru private",
-            "vă abonați la Notoria Pro",
+            "abonați-vă la Notoria Pro sau Premium",
             "folosiți instrumente opționale asistate de AI",
             "încărcați media pentru ascultare sau profil",
             "folosiți practica de vorbire",
@@ -4156,7 +4178,7 @@
               "basis": "Contract (Art. 6(1)(b))"
             },
             {
-              "purpose": "Derularea facturării Notoria Pro și a stării abonamentului prin Stripe",
+              "purpose": "Gestionați facturarea și starea abonamentului Notoria Pro și Premium prin Stripe",
               "basis": "Contract (Art. 6(1)(b))"
             },
             {
@@ -4191,7 +4213,7 @@
           "p4": "Codul actual nu folosește alți furnizori de modele de limbaj de mari dimensiuni în afară de OpenAI. OpenAI prelucrează datele conform propriilor termeni și politici de confidențialitate, ca procesator pentru aceste funcții."
         },
         "payments": {
-          "title": "7. Plăți (Notoria Pro)",
+          "title": "7. Plăți (Pro și Premium)",
           "p1": "Abonamentele plătite sunt gestionate de <strong>Stripe</strong>. Checkout-ul, facturile, metodele de plată și anularea rulează prin Stripe Checkout și Stripe Customer Portal. Webhook-urile Stripe actualizează planul și starea în Notoria.",
           "p2": "Stripe prelucrează datele de plată ca furnizor de plăți. Consultați documentația Stripe privind confidențialitatea pentru gestionarea cardurilor."
         },
@@ -4233,7 +4255,7 @@
             },
             {
               "provider": "Stripe",
-              "role": "Checkout Notoria Pro, portal și starea abonamentului"
+              "role": "Plata Notoria Pro și Premium, portal și starea abonamentului"
             },
             {
               "provider": "Google",
@@ -4347,7 +4369,7 @@
       }
     },
     "termsOfUse": {
-      "intro": "Acești Termeni de utilizare explică regulile pentru folosirea Notoria la <site>www.notoria.fi</site>. Descriu modul în care produsul funcționează astăzi: spații private de învățare, facturare opțională Notoria Pro prin Stripe și funcții asistate de AI. Nu înlocuiesc sfatul unui avocat cu privire la situația dvs. specifică.",
+      "intro": "Acești Termeni de utilizare explică regulile pentru utilizarea Notoria la <site>www.notoria.fi</site>. Ei descriu cum funcționează produsul astăzi: spații de învățare private, facturare opțională Pro și Premium prin Stripe și funcții asistate de AI. Nu sunt un substitut pentru sfatul unui avocat despre situația dvs. specifică.",
       "tocTitle": "Pe această pagină",
       "tocAria": "Pe această pagină",
       "toc": {
@@ -4358,7 +4380,7 @@
         "acceptable-use": "Utilizare acceptabilă",
         "ip": "Proprietate intelectuală",
         "ai": "Rezultate generate de AI",
-        "plans": "Planul Free și Notoria Pro",
+        "plans": "Planuri gratuite, Pro și Premium",
         "billing": "Abonament și facturare",
         "refunds": "Rambursări și drepturi ale consumatorilor",
         "availability": "Disponibilitate",
@@ -4377,7 +4399,7 @@
         "service": {
           "title": "2. Serviciul",
           "p1": "Notoria este o aplicație web privată de învățare a limbilor. Puteți crea spații de lucru și păstra material de învățare precum vocabular, note de teorie, scriere, exerciții, lecții de ascultare și sesiuni de vorbire.",
-          "p2": "Unele funcții sunt disponibile pe planul free. Notoria Pro deblochează capacități suplimentare, așa cum sunt afișate în produs și pe pagina <account>Cont</account> — inclusiv Ascultare, Vorbire, anumite instrumente AI de studiu, import de exerciții și formate plătite de export de documente. Disponibilitatea funcțiilor se poate schimba pe măsură ce produsul evoluează.",
+          "p2": "Zonele de învățare de bază, inclusiv Ascultare, Vorbire și Citire, sunt disponibile pe fiecare plan. Pro și Premium adaugă alocații mai mari de AI și import/export de materiale de învățare; Premium adaugă, de asemenea, coaching personalizat și funcții de practică. Compararea curentă este afișată pe pagina dvs. <account>Cont</account>. Disponibilitatea funcțiilor poate varia pe măsură ce produsul evoluează.",
           "p3": "Notoria este pentru învățarea personală a limbilor. Nu este o școală, o autoritate de examene sau un serviciu de consultanță profesională."
         },
         "accounts": {
@@ -4418,23 +4440,23 @@
           "title": "7. Rezultate generate de AI",
           "p1": "Unele funcții pot verifica, sugera, genera, transcrie, rezuma sau oferi tutorat pe baza materialului dvs. Rezultatele pot fi incomplete, incorecte sau nepotrivite pentru obiectivul dvs. Rămâneți responsabil să revizuiți rezultatele AI înainte de a vă baza pe ele pentru studiu, examene, uz profesional sau publicare.",
           "p2": "Funcțiile AI pot fi indisponibile dacă asistența este dezactivată în <settings>Setări</settings>, dacă planul dvs. nu include un anumit instrument sau dacă un furnizor este temporar inaccesibil.",
-          "p3": "Nu toate ajutoarele AI necesită Notoria Pro. Produsul arată care instrumente sunt gratuite și care necesită Pro."
+          "p3": "Disponibilitatea AI și alocațiile zilnice variază între planurile gratuite, Pro și Premium. Produsul arată planul și alocația necesară pentru fiecare instrument."
         },
         "plans": {
-          "title": "8. Planul Free și Notoria Pro",
+          "title": "8. Planuri gratuite, Pro și Premium",
           "p1": "Planul free acoperă practica de bază cu propriul vocabular și instrumentele de studiu aferente, așa cum sunt afișate în produs.",
-          "p2": "Notoria Pro este un abonament plătit care deblochează funcții suplimentare. În produsul actual, aceasta include de obicei Ascultare, Vorbire, import de exerciții, practică de tip formați o propoziție, multe instrumente de studiu asistate de AI și export de documente PDF/DOCX. Unele ajutoare AI mai ușoare (cum ar fi anumite instrumente de vocabular sau de formatare în editor) pot rămâne disponibile pe planul free când asistența AI este activată.",
-          "p3": "Accesul Pro este legat de contul de utilizator, deci se aplică în spațiile de lucru din acel cont. Conturile cu rol de administrator pot avea acces la nivel Pro fără un abonament Stripe personal.",
-          "p4": "Prețul care se aplică achiziției dvs. este prețul afișat la Stripe Checkout pentru planul Pro actual. Orice preț afișat în altă parte în produs (de exemplu pe Cont) este doar orientativ și trebuie să corespundă configurației active de preț Stripe."
+          "p2": "Pro și Premium sunt abonamente plătite. Pro adaugă alocații mai mari sau nelimitate pentru multe instrumente AI plus import de materiale de învățare și export PDF/DOCX. Premium include Pro și adaugă funcții personalizate, cum ar fi Coach-ul de Învățare, profilul de învățare personal, practică adaptivă, practică bazată pe greșeli și instrucțiuni personalizate pentru exerciții. Pagina Cont arată comparația curentă și limitele.",
+          "p3": "Accesul plătit este legat de contul dvs. de utilizator și se aplică în toate spațiile sale de lucru. Conturile cu un rol de administrator pot avea acces la nivel plătit fără un abonament personal Stripe.",
+          "p4": "Prețul care se aplică este prețul afișat la Stripe Checkout pentru planul Pro sau Premium selectat. Orice preț afișat în altă parte în produs (de exemplu, pe Cont) este doar orientativ și trebuie să corespundă configurației active a prețului Stripe."
         },
         "billing": {
           "title": "9. Abonament, facturare și anulare",
-          "list0": "Abonamentele Pro sunt facturate prin <strong>Stripe</strong>",
-          "list1": "Puteți începe checkout-ul din <account>Cont</account> sau din controalele Pro blocate din aplicație",
+          "list0": "Abonamentele Pro și Premium sunt facturate prin <strong>Stripe</strong>",
+          "list1": "Puteți începe checkout-ul sau schimba planul din <account>Cont</account> sau din controalele plătite blocate din aplicație",
           "list2": "Din Cont, puteți deschide Stripe Customer Portal pentru a vedea facturile, a actualiza metodele de plată și a anula abonamentul",
           "list3": "Anularea urmează comportamentul Stripe Customer Portal pentru abonamentul dvs.",
-          "p1": "După anulare, accesul Pro continuă doar cât timp starea abonamentului Stripe încă acordă Pro în produs. În implementarea actuală, stările tratate ca Pro includ <code>active</code>, <code>trialing</code> și <code>past_due</code>. Când starea nu mai califică, contul revine la planul free.",
-          "p2": "Dacă o plată eșuează, Stripe poate muta abonamentul la <code>past_due</code> sau o altă stare. Notoria sincronizează acea stare din webhook-urile Stripe. Cât timp starea rămâne <code>past_due</code>, funcțiile Pro rămân disponibile conform regulilor actuale de acces; dacă abonamentul devine ulterior anulat sau altfel neeligibil, accesul Pro încetează.",
+          "p1": "După ce anulați reînnoirea, accesul dvs. curent Pro sau Premium continuă atâta timp cât starea abonamentului Stripe se califică în produs. Stările calificate includ în prezent <code>activ</code>, <code>trialing</code> și <code>past_due</code>. Când starea nu se mai califică, contul revine la Gratuit.",
+          "p2": "Dacă o plată eșuează, Stripe poate muta abonamentul în <code>past_due</code> sau altă stare. Notoria sincronizează acea stare din webhook-urile Stripe. Atâta timp cât rămâne <code>past_due</code>, planul plătit curent rămâne disponibil conform regulilor de acces actuale; dacă devine ulterior anulat sau altfel ineligibil, accesul plătit se încheie.",
           "p3": "Ștergerea contului Notoria anulează imediat abonamentul Stripe (efort rezonabil) ca parte a ștergerii contului. Aceasta este diferită de anularea reînnoirii prin Customer Portal menținând contul."
         },
         "refunds": {
@@ -4455,7 +4477,7 @@
         "liability": {
           "title": "13. Declinarea responsabilității și răspundere",
           "p1": "Notoria este furnizată pe o bază „disponibilă așa cum este” pentru învățarea personală a limbilor. În măsura maximă permisă de legislația aplicabilă, declinăm garanțiile care nu sunt cerute de lege.",
-          "p2": "În măsura maximă permisă de legislația aplicabilă, Notoria nu răspunde pentru daune indirecte, incidentale, speciale, consecutive sau pierdere de date rezultate din utilizarea serviciului sau din încrederea pe rezultatele AI. Unde răspunderea nu poate fi exclusă, aceasta este limitată la suma pe care ați plătit-o pentru Notoria Pro în cele trei luni dinaintea reclamației sau la orice sumă mai mare cerută de legea obligatorie.",
+          "p2": "În cea mai mare măsură permisă de legea aplicabilă, Notoria nu este responsabilă pentru daune indirecte, incidentale, speciale, consecvente sau de pierdere a datelor care decurg din utilizarea serviciului sau din încrederea în rezultatul AI. Acolo unde răspunderea nu poate fi exclusă, aceasta este limitată la suma pe care ați plătit-o pentru Notoria Pro sau Premium în ultimele trei luni înainte de reclamație, sau orice sumă mai mare cerută de legea obligatorie.",
           "p3": "Aceste limite nu exclud răspunderea pe care legislația finlandeză sau a UE nu permite să fie limitată — inclusiv răspunderea care nu poate fi renunțată pentru consumatori și răspunderea pentru deces sau vătămare corporală cauzată de neglijență unde se aplică astfel de reguli."
         },
         "changes": {
@@ -4528,9 +4550,9 @@
           "vocab": "Construiți o bancă personală de vocabular cu semnificații, exemple și etichete",
           "practice": "Practicați cu exerciții extrase din propriile cuvinte și note",
           "create": "Scrieți note de teorie și lucrări de scriere la care puteți reveni mai târziu",
-          "listenSpeak": "Transformați media în practică de ascultare și vorbiți cu un tutore AI pe Pro"
+          "listenSpeak": "Transformați media în practică de ascultare și utilizați alocațiile AI pentru transcriere și practică de vorbire"
         },
-        "note": "Unele instrumente AI, de ascultare, vorbire și export fac parte din Notoria Pro. Planul free acoperă totuși practica zilnică de vocabular și bucla de studiu de bază."
+        "note": "Zonele de învățare de bază sunt disponibile pe fiecare plan. Pro crește alocațiile AI și adaugă import/export de materiale de învățare; Premium adaugă coaching personalizat și practică."
       },
       "ai": {
         "title": "AI, acolo unde ajută",
@@ -4656,7 +4678,7 @@
         "title": "Cum se conectează zonele",
         "p1": "Captura este punctul rapid de intrare. Vocabularul și Teoria sunt locul unde materialul se așază. Exercițiul transformă acel material în practică. Scrierea, Ascultarea și Vorbirea vă ajută să folosiți limba mai activ.",
         "p2": "Nu trebuie să treceți prin fiecare zonă în ordine. Mulți rămân o vreme la cuvinte și practică scurtă.",
-        "p3": "Un pas natural următor este scrierea când doriți să produceți limbă în propriii termeni, apoi ascultarea și vorbirea când doriți ca același material să lucreze în ureche și voce — Ascultarea și Vorbirea fac parte din Notoria Pro.",
+        "p3": "Un pas natural următor este scrierea atunci când doriți să produceți limbaj în termenii dvs., apoi ascultarea și vorbirea atunci când doriți ca același material să funcționeze în urechea și vocea dvs. Aceste zone sunt disponibile pe fiecare plan; limitele de utilizare AI variază în funcție de plan.",
         "beat": "Colectați și înțelegeți mai întâi. Folosiți și vorbiți când materialul e gata să părăsească pagina."
       },
       "areas": {
@@ -4680,11 +4702,11 @@
         },
         "listening": {
           "label": "Ascultare",
-          "body": "Transformați media în practică de ascultare în spațiul de lucru. Disponibil pe Notoria Pro."
+          "body": "Transformați media în practică de ascultare în spațiul dvs. de lucru. Disponibil pe fiecare plan; alocațiile de transcriere AI variază în funcție de plan."
         },
         "speaking": {
           "label": "Vorbire",
-          "body": "Practică live cu un tutore AI, ancorată în limba pe care o studiați. Disponibil pe Notoria Pro."
+          "body": "Practică live cu un tutor AI, bazată pe limba pe care o studiați. Disponibil pe fiecare plan cu o alocație zilnică bazată pe plan."
         },
         "reading": {
           "label": "Citire",
@@ -4734,15 +4756,15 @@
         },
         "account": {
           "q": "Cum îmi schimb parola sau închid contul?",
-          "a": "Deschideți <account>Cont</account>. Puteți actualiza parola acolo dacă folosiți autentificarea cu e-mail, gestiona Notoria Pro, exporta un backup sau șterge definitiv contul."
+          "a": "Deschideți <account>Cont</account>. Puteți actualiza parola acolo dacă utilizați autentificarea prin email, gestionați Pro sau Premium, exportați un backup sau ștergeți permanent contul dvs. Ștergerea contului anulează de asemenea imediat orice abonament activ Stripe pe o bază de cel mai bun efort; anularea reînnoirii păstrează contul și datele sale."
         },
         "pro": {
           "q": "Cum funcționează facturarea și anularea?",
-          "a": "Notoria Pro este facturat prin Stripe. Din <account>Cont</account> puteți trece la un plan superior, deschide portalul de client Stripe pentru a gestiona metodele de plată și facturile sau anula reînnoirea."
+          "a": "Notoria Pro și Premium sunt facturate prin Stripe. Din <account>Cont</account> puteți abona, comuta între Pro și Premium, gestiona metodele de plată și facturile, anula reînnoirea sau relua o anulare programată. Anularea reînnoirii păstrează accesul până când Stripe încheie perioada de abonament eligibil; ștergerea contului dvs. este separată și anulează abonamentul imediat pe o bază de cel mai bun efort."
         },
         "proFeatures": {
-          "q": "Ce este gratuit și ce necesită Notoria Pro?",
-          "a": "Practica zilnică de vocabular și instrumentele de studiu aferente sunt disponibile pe planul free. Unele instrumente AI, ascultarea, vorbirea și funcțiile de export de documente fac parte din Notoria Pro. Comparați și treceți la un plan superior din <account>Cont</account>."
+          "q": "Ce este inclus în planurile Gratuito, Pro și Premium?",
+          "a": "Planul Gratuit include zonele de învățare de bază și alocațiile zilnice pentru instrumentele AI suportate. Pro crește sau elimină multe limite AI și adaugă import de materiale de învățare plus export PDF/DOCX. Premium include Pro și adaugă coaching personalizat, un profil de învățare, practică adaptivă și bazată pe greșeli, și instrucțiuni personalizate pentru exerciții. Consultați comparația live și limitele curente în <account>Cont</account>."
         },
         "learning": {
           "q": "Cum funcționează funcțiile de învățare Notoria?",
@@ -4997,7 +5019,7 @@
         "admins": "Administratori",
         "testers": "Testeri",
         "suspended": "Suspendați",
-        "contentTotal": "Content records"
+        "contentTotal": "Înregistrări de conținut"
       },
       "quickAccess": "Acces rapid",
       "quickAccessLede": "Mergi la instrumentele de administrare.",
@@ -5051,7 +5073,7 @@
         "updated": "Actualizat",
         "emailVerified": "E-mail verificat",
         "email": "Email",
-        "password": "Password"
+        "password": "Parolă"
       },
       "detail": {
         "account": "Cont",
@@ -5060,7 +5082,7 @@
         "actions": "Acțiuni asupra contului",
         "workspaces": "Spații de lucru",
         "workspacesLede": "Spații de lucru pe limbă deținute de acest utilizator.",
-        "danger": "Danger zone"
+        "danger": "Zona de pericol"
       },
       "actions": {
         "saveProfile": "Salvează numele",
@@ -5071,7 +5093,7 @@
         "delete": "Șterge contul",
         "grantTester": "Acordă rolul de tester",
         "revokeTester": "Revocă rolul de tester",
-        "create": "Create user"
+        "create": "Creează utilizator"
       },
       "confirm": {
         "grantAdmin": "Acordați acces de administrator acestui cont?",
@@ -5089,11 +5111,11 @@
         "admin": "Administrator"
       },
       "create": {
-        "title": "Create user",
-        "lede": "Provision an account with an email and password. They can sign in immediately."
+        "title": "Creează utilizator",
+        "lede": "Provisionează un cont cu un email și o parolă. Aceștia se pot conecta imediat."
       },
       "plans": {
-        "free": "Free",
+        "free": "Gratuit",
         "pro": "Pro",
         "premium": "Premium"
       }
@@ -5118,7 +5140,7 @@
         "owner": "Proprietar",
         "created": "Creat",
         "updated": "Actualizat",
-        "ownerEmail": "Owner email",
+        "ownerEmail": "Email-ul proprietarului",
         "ownerEmailPlaceholder": "owner@example.com"
       },
       "detail": {
@@ -5136,8 +5158,8 @@
         "delete": "Ștergeți acest spațiu de lucru și tot conținutul de învățare din el prin cascadele bazei de date?"
       },
       "create": {
-        "title": "Create workspace",
-        "lede": "Attach a new language workspace to an existing account by email."
+        "title": "Creează spațiu de lucru",
+        "lede": "Atașează un nou spațiu de lucru lingvistic la un cont existent prin email."
       }
     },
     "content": {
@@ -5160,9 +5182,9 @@
         "workspace": "Spațiu de lucru",
         "created": "Creat",
         "updated": "Actualizat",
-        "title": "Title",
-        "word": "Word",
-        "folderName": "Folder name"
+        "title": "Titlu",
+        "word": "Cuvânt",
+        "folderName": "Numele folderului"
       },
       "detail": {
         "description": "Inspecție de metadate. Conținutul privat nu este încărcat automat.",
@@ -5172,12 +5194,12 @@
       },
       "actions": {
         "delete": "Șterge înregistrarea",
-        "saveTitle": "Save title"
+        "saveTitle": "Salvează titlul"
       },
       "confirm": {
         "delete": "Ștergeți această înregistrare? Rândurile copil asociate urmează regulile de cascadă / set-null ale bazei de date."
       },
-      "inboxEditNote": "Capture items store freeform text. Title editing is not supported here — delete if the record should be removed."
+      "inboxEditNote": "Capturați elemente care stochează text liber. Editarea titlului nu este acceptată aici — ștergeți dacă înregistrarea ar trebui eliminată."
     },
     "jobs": {
       "title": "Sarcini",
@@ -5243,9 +5265,9 @@
       "INVALID_LANGUAGE": "Cod de limbă nevalid.",
       "CONTENT_NOT_FOUND": "Înregistrarea nu a fost găsită.",
       "INVALID_CONTENT_MODULE": "Modul de conținut necunoscut.",
-      "EMAIL_EXISTS": "That email is already registered.",
-      "PASSWORD_TOO_WEAK": "Password does not meet strength requirements.",
-      "CONTENT_TITLE_UNSUPPORTED": "This content type does not support title editing."
+      "EMAIL_EXISTS": "Acest email este deja înregistrat.",
+      "PASSWORD_TOO_WEAK": "Parola nu îndeplinește cerințele de securitate.",
+      "CONTENT_TITLE_UNSUPPORTED": "Acest tip de conținut nu acceptă editarea titlului."
     }
   }
 }

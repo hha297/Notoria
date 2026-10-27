@@ -1036,6 +1036,9 @@ export const exerciseImports = pgTable(
     mimeType: text("mime_type"),
     extractedText: text("extracted_text"),
     analysis: jsonb("analysis"),
+    /** Missing/legacy values are interpreted as fill_blank by serializers. */
+    questionType: text("question_type").notNull().default("fill_blank"),
+    additionalInstructions: text("additional_instructions"),
     status: exerciseImportStatusEnum("status").notNull().default("UPLOADING"),
     errorCode: text("error_code"),
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -1048,6 +1051,10 @@ export const exerciseImports = pgTable(
   (table) => [
     index("exercise_imports_workspace_id_idx").on(table.workspaceId),
     index("exercise_imports_user_id_idx").on(table.userId),
+    check(
+      "exercise_imports_question_type_check",
+      sql`${table.questionType} in ('fill_blank', 'multiple_choice')`,
+    ),
     index("exercise_imports_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.extractedText}, ''))`,
@@ -1495,6 +1502,38 @@ export const aiJobLocks = pgTable(
       "ai_job_locks_status_check",
       sql`${table.status} in ('running', 'completed', 'failed', 'released')`,
     ),
+  ],
+);
+
+/** Unsubmitted AI exercise batches, restored across tabs/devices for 24 hours. */
+export const aiExerciseDrafts = pgTable(
+  "ai_exercise_drafts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    draftKey: text("draft_key").notNull(),
+    scopeKey: text("scope_key").notNull(),
+    payload: jsonb("payload").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_exercise_drafts_user_key_unique").on(
+      table.userId,
+      table.draftKey,
+    ),
+    index("ai_exercise_drafts_user_scope_idx").on(
+      table.userId,
+      table.scopeKey,
+    ),
+    index("ai_exercise_drafts_expires_at_idx").on(table.expiresAt),
   ],
 );
 

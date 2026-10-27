@@ -94,6 +94,7 @@ export function MeaningUsageTrigger({
           {MEANING_USAGE_IDS.map((id) => (
             <DropdownMenuCheckboxItem
               key={id}
+              data-usage-id={id}
               checked={value.includes(id)}
               className="cursor-pointer"
               onCheckedChange={() => toggle(id)}

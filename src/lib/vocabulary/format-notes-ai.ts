@@ -126,9 +126,10 @@ export async function formatVocabularyNotesWithAi(
   const notes = clipForAi(input.notes, AI_INPUT_LIMITS.vocabNotes);
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o",
+    model: "gpt-5.6-terra",
+    reasoning_effort: "none",
     temperature: 0.1,
-    max_tokens: AI_OUTPUT_TOKENS.vocabNotesFormat,
+    max_completion_tokens: AI_OUTPUT_TOKENS.vocabNotesFormat,
     response_format: { type: "json_object" },
     messages: [
       { role: "system", content: notesFormatSystemPrompt() },

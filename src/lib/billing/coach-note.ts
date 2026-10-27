@@ -87,9 +87,10 @@ async function generateAiCoachNote(facts: CoachFacts) {
     );
 
     const response = await client.chat.completions.create({
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-luna",
+      reasoning_effort: "none",
       temperature: 0.2,
-      max_tokens: AI_OUTPUT_TOKENS.coachNote,
+      max_completion_tokens: AI_OUTPUT_TOKENS.coachNote,
       response_format: { type: "json_object" },
       messages: [
         { role: "system", content: system },
