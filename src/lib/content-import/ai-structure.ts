@@ -1,8 +1,4 @@
-import {
-  AI_INPUT_LIMITS,
-  AI_OUTPUT_TOKENS,
-  clipForAi,
-} from "@/lib/ai/bounds";
+import { AI_INPUT_LIMITS, AI_OUTPUT_TOKENS, clipForAi } from "@/lib/ai/bounds";
 import { createOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import type {
@@ -66,9 +62,10 @@ export async function structureVocabularyWithAi(
   const clipped = clipForAi(text, AI_INPUT_LIMITS.contentImport);
   const usageIdList = MEANING_USAGE_IDS.join(", ");
   const response = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-luna",
+    reasoning_effort: "none",
     temperature: 0.1,
-    max_tokens: AI_OUTPUT_TOKENS.contentImport,
+    max_completion_tokens: AI_OUTPUT_TOKENS.contentImport,
     response_format: { type: "json_object" },
     messages: [
       {
@@ -127,9 +124,9 @@ ${clipped}`,
         meaningsFromArray.length > 0
           ? meaningsFromArray
           : item.meaning
-            ? [{ meaning: String(item.meaning).trim(), usageLabels: [] }].filter(
-                (m) => m.meaning,
-              )
+            ? [
+                { meaning: String(item.meaning).trim(), usageLabels: [] },
+              ].filter((m) => m.meaning)
             : [];
       const examples =
         Array.isArray(item.examples) && item.examples.length > 0
@@ -158,9 +155,7 @@ ${clipped}`,
       return {
         word,
         meanings,
-        partOfSpeech: item.partOfSpeech
-          ? String(item.partOfSpeech)
-          : undefined,
+        partOfSpeech: item.partOfSpeech ? String(item.partOfSpeech) : undefined,
         examples,
         tags: Array.isArray(item.tags)
           ? item.tags.map(String).filter(Boolean)

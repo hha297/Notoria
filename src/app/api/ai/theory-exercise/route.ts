@@ -3,7 +3,7 @@ import { z } from "zod";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { authErrorResponse } from "@/lib/auth/http";
 import { getFlashcardWords } from "@/lib/actions/flashcards";
-import { getTheoryNote } from "@/lib/actions/theory";
+import { getTheoryNoteForExercise } from "@/lib/actions/theory";
 import { generateAiTheoryExercises } from "@/lib/theory-exercises/ai";
 import { parseTheoryContent } from "@/lib/theory/content";
 import { locales } from "@/i18n/config";
@@ -15,7 +15,6 @@ import {
   exerciseJobInProgressResponse,
   runExclusiveExerciseGeneration,
 } from "@/lib/exercises/next-set-job";
-import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import { theoryQuestionTypeSchema } from "@/lib/theory-exercises/question-type";
 
 export const runtime = "nodejs";
@@ -51,7 +50,7 @@ export async function POST(request: Request) {
     );
   }
 
-  const note = await getTheoryNote(parsed.data.theoryId);
+  const note = await getTheoryNoteForExercise(parsed.data.theoryId);
   if (!note) {
     return NextResponse.json({ ok: false, code: "NOT_FOUND" }, { status: 404 });
   }
@@ -79,7 +78,7 @@ export async function POST(request: Request) {
   const nextSet = parsed.data.nextSet;
   const sessionId = nextSet?.sessionId ?? `oneshot-${user.id}`;
   const sequence = nextSet?.sequence ?? 0;
-  const count = parsed.data.count ?? DEFAULT_NEXT_SET_COUNT;
+  const count = parsed.data.count ?? 15;
   const revision =
     note.updatedAt instanceof Date
       ? note.updatedAt.toISOString()

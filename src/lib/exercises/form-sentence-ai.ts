@@ -36,9 +36,10 @@ export async function evaluateFormSentence(
   const client = getOpenAIClient();
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-terra",
+    reasoning_effort: "none",
     temperature: 0.2,
-    max_tokens: AI_OUTPUT_TOKENS.formSentence,
+    max_completion_tokens: AI_OUTPUT_TOKENS.formSentence,
     response_format: { type: "json_object" },
     messages: [
       {

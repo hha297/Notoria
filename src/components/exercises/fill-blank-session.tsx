@@ -29,6 +29,11 @@ import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { isValidLocale } from "@/i18n/config";
 import { requestExerciseAi } from "@/lib/exercises/ai-client";
+import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
 import type { ExerciseAiFillBlank, ExerciseAiWordInput } from "@/lib/exercises/ai-types";
 import {
   fillBlankExerciseToItem,
@@ -321,6 +326,20 @@ export function FillBlankSession({
     [afterNewSet, resetAttempt],
   );
 
+  const draftIdentity = useMemo(
+    () => ({
+      scope: `workspace:${workspaceId}:fill_blank`,
+      config: JSON.stringify({
+        difficulty,
+        uiLocale,
+        language: language ?? null,
+        filters,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    }),
+    [additionalInstructions, difficulty, filters, language, uiLocale, workspaceId],
+  );
+
   const buildNextPayload = useCallback((): FillBlankNextPayload | null => {
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
@@ -384,6 +403,7 @@ export function FillBlankSession({
       return { ok: true, result: nextItems };
     },
     applyResult: (items) => {
+      void saveExerciseDraft(draftIdentity, items);
       applyGeneratedItems(items);
     },
   });
@@ -414,6 +434,27 @@ export function FillBlankSession({
         setStage("generating");
       }
       try {
+        if (!options?.regenerate && targetSequence === 0 && !aiItems) {
+          const restored = await loadExerciseDraft<FillBlankItem>(draftIdentity);
+          const eligibleIds = new Set(filteredWords.map((word) => word.id));
+          const valid = (restored ?? []).filter(
+            (item) =>
+              item?.id &&
+              item.word &&
+              Array.isArray(item.acceptableAnswers) &&
+              item.acceptableAnswers.length > 0 &&
+              eligibleIds.has(item.wordId),
+          );
+          if (valid.length > 0) {
+            applyGeneratedItems(valid);
+            markGeneratedSequence(targetSequence);
+            if (showProgress) {
+              completeProcessing();
+              window.setTimeout(() => resetProcessing(), 350);
+            }
+            return true;
+          }
+        }
         const result = await requestExerciseAi(
           {
             exerciseType: "fill-in-blank",
@@ -465,6 +506,7 @@ export function FillBlankSession({
         }
 
         if (showProgress) setStage("saving");
+        await saveExerciseDraft(draftIdentity, nextItems);
         applyGeneratedItems(nextItems);
         markGeneratedSequence(targetSequence);
         if (showProgress) {
@@ -487,6 +529,7 @@ export function FillBlankSession({
       buildNextPayload,
       completeProcessing,
       difficulty,
+      draftIdentity,
       exerciseQuota,
       fail,
       filteredWords,
@@ -552,6 +595,7 @@ export function FillBlankSession({
   );
 
   const handleSubmit = () => {
+    if (usingAiGenerated) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const item of practiceItems) {

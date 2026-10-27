@@ -1505,6 +1505,38 @@ export const aiJobLocks = pgTable(
   ],
 );
 
+/** Unsubmitted AI exercise batches, restored across tabs/devices for 24 hours. */
+export const aiExerciseDrafts = pgTable(
+  "ai_exercise_drafts",
+  {
+    id: uuid("id").primaryKey().defaultRandom(),
+    userId: uuid("user_id")
+      .notNull()
+      .references(() => users.id, { onDelete: "cascade" }),
+    draftKey: text("draft_key").notNull(),
+    scopeKey: text("scope_key").notNull(),
+    payload: jsonb("payload").notNull(),
+    expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
+    createdAt: timestamp("created_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+    updatedAt: timestamp("updated_at", { withTimezone: true })
+      .notNull()
+      .defaultNow(),
+  },
+  (table) => [
+    uniqueIndex("ai_exercise_drafts_user_key_unique").on(
+      table.userId,
+      table.draftKey,
+    ),
+    index("ai_exercise_drafts_user_scope_idx").on(
+      table.userId,
+      table.scopeKey,
+    ),
+    index("ai_exercise_drafts_expires_at_idx").on(table.expiresAt),
+  ],
+);
+
 /**
  * Provider-usage telemetry (tokens, latency, outcome, request ids).
  * Separate from quota counters in `ai_usage`. Cost fields are ESTIMATES only.

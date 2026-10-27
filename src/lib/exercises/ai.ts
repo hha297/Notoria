@@ -120,9 +120,10 @@ export async function generateFillBlankExercises(
 
       const completion = await client.chat.completions.create(
         {
-          model: "gpt-4o-mini",
+          model: "gpt-5.6-terra",
+          reasoning_effort: "none",
           temperature: retry ? 0.45 : 0.7,
-          max_tokens: AI_OUTPUT_TOKENS.exerciseFillBlank,
+          max_completion_tokens: AI_OUTPUT_TOKENS.exerciseFillBlank,
           response_format: { type: "json_object" },
           messages: [
             {

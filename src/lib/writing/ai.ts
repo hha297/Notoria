@@ -54,9 +54,10 @@ export async function analyzeWriting(input: WritingAiRequest): Promise<WritingAi
     input.action === "check" || input.action === "correct";
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-terra",
+    reasoning_effort: "none",
     temperature: input.action === "improve" ? 0.35 : 0.15,
-    max_tokens: writingMaxTokens(input.action),
+    max_completion_tokens: writingMaxTokens(input.action),
     response_format: { type: "json_object" },
     messages: [
       {

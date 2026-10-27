@@ -5,7 +5,7 @@ import { getTranslations } from "next-intl/server";
 import { PageHeader } from "@/components/layout/page-header";
 import { TheoryExerciseSessionView } from "@/components/exercises/theory-exercise-session";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
-import { getTheoryNote } from "@/lib/actions/theory";
+import { getTheoryNoteForExercise } from "@/lib/actions/theory";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
 import { parseTheoryContent } from "@/lib/theory/content";
 import { getActiveWorkspace } from "@/lib/workspace";
@@ -50,7 +50,7 @@ export default async function TheoryExercisePracticePage({
     );
   }
 
-  const note = await getTheoryNote(id);
+  const note = await getTheoryNoteForExercise(id);
   if (!note) notFound();
 
   const parsed = parseTheoryContent(note.content);

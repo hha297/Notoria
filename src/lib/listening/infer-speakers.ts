@@ -90,9 +90,10 @@ export async function inferSpeakerDisplayNames(input: {
     });
     const completion = await client.chat.completions.create(
       {
-        model: "gpt-4o-mini",
+        model: "gpt-5.6-luna",
+        reasoning_effort: "none",
         temperature: 0,
-        max_tokens: AI_OUTPUT_TOKENS.speakerInfer,
+        max_completion_tokens: AI_OUTPUT_TOKENS.speakerInfer,
         response_format: { type: "json_object" },
         messages: [
           {
@@ -159,9 +160,10 @@ export async function assignDialogueSpeakers(input: {
     });
     const completion = await client.chat.completions.create(
       {
-        model: "gpt-4o-mini",
+        model: "gpt-5.6-luna",
+        reasoning_effort: "none",
         temperature: 0,
-        max_tokens: AI_OUTPUT_TOKENS.speakerInfer,
+        max_completion_tokens: AI_OUTPUT_TOKENS.speakerInfer,
         response_format: { type: "json_object" },
         messages: [
           {

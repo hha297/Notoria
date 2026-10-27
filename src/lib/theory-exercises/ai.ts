@@ -25,7 +25,6 @@ import {
   theoryAiResponseSchema,
   type TheoryAiExerciseDraft,
 } from "@/lib/theory-exercises/generate-ai";
-import { validateTheoryExercisesSemantically } from "@/lib/theory-exercises/semantic-validate";
 import {
   extractTheoryGenerationMaterial,
   maxExampleReuseAllowed,
@@ -42,7 +41,7 @@ import type { AppLocale } from "@/i18n/config";
 import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 function getOpenAIClient() {
-  // Interactive theory sets are lean (~10 items); keep the SDK timeout below
+  // Interactive theory sets are bounded (up to 15 returned items); keep the SDK timeout below
   // the app deadline so a hung provider call fails fast enough to recover.
   return requireOpenAiClient({ timeoutMs: 75_000 });
 }
@@ -180,9 +179,10 @@ async function requestExerciseBatch(input: {
     );
     completion = await input.client.chat.completions.create(
       {
-        model: "gpt-4o-mini",
+        model: "gpt-5.6-luna",
+        reasoning_effort: "none",
         temperature: 0.7,
-        max_tokens: maxTokens,
+        max_completion_tokens: maxTokens,
         response_format: { type: "json_object" },
         messages: [
           {
@@ -254,7 +254,7 @@ async function requestExerciseBatch(input: {
 
 /**
  * AI-only Theory exercise generation. Invents practice material; Theory only supplies the rule.
- * Parallel batches + optional refill so sets reach the requested 20–30 size.
+ * Runs one provider generation request and applies deterministic local mapping.
  */
 export async function generateAiTheoryExercises(input: {
   theoryId: string;
@@ -273,12 +273,11 @@ export async function generateAiTheoryExercises(input: {
     return [];
   }
 
-  /**
-   * Interactive default is a lean 10-item set. Keep provider work to one
-   * generation pass + a time-boxed semantic check so wall time stays under ~1 min.
-   */
-  const MIN_PRACTICE_SET = 8;
-  const count = Math.min(Math.max(input.count ?? 10, 1), 20);
+  // Interactive Theory targets 15 usable questions from one provider request.
+  const count = Math.min(
+    Math.max(input.count ?? 15, 1),
+    20,
+  );
   const deadline = createAiDeadline(AI_DEADLINES_MS.theoryGenerate);
   const exampleLexemes = material.exampleLexemes;
   const mapOpts = {
@@ -331,11 +330,11 @@ export async function generateAiTheoryExercises(input: {
       signal: deadline.signal,
     };
 
-    // Ask for exactly the set size — over-requesting balloons output tokens.
-    const primarySize = count;
+    // Use the full single-call batch as a buffer. Local structural validation may
+    // reject malformed or duplicate drafts; we still return at most `count`.
+    const primarySize = 20;
     const rejections: unknown[] = [];
     let drafts: TheoryAiExerciseDraft[] = [];
-    let theoryFocus: string | undefined;
 
     try {
       const primary = await requestExerciseBatch({
@@ -344,7 +343,6 @@ export async function generateAiTheoryExercises(input: {
         batchIndex: 1,
       });
       drafts = primary.exercises;
-      theoryFocus = primary.theoryFocus?.trim();
     } catch (error) {
       rejections.push(error);
       if (isDeadlineExceeded(error) || deadline.expired()) {
@@ -352,90 +350,7 @@ export async function generateAiTheoryExercises(input: {
       }
     }
 
-    const selectedQuestionType = input.questionType ?? "fill_blank";
-    const SEMANTIC_BUDGET_MS =
-      selectedQuestionType === "multiple_choice" ? 10_000 : 20_000;
-    const applySemantic = async (candidates: TheoryExercise[]) => {
-      if (candidates.length === 0 || deadline.expired()) return candidates;
-      try {
-        deadline.throwIfExpired();
-        const judge = validateTheoryExercisesSemantically({
-          items: candidates.slice(0, count),
-          theoryTitle: title,
-          theoryFocus,
-          theoryRules,
-          studyLanguage,
-          signal: deadline.signal,
-        });
-        const timedOut = new Promise<TheoryExercise[]>((resolve) => {
-          const timer = setTimeout(
-            () => resolve(candidates.slice(0, count)),
-            SEMANTIC_BUDGET_MS,
-          );
-          timer.unref?.();
-        });
-        const accepted = await Promise.race([judge, timedOut]);
-        return accepted.slice(0, count);
-      } catch (error) {
-        if (isDeadlineExceeded(error) || deadline.expired()) {
-          return candidates.slice(0, count);
-        }
-        // Structural items are already mapped — prefer returning them over failing.
-        console.error("theory semantic skipped after error");
-        return candidates.slice(0, count);
-      }
-    };
-
-    let items = await applySemantic(mapDrafts(drafts, count));
-
-    // One short refill only when the set is badly short (not a second full round).
-    // Multiple-choice generation already requests four choices per item and
-    // runs semantic validation. Do not launch a second provider batch merely
-    // because the judge kept fewer than eight cards; that doubled latency and
-    // could push a format switch close to the request deadline.
-    const needAtLeast = Math.min(
-      count,
-      selectedQuestionType === "multiple_choice" ? 1 : MIN_PRACTICE_SET,
-    );
-    if (items.length < needAtLeast && !deadline.expired()) {
-      const avoid = [
-        ...drafts.map((d) => d.sentence).filter((s): s is string => Boolean(s)),
-        ...drafts
-          .map((d) => d.completedSentence)
-          .filter((s): s is string => Boolean(s)),
-        ...items
-          .filter(
-            (item): item is TheoryFillBlankExercise =>
-              item.type === "fill_blank",
-          )
-          .map((item) => item.completedSentence ?? item.sentence),
-      ];
-      const need = Math.max(needAtLeast - items.length, 4);
-      try {
-        deadline.throwIfExpired();
-        const refill = await requestExerciseBatch({
-          ...batchArgs,
-          maxExercises: Math.min(need, 8),
-          batchIndex: 2,
-          avoidSentences: avoid,
-        });
-        drafts = [...drafts, ...refill.exercises];
-        theoryFocus = theoryFocus ?? refill.theoryFocus?.trim();
-        items = await applySemantic(mapDrafts(drafts, count));
-      } catch (error) {
-        rejections.push(error);
-        if (items.length === 0) {
-          if (isDeadlineExceeded(error) || deadline.expired()) {
-            throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
-          }
-          throw error instanceof Error &&
-            error.message === "AI_INVALID_RESPONSE"
-            ? error
-            : afterProviderError(error);
-        }
-      }
-    }
-
+    const items = mapDrafts(drafts, count);
     if (items.length === 0) {
       const deadlineErr = rejections.find(isDeadlineExceeded);
       if (deadlineErr || deadline.expired()) {

@@ -35,6 +35,11 @@ import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { regenerateExerciseImportQuestionType } from "@/lib/actions/exercise-import";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
+import {
+  deleteExerciseDraft,
+  loadExerciseDraft,
+  saveExerciseDraft,
+} from "@/lib/exercises/ai-draft-client";
 import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
 import {
   isNonEmptyAnswer,
@@ -59,6 +64,14 @@ import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 import { TheoryQuestionTypePicker } from "@/components/exercises/theory-question-type-picker";
 import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
+
+const PROGRESS_STAGE_DWELL_MS = 260;
+
+function dwellOnProgressStage() {
+  return new Promise<void>((resolve) => {
+    window.setTimeout(resolve, PROGRESS_STAGE_DWELL_MS);
+  });
+}
 
 type TheoryNextPayload = {
   theoryIds: string[];
@@ -245,10 +258,27 @@ export function TheoryExerciseSessionView({
     ].slice(0, 3);
     const perTheory =
       theoryIds.length === 1
-        ? DEFAULT_NEXT_SET_COUNT
+        ? 15
         : Math.max(4, Math.ceil(DEFAULT_NEXT_SET_COUNT / theoryIds.length));
     return { theoryIds, perTheory };
   }, [alsoTheoryIds, session.theoryId]);
+
+  const draftIdentity = useMemo(() => {
+    const theoryIds = [
+      session.theoryId,
+      ...alsoTheoryIds.filter((id) => id !== session.theoryId),
+    ]
+      .slice(0, 3)
+      .sort();
+    return {
+      scope: `theory:${theoryIds.join(",")}`,
+      config: JSON.stringify({
+        questionType,
+        uiLocale,
+        additionalInstructions: additionalInstructions.trim(),
+      }),
+    };
+  }, [additionalInstructions, alsoTheoryIds, questionType, session.theoryId, uiLocale]);
 
   const {
     sessionId,
@@ -295,6 +325,7 @@ export function TheoryExerciseSessionView({
       return { ok: true, result: merged };
     },
     applyResult: (nextItems) => {
+      void saveExerciseDraft(draftIdentity, nextItems);
       loadItems(nextItems, true);
     },
   });
@@ -324,6 +355,25 @@ export function TheoryExerciseSessionView({
         ? window.setTimeout(() => controller.abort(), 110_000)
         : null;
       try {
+        if (!options?.regenerate && targetSequence === 0) {
+          const restored = await loadExerciseDraft<TheoryExercise>(draftIdentity);
+          const valid = filterPersistedTheoryExercises(restored ?? []);
+          if (valid.length > 0) {
+            if (showProgress) {
+              setStage("validating");
+              await dwellOnProgressStage();
+              setStage("saving");
+              await dwellOnProgressStage();
+            }
+            loadItems(valid, true);
+            markGeneratedSequence(targetSequence);
+            if (showProgress) {
+              completeProcessing();
+              window.setTimeout(() => resetProcessing(), 350);
+            }
+            return true;
+          }
+        }
         const merged: TheoryExercise[] = [];
         for (const [index, theoryId] of payload.theoryIds.entries()) {
           const result = await requestTheoryExerciseAi(
@@ -374,8 +424,11 @@ export function TheoryExerciseSessionView({
         }
         if (showProgress) {
           setStage("validating");
+          await dwellOnProgressStage();
           setStage("saving");
         }
+        await saveExerciseDraft(draftIdentity, merged);
+        if (showProgress) await dwellOnProgressStage();
         loadItems(merged, true);
         markGeneratedSequence(targetSequence);
         if (showProgress) {
@@ -398,6 +451,7 @@ export function TheoryExerciseSessionView({
     [
       additionalInstructions,
       buildTheoryPayload,
+      draftIdentity,
       completeProcessing,
       exerciseQuota,
       fail,
@@ -430,6 +484,7 @@ export function TheoryExerciseSessionView({
           next,
         );
         setStage("validating");
+        await dwellOnProgressStage();
         if (
           result.questionType !== next ||
           result.exercises.some((exercise) => exercise.type !== next)
@@ -437,6 +492,7 @@ export function TheoryExerciseSessionView({
           throw new Error("QUESTION_TYPE_MISMATCH");
         }
         setStage("saving");
+        await dwellOnProgressStage();
         setQuestionType(result.questionType);
         loadItems(result.exercises, true);
         completeProcessing();
@@ -565,6 +621,7 @@ export function TheoryExerciseSessionView({
   );
 
   const handleSubmit = () => {
+    if (!practiceOnly) void deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers, ids) => {
       const subset = practiceItems.filter((item) => ids.includes(item.id));
       return gradeTheorySet(subset, currentAnswers);

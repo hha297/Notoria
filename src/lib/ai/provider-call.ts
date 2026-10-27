@@ -52,7 +52,7 @@ export async function runChatCompletion(
   assertPaidOpsAllowed({ allowCleanup: input.allowCleanup });
   throwIfAborted(input.signal);
 
-  const model = input.model ?? input.body.model ?? "gpt-4o-mini";
+  const model = input.model ?? input.body.model ?? "gpt-5.6-luna";
   const client = requireOpenAiClient({
     timeoutMs: input.timeoutMs,
     maxRetries: input.maxRetries ?? AI_SDK_MAX_RETRIES,

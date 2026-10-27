@@ -431,9 +431,10 @@ async function requestExerciseJson(input: {
 
   const completion = await input.client.chat.completions.create(
     {
-      model: "gpt-4o-mini",
+      model: "gpt-5.6-terra",
+      reasoning_effort: "none",
       temperature: 0.35,
-      max_tokens: isFillBlank ? 8_000 : 6_000,
+      max_completion_tokens: isFillBlank ? 8_000 : 6_000,
       response_format: { type: "json_object" },
       messages: [
         {

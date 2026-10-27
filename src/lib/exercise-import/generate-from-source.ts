@@ -486,9 +486,10 @@ export async function generateExercisesFromSourceText(input: {
   const sourceText = clipForAi(extractedText, AI_INPUT_LIMITS.importText);
 
   const completion = await client.chat.completions.create({
-    model: "gpt-4o-mini",
+    model: "gpt-5.6-terra",
+    reasoning_effort: "none",
     temperature: 0.2,
-    max_tokens: AI_OUTPUT_TOKENS.importGenerate,
+    max_completion_tokens: AI_OUTPUT_TOKENS.importGenerate,
     response_format: { type: "json_object" },
     messages: [
       {
