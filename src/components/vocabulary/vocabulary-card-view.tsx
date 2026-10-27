@@ -100,7 +100,8 @@ function VocabularyCard({
       </h3>
       <VocabularyMeaningPreview
         word={word}
-        className="mt-2 text-sm leading-relaxed text-muted-foreground"
+        variant="card"
+        className="mt-3"
       />
       {word.tags.length > 0 ? (
         <div className="mt-3">

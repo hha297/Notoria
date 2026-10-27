@@ -2,15 +2,19 @@
 
 import { useTranslations } from "next-intl";
 import { MeaningUsageBadges } from "@/components/vocabulary/meaning-usage-badges";
+import featureStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { mx } from "@/lib/css-module";
 import { MEANING_PREVIEW_LIMIT } from "@/lib/vocabulary/display";
 import { cn } from "@/lib/utils";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
 
 type VocabularyMeaningPreviewProps = {
-  word: VocabularyWordRow;
+  word: Pick<VocabularyWordRow, "meanings">;
   className?: string;
   emptyLabel?: string;
   clamp?: boolean;
+  variant?: "list" | "card";
+  limit?: number;
 };
 
 /**
@@ -21,11 +25,21 @@ export function VocabularyMeaningPreview({
   className,
   emptyLabel,
   clamp = true,
+  variant = "list",
+  limit,
 }: VocabularyMeaningPreviewProps) {
   const t = useTranslations("vocabulary");
-  const meanings = word.meanings.filter((item) => item.meaning.trim());
-  const shown = meanings.slice(0, MEANING_PREVIEW_LIMIT);
-  const extra = Math.max(0, meanings.length - MEANING_PREVIEW_LIMIT);
+  const meanings = word.meanings
+    .filter((item) => item.meaning.trim())
+    .sort((a, b) => {
+      if (Boolean(a.isPrimary) !== Boolean(b.isPrimary)) {
+        return a.isPrimary ? -1 : 1;
+      }
+      return a.sortOrder - b.sortOrder;
+    });
+  const visibleLimit = limit ?? MEANING_PREVIEW_LIMIT;
+  const shown = meanings.slice(0, visibleLimit);
+  const extra = Math.max(0, meanings.length - visibleLimit);
   const title = meanings
     .map((item) => {
       const labels = item.usageLabels?.length
@@ -47,24 +61,57 @@ export function VocabularyMeaningPreview({
     <div
       title={title}
       className={cn(
-        "min-w-0 text-sm leading-snug text-ink/80",
-        clamp && "line-clamp-3",
+        mx(
+          featureStyles,
+          "vocab-meaning-preview",
+          variant === "card"
+            ? "vocab-meaning-preview-card"
+            : "vocab-meaning-preview-list",
+        ),
+        "min-w-0",
         className,
       )}
     >
-      {shown.map((item, index) => (
-        <span key={item.id} className="inline">
-          {index > 0 ? <span className="text-muted-foreground"> · </span> : null}
-          <span className="inline-flex max-w-full flex-wrap items-baseline gap-1">
-            <span>{item.meaning}</span>
-            <MeaningUsageBadges labels={item.usageLabels} limit={2} />
-          </span>
-        </span>
-      ))}
+      <div className={mx(featureStyles, "vocab-meaning-stack")}>
+        {shown.map((item, index) => (
+          <div
+            key={item.id}
+            className={mx(
+              featureStyles,
+              "vocab-meaning-row",
+              item.isPrimary && "vocab-meaning-primary",
+            )}
+          >
+            <span
+              className={mx(featureStyles, "vocab-meaning-marker")}
+              aria-hidden
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <span className={mx(featureStyles, "vocab-meaning-copy")}>
+              <span
+                className={cn(
+                  mx(featureStyles, "vocab-meaning-text"),
+                  clamp && index === 0 && "line-clamp-2",
+                  clamp && index > 0 && "line-clamp-1",
+                )}
+              >
+                {item.meaning}
+              </span>
+              <MeaningUsageBadges labels={item.usageLabels} limit={2} />
+            </span>
+          </div>
+        ))}
+      </div>
       {extra > 0 ? (
-        <span className="ml-1 text-xs text-muted-foreground">
-          {t("moreMeanings", { count: extra })}
-        </span>
+        <div className={mx(featureStyles, "vocab-meaning-more-row")}>
+          <span className={mx(featureStyles, "vocab-meaning-more-marker")}>
+            +
+          </span>
+          <span className={mx(featureStyles, "vocab-meaning-more")}>
+            {t("moreMeanings", { count: extra })}
+          </span>
+        </div>
       ) : null}
     </div>
   );

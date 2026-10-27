@@ -43,7 +43,7 @@ export function VocabularyPagination({
           type="button"
           variant="outline"
           size="sm"
-          className="h-8 px-2"
+          className={cn("h-8 px-2", mx(featureStyles, "vocab-pagination-button"))}
           onClick={() => onPageChange(Math.max(1, page - 1))}
           disabled={page <= 1}
           aria-label={t("previousPage")}
@@ -66,6 +66,11 @@ export function VocabularyPagination({
               size="sm"
               className={cn(
                 "h-8 min-w-8 px-2",
+                mx(
+                  featureStyles,
+                  "vocab-pagination-button",
+                  item === page && "vocab-pagination-button-active",
+                ),
                 item === page && "pointer-events-none",
               )}
               onClick={() => onPageChange(item)}
@@ -80,7 +85,7 @@ export function VocabularyPagination({
           type="button"
           variant="outline"
           size="sm"
-          className="h-8 px-2"
+          className={cn("h-8 px-2", mx(featureStyles, "vocab-pagination-button"))}
           onClick={() => onPageChange(Math.min(totalPages, page + 1))}
           disabled={page >= totalPages}
           aria-label={t("nextPage")}

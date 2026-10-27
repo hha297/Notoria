@@ -30,6 +30,157 @@
 .shell[data-detail="vocab"] {
   --detail-fg: var(--module-vocab-fg);
   --detail-bg: var(--module-vocab-bg);
+  width: min(100%, 76rem);
+  margin-inline: auto;
+  gap: 1rem;
+  padding: 0.25rem 0 2rem;
+}
+
+/* Vocabulary detail ref4: compact command card and stable reading flow. */
+.shell[data-detail="vocab"] {
+  width: min(100%, 78rem);
+  gap: 1rem;
+  padding-bottom: 2.5rem;
+}
+
+.shell[data-detail="vocab"] .header {
+  min-height: 2.75rem;
+  padding: 0;
+}
+
+.shell[data-detail="vocab"] .hero {
+  position: relative;
+  display: flex;
+  min-height: 10.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: clamp(1.35rem, 3vw, 2.1rem);
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 24%, var(--border));
+  border-radius: 1rem;
+  background:
+    linear-gradient(
+      100deg,
+      color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 11%, var(--surface-elevated)),
+      color-mix(in oklab, var(--surface-elevated) 85%, transparent) 58%
+    );
+  box-shadow: 0 0.8rem 2rem color-mix(in oklab, black 7%, transparent);
+}
+
+.shell[data-detail="vocab"] .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.3rem;
+  height: auto;
+  background: var(--vocab-pos-accent, var(--detail-fg));
+}
+
+.shell[data-detail="vocab"] .hero::after {
+  content: "";
+  position: absolute;
+  top: -5rem;
+  right: -3rem;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 16%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2.5rem color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 3%, transparent),
+    0 0 0 5rem color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 2%, transparent);
+  pointer-events: none;
+}
+
+.shell[data-detail="vocab"] .kicker,
+.shell[data-detail="vocab"] .titleRow,
+.shell[data-detail="vocab"] .meta,
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  position: relative;
+  z-index: 1;
+  order: initial;
+  grid-column: auto;
+  grid-row: auto;
+  max-width: 46rem;
+  justify-content: flex-start;
+  justify-self: auto;
+  text-align: left;
+}
+
+.shell[data-detail="vocab"] .kicker {
+  margin: 0 0 0.35rem;
+}
+
+.shell[data-detail="vocab"] .titleRow {
+  margin: 0;
+}
+
+.shell[data-detail="vocab"] .title {
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 740;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.shell[data-detail="vocab"] .meta {
+  margin-top: 1rem;
+}
+
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  margin-top: 0.65rem;
+}
+
+.shell[data-detail="vocab"] .body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+@media (max-width: 639px) {
+  .shell[data-detail="vocab"] .hero {
+    min-height: 0;
+    padding: 1.15rem 1rem 1.25rem 1.2rem;
+    border-radius: 0.75rem;
+  }
+
+  .shell[data-detail="vocab"] .hero::after {
+    display: none;
+  }
+
+  .shell[data-detail="vocab"] .title {
+    font-size: clamp(2rem, 12vw, 3rem);
+  }
+}
+
+.shell[data-detail="vocab"] {
+  width: 100%;
+  max-width: none;
+}
+
+/* All vocabulary metadata follows the active part-of-speech accent. */
+.shell[data-detail="vocab"] .tag {
+  --tag-fg: var(--vocab-pos-accent, var(--detail-fg));
+  --tag-bg: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-bg)) 14%,
+    transparent
+  );
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-fg)) 38%,
+    transparent
+  );
+  background: var(--tag-bg);
+  color: var(--vocab-pos-accent, var(--detail-fg));
+}
+
+/* Ref4 width refinement: let the reading sections use the available canvas. */
+.shell[data-detail="vocab"] {
+  width: 100%;
+  max-width: none;
 }
 
 .shell[data-detail="writing"][data-writing-kind="question_set"] {
@@ -235,6 +386,194 @@
     color-mix(in oklab, var(--detail-fg) 18%, transparent);
 }
 
+.shell[data-detail="vocab"] .body {
+  margin-top: 0;
+  padding-top: 0;
+  border-top: 0;
+}
+
+.shell[data-detail="vocab"] .header {
+  min-height: 2.5rem;
+  padding-inline: 0.15rem;
+}
+
+.shell[data-detail="vocab"] .hero {
+  position: relative;
+  gap: 0.2rem;
+  padding: clamp(1.1rem, 2.5vw, 1.75rem);
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 22%, var(--border));
+  border-radius: 1rem;
+  background:
+    radial-gradient(
+      circle at 100% 0%,
+      color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 16%, transparent),
+      transparent 36%
+    ),
+    color-mix(in oklab, var(--surface-elevated) 78%, transparent);
+  box-shadow:
+    inset 0 1px 0 color-mix(in oklab, white 4%, transparent),
+    0 0.8rem 2.5rem color-mix(in oklab, black 8%, transparent);
+}
+
+.shell[data-detail="vocab"] .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 3px;
+  background: linear-gradient(
+    to bottom,
+    var(--vocab-pos-accent, var(--detail-fg)),
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 18%, transparent)
+  );
+}
+
+.shell[data-detail="vocab"] .title {
+  font-size: clamp(2rem, 4.5vw, 3.25rem);
+  line-height: 1.02;
+}
+
+.shell[data-detail="vocab"] .meta {
+  margin-top: 1rem;
+}
+
+/* Vocabulary detail ref2: an editorial dictionary dossier. */
+.shell[data-detail="vocab"] {
+  width: min(100%, 82rem);
+  gap: 1.15rem;
+}
+
+.shell[data-detail="vocab"] .header {
+  padding: 0 0.35rem;
+  border-bottom: 0;
+}
+
+.shell[data-detail="vocab"] .hero {
+  min-height: 12rem;
+  justify-content: flex-end;
+  padding: clamp(1.35rem, 3.5vw, 2.5rem);
+  border: 0;
+  border-radius: 1.2rem;
+  background:
+    linear-gradient(
+      112deg,
+      color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 15%, var(--surface-elevated)) 0%,
+      color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 5%, var(--surface)) 58%,
+      var(--surface) 100%
+    );
+  box-shadow: inset 0 0 0 1px
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 18%, var(--border));
+}
+
+.shell[data-detail="vocab"] .hero::before {
+  inset: auto 2.5rem 0 2.5rem;
+  width: auto;
+  height: 3px;
+  background: linear-gradient(
+    to right,
+    var(--vocab-pos-accent, var(--detail-fg)),
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 12%, transparent) 72%,
+    transparent
+  );
+}
+
+.shell[data-detail="vocab"] .kicker {
+  order: 2;
+  margin-top: 0.55rem;
+  opacity: 0.8;
+}
+
+.shell[data-detail="vocab"] .titleRow {
+  order: 1;
+  margin-top: 0;
+}
+
+.shell[data-detail="vocab"] .title {
+  font-size: clamp(2.5rem, 6vw, 4.75rem);
+  font-weight: 750;
+  letter-spacing: -0.055em;
+}
+
+.shell[data-detail="vocab"] .meta {
+  order: 3;
+  margin-top: 1.15rem;
+}
+
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  order: 4;
+}
+
+/* Vocabulary detail ref3: a quiet editorial index. */
+.shell[data-detail="vocab"] {
+  width: min(100%, 78rem);
+  gap: 1.35rem;
+}
+
+.shell[data-detail="vocab"] .hero {
+  display: grid;
+  min-height: 0;
+  grid-template-columns: minmax(0, 1fr) auto;
+  grid-template-rows: auto auto auto;
+  gap: 0.4rem 2rem;
+  align-items: end;
+  padding: 1.4rem 0 1.65rem;
+  overflow: visible;
+  border-radius: 0;
+  border-top: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 22%, transparent);
+  border-bottom: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 28%, transparent);
+  background: none;
+  box-shadow: none;
+}
+
+.shell[data-detail="vocab"] .hero::before {
+  inset: auto auto -1px 0;
+  width: min(12rem, 32%);
+  height: 2px;
+  background: var(--vocab-pos-accent, var(--detail-fg));
+}
+
+.shell[data-detail="vocab"] .kicker {
+  grid-column: 1;
+  grid-row: 1;
+  order: initial;
+  margin: 0 0 0.2rem;
+}
+
+.shell[data-detail="vocab"] .titleRow {
+  grid-column: 1;
+  grid-row: 2 / span 2;
+  order: initial;
+  margin: 0;
+}
+
+.shell[data-detail="vocab"] .title {
+  font-size: clamp(2.6rem, 6vw, 5.25rem);
+  font-weight: 720;
+  line-height: 0.96;
+}
+
+.shell[data-detail="vocab"] .meta {
+  grid-column: 2;
+  grid-row: 2;
+  order: initial;
+  justify-content: flex-end;
+  max-width: 24rem;
+  margin: 0;
+}
+
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  grid-column: 2;
+  grid-row: 3;
+  order: initial;
+  justify-self: end;
+  max-width: 28rem;
+  margin-top: 0.25rem;
+  text-align: right;
+}
+
 .panel {
   border: 2px solid
     color-mix(in oklab, var(--detail-fg) 24%, var(--hairline-cloud));
@@ -329,5 +668,170 @@
 
   .status {
     padding: 0.75rem 0.85rem;
+  }
+
+  .shell[data-detail="vocab"] {
+    padding-top: 0;
+  }
+
+  .shell[data-detail="vocab"] .hero {
+    border-radius: 0.8rem;
+  }
+
+  .shell[data-detail="vocab"] .hero {
+    display: flex;
+    align-items: stretch;
+    padding: 1.1rem 0 1.25rem;
+    border-radius: 0;
+  }
+
+  .shell[data-detail="vocab"] .kicker,
+  .shell[data-detail="vocab"] .titleRow,
+  .shell[data-detail="vocab"] .meta,
+  .shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+    order: initial;
+    max-width: none;
+    justify-content: flex-start;
+    justify-self: auto;
+    text-align: left;
+  }
+
+  .shell[data-detail="vocab"] .title {
+    font-size: clamp(2.25rem, 13vw, 3.5rem);
+  }
+}
+
+/* Final ref4 activation; kept last to supersede the earlier design studies. */
+.shell[data-detail="vocab"] {
+  width: 100%;
+  max-width: none;
+  gap: 1rem;
+  padding-bottom: 2.5rem;
+}
+
+.shell[data-detail="vocab"] .tag {
+  --tag-fg: var(--vocab-pos-accent, var(--detail-fg));
+  --tag-bg: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-bg)) 14%,
+    transparent
+  );
+  border-color: color-mix(
+    in oklab,
+    var(--vocab-pos-accent, var(--detail-fg)) 38%,
+    transparent
+  );
+  background: var(--tag-bg);
+  color: var(--vocab-pos-accent, var(--detail-fg));
+}
+
+.shell[data-detail="vocab"] .header {
+  min-height: 2.75rem;
+  padding: 0;
+}
+
+.shell[data-detail="vocab"] .hero {
+  position: relative;
+  display: flex;
+  min-height: 10.5rem;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  gap: 0.2rem;
+  padding: clamp(1.35rem, 3vw, 2.1rem);
+  overflow: hidden;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 24%, var(--border));
+  border-radius: 1rem;
+  background: linear-gradient(
+    100deg,
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 11%, var(--surface-elevated)),
+    color-mix(in oklab, var(--surface-elevated) 85%, transparent) 58%
+  );
+  box-shadow: 0 0.8rem 2rem color-mix(in oklab, black 7%, transparent);
+}
+
+.shell[data-detail="vocab"] .hero::before {
+  content: "";
+  position: absolute;
+  inset: 0 auto 0 0;
+  width: 0.3rem;
+  height: auto;
+  background: var(--vocab-pos-accent, var(--detail-fg));
+}
+
+.shell[data-detail="vocab"] .hero::after {
+  content: "";
+  position: absolute;
+  top: -5rem;
+  right: -3rem;
+  width: 15rem;
+  height: 15rem;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 16%, transparent);
+  border-radius: 50%;
+  box-shadow:
+    0 0 0 2.5rem color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 3%, transparent),
+    0 0 0 5rem color-mix(in oklab, var(--vocab-pos-accent, var(--detail-fg)) 2%, transparent);
+  pointer-events: none;
+}
+
+.shell[data-detail="vocab"] .kicker,
+.shell[data-detail="vocab"] .titleRow,
+.shell[data-detail="vocab"] .meta,
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  position: relative;
+  z-index: 1;
+  order: initial;
+  grid-column: auto;
+  grid-row: auto;
+  max-width: 46rem;
+  justify-content: flex-start;
+  justify-self: auto;
+  text-align: left;
+}
+
+.shell[data-detail="vocab"] .kicker {
+  margin: 0 0 0.35rem;
+}
+
+.shell[data-detail="vocab"] .titleRow {
+  margin: 0;
+}
+
+.shell[data-detail="vocab"] .title {
+  font-size: clamp(2.35rem, 5vw, 4rem);
+  font-weight: 740;
+  line-height: 1;
+  letter-spacing: -0.045em;
+}
+
+.shell[data-detail="vocab"] .meta {
+  margin-top: 1rem;
+}
+
+.shell[data-detail="vocab"] .hero > :last-child:not(.meta) {
+  margin-top: 0.65rem;
+}
+
+.shell[data-detail="vocab"] .body {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+@media (max-width: 639px) {
+  .shell[data-detail="vocab"] .hero {
+    min-height: 0;
+    padding: 1.15rem 1rem 1.25rem 1.2rem;
+    border-radius: 0.75rem;
+  }
+
+  .shell[data-detail="vocab"] .hero::after {
+    display: none;
+  }
+
+  .shell[data-detail="vocab"] .title {
+    font-size: clamp(2rem, 12vw, 3rem);
   }
 }
