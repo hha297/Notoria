@@ -49,13 +49,23 @@ function icuVars(message: string): string[] {
 
   function visit(elements: MessageFormatElement[]) {
     for (const element of elements) {
-      if (element.type >= TYPE.argument && element.type <= TYPE.plural) {
-        vars.add(element.value);
-      }
-      if (element.type === TYPE.select || element.type === TYPE.plural) {
-        Object.values(element.options).forEach((option) => visit(option.value));
-      } else if (element.type === TYPE.tag) {
-        visit(element.children);
+      switch (element.type) {
+        case TYPE.argument:
+        case TYPE.number:
+        case TYPE.date:
+        case TYPE.time:
+          vars.add(element.value);
+          break;
+        case TYPE.select:
+        case TYPE.plural:
+          vars.add(element.value);
+          Object.values(element.options).forEach((option) =>
+            visit(option.value),
+          );
+          break;
+        case TYPE.tag:
+          visit(element.children);
+          break;
       }
     }
   }
