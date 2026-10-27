@@ -63,7 +63,7 @@ export default async function TheoryExercisePracticePage({
   });
 
   return (
-    <div className="mx-auto max-w-5xl space-y-8 pt-2 sm:space-y-10">
+    <div className="w-full min-w-0 max-w-full space-y-3 pt-1 sm:space-y-4">
       <Link
         href="/exercises"
         className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"

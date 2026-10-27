@@ -56,6 +56,11 @@ import {
   titleFromUrl,
 } from "@/lib/exercise-import/utils";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
+import { gateAdditionalInstructions } from "@/lib/exercises/additional-instructions-server";
+import {
+  resolveTheoryQuestionType,
+  type TheoryQuestionType,
+} from "@/lib/theory-exercises/question-type";
 
 /** Prefer chunked Cloudinary upload for large assets (default chunk ≈ 20 MB). */
 const CHUNKED_UPLOAD_THRESHOLD = 20 * 1024 * 1024;
@@ -146,9 +151,7 @@ async function uploadImportAsset(input: {
   }
 
   const cloudinary = configureCloudinary();
-  const resourceType = input.mimeType.startsWith("image/")
-    ? "image"
-    : "raw";
+  const resourceType = input.mimeType.startsWith("image/") ? "image" : "raw";
   const folder = getExerciseImportFolder(input.userId, input.workspaceId);
   const useChunked = input.file.size > CHUNKED_UPLOAD_THRESHOLD;
   const options = {
@@ -343,10 +346,14 @@ export async function createExerciseImportFromUploadedAsset(input: {
   originalFilename: string;
   title?: string;
   byteSize?: number;
+  questionType?: TheoryQuestionType;
+  additionalInstructions?: string | null;
 }) {
   await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const gated = await gateAdditionalInstructions(input.additionalInstructions);
+  if (!gated.ok) throw new Error(gated.code);
 
   const fileUrl = input.fileUrl.trim();
   const filePublicId = input.filePublicId.trim();
@@ -385,6 +392,8 @@ export async function createExerciseImportFromUploadedAsset(input: {
       fileUrl,
       filePublicId,
       mimeType,
+      questionType: resolveTheoryQuestionType(input.questionType),
+      additionalInstructions: gated.text,
       status: "UPLOADING",
     })
     .returning({ id: exerciseImports.id });
@@ -397,6 +406,11 @@ export async function createExerciseImportFromFile(formData: FormData) {
   await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const gated = await gateAdditionalInstructions(
+    formData.get("additionalInstructions"),
+  );
+  if (!gated.ok) throw new Error(gated.code);
+  const questionType = resolveTheoryQuestionType(formData.get("questionType"));
 
   const file = formData.get("file");
   if (!(file instanceof File) || file.size === 0) {
@@ -437,6 +451,8 @@ export async function createExerciseImportFromFile(formData: FormData) {
       fileUrl: uploaded.secure_url,
       filePublicId: uploaded.public_id,
       mimeType,
+      questionType,
+      additionalInstructions: gated.text,
       status: "UPLOADING",
     })
     .returning({ id: exerciseImports.id });
@@ -449,6 +465,11 @@ export async function createExerciseImportFromUrl(formData: FormData) {
   await requireExerciseImportPlan();
   const userId = await getCurrentUserId();
   const workspace = await requireActiveWorkspace();
+  const gated = await gateAdditionalInstructions(
+    formData.get("additionalInstructions"),
+  );
+  if (!gated.ok) throw new Error(gated.code);
+  const questionType = resolveTheoryQuestionType(formData.get("questionType"));
 
   const urlRaw = formData.get("url");
   const url = typeof urlRaw === "string" ? urlRaw.trim() : "";
@@ -470,6 +491,8 @@ export async function createExerciseImportFromUrl(formData: FormData) {
       sourceType: "url",
       title,
       sourceUrl: url.slice(0, 2000),
+      questionType,
+      additionalInstructions: gated.text,
       status: "UPLOADING",
     })
     .returning({ id: exerciseImports.id });
@@ -501,7 +524,10 @@ export async function extractExerciseImport(
   ) {
     return {
       id: row.id,
-      status: row.status === "COMPLETED" ? ("COMPLETED" as const) : ("ANALYZING" as const),
+      status:
+        row.status === "COMPLETED"
+          ? ("COMPLETED" as const)
+          : ("ANALYZING" as const),
       inProgress: false,
     };
   }
@@ -561,11 +587,17 @@ export async function extractExerciseImport(
  */
 export async function generateExerciseImportExercises(
   id: string,
-  options?: { regenerate?: boolean },
+  options?: {
+    regenerate?: boolean;
+    questionType?: TheoryQuestionType;
+  },
 ) {
   await requireAiAssistanceEnabled();
   const { row, workspace } = await requireOwnedImport(id);
   const regenerate = options?.regenerate === true;
+  const questionType = resolveTheoryQuestionType(
+    options?.questionType ?? row.questionType,
+  );
 
   if (!regenerate && row.status === "COMPLETED" && row.exercises.length > 0) {
     return { id: row.id, status: "COMPLETED" as const, inProgress: false };
@@ -607,9 +639,14 @@ export async function generateExerciseImportExercises(
           title: row.title,
           extractedText: text,
           studyLanguage: workspace.language,
+          questionType,
+          additionalInstructions: row.additionalInstructions,
         });
 
         if (exercises.length === 0) {
+          throw new ExerciseImportError("GENERATION_FAILED");
+        }
+        if (exercises.some((exercise) => exercise.type !== questionType)) {
           throw new ExerciseImportError("GENERATION_FAILED");
         }
         if (!(await stillOwner())) throw new JobLockLostError();
@@ -630,6 +667,7 @@ export async function generateExerciseImportExercises(
           await tx
             .update(exerciseImports)
             .set({
+              questionType,
               status: "COMPLETED",
               errorCode: null,
               updatedAt: new Date(),
@@ -658,6 +696,68 @@ export async function generateExerciseImportExercises(
   return outcome.result;
 }
 
+/** Regenerate a completed import in another supported question format. */
+export async function regenerateExerciseImportQuestionType(
+  id: string,
+  requestedQuestionType: TheoryQuestionType,
+) {
+  const { row } = await requireOwnedImport(id);
+  const questionType = resolveTheoryQuestionType(requestedQuestionType);
+
+  if (
+    resolveTheoryQuestionType(row.questionType) === questionType &&
+    row.status === "COMPLETED" &&
+    row.exercises.length > 0 &&
+    row.exercises.every((exercise) => exercise.type === questionType)
+  ) {
+    return {
+      questionType,
+      exercises: toImportDetail(row).exercises,
+    };
+  }
+
+  const generateLock = await readJobLock(AI_JOBS.exerciseImportGenerate, id);
+  if (jobLockIsActive(generateLock)) {
+    throw new ExerciseImportError("ALREADY_PROCESSING");
+  }
+
+  const previous = {
+    questionType: resolveTheoryQuestionType(row.questionType),
+    status: row.status,
+    errorCode: row.errorCode,
+  };
+
+  try {
+    const generated = await generateExerciseImportExercises(id, {
+      regenerate: true,
+      questionType,
+    });
+    if (generated.inProgress) {
+      throw new ExerciseImportError("ALREADY_PROCESSING");
+    }
+
+    const { row: refreshed } = await requireOwnedImport(id);
+    return {
+      questionType: resolveTheoryQuestionType(refreshed.questionType),
+      exercises: toImportDetail(refreshed).exercises,
+    };
+  } catch (error) {
+    // Generation replaces importedExercises only after a complete valid set is
+    // ready. Restore the import metadata so the previous set remains usable.
+    await db
+      .update(exerciseImports)
+      .set({
+        questionType: previous.questionType,
+        status: previous.status,
+        errorCode: previous.errorCode,
+        updatedAt: new Date(),
+      })
+      .where(eq(exerciseImports.id, id));
+    revalidateImports(id);
+    throw error;
+  }
+}
+
 /**
  * Extract content → generate exercises → persist.
  * Prefer calling extract + generate separately from the client for status UI.
@@ -667,7 +767,8 @@ export async function processExerciseImport(
   options?: { regenerate?: boolean },
 ) {
   const extracted = await extractExerciseImport(id, options);
-  if (extracted.inProgress || extracted.status === "COMPLETED") return extracted;
+  if (extracted.inProgress || extracted.status === "COMPLETED")
+    return extracted;
   return generateExerciseImportExercises(id, options);
 }
 

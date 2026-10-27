@@ -684,6 +684,11 @@
     "updated": "Обновлено",
     "backToStudio": "К упражнениям",
     "studyMode": "Режим изучения",
+    "questionTypeLabel": "Тип вопроса",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Сложность",
       "easy": "Легко",

@@ -684,6 +684,11 @@
     "updated": "Đã cập nhật",
     "backToStudio": "Về trang luyện tập",
     "studyMode": "Kiểu học",
+    "questionTypeLabel": "Loại câu hỏi",
+    "questionTypeOptions": {
+      "fill_blank": "Nhập từ hoặc cụm từ còn thiếu vào mỗi câu.",
+      "multiple_choice": "Chọn đáp án đúng trong bốn lựa chọn."
+    },
     "difficulty": {
       "label": "Độ khó",
       "easy": "Dễ",

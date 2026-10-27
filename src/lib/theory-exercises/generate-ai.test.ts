@@ -17,6 +17,146 @@ import {
 } from "@/lib/theory-exercises/semantic-validate";
 
 describe("AI theory exercise mapping", () => {
+  it("keeps only the selected question type", () => {
+    const drafts = [
+      {
+        type: "multiple_choice" as const,
+        learningObjective: "Choose the form required by the rule",
+        targetType: "concept" as const,
+        prompt: "Which form follows the rule?",
+        options: ["one", "two", "three", "four"],
+        correctOption: "three",
+        hint: "Apply the rule before choosing.",
+      },
+      {
+        type: "fill_blank" as const,
+        learningObjective: "Complete the form required by the rule",
+        targetType: "concept" as const,
+        sentence: "This is ________ today.",
+        completedSentence: "This is ready today.",
+        answer: "ready",
+        hint: "Apply the rule to the missing word.",
+      },
+    ];
+
+    const multipleChoice = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      drafts,
+      "Rule",
+      10,
+      { questionType: "multiple_choice" },
+    );
+    expect(multipleChoice).toHaveLength(1);
+    expect(multipleChoice[0]?.type).toBe("multiple_choice");
+
+    const fillBlank = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      drafts,
+      "Rule",
+      10,
+      { questionType: "fill_blank" },
+    );
+    expect(fillBlank.every((item) => item.type === "fill_blank")).toBe(true);
+  });
+
+  it("requires exactly four distinct multiple-choice options", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "multiple_choice",
+          learningObjective: "Choose the correct form",
+          targetType: "concept",
+          prompt: "Which option is correct?",
+          options: ["same", "same", "other", "last"],
+          correctOption: "same",
+          hint: "Use the theory rule.",
+        },
+      ],
+      "Rule",
+      10,
+      { questionType: "multiple_choice" },
+    );
+
+    expect(items).toEqual([]);
+  });
+
+  it("uses a cloze sentence as the multiple-choice prompt", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "multiple_choice",
+          learningObjective: "Choose the form required by the rule",
+          targetType: "full_word",
+          sentence: "Lapset leikkivät ________.",
+          options: ["puisto", "puistot", "puistossa", "puistoissa"],
+          correctOption: "puistoissa",
+          hint: "Use the plural form required by the sentence.",
+        },
+      ],
+      "Plural rule",
+      10,
+      { questionType: "multiple_choice" },
+    );
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({
+      type: "multiple_choice",
+      prompt: "Lapset leikkivät ________.",
+      correctOption: "puistoissa",
+    });
+  });
+  it("rejects an English multiple-choice card for a Finnish workspace", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "multiple_choice",
+          learningObjective: "Choose the correct noun form for this sentence.",
+          targetType: "full_word",
+          prompt: "Which word belongs in the blank?",
+          instruction: "Choose the correct answer.",
+          options: ["house", "street", "school", "garden"],
+          correctOption: "house",
+          hint: "Read the sentence and choose the best answer.",
+        },
+      ],
+      "Nominien taivutus",
+      10,
+      { questionType: "multiple_choice", studyLanguage: "fi" },
+    );
+
+    expect(items).toEqual([]);
+  });
+
+  it("keeps a Finnish multiple-choice card for a Finnish workspace", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "multiple_choice",
+          learningObjective: "Valitse lauseeseen sopiva muoto.",
+          targetType: "full_word",
+          prompt: "Huomenna menen ________ opiskelemaan.",
+          instruction: "Valitse oikea vaihtoehto.",
+          options: ["kouluun", "koulussa", "koulusta", "koululla"],
+          correctOption: "kouluun",
+          hint: "Liike kohti paikkaa vaatii tulosijan.",
+        },
+      ],
+      "Paikallissijat",
+      10,
+      { questionType: "multiple_choice", studyLanguage: "fi" },
+    );
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({
+      type: "multiple_choice",
+      correctOption: "kouluun",
+    });
+  });
+
   it("maps fill_blank drafts with accepted answers and hints", () => {
     const items = mapAiDraftsToTheoryExercises(
       "theory_1",
@@ -308,7 +448,9 @@ describe("AI theory exercise mapping", () => {
   });
 
   it("extracts a base-word cue already stuck in the hint for display", () => {
-    const recovered = extractSourceWordCueFromHint("Muista lisätä -mpi. (suuri)");
+    const recovered = extractSourceWordCueFromHint(
+      "Muista lisätä -mpi. (suuri)",
+    );
     expect(recovered.cue).toBe("suuri");
     expect(recovered.hint.toLowerCase()).not.toContain("suuri");
     expect(recovered.hint).toContain("-mpi");
@@ -514,9 +656,7 @@ describe("AI theory exercise mapping", () => {
   });
 
   it("accepts legitimate casing variants without accepting the lemma", () => {
-    expect(
-      answersMatchAny("Alphas", ["alphas"]),
-    ).toBe(true);
+    expect(answersMatchAny("Alphas", ["alphas"])).toBe(true);
     expect(answersMatchAny("alpha", ["alphas"])).toBe(false);
   });
 
@@ -711,6 +851,3 @@ describe("AI theory exercise mapping", () => {
     ).toBe(true);
   });
 });
-
-
-

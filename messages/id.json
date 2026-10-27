@@ -684,6 +684,11 @@
     "updated": "Diperbarui",
     "backToStudio": "Kembali ke exercises",
     "studyMode": "Mode belajar",
+    "questionTypeLabel": "Jenis pertanyaan",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Tingkat kesulitan",
       "easy": "Mudah",

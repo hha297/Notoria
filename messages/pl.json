@@ -684,6 +684,11 @@
     "updated": "Zaktualizowano",
     "backToStudio": "Wróć do ćwiczeń",
     "studyMode": "Tryb nauki",
+    "questionTypeLabel": "Typ pytania",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Trudność",
       "easy": "Łatwy",

@@ -12,6 +12,7 @@ import type {
   TheoryMultipleChoiceExercise,
   TheoryTransformationExercise,
 } from "@/lib/theory-exercises/types";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 export const theoryLearningTargetTypeSchema = z.enum([
   "suffix",
@@ -53,6 +54,15 @@ export const theoryAiResponseSchema = z.object({
 });
 
 export type TheoryAiExerciseDraft = z.infer<typeof theoryAiExerciseSchema>;
+
+function shuffled<T>(values: readonly T[]): T[] {
+  const next = [...values];
+  for (let index = next.length - 1; index > 0; index -= 1) {
+    const picked = Math.floor(Math.random() * (index + 1));
+    [next[index], next[picked]] = [next[picked]!, next[index]!];
+  }
+  return next;
+}
 
 const BLANK = "________";
 
@@ -147,13 +157,19 @@ export function resolveFullWordAnswer(input: {
   const looksLikeFullForm =
     !source ||
     answer.length > 6 ||
-    answer.toLowerCase().startsWith(source.slice(0, Math.min(3, source.length)).toLowerCase()) ||
-    source.toLowerCase().startsWith(answer.slice(0, Math.min(3, answer.length)).toLowerCase());
+    answer
+      .toLowerCase()
+      .startsWith(source.slice(0, Math.min(3, source.length)).toLowerCase()) ||
+    source
+      .toLowerCase()
+      .startsWith(answer.slice(0, Math.min(3, answer.length)).toLowerCase());
 
   if (!source || looksLikeFullForm) return answer;
 
   // Affix-only answer — recover full token from completed sentence.
-  const completed = input.completedSentence ? normalize(input.completedSentence) : "";
+  const completed = input.completedSentence
+    ? normalize(input.completedSentence)
+    : "";
   if (completed) {
     const tokens = completed.split(/\s+/).map(stripEdges).filter(Boolean);
     const hit = tokens.find((token) => {
@@ -279,11 +295,17 @@ export function scrubFillBlankPresentation(input: {
 
   if (answerKey) {
     // Drop trailing prefix token that already is the answer (… historiasta ________).
-    const prefixLeak = new RegExp(`(?:^|\\s)(${escapeRegExp(answer)})\\s*$`, "iu");
+    const prefixLeak = new RegExp(
+      `(?:^|\\s)(${escapeRegExp(answer)})\\s*$`,
+      "iu",
+    );
     prefix = prefix.replace(prefixLeak, "").trimEnd();
 
     // Drop leading suffix token that repeats the answer (________ historiasta.).
-    const suffixLeak = new RegExp(`^(${escapeRegExp(answer)})([.!?…]*)(?:\\s+|$)`, "iu");
+    const suffixLeak = new RegExp(
+      `^(${escapeRegExp(answer)})([.!?…]*)(?:\\s+|$)`,
+      "iu",
+    );
     const match = suffix.match(suffixLeak);
     if (match) {
       const punct = match[2] ?? "";
@@ -291,7 +313,8 @@ export function scrubFillBlankPresentation(input: {
     }
   }
 
-  const joinTail = (tail: string) => (tail ? (/^[.,:;!?]/.test(tail) ? tail : ` ${tail}`) : "");
+  const joinTail = (tail: string) =>
+    tail ? (/^[.,:;!?]/.test(tail) ? tail : ` ${tail}`) : "";
   const sentence = normalize(
     `${prefix} ${BLANK}${joinTail(suffix)}`.replace(/\s+([.,:;!?])/g, "$1"),
   );
@@ -414,7 +437,11 @@ export function hasEnoughPreAnswerContext(input: {
     return true;
   }
   // Concept/structure items may be shorter if the hint carries the task.
-  if (!input.needsSourceWord && input.hint.trim().length >= 8 && tokens.length >= 1) {
+  if (
+    !input.needsSourceWord &&
+    input.hint.trim().length >= 8 &&
+    tokens.length >= 1
+  ) {
     return true;
   }
   return false;
@@ -476,7 +503,9 @@ export function instructionUnanswerable(input: {
 }): boolean {
   if (!input.needsSourceWord) return false;
   if (!input.sourceWord?.trim()) return true;
-  const task = normalize(input.instruction ?? "") || normalize(input.learningObjective ?? "");
+  const task =
+    normalize(input.instruction ?? "") ||
+    normalize(input.learningObjective ?? "");
   return task.length < 8;
 }
 
@@ -486,7 +515,11 @@ export function looksLikeMetaLabel(value: string): boolean {
   if (t.includes("/")) return true;
   if (/\?$/.test(t)) return true;
   if (/[+→⇒]/.test(t)) return true;
-  if (/^[\p{Lu}\p{M}\s?]{2,16}$/u.test(t) && t === t.toUpperCase() && t.length <= 12) {
+  if (
+    /^[\p{Lu}\p{M}\s?]{2,16}$/u.test(t) &&
+    t === t.toUpperCase() &&
+    t.length <= 12
+  ) {
     return true;
   }
   return false;
@@ -564,7 +597,8 @@ export function dedupeTheoryExercises(
 function isFullWordBlank(sentence: string): boolean {
   const split = splitSentenceBlank(sentence);
   if (!split) return false;
-  if (/\S$/.test(split.before) && /[\p{L}\p{N}]$/u.test(split.before)) return false;
+  if (/\S$/.test(split.before) && /[\p{L}\p{N}]$/u.test(split.before))
+    return false;
   if (/^[\p{L}\p{N}]/u.test(split.after)) return false;
   return true;
 }
@@ -676,7 +710,9 @@ export function isValidTheoryExercise(item: TheoryExercise): boolean {
   }
   if (item.type === "transformation") {
     if (!item.promptWord.trim() || !item.answer.trim()) return false;
-    if (normalizeAnswerKey(item.promptWord) === normalizeAnswerKey(item.answer)) {
+    if (
+      normalizeAnswerKey(item.promptWord) === normalizeAnswerKey(item.answer)
+    ) {
       return false;
     }
     if (looksLikeMetaLabel(item.answer)) return false;
@@ -696,13 +732,19 @@ export function isValidTheoryExercise(item: TheoryExercise): boolean {
     return item.acceptedAnswers.length > 0;
   }
   if (item.type === "multiple_choice") {
-    if (item.options.length < 2) return false;
-    if (!item.options.includes(item.correctOption)) return false;
+    if (item.options.length !== 4) return false;
+    const optionKeys = item.options.map(normalizeAnswerKey);
+    if (new Set(optionKeys).size !== 4) return false;
+    if (!optionKeys.includes(normalizeAnswerKey(item.correctOption)))
+      return false;
     if (looksLikeMetaLabel(item.correctOption)) return false;
     if (item.options.some(looksLikeMetaLabel)) return false;
     if (hintLeaksAnswer(item.hint ?? "", item.correctOption)) return false;
-    // Prompt must give enough to choose without guessing.
-    if (letterTokens(item.prompt).length < 3) return false;
+    // A cloze sentence can be short (e.g. "Menen ________.") while the
+    // four options still make the task fully answerable.
+    const promptTokens = letterTokens(item.prompt).length;
+    if (promptTokens < 1) return false;
+    if (!/_{3,}/.test(item.prompt) && promptTokens < 3) return false;
     return true;
   }
   return false;
@@ -738,9 +780,7 @@ export function isWrongStudyLanguageSentence(
   const lang = studyLanguage.trim().toLowerCase();
   if (/^(en|eng|english|anglais|tiếng anh)/.test(lang)) return false;
 
-  const stripped = sentence
-    .replace(/_{3,}/g, " ")
-    .replace(/\([^)]*\)/g, " ");
+  const stripped = sentence.replace(/_{3,}/g, " ").replace(/\([^)]*\)/g, " ");
   const words = stripped.match(/\b[a-zA-Z']+\b/g) ?? [];
   if (words.length < 3) return false;
 
@@ -830,6 +870,8 @@ function effectiveTargetType(
 export type MapAiDraftsOptions = {
   studyLanguage?: string;
   exampleLexemes?: readonly string[];
+  /** Restrict output to the learner-selected question format. */
+  questionType?: TheoryQuestionType;
   /** When provided, overrides draft.materialSource for example-reuse accounting. */
   material?: Pick<TheoryGenerationMaterial, "exampleLexemes">;
 };
@@ -875,13 +917,15 @@ export function mapAiDraftsToTheoryExercises(
   const skill = fallbackSkill?.trim() || undefined;
 
   for (const draft of drafts) {
+    if (options.questionType && draft.type !== options.questionType) continue;
     const skillLabel = draft.skillLabel ?? skill;
     const hint = draft.hint.trim();
     const explanation = draft.explanation?.trim() || undefined;
     const learningObjective = draft.learningObjective.trim();
     const targetType = draft.targetType;
     const completedSentence = draft.completedSentence?.trim() || undefined;
-    let sourceWord = draft.sourceWord?.trim() || draft.promptWord?.trim() || undefined;
+    let sourceWord =
+      draft.sourceWord?.trim() || draft.promptWord?.trim() || undefined;
 
     const needsSourceWord =
       targetType === "suffix" ||
@@ -939,14 +983,18 @@ export function mapAiDraftsToTheoryExercises(
         sourceWord,
       });
       if (!isFullWordBlank(scrubbed.sentence)) continue;
-      if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage)) continue;
+      if (isWrongStudyLanguageSentence(scrubbed.sentence, studyLanguage))
+        continue;
       const hintsForItem = theoryHintFields(
         draft,
         [answerText, ...(draft.acceptedAnswers ?? [])],
         learningObjective,
         scrubbed.hint,
       );
-      if (!hintsForItem.hint || hintLeaksAnswer(hintsForItem.hint, answerText)) {
+      if (
+        !hintsForItem.hint ||
+        hintLeaksAnswer(hintsForItem.hint, answerText)
+      ) {
         continue;
       }
 
@@ -997,7 +1045,10 @@ export function mapAiDraftsToTheoryExercises(
         hints: hintsForItem.hints,
         explanation,
         learningObjective,
-        targetType: effectiveTargetType(targetType, Boolean(resolvedSourceWord)),
+        targetType: effectiveTargetType(
+          targetType,
+          Boolean(resolvedSourceWord),
+        ),
         sourceWord: resolvedSourceWord,
         // Always store the canonical rebuild so feedback matches grading.
         completedSentence: canonicalCompleted,
@@ -1010,7 +1061,11 @@ export function mapAiDraftsToTheoryExercises(
       continue;
     }
 
-    if (draft.type === "transformation" && (draft.promptWord || draft.sourceWord) && draft.answer) {
+    if (
+      draft.type === "transformation" &&
+      (draft.promptWord || draft.sourceWord) &&
+      draft.answer
+    ) {
       const promptWord = normalize(draft.promptWord ?? draft.sourceWord ?? "");
       const answerText = resolveFullWordAnswer({
         answer: draft.answer,
@@ -1024,7 +1079,10 @@ export function mapAiDraftsToTheoryExercises(
         [answerText, ...(draft.acceptedAnswers ?? [])],
         learningObjective,
       );
-      if (!hintsForItem.hint || hintLeaksAnswer(hintsForItem.hint, answerText)) {
+      if (
+        !hintsForItem.hint ||
+        hintLeaksAnswer(hintsForItem.hint, answerText)
+      ) {
         continue;
       }
 
@@ -1055,27 +1113,65 @@ export function mapAiDraftsToTheoryExercises(
     }
 
     if (draft.type === "multiple_choice") {
+      const prompt = draft.prompt?.trim() || draft.sentence?.trim() || "";
+      const distinctOptions = draft.options
+        ? [
+            ...new Map(
+              draft.options.map((option) => [
+                normalizeAnswerKey(option),
+                option.trim(),
+              ]),
+            ).values(),
+          ]
+        : [];
       if (
-        !draft.prompt ||
-        !draft.options ||
-        draft.options.length < 2 ||
+        !prompt ||
+        distinctOptions.length !== 4 ||
         !draft.correctOption ||
-        !draft.options.includes(draft.correctOption)
+        !distinctOptions.some(
+          (option) =>
+            normalizeAnswerKey(option) ===
+            normalizeAnswerKey(draft.correctOption!),
+        )
       ) {
         continue;
       }
+      const learnerFacingText = [
+        prompt,
+        draft.instruction,
+        ...distinctOptions,
+        draft.hint,
+        ...(draft.hints ?? []),
+        draft.explanation,
+        draft.learningObjective,
+      ]
+        .filter((value): value is string => Boolean(value?.trim()))
+        .join(" ");
+      // The generation contract should prevent this. Keep a final guard so
+      // model drift cannot persist an English MC card in another workspace.
+      if (isWrongStudyLanguageSentence(learnerFacingText, studyLanguage)) {
+        continue;
+      }
+      const correctOption = distinctOptions.find(
+        (option) =>
+          normalizeAnswerKey(option) ===
+          normalizeAnswerKey(draft.correctOption!),
+      )!;
       const hintsForItem = theoryHintFields(
         draft,
-        [draft.correctOption, ...(draft.acceptedAnswers ?? [])],
+        [correctOption, ...(draft.acceptedAnswers ?? [])],
         learningObjective,
       );
       if (
         !hintsForItem.hint ||
-        hintLeaksAnswer(hintsForItem.hint, draft.correctOption)
+        hintLeaksAnswer(hintsForItem.hint, correctOption)
       ) {
         continue;
       }
-      const accepted = uniqueAnswers(draft.correctOption, draft.acceptedAnswers ?? []);
+      const accepted = uniqueAnswers(
+        correctOption,
+        draft.acceptedAnswers ?? [],
+      );
       const mc: TheoryMultipleChoiceExercise = {
         id: uid("ai_mc"),
         source: "theory",
@@ -1086,9 +1182,9 @@ export function mapAiDraftsToTheoryExercises(
         materialSource: draft.materialSource ?? "ai",
         skillLabel,
         instruction: draft.instruction?.trim() || undefined,
-        prompt: draft.prompt,
-        options: draft.options,
-        correctOption: draft.correctOption,
+        prompt: normalizeBlankMarkers(prompt),
+        options: shuffled(distinctOptions),
+        correctOption,
         acceptedAnswers: accepted,
         hint: hintsForItem.hint,
         hints: hintsForItem.hints,

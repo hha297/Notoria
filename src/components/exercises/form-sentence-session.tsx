@@ -401,50 +401,21 @@ export function FormSentenceSession({
         </p>
       ) : null}
 
-      {submitted || oneByOne ? (
+      {submitted ? (
         <ExerciseProgressHeader
-        current={progressCurrent}
-        total={progressTotal}
-        progressLabel={
-          submitted
-            ? tSession("score", {
-                correct: score.correct,
-                total: score.total,
-              })
-            : oneByOne
-              ? tSession("questionProgress", {
-                  current: Math.min(
-                    checkedCount + 1,
-                    Math.max(totalQuestionCount, 1),
-                  ),
-                  total: totalQuestionCount,
-                })
-              : tSession("answeredProgress", {
-                  answered: answeredCount,
-                  total: totalQuestionCount,
-                })
-        }
-        scoreLabel={
-          submitted
-            ? t("score", {
-                correct: score.correct,
-                answered: score.total,
-              })
-            : undefined
-        }
-        progressValue={
-          submitted
-            ? score.total
-              ? (score.correct / score.total) * 100
-              : 0
-            : oneByOne
-              ? totalQuestionCount
-                ? (checkedCount / totalQuestionCount) * 100
-                : 0
-              : totalQuestionCount
-                ? (answeredCount / totalQuestionCount) * 100
-                : 0
-        }
+          current={progressCurrent}
+          total={progressTotal}
+          progressLabel={tSession("score", {
+            correct: score.correct,
+            total: score.total,
+          })}
+          scoreLabel={t("score", {
+            correct: score.correct,
+            answered: score.total,
+          })}
+          progressValue={
+            score.total ? (score.correct / score.total) * 100 : 0
+          }
         />
       ) : null}
 
@@ -523,6 +494,8 @@ export function FormSentenceSession({
             isLast={isLastQuestion}
             canCheck={currentCanCheck}
             submitting={submitting}
+            progressCurrent={progressCurrent}
+            progressTotal={progressTotal}
             onCheck={handleCheckOne}
             onNext={goNextQuestion}
             onViewResults={handleViewResults}

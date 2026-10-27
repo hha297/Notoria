@@ -3,6 +3,7 @@ import type {
   ExerciseImportStatus,
 } from "@/db/schema";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 export type ExerciseImportListItem = {
   id: string;
@@ -15,6 +16,7 @@ export type ExerciseImportListItem = {
   updatedAt: string;
   sourceUrl: string | null;
   originalFilename: string | null;
+  questionType: TheoryQuestionType;
 };
 
 export type ExerciseImportDetail = ExerciseImportListItem & {

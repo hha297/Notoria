@@ -16,6 +16,7 @@ import {
   runExclusiveExerciseGeneration,
 } from "@/lib/exercises/next-set-job";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
+import { theoryQuestionTypeSchema } from "@/lib/theory-exercises/question-type";
 
 export const runtime = "nodejs";
 /** Match `AI_DEADLINES_MS.theoryGenerate` with a little headroom. */
@@ -27,6 +28,7 @@ const bodySchema = z.object({
   /** Website UI locale for sentenceMeaning. */
   uiLocale: z.enum(locales).optional(),
   additionalInstructions: z.string().trim().max(2_000).optional().nullable(),
+  questionType: theoryQuestionTypeSchema.optional().default("fill_blank"),
   nextSet: exerciseNextSetMetaSchema.optional(),
 });
 
@@ -92,7 +94,7 @@ export async function POST(request: Request) {
         sessionId,
         sourceIds: [note.id],
         sourceRevisions: [revision],
-        mode: "theory",
+        mode: `theory:${parsed.data.questionType}`,
         difficulty: null,
         language: null,
         uiLocale: parsed.data.uiLocale ?? null,
@@ -119,6 +121,7 @@ export async function POST(request: Request) {
           studyLanguage: workspace?.language,
           uiLanguage: uiLocaleEnglishName(uiLocale),
           additionalInstructions: gated.text,
+          questionType: parsed.data.questionType,
         });
       },
     });

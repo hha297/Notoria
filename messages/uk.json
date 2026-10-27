@@ -684,6 +684,11 @@
     "updated": "Оновлено",
     "backToStudio": "Назад до вправ",
     "studyMode": "Режим навчання",
+    "questionTypeLabel": "Тип запитання",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Складність",
       "easy": "Легко",

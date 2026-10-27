@@ -684,6 +684,11 @@
     "updated": "হালনাগাদ",
     "backToStudio": "অনুশীলনীতে ফিরে যান",
     "studyMode": "অধ্যয়ন মোড",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "কঠিনতা",
       "easy": "সহজ",

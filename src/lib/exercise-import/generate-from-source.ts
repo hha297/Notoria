@@ -1,8 +1,4 @@
-import {
-  AI_INPUT_LIMITS,
-  AI_OUTPUT_TOKENS,
-  clipForAi,
-} from "@/lib/ai/bounds";
+import { AI_INPUT_LIMITS, AI_OUTPUT_TOKENS, clipForAi } from "@/lib/ai/bounds";
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
 import { ExerciseImportError } from "@/lib/exercise-import/errors";
@@ -21,9 +17,20 @@ import {
   type TheoryAiExerciseDraft,
 } from "@/lib/theory-exercises/generate-ai";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
+import {
+  additionalInstructionFields,
+  appendAdditionalInstructions,
+} from "@/lib/exercises/additional-instructions";
+import {
+  buildLearnerFacingLanguageContract,
+  describeStudyLanguage,
+} from "@/lib/exercises/study-language-contract";
 import { plainTextToTheoryDoc } from "@/lib/theory/content";
 
 const IMPORT_MAX_EXERCISES = 60;
+const IMPORT_MIN_PRACTICE_SET = 10;
+const IMPORT_TARGET_PRACTICE_SET = 20;
 
 function getOpenAIClient() {
   try {
@@ -82,10 +89,7 @@ export function coerceImportAiDraft(
     sourceWord ||
     "Practice";
   const hint =
-    asTrimmedString(raw.hint, 300) ||
-    instruction ||
-    learningObjective ||
-    "—";
+    asTrimmedString(raw.hint, 300) || instruction || learningObjective || "—";
 
   const targetParsed = theoryLearningTargetTypeSchema.safeParse(raw.targetType);
   const targetType = targetParsed.success ? targetParsed.data : "word_form";
@@ -167,21 +171,21 @@ The source text IS the exercise material. You must NOT invent new practice conte
 6. You MAY compute answer / acceptedAnswers as the correct form of the SAME lexical item when a cell is blank (for grading). That is not inventing practice content.
 7. Prefer type "transformation": promptWord = given cue from the source.
 8. Use type "fill_blank" ONLY when the source already contains a sentence (or clear cloze line) with a blank. Keep that exact sentence; use ________ for the blank. sourceWord = the given base/cue from the same item if present.
-9. Avoid multiple_choice unless the source already presents choices.
+9. Follow the QUESTION TYPE LOCK appended below. When multiple_choice is selected, distractors may be written by the model but the tested fact/rule and correct answer must be grounded in the source.
 10. For open "write a sentence" list items (cue + instruction only): use transformation with promptWord = the cue; set showArrow to false; instruction = the worksheet instruction. Do NOT invent an example sentence.
 11. For morphology tables: each ROW is one lexical item. Given one filled cell, create separate transformation cards for each empty target column, using that row's cue as promptWord. Put the column header into instruction together with any worksheet title/instruction from the source. Never use another row's word as the cue.
 12. Hints/explanations may briefly clarify the target form; they must not introduce new practice sentences as the main task.
-13. Practice answers must be in the studied language (studyLanguage / inferred from source).
+13. The appended LEARNER-FACING LANGUAGE LOCK is authoritative. Practice answers, prompts, choices, instructions, hints, explanations, objectives, and labels must all follow it.
 
 ## Instruction / title (required for UX)
 14. For EVERY exercise set instruction and skillLabel carefully:
     Priority for instruction:
       (1) Copy the original explicit worksheet instruction from the source (same language).
       (2) If none, use a clearly present column header / task line from the source.
-      (3) If still insufficient, use the neutral fallback exactly: "Complete the exercise."
+      (3) If still insufficient, omit instruction. The application supplies a localized fallback.
     NEVER invent a specific grammar/topic instruction unless those words appear in the source.
     skillLabel = short title/heading from the source when present (same language). Do not invent a fancy title.
-15. Keep instruction in the source language. Do not translate unless the source itself is translated.
+15. Preserve an original source instruction only when it already matches the authoritative study/workspace language. Otherwise write learner-facing text in the language required by the appended language lock.
 16. JSON only:
 {
   "theoryFocus": string,
@@ -258,7 +262,11 @@ export function sourceContainsCue(sourceText: string, cue: string): boolean {
  * True when every significant token of phrase appears in source (order-independent).
  * Used for instructions that combine title + column header.
  */
-function sourceContainsTokens(sourceNorm: string, phrase: string, minLen = 3): boolean {
+function sourceContainsTokens(
+  sourceNorm: string,
+  phrase: string,
+  minLen = 3,
+): boolean {
   const tokens = normalizeSourceForMatch(phrase)
     .split(" ")
     .filter((t) => t.length >= minLen);
@@ -372,7 +380,9 @@ export function classifyImportSource(
 ): "worksheet" | "notes" {
   const worksheetSignals =
     (/\(blank\)/i.test(extractedText) ? 1 : 0) +
-    (extractedText.includes("| ---") || extractedText.includes("|---") ? 1 : 0) +
+    (extractedText.includes("| ---") || extractedText.includes("|---")
+      ? 1
+      : 0) +
     (/\n\s*[a-z]\.\s+\S+/i.test(extractedText) ? 1 : 0) +
     (/_{3,}/.test(extractedText) ? 1 : 0) +
     (/\btehtävä\b|\bbài tập\b|\bexercise\b/i.test(extractedText) &&
@@ -399,6 +409,8 @@ async function generateFromImportedNotes(input: {
   title: string;
   extractedText: string;
   studyLanguage?: string;
+  questionType: TheoryQuestionType;
+  additionalInstructions?: string | null;
 }): Promise<TheoryExercise[]> {
   const doc = plainTextToTheoryDoc(input.extractedText);
   try {
@@ -406,8 +418,16 @@ async function generateFromImportedNotes(input: {
       theoryId: input.importId,
       theoryTitle: input.title,
       doc,
-      count: 20,
+      count: IMPORT_TARGET_PRACTICE_SET,
       studyLanguage: input.studyLanguage,
+      // Imported practice is learner-facing material. Its instructions and
+      // progressive hints must follow the workspace language too; allowing
+      // Theory's default English UI language conflicts with the Import
+      // language lock and causes every generated MC item to be rejected.
+      uiLanguage:
+        describeStudyLanguage(input.studyLanguage) ?? input.studyLanguage,
+      questionType: input.questionType,
+      additionalInstructions: input.additionalInstructions,
     });
     if (items.length === 0) {
       throw new ExerciseImportError("GENERATION_FAILED");
@@ -435,6 +455,8 @@ export async function generateExercisesFromSourceText(input: {
   title: string;
   extractedText: string;
   studyLanguage?: string;
+  questionType?: TheoryQuestionType;
+  additionalInstructions?: string | null;
 }): Promise<TheoryExercise[]> {
   const extractedText = input.extractedText.trim();
   if (!extractedText) {
@@ -442,15 +464,21 @@ export async function generateExercisesFromSourceText(input: {
   }
 
   const studyLanguage = input.studyLanguage?.trim() || undefined;
+  const languageContract = buildLearnerFacingLanguageContract(studyLanguage);
+  const questionType = input.questionType ?? "fill_blank";
   const sourceKind = classifyImportSource(extractedText);
 
   if (sourceKind === "notes") {
-    console.info("[exercise-import] Notes/theory source — using Theory pipeline");
+    console.info(
+      "[exercise-import] Notes/theory source — using Theory pipeline",
+    );
     return generateFromImportedNotes({
       importId: input.importId,
       title: input.title,
       extractedText,
       studyLanguage,
+      questionType,
+      additionalInstructions: input.additionalInstructions,
     });
   }
 
@@ -465,15 +493,26 @@ export async function generateExercisesFromSourceText(input: {
     messages: [
       {
         role: "system",
-        content: await aiSystemPrompt(IMPORT_SOURCE_FIDELITY_PROMPT, {
-          responseStyle: true,
-        }),
+        content: appendAdditionalInstructions(
+          await aiSystemPrompt(
+            `${IMPORT_SOURCE_FIDELITY_PROMPT}\n\nLEARNER-FACING LANGUAGE LOCK: ${languageContract}\n\n${
+              questionType === "multiple_choice"
+                ? "QUESTION TYPE LOCK: Return only multiple_choice. Create exactly 4 distinct choices per question with exactly one correctOption. Distractors may be newly written, but must be plausible for this exact source task and must not add facts unsupported by the imported material."
+                : "QUESTION TYPE LOCK: Return only fill_blank. Convert source tasks into one-full-word cloze questions grounded in the imported material; do not return transformation or multiple_choice."
+            }`,
+            { responseStyle: true },
+          ),
+          input.additionalInstructions,
+        ),
       },
       {
         role: "user",
         content: JSON.stringify({
           title: clipForAi(input.title, AI_INPUT_LIMITS.title),
-          studyLanguage: studyLanguage ?? null,
+          studyLanguage: describeStudyLanguage(studyLanguage),
+          learnerFacingLanguageContract: languageContract,
+          questionType,
+          ...additionalInstructionFields(input.additionalInstructions),
           reminder:
             "Do NOT invent sentences or new words. Cards must reuse source cues/instructions only. Do not pad count.",
           sourceText,
@@ -498,6 +537,8 @@ export async function generateExercisesFromSourceText(input: {
       title: input.title,
       extractedText,
       studyLanguage,
+      questionType,
+      additionalInstructions: input.additionalInstructions,
     });
   }
 
@@ -506,10 +547,13 @@ export async function generateExercisesFromSourceText(input: {
     grounded = filterDraftsToSourceFidelity(drafts, extractedText, {
       relaxSentenceFrames: true,
     });
-    console.warn("[exercise-import] Strict fidelity empty; using relaxed cue filter", {
-      draftCount: drafts.length,
-      groundedCount: grounded.length,
-    });
+    console.warn(
+      "[exercise-import] Strict fidelity empty; using relaxed cue filter",
+      {
+        draftCount: drafts.length,
+        groundedCount: grounded.length,
+      },
+    );
   }
 
   const withInstructions = applyImportInstructionFidelity(
@@ -522,7 +566,7 @@ export async function generateExercisesFromSourceText(input: {
     withInstructions,
     input.title,
     IMPORT_MAX_EXERCISES,
-    studyLanguage,
+    { studyLanguage, questionType },
   );
 
   if (items.length === 0) {
@@ -539,7 +583,28 @@ export async function generateExercisesFromSourceText(input: {
       title: input.title,
       extractedText,
       studyLanguage,
+      questionType,
+      additionalInstructions: input.additionalInstructions,
     });
+  }
+
+  // Exact worksheet extraction is preferred, but a tiny 1-3 card result is not
+  // a useful practice session. Fill the remainder from the imported material's
+  // rules and vocabulary while retaining every grounded worksheet card.
+  if (items.length < IMPORT_MIN_PRACTICE_SET) {
+    console.info(
+      "[exercise-import] Small worksheet set; supplementing from imported material",
+      { groundedCount: items.length, targetCount: IMPORT_TARGET_PRACTICE_SET },
+    );
+    const supplemental = await generateFromImportedNotes({
+      importId: input.importId,
+      title: input.title,
+      extractedText,
+      studyLanguage,
+      questionType,
+      additionalInstructions: input.additionalInstructions,
+    });
+    return [...items, ...supplemental].slice(0, IMPORT_TARGET_PRACTICE_SET);
   }
 
   return items;

@@ -63,7 +63,7 @@ export type TheoryExerciseCardItem = {
 type TheoryViewMode = "list" | "cards";
 
 const THEORY_PAGE_SIZE = 6;
-const THEORY_COLOR_SLOTS = 6;
+const THEORY_COLOR_SLOTS = 12;
 
 type TheoryExercisePickerProps = {
   theories: TheoryExerciseCardItem[];

@@ -684,6 +684,11 @@
     "updated": "Päivitetty",
     "backToStudio": "Takaisin harjoituksiin",
     "studyMode": "Opiskelutila",
+    "questionTypeLabel": "Kysymystyyppi",
+    "questionTypeOptions": {
+      "fill_blank": "Kirjoita puuttuva sana tai ilmaus kuhunkin tehtävään.",
+      "multiple_choice": "Valitse oikea vastaus neljästä vaihtoehdosta."
+    },
     "difficulty": {
       "label": "Vaikeustaso",
       "easy": "Helppo",

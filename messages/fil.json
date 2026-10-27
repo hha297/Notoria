@@ -684,6 +684,11 @@
     "updated": "Na-update",
     "backToStudio": "Bumalik sa mga ehersisyo",
     "studyMode": "Mode ng pag-aaral",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Kahirapan",
       "easy": "Madali",

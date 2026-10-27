@@ -1036,6 +1036,9 @@ export const exerciseImports = pgTable(
     mimeType: text("mime_type"),
     extractedText: text("extracted_text"),
     analysis: jsonb("analysis"),
+    /** Missing/legacy values are interpreted as fill_blank by serializers. */
+    questionType: text("question_type").notNull().default("fill_blank"),
+    additionalInstructions: text("additional_instructions"),
     status: exerciseImportStatusEnum("status").notNull().default("UPLOADING"),
     errorCode: text("error_code"),
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -1048,6 +1051,10 @@ export const exerciseImports = pgTable(
   (table) => [
     index("exercise_imports_workspace_id_idx").on(table.workspaceId),
     index("exercise_imports_user_id_idx").on(table.userId),
+    check(
+      "exercise_imports_question_type_check",
+      sql`${table.questionType} in ('fill_blank', 'multiple_choice')`,
+    ),
     index("exercise_imports_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.title}, '') || ' ' || coalesce(${table.extractedText}, ''))`,

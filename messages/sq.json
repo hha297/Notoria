@@ -684,6 +684,11 @@
     "updated": "Përditësuar",
     "backToStudio": "Kthehu te ushtrimet",
     "studyMode": "Mënyra e studimit",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Vështirësia",
       "easy": "E lehtë",

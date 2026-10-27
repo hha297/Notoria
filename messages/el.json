@@ -684,6 +684,11 @@
     "updated": "Ενημερώθηκε",
     "backToStudio": "Πίσω στις ασκήσεις",
     "studyMode": "Λειτουργία μελέτης",
+    "questionTypeLabel": "Question type",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Δυσκολία",
       "easy": "Εύκολη",

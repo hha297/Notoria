@@ -684,6 +684,11 @@
     "updated": "Aktualizováno",
     "backToStudio": "Zpět ke cvičením",
     "studyMode": "Režim studia",
+    "questionTypeLabel": "Typ otázky",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Obtížnost",
       "easy": "Snadná",

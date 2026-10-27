@@ -236,7 +236,7 @@
 .theory-zone-examples > *:not(.theory-decor),
 .theory-zone-insight > *:not(.theory-decor),
 .theory-zone-practice > *:not(.theory-decor),
-.theory-practice-stage > * {
+.theory-practice-stage > *:not([data-scroll-top-clearance]) {
   position: relative;
   z-index: 1;
 }
@@ -304,43 +304,85 @@
 
 :global([data-exercise="theory"]) .theory-library-row[data-theory-slot="0"],
 :global([data-exercise="theory"]) .theory-library-card[data-theory-slot="0"] {
-  --lesson-row-fg: var(--primary);
-  --lesson-row-bg: color-mix(in oklab, var(--primary) 28%, transparent);
-  --lesson-row-on: var(--primary-foreground);
-}
-
-:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="1"],
-:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="1"] {
   --lesson-row-fg: var(--module-theory-fg);
   --lesson-row-bg: var(--module-theory-bg);
   --lesson-row-on: var(--background);
 }
 
-:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="2"],
-:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="2"] {
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="1"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="1"] {
   --lesson-row-fg: var(--module-vocab-fg);
   --lesson-row-bg: var(--module-vocab-bg);
   --lesson-row-on: var(--background);
 }
 
-:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="3"],
-:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="3"] {
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="2"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="2"] {
   --lesson-row-fg: var(--module-listen-fg);
   --lesson-row-bg: var(--module-listen-bg);
   --lesson-row-on: var(--background);
 }
 
-:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="4"],
-:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="4"] {
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="3"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="3"] {
   --lesson-row-fg: var(--module-writing-fg);
   --lesson-row-bg: var(--module-writing-bg);
   --lesson-row-on: var(--background);
 }
 
-:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="5"],
-:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="5"] {
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="4"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="4"] {
   --lesson-row-fg: var(--module-speak-fg);
   --lesson-row-bg: var(--module-speak-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="5"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="5"] {
+  --lesson-row-fg: var(--module-coach-fg);
+  --lesson-row-bg: var(--module-coach-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="6"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="6"] {
+  --lesson-row-fg: var(--module-exercise-fg);
+  --lesson-row-bg: var(--module-exercise-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="7"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="7"] {
+  --lesson-row-fg: var(--module-guide-fg);
+  --lesson-row-bg: var(--module-guide-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="8"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="8"] {
+  --lesson-row-fg: var(--module-inbox-fg);
+  --lesson-row-bg: var(--module-inbox-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="9"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="9"] {
+  --lesson-row-fg: var(--module-settings-fg);
+  --lesson-row-bg: var(--module-settings-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="10"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="10"] {
+  --lesson-row-fg: var(--module-account-fg);
+  --lesson-row-bg: var(--module-account-bg);
+  --lesson-row-on: var(--background);
+}
+
+:global([data-exercise="theory"]) .theory-library-row[data-theory-slot="11"],
+:global([data-exercise="theory"]) .theory-library-card[data-theory-slot="11"] {
+  --lesson-row-fg: var(--module-read-fg);
+  --lesson-row-bg: var(--module-read-bg);
   --lesson-row-on: var(--background);
 }
 

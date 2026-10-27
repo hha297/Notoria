@@ -1,6 +1,7 @@
 import { ExerciseImportError } from "@/lib/exercise-import/errors";
 import { generateExercisesFromSourceText } from "@/lib/exercise-import/generate-from-source";
 import type { TheoryExercise } from "@/lib/theory-exercises/types";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 /**
  * Generate exercises from extracted import text with source fidelity
@@ -13,6 +14,8 @@ export async function generateExercisesFromImport(input: {
   studyLanguage?: string;
   /** Ignored — import does not pad to a fixed count. */
   count?: number;
+  questionType?: TheoryQuestionType;
+  additionalInstructions?: string | null;
 }): Promise<TheoryExercise[]> {
   try {
     return await generateExercisesFromSourceText({
@@ -20,6 +23,8 @@ export async function generateExercisesFromImport(input: {
       title: input.title,
       extractedText: input.extractedText,
       studyLanguage: input.studyLanguage,
+      questionType: input.questionType ?? "fill_blank",
+      additionalInstructions: input.additionalInstructions,
     });
   } catch (error) {
     if (error instanceof ExerciseImportError) throw error;

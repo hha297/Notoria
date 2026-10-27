@@ -8,7 +8,14 @@ import {
 } from "@/lib/ai/bounds";
 import { requireOpenAiClient } from "@/lib/ai/openai-client";
 import { aiSystemPrompt } from "@/lib/ai/system-prompt";
-import { appendAdditionalInstructions, additionalInstructionFields } from "@/lib/exercises/additional-instructions";
+import {
+  appendAdditionalInstructions,
+  additionalInstructionFields,
+} from "@/lib/exercises/additional-instructions";
+import {
+  buildLearnerFacingLanguageContract,
+  describeStudyLanguage,
+} from "@/lib/exercises/study-language-contract";
 import {
   PROGRESSIVE_HINT_PROMPT,
   progressiveHintPayload,
@@ -32,6 +39,7 @@ import type {
 import type { JSONContent } from "@tiptap/react";
 import { ensureSentenceMeanings } from "@/lib/exercises/sentence-meaning";
 import type { AppLocale } from "@/i18n/config";
+import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 function getOpenAIClient() {
   // Interactive theory sets are lean (~10 items); keep the SDK timeout below
@@ -98,9 +106,9 @@ Never label a different-category form as the Theory category in instruction/expl
 
 ## Language
 Detect the studied language from Theory + studyLanguage.
-Write sentence, sourceWord, answer, completedSentence in that studied language only.
+Write every learner-facing field in that studied language: sentence, prompt, sourceWord, answer, completedSentence, options, correctOption, instruction, hint, hints, explanation, learningObjective, and skillLabel.
 Never wrap a studied-language form inside an unrelated-language sentence frame.
-Hints may use any language; practice content must match the studied language.
+Do not fall back to English just because the system prompt and JSON keys are English.
 
 ## UI constraints
 - One full-token blank only. Never place the blank inside a word.
@@ -158,8 +166,12 @@ async function requestExerciseBatch(input: {
   uiLanguage?: string;
   avoidSentences?: string[];
   additionalInstructions?: string | null;
+  questionType: TheoryQuestionType;
   signal?: AbortSignal;
 }): Promise<{ theoryFocus?: string; exercises: TheoryAiExerciseDraft[] }> {
+  const languageContract = buildLearnerFacingLanguageContract(
+    input.studyLanguage,
+  );
   let completion;
   try {
     const maxTokens = Math.min(
@@ -176,9 +188,16 @@ async function requestExerciseBatch(input: {
           {
             role: "system",
             content: appendAdditionalInstructions(
-              await aiSystemPrompt(THEORY_EXERCISE_AI_PROMPT, {
-                responseStyle: true,
-              }),
+              await aiSystemPrompt(
+                `${THEORY_EXERCISE_AI_PROMPT}\n\nLEARNER-FACING LANGUAGE LOCK: ${languageContract}\n\n${
+                  input.questionType === "multiple_choice"
+                    ? "QUESTION TYPE LOCK: Return only type=multiple_choice. Every item must contain exactly 4 distinct, plausible options and exactly one correctOption. Distractors must be relevant to the Theory rule and must not be duplicate spellings or paraphrases of the correct answer."
+                    : "QUESTION TYPE LOCK: Return only type=fill_blank. Do not return transformation or multiple_choice items."
+                }`,
+                {
+                  responseStyle: true,
+                },
+              ),
               input.additionalInstructions,
             ),
           },
@@ -186,22 +205,29 @@ async function requestExerciseBatch(input: {
             role: "user",
             content: JSON.stringify({
               title: input.title,
-              studyLanguage: input.studyLanguage ?? null,
+              studyLanguage: describeStudyLanguage(input.studyLanguage),
+              learnerFacingLanguageContract: languageContract,
               uiLanguage: input.uiLanguage ?? "English",
               maxExercises: input.maxExercises,
+              questionType: input.questionType,
               batch: input.batchIndex,
               theoryRules: input.theoryRules,
               theoryExamples: input.theoryExamples.slice(0, 8),
               maxExampleDerivedExercises: input.maxExampleReuse,
               aimExampleDerivedExercises: input.aimExampleReuse,
               vocabularyWords: input.vocabularyWords.slice(0, 20),
-              avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(0, 12),
+              avoidReusingTheseSentences: (input.avoidSentences ?? []).slice(
+                0,
+                12,
+              ),
               ...additionalInstructionFields(input.additionalInstructions),
               ...progressiveHintPayload({
                 explanationLanguage: input.uiLanguage ?? "English",
               }),
               reminder:
-                "Form-category lock: answer must be the Theory category in theoryFocus. Blank that token only. Write completedSentence first, then blank that exact answer. sentenceMeaning in uiLanguage. Return exactly maxExercises items.",
+                input.questionType === "multiple_choice"
+                  ? "Return exactly maxExercises multiple-choice items. Each item must test the Theory category in theoryFocus, use prompt or a sentence with one ________ slot, include exactly 4 distinct plausible options, and set correctOption to exactly one option. Do not return fill_blank or transformation."
+                  : "Form-category lock: answer must be the Theory category in theoryFocus. Blank that token only. Write completedSentence first, then blank that exact answer. sentenceMeaning in uiLanguage. Return exactly maxExercises fill_blank items; do not return transformation or multiple_choice.",
             }),
           },
         ],
@@ -240,6 +266,7 @@ export async function generateAiTheoryExercises(input: {
   /** Website UI language name for sentenceMeaning (e.g. "Finnish", "English"). */
   uiLanguage?: string;
   additionalInstructions?: string | null;
+  questionType?: TheoryQuestionType;
 }): Promise<TheoryExercise[]> {
   const material = extractTheoryGenerationMaterial(input.doc);
   if (!material.rulesText.trim() && material.exampleTexts.length === 0) {
@@ -254,7 +281,10 @@ export async function generateAiTheoryExercises(input: {
   const count = Math.min(Math.max(input.count ?? 10, 1), 20);
   const deadline = createAiDeadline(AI_DEADLINES_MS.theoryGenerate);
   const exampleLexemes = material.exampleLexemes;
-  const mapOpts = { studyLanguage: undefined as string | undefined, exampleLexemes };
+  const mapOpts = {
+    studyLanguage: undefined as string | undefined,
+    exampleLexemes,
+  };
 
   const mapDrafts = (drafts: TheoryAiExerciseDraft[], maxItems: number) =>
     mapAiDraftsToTheoryExercises(
@@ -262,7 +292,7 @@ export async function generateAiTheoryExercises(input: {
       drafts,
       input.theoryTitle,
       maxItems,
-      mapOpts,
+      { ...mapOpts, questionType: input.questionType ?? "fill_blank" },
     );
 
   try {
@@ -271,7 +301,10 @@ export async function generateAiTheoryExercises(input: {
       .slice(0, 20)
       .map((w) => clipForAi(w.word, AI_INPUT_LIMITS.word))
       .filter((word) => word.length > 0);
-    const theoryRules = clipForAi(material.rulesText, Math.min(AI_INPUT_LIMITS.theory, 6_000));
+    const theoryRules = clipForAi(
+      material.rulesText,
+      Math.min(AI_INPUT_LIMITS.theory, 6_000),
+    );
     const theoryExamples = material.exampleTexts
       .slice(0, 8)
       .map((text) => clipForAi(text, 180))
@@ -294,6 +327,7 @@ export async function generateAiTheoryExercises(input: {
       studyLanguage,
       uiLanguage,
       additionalInstructions: input.additionalInstructions,
+      questionType: input.questionType ?? "fill_blank",
       signal: deadline.signal,
     };
 
@@ -318,7 +352,9 @@ export async function generateAiTheoryExercises(input: {
       }
     }
 
-    const SEMANTIC_BUDGET_MS = 20_000;
+    const selectedQuestionType = input.questionType ?? "fill_blank";
+    const SEMANTIC_BUDGET_MS =
+      selectedQuestionType === "multiple_choice" ? 10_000 : 20_000;
     const applySemantic = async (candidates: TheoryExercise[]) => {
       if (candidates.length === 0 || deadline.expired()) return candidates;
       try {
@@ -332,7 +368,10 @@ export async function generateAiTheoryExercises(input: {
           signal: deadline.signal,
         });
         const timedOut = new Promise<TheoryExercise[]>((resolve) => {
-          const timer = setTimeout(() => resolve(candidates.slice(0, count)), SEMANTIC_BUDGET_MS);
+          const timer = setTimeout(
+            () => resolve(candidates.slice(0, count)),
+            SEMANTIC_BUDGET_MS,
+          );
           timer.unref?.();
         });
         const accepted = await Promise.race([judge, timedOut]);
@@ -350,7 +389,14 @@ export async function generateAiTheoryExercises(input: {
     let items = await applySemantic(mapDrafts(drafts, count));
 
     // One short refill only when the set is badly short (not a second full round).
-    const needAtLeast = Math.min(count, MIN_PRACTICE_SET);
+    // Multiple-choice generation already requests four choices per item and
+    // runs semantic validation. Do not launch a second provider batch merely
+    // because the judge kept fewer than eight cards; that doubled latency and
+    // could push a format switch close to the request deadline.
+    const needAtLeast = Math.min(
+      count,
+      selectedQuestionType === "multiple_choice" ? 1 : MIN_PRACTICE_SET,
+    );
     if (items.length < needAtLeast && !deadline.expired()) {
       const avoid = [
         ...drafts.map((d) => d.sentence).filter((s): s is string => Boolean(s)),
@@ -358,7 +404,10 @@ export async function generateAiTheoryExercises(input: {
           .map((d) => d.completedSentence)
           .filter((s): s is string => Boolean(s)),
         ...items
-          .filter((item): item is TheoryFillBlankExercise => item.type === "fill_blank")
+          .filter(
+            (item): item is TheoryFillBlankExercise =>
+              item.type === "fill_blank",
+          )
           .map((item) => item.completedSentence ?? item.sentence),
       ];
       const need = Math.max(needAtLeast - items.length, 4);
@@ -379,7 +428,8 @@ export async function generateAiTheoryExercises(input: {
           if (isDeadlineExceeded(error) || deadline.expired()) {
             throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));
           }
-          throw error instanceof Error && error.message === "AI_INVALID_RESPONSE"
+          throw error instanceof Error &&
+            error.message === "AI_INVALID_RESPONSE"
             ? error
             : afterProviderError(error);
         }
@@ -421,7 +471,9 @@ export async function generateAiTheoryExercises(input: {
         if (item.type !== "fill_blank") return "";
         return (
           item.completedSentence?.trim() ||
-          `${item.prefix ?? ""}${item.answer}${item.suffix ?? ""}`.replace(/\s+/g, " ").trim()
+          `${item.prefix ?? ""}${item.answer}${item.suffix ?? ""}`
+            .replace(/\s+/g, " ")
+            .trim()
         );
       },
       getMeaning: (item) =>
@@ -482,7 +534,11 @@ function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
   ) {
     return "da";
   }
-  if (normalized.startsWith("de") || normalized.includes("german") || normalized.includes("deutsch")) {
+  if (
+    normalized.startsWith("de") ||
+    normalized.includes("german") ||
+    normalized.includes("deutsch")
+  ) {
     return "de";
   }
   if (
@@ -615,7 +671,8 @@ function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
   ) {
     return "sq";
   }
-  if (normalized.startsWith("sv") || normalized.includes("swedish")) return "sv";
+  if (normalized.startsWith("sv") || normalized.includes("swedish"))
+    return "sv";
   if (
     normalized.startsWith("th") ||
     normalized.includes("thai") ||
@@ -638,7 +695,8 @@ function resolveUiLocaleFromLanguageName(languageName: string): AppLocale {
   ) {
     return "uk";
   }
-  if (normalized.startsWith("vi") || normalized.includes("vietnam")) return "vi";
+  if (normalized.startsWith("vi") || normalized.includes("vietnam"))
+    return "vi";
   if (
     normalized.startsWith("zh") ||
     normalized.includes("chinese") ||

@@ -50,10 +50,8 @@ export function ExerciseSetSubmitBar({
         data-scroll-top-clearance=""
         className={[
           "sticky bottom-0 z-20 overflow-hidden",
-          // Bleed to studio-paper edges and cancel main pb so the bar sits flush.
           "-mx-[var(--studio-main-pad,1rem)]",
           "mb-[calc(-1*var(--studio-main-pb,1.5rem))]",
-          // Match .studio-paper radius (--radius-lg), not the old 1rem corners.
           "rounded-b-[var(--radius-lg)]",
           "border-t border-hairline-cloud",
           "bg-[color-mix(in_oklab,var(--exercise-accent-soft)_42%,var(--surface-elevated))]",

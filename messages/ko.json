@@ -684,6 +684,11 @@
     "updated": "업데이트됨",
     "backToStudio": "연습으로 돌아가기",
     "studyMode": "학습 모드",
+    "questionTypeLabel": "문제 유형",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "난이도",
       "easy": "쉬움",

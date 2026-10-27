@@ -684,6 +684,11 @@
     "updated": "Opdateret",
     "backToStudio": "Tilbage til øvelser",
     "studyMode": "Studietilstand",
+    "questionTypeLabel": "Spørgsmålstype",
+    "questionTypeOptions": {
+      "fill_blank": "Type the missing word or phrase in each question.",
+      "multiple_choice": "Choose the correct answer from four options."
+    },
     "difficulty": {
       "label": "Sværhedsgrad",
       "easy": "Nem",

@@ -8,7 +8,6 @@ import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getExerciseImport } from "@/lib/actions/exercise-import";
 import { getActiveWorkspace } from "@/lib/workspace";
 
-
 export default async function ImportExercisePracticePage({
   params,
 }: {
@@ -42,13 +41,17 @@ export default async function ImportExercisePracticePage({
   }
 
   const detail = await getExerciseImport(id);
-  if (!detail || detail.status !== "COMPLETED" || detail.exercises.length === 0) {
+  if (
+    !detail ||
+    detail.status !== "COMPLETED" ||
+    detail.exercises.length === 0
+  ) {
     notFound();
   }
 
   return (
-    <div className="mx-auto max-w-5xl space-y-10 pt-2">
-      <div className="space-y-6">
+    <div className="w-full min-w-0 max-w-full space-y-5 pt-1">
+      <div className="space-y-3">
         <Link
           href="/exercises"
           className="inline-flex items-center gap-1.5 text-sm font-medium text-muted-foreground transition-colors hover:text-ink"
@@ -64,7 +67,12 @@ export default async function ImportExercisePracticePage({
         />
       </div>
       <TheoryExerciseSessionView
+        key={detail.id}
         practiceOnly
+        importPractice={{
+          id: detail.id,
+          questionType: detail.questionType,
+        }}
         session={{
           theoryId: detail.id,
           theoryTitle: detail.title,
