@@ -1,7 +1,7 @@
 "use client";
 
 import { useMemo, useRef, useState } from "react";
-import { Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
+import { Check, Hash, Loader2, Pencil, Plus, Trash2, X } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { useQueryClient } from "@tanstack/react-query";
 import { toast } from "sonner";
@@ -232,7 +232,9 @@ export function TagMultiSelect({
     }
 
     if (event.key === "Backspace" && query.length === 0) {
-      const lastCustom = [...value].reverse().find((tag) => isCustomTagKey(tag));
+      const lastCustom = [...value]
+        .reverse()
+        .find((tag) => isCustomTagKey(tag));
       if (lastCustom) {
         onChange(value.filter((tag) => tag !== lastCustom));
       }
@@ -267,7 +269,9 @@ export function TagMultiSelect({
       onCustomTagsChange(
         uniqueCustomTagNames(
           customTags.map((name) =>
-            name.toLowerCase() === editingTag.toLowerCase() ? updated.name : name,
+            name.toLowerCase() === editingTag.toLowerCase()
+              ? updated.name
+              : name,
           ),
         ),
       );
@@ -325,7 +329,10 @@ export function TagMultiSelect({
             )}
           >
             {builtinGroups.map((item) => (
-              <div key={item.group} className={mx(composerStyles, "vocab-chip-group")}>
+              <div
+                key={item.group}
+                className={mx(composerStyles, "vocab-chip-group")}
+              >
                 <p
                   className={mx(
                     composerStyles,
@@ -486,46 +493,88 @@ export function TagMultiSelect({
                   aria-selected={checked}
                   data-active={checked || undefined}
                   className={mx(composerStyles, "vocab-suggest-item")}
+                  tabIndex={busy ? -1 : 0}
+                  onClick={() => {
+                    if (!busy) toggleTag(option.id);
+                  }}
+                  onKeyDown={(event) => {
+                    if (busy) return;
+                    if (event.key !== "Enter" && event.key !== " ") return;
+                    event.preventDefault();
+                    toggleTag(option.id);
+                  }}
                 >
-                  <button
-                    type="button"
-                    className="flex min-w-0 flex-1 items-center text-left"
-                    onClick={() => toggleTag(option.id)}
-                    disabled={busy}
-                  >
-                    <span className={mx(composerStyles, "vocab-suggest-title")}>
-                      {optionLabel(option)}
-                    </span>
-                  </button>
-                  <div className={mx(composerStyles, "vocab-suggest-actions")}>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-xs"
-                      className={mx(composerStyles, "vocab-suggest-action")}
-                      aria-label={tSettings("renameTag")}
-                      disabled={busy}
-                      onClick={() => openEdit(option)}
-                    >
-                      <Pencil />
-                    </Button>
-                    <Button
-                      type="button"
-                      variant="ghost"
-                      size="icon-xs"
+                  <span className={mx(composerStyles, "vocab-option-icon")}>
+                    <Hash />
+                  </span>
+                  <div className={mx(composerStyles, "vocab-tag-option-copy")}>
+                    <div
                       className={mx(
                         composerStyles,
-                        "vocab-suggest-action vocab-suggest-action-danger",
+                        "vocab-tag-option-title-row",
                       )}
-                      aria-label={tCommon("delete")}
-                      disabled={busy}
-                      onClick={() =>
-                        setDeletingTag(getCustomTagName(option.id))
-                      }
                     >
-                      <Trash2 />
-                    </Button>
+                      <span
+                        className={mx(composerStyles, "vocab-tag-option-name")}
+                      >
+                        <span
+                          className={mx(composerStyles, "vocab-suggest-title")}
+                        >
+                          {optionLabel(option)}
+                        </span>
+                      </span>
+                      <div
+                        className={mx(composerStyles, "vocab-suggest-actions")}
+                      >
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-xs"
+                          className={mx(composerStyles, "vocab-suggest-action")}
+                          aria-label={tSettings("renameTag")}
+                          disabled={busy}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            openEdit(option);
+                          }}
+                        >
+                          <Pencil />
+                        </Button>
+                        <Button
+                          type="button"
+                          variant="ghost"
+                          size="icon-xs"
+                          className={mx(
+                            composerStyles,
+                            "vocab-suggest-action vocab-suggest-action-danger",
+                          )}
+                          aria-label={tCommon("delete")}
+                          disabled={busy}
+                          onClick={(event) => {
+                            event.stopPropagation();
+                            setDeletingTag(getCustomTagName(option.id));
+                          }}
+                        >
+                          <Trash2 />
+                        </Button>
+                      </div>
+                    </div>
+                    <span className={mx(composerStyles, "vocab-option-kind")}>
+                      {t("groups.custom")}
+                    </span>
                   </div>
+                  <button
+                    type="button"
+                    className={mx(composerStyles, "vocab-option-check")}
+                    aria-label={optionLabel(option)}
+                    onClick={(event) => {
+                      event.stopPropagation();
+                      toggleTag(option.id);
+                    }}
+                    disabled={busy}
+                  >
+                    <Check />
+                  </button>
                 </div>
               );
             })
@@ -543,7 +592,9 @@ export function TagMultiSelect({
         <DialogContent>
           <DialogHeader>
             <DialogTitle>{tSettings("editTagTitle")}</DialogTitle>
-            <DialogDescription>{tSettings("editTagDescription")}</DialogDescription>
+            <DialogDescription>
+              {tSettings("editTagDescription")}
+            </DialogDescription>
           </DialogHeader>
           <div className="space-y-2">
             <Label htmlFor="rename-custom-tag">{tSettings("tagName")}</Label>
@@ -562,7 +613,7 @@ export function TagMultiSelect({
               }}
               maxLength={40}
               aria-invalid={editError ? true : undefined}
-              className={mx(composerStyles, "vocab-composer-field")}
+              className={mx(composerStyles, "vocab-tag-dialog-input")}
               disabled={isSavingEdit}
             />
             {editError ? (

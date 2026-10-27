@@ -2763,11 +2763,84 @@
   .vocab-usage-menu {
     --page-accent: var(--success);
     --page-accent-soft: var(--success-muted);
+    padding: 0.45rem !important;
     border-color: color-mix(
       in oklab,
       var(--success) 28%,
       var(--hairline-cloud)
     ) !important;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-group"] {
+    display: grid;
+    gap: 0.22rem;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-label"] {
+    padding: 0.3rem 0.45rem 0.45rem;
+    font-weight: 700;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  .vocab-usage-menu [data-slot="dropdown-menu-checkbox-item"] {
+    --usage-accent: var(--module-vocab-fg);
+    min-height: 2.35rem;
+    padding: 0.48rem 2rem 0.48rem 0.65rem !important;
+    border: 1px solid
+      color-mix(in oklab, var(--usage-accent) 14%, transparent);
+    border-radius: 0.6rem;
+    background: color-mix(in oklab, var(--usage-accent) 6%, transparent);
+    font-weight: 600;
+    transition:
+      border-color 120ms ease,
+      background 120ms ease,
+      color 120ms ease;
+  }
+
+  .vocab-usage-menu
+    [data-slot="dropdown-menu-checkbox-item"]::before {
+    content: "";
+    position: static;
+    display: block;
+    width: 0.52rem;
+    height: 0.52rem;
+    flex: 0 0 0.52rem;
+    border-radius: 999px;
+    background: var(--usage-accent);
+    box-shadow: 0 0 0 3px
+      color-mix(in oklab, var(--usage-accent) 16%, transparent);
+  }
+
+  .vocab-usage-menu [data-usage-id="formal"] {
+    --usage-accent: var(--module-vocab-fg);
+  }
+  .vocab-usage-menu [data-usage-id="informal"] {
+    --usage-accent: var(--module-home-fg);
+  }
+  .vocab-usage-menu [data-usage-id="spoken"] {
+    --usage-accent: var(--module-listen-fg);
+  }
+  .vocab-usage-menu [data-usage-id="slang"] {
+    --usage-accent: var(--module-theory-fg);
+  }
+  .vocab-usage-menu [data-usage-id="idiom"] {
+    --usage-accent: var(--module-exercise-fg);
+  }
+  .vocab-usage-menu [data-usage-id="literary"] {
+    --usage-accent: var(--module-speak-fg);
+  }
+  .vocab-usage-menu [data-usage-id="technical"] {
+    --usage-accent: color-mix(in oklab, var(--module-listen-fg) 62%, var(--module-vocab-fg));
+  }
+  .vocab-usage-menu [data-usage-id="archaic"] {
+    --usage-accent: color-mix(in oklab, var(--module-exercise-fg) 70%, var(--module-theory-fg));
+  }
+  .vocab-usage-menu [data-usage-id="regional"] {
+    --usage-accent: color-mix(in oklab, var(--module-vocab-fg) 58%, var(--module-listen-fg));
+  }
+  .vocab-usage-menu [data-usage-id="figurative"] {
+    --usage-accent: color-mix(in oklab, var(--module-theory-fg) 58%, var(--module-speak-fg));
   }
 
   .vocab-usage-menu [data-slot="dropdown-menu-checkbox-item"]:focus,
@@ -2776,10 +2849,15 @@
   .vocab-usage-menu [data-slot="dropdown-menu-item"][data-highlighted] {
     background: color-mix(
       in oklab,
-      var(--success-muted) 55%,
+      var(--usage-accent, var(--success)) 18%,
       transparent
     ) !important;
-    color: var(--success) !important;
+    border-color: color-mix(
+      in oklab,
+      var(--usage-accent, var(--success)) 46%,
+      transparent
+    ) !important;
+    color: var(--usage-accent, var(--success)) !important;
   }
 
   .vocab-custom-tag-menu [data-slot="dropdown-menu-separator"] {
