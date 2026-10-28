@@ -13,6 +13,32 @@ vi.mock("@/lib/ai/guard-route", () => ({
 import { runExclusiveExerciseGeneration } from "@/lib/exercises/next-set-job";
 
 describe("runExclusiveExerciseGeneration", () => {
+  it("persists an upcoming result before reporting completion", async () => {
+    const store = new MemoryJobLockStore();
+    const events: string[] = [];
+    const result = await runExclusiveExerciseGeneration({
+      userId: "user-persist",
+      fingerprint: {
+        kind: "fill_blank",
+        sessionId: "persist-session",
+        sourceIds: ["word-1"],
+        count: 1,
+        sequence: 1,
+      },
+      persistence: { scope: "workspace:1:fill_blank", config: "{}" },
+      persist: async () => {
+        events.push("persisted");
+      },
+      store,
+      generate: async () => {
+        events.push("generated");
+        return [{ id: "question-1" }];
+      },
+    });
+    events.push("returned");
+    expect(result.status).toBe("completed");
+    expect(events).toEqual(["generated", "persisted", "returned"]);
+  });
   it("dedupes concurrent callers and reuses completed results", async () => {
     const store = new MemoryJobLockStore();
 

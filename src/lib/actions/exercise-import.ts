@@ -57,6 +57,8 @@ import {
 } from "@/lib/exercise-import/utils";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import { gateAdditionalInstructions } from "@/lib/exercises/additional-instructions-server";
+import { saveExerciseBatch } from "@/lib/exercises/exercise-batch-store";
+import { exerciseImportSourceRevision } from "@/lib/exercise-import/source-revision";
 import {
   resolveTheoryQuestionType,
   type TheoryQuestionType,
@@ -756,6 +758,77 @@ export async function regenerateExerciseImportQuestionType(
     revalidateImports(id);
     throw error;
   }
+}
+
+/** Generate a new practice batch without replacing the import's current set. */
+export async function generateExerciseImportNextBatch(input: {
+  id: string;
+  questionType: TheoryQuestionType;
+  sequence: number;
+  persistence: { scope: string; config: string };
+  regenerate?: boolean;
+}) {
+  await requireAiAssistanceEnabled();
+  const { row, userId, workspace } = await requireOwnedImport(input.id);
+  const questionType = resolveTheoryQuestionType(input.questionType);
+  const text = row.extractedText?.trim() ?? "";
+  if (!text) throw new ExerciseImportError("EMPTY_CONTENT");
+  const user = await requireExerciseImportPlan();
+  const sourceRevision = exerciseImportSourceRevision({
+    extractedText: row.extractedText,
+    additionalInstructions: row.additionalInstructions,
+    studyLanguage: workspace.language,
+  });
+  const subjectId = [
+    input.id,
+    sourceRevision,
+    questionType,
+    input.sequence,
+  ].join(":");
+  const outcome = await runExclusiveJob({
+    operation: AI_JOBS.exerciseNextSet,
+    subjectId,
+    regenerate: input.regenerate === true,
+    run: async ({ stillOwner }) => {
+      const reservation = await consumeUsage(user, "ai_exercise_import", subjectId);
+      try {
+        const exercises = await generateExercisesFromImport({
+          importId: input.id,
+          title: row.title,
+          extractedText: text,
+          studyLanguage: workspace.language,
+          questionType,
+          additionalInstructions: row.additionalInstructions,
+        });
+        if (!exercises.length || !(await stillOwner())) {
+          throw new JobLockLostError();
+        }
+        await saveExerciseBatch({
+          userId,
+          ...input.persistence,
+          slot: "upcoming",
+          payload: exercises,
+        });
+        await finalizeUsageReservation(reservation.reservationId);
+        return exercises;
+      } catch (error) {
+        if (shouldRefundUsage(error)) {
+          await refundUsageReservation(reservation.reservationId);
+        } else {
+          await finalizeUsageReservation(reservation.reservationId);
+        }
+        throw error;
+      }
+    },
+  });
+  if (outcome.status === "in_progress") return { inProgress: true as const };
+  await saveExerciseBatch({
+    userId,
+    ...input.persistence,
+    slot: "upcoming",
+    payload: outcome.result,
+  });
+  return { inProgress: false as const, exercises: outcome.result };
 }
 
 /**

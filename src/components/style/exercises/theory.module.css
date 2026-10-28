@@ -309,6 +309,11 @@
   --lesson-row-on: var(--background);
 }
 
+/* Contain the practice wash so it cannot inflate scroll height below footer. */
+.theory-practice-stage::before {
+  inset: 0;
+}
+
 :global([data-exercise="theory"]) .theory-library-row[data-theory-slot="1"],
 :global([data-exercise="theory"]) .theory-library-card[data-theory-slot="1"] {
   --lesson-row-fg: var(--module-vocab-fg);

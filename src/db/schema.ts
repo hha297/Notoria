@@ -1515,6 +1515,7 @@ export const aiExerciseDrafts = pgTable(
       .references(() => users.id, { onDelete: "cascade" }),
     draftKey: text("draft_key").notNull(),
     scopeKey: text("scope_key").notNull(),
+    batchSlot: text("batch_slot").notNull().default("active"),
     payload: jsonb("payload").notNull(),
     expiresAt: timestamp("expires_at", { withTimezone: true }).notNull(),
     createdAt: timestamp("created_at", { withTimezone: true })
@@ -1534,6 +1535,11 @@ export const aiExerciseDrafts = pgTable(
       table.scopeKey,
     ),
     index("ai_exercise_drafts_expires_at_idx").on(table.expiresAt),
+    index("ai_exercise_drafts_user_slot_idx").on(table.userId, table.batchSlot),
+    check(
+      "ai_exercise_drafts_batch_slot_check",
+      sql`${table.batchSlot} in ('active', 'upcoming')`,
+    ),
   ],
 );
 

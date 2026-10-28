@@ -117,13 +117,13 @@ export function TheoryMultipleChoiceCard({
                     !reduceMotion && !submitted && "active:scale-[0.99]",
                   )}
                 >
-                  <span className="flex items-start gap-2">
-                    <span className="font-mono text-[0.65rem] tracking-[0.14em] text-muted-foreground uppercase">
+                  <span className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-center gap-2">
+                    <span className="inline-flex h-6 items-center justify-center font-mono text-[0.68rem] leading-none tracking-[0.08em] text-muted-foreground uppercase">
                       {String.fromCharCode(65 + optionIndex)}
                     </span>
-                    <span className="min-w-0 flex-1">{option}</span>
+                    <span className="min-w-0 leading-6">{option}</span>
                     {submitted && isAnswer ? (
-                      <Check className="mt-0.5 size-4 shrink-0" strokeWidth={2.6} />
+                      <Check className="size-4 shrink-0" strokeWidth={2.6} />
                     ) : null}
                   </span>
                 </button>

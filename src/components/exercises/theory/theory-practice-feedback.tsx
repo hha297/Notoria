@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { ChevronRight, XCircle } from "lucide-react";
+import { ArrowRight, ChevronRight, XCircle } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import featureStyles from "@/components/style/exercises/theory.module.css";
 import { mx } from "@/lib/css-module";
@@ -129,10 +129,16 @@ export function TheoryPracticeFeedback({
             ) : null}
 
             {sentenceMeaning?.trim() ? (
-              <div>
+              <div className="pt-1">
                 <dt className="sr-only">{t("lesson.example")}</dt>
-                <dd className="mt-1 max-w-xl text-muted-foreground wrap-anywhere">
-                  {sentenceMeaning}
+                <dd className="flex max-w-2xl items-start gap-2 border-l-2 border-(--exercise-accent)/45 bg-(--exercise-accent-soft)/35 px-3 py-2.5 text-base leading-relaxed wrap-anywhere">
+                  <ArrowRight
+                    aria-hidden
+                    className="mt-1 size-4 shrink-0 text-(--exercise-accent)"
+                  />
+                  <span className="font-semibold text-(--exercise-accent)">
+                    {sentenceMeaning}
+                  </span>
                 </dd>
               </div>
             ) : null}

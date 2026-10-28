@@ -33,6 +33,8 @@ export function CharacterSlotInput({
   const composingRef = useRef(false);
   const lastEmittedRef = useRef(value);
   const [shake, setShake] = useState(0);
+  const [focused, setFocused] = useState(false);
+  const [selection, setSelection] = useState({ start: 0, end: 0 });
   const enteredValue = editableAnswerCharacters(value).join("");
   const parts = slotDisplayParts(value, answers);
   const maximumLength = maximumAnswerSlotLength(answers);
@@ -58,6 +60,23 @@ export function CharacterSlotInput({
   }, [enteredValue, value]);
 
   const rejectOverflow = () => setShake((current) => current + 1);
+
+  const syncSelection = (input = inputRef.current) => {
+    if (!input) return;
+    setSelection({
+      start: input.selectionStart ?? 0,
+      end: input.selectionEnd ?? input.selectionStart ?? 0,
+    });
+  };
+
+  const placeCaret = (position: number) => {
+    const input = inputRef.current;
+    if (!input) return;
+    const next = Math.max(0, Math.min(position, enteredValue.length));
+    input.focus();
+    input.setSelectionRange(next, next);
+    setSelection({ start: next, end: next });
+  };
 
   const commitInputValue = (input: HTMLInputElement) => {
     const raw = input.value;
@@ -103,6 +122,19 @@ export function CharacterSlotInput({
           );
         }
 
+        const slotIndex = parts
+          .slice(0, index)
+          .filter((candidate) => candidate.editable).length;
+        const selected =
+          focused &&
+          selection.start !== selection.end &&
+          slotIndex >= selection.start &&
+          slotIndex < selection.end;
+        const showCaret =
+          focused &&
+          selection.start === selection.end &&
+          selection.start === slotIndex;
+
         return (
           <span
             key={index}
@@ -110,32 +142,39 @@ export function CharacterSlotInput({
             data-missing={part.entered ? undefined : "true"}
             onPointerDown={(event) => {
               event.preventDefault();
-              const slotIndex = parts
-                .slice(0, index)
-                .filter((candidate) => candidate.editable).length;
-              const enteredCharacters = editableAnswerCharacters(enteredValue);
-              const selectionStart = enteredCharacters
-                .slice(0, slotIndex)
-                .join("").length;
-              const selectionEnd =
-                selectionStart + (enteredCharacters[slotIndex]?.length ?? 0);
-              inputRef.current?.focus();
-              inputRef.current?.setSelectionRange(
-                selectionStart,
-                selectionEnd,
+              const bounds = event.currentTarget.getBoundingClientRect();
+              placeCaret(
+                slotIndex +
+                  (event.clientX >= bounds.left + bounds.width / 2 ? 1 : 0),
               );
             }}
             className={cn(
-              "inline-flex size-[1.18em] shrink-0 items-center justify-center rounded-[0.18em] border text-[0.82em] leading-none font-semibold transition-[border-color,background-color,color]",
+              "relative inline-flex size-[1.18em] shrink-0 items-center justify-center rounded-[0.18em] border text-[0.82em] leading-none font-semibold transition-[border-color,background-color,color,box-shadow]",
               part.entered
                 ? "border-(--exercise-accent)/70 bg-(--exercise-accent-soft)/55 text-ink"
                 : "border-dashed border-(--exercise-accent)/55 bg-(--exercise-accent)/7 text-transparent",
+              selected &&
+                "border-(--exercise-accent) bg-(--exercise-accent-soft) shadow-[inset_0_0_0_1px_var(--exercise-accent)]",
             )}
           >
+            {showCaret ? (
+              <span
+                aria-hidden
+                className="pointer-events-none absolute top-[-0.12em] bottom-[-0.12em] left-[-0.16em] z-20 w-[2px] animate-pulse rounded-full bg-(--exercise-accent)"
+              />
+            ) : null}
             {part.entered || "·"}
           </span>
         );
       })}
+      {focused &&
+      selection.start === selection.end &&
+      selection.start >= maximumLength ? (
+        <span
+          aria-hidden
+          className="h-[1.35em] w-[2px] animate-pulse rounded-full bg-(--exercise-accent)"
+        />
+      ) : null}
       <input
         ref={inputRef}
         type="text"
@@ -149,7 +188,15 @@ export function CharacterSlotInput({
             return;
           }
           commitInputValue(event.currentTarget);
+          queueMicrotask(() => syncSelection(event.currentTarget));
         }}
+        onFocus={(event) => {
+          setFocused(true);
+          syncSelection(event.currentTarget);
+        }}
+        onBlur={() => setFocused(false)}
+        onSelect={(event) => syncSelection(event.currentTarget)}
+        onKeyUp={(event) => syncSelection(event.currentTarget)}
         onCompositionStart={() => {
           composingRef.current = true;
         }}
@@ -159,6 +206,7 @@ export function CharacterSlotInput({
           queueMicrotask(() => {
             if (!composingRef.current && input.isConnected) {
               commitInputValue(input);
+              syncSelection(input);
             }
           });
         }}
@@ -171,7 +219,10 @@ export function CharacterSlotInput({
             (inputRef.current?.selectionEnd ?? 0) -
               (inputRef.current?.selectionStart ?? 0),
           );
-          if (enteredValue.length - selectionLength + pasted.length > maximumLength) {
+          if (
+            enteredValue.length - selectionLength + pasted.length >
+            maximumLength
+          ) {
             rejectOverflow();
           }
         }}
@@ -185,7 +236,7 @@ export function CharacterSlotInput({
         data-1p-ignore
         data-lpignore="true"
         data-form-type="other"
-        className="absolute inset-0 z-10 h-full w-full cursor-text opacity-0"
+        className="pointer-events-none absolute inset-0 z-10 h-full w-full opacity-0"
       />
     </span>
   );

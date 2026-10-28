@@ -74,6 +74,7 @@ export default async function TheoryExercisePracticePage({
       <TheoryExerciseSessionView
         session={session}
         alsoTheoryIds={alsoTheoryIds}
+        sourceRevision={note.updatedAt instanceof Date ? note.updatedAt.toISOString() : String(note.updatedAt)}
       />
     </div>
   );

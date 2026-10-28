@@ -25,6 +25,7 @@ import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
+import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { cn } from "@/lib/utils";
 import { isValidLocale } from "@/i18n/config";
@@ -37,6 +38,7 @@ import {
 import {
   CONTEXTUAL_AI_BATCH,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
+  type ContextualAiRequest,
 } from "@/lib/exercises/contextual-ai-types";
 import { pickDistinctContextualWords } from "@/lib/exercises/contextual-word-pick";
 import { wordHasBlankMeaningHint } from "@/lib/exercises/blank-hint";
@@ -58,6 +60,11 @@ type MultipleChoiceSessionProps = {
   workspaceId: string;
   words: FlashcardWord[];
   language?: string;
+};
+
+type ContextualNextPayload = {
+  picked: FlashcardWord[];
+  words: ContextualAiRequest["words"];
 };
 
 function promptLabelFor(
@@ -369,13 +376,121 @@ export function MultipleChoiceSession({
     uiLocale,
   ]);
 
-  const startSession = useCallback(() => {
+  const buildContextualNextPayload = useCallback((): ContextualNextPayload | null => {
+    const prefs = commitAndBeginNext();
+    const picked = pickDistinctContextualWords(
+      filteredWords.filter(wordHasBlankMeaningHint),
+      CONTEXTUAL_AI_BATCH,
+      {
+        getWordId: (word) => word.id,
+        getWordForm: (word) => word.word,
+        softAvoidWordIds: prefs.softAvoidWordIds,
+        softPreferWordIds: prefs.softPreferWordIds,
+      },
+    );
+    if (!picked.length) return null;
+    const pool = [...new Set(filteredWords.map((word) => word.word.trim()).filter(Boolean))]
+      .slice(0, CONTEXTUAL_DISTRACTOR_POOL_MAX);
+    return {
+      picked,
+      words: picked.map((word) => ({
+        id: word.id,
+        word: word.word.trim().slice(0, 120),
+        meaning: word.meanings[0]?.trim() || null,
+        partOfSpeech: word.partOfSpeech,
+        distractorPool: pool.filter(
+          (candidate) => candidate.toLowerCase() !== word.word.trim().toLowerCase(),
+        ),
+      })),
+    };
+  }, [commitAndBeginNext, filteredWords]);
+
+  const { notifyAnswerInteraction, openNextSet } = useExerciseNextSet<
+    ContextualNextPayload,
+    MultipleChoiceQuestion[]
+  >({
+    enabled: isContextual && questions.length > 0,
+    buildPayload: buildContextualNextPayload,
+    generate: async (payload, meta) => {
+      const result = await requestContextualExerciseAi(
+        {
+          exerciseType: "multiple-choice",
+          language: language && language.trim().length >= 2
+            ? language.trim().slice(0, 16)
+            : null,
+          difficulty,
+          uiLocale: isValidLocale(uiLocale) ? uiLocale : "en",
+          additionalInstructions,
+          words: payload.words,
+          nextSet: {
+            sessionId: meta.sessionId,
+            sequence: meta.sequence,
+            regenerate: meta.regenerate,
+            persistence: meta.persistence,
+          },
+        },
+        { signal: meta.signal },
+      );
+      if (!result.ok) return { ok: false, retryable: true };
+      const byId = new Map(payload.picked.map((word) => [word.id, word] as const));
+      const next = result.exercises
+        .filter((exercise) => exercise.type === "multiple-choice")
+        .map((exercise, index) =>
+          contextualExerciseToQuestion(exercise, byId.get(exercise.wordId), index),
+        )
+        .filter((question): question is MultipleChoiceQuestion => Boolean(question))
+        .filter((question) => question.options.length === 4);
+      return next.length
+        ? { ok: true, result: next }
+        : { ok: false, retryable: false };
+    },
+    applyResult: (next) => {
+      void saveExerciseDraft(draftIdentity, next);
+      setQuestions(next);
+      setActiveIds(null);
+      resetAttempt();
+      afterNewSet();
+    },
+    persistence: {
+      ...draftIdentity,
+      decode: (payload) => {
+        const byId = new Map(filteredWords.map((word) => [word.id, word] as const));
+        const next = (payload as Array<{ type?: string; wordId: string }>)
+          .filter((exercise) => exercise.type === "multiple-choice" && byId.has(exercise.wordId))
+          .filter((exercise) => {
+            const baseWord = (exercise as { baseWord?: unknown }).baseWord;
+            return typeof baseWord !== "string" ||
+              baseWord.trim().toLocaleLowerCase() ===
+                byId.get(exercise.wordId)!.word.trim().toLocaleLowerCase();
+          })
+          .map((exercise, index) =>
+            contextualExerciseToQuestion(
+              exercise as never,
+              byId.get(exercise.wordId),
+              index,
+            ),
+          )
+          .filter((question): question is MultipleChoiceQuestion => Boolean(question))
+          .filter((question) => question.options.length === 4);
+        return next.length ? next : null;
+      },
+    },
+  });
+
+  const startSession = useCallback(async () => {
     if (isContextual) {
-      void startContextualSession();
+      if (questions.length === 0) {
+        await startContextualSession();
+        return;
+      }
+      const outcome = await openNextSet();
+      if (outcome.mode === "applied") return;
+      if (outcome.mode === "attached" && (await outcome.promise)) return;
+      await startContextualSession();
       return;
     }
     startDeterministicSession();
-  }, [isContextual, startContextualSession, startDeterministicSession]);
+  }, [isContextual, openNextSet, questions.length, startContextualSession, startDeterministicSession]);
 
   // Deterministic modes reshuffle when the practice source changes.
   // Contextual waits for an explicit Generate click so the learner can edit
@@ -424,8 +539,8 @@ export function MultipleChoiceSession({
     [recordOutcome],
   );
 
-  const handleSubmit = () => {
-    if (isContextual) void deleteExerciseDraft(draftIdentity);
+  const handleSubmit = async () => {
+    if (isContextual) await deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const question of practiceQuestions) {
@@ -684,7 +799,10 @@ export function MultipleChoiceSession({
                 peeked={false}
                 isCorrect={isCorrect}
                 unanswered={unanswered}
-                onPick={(option) => setAnswer(question.id, option)}
+                onPick={(option) => {
+                  setAnswer(question.id, option);
+                  if (isContextual) notifyAnswerInteraction();
+                }}
               />
             </div>
           );

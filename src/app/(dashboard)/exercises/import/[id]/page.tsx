@@ -7,6 +7,7 @@ import { PageHeader } from "@/components/layout/page-header";
 import { NoWorkspaceEmpty } from "@/components/workspace/no-workspace-empty";
 import { getExerciseImport } from "@/lib/actions/exercise-import";
 import { getActiveWorkspace } from "@/lib/workspace";
+import { exerciseImportSourceRevision } from "@/lib/exercise-import/source-revision";
 
 export default async function ImportExercisePracticePage({
   params,
@@ -49,6 +50,12 @@ export default async function ImportExercisePracticePage({
     notFound();
   }
 
+  const sourceRevision = exerciseImportSourceRevision({
+    extractedText: detail.extractedText,
+    additionalInstructions: detail.additionalInstructions,
+    studyLanguage: workspace.language,
+  });
+
   return (
     <div className="w-full min-w-0 max-w-full space-y-5 pt-1">
       <div className="space-y-3">
@@ -72,6 +79,7 @@ export default async function ImportExercisePracticePage({
         importPractice={{
           id: detail.id,
           questionType: detail.questionType,
+          sourceRevision,
         }}
         session={{
           theoryId: detail.id,

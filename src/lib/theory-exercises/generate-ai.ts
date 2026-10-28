@@ -23,16 +23,85 @@ export const theoryLearningTargetTypeSchema = z.enum([
   "concept",
 ]);
 
-export const theoryAiExerciseSchema = z.object({
+function normalizeTheoryDraftShape(value: unknown) {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  const draft = { ...(value as Record<string, unknown>) };
+  if (draft.type === "multiple-choice") draft.type = "multiple_choice";
+  if (draft.type === "fill-in-blank") draft.type = "fill_blank";
+
+  if (typeof draft.hint !== "string" || !draft.hint.trim()) {
+    const firstHint = Array.isArray(draft.hints)
+      ? draft.hints.find((item) => typeof item === "string" && item.trim())
+      : undefined;
+    if (typeof firstHint === "string") draft.hint = firstHint;
+  }
+
+  if (
+    typeof draft.learningObjective !== "string" ||
+    draft.learningObjective.trim().length < 3
+  ) {
+    const fallback = [draft.explanation, draft.instruction, draft.skillLabel]
+      .find((item) => typeof item === "string" && item.trim().length >= 3);
+    if (typeof fallback === "string") draft.learningObjective = fallback;
+  }
+
+  const textLimits: Record<string, number> = {
+    learningObjective: 240,
+    instruction: 400,
+    skillLabel: 120,
+    hint: 300,
+    explanation: 500,
+    sentence: 400,
+    answer: 200,
+    sourceWord: 80,
+    completedSentence: 400,
+    sentenceMeaning: 400,
+    promptWord: 80,
+    prompt: 400,
+    correctOption: 200,
+  };
+  for (const [key, limit] of Object.entries(textLimits)) {
+    if (typeof draft[key] === "string") {
+      draft[key] = draft[key].trim().slice(0, limit);
+    }
+  }
+  if (Array.isArray(draft.hints)) {
+    draft.hints = draft.hints
+      .filter((item): item is string => typeof item === "string")
+      .map((item) => item.trim().slice(0, 240))
+      .filter(Boolean)
+      .slice(0, 3);
+  }
+  if (Array.isArray(draft.acceptedAnswers)) {
+    draft.acceptedAnswers = draft.acceptedAnswers
+      .filter((item): item is string => typeof item === "string")
+      .map((item) => item.trim().slice(0, 200))
+      .filter(Boolean)
+      .slice(0, 8);
+  }
+  if (Array.isArray(draft.options)) {
+    draft.options = draft.options
+      .filter((item): item is string => typeof item === "string")
+      .map((item) => item.trim().slice(0, 200))
+      .filter(Boolean)
+      .slice(0, 6);
+  }
+  return draft;
+}
+
+export const theoryAiExerciseSchema = z.preprocess(normalizeTheoryDraftShape, z.object({
   type: z.enum(["fill_blank", "transformation", "multiple_choice"]),
   learningObjective: z.string().min(3).max(240),
-  targetType: theoryLearningTargetTypeSchema,
+  targetType: theoryLearningTargetTypeSchema.catch("concept"),
   instruction: z.string().max(400).optional(),
   skillLabel: z.string().max(120).optional(),
   hint: z.string().min(1).max(300),
   hints: z.array(z.string().trim().max(240)).max(3).optional().catch(undefined),
   explanation: z.string().max(500).optional(),
-  materialSource: z.enum(["theory", "vocabulary", "ai"]).optional(),
+  materialSource: z
+    .enum(["theory", "vocabulary", "ai"])
+    .optional()
+    .catch("ai"),
   sentence: z.string().min(1).max(400).optional(),
   answer: z.string().min(1).max(200).optional(),
   acceptedAnswers: z.array(z.string().min(1).max(200)).max(8).optional(),
@@ -46,12 +115,28 @@ export const theoryAiExerciseSchema = z.object({
   correctOption: z.string().min(1).max(200).optional(),
   /** When false, UI shows cue + blank line instead of "cue → blank". */
   showArrow: z.boolean().optional(),
-});
+}));
 
-export const theoryAiResponseSchema = z.object({
-  theoryFocus: z.string().min(3).max(400).optional(),
-  exercises: z.array(theoryAiExerciseSchema).max(30),
-});
+export const theoryAiResponseSchema = z.preprocess((value) => {
+  if (!value || typeof value !== "object" || Array.isArray(value)) return value;
+  const response = { ...(value as Record<string, unknown>) };
+  if (!Array.isArray(response.exercises)) {
+    if (Array.isArray(response.questions)) response.exercises = response.questions;
+    else if (Array.isArray(response.items)) response.exercises = response.items;
+  }
+  return response;
+}, z.object({
+  theoryFocus: z.string().min(3).max(400).optional().catch(undefined),
+  // One malformed draft must not discard the other valid questions from the
+  // same provider response. This is structural parsing only; no extra AI pass.
+  exercises: z
+    .array(theoryAiExerciseSchema.nullable().catch(null))
+    .transform((items) =>
+      items
+        .filter((item): item is TheoryAiExerciseDraft => item !== null)
+        .slice(0, 30),
+    ),
+}));
 
 export type TheoryAiExerciseDraft = z.infer<typeof theoryAiExerciseSchema>;
 
@@ -1138,17 +1223,13 @@ export function mapAiDraftsToTheoryExercises(
       }
       const learnerFacingText = [
         prompt,
-        draft.instruction,
         ...distinctOptions,
-        draft.hint,
-        ...(draft.hints ?? []),
-        draft.explanation,
-        draft.learningObjective,
       ]
         .filter((value): value is string => Boolean(value?.trim()))
         .join(" ");
-      // The generation contract should prevent this. Keep a final guard so
-      // model drift cannot persist an English MC card in another workspace.
+      // Validate the actual question and choices. Explanations/hints may use
+      // the UI language and must not make an otherwise valid study-language
+      // question look like an English practice card.
       if (isWrongStudyLanguageSentence(learnerFacingText, studyLanguage)) {
         continue;
       }

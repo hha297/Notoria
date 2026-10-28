@@ -70,6 +70,13 @@ export const exerciseNextSetMetaSchema = z.object({
   sequence: z.number().int().min(0).max(10_000),
   /** Force a new provider call after a failed job. */
   regenerate: z.boolean().optional(),
+  /** Durable destination for a speculative next set. */
+  persistence: z
+    .object({
+      scope: z.string().trim().min(1).max(2_000),
+      config: z.string().trim().min(1).max(12_000),
+    })
+    .optional(),
 });
 
 export type ExerciseNextSetMeta = z.infer<typeof exerciseNextSetMetaSchema>;
