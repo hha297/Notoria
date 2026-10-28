@@ -627,10 +627,10 @@ export function VocabularyForm({
       onSubmit={form.handleSubmit(onSubmit)}
       className={mx(
         composerStyles,
-        "vocab-composer",
+        "vocab-composer vocab-composer-page",
         isModal
-          ? "vocab-composer-modal space-y-6"
-          : "vocab-composer-page flex flex-col gap-4",
+          ? "vocab-composer-modal flex flex-col gap-6"
+          : "flex flex-col gap-6",
       )}
     >
       {!isModal ? (
@@ -650,7 +650,11 @@ export function VocabularyForm({
         />
       ) : null}
 
-      <VocabularyComposerSection slot="word" index={1}>
+      <VocabularyComposerSection
+        slot="word"
+        index={1}
+        title={`${t("word")} · ${t("partOfSpeech")}`}
+      >
         <div className={mx(composerStyles, "vocab-composer-word-row")}>
           <div className={mx(composerStyles, "vocab-composer-word-col")}>
             <Label

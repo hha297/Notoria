@@ -226,10 +226,10 @@ function SortableExampleRow({
     <div
       ref={setNodeRef}
       style={{
-        transform: CSS.Transform.toString(transform),
+        transform: CSS.Translate.toString(transform),
         transition,
       }}
-      className={cn(isDragging && "opacity-60 shadow-md")}
+      className={cn("min-w-0", isDragging && "relative z-20 opacity-80 shadow-md")}
     >
       <ExampleRowShell
         item={item}
@@ -268,13 +268,7 @@ export function SortableExamples({
   const t = useTranslations("vocabulary");
   const { requestFocus, bindRef } = useFocusNewItem<HTMLInputElement>();
   const [openDetails, setOpenDetails] = useState<Record<string, boolean>>(
-    () =>
-      Object.fromEntries(
-        examples.map((item) => [
-          item.id,
-          Boolean(item.meaning.trim() || item.notes.trim()),
-        ]),
-      ),
+    () => Object.fromEntries(examples.map((item) => [item.id, true])),
   );
   const sensors = useSensors(
     useSensor(PointerSensor),
@@ -310,7 +304,7 @@ export function SortableExamples({
         sortOrder: examples.length,
       },
     ]);
-    setOpenDetails((current) => ({ ...current, [id]: false }));
+    setOpenDetails((current) => ({ ...current, [id]: true }));
   }
 
   function updateExample(id: string, patch: ExamplePatch) {
@@ -341,7 +335,7 @@ export function SortableExamples({
   function toggleDetails(id: string) {
     setOpenDetails((current) => ({
       ...current,
-      [id]: !current[id],
+      [id]: current[id] === false,
     }));
   }
 
@@ -357,7 +351,7 @@ export function SortableExamples({
             onRemove={removeExample}
             canRemove={examples.length > 1}
             placeholder={t("examplePlaceholder")}
-            detailsOpen={Boolean(openDetails[item.id])}
+            detailsOpen={openDetails[item.id] !== false}
             onToggleDetails={() => toggleDetails(item.id)}
             inputRef={bindRef(item.id)}
           />
@@ -370,7 +364,7 @@ export function SortableExamples({
             onRemove={removeExample}
             canRemove={examples.length > 1}
             placeholder={t("examplePlaceholder")}
-            detailsOpen={Boolean(openDetails[item.id])}
+            detailsOpen={openDetails[item.id] !== false}
             onToggleDetails={() => toggleDetails(item.id)}
             inputRef={bindRef(item.id)}
             dragHandle={
