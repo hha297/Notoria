@@ -523,45 +523,45 @@ export function TagMultiSelect({
                           {optionLabel(option)}
                         </span>
                       </span>
-                      <div
-                        className={mx(composerStyles, "vocab-suggest-actions")}
-                      >
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          className={mx(composerStyles, "vocab-suggest-action")}
-                          aria-label={tSettings("renameTag")}
-                          disabled={busy}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            openEdit(option);
-                          }}
-                        >
-                          <Pencil />
-                        </Button>
-                        <Button
-                          type="button"
-                          variant="ghost"
-                          size="icon-xs"
-                          className={mx(
-                            composerStyles,
-                            "vocab-suggest-action vocab-suggest-action-danger",
-                          )}
-                          aria-label={tCommon("delete")}
-                          disabled={busy}
-                          onClick={(event) => {
-                            event.stopPropagation();
-                            setDeletingTag(getCustomTagName(option.id));
-                          }}
-                        >
-                          <Trash2 />
-                        </Button>
-                      </div>
                     </div>
                     <span className={mx(composerStyles, "vocab-option-kind")}>
                       {t("groups.custom")}
                     </span>
+                  </div>
+                  <div className={mx(composerStyles, "vocab-suggest-actions")}>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-xs"
+                      className={mx(composerStyles, "vocab-suggest-action")}
+                      aria-label={tSettings("renameTag")}
+                      title={tSettings("renameTag")}
+                      disabled={busy}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        openEdit(option);
+                      }}
+                    >
+                      <Pencil />
+                    </Button>
+                    <Button
+                      type="button"
+                      variant="ghost"
+                      size="icon-xs"
+                      className={mx(
+                        composerStyles,
+                        "vocab-suggest-action vocab-suggest-action-danger",
+                      )}
+                      aria-label={tCommon("delete")}
+                      title={tCommon("delete")}
+                      disabled={busy}
+                      onClick={(event) => {
+                        event.stopPropagation();
+                        setDeletingTag(getCustomTagName(option.id));
+                      }}
+                    >
+                      <Trash2 />
+                    </Button>
                   </div>
                   <button
                     type="button"

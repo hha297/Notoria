@@ -91,7 +91,7 @@ export function VocabularyComposerSection({
           {String(index).padStart(2, "0")}
         </p>
         <div className={mx(styles, "vocab-composer-section-main")}>
-          {title || action ? (
+          {title || hint || action ? (
             <div className={mx(styles, "vocab-composer-section-head")}>
               <div className={mx(styles, "vocab-composer-section-copy")}>
                 {title ? (

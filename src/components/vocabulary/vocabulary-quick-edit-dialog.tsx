@@ -70,7 +70,10 @@ export function VocabularyQuickEditDialog({
           <DialogDescription>{t("editDescription")}</DialogDescription>
         </DialogHeader>
 
-        <div className="min-h-0 flex-1 overflow-y-auto px-4 py-4 sm:px-6 sm:py-5">
+        <div
+          data-vocabulary-scroll-root
+          className="min-h-0 flex-1 overflow-x-hidden overflow-y-auto px-4 py-4 sm:px-6 sm:py-5"
+        >
           {open && wordId && initialData ? (
             <VocabularyForm
               key={initialData.id}

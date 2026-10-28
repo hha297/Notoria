@@ -109,7 +109,7 @@ function MeaningRowShell({
   aiFooter?: ReactNode;
 }) {
   return (
-    <div className="space-y-3">
+    <div className={mx(composerStyles, "vocab-composer-sortable-row")}>
       <div
         className={mx(
           composerStyles,
@@ -237,10 +237,13 @@ function SortableMeaningRow({
     <div
       ref={setNodeRef}
       style={{
-        transform: CSS.Transform.toString(transform),
+        // Dynamic AI content can change a row's measured height mid-drag. A
+        // translate-only transform keeps dnd-kit's temporary scale correction
+        // from stretching the complete card and its controls.
+        transform: CSS.Translate.toString(transform),
         transition,
       }}
-      className={cn(isDragging && "opacity-60 shadow-md")}
+      className={cn("min-w-0", isDragging && "relative z-20 opacity-80 shadow-md")}
     >
       <MeaningRowShell
         item={item}
