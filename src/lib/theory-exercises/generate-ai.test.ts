@@ -9,6 +9,7 @@ import {
   mapAiDraftsToTheoryExercises,
   resolveFullWordAnswer,
   revealTextForExercise,
+  theoryAiResponseSchema,
 } from "@/lib/theory-exercises/generate-ai";
 import { buildTheoryExerciseSession } from "@/lib/theory-exercises/build-session";
 import {
@@ -17,6 +18,70 @@ import {
 } from "@/lib/theory-exercises/semantic-validate";
 
 describe("AI theory exercise mapping", () => {
+  it("keeps valid drafts when another draft in the same response is malformed", () => {
+    const parsed = theoryAiResponseSchema.parse({
+      exercises: [
+        {
+          type: "multiple_choice",
+          learningObjective: "Valitse oikea muoto.",
+          targetType: "full_word",
+          prompt: "Hän asuu ________.",
+          options: ["talossa", "talosta", "taloon", "talolla"],
+          correctOption: "talossa",
+          hint: "Paikallaan oleminen vaatii inessiivin.",
+        },
+        { type: "multiple_choice", correctOption: 2 },
+      ],
+    });
+
+    expect(parsed.exercises).toHaveLength(1);
+    expect(parsed.exercises[0]?.correctOption).toBe("talossa");
+  });
+
+  it("normalizes harmless multiple-choice response shape drift", () => {
+    const parsed = theoryAiResponseSchema.parse({
+      exercises: [
+        {
+          type: "multiple-choice",
+          learningObjective: "Valitse oikea sijamuoto.",
+          targetType: "grammatical_case",
+          prompt: "Tutkija löysi tiedon vanhoista ________.",
+          options: ["kirje", "kirjeen", "kirjeissä", "kirjeisiin"],
+          correctOption: "kirjeissä",
+          hints: ["Monikon inessiivi päättyy tässä -issä."],
+          materialSource: "generated",
+        },
+      ],
+    });
+
+    expect(parsed.exercises[0]).toMatchObject({
+      type: "multiple_choice",
+      targetType: "concept",
+      hint: "Monikon inessiivi päättyy tässä -issä.",
+      materialSource: "ai",
+    });
+  });
+
+  it("accepts alternate batch wrappers and clips oversized optional fields", () => {
+    const parsed = theoryAiResponseSchema.parse({
+      questions: [
+        {
+          type: "multiple_choice",
+          learningObjective: `Valitse oikea muoto. ${"x".repeat(300)}`,
+          targetType: "full_word",
+          prompt: "Hän asuu ________.",
+          options: ["talossa", "talosta", "taloon", "talolla"],
+          correctOption: "talossa",
+          hint: "Paikallaan oleminen vaatii inessiivin.",
+          hints: ["1", "2", "3", "4"],
+        },
+      ],
+    });
+
+    expect(parsed.exercises).toHaveLength(1);
+    expect(parsed.exercises[0]?.learningObjective).toHaveLength(240);
+    expect(parsed.exercises[0]?.hints).toEqual(["1", "2", "3"]);
+  });
   it("keeps only the selected question type", () => {
     const drafts = [
       {
@@ -154,6 +219,34 @@ describe("AI theory exercise mapping", () => {
     expect(items[0]).toMatchObject({
       type: "multiple_choice",
       correctOption: "kouluun",
+    });
+  });
+
+  it("allows UI-language guidance on a study-language multiple-choice card", () => {
+    const items = mapAiDraftsToTheoryExercises(
+      "theory_1",
+      [
+        {
+          type: "multiple_choice",
+          learningObjective: "Choose the inessive plural form.",
+          targetType: "full_word",
+          prompt: "Tietoja löydetään vanhoista ________.",
+          instruction: "Choose the correct answer.",
+          options: ["kirje", "kirjeen", "kirjeissä", "kirjeisiin"],
+          correctOption: "kirjeissä",
+          hint: "Use the plural inessive required by this sentence.",
+          explanation: "The ending marks the plural inessive.",
+        },
+      ],
+      "I-monikko",
+      10,
+      { questionType: "multiple_choice", studyLanguage: "fi" },
+    );
+
+    expect(items).toHaveLength(1);
+    expect(items[0]).toMatchObject({
+      type: "multiple_choice",
+      correctOption: "kirjeissä",
     });
   });
 

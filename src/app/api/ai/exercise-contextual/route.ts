@@ -62,6 +62,7 @@ export async function POST(request: Request) {
     const outcome = await runExclusiveExerciseGeneration({
       userId: user.id,
       regenerate: nextSet?.regenerate === true,
+      persistence: nextSet?.persistence,
       fingerprint: {
         kind,
         sessionId,

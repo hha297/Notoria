@@ -58,6 +58,7 @@ export function toImportDetail(
     fileUrl: row.fileUrl,
     mimeType: row.mimeType,
     extractedText: row.extractedText,
+    additionalInstructions: row.additionalInstructions,
     exercises,
   };
 }

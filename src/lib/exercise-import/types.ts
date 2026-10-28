@@ -24,6 +24,7 @@ export type ExerciseImportDetail = ExerciseImportListItem & {
   mimeType: string | null;
   /** Internal only — not shown in UI. */
   extractedText: string | null;
+  additionalInstructions: string | null;
   exercises: TheoryExercise[];
 };
 

@@ -17,7 +17,6 @@ import {
   ExerciseSetReviewNav,
   exerciseReviewFocusClass,
 } from "@/components/exercises/exercise-set-review-nav";
-import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { TheoryFillBlankCard } from "@/components/exercises/theory/theory-fill-blank-card";
 import {
@@ -33,12 +32,16 @@ import { useExerciseNextSet } from "@/hooks/use-exercise-next-set";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
 import { useQuotaLockMessage } from "@/hooks/use-quota-lock-message";
-import { regenerateExerciseImportQuestionType } from "@/lib/actions/exercise-import";
+import {
+  generateExerciseImportNextBatch,
+  regenerateExerciseImportQuestionType,
+} from "@/lib/actions/exercise-import";
 import { DEFAULT_NEXT_SET_COUNT } from "@/lib/exercises/next-set-fingerprint";
 import {
   deleteExerciseDraft,
   loadExerciseDraft,
   saveExerciseDraft,
+  saveUpcomingExerciseBatch,
 } from "@/lib/exercises/ai-draft-client";
 import { isSlotAnswerComplete } from "@/lib/exercises/character-slots";
 import {
@@ -66,6 +69,7 @@ import { TheoryQuestionTypePicker } from "@/components/exercises/theory-question
 import type { TheoryQuestionType } from "@/lib/theory-exercises/question-type";
 
 const PROGRESS_STAGE_DWELL_MS = 260;
+const EMPTY_THEORY_IDS: string[] = [];
 
 function dwellOnProgressStage() {
   return new Promise<void>((resolve) => {
@@ -89,7 +93,9 @@ type TheoryExerciseSessionViewProps = {
   importPractice?: {
     id: string;
     questionType: TheoryQuestionType;
+    sourceRevision: string;
   };
+  sourceRevision?: string;
   /** Extra theory ids selected in the studio picker (same workspace). */
   alsoTheoryIds?: string[];
 };
@@ -126,7 +132,8 @@ export function TheoryExerciseSessionView({
   session,
   practiceOnly = false,
   importPractice,
-  alsoTheoryIds = [],
+  alsoTheoryIds = EMPTY_THEORY_IDS,
+  sourceRevision,
 }: TheoryExerciseSessionViewProps) {
   const t = useTranslations("exercises.theory");
   const tExercises = useTranslations("exercises");
@@ -263,7 +270,7 @@ export function TheoryExerciseSessionView({
     return { theoryIds, perTheory };
   }, [alsoTheoryIds, session.theoryId]);
 
-  const draftIdentity = useMemo(() => {
+  const buildDraftIdentity = useCallback((targetQuestionType: TheoryQuestionType) => {
     const theoryIds = [
       session.theoryId,
       ...alsoTheoryIds.filter((id) => id !== session.theoryId),
@@ -273,26 +280,48 @@ export function TheoryExerciseSessionView({
     return {
       scope: `theory:${theoryIds.join(",")}`,
       config: JSON.stringify({
-        questionType,
+        questionType: targetQuestionType,
         uiLocale,
         additionalInstructions: additionalInstructions.trim(),
+        sourceRevision: importPractice?.sourceRevision ?? sourceRevision ?? null,
       }),
     };
-  }, [additionalInstructions, alsoTheoryIds, questionType, session.theoryId, uiLocale]);
+  }, [additionalInstructions, alsoTheoryIds, importPractice?.sourceRevision, session.theoryId, sourceRevision, uiLocale]);
+
+  const draftIdentity = useMemo(
+    () => buildDraftIdentity(questionType),
+    [buildDraftIdentity, questionType],
+  );
 
   const {
     sessionId,
     sequence,
-    status: nextSetStatus,
     notifyAnswerInteraction,
     openNextSet,
-    retryPrefetch,
     markGeneratedSequence,
     resetForNewActiveSet,
   } = useExerciseNextSet<TheoryNextPayload, TheoryExercise[]>({
-    enabled: !practiceOnly && items.length > 0,
+    enabled: (!practiceOnly || Boolean(importPractice)) && items.length > 0,
     buildPayload: () => buildTheoryPayload(),
     generate: async (payload, meta) => {
+      if (importPractice) {
+        try {
+          const result = await generateExerciseImportNextBatch({
+            id: importPractice.id,
+            questionType,
+            sequence: meta.sequence,
+            persistence: meta.persistence ?? draftIdentity,
+            regenerate: meta.regenerate,
+          });
+          if (result.inProgress) return { ok: false, retryable: true };
+          const valid = filterPersistedTheoryExercises(result.exercises);
+          return valid.length
+            ? { ok: true, result: valid }
+            : { ok: false, retryable: false };
+        } catch {
+          return { ok: false, retryable: true };
+        }
+      }
       const merged: TheoryExercise[] = [];
       for (const [index, theoryId] of payload.theoryIds.entries()) {
         const result = await requestTheoryExerciseAi(
@@ -307,6 +336,8 @@ export function TheoryExerciseSessionView({
               // Offset per theory so multi-source merges stay unique per sequence.
               sequence: meta.sequence * 10 + index,
               regenerate: meta.regenerate,
+              persistence:
+                payload.theoryIds.length === 1 ? meta.persistence : undefined,
             },
           },
           { signal: meta.signal },
@@ -322,13 +353,52 @@ export function TheoryExerciseSessionView({
         merged.push(...filterPersistedTheoryExercises(result.exercises));
       }
       if (merged.length === 0) return { ok: false, retryable: false };
+      if (payload.theoryIds.length > 1) {
+        await saveUpcomingExerciseBatch(draftIdentity, merged);
+      }
       return { ok: true, result: merged };
     },
     applyResult: (nextItems) => {
       void saveExerciseDraft(draftIdentity, nextItems);
       loadItems(nextItems, true);
     },
+    persistence: {
+      ...draftIdentity,
+      decode: (payload) => {
+        const valid = filterPersistedTheoryExercises(payload as TheoryExercise[]);
+        return valid.length > 0 ? valid : null;
+      },
+    },
   });
+
+  useEffect(() => {
+    if (!importPractice) return;
+    let cancelled = false;
+    void loadExerciseDraft<TheoryExercise>(draftIdentity).then((restored) => {
+      if (cancelled) return;
+      const valid = filterPersistedTheoryExercises(restored ?? []).filter(
+        (exercise) => exercise.type === questionType,
+      );
+      if (valid.length) {
+        setItems(valid);
+        setActiveIds(null);
+        return;
+      }
+
+      // imported_exercises contains the most recently generated format. Seed
+      // that canonical set into durable per-format storage before another
+      // format replaces those rows.
+      if (questionType === importPractice.questionType) {
+        const canonical = filterPersistedTheoryExercises(session.items).filter(
+          (exercise) => exercise.type === questionType,
+        );
+        if (canonical.length) void saveExerciseDraft(draftIdentity, canonical);
+      }
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [draftIdentity, importPractice, questionType, session.items]);
 
   const generateWithAi = useCallback(
     async (options?: {
@@ -474,11 +544,22 @@ export function TheoryExerciseSessionView({
     async (next: TheoryQuestionType) => {
       if (!importPractice) return;
       const previous = questionType;
+      const targetIdentity = buildDraftIdentity(next);
       setQuestionType(next);
       setStage("preparing", { title: session.theoryTitle });
-      setStage("generating", { title: session.theoryTitle });
 
       try {
+        const restored = filterPersistedTheoryExercises(
+          (await loadExerciseDraft<TheoryExercise>(targetIdentity)) ?? [],
+        ).filter((exercise) => exercise.type === next);
+        if (restored.length) {
+          loadItems(restored, true);
+          completeProcessing();
+          window.setTimeout(() => resetProcessing(), 350);
+          return;
+        }
+
+        setStage("generating", { title: session.theoryTitle });
         const result = await regenerateExerciseImportQuestionType(
           importPractice.id,
           next,
@@ -492,6 +573,7 @@ export function TheoryExerciseSessionView({
           throw new Error("QUESTION_TYPE_MISMATCH");
         }
         setStage("saving");
+        await saveExerciseDraft(targetIdentity, result.exercises);
         await dwellOnProgressStage();
         setQuestionType(result.questionType);
         loadItems(result.exercises, true);
@@ -505,6 +587,7 @@ export function TheoryExerciseSessionView({
     },
     [
       completeProcessing,
+      buildDraftIdentity,
       fail,
       importPractice,
       loadItems,
@@ -620,8 +703,8 @@ export function TheoryExerciseSessionView({
     [],
   );
 
-  const handleSubmit = () => {
-    if (!practiceOnly) void deleteExerciseDraft(draftIdentity);
+  const handleSubmit = async () => {
+    if (!practiceOnly || importPractice) await deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers, ids) => {
       const subset = practiceItems.filter((item) => ids.includes(item.id));
       return gradeTheorySet(subset, currentAnswers);
@@ -871,7 +954,7 @@ export function TheoryExerciseSessionView({
             </div>
           ) : null}
           <div className="flex items-center gap-2">
-            {!practiceOnly ? (
+            {!practiceOnly || importPractice ? (
               <QuotaLockButton
                 type="button"
                 variant="ghost"
@@ -896,13 +979,6 @@ export function TheoryExerciseSessionView({
             </Button>
           </div>
         </div>
-        {!practiceOnly ? (
-          <NextSetStatusChip
-            status={nextSetStatus}
-            onRetry={() => retryPrefetch()}
-            onOpen={() => void handleNewSet()}
-          />
-        ) : null}
       </div>
 
       {submitted ? (

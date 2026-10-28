@@ -33,6 +33,8 @@ export async function runExclusiveExerciseGeneration<T>(input: {
   regenerate?: boolean;
   store?: JobLockStore;
   generate: () => Promise<T>;
+  persistence?: { scope: string; config: string };
+  persist?: (result: T) => Promise<void>;
 }): Promise<ExclusiveExerciseJobResult<T>> {
   const fingerprint = fingerprintExerciseNextSet(input.fingerprint);
   const subjectId = buildExerciseNextSetSubject(input.userId, fingerprint);
@@ -52,6 +54,21 @@ export async function runExclusiveExerciseGeneration<T>(input: {
         }
         try {
           const result = await input.generate();
+          if (input.persistence && Array.isArray(result)) {
+            if (input.persist) {
+              await input.persist(result);
+            } else {
+              const { saveExerciseBatch } = await import(
+                "@/lib/exercises/exercise-batch-store"
+              );
+              await saveExerciseBatch({
+                userId: input.userId,
+                ...input.persistence,
+                slot: "upcoming",
+                payload: result,
+              });
+            }
+          }
           await settleMeteredAi(access, true);
           return result;
         } catch (error) {

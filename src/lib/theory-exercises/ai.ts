@@ -244,6 +244,10 @@ async function requestExerciseBatch(input: {
   const raw = parseJsonContent(completion.choices[0]?.message?.content);
   const parsed = theoryAiResponseSchema.safeParse(raw);
   if (!parsed.success) {
+    console.warn("[theory-exercise] provider response shape rejected", {
+      questionType: input.questionType,
+      issuePaths: parsed.error.issues.map((issue) => issue.path.join(".")),
+    });
     throw new Error("AI_INVALID_RESPONSE");
   }
   return {
@@ -352,6 +356,11 @@ export async function generateAiTheoryExercises(input: {
 
     const items = mapDrafts(drafts, count);
     if (items.length === 0) {
+      console.warn("[theory-exercise] all provider drafts rejected locally", {
+        questionType: input.questionType ?? "fill_blank",
+        parsedDraftCount: drafts.length,
+        providerRejected: rejections.length,
+      });
       const deadlineErr = rejections.find(isDeadlineExceeded);
       if (deadlineErr || deadline.expired()) {
         throw afterProviderError(new Error("AI_DEADLINE_EXCEEDED"));

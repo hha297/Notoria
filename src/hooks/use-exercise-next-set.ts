@@ -5,6 +5,10 @@ import { useAiPreferences } from "@/components/providers/ai-preferences-provider
 import {
   NEXT_SET_PREFETCH_DELAY_MS,
 } from "@/lib/exercises/next-set-fingerprint";
+import {
+  claimUpcomingExerciseBatch,
+  loadUpcomingExerciseBatch,
+} from "@/lib/exercises/ai-draft-client";
 
 export type NextSetStatus =
   | "idle"
@@ -26,10 +30,16 @@ type UseExerciseNextSetOptions<TPayload, TResult> = {
       sequence: number;
       regenerate: boolean;
       signal: AbortSignal;
+      persistence?: { scope: string; config: string };
     },
   ) => Promise<{ ok: true; result: TResult } | { ok: false; retryable: boolean }>;
   /** Apply a ready result into the active session (New set). */
   applyResult: (result: TResult) => void;
+  persistence?: {
+    scope: string;
+    config: string;
+    decode: (payload: unknown[]) => TResult | null;
+  };
 };
 
 /**
@@ -89,9 +99,13 @@ export function useExerciseNextSet<TPayload, TResult>(
   );
 
   const runPrefetch = useCallback(
-    async (targetSequence: number, regenerate: boolean) => {
+    async (
+      targetSequence: number,
+      regenerate: boolean,
+      capturedOptions?: UseExerciseNextSetOptions<TPayload, TResult>,
+    ) => {
       if (inFlightRef.current && !regenerate) return;
-      const opts = optionsRef.current;
+      const opts = capturedOptions ?? optionsRef.current;
       if (!opts.enabled) return;
 
       const payload = opts.buildPayload(targetSequence);
@@ -114,6 +128,9 @@ export function useExerciseNextSet<TPayload, TResult>(
           sequence: targetSequence,
           regenerate,
           signal: controller.signal,
+          persistence: opts.persistence
+            ? { scope: opts.persistence.scope, config: opts.persistence.config }
+            : undefined,
         });
         if (controller.signal.aborted) return;
         if (!outcome.ok) {
@@ -150,6 +167,7 @@ export function useExerciseNextSet<TPayload, TResult>(
     clearTimer();
     setStatus("scheduled");
     const target = sequence + 1;
+    const submittedOptions = optionsRef.current;
     timerRef.current = window.setTimeout(() => {
       timerRef.current = null;
       if (typeof document !== "undefined" && document.visibilityState === "hidden") {
@@ -157,7 +175,7 @@ export function useExerciseNextSet<TPayload, TResult>(
         interactedRef.current = false;
         return;
       }
-      void runPrefetch(target, false);
+      void runPrefetch(target, false, submittedOptions);
     }, NEXT_SET_PREFETCH_DELAY_MS);
   }, [
     clearTimer,
@@ -190,7 +208,20 @@ export function useExerciseNextSet<TPayload, TResult>(
     if (status === "ready" && readyResultRef.current != null) {
       const result = readyResultRef.current;
       const usedSequence = readySequenceRef.current ?? sequence + 1;
-      optionsRef.current.applyResult(result);
+      const persistence = optionsRef.current.persistence;
+      if (persistence) {
+        const claimed = await claimUpcomingExerciseBatch<unknown>(persistence);
+        const decoded = claimed ? persistence.decode(claimed) : null;
+        if (!decoded) {
+          readyResultRef.current = null;
+          readySequenceRef.current = null;
+          setStatus("idle");
+          return { mode: "generate", sequence: sequence + 1 };
+        }
+        optionsRef.current.applyResult(decoded);
+      } else {
+        optionsRef.current.applyResult(result);
+      }
       resetForNewActiveSet(usedSequence);
       return { mode: "applied" };
     }
@@ -209,6 +240,12 @@ export function useExerciseNextSet<TPayload, TResult>(
             sequence: target,
             regenerate: false,
             signal: controller.signal,
+            persistence: optionsRef.current.persistence
+              ? {
+                  scope: optionsRef.current.persistence.scope,
+                  config: optionsRef.current.persistence.config,
+                }
+              : undefined,
           });
           if (!outcome.ok) {
             setStatus("failed");
@@ -229,6 +266,23 @@ export function useExerciseNextSet<TPayload, TResult>(
   }, [resetForNewActiveSet, sequence, status]);
 
   const sessionId = sessionIdRef.current;
+
+  useEffect(() => {
+    const persistence = optionsRef.current.persistence;
+    if (!persistence || readyResultRef.current != null || inFlightRef.current) return;
+    let cancelled = false;
+    void loadUpcomingExerciseBatch<unknown>(persistence).then((payload) => {
+      if (cancelled || !payload?.length) return;
+      const decoded = persistence.decode(payload);
+      if (!decoded) return;
+      readyResultRef.current = decoded;
+      readySequenceRef.current = sequence + 1;
+      setStatus("ready");
+    });
+    return () => {
+      cancelled = true;
+    };
+  }, [sequence, options.persistence?.scope, options.persistence?.config]);
 
   useEffect(() => {
     const onVisibility = () => {

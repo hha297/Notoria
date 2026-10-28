@@ -6,17 +6,20 @@ import { db } from "@/db";
 import { aiExerciseDrafts } from "@/db/schema";
 import { getCurrentUserRecord } from "@/lib/auth/current-user";
 import { authErrorResponse } from "@/lib/auth/http";
+import {
+  EXERCISE_BATCH_TTL_MS,
+  exerciseBatchKeys,
+} from "@/lib/exercises/exercise-batch-store";
 
 export const runtime = "nodejs";
 
 const requestSchema = z.object({
-  action: z.enum(["load", "save", "delete"]),
+  action: z.enum(["load", "save", "delete", "claim"]),
+  slot: z.enum(["active", "upcoming"]).optional().default("active"),
   scope: z.string().trim().min(1).max(2_000),
   config: z.string().trim().min(1).max(12_000),
   payload: z.array(z.unknown()).max(40).optional(),
 });
-
-const TTL_MS = 24 * 60 * 60 * 1_000;
 
 function digest(value: string) {
   return createHash("sha256").update(value).digest("hex");
@@ -48,7 +51,11 @@ export async function POST(request: Request) {
   }
 
   const scopeKey = digest(parsed.data.scope);
-  const draftKey = digest(`${parsed.data.scope}\0${parsed.data.config}`);
+  const { draftKey } = exerciseBatchKeys({
+    scope: parsed.data.scope,
+    config: parsed.data.config,
+    slot: parsed.data.slot,
+  });
   const now = new Date();
 
   // Opportunistic per-user cleanup keeps expired config variants from piling up.
@@ -67,10 +74,55 @@ export async function POST(request: Request) {
       .where(
         and(
           eq(aiExerciseDrafts.userId, user.id),
-          eq(aiExerciseDrafts.scopeKey, scopeKey),
+          eq(aiExerciseDrafts.draftKey, draftKey),
         ),
       );
     return NextResponse.json({ ok: true });
+  }
+
+  if (parsed.data.action === "claim") {
+    if (parsed.data.slot !== "upcoming") {
+      return NextResponse.json({ ok: false }, { status: 400 });
+    }
+    const payload = await db.transaction(async (tx) => {
+      const [claimed] = await tx
+        .delete(aiExerciseDrafts)
+        .where(
+          and(
+            eq(aiExerciseDrafts.userId, user.id),
+            eq(aiExerciseDrafts.draftKey, draftKey),
+            gt(aiExerciseDrafts.expiresAt, now),
+          ),
+        )
+        .returning({ payload: aiExerciseDrafts.payload });
+      if (!Array.isArray(claimed?.payload)) return null;
+      const active = exerciseBatchKeys({
+        scope: parsed.data.scope,
+        config: parsed.data.config,
+        slot: "active",
+      });
+      await tx
+        .insert(aiExerciseDrafts)
+        .values({
+          userId: user.id,
+          ...active,
+          batchSlot: "active",
+          payload: claimed.payload,
+          expiresAt: new Date(now.getTime() + EXERCISE_BATCH_TTL_MS),
+          updatedAt: now,
+        })
+        .onConflictDoUpdate({
+          target: [aiExerciseDrafts.userId, aiExerciseDrafts.draftKey],
+          set: {
+            payload: claimed.payload,
+            batchSlot: "active",
+            expiresAt: new Date(now.getTime() + EXERCISE_BATCH_TTL_MS),
+            updatedAt: now,
+          },
+        });
+      return claimed.payload;
+    });
+    return NextResponse.json({ ok: true, payload });
   }
 
   if (parsed.data.action === "load") {
@@ -104,15 +156,17 @@ export async function POST(request: Request) {
       userId: user.id,
       scopeKey,
       draftKey,
+      batchSlot: parsed.data.slot,
       payload: parsed.data.payload,
-      expiresAt: new Date(now.getTime() + TTL_MS),
+      expiresAt: new Date(now.getTime() + EXERCISE_BATCH_TTL_MS),
       updatedAt: now,
     })
     .onConflictDoUpdate({
       target: [aiExerciseDrafts.userId, aiExerciseDrafts.draftKey],
       set: {
         payload: parsed.data.payload,
-        expiresAt: new Date(now.getTime() + TTL_MS),
+        batchSlot: parsed.data.slot,
+        expiresAt: new Date(now.getTime() + EXERCISE_BATCH_TTL_MS),
         updatedAt: now,
       },
     });

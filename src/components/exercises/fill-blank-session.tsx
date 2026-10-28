@@ -18,7 +18,6 @@ import {
   ExerciseSetReviewNav,
   exerciseReviewFocusClass,
 } from "@/components/exercises/exercise-set-review-nav";
-import { NextSetStatusChip } from "@/components/exercises/next-set-status";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { VocabularyEmpty } from "@/components/exercises/vocabulary-empty";
 import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-bar";
@@ -364,10 +363,8 @@ export function FillBlankSession({
   const {
     sessionId,
     sequence,
-    status: nextSetStatus,
     notifyAnswerInteraction,
     openNextSet,
-    retryPrefetch,
     markGeneratedSequence,
     resetForNewActiveSet,
   } = useExerciseNextSet<FillBlankNextPayload, FillBlankItem[]>({
@@ -386,6 +383,7 @@ export function FillBlankSession({
             sessionId: meta.sessionId,
             sequence: meta.sequence,
             regenerate: meta.regenerate,
+            persistence: meta.persistence,
           },
         },
         { signal: meta.signal },
@@ -405,6 +403,23 @@ export function FillBlankSession({
     applyResult: (items) => {
       void saveExerciseDraft(draftIdentity, items);
       applyGeneratedItems(items);
+    },
+    persistence: {
+      ...draftIdentity,
+      decode: (payload) => {
+        const current = new Map(
+          filteredWords.map((word) => [word.id, word.word.trim().toLocaleLowerCase()] as const),
+        );
+        const items = mapExercisesToItems(
+          (payload as ExerciseAiFillBlank[]).filter((exercise) => {
+            const word = exercise.wordId ? current.get(exercise.wordId) : null;
+            if (!word) return false;
+            return !exercise.baseWord || exercise.baseWord.trim().toLocaleLowerCase() === word;
+          }),
+          filteredWords,
+        );
+        return items.length > 0 ? items : null;
+      },
     },
   });
 
@@ -594,8 +609,8 @@ export function FillBlankSession({
     [recordOutcome],
   );
 
-  const handleSubmit = () => {
-    if (usingAiGenerated) void deleteExerciseDraft(draftIdentity);
+  const handleSubmit = async () => {
+    if (usingAiGenerated) await deleteExerciseDraft(draftIdentity);
     void submit((currentAnswers) => {
       const graded: Record<string, SetQuestionResult> = {};
       for (const item of practiceItems) {
@@ -691,15 +706,6 @@ export function FillBlankSession({
       <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
       {sourcePicker}
       {usingAiGenerated ? aiBar : null}
-
-      {hasSession && usingAiGenerated && hasProAccess && !showAiProgress ? (
-        <NextSetStatusChip
-          status={nextSetStatus}
-          onRetry={() => retryPrefetch()}
-          onOpen={() => void handleNewSet()}
-          className="mx-auto w-fit"
-        />
-      ) : null}
 
       {showAiProgress ? (
         <AiProcessingProgress
