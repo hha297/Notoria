@@ -137,6 +137,7 @@ export function TheoryTransformationCard({
               legacyHint={item.hint}
               grounding={item.learningObjective}
               answers={item.acceptedAnswers}
+              strategy="theory-rule"
               resetKey={item.id}
               answered={submitted}
             />

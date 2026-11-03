@@ -49,6 +49,7 @@ export const AI_OUTPUT_TOKENS = {
   vocabMeaning: 280,
   sentenceGloss: 200,
   sentenceGlossBatch: 4_000,
+  exerciseHints: 1_600,
 } as const;
 
 /** Explicit SDK retries (OpenAI default is 2). Keep low to bound spend. */

@@ -972,6 +972,7 @@ function theoryHintFields(
     legacyHint,
     answers,
     grounding,
+    strategy: "theory-rule",
   });
   const scrubbedLegacy = legacyHint.trim();
   const hint =

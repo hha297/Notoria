@@ -1,6 +1,6 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
 import { Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
@@ -30,11 +30,13 @@ import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferen
 import { cn } from "@/lib/utils";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
+import { requestVocabularyMeaningHints } from "@/lib/exercises/hint-generation-client";
 import {
   deleteExerciseDraft,
   loadExerciseDraft,
   saveExerciseDraft,
 } from "@/lib/exercises/ai-draft-client";
+import { uiLocaleEnglishName } from "@/lib/i18n/ui-locales";
 import {
   CONTEXTUAL_AI_BATCH,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
@@ -96,6 +98,7 @@ export function MultipleChoiceSession({
     useState<MultipleChoiceStudyMode>("word-to-meaning");
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
+  const hintEnrichmentGeneration = useRef(0);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("multiple_choice");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
@@ -192,7 +195,7 @@ export function MultipleChoiceSession({
     setAnchorId: "mc-set-top",
   });
 
-  const startDeterministicSession = useCallback(() => {
+  const startDeterministicSession = useCallback(async () => {
     const prefs = commitAndBeginNext();
     const built = sampleSessionItems(
       buildMultipleChoiceQuestions(
@@ -207,25 +210,76 @@ export function MultipleChoiceSession({
         softPreferWordIds: prefs.softPreferWordIds,
       },
     );
-    setQuestions(built);
     setActiveIds(null);
     resetAttempt();
+    const generation = ++hintEnrichmentGeneration.current;
+    const locale = isValidLocale(uiLocale) ? uiLocale : "en";
+
+    // Generate usage-oriented AI hints before the set appears when possible.
+    // Local usage hints on `built` remain if AI is unavailable.
+    setQuestions([]);
     resetProcessing();
-    afterNewSet();
+    setStage("preparing");
+    setStage("generating");
+
+    try {
+      const result = await requestVocabularyMeaningHints({
+        explanationLanguage: uiLocaleEnglishName(locale),
+        difficulty,
+        questions: built.map((question) => ({
+          id: question.id,
+          direction:
+            question.direction === "MEANING_TO_WORD"
+              ? "MEANING_TO_WORD"
+              : "WORD_TO_MEANING",
+          prompt: question.prompt,
+          options: question.options,
+          correctOption: question.correctOption,
+          partOfSpeech: question.partOfSpeech,
+          targetWord: question.baseWord ?? null,
+        })),
+      });
+
+      if (generation !== hintEnrichmentGeneration.current) return;
+
+      let next = built;
+      if (result.ok && result.items.length > 0) {
+        const byId = new Map(result.items.map((item) => [item.id, item.hints]));
+        next = built.map((question) => {
+          const hints = byId.get(question.id);
+          if (!hints || hints.length === 0) return question;
+          return { ...question, hints };
+        });
+      }
+
+      setQuestions(next);
+      completeProcessing();
+      afterNewSet();
+    } catch {
+      if (generation !== hintEnrichmentGeneration.current) return;
+      setQuestions(built);
+      completeProcessing();
+      afterNewSet();
+    }
   }, [
     afterNewSet,
     commitAndBeginNext,
+    completeProcessing,
     createdAtByWordId,
+    difficulty,
     filteredWords,
     resetAttempt,
     resetProcessing,
+    setStage,
     studyMode,
+    uiLocale,
   ]);
 
   const startContextualSession = useCallback(async () => {
     if (filteredWords.length < 2) return;
 
     const mayRestore = questions.length === 0;
+    hintEnrichmentGeneration.current += 1;
 
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
@@ -489,7 +543,7 @@ export function MultipleChoiceSession({
       await startContextualSession();
       return;
     }
-    startDeterministicSession();
+    await startDeterministicSession();
   }, [isContextual, openNextSet, questions.length, startContextualSession, startDeterministicSession]);
 
   // Deterministic modes reshuffle when the practice source changes.
@@ -506,7 +560,7 @@ export function MultipleChoiceSession({
         resetProcessing();
         return;
       }
-      startDeterministicSession();
+      void startDeterministicSession();
     });
     return () => {
       cancelled = true;

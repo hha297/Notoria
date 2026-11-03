@@ -1,7 +1,7 @@
 import { vocabularyAiFields } from "@/lib/ai/bounds";
 import { additionalInstructionFields } from "@/lib/exercises/additional-instructions";
 import {
-  PROGRESSIVE_HINT_PROMPT,
+  GRAMMAR_FORM_HINT_PROMPT,
   progressiveHintPayload,
 } from "@/lib/exercises/progressive-hints";
 import {
@@ -53,7 +53,7 @@ CRITICAL — difficulty controls the ENTIRE question (sentence structure, gramma
 - Intensive: nuanced but natural; difficulty from reasoning, never from artificial length or confusion.
 - NEVER swap the assigned target for an "easier" or "harder" vocabulary item.
 
-${PROGRESSIVE_HINT_PROMPT}
+${GRAMMAR_FORM_HINT_PROMPT}
 
 Return JSON only:
 {
@@ -112,7 +112,7 @@ CRITICAL — difficulty controls the ENTIRE question (sentence structure, gramma
 - Intensive: nuanced but natural; difficulty from reasoning, never from artificial length or confusion.
 - NEVER swap the assigned target for an "easier" or "harder" vocabulary item.
 
-${PROGRESSIVE_HINT_PROMPT}
+${GRAMMAR_FORM_HINT_PROMPT}
 
 Return JSON only:
 {
@@ -168,14 +168,15 @@ export function contextualAiUserPayload(input: {
     typeAnswerGuidance: profile.typeAnswerGuidance,
     reminder:
       input.exerciseType === "multiple-choice"
-        ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks."
-        : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks.",
+        ? "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. Return that exact token as answerForm and correctOption. baseWord stays the lemma. options must be exactly 4 contextual forms for that same slot. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints follow hintStrategy=grammar-form: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks."
+        : "Write completeSentence in studyLanguage with the correctly inflected target already in the sentence — no blank. answer is that exact in-sentence token, not automatically the saved lemma. One exercise per wordId. Difficulty changes construction only — never swap targets. Hints follow hintStrategy=grammar-form: grammar/structure in explanationLanguage only; do not restate the meaning gloss or invent spelling masks.",
     regenerateReason: input.regenerateReason,
     ...additionalInstructionFields(input.additionalInstructions),
     ...progressiveHintPayload({
       explanationLanguage: input.uiLanguage,
       difficulty: profile.id,
       submittedMistake: input.submittedMistake,
+      strategy: "grammar-form",
     }),
     words: input.words.map((word) => {
       const fields = vocabularyAiFields({

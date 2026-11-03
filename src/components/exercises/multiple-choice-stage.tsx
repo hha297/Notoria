@@ -151,7 +151,19 @@ export function MultipleChoiceStage({
           <ProgressiveHintReveal
             hints={question.hints}
             grounding={question.meaningHint}
-            answers={[surface, ...question.options]}
+            answers={
+              question.direction === "CONTEXTUAL"
+                ? [surface, question.baseWord ?? surface]
+                : [surface, ...question.options]
+            }
+            strategy={
+              question.direction === "CONTEXTUAL"
+                ? "grammar-form"
+                : "vocabulary-meaning"
+            }
+            partOfSpeech={question.partOfSpeech}
+            direction={question.direction}
+            lemma={question.baseWord}
             resetKey={question.id}
             answered={revealed}
             correctAnswer={onRevealAnswer ? surface : undefined}

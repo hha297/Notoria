@@ -78,6 +78,7 @@ export function TheoryMultipleChoiceCard({
               legacyHint={item.hint}
               grounding={item.learningObjective}
               answers={[item.correctOption, ...item.options]}
+              strategy="theory-rule"
               resetKey={item.id}
               answered={submitted}
             />

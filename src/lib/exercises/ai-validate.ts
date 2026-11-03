@@ -230,9 +230,11 @@ export function fillBlankExerciseToItem(
       grounding: meaningHint,
       difficulty: exercise.difficulty,
       mode: "spelling-progressive",
+      strategy: "grammar-form",
       visibleMeaning: meaningHint,
       spellingAnswer: answer,
       lemma: word.word,
+      partOfSpeech: word.partOfSpeech,
     }),
   };
 }
