@@ -1,8 +1,8 @@
 import { Font } from "@react-pdf/renderer";
 
-/** Matches app body/heading font (`IBM_Plex_Sans` in `layout.tsx`). */
+/** Matches app body/heading font (`ibmPlexSans` in `@/lib/app-fonts`). */
 export const PDF_FONT_SANS = "IBMPlexSans";
-/** Matches app monospace font (`JetBrains_Mono` in `layout.tsx`). */
+/** Matches app monospace font (`jetbrainsMono` in `@/lib/app-fonts`). */
 export const PDF_FONT_MONO = "JetBrainsMono";
 
 let fontReady: Promise<void> | null = null;

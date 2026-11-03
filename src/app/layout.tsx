@@ -1,6 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 // Previous Notoria fonts.
 // Kept intentionally for rollback/reference.
 // Do not delete unless explicitly requested.
@@ -22,6 +21,10 @@ import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 //
 // Previous OpenCode-inspired heading font (JetBrains Mono was also used as --font-heading):
 // Headings now use IBM Plex Sans. JetBrains Mono remains for code only.
+//
+// Google Fonts via next/font/google was replaced with self-hosted next/font/local
+// (see @/lib/app-fonts) to avoid Turbopack production build failures resolving
+// `@vercel/turbopack-next/internal/font/google/font`.
 
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
@@ -32,20 +35,9 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { AuthSessionProvider } from "@/components/providers/auth-session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PreferencesProvider } from "@/components/providers/preferences-provider";
+import { ibmPlexSans, jetbrainsMono } from "@/lib/app-fonts";
 import { localeTextDirection } from "@/lib/i18n/ui-locales";
 import "./globals.css";
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin", "latin-ext", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "700"],
-});
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://www.notoria.fi"),
