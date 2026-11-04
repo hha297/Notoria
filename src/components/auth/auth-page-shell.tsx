@@ -1,8 +1,8 @@
 import { getLocale } from "next-intl/server";
-import Link from "next/link";
+import { AuthAmbient } from "@/components/auth/auth-ambient";
 import { LocaleThemeControls } from "@/components/layout/locale-theme-controls";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { Logo, LogoWordmark } from "@/components/ui/logo";
+import { BrandMark } from "@/components/ui/brand-mark";
 import styles from "@/components/style/auth/auth.module.css";
 import { mx } from "@/lib/css-module";
 import type { AppLocale } from "@/i18n/config";
@@ -24,26 +24,19 @@ export async function AuthPageShell({
 
   return (
     <div className={mx(styles, "auth-atelier-shell auth-atelier-shell-footer")}>
+      <AuthAmbient />
+      <header className={mx(styles, "auth-top-bar")}>
+        <div className={mx(styles, "auth-chrome-shell auth-top-bar-inner")}>
+          <BrandMark href="/" />
+
+          <div className={mx(styles, "auth-brand-controls")}>
+            <LocaleThemeControls locale={locale} compact />
+          </div>
+        </div>
+      </header>
+
       <div className={mx(styles, "auth-atelier")}>
         <header className={mx(styles, "auth-hero")}>
-          <div className={mx(styles, "auth-brand-bar")}>
-            <Link
-              href="/sign-in"
-              className={mx(styles, "auth-brand-link")}
-              aria-label="Notoria"
-            >
-              <Logo size="md" />
-              <LogoWordmark
-                tone="ink"
-                className={mx(styles, "auth-brand-wordmark")}
-              />
-            </Link>
-
-            <div className={mx(styles, "auth-brand-controls")}>
-              <LocaleThemeControls locale={locale} compact />
-            </div>
-          </div>
-
           <div className={mx(styles, "auth-hero-copy")}>
             <p className={mx(styles, "auth-kicker")}>{eyebrow}</p>
             <h1 className={mx(styles, "auth-title")}>{title}</h1>

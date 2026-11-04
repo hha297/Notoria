@@ -4498,7 +4498,8 @@
           "p3": "Za opće opce podrške i tehnički sandučić za povratne informace pogledajte <contactPage>Kontaktirajte nas</contactPage> i <support>Podršku</support>."
         }
       }
-    }
+    },
+    "backToHome": "Povratak na početnu stranicu"
   },
   "footer": {
     "navLabel": "Linkovi sajta",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Tražite odgovore ili želite poslati povratne informace?",
         "link": "Podrška"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primarno",
+        "howItWorks": "Kako to funkcionira",
+        "features": "Značajke",
+        "faq": "Česta pitanja",
+        "about": "O nama",
+        "support": "Podrška",
+        "signIn": "Prijavite se",
+        "getStarted": "Započnite",
+        "openMenu": "Otvorite izbornik",
+        "closeMenu": "Zatvorite izbornik"
+      },
+      "hero": {
+        "headline": "Izgradite sustav učenja koji raste s vama.",
+        "description": "Prikupite vokabular, razumite nove koncepte, vježbajte svoje vještine i pretvorite ono što naučite u trajno znanje — sve u jednom povezanom radnom prostoru.",
+        "supporting": "Notoria je privatni radni prostor za samostalno učenje bilo kojeg jezika. Izgrađena je oko materijala koji donosite — a ne kataloga lekcija koje niste odabrali.",
+        "primaryCta": "Započnite",
+        "secondaryCta": "Istražite kako to funkcionira"
+      },
+      "preview": {
+        "windowLabel": "Notoria radni prostor",
+        "vocabTitle": "Vokabular",
+        "vocabMeta": "Riječi koje zadržavate",
+        "theoryTitle": "Teorija",
+        "theoryMeta": "Bilješke koje ostaju",
+        "practiceTitle": "Vježba",
+        "practiceMeta": "Iz vašeg materijala",
+        "cardKicker": "Vaš radni prostor",
+        "cardTitle": "Jedan jezik. Jedan ciklus.",
+        "cardBody": "Spremite ono što je važno, organizirajte to, a zatim vježbajte pisanje, slušanje, govor i čitanje iz istog mjesta.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "onda · sljedeće",
+        "floatTheory": "Djelomično",
+        "floatTheoryMeta": "Kada količine ostanu otvorene",
+        "floatPractice": "Set kartica",
+        "floatPracticeMeta": "12 dospjelo danas"
+      },
+      "workflow": {
+        "kicker": "Kako Notoria funkcionira",
+        "title": "Ciklus učenja oko vašeg vlastitog materijala.",
+        "lede": "Notoria nije katalog tečajeva. To je privatni radni prostor gdje ono što prikupite postaje ono što vježbate.",
+        "bridge": "Vokabular, Prikupiti, Teorija, Vježbe, Pisanje, Slušanje, Govor i Čitanje ostaju povezani — tako da ne morate ponovno započinjati svaki put kada promijenite alate.",
+        "guideLink": "Pročitajte cijeli vodič Kako koristiti",
+        "steps": {
+          "collect": {
+            "title": "Prikupiti",
+            "body": "Spremite vokabular i komadiće učenja dok ih susrećete — iz lekcija, knjiga, medija i razgovora."
+          },
+          "organise": {
+            "title": "Organizirati",
+            "body": "Zadržite jednu strukturiranu kolekciju po jeziku, s značenjima, primjerima, oznakama i značenjima koja možete ponovno pronaći."
+          },
+          "understand": {
+            "title": "Razumjeti",
+            "body": "Zapišite teorijske bilješke vlastitim riječima kada je potrebno objasniti obrazac."
+          },
+          "practise": {
+            "title": "Vježbati",
+            "body": "Pretvorite ono što ste spremili u kartice, kvizove, popunjavanje praznina i još mnogo toga."
+          },
+          "apply": {
+            "title": "Primijeniti",
+            "body": "Pišite, slušajte, govorite i čitajte tako da jezik prelazi iz prepoznavanja u aktivnu upotrebu."
+          },
+          "review": {
+            "title": "Ponavljati",
+            "body": "Vratite se kasnije, dodajte što je novo, ponovo posjetite ono što je bilo teško i nastavite s ciklusom."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Osnovne značajke",
+        "title": "Sve u jednom povezanom radnom prostoru.",
+        "lede": "Svako područje je izgrađeno za stvarno samostalno učenje — ne izolirani alati s zajedničkim prijavama.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Vokabular",
+            "title": "Osobna banka vokabulara koja ostaje korisna",
+            "body": "Spremite riječi s značenjima, primjerima, dijelom govora, oznakama i primarnim ili sekundarnim značenjima. Ono što spremite može postati praksa kasnije.",
+            "example": "Primjer: spremite sitten s njegovim značenjem sekvence i značenjem vremena, a zatim vježbajte oboje iz istog unosa.",
+            "previewLabel": "Vokabular",
+            "previewKicker": "Detalji riječi",
+            "previewTitle": "Značenja ostaju vezana uz riječ",
+            "previewBody": "Primarna značenja za vježbe. Sekundarna značenja za referencu kada vam zatrebaju."
+          },
+          "inbox": {
+            "eyebrow": "Prikupiti",
+            "title": "Inbox za brzo učenje",
+            "body": "Brzo zapišite bilješke kada nešto primijetite, a zatim ih obradite u vokabular, teoriju, pisanje ili vježbe kada imate vremena.",
+            "example": "Primjer: zabilježite frazu iz podcasta, a zatim je pretvorite u unos vokabulara nakon putovanja.",
+            "previewLabel": "Prikupiti",
+            "previewKicker": "Inbox",
+            "previewTitle": "Uhvatite to sada. Organizirajte kasnije.",
+            "previewBody": "Zadržite trenutak bez prisiljavanja na puni unos kada ste zauzeti."
+          },
+          "theory": {
+            "eyebrow": "Teorija",
+            "title": "Objašnjenja uz jezik koji učite",
+            "body": "Zapišite gramatičke i upotrebljive bilješke vlastitim riječima. Držite ih u istom radnom prostoru kao vokabular koji objašnjavaju.",
+            "example": "Primjer: kratka bilješka o djelomičnom slučaju uz imenice koje stalno zaboravljate.",
+            "previewLabel": "Teorija",
+            "previewKicker": "Vaša bilješka",
+            "previewTitle": "Obrasci napisani vašim riječima",
+            "previewBody": "Ponovo posjetite objašnjenje kada se ista zabuna vrati."
+          },
+          "exercises": {
+            "eyebrow": "Vježbe",
+            "title": "Praksa iz vašeg vlastitog materijala",
+            "body": "Kartice, višestruki izbor, popunjavanje praznina, tipkanje odgovora, uparivanje i još mnogo toga — izgrađeno od riječi i bilješki koje ste već spremili.",
+            "example": "Primjer: set kartica iz ovog tjedna umjesto generičkog seta.",
+            "previewLabel": "Vježbe",
+            "previewKicker": "Set vježbi",
+            "previewTitle": "Vaše riječi postaju vježba",
+            "previewBody": "Rad na pamćenju ostaje povezan s onim što vam je zapravo važno za učenje."
+          },
+          "skills": {
+            "eyebrow": "Vještine",
+            "title": "Pisanje, slušanje, govor i čitanje",
+            "body": "Pređite iz prepoznavanja. Proizvodite jezik, radite s audio materijalima, vježbajte govor i čitajte s materijalom koji pripada vašem radnom prostoru.",
+            "example": "Primjer: pišite s vokabularom tjedna, a zatim slušajte povezani materijal i govorite iz iste teme.",
+            "previewLabel": "Vještine",
+            "previewKicker": "Aktivna upotreba",
+            "previewTitle": "Od znanja do korištenja",
+            "previewBody": "Osnovna područja vještina dostupna su u svakom planu; ograničenja korištenja AI variraju ovisno o planu."
+          },
+          "connected": {
+            "eyebrow": "Povezivanje",
+            "title": "Jedan ciklus umjesto raspršenih alata",
+            "body": "Ono što prikupite može postati vokabular. Vokabular može postati praksa. Praksa može hraniti pisanje, slušanje i govor — bez gubitka konteksta.",
+            "example": "Primjer: komadić iz Prikupiti postaje riječ, ta riječ se pojavljuje u vježbama, a zatim se ponovo pojavljuje u pisanju.",
+            "previewLabel": "Radni prostor",
+            "previewKicker": "Povezano učenje",
+            "previewTitle": "Manje ponovnog započinjanja. Više kontinuiteta.",
+            "previewBody": "Proizvod ostaje izvan puta kako bi vaš materijal mogao ostati u središtu."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Filozofija učenja",
+        "title": "Prikupiti riječi nije dovoljno.",
+        "lede": "Popis vokabulara bez razumijevanja, prakse ili upotrebe postaje još jedna napuštena bilješka.",
+        "expand": "Notoria postoji kako bi vokabular, teorija, vježbe i aktivne vještine mogle dijeliti jedan privatni dom — uz vaše knjige, učitelje i medije, a ne umjesto njih.",
+        "beat": "Vaš materijal pripada u središtu.",
+        "aboutLink": "O Notoriji",
+        "storyLink": "Pročitajte našu priču",
+        "points": {
+          "workspace": "Izgradite osobni radni prostor za jedan jezik u isto vrijeme.",
+          "understand": "Razumite koncepte umjesto da pamtite izolirane komadiće.",
+          "connect": "Povežite vokabular, bilješke i praksu u jedan ciklus.",
+          "skills": "Vježbajte pisanje, slušanje, govor i čitanje iz istog materijala.",
+          "pace": "Učite vlastitim tempom, bez fiksnog kurikuluma.",
+          "habits": "Vratite se često i izgradite kontinuitet umjesto raspršenih sesija."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Započnite",
+        "title": "Jednostavan put u radni prostor.",
+        "lede": "Ne morate naučiti cijeli proizvod odjednom. Započnite s malim, a zatim proširite ciklus.",
+        "expect": "Nakon registracije kreirate radni prostor za jezik koji učite, a zatim počnite prikupljati materijal. U aplikaciji vodič za početak vodi kroz svako područje kada ste spremni.",
+        "cta": "Kreirajte svoj račun",
+        "secondaryCta": "Pročitajte Kako koristiti",
+        "steps": {
+          "account": {
+            "title": "Kreirajte račun",
+            "body": "Prijavite se i uđite u svoj privatni prostor za učenje."
+          },
+          "workspace": {
+            "title": "Postavite radni prostor",
+            "body": "Dajte svom učenju dom za jedan jezik."
+          },
+          "language": {
+            "title": "Odaberite svoj jezik učenja",
+            "body": "Svaki radni prostor fokusira se na jezik koji učite."
+          },
+          "collect": {
+            "title": "Počnite prikupljati",
+            "body": "Spremite vokabular i komadiće Prikupiti koji su vam važni."
+          },
+          "explore": {
+            "title": "Istražite teoriju i vježbe",
+            "body": "Pretvorite ono što ste spremili u razumijevanje i praksu."
+          },
+          "routine": {
+            "title": "Izgradite rutinu",
+            "body": "Vratite se, pregledajte, pišite, slušajte, govorite i čitajte iz istog mjesta."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "Česta pitanja",
+        "title": "Odgovori prije nego što počnete.",
+        "lede": "Praktična pitanja o tome što je Notoria, kako učenje funkcionira i što se događa nakon što se prijavite.",
+        "supportLink": "Posjetite podršku za dodatnu pomoć",
+        "groups": {
+          "about": "O Notoriji",
+          "features": "Značajke učenja",
+          "start": "Započnite",
+          "account": "Račun i dostupnost"
+        },
+        "items": {
+          "what": {
+            "q": "Što je točno Notoria?",
+            "a": "Notoria je privatni radni prostor za samostalno učenje bilo kojeg jezika. Držite vokabular, bilješke, teoriju, vježbe, pisanje, slušanje, govor i čitanje na jednom mjestu organiziranim prema jeziku koji učite. To nije školska platforma i nije knjižnica gotovih tečajeva."
+          },
+          "onlyVocab": {
+            "q": "Je li Notoria samo aplikacija za učenje vokabulara?",
+            "a": "Ne. Vokabular je središnji, ali Notoria također uključuje Prikupiti, Teoriju, interaktivne vježbe, pisanje, slušanje, govor i čitanje. Cilj je zadržati ta područja povezana oko vašeg vlastitog materijala."
+          },
+          "who": {
+            "q": "Za koga je Notoria dizajnirana?",
+            "a": "Neovisni učenici koji žele da njihov materijal bude u središtu procesa — ljudi koji preferiraju prikupljanje onoga što im je važno umjesto praćenja nečijeg fiksnog kurikuluma."
+          },
+          "vsFlashcards": {
+            "q": "Kako se Notoria razlikuje od tradicionalnih aplikacija za kartice?",
+            "a": "Kartice su jedan način vježbanja unutar Notorije. Proizvod također pohranjuje značenja i primjere, teorijske bilješke, komadiće Prikupiti i praksu vještina u istom radnom prostoru, tako da pregled nije izoliran od razumijevanja i upotrebe."
+          },
+          "vocabHow": {
+            "q": "Kako funkcionira upravljanje vokabularom?",
+            "a": "Spremate riječi s značenjima, primjerima, oznakama i opcionalnim primarnim ili sekundarnim značenjima. Ta banka može kasnije hraniti vježbe i ponovni pregled umjesto da živi u odvojenom popisu koji nikada ne otvarate."
+          },
+          "inboxWhy": {
+            "q": "Koja je svrha Learning Inbox (Prikupiti)?",
+            "a": "Prikupiti je brza točka unosa. Kada primijetite nešto korisno, ali nemate vremena za puni unos, spremite komadić i obradite ga kasnije u vokabular, teoriju, pisanje ili vježbe."
+          },
+          "theoryExercises": {
+            "q": "Kako Teorija i Vježbe rade zajedno?",
+            "a": "Teorija sadrži objašnjenja vašim riječima. Vježbe pretvaraju spremljeni vokabular i povezani materijal u praksu. Možete ostati s riječima i kratkim vježbama neko vrijeme, a zatim dodati teorijske bilješke kada je obrazac potrebno objasniti."
+          },
+          "skillsSupported": {
+            "q": "Koje vještine učenja su podržane? Mogu li vježbati pisanje, slušanje, govor i čitanje?",
+            "a": "Da. Pisanje, slušanje, govor i čitanje su dio radnog prostora. Ova područja su dostupna u svakom planu; ograničenja korištenja AI variraju ovisno o planu."
+          },
+          "review": {
+            "q": "Kako mogu pregledati prethodno prikupljeni materijal?",
+            "a": "Vratite se kroz Vokabular, Teoriju, Vježbe i povezane alate za pregled u vašem radnom prostoru. Kontinuitet je ključ: dodajte što je novo, ponovo posjetite što je bilo teško i nastavite vježbati iz materijala koji već posjedujete."
+          },
+          "createAccount": {
+            "q": "Kako mogu kreirati račun?",
+            "a": "Koristite <signUp>Počnite</signUp> ili <signUp>Prijavite se</signUp>, a zatim dovršite registraciju. Također se možete <signIn>prijaviti</signIn> kasnije iz javnog izbornika."
+          },
+          "afterSignup": {
+            "q": "Što se događa nakon registracije?",
+            "a": "Postavili ste radni prostor za učenje za svoj jezik, a zatim počnite prikupljati materijal. U aplikaciji <gettingStarted>Upute za početak</gettingStarted> objašnjavaju svako područje kada ste unutar proizvoda."
+          },
+          "chooseLanguage": {
+            "q": "Kako mogu odabrati svoj jezik učenja?",
+            "a": "Svaki radni prostor posvećen je jednom jeziku učenja. Taj jezik birate kada kreirate radni prostor, tako da vokabular i praksa ostanu organizirani oko njega."
+          },
+          "experience": {
+            "q": "Trebam li prethodno iskustvo u učenju?",
+            "a": "Ne. Notoria ne zahtijeva fiksni kurikulum ili prethodni napredak tečaja. Dobar prvi dan može biti radni prostor i nekoliko riječi koje vam zapravo znače."
+          },
+          "languages": {
+            "q": "Koji jezici su podržani?",
+            "a": "Možete učiti bilo koji jezik koji odaberete. Sučelje proizvoda dostupno je na mnogim jezicima korisničkog sučelja; svaki radni prostor fokusira se na jezik koji učite."
+          },
+          "devices": {
+            "q": "Mogu li pristupiti Notoriji na različitim uređajima?",
+            "a": "Da. Notoria je web aplikacija na <site>notoria.fi</site>, tako da se možete <signIn>prijaviti</signIn> iz preglednika na uređajima koje već koristite."
+          },
+          "plans": {
+            "q": "Postoji li besplatan plan?",
+            "a": "Da. Besplatna verzija pokriva osnovne potrebe učenja s dnevnom dozvolom AI. Pro otključava više alata AI i povezanih dodataka. Premium dodaje personaliziranu inteligenciju učenja. Možete usporediti planove u <billing>Račun za naplatu</billing> nakon što se <signIn>prijavite</signIn>."
+          },
+          "help": {
+            "q": "Kako mogu dobiti pomoć ili kontaktirati podršku?",
+            "a": "Otvorite stranicu <support>Podrška</support> za često postavljana pitanja i opcije kontaktiranja. Također možete koristiti <contact>Kontaktirajte nas</contact> za pitanja o računu, naplati, privatnosti ili opća pitanja."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Uključite učenje u svoj svakodnevni život.",
+        "lede": "Započnite izgradnju svog osobnog radnog prostora za učenje s Notorijom — privatno, praktično i usredotočeno na vaš vlastiti materijal.",
+        "primary": "Započnite",
+        "secondary": "Prijavite se"
+      },
+      "meta": {
+        "title": "Notoria — Privatni radni prostor za učenje jezika",
+        "description": "Prikupite vokabular, razumite teoriju, vježbajte s vježbama i izgradite trajne jezične vještine u jednom povezanom osobnom radnom prostoru.",
+        "ogDescription": "Izgradite sustav učenja koji raste s vama — vokabular, teorija, vježbe, pisanje, slušanje, govor i čitanje na jednom mjestu.",
+        "twitterDescription": "Izgradite sustav učenja koji raste s vama — vokabular, teorija, vježbe i praksa vještina u jednom radnom prostoru."
       }
     }
   },

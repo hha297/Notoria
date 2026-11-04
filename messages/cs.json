@@ -4498,7 +4498,8 @@
           "p3": "Obecné možnosti podpory a technickou schránku zpětné vazby viz <contactPage>Kontaktujte nás</contactPage> a <support>Podpora</support>."
         }
       }
-    }
+    },
+    "backToHome": "Zpět na domovskou stránku"
   },
   "footer": {
     "navLabel": "Odkazy webu",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Hledáte odpovědi nebo chcete odeslat zpětnou vazbu?",
         "link": "Podpora"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primární",
+        "howItWorks": "Jak to funguje",
+        "features": "Funkce",
+        "faq": "Často kladené otázky",
+        "about": "O nás",
+        "support": "Podpora",
+        "signIn": "Přihlásit se",
+        "getStarted": "Začít",
+        "openMenu": "Otevřít menu",
+        "closeMenu": "Zavřít menu"
+      },
+      "hero": {
+        "headline": "Vytvořte si vzdělávací systém, který roste s vámi.",
+        "description": "Sbírejte slovní zásobu, porozumějte novým konceptům, procvičujte své dovednosti a proměňte to, co se naučíte, v trvalé znalosti — vše v jednom propojeném pracovním prostoru.",
+        "supporting": "Notoria je soukromý pracovní prostor pro samostudium jakéhokoli jazyka. Je postaven kolem materiálu, který přinášíte — ne katalogu lekcí, které jste si nevybrali.",
+        "primaryCta": "Začít",
+        "secondaryCta": "Prozkoumat, jak to funguje"
+      },
+      "preview": {
+        "windowLabel": "Notoria workspace",
+        "vocabTitle": "Slovní zásoba",
+        "vocabMeta": "Slova, která si uchováváte",
+        "theoryTitle": "Teorie",
+        "theoryMeta": "Poznámky, které se drží",
+        "practiceTitle": "Procvičování",
+        "practiceMeta": "Z vašeho materiálu",
+        "cardKicker": "Váš pracovní prostor",
+        "cardTitle": "Jeden jazyk. Jeden cyklus.",
+        "cardBody": "Uložte, co je důležité, uspořádejte to a poté procvičujte psaní, poslech, mluvení a čtení ze stejného místa.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "poté · další",
+        "floatTheory": "Částečný",
+        "floatTheoryMeta": "Když zůstávají množství otevřená",
+        "floatPractice": "Sada kartiček",
+        "floatPracticeMeta": "12 splatných dnes"
+      },
+      "workflow": {
+        "kicker": "Jak Notoria funguje",
+        "title": "Vzdělávací cyklus kolem vašeho vlastního materiálu.",
+        "lede": "Notoria není katalog kurzů. Je to soukromý pracovní prostor, kde to, co shromáždíte, se stává tím, co procvičujete.",
+        "bridge": "Slovní zásoba, zachycení, teorie, cvičení, psaní, poslech, mluvení a čtení zůstávají propojené — takže se nemusíte každýkrát znovu začínat, když přepínáte nástroje.",
+        "guideLink": "Přečtěte si kompletní průvodce Jak používat",
+        "steps": {
+          "collect": {
+            "title": "Sbírat",
+            "body": "Uložte slovní zásobu a útržky učení, jak je potkáte — z lekcí, knih, médií a konverzací."
+          },
+          "organise": {
+            "title": "Uspořádat",
+            "body": "Udržujte jednu strukturovanou sbírku na jazyk, se významy, příklady, štítky a smysly, které můžete znovu najít."
+          },
+          "understand": {
+            "title": "Porozumět",
+            "body": "Pište teoretické poznámky svými vlastními slovy, když je třeba vysvětlit vzor."
+          },
+          "practise": {
+            "title": "Procvičovat",
+            "body": "Proměňte to, co jste uložili, na kartičky, kvízy, doplňovačky a další."
+          },
+          "apply": {
+            "title": "Aplikovat",
+            "body": "Píšete, posloucháte, mluvíte a čtete tak, aby jazyk přešel z rozpoznání do aktivního použití."
+          },
+          "review": {
+            "title": "Přezkoumat",
+            "body": "Vraťte se později, přidejte, co je nové, znovu navštivte, co bylo obtížné, a udržujte cyklus v pohybu."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Hlavní funkce",
+        "title": "Vše v jednom propojeném pracovním prostoru.",
+        "lede": "Každá oblast je postavena pro skutečné samostudium — ne izolované nástroje se sdíleným přihlášením.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Slovní zásoba",
+            "title": "Osobní bankovní slovní zásoby, která zůstává užitečná",
+            "body": "Uložte slova s významy, příklady, částmi řeči, štítky a primárními nebo sekundárními smysly. To, co uložíte, se může později stát procvičováním.",
+            "example": "Příklad: uložte sitten s jeho sekvenčním a časovým smyslem, poté procvičujte oba z téže položky.",
+            "previewLabel": "Slovní zásoba",
+            "previewKicker": "Detail slova",
+            "previewTitle": "Významy zůstávají připojeny k slovu",
+            "previewBody": "Primární smysly pro cvičení. Sekundární smysly pro odkaz, když je potřebujete."
+          },
+          "inbox": {
+            "eyebrow": "Zachycení",
+            "title": "Učební inbox pro rychlé útržky",
+            "body": "Rychle zapište poznámky, když se něco objeví, a poté je zpracujte do slovní zásoby, teorie, psaní nebo cvičení, když máte čas.",
+            "example": "Příklad: zachyťte frázi z podcastu, poté ji převeďte na položku slovní zásoby po dojíždění.",
+            "previewLabel": "Zachycení",
+            "previewKicker": "Inbox",
+            "previewTitle": "Chyťte to nyní. Uspořádejte později.",
+            "previewBody": "Udržujte okamžik, aniž byste museli nutit plnou položku, když jste zaneprázdněni."
+          },
+          "theory": {
+            "eyebrow": "Teorie",
+            "title": "Vysvětlení vedle jazyka, který se učíte",
+            "body": "Pište gramatické a uživatelské poznámky svými vlastními slovy. Udržujte je ve stejném pracovním prostoru jako slovní zásobu, kterou vysvětlují.",
+            "example": "Příklad: krátká poznámka o částečném pádu vedle podstatných jmen, na která stále zapomínáte.",
+            "previewLabel": "Teorie",
+            "previewKicker": "Vaše poznámka",
+            "previewTitle": "Vzory napsané vašimi slovy",
+            "previewBody": "Znovu navštivte vysvětlení, když se stejná zmatení vrátí."
+          },
+          "exercises": {
+            "eyebrow": "Cvičení",
+            "title": "Procvičování vycházející z vašeho vlastního materiálu",
+            "body": "Kartičky, výběr z více možností, doplňovačky, napište odpověď, spojte páry a další — postavené z již uložených slov a poznámek.",
+            "example": "Příklad: sada kartiček z této týdne slovní zásoby místo generického balíčku.",
+            "previewLabel": "Cvičení",
+            "previewKicker": "Sada procvičování",
+            "previewTitle": "Vaše slova se stávají cvičením",
+            "previewBody": "Paměťová práce zůstává propojena s tím, co skutečně chcete naučit."
+          },
+          "skills": {
+            "eyebrow": "Dovednosti",
+            "title": "Psaní, poslech, mluvení a čtení",
+            "body": "Přejděte za rozpoznání. Produkujte jazyk, pracujte s audio, procvičujte mluvení a čtěte s materiálem, který patří do vašeho pracovního prostoru.",
+            "example": "Příklad: pište se slovní zásobou týdne, poté poslouchejte související materiál a mluvte na stejné téma.",
+            "previewLabel": "Dovednosti",
+            "previewKicker": "Aktivní použití",
+            "previewTitle": "Od znalosti k použití",
+            "previewBody": "Hlavní oblasti dovedností jsou k dispozici na každém plánu; limity používání AI se liší podle plánu."
+          },
+          "connected": {
+            "eyebrow": "Spojení",
+            "title": "Jeden cyklus místo rozptýlených nástrojů",
+            "body": "Co zachytíte, se může stát slovní zásobou. Slovní zásoba se může stát procvičováním. Procvičování může živit psaní, poslech a mluvení — aniž byste ztratili nit.",
+            "example": "Příklad: útržek ze Zachycení se stane slovem, to slovo se objeví v cvičeních, poté se znovu objeví v psaní.",
+            "previewLabel": "Pracovní prostor",
+            "previewKicker": "Propojené učení",
+            "previewTitle": "Méně restartování. Více kontinuity.",
+            "previewBody": "Produkt se drží stranou, aby váš materiál mohl zůstat v centru."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Vzdělávací filozofie",
+        "title": "Sbírání slov nestačí.",
+        "lede": "Seznam slovní zásoby bez porozumění, procvičování nebo použití se stává dalším opuštěným poznámkou.",
+        "expand": "Notoria existuje, aby slovní zásoba, teorie, cvičení a aktivní dovednosti mohly sdílet jeden soukromý domov — vedle vašich knih, učitelů a médií, ne místo nich.",
+        "beat": "Váš materiál patří do centra.",
+        "aboutLink": "O Notoria",
+        "storyLink": "Přečtěte si náš příběh",
+        "points": {
+          "workspace": "Vytvořte si osobní vzdělávací pracovní prostor pro jeden jazyk najednou.",
+          "understand": "Porozumějte konceptům místo zapamatování izolovaných útržků.",
+          "connect": "Propojte slovní zásobu, poznámky a procvičování do jednoho cyklu.",
+          "skills": "Procvičujte psaní, poslech, mluvení a čtení z téhož materiálu.",
+          "pace": "Učte se vlastním tempem, bez pevného sylabu.",
+          "habits": "Vraťte se často a budujte kontinuitu místo rozptýlených sezení."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Začínáme",
+        "title": "Jednoduchá cesta do pracovního prostoru.",
+        "lede": "Nemusíte se učit celý produkt najednou. Začněte malými kroky a poté rozšiřujte cyklus.",
+        "expect": "Po registraci vytvoříte pracovní prostor pro svůj učební jazyk a poté začnete shromažďovat materiál. Průvodce Jak začít v aplikaci vás provede každou oblastí, když budete připraveni.",
+        "cta": "Vytvořte si účet",
+        "secondaryCta": "Přečtěte si Jak používat",
+        "steps": {
+          "account": {
+            "title": "Vytvořte účet",
+            "body": "Zaregistrujte se a vstupte do svého soukromého vzdělávacího prostoru."
+          },
+          "workspace": {
+            "title": "Nastavte pracovní prostor",
+            "body": "Dejte svému studiu domov pro jeden jazyk."
+          },
+          "language": {
+            "title": "Vyberte si svůj učební jazyk",
+            "body": "Každý pracovní prostor se zaměřuje na jazyk, který se učíte."
+          },
+          "collect": {
+            "title": "Začněte sbírat",
+            "body": "Uložte slovní zásobu a útržky zachycení, které jsou pro vás důležité."
+          },
+          "explore": {
+            "title": "Prozkoumejte teorii a cvičení",
+            "body": "Proměňte to, co jste uložili, na porozumění a procvičování."
+          },
+          "routine": {
+            "title": "Vytvořte si rutinu",
+            "body": "Vraťte se, přezkoumejte, pište, poslouchejte, mluvte a čtěte ze stejného místa."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "Často kladené otázky",
+        "title": "Odpovědi předtím, než začnete.",
+        "lede": "Praktické otázky o tom, co Notoria je, jak učení funguje a co se stane po registraci.",
+        "supportLink": "Navštivte podporu pro další pomoc",
+        "groups": {
+          "about": "O Notoria",
+          "features": "Vzdělávací funkce",
+          "start": "Začínáme",
+          "account": "Účet a dostupnost"
+        },
+        "items": {
+          "what": {
+            "q": "Co přesně je Notoria?",
+            "a": "Notoria je soukromý pracovní prostor pro samostudium jakéhokoli jazyka. Uchováváte slovní zásobu, poznámky, teorii, cvičení, psaní, poslech, mluvení a čtení na jednom místě organizovaném podle jazyka, který se učíte. Není to školní platforma a není to knihovna hotových kurzů."
+          },
+          "onlyVocab": {
+            "q": "Je Notoria pouze aplikací pro učení slovní zásoby?",
+            "a": "Ne. Slovní zásoba je centrální, ale Notoria také zahrnuje zachycení, teorii, interaktivní cvičení, psaní, poslech, mluvení a čtení. Cílem je udržet tyto oblasti propojené kolem vašeho vlastního materiálu."
+          },
+          "who": {
+            "q": "Pro koho je Notoria určena?",
+            "a": "Nezávislí studenti, kteří chtějí mít svůj vlastní materiál v centru procesu — lidé, kteří dávají přednost sbírání toho, co je pro ně důležité, před sledováním něčího pevného sylabu."
+          },
+          "vsFlashcards": {
+            "q": "Jak se Notoria liší od tradičních aplikací na kartičky?",
+            "a": "Kartičky jsou jedním z režimů procvičování v Notoria. Produkt také uchovává významy a příklady, teoretické poznámky, útržky zachycení a procvičování dovedností ve stejném pracovním prostoru, takže přezkoumání není izolováno od porozumění a použití."
+          },
+          "vocabHow": {
+            "q": "Jak funguje správa slovní zásoby?",
+            "a": "Ukládáte slova s významy, příklady, štítky a volitelnými primárními nebo sekundárními smysly. Tato banka může poté živit cvičení a pozdější přezkoumání místo toho, aby žila v odděleném seznamu, který nikdy neotevřete."
+          },
+          "inboxWhy": {
+            "q": "Jaký je účel Učebního inboxu (Zachycení)?",
+            "a": "Zachycení je rychlý vstupní bod. Když si všimnete něčeho užitečného, ale nemáte čas na plnou položku, uložíte útržek a později ho zpracujete do slovní zásoby, teorie, psaní nebo cvičení."
+          },
+          "theoryExercises": {
+            "q": "Jak spolupracují teorie a cvičení?",
+            "a": "Teorie obsahuje vysvětlení vašimi vlastními slovy. Cvičení proměňují uloženou slovní zásobu a související materiál na procvičování. Můžete zůstat u slov a krátkých cvičení na chvíli, poté přidat teoretické poznámky, když je třeba vysvětlit vzor."
+          },
+          "skillsSupported": {
+            "q": "Jaké dovednosti učení jsou podporovány? Mohu procvičovat psaní, poslech, mluvení a čtení?",
+            "a": "Ano. Psaní, poslech, mluvení a čtení jsou součástí pracovního prostoru. Tyto oblasti jsou k dispozici na každém plánu; limity používání AI se liší podle plánu."
+          },
+          "review": {
+            "q": "Jak mohu přezkoumat dříve shromážděný materiál?",
+            "a": "Vraťte se přes slovní zásobu, teorii, cvičení a související přezkoumávací nástroje ve vašem pracovním prostoru. Kontinuita je klíčová: přidejte, co je nové, znovu navštivte, co bylo obtížné, a pokračujte v procvičování z materiálu, který již vlastníte."
+          },
+          "createAccount": {
+            "q": "Jak si vytvořím účet?",
+            "a": "Použijte <signUp>Začít</signUp> nebo <signUp>Registrovat se</signUp>, poté dokončete registraci. Můžete se také <signIn>přihlásit</signIn> později z veřejného záhlaví."
+          },
+          "afterSignup": {
+            "q": "Co se stane po registraci?",
+            "a": "Nastavili jste si pracovní prostor pro učení vašeho jazyka, poté začněte shromažďovat materiály. V aplikaci je <gettingStarted>Průvodce začátky</gettingStarted>, který vysvětluje každou oblast, jakmile jste uvnitř produktu."
+          },
+          "chooseLanguage": {
+            "q": "Jak si vyberu svůj učební jazyk?",
+            "a": "Každý pracovní prostor je věnován jednomu učebnímu jazyku. Ten jazyk si vyberete, když vytváříte pracovní prostor, takže slovní zásoba a procvičování zůstávají organizovány kolem něj."
+          },
+          "experience": {
+            "q": "Potřebuji předchozí zkušenosti s učením?",
+            "a": "Ne. Notoria nevyžaduje pevný sylabus nebo předchozí pokrok v kurzu. Dobrý první den může být pracovní prostor a hrst slov, na kterých vám skutečně záleží."
+          },
+          "languages": {
+            "q": "Jaké jazyky jsou podporovány?",
+            "a": "Můžete studovat jakýkoli jazyk, který si vyberete. Uživatelské rozhraní produktu je k dispozici v mnoha jazycích; každý pracovní prostor se zaměřuje na jazyk, který se učíte."
+          },
+          "devices": {
+            "q": "Mohu přistupovat k Notoria na různých zařízeních?",
+            "a": "Ano. Notoria je webová aplikace na <site>notoria.fi</site>, takže se můžete <signIn>přihlásit</signIn> z prohlížečů na zařízeních, která již používáte."
+          },
+          "plans": {
+            "q": "Je k dispozici bezplatný plán?",
+            "a": "Ano. Bezplatný plán pokrývá základní potřeby učení s denním přídělem AI. Pro odemyká více nástrojů AI a souvisejících výhod. Prémiový plán přidává personalizovanou inteligenci učení. Můžete porovnat plány v <billing>Fakturace účtu</billing> poté, co se <signIn>přihlásíte</signIn>."
+          },
+          "help": {
+            "q": "Jak mohu získat pomoc nebo kontaktovat podporu?",
+            "a": "Otevřete stránku <support>Podpora</support> pro často kladené dotazy a možnosti kontaktu. Můžete také použít <contact>Kontaktujte nás</contact> pro dotazy ohledně účtu, fakturace, soukromí nebo obecných otázek."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Udělejte z učení součást svého každodenního života.",
+        "lede": "Začněte budovat svůj osobní vzdělávací pracovní prostor s Notoria — soukromý, praktický a zaměřený na váš vlastní materiál.",
+        "primary": "Začít",
+        "secondary": "Přihlásit se"
+      },
+      "meta": {
+        "title": "Notoria — Soukromý pracovní prostor pro učení jazyků",
+        "description": "Sbírejte slovní zásobu, porozumějte teorii, procvičujte s cvičeními a budujte trvalé jazykové dovednosti v jednom propojeném osobním pracovním prostoru.",
+        "ogDescription": "Vytvořte si vzdělávací systém, který roste s vámi — slovní zásoba, teorie, cvičení, psaní, poslech, mluvení a čtení na jednom místě.",
+        "twitterDescription": "Vytvořte si vzdělávací systém, který roste s vámi — slovní zásoba, teorie, cvičení a procvičování dovedností v jednom pracovním prostoru."
       }
     }
   },

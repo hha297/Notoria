@@ -84,7 +84,7 @@ const NAV_GROUPS: NavGroup[] = [
     labelKey: "groups.main",
     items: [
       {
-        href: "/",
+        href: "/dashboard",
         key: "dashboard",
         icon: LayoutDashboard,
         match: "exact",
@@ -252,10 +252,10 @@ export function SidebarNav({
         )}
       >
         <Link
-          href="/"
+          href="/dashboard"
           onClick={onNavigate}
-          onPointerEnter={() => prefetchItem("/")}
-          onFocus={() => prefetchItem("/")}
+          onPointerEnter={() => prefetchItem("/dashboard")}
+          onFocus={() => prefetchItem("/dashboard")}
           className="mb-3 flex items-center gap-2.5 rounded-lg px-2 py-1 outline-none hover:opacity-90 focus-visible:ring-2 focus-visible:ring-ring"
         >
           <Logo size="md" />

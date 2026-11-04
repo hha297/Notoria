@@ -4498,7 +4498,8 @@
           "p3": "Pour les options d'assistance générales et la boîte de retours techniques, voir <contactPage>Nous contacter</contactPage> et <support>Assistance</support>."
         }
       }
-    }
+    },
+    "backToHome": "Retour à l'accueil"
   },
   "footer": {
     "navLabel": "Liens du site",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Vous cherchez des réponses ou souhaitez envoyer un retour ?",
         "link": "Assistance"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Principal",
+        "howItWorks": "Comment ça fonctionne",
+        "features": "Fonctionnalités",
+        "faq": "FAQ",
+        "about": "À propos",
+        "support": "Support",
+        "signIn": "Se connecter",
+        "getStarted": "Commencer",
+        "openMenu": "Ouvrir le menu",
+        "closeMenu": "Fermer le menu"
+      },
+      "hero": {
+        "headline": "Construisez un système d'apprentissage qui évolue avec vous.",
+        "description": "Collectez du vocabulaire, comprenez de nouveaux concepts, pratiquez vos compétences et transformez ce que vous apprenez en connaissances durables — le tout dans un espace de travail connecté.",
+        "supporting": "Notoria est un espace de travail privé pour l'auto-apprentissage de n'importe quelle langue. Il est construit autour du matériel que vous apportez — pas d'un catalogue de leçons que vous n'avez pas choisies.",
+        "primaryCta": "Commencer",
+        "secondaryCta": "Découvrez comment ça fonctionne"
+      },
+      "preview": {
+        "windowLabel": "Espace de travail Notoria",
+        "vocabTitle": "Vocabulaire",
+        "vocabMeta": "Mots que vous conservez",
+        "theoryTitle": "Théorie",
+        "theoryMeta": "Notes qui restent",
+        "practiceTitle": "Pratique",
+        "practiceMeta": "À partir de votre matériel",
+        "cardKicker": "Votre espace de travail",
+        "cardTitle": "Une langue. Une boucle.",
+        "cardBody": "Enregistrez ce qui compte, organisez-le, puis pratiquez l'écriture, l'écoute, la parole et la lecture depuis le même endroit.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "puis · suivant",
+        "floatTheory": "Partitif",
+        "floatTheoryMeta": "Lorsque les quantités restent ouvertes",
+        "floatPractice": "Ensemble de cartes mémoire",
+        "floatPracticeMeta": "12 dues aujourd'hui"
+      },
+      "workflow": {
+        "kicker": "Comment fonctionne Notoria",
+        "title": "Une boucle d'apprentissage autour de votre propre matériel.",
+        "lede": "Notoria n'est pas un catalogue de cours. C'est un espace de travail privé où ce que vous collectez devient ce que vous pratiquez.",
+        "bridge": "Vocabulaire, Capture, Théorie, Exercices, Écriture, Écoute, Parole et Lecture restent connectés — vous ne redémarrez pas à chaque fois que vous changez d'outil.",
+        "guideLink": "Lisez le guide complet Comment utiliser",
+        "steps": {
+          "collect": {
+            "title": "Collecter",
+            "body": "Enregistrez le vocabulaire et les morceaux d'apprentissage au fur et à mesure que vous les rencontrez — à partir de leçons, de livres, de médias et de conversations."
+          },
+          "organise": {
+            "title": "Organiser",
+            "body": "Conservez une collection structurée par langue, avec significations, exemples, étiquettes et sens que vous pouvez retrouver."
+          },
+          "understand": {
+            "title": "Comprendre",
+            "body": "Écrivez des notes théoriques dans vos propres mots lorsque un schéma nécessite une explication."
+          },
+          "practise": {
+            "title": "Pratiquer",
+            "body": "Transformez ce que vous avez enregistré en cartes mémoire, quiz, complétez les blancs, et plus encore."
+          },
+          "apply": {
+            "title": "Appliquer",
+            "body": "Écrivez, écoutez, parlez et lisez pour que la langue passe de la reconnaissance à l'utilisation active."
+          },
+          "review": {
+            "title": "Revoir",
+            "body": "Revenez plus tard, ajoutez ce qui est nouveau, revisitez ce qui était difficile et continuez la boucle."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Fonctionnalités principales",
+        "title": "Tout dans un espace de travail connecté.",
+        "lede": "Chaque domaine est conçu pour un véritable auto-apprentissage — pas d'outils isolés avec un identifiant partagé.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Vocabulaire",
+            "title": "Une banque de vocabulaire personnelle qui reste utile",
+            "body": "Stockez des mots avec significations, exemples, parties du discours, étiquettes et sens primaires ou secondaires. Ce que vous enregistrez peut devenir une pratique plus tard.",
+            "example": "Exemple : enregistrez sitten avec son sens de séquence et son sens temporel, puis pratiquez les deux à partir de la même entrée.",
+            "previewLabel": "Vocabulaire",
+            "previewKicker": "Détails du mot",
+            "previewTitle": "Les significations restent attachées au mot",
+            "previewBody": "Sens primaires pour les exercices. Sens secondaires pour référence lorsque vous en avez besoin."
+          },
+          "inbox": {
+            "eyebrow": "Capture",
+            "title": "Une boîte de réception d'apprentissage pour des morceaux rapides",
+            "body": "Déposez des notes rapidement lorsque quelque chose apparaît, puis traitez-les en vocabulaire, théorie, écriture ou exercices lorsque vous avez le temps.",
+            "example": "Exemple : capturez une phrase d'un podcast, puis transformez-la en entrée de vocabulaire après le trajet.",
+            "previewLabel": "Capture",
+            "previewKicker": "Boîte de réception",
+            "previewTitle": "Attrapez-le maintenant. Organisez-le plus tard.",
+            "previewBody": "Conservez le moment sans forcer une entrée complète lorsque vous êtes occupé."
+          },
+          "theory": {
+            "eyebrow": "Théorie",
+            "title": "Explications à côté de la langue que vous apprenez",
+            "body": "Écrivez des notes de grammaire et d'utilisation dans vos propres mots. Conservez-les dans le même espace de travail que le vocabulaire qu'elles expliquent.",
+            "example": "Exemple : une courte note sur le cas partitif à côté des noms que vous oubliez.",
+            "previewLabel": "Théorie",
+            "previewKicker": "Votre note",
+            "previewTitle": "Schémas écrits dans vos mots",
+            "previewBody": "Revisitez l'explication lorsque la même confusion revient."
+          },
+          "exercises": {
+            "eyebrow": "Exercices",
+            "title": "Pratique tirée de votre propre matériel",
+            "body": "Cartes mémoire, choix multiples, complétez les blancs, tapez la réponse, associez des paires, et plus encore — construits à partir des mots et notes que vous avez déjà enregistrés.",
+            "example": "Exemple : un ensemble de cartes mémoire à partir du vocabulaire de cette semaine plutôt qu'un paquet générique.",
+            "previewLabel": "Exercices",
+            "previewKicker": "Ensemble de pratique",
+            "previewTitle": "Vos mots deviennent l'entraînement",
+            "previewBody": "Le travail de mémoire reste connecté à ce que vous tenez réellement à apprendre."
+          },
+          "skills": {
+            "eyebrow": "Compétences",
+            "title": "Écriture, écoute, parole et lecture",
+            "body": "Allez au-delà de la reconnaissance. Produisez la langue, travaillez avec de l'audio, pratiquez la parole et lisez avec du matériel qui appartient à votre espace de travail.",
+            "example": "Exemple : écrivez avec le vocabulaire de la semaine, puis écoutez du matériel connexe et parlez à partir du même thème.",
+            "previewLabel": "Compétences",
+            "previewKicker": "Utilisation active",
+            "previewTitle": "De la connaissance à l'utilisation",
+            "previewBody": "Les domaines de compétences de base sont disponibles sur chaque plan ; les limites d'utilisation de l'IA varient selon le plan."
+          },
+          "connected": {
+            "eyebrow": "Connexions",
+            "title": "Une boucle au lieu d'outils éparpillés",
+            "body": "Ce que vous capturez peut devenir du vocabulaire. Le vocabulaire peut devenir de la pratique. La pratique peut alimenter l'écriture, l'écoute et la parole — sans perdre le fil.",
+            "example": "Exemple : un morceau de Capture devient un mot, ce mot apparaît dans des exercices, puis réapparaît dans l'écriture.",
+            "previewLabel": "Espace de travail",
+            "previewKicker": "Apprentissage connecté",
+            "previewTitle": "Moins de redémarrages. Plus de continuité.",
+            "previewBody": "Le produit reste en retrait pour que votre matériel puisse rester au centre."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Philosophie d'apprentissage",
+        "title": "Collecter des mots n'est pas suffisant.",
+        "lede": "Une liste de vocabulaire sans compréhension, pratique ou utilisation devient une autre note abandonnée.",
+        "expand": "Notoria existe pour que le vocabulaire, la théorie, les exercices et les compétences actives puissent partager un foyer privé — à côté de vos livres, enseignants et médias, et non à leur place.",
+        "beat": "Votre matériel appartient au centre.",
+        "aboutLink": "À propos de Notoria",
+        "storyLink": "Lisez notre histoire",
+        "points": {
+          "workspace": "Construisez un espace d'apprentissage personnel pour une langue à la fois.",
+          "understand": "Comprenez les concepts au lieu de mémoriser des morceaux isolés.",
+          "connect": "Connectez vocabulaire, notes et pratique en une seule boucle.",
+          "skills": "Pratiquez l'écriture, l'écoute, la parole et la lecture à partir du même matériel.",
+          "pace": "Apprenez à votre propre rythme, sans programme fixe.",
+          "habits": "Revenez souvent et construisez une continuité plutôt que des sessions éparpillées."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Commencer",
+        "title": "Un chemin simple vers l'espace de travail.",
+        "lede": "Vous n'avez pas besoin d'apprendre tout le produit d'un coup. Commencez petit, puis développez la boucle.",
+        "expect": "Après l'inscription, vous créez un espace de travail pour votre langue d'apprentissage, puis commencez à collecter du matériel. Le guide de démarrage dans l'application vous guide à travers chaque domaine lorsque vous êtes prêt.",
+        "cta": "Créez votre compte",
+        "secondaryCta": "Lisez Comment utiliser",
+        "steps": {
+          "account": {
+            "title": "Créer un compte",
+            "body": "Inscrivez-vous et entrez dans votre espace d'apprentissage privé."
+          },
+          "workspace": {
+            "title": "Configurer un espace de travail",
+            "body": "Donnez à votre étude un foyer pour une langue."
+          },
+          "language": {
+            "title": "Choisissez votre langue d'apprentissage",
+            "body": "Chaque espace de travail se concentre sur la langue que vous apprenez."
+          },
+          "collect": {
+            "title": "Commencez à collecter",
+            "body": "Enregistrez le vocabulaire et les morceaux de Capture qui comptent pour vous."
+          },
+          "explore": {
+            "title": "Explorez la théorie et les exercices",
+            "body": "Transformez ce que vous avez enregistré en compréhension et pratique."
+          },
+          "routine": {
+            "title": "Construisez une routine",
+            "body": "Revenez, révisez, écrivez, écoutez, parlez et lisez depuis le même endroit."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Réponses avant de commencer.",
+        "lede": "Questions pratiques sur ce qu'est Notoria, comment l'apprentissage fonctionne et ce qui se passe après votre inscription.",
+        "supportLink": "Visitez le support pour plus d'aide",
+        "groups": {
+          "about": "À propos de Notoria",
+          "features": "Fonctionnalités d'apprentissage",
+          "start": "Commencer",
+          "account": "Compte et disponibilité"
+        },
+        "items": {
+          "what": {
+            "q": "Qu'est-ce que Notoria exactement ?",
+            "a": "Notoria est un espace de travail privé pour l'auto-apprentissage de n'importe quelle langue. Vous conservez le vocabulaire, les notes, la théorie, les exercices, l'écriture, l'écoute, la parole et la lecture en un seul endroit organisé par la langue que vous apprenez. Ce n'est pas une plateforme scolaire et pas une bibliothèque de cours prêts à l'emploi."
+          },
+          "onlyVocab": {
+            "q": "Notoria est-elle uniquement une application d'apprentissage du vocabulaire ?",
+            "a": "Non. Le vocabulaire est central, mais Notoria inclut également la Capture, la Théorie, des exercices interactifs, l'écriture, l'écoute, la parole et la lecture. L'objectif est de garder ces domaines connectés autour de votre propre matériel."
+          },
+          "who": {
+            "q": "Pour qui Notoria est-elle conçue ?",
+            "a": "Pour les apprenants indépendants qui souhaitent que leur propre matériel soit au centre du processus — des personnes qui préfèrent collecter ce qui compte pour elles plutôt que de suivre le programme fixe de quelqu'un d'autre."
+          },
+          "vsFlashcards": {
+            "q": "En quoi Notoria est-elle différente des applications de cartes mémoire traditionnelles ?",
+            "a": "Les cartes mémoire sont un mode de pratique à l'intérieur de Notoria. Le produit stocke également significations et exemples, notes théoriques, morceaux de Capture et pratique des compétences dans le même espace de travail, de sorte que la révision n'est pas isolée de la compréhension et de l'utilisation."
+          },
+          "vocabHow": {
+            "q": "Comment fonctionne la gestion du vocabulaire ?",
+            "a": "Vous enregistrez des mots avec significations, exemples, étiquettes et sens primaires ou secondaires optionnels. Cette banque peut ensuite alimenter des exercices et des révisions ultérieures au lieu de vivre dans une liste séparée que vous ne rouvrez jamais."
+          },
+          "inboxWhy": {
+            "q": "Quel est le but de la Boîte de Réception d'Apprentissage (Capture) ?",
+            "a": "La Capture est le point d'entrée rapide. Lorsque vous remarquez quelque chose d'utile mais que vous n'avez pas le temps pour une entrée complète, vous enregistrez le morceau et le traitez plus tard en vocabulaire, théorie, écriture ou exercices."
+          },
+          "theoryExercises": {
+            "q": "Comment la Théorie et les Exercices fonctionnent-ils ensemble ?",
+            "a": "La Théorie contient des explications dans vos propres mots. Les Exercices transforment le vocabulaire enregistré et le matériel connexe en pratique. Vous pouvez rester avec des mots et des exercices courts pendant un certain temps, puis ajouter des notes théoriques lorsque un schéma nécessite une explication."
+          },
+          "skillsSupported": {
+            "q": "Quelles compétences d'apprentissage sont prises en charge ? Puis-je pratiquer l'écriture, l'écoute, la parole et la lecture ?",
+            "a": "Oui. L'écriture, l'écoute, la parole et la lecture font partie de l'espace de travail. Ces domaines sont disponibles sur chaque plan ; les limites d'utilisation de l'IA varient selon le plan."
+          },
+          "review": {
+            "q": "Comment puis-je revoir le matériel précédemment collecté ?",
+            "a": "Revenez à travers le Vocabulaire, la Théorie, les Exercices et les outils de révision connexes dans votre espace de travail. La continuité est l'objectif : ajoutez ce qui est nouveau, revisitez ce qui était difficile et continuez à pratiquer à partir du matériel que vous possédez déjà."
+          },
+          "createAccount": {
+            "q": "Comment créer un compte ?",
+            "a": "Utilisez <signUp>Commencer</signUp> ou <signUp>S'inscrire</signUp>, puis complétez l'enregistrement. Vous pouvez également <signIn>vous connecter</signIn> plus tard depuis l'en-tête public."
+          },
+          "afterSignup": {
+            "q": "Que se passe-t-il après l'inscription ?",
+            "a": "Vous configurez un espace de travail d'apprentissage pour votre langue, puis commencez à collecter du matériel. Un guide <gettingStarted>Commencer</gettingStarted> dans l'application explique chaque zone une fois que vous êtes à l'intérieur du produit."
+          },
+          "chooseLanguage": {
+            "q": "Comment choisir ma langue d'apprentissage ?",
+            "a": "Chaque espace de travail est dédié à une langue d'apprentissage. Vous choisissez cette langue lorsque vous créez l'espace de travail, de sorte que le vocabulaire et la pratique restent organisés autour de celle-ci."
+          },
+          "experience": {
+            "q": "Ai-je besoin d'une expérience d'apprentissage préalable ?",
+            "a": "Non. Notoria ne nécessite pas de programme fixe ou de progression de cours préalable. Une bonne première journée peut être un espace de travail et une poignée de mots qui vous tiennent réellement à cœur."
+          },
+          "languages": {
+            "q": "Quelles langues sont prises en charge ?",
+            "a": "Vous pouvez étudier n'importe quelle langue de votre choix. L'interface du produit est disponible dans de nombreuses langues d'interface utilisateur ; chaque espace de travail se concentre sur la langue que vous apprenez."
+          },
+          "devices": {
+            "q": "Puis-je accéder à Notoria sur différents appareils ?",
+            "a": "Oui. Notoria est une application web à <site>notoria.fi</site>, donc vous pouvez <signIn>vous connecter</signIn> depuis les navigateurs sur les appareils que vous utilisez déjà."
+          },
+          "plans": {
+            "q": "Y a-t-il un plan gratuit ?",
+            "a": "Oui. La version gratuite couvre les éléments essentiels de l'apprentissage avec une allocation quotidienne d'IA. La version Pro débloque plus d'outils d'IA et d'extras associés. La version Premium ajoute une intelligence d'apprentissage personnalisée. Vous pouvez comparer les plans dans <billing>Facturation du compte</billing> après vous être <signIn>connecté</signIn>."
+          },
+          "help": {
+            "q": "Comment puis-je obtenir de l'aide ou contacter le support ?",
+            "a": "Ouvrez la page <support>Support</support> pour les FAQ et les options de contact. Vous pouvez également utiliser <contact>Nous contacter</contact> pour des questions concernant le compte, la facturation, la confidentialité ou des questions générales."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Faites de l'apprentissage une partie de votre vie quotidienne.",
+        "lede": "Commencez à construire votre espace de travail d'apprentissage personnel avec Notoria — privé, pratique et centré sur votre propre matériel.",
+        "primary": "Commencer",
+        "secondary": "Se connecter"
+      },
+      "meta": {
+        "title": "Notoria — Espace d'apprentissage des langues privé",
+        "description": "Collectez du vocabulaire, comprenez la théorie, pratiquez avec des exercices et développez des compétences linguistiques durables dans un espace de travail personnel connecté.",
+        "ogDescription": "Construisez un système d'apprentissage qui évolue avec vous — vocabulaire, théorie, exercices, écriture, écoute, parole et lecture en un seul endroit.",
+        "twitterDescription": "Construisez un système d'apprentissage qui évolue avec vous — vocabulaire, théorie, exercices et pratique des compétences dans un seul espace de travail."
       }
     }
   },

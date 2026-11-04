@@ -22,7 +22,7 @@ export default async function GettingStartedPage() {
         )}
       >
         <Link
-          href="/"
+          href="/dashboard"
           className="inline-flex w-fit items-center gap-2 text-sm text-muted-foreground transition-colors hover:text-ink"
         >
           <ArrowLeft className="size-4" aria-hidden />

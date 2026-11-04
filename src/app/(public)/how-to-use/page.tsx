@@ -161,7 +161,7 @@ export default async function HowToUsePage() {
             {signedIn ? (
               <>
                 <Link
-                  href="/"
+                  href="/dashboard"
                   className={cn(
                     buttonVariants({ size: "lg" }),
                     mx(guideStyles, "guide-cta-link guide-cta-primary"),

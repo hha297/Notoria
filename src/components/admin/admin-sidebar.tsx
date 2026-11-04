@@ -131,7 +131,7 @@ export function AdminSidebar({ onNavigate, className }: AdminSidebarProps) {
 
         <div className={mx(styles, "admin-nav-group")}>
           <Link
-            href="/"
+            href="/dashboard"
             onClick={onNavigate}
             className={mx(styles, "admin-nav-link")}
           >

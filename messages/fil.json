@@ -4498,7 +4498,8 @@
           "p3": "Para sa mga pangkalahatang opsyon sa suporta at ang teknikal na inbox para sa feedback, tingnan ang <contactPage>Makipag-ugnay sa Amin</contactPage> at <support>Suporta</support>."
         }
       }
-    }
+    },
+    "backToHome": "Bumalik sa tahanan"
   },
   "footer": {
     "navLabel": "Mga link ng site",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Naghahanap ng mga sagot o nais magpadala ng feedback?",
         "link": "Suporta"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Pangunahing",
+        "howItWorks": "Paano Ito Gumagana",
+        "features": "Mga Tampok",
+        "faq": "FAQ",
+        "about": "Tungkol",
+        "support": "Suporta",
+        "signIn": "Mag-sign In",
+        "getStarted": "Magsimula",
+        "openMenu": "Buksan ang menu",
+        "closeMenu": "Isara ang menu"
+      },
+      "hero": {
+        "headline": "Bumuo ng isang sistema ng pag-aaral na lumalaki kasama mo.",
+        "description": "Kolektahin ang bokabularyo, unawain ang mga bagong konsepto, sanayin ang iyong mga kasanayan, at gawing pangmatagalang kaalaman ang iyong natutunan — lahat sa isang konektadong workspace.",
+        "supporting": "Ang Notoria ay isang pribadong workspace para sa sariling pag-aaral ng anumang wika. Ito ay nakabatay sa materyal na iyong dinadala — hindi isang katalogo ng mga aralin na hindi mo pinili.",
+        "primaryCta": "Magsimula",
+        "secondaryCta": "Tuklasin Kung Paano Ito Gumagana"
+      },
+      "preview": {
+        "windowLabel": "Notoria workspace",
+        "vocabTitle": "Bokabularyo",
+        "vocabMeta": "Mga salitang iyong itinatago",
+        "theoryTitle": "Teorya",
+        "theoryMeta": "Mga tala na nananatili",
+        "practiceTitle": "Pagsasanay",
+        "practiceMeta": "Mula sa iyong materyal",
+        "cardKicker": "Iyong workspace",
+        "cardTitle": "Isang wika. Isang loop.",
+        "cardBody": "I-save ang mga mahalaga, ayusin ito, at pagkatapos ay sanayin ang pagsusulat, pakikinig, pagsasalita, at pagbabasa mula sa parehong lugar.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "pagkatapos · susunod",
+        "floatTheory": "Partitive",
+        "floatTheoryMeta": "Kapag ang mga halaga ay nananatiling bukas",
+        "floatPractice": "Set ng flashcard",
+        "floatPracticeMeta": "12 ang dapat gawin ngayon"
+      },
+      "workflow": {
+        "kicker": "Paano gumagana ang Notoria",
+        "title": "Isang learning loop sa paligid ng iyong sariling materyal.",
+        "lede": "Ang Notoria ay hindi isang katalogo ng kurso. Ito ay isang pribadong workspace kung saan ang iyong kinokolekta ay nagiging iyong sinasanay.",
+        "bridge": "Ang Bokabularyo, Pagkuha, Teorya, Ehersisyo, Pagsusulat, Pakikinig, Pagsasalita, at Pagbasa ay nananatiling konektado — kaya hindi mo kailangang magsimula muli sa tuwing lumilipat ka ng mga tool.",
+        "guideLink": "Basahin ang buong gabay sa Paano Gamitin",
+        "steps": {
+          "collect": {
+            "title": "Kolektahin",
+            "body": "I-save ang bokabularyo at mga piraso ng pag-aaral habang nakikita mo ang mga ito — mula sa mga aralin, libro, media, at pag-uusap."
+          },
+          "organise": {
+            "title": "Ayusin",
+            "body": "Panatilihin ang isang nakabalangkas na koleksyon bawat wika, kasama ang mga kahulugan, halimbawa, mga tag, at mga kahulugan na maaari mong mahanap muli."
+          },
+          "understand": {
+            "title": "Unawain",
+            "body": "Sumulat ng mga tala ng teorya sa iyong sariling mga salita kapag may pattern na kailangang ipaliwanag."
+          },
+          "practise": {
+            "title": "Sanayin",
+            "body": "Gawing mga flashcard, quizzes, fill-in blanks, at iba pa ang iyong nai-save."
+          },
+          "apply": {
+            "title": "Ilapat",
+            "body": "Sumulat, makinig, magsalita, at magbasa upang ang wika ay lumampas sa pagkilala patungo sa aktibong paggamit."
+          },
+          "review": {
+            "title": "Suriin",
+            "body": "Bumalik mamaya, idagdag ang bago, balikan ang mahirap, at panatilihing umaandar ang loop."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Pangunahing mga tampok",
+        "title": "Lahat sa isang konektadong workspace.",
+        "lede": "Bawat lugar ay itinayo para sa tunay na sariling pag-aaral — hindi mga nakahiwalay na tool na may shared login.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Bokabularyo",
+            "title": "Isang personal na bangko ng bokabularyo na nananatiling kapaki-pakinabang",
+            "body": "I-imbak ang mga salita kasama ang mga kahulugan, halimbawa, bahagi ng pananalita, mga tag, at pangunahing o pangalawang mga kahulugan. Ang iyong nai-save ay maaaring maging pagsasanay sa hinaharap.",
+            "example": "Halimbawa: i-save ang sitten kasama ang pagkakasunod-sunod na kahulugan at oras na kahulugan, pagkatapos ay sanayin ang pareho mula sa parehong entry.",
+            "previewLabel": "Bokabularyo",
+            "previewKicker": "Detalyeng salita",
+            "previewTitle": "Ang mga kahulugan ay nananatiling nakakabit sa salita",
+            "previewBody": "Pangunahing mga kahulugan para sa mga ehersisyo. Pangalawang mga kahulugan para sa sanggunian kapag kailangan mo ang mga ito."
+          },
+          "inbox": {
+            "eyebrow": "Pagkuha",
+            "title": "Isang learning inbox para sa mabilis na mga piraso",
+            "body": "I-drop ang mga tala nang mabilis kapag may lumitaw, pagkatapos ay iproseso ang mga ito sa bokabularyo, teorya, pagsusulat, o mga ehersisyo kapag mayroon kang oras.",
+            "example": "Halimbawa: kunin ang isang parirala mula sa isang podcast, pagkatapos ay gawing isang entry ng bokabularyo pagkatapos ng biyahe.",
+            "previewLabel": "Pagkuha",
+            "previewKicker": "Inbox",
+            "previewTitle": "Hulihin ito ngayon. Ayusin mamaya.",
+            "previewBody": "Panatilihin ang sandali nang hindi pinipilit ang isang buong entry kapag abala ka."
+          },
+          "theory": {
+            "eyebrow": "Teorya",
+            "title": "Mga paliwanag sa tabi ng wika na iyong pinag-aaralan",
+            "body": "Sumulat ng mga tala ng gramatika at paggamit sa iyong sariling mga salita. Panatilihin ang mga ito sa parehong workspace bilang bokabularyo na kanilang ipinaliliwanag.",
+            "example": "Halimbawa: isang maikling tala sa partitive case sa tabi ng mga pangngalan na patuloy mong nakakalimutan.",
+            "previewLabel": "Teorya",
+            "previewKicker": "Iyong tala",
+            "previewTitle": "Mga pattern na nakasulat sa iyong mga salita",
+            "previewBody": "Balikan ang paliwanag kapag bumalik ang parehong kalituhan."
+          },
+          "exercises": {
+            "eyebrow": "Mga Ehersisyo",
+            "title": "Pagsasanay na hinango mula sa iyong sariling materyal",
+            "body": "Mga flashcard, multiple choice, fill-in blanks, type-the-answer, match pairs, at iba pa — itinayo mula sa mga salita at tala na iyong nai-save.",
+            "example": "Halimbawa: isang set ng flashcard mula sa bokabularyo ng linggong ito sa halip na isang generic na deck.",
+            "previewLabel": "Mga Ehersisyo",
+            "previewKicker": "Set ng pagsasanay",
+            "previewTitle": "Ang iyong mga salita ay nagiging drill",
+            "previewBody": "Ang memory work ay nananatiling konektado sa kung ano talaga ang mahalaga sa iyo na matutunan."
+          },
+          "skills": {
+            "eyebrow": "Mga Kasanayan",
+            "title": "Pagsusulat, pakikinig, pagsasalita, at pagbabasa",
+            "body": "Lumampas sa pagkilala. Gumawa ng wika, magtrabaho sa audio, sanayin ang pagsasalita, at magbasa gamit ang materyal na pag-aari ng iyong workspace.",
+            "example": "Halimbawa: sumulat gamit ang bokabularyo ng linggo, pagkatapos ay makinig sa kaugnay na materyal at magsalita mula sa parehong tema.",
+            "previewLabel": "Mga Kasanayan",
+            "previewKicker": "Aktibong paggamit",
+            "previewTitle": "Mula sa kaalaman patungo sa paggamit",
+            "previewBody": "Ang mga pangunahing lugar ng kasanayan ay available sa bawat plano; ang mga limitasyon sa paggamit ng AI ay nag-iiba ayon sa plano."
+          },
+          "connected": {
+            "eyebrow": "Mga Koneksyon",
+            "title": "Isang loop sa halip na mga nakakalat na tool",
+            "body": "Ang iyong kinokolekta ay maaaring maging bokabularyo. Ang bokabularyo ay maaaring maging pagsasanay. Ang pagsasanay ay maaaring magbigay ng pagsusulat, pakikinig, at pagsasalita — nang hindi nawawala ang sinulid.",
+            "example": "Halimbawa: isang scrap mula sa Pagkuha ay nagiging isang salita, ang salitang iyon ay lumilitaw sa mga ehersisyo, pagkatapos ay muling lumilitaw sa pagsusulat.",
+            "previewLabel": "Workspace",
+            "previewKicker": "Konektadong pag-aaral",
+            "previewTitle": "Mas kaunting pagsisimula muli. Mas maraming pagkakapare-pareho.",
+            "previewBody": "Ang produkto ay nananatiling hindi nakakasagabal upang ang iyong materyal ay manatiling nasa sentro."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Pilosopiya ng pag-aaral",
+        "title": "Ang pagkolekta ng mga salita ay hindi sapat.",
+        "lede": "Ang isang listahan ng bokabularyo nang walang pag-unawa, pagsasanay, o paggamit ay nagiging isa pang inabandunang tala.",
+        "expand": "Ang Notoria ay umiiral upang ang bokabularyo, teorya, mga ehersisyo, at aktibong kasanayan ay maaaring magbahagi ng isang pribadong tahanan — sa tabi ng iyong mga libro, guro, at media, hindi sa halip na sa kanila.",
+        "beat": "Ang iyong materyal ay nararapat sa sentro.",
+        "aboutLink": "Tungkol sa Notoria",
+        "storyLink": "Basahin ang aming kwento",
+        "points": {
+          "workspace": "Bumuo ng isang personal na learning workspace para sa isang wika sa isang pagkakataon.",
+          "understand": "Unawain ang mga konsepto sa halip na mag-memorize ng mga nakahiwalay na piraso.",
+          "connect": "Ikonekta ang bokabularyo, mga tala, at pagsasanay sa isang loop.",
+          "skills": "Sanayin ang pagsusulat, pakikinig, pagsasalita, at pagbabasa mula sa parehong materyal.",
+          "pace": "Matuto sa iyong sariling bilis, nang walang nakatakdang syllabus.",
+          "habits": "Bumalik nang madalas at bumuo ng pagkakapare-pareho sa halip na mga nakakalat na sesyon."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Pagsisimula",
+        "title": "Isang simpleng landas patungo sa workspace.",
+        "lede": "Hindi mo kailangang matutunan ang buong produkto nang sabay-sabay. Magsimula ng maliit, pagkatapos ay palaguin ang loop.",
+        "expect": "Pagkatapos ng pagpaparehistro, lumikha ka ng isang workspace para sa iyong wikang pinag-aaralan, pagkatapos ay simulan ang pagkolekta ng materyal. Ang in-app na gabay sa Pagsisimula ay naglalakad sa bawat lugar kapag handa ka na.",
+        "cta": "Lumikha ng iyong account",
+        "secondaryCta": "Basahin ang Paano Gamitin",
+        "steps": {
+          "account": {
+            "title": "Lumikha ng account",
+            "body": "Mag-sign up at pumasok sa iyong pribadong learning space."
+          },
+          "workspace": {
+            "title": "Mag-set up ng workspace",
+            "body": "Bigyan ang iyong pag-aaral ng tahanan para sa isang wika."
+          },
+          "language": {
+            "title": "Pumili ng iyong wikang pinag-aaralan",
+            "body": "Bawat workspace ay nakatuon sa wikang iyong pinag-aaralan."
+          },
+          "collect": {
+            "title": "Simulan ang pagkolekta",
+            "body": "I-save ang bokabularyo at mga piraso ng Pagkuha na mahalaga sa iyo."
+          },
+          "explore": {
+            "title": "Tuklasin ang teorya at mga ehersisyo",
+            "body": "Gawing pag-unawa at pagsasanay ang iyong nai-save."
+          },
+          "routine": {
+            "title": "Bumuo ng isang routine",
+            "body": "Bumalik, suriin, sumulat, makinig, magsalita, at magbasa mula sa parehong lugar."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Mga sagot bago ka magsimula.",
+        "lede": "Praktikal na mga tanong tungkol sa kung ano ang Notoria, kung paano gumagana ang pag-aaral, at kung ano ang mangyayari pagkatapos mong mag-sign up.",
+        "supportLink": "Bumisita sa Suporta para sa karagdagang tulong",
+        "groups": {
+          "about": "Tungkol sa Notoria",
+          "features": "Mga tampok sa pag-aaral",
+          "start": "Pagsisimula",
+          "account": "Account at availability"
+        },
+        "items": {
+          "what": {
+            "q": "Ano talaga ang Notoria?",
+            "a": "Ang Notoria ay isang pribadong workspace para sa sariling pag-aaral ng anumang wika. Itinatago mo ang bokabularyo, mga tala, teorya, mga ehersisyo, pagsusulat, pakikinig, pagsasalita, at pagbabasa sa isang lugar na inayos ayon sa wika na iyong pinag-aaralan. Ito ay hindi isang platform ng paaralan at hindi isang aklatan ng mga handang kurso."
+          },
+          "onlyVocab": {
+            "q": "Ang Notoria ba ay isang aplikasyon lamang para sa pag-aaral ng bokabularyo?",
+            "a": "Hindi. Ang bokabularyo ay sentro, ngunit ang Notoria ay may kasamang Pagkuha, Teorya, interactive na mga ehersisyo, pagsusulat, pakikinig, pagsasalita, at pagbabasa. Ang layunin ay panatilihing konektado ang mga lugar na iyon sa paligid ng iyong sariling materyal."
+          },
+          "who": {
+            "q": "Para kanino idinisenyo ang Notoria?",
+            "a": "Para sa mga independent learners na nais ang kanilang sariling materyal sa sentro ng proseso — mga tao na mas pinipili ang pagkolekta ng mga mahalaga sa kanila kaysa sa pagsunod sa nakatakdang syllabus ng iba."
+          },
+          "vsFlashcards": {
+            "q": "Paano naiiba ang Notoria mula sa mga tradisyunal na aplikasyon ng flashcard?",
+            "a": "Ang mga flashcard ay isang mode ng pagsasanay sa loob ng Notoria. Ang produkto ay nag-iimbak din ng mga kahulugan at halimbawa, mga tala ng teorya, mga scrap ng Pagkuha, at pagsasanay sa kasanayan sa parehong workspace, kaya ang pagsusuri ay hindi nakahiwalay mula sa pag-unawa at paggamit."
+          },
+          "vocabHow": {
+            "q": "Paano gumagana ang pamamahala ng bokabularyo?",
+            "a": "I-save mo ang mga salita kasama ang mga kahulugan, halimbawa, mga tag, at opsyonal na pangunahing o pangalawang mga kahulugan. Ang bank na iyon ay maaaring magbigay ng mga ehersisyo at pagsusuri sa hinaharap sa halip na manatili sa isang hiwalay na listahan na hindi mo na muling bubuksan."
+          },
+          "inboxWhy": {
+            "q": "Ano ang layunin ng Learning Inbox (Pagkuha)?",
+            "a": "Ang Pagkuha ay ang mabilis na entry point. Kapag napansin mo ang isang bagay na kapaki-pakinabang ngunit wala kang oras para sa isang buong entry, i-save mo ang scrap at iproseso ito mamaya sa bokabularyo, teorya, pagsusulat, o mga ehersisyo."
+          },
+          "theoryExercises": {
+            "q": "Paano nagtutulungan ang Teorya at mga Ehersisyo?",
+            "a": "Ang Teorya ay naglalaman ng mga paliwanag sa iyong sariling mga salita. Ang mga Ehersisyo ay ginagawang pagsasanay ang nai-save na bokabularyo at kaugnay na materyal. Maaari kang manatili sa mga salita at maiikli na drills sa loob ng ilang sandali, pagkatapos ay idagdag ang mga tala ng teorya kapag may pattern na kailangang ipaliwanag."
+          },
+          "skillsSupported": {
+            "q": "Anong mga kasanayan sa pag-aaral ang sinusuportahan? Maaari ba akong magsanay ng pagsusulat, pakikinig, pagsasalita, at pagbabasa?",
+            "a": "Oo. Ang pagsusulat, pakikinig, pagsasalita, at pagbabasa ay bahagi ng workspace. Ang mga lugar na ito ay available sa bawat plano; ang mga limitasyon sa paggamit ng AI ay nag-iiba ayon sa plano."
+          },
+          "review": {
+            "q": "Paano ko masusuri ang mga naunang nakolektang materyal?",
+            "a": "Bumalik sa pamamagitan ng Bokabularyo, Teorya, Mga Ehersisyo, at kaugnay na mga tool sa pagsusuri sa iyong workspace. Ang pagkakapare-pareho ang layunin: idagdag ang bago, balikan ang mahirap, at patuloy na magsanay mula sa materyal na pag-aari mo na."
+          },
+          "createAccount": {
+            "q": "Paano ako makakalikha ng account?",
+            "a": "Gamitin ang <signUp>Simulan</signUp> o <signUp>Mag-sign Up</signUp>, pagkatapos ay kumpletuhin ang pagpaparehistro. Maaari ka ring <signIn>mag-sign in</signIn> mamaya mula sa pampublikong header."
+          },
+          "afterSignup": {
+            "q": "Ano ang mangyayari pagkatapos ng pagpaparehistro?",
+            "a": "Nagtakda ka ng isang learning workspace para sa iyong wika, pagkatapos ay simulan ang pagkolekta ng materyal. Isang in-app na <gettingStarted>Pagpapakilala</gettingStarted> na gabay ang nagpapaliwanag sa bawat bahagi kapag ikaw ay nasa loob ng produkto."
+          },
+          "chooseLanguage": {
+            "q": "Paano ko pipiliin ang aking wikang pinag-aaralan?",
+            "a": "Bawat workspace ay nakatuon sa isang wikang pinag-aaralan. Pumili ka ng wikang iyon kapag nilikha mo ang workspace, kaya ang bokabularyo at pagsasanay ay nananatiling inayos sa paligid nito."
+          },
+          "experience": {
+            "q": "Kailangan ko ba ng naunang karanasan sa pag-aaral?",
+            "a": "Hindi. Ang Notoria ay hindi nangangailangan ng nakatakdang syllabus o naunang pag-unlad sa kurso. Ang isang magandang unang araw ay maaaring maging isang workspace at isang kamay ng mga salitang talagang mahalaga sa iyo."
+          },
+          "languages": {
+            "q": "Anong mga wika ang sinusuportahan?",
+            "a": "Maaari mong pag-aralan ang anumang wika na iyong pinili. Ang interface ng produkto ay available sa maraming UI na wika; bawat workspace ay nakatuon sa wikang iyong pinag-aaralan."
+          },
+          "devices": {
+            "q": "Maaari ko bang ma-access ang Notoria sa iba't ibang device?",
+            "a": "Oo. Ang Notoria ay isang web application sa <site>notoria.fi</site>, kaya maaari kang <signIn>mag-sign in</signIn> mula sa mga browser sa mga device na ginagamit mo na."
+          },
+          "plans": {
+            "q": "Mayroon bang libreng plano?",
+            "a": "Oo. Ang Libre ay sumasaklaw sa mga pangunahing pangangailangan sa pag-aaral na may pang-araw-araw na allowance ng AI. Ang Pro ay nagbubukas ng higit pang mga tool ng AI at mga kaugnay na extras. Ang Premium ay nagdadagdag ng personalisadong katalinuhan sa pag-aaral. Maaari mong ihambing ang mga plano sa <billing>Pagsingil ng Account</billing> pagkatapos mong <signIn>mag-sign in</signIn>."
+          },
+          "help": {
+            "q": "Paano ako makakakuha ng tulong o makipag-ugnayan sa suporta?",
+            "a": "Buksan ang <support>Suporta</support> na pahina para sa mga FAQ at mga opsyon sa pakikipag-ugnayan. Maaari mo ring gamitin ang <contact>Makipag-ugnayan sa Amin</contact> para sa mga tanong tungkol sa account, pagsingil, privacy, o pangkalahatang mga katanungan."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Gawing bahagi ng iyong pang-araw-araw na buhay ang pag-aaral.",
+        "lede": "Simulan ang pagbubuo ng iyong personal na learning workspace gamit ang Notoria — pribado, praktikal, at nakatuon sa iyong sariling materyal.",
+        "primary": "Magsimula",
+        "secondary": "Mag-sign In"
+      },
+      "meta": {
+        "title": "Notoria — Pribadong workspace para sa pag-aaral ng wika",
+        "description": "Kolektahin ang bokabularyo, unawain ang teorya, magsanay gamit ang mga ehersisyo, at bumuo ng pangmatagalang kasanayan sa wika sa isang konektadong personal na workspace.",
+        "ogDescription": "Bumuo ng isang sistema ng pag-aaral na lumalaki kasama mo — bokabularyo, teorya, mga ehersisyo, pagsusulat, pakikinig, pagsasalita, at pagbabasa sa isang lugar.",
+        "twitterDescription": "Bumuo ng isang sistema ng pag-aaral na lumalaki kasama mo — bokabularyo, teorya, mga ehersisyo, at pagsasanay sa kasanayan sa isang workspace."
       }
     }
   },

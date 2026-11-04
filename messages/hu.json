@@ -4498,7 +4498,8 @@
           "p3": "Az általános támogatási lehetőségekhez és a technikai visszajelzési postaládához lásd a <contactPage>Kapcsolat</contactPage> és a <support>Támogatás</support> oldalakat."
         }
       }
-    }
+    },
+    "backToHome": "Vissza a kezdőlapra"
   },
   "footer": {
     "navLabel": "Oldal hivatkozásai",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Válaszokat keres, vagy visszajelzést szeretne küldeni?",
         "link": "Támogatás"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Fő",
+        "howItWorks": "Hogyan működik",
+        "features": "Funkciók",
+        "faq": "GYIK",
+        "about": "Rólunk",
+        "support": "Támogatás",
+        "signIn": "Bejelentkezés",
+        "getStarted": "Kezdj el",
+        "openMenu": "Menü megnyitása",
+        "closeMenu": "Menü bezárása"
+      },
+      "hero": {
+        "headline": "Építs egy tanulási rendszert, ami veled együtt fejlődik.",
+        "description": "Gyűjtsd össze a szókincset, értsd meg az új fogalmakat, gyakorold a készségeidet, és alakítsd át, amit tanulsz, tartós tudássá — mindezt egy összekapcsolt munkaterületen.",
+        "supporting": "A Notoria egy privát munkaterület, ahol bármely nyelvet önállóan tanulhatsz. Az általad hozott anyag köré épül — nem egy olyan tananyag katalógusa, amit nem te választottál.",
+        "primaryCta": "Kezdj el",
+        "secondaryCta": "Fedezd fel, hogyan működik"
+      },
+      "preview": {
+        "windowLabel": "Notoria munkaterület",
+        "vocabTitle": "Szókincs",
+        "vocabMeta": "Szavak, amiket megőrzöl",
+        "theoryTitle": "Elmélet",
+        "theoryMeta": "Ragaszkodó jegyzetek",
+        "practiceTitle": "Gyakorlat",
+        "practiceMeta": "A te anyagodból",
+        "cardKicker": "A te munkaterületed",
+        "cardTitle": "Egy nyelv. Egy kör.",
+        "cardBody": "Tartsd meg, ami számít, szervezd meg, majd gyakorolj írást, hallgatást, beszédet és olvasást ugyanabból a helyről.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "akkor · következő",
+        "floatTheory": "Részleges",
+        "floatTheoryMeta": "Amikor a mennyiségek nyitva maradnak",
+        "floatPractice": "Flashcard készlet",
+        "floatPracticeMeta": "12 esedékes ma"
+      },
+      "workflow": {
+        "kicker": "Hogyan működik a Notoria",
+        "title": "Egy tanulási kör a saját anyagod körül.",
+        "lede": "A Notoria nem egy tanfolyam katalógus. Ez egy privát munkaterület, ahol amit összegyűjtesz, az válik gyakorlattá.",
+        "bridge": "A szókincs, a gyűjtés, az elmélet, a gyakorlatok, az írás, a hallgatás, a beszéd és az olvasás összekapcsolva marad — így nem kell újra kezdened, amikor eszközt váltasz.",
+        "guideLink": "Olvasd el a teljes Használati útmutatót",
+        "steps": {
+          "collect": {
+            "title": "Gyűjtsd össze",
+            "body": "Tartsd meg a szókincset és a tanulási anyagokat, amikkel találkozol — leckékből, könyvekből, médiából és beszélgetésekből."
+          },
+          "organise": {
+            "title": "Szervezd meg",
+            "body": "Tarts egy strukturált gyűjteményt nyelvenként, jelentésekkel, példákkal, címkékkel és érzésekkel, amiket újra megtalálhatsz."
+          },
+          "understand": {
+            "title": "Értsd meg",
+            "body": "Írd le az elméleti jegyzeteidet a saját szavaiddal, amikor egy mintát magyarázni kell."
+          },
+          "practise": {
+            "title": "Gyakorolj",
+            "body": "Alakítsd át, amit megőriztél, flashcardokká, kvízekké, kitöltős feladatokká és még sok mássá."
+          },
+          "apply": {
+            "title": "Alkalmazd",
+            "body": "Írj, hallgass, beszélj és olvass, hogy a nyelv a felismerésen túl aktív használatra lépjen."
+          },
+          "review": {
+            "title": "Ismételd át",
+            "body": "Térj vissza később, add hozzá, ami új, nézd át, ami nehéz volt, és tartsd mozgásban a kört."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Alapvető funkciók",
+        "title": "Minden egy összekapcsolt munkaterületen.",
+        "lede": "Minden terület a valódi önálló tanulásra épül — nem elszigetelt eszközök megosztott bejelentkezéssel.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Szókincs",
+            "title": "Egy személyes szókincstár, ami hasznos marad",
+            "body": "Tartsd meg a szavakat jelentésekkel, példákkal, szófajjal, címkékkel és elsődleges vagy másodlagos érzésekkel. Amit megőrzöl, az később gyakorlattá válhat.",
+            "example": "Példa: mentsd el a sitten szót a sorrendi és időbeli jelentésével, majd gyakorold mindkettőt ugyanabból a bejegyzésből.",
+            "previewLabel": "Szókincs",
+            "previewKicker": "Szó részletei",
+            "previewTitle": "A jelentések a szóhoz kapcsolódnak",
+            "previewBody": "Elsődleges jelentések a gyakorlatokhoz. Másodlagos jelentések hivatkozásként, amikor szükséged van rájuk."
+          },
+          "inbox": {
+            "eyebrow": "Gyűjtés",
+            "title": "Egy tanulási bejövő a gyors anyagokhoz",
+            "body": "Gyorsan jegyezd fel a jegyzeteket, amikor valami felmerül, majd dolgozd fel őket szókincsbe, elméletbe, írásba vagy gyakorlatokba, amikor időd van.",
+            "example": "Példa: rögzíts egy kifejezést egy podcastból, majd alakítsd át egy szókincs bejegyzéssé az utazás után.",
+            "previewLabel": "Gyűjtés",
+            "previewKicker": "Bejövő",
+            "previewTitle": "Kapd el most. Szervezd meg később.",
+            "previewBody": "Tartsd meg a pillanatot anélkül, hogy teljes bejegyzést kényszerítenél, amikor elfoglalt vagy."
+          },
+          "theory": {
+            "eyebrow": "Elmélet",
+            "title": "Magyarázatok a tanulni kívánt nyelv mellett",
+            "body": "Írd le a nyelvtani és használati jegyzeteidet a saját szavaiddal. Tartsd őket ugyanabban a munkaterületben, mint a szókincs, amit magyaráznak.",
+            "example": "Példa: egy rövid jegyzet a részleges esetről a főnevek mellett, amiket folyamatosan elfelejtesz.",
+            "previewLabel": "Elmélet",
+            "previewKicker": "A te jegyzeted",
+            "previewTitle": "Minták a te szavaiddal",
+            "previewBody": "Nézd át a magyarázatot, amikor ugyanaz a zűrzavar visszatér."
+          },
+          "exercises": {
+            "eyebrow": "Gyakorlatok",
+            "title": "Gyakorlat a saját anyagodból",
+            "body": "Flashcardok, feleletválasztós kérdések, kitöltős feladatok, válaszírás, párok összepárosítása és még sok más — a már elmentett szavak és jegyzetek alapján.",
+            "example": "Példa: egy flashcard készlet a hét szókincséből, nem egy általános pakli.",
+            "previewLabel": "Gyakorlatok",
+            "previewKicker": "Gyakorlati készlet",
+            "previewTitle": "A te szavaid a gyakorlat",
+            "previewBody": "A memóriagyakorlat összekapcsolva marad azzal, ami valóban érdekel a tanulásban."
+          },
+          "skills": {
+            "eyebrow": "Készségek",
+            "title": "Írás, hallgatás, beszéd és olvasás",
+            "body": "Lépj túl a felismerésen. Termelj nyelvet, dolgozz a hanganyaggal, gyakorolj beszédet, és olvass olyan anyaggal, ami a te munkaterületedhez tartozik.",
+            "example": "Példa: írj a hét szókincsével, majd hallgass meg kapcsolódó anyagokat és beszélj ugyanarról a témáról.",
+            "previewLabel": "Készségek",
+            "previewKicker": "Aktív használat",
+            "previewTitle": "A tudásból a használatba",
+            "previewBody": "A fő készségterületek minden tervben elérhetők; az AI használati korlátok tervenként változnak."
+          },
+          "connected": {
+            "eyebrow": "Kapcsolatok",
+            "title": "Egy kör a szétszórt eszközök helyett",
+            "body": "Amit összegyűjtesz, az szókincsé válhat. A szókincs gyakorlattá válhat. A gyakorlat táplálhatja az írást, hallgatást és beszédet — anélkül, hogy elveszítenéd a fonalat.",
+            "example": "Példa: egy Gyűjtés anyag szóbá válik, az a szó megjelenik a gyakorlatokban, majd újra megjelenik az írásban.",
+            "previewLabel": "Munkaterület",
+            "previewKicker": "Összekapcsolt tanulás",
+            "previewTitle": "Kevesebb újrakezdés. Több folytonosság.",
+            "previewBody": "A termék nem zavar, így az anyagod a középpontban maradhat."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Tanulási filozófia",
+        "title": "A szavak gyűjtése nem elég.",
+        "lede": "Egy szókincs lista megértés, gyakorlás vagy használat nélkül egy újabb elhagyott jegyzet lesz.",
+        "expand": "A Notoria azért létezik, hogy a szókincs, az elmélet, a gyakorlatok és az aktív készségek egy privát otthonban osztozhassanak — a könyveid, tanáraid és médiáid mellett, nem helyettük.",
+        "beat": "A te anyagod a középpontban van.",
+        "aboutLink": "A Notoriáról",
+        "storyLink": "Olvasd el a történetünket",
+        "points": {
+          "workspace": "Építs egy személyes tanulási munkaterületet egy nyelv számára.",
+          "understand": "Értsd meg a fogalmakat ahelyett, hogy elszigetelt anyagokat memorizálnál.",
+          "connect": "Kapcsolj össze szókincset, jegyzeteket és gyakorlatokat egy körbe.",
+          "skills": "Gyakorolj írást, hallgatást, beszédet és olvasást ugyanabból az anyagból.",
+          "pace": "Tanulj a saját tempódban, fix tanterv nélkül.",
+          "habits": "Térj vissza gyakran és építs folytonosságot a szétszórt ülések helyett."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Kezdés",
+        "title": "Egy egyszerű út a munkaterülethez.",
+        "lede": "Nem szükséges egyszerre megtanulnod az egész terméket. Kezdj kicsiben, majd növeld a kört.",
+        "expect": "A regisztráció után létrehozol egy munkaterületet a tanulni kívánt nyelvedhez, majd elkezded összegyűjteni az anyagot. Az alkalmazáson belüli Kezdés útmutató végigvezet minden területen, amikor készen állsz.",
+        "cta": "Hozd létre a fiókodat",
+        "secondaryCta": "Olvasd el, hogyan használd",
+        "steps": {
+          "account": {
+            "title": "Hozz létre egy fiókot",
+            "body": "Regisztrálj és lépj be a privát tanulási teredbe."
+          },
+          "workspace": {
+            "title": "Állítsd be a munkaterületet",
+            "body": "Adj otthont a tanulásodnak egy nyelv számára."
+          },
+          "language": {
+            "title": "Válaszd ki a tanulni kívánt nyelvet",
+            "body": "Minden munkaterület a tanulni kívánt nyelvre összpontosít."
+          },
+          "collect": {
+            "title": "Kezdj el gyűjteni",
+            "body": "Tartsd meg a számodra fontos szókincset és Gyűjtés anyagokat."
+          },
+          "explore": {
+            "title": "Fedezd fel az elméletet és a gyakorlatokat",
+            "body": "Alakítsd át, amit megőriztél, megértéssé és gyakorlattá."
+          },
+          "routine": {
+            "title": "Építs egy rutint",
+            "body": "Térj vissza, nézd át, írj, hallgass, beszélj és olvass ugyanabból a helyről."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "GYIK",
+        "title": "Válaszok, mielőtt elkezdenéd.",
+        "lede": "Gyakorlati kérdések arról, hogy mi a Notoria, hogyan működik a tanulás, és mi történik a regisztráció után.",
+        "supportLink": "Látogass el a Támogatás oldalra további segítségért",
+        "groups": {
+          "about": "A Notoriáról",
+          "features": "Tanulási funkciók",
+          "start": "Kezdés",
+          "account": "Fiók és elérhetőség"
+        },
+        "items": {
+          "what": {
+            "q": "Mi pontosan a Notoria?",
+            "a": "A Notoria egy privát munkaterület, ahol bármely nyelvet önállóan tanulhatsz. A szókincset, jegyzeteket, elméletet, gyakorlatokat, írást, hallgatást, beszédet és olvasást egy helyen tartod, a tanulni kívánt nyelv szerint rendezve. Ez nem egy iskolai platform és nem egy kész tanfolyamok könyvtára."
+          },
+          "onlyVocab": {
+            "q": "A Notoria csak egy szókincs tanuló alkalmazás?",
+            "a": "Nem. A szókincs középpontban áll, de a Notoria tartalmazza a Gyűjtést, az Elméletet, interaktív gyakorlatokat, írást, hallgatást, beszédet és olvasást is. A lényeg, hogy ezeket a területeket összekapcsolva tartsuk a saját anyagod körül."
+          },
+          "who": {
+            "q": "Kinek készült a Notoria?",
+            "a": "Önálló tanulóknak, akik szeretnék, hogy a saját anyaguk legyen a folyamat középpontjában — olyan embereknek, akik inkább azt gyűjtik, ami számít nekik, mint hogy valaki más fix tantervét kövessék."
+          },
+          "vsFlashcards": {
+            "q": "Miben különbözik a Notoria a hagyományos flashcard alkalmazásoktól?",
+            "a": "A flashcardok egy gyakorlási mód a Notoriában. A termék tárolja a jelentéseket és példákat, elméleti jegyzeteket, Gyűjtés anyagokat és készséggyakorlatokat ugyanabban a munkaterületben, így az áttekintés nem elszigetelt a megértéstől és a használattól."
+          },
+          "vocabHow": {
+            "q": "Hogyan működik a szókincs kezelése?",
+            "a": "Szavakat menthetsz el jelentésekkel, példákkal, címkékkel és opcionális elsődleges vagy másodlagos érzésekkel. Ez a bank később táplálhatja a gyakorlatokat és az áttekintést, ahelyett, hogy egy külön listában élne, amit soha nem nyitsz meg újra."
+          },
+          "inboxWhy": {
+            "q": "Mi a célja a Tanulási Bejövőnek (Gyűjtés)?",
+            "a": "A Gyűjtés a gyors bejegyzési pont. Amikor észreveszel valami hasznosat, de nincs időd egy teljes bejegyzésre, elmented az anyagot, és később feldolgozod szókincsbe, elméletbe, írásba vagy gyakorlatokba."
+          },
+          "theoryExercises": {
+            "q": "Hogyan működik együtt az Elmélet és a Gyakorlatok?",
+            "a": "Az Elmélet a saját szavaiddal tartalmaz magyarázatokat. A Gyakorlatok a mentett szókincset és kapcsolódó anyagokat alakítják gyakorlattá. Egy ideig maradhatsz a szavaknál és a rövid gyakorlatoknál, majd hozzáadhatod az elméleti jegyzeteket, amikor egy mintát magyarázni kell."
+          },
+          "skillsSupported": {
+            "q": "Milyen tanulási készségeket támogat a Notoria? Gyakorolhatok írást, hallgatást, beszédet és olvasást?",
+            "a": "Igen. Az írás, hallgatás, beszéd és olvasás része a munkaterületnek. Ezek a területek minden tervben elérhetők; az AI használati korlátok tervenként változnak."
+          },
+          "review": {
+            "q": "Hogyan tudom áttekinteni a korábban összegyűjtött anyagot?",
+            "a": "Térj vissza a Szókincs, Elmélet, Gyakorlatok és kapcsolódó áttekintő eszközök segítségével a munkaterületedben. A folytonosság a lényeg: add hozzá, ami új, nézd át, ami nehéz volt, és folytasd a gyakorlást az anyaggal, amit már birtokolsz."
+          },
+          "createAccount": {
+            "q": "Hogyan hozhatok létre egy fiókot?",
+            "a": "Használja a <signUp>Elindulás</signUp> vagy <signUp>Regisztráció</signUp> lehetőséget, majd fejezze be a regisztrációt. Később a nyilvános fejlécből is <signIn>bejelentkezhet</signIn>."
+          },
+          "afterSignup": {
+            "q": "Mi történik a regisztráció után?",
+            "a": "Beállít egy tanulási munkaterületet a nyelvéhez, majd elkezdi gyűjteni az anyagokat. Az alkalmazáson belüli <gettingStarted>Elindulás</gettingStarted> útmutató minden területet elmagyaráz, amint belépett a termékbe."
+          },
+          "chooseLanguage": {
+            "q": "Hogyan választhatom ki a tanulni kívánt nyelvet?",
+            "a": "Minden munkaterület egy tanulni kívánt nyelvre van dedikálva. Ezt a nyelvet választod ki, amikor létrehozod a munkaterületet, így a szókincs és a gyakorlatok köré rendeződnek."
+          },
+          "experience": {
+            "q": "Szükségem van korábbi tanulási tapasztalatra?",
+            "a": "Nem. A Notoria nem igényel fix tantervet vagy korábbi tanfolyami előrehaladást. Egy jó első nap lehet egy munkaterület és néhány szó, ami valóban érdekel."
+          },
+          "languages": {
+            "q": "Milyen nyelvek támogatottak?",
+            "a": "Bármely nyelvet tanulmányozhatsz, amit választasz. A termék felülete sok UI nyelven elérhető; minden munkaterület a tanulni kívánt nyelvre összpontosít."
+          },
+          "devices": {
+            "q": "Hozzáférhetek a Notoriához különböző eszközökön?",
+            "a": "Igen. A Notoria egy webalkalmazás a <site>notoria.fi</site> címen, így a már használt eszközök böngészőiből <signIn>bejelentkezhet</signIn>."
+          },
+          "plans": {
+            "q": "Van ingyenes terv?",
+            "a": "Igen. A ingyenes csomag a legfontosabb tanulási alapokat tartalmazza napi AI kerettel. A Pro több AI eszközt és kapcsolódó extrákat old fel. A Prémium személyre szabott tanulási intelligenciát ad hozzá. A <billing>Fiók számlázás</billing> menüpontban összehasonlíthatja a csomagokat, miután <signIn>bejelentkezett</signIn>."
+          },
+          "help": {
+            "q": "Hogyan kaphatok segítséget vagy léphetek kapcsolatba a támogatással?",
+            "a": "Nyissa meg a <support>Támogatás</support> oldalt a GYIK és a kapcsolattartási lehetőségekért. Használhatja a <contact>Kapcsolatfelvétel</contact> lehetőséget is fiókkal, számlázással, adatvédelemmel vagy általános kérdésekkel kapcsolatban."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Tedd a tanulást a mindennapi életed részévé.",
+        "lede": "Kezdj el építeni a személyes tanulási munkaterületedet a Notoriával — privát, praktikus és a saját anyagod középpontjában.",
+        "primary": "Kezdj el",
+        "secondary": "Bejelentkezés"
+      },
+      "meta": {
+        "title": "Notoria — Privát nyelvtanulási munkaterület",
+        "description": "Gyűjtsd össze a szókincset, értsd meg az elméletet, gyakorolj a gyakorlatokkal, és építs tartós nyelvi készségeket egy összekapcsolt személyes munkaterületen.",
+        "ogDescription": "Építs egy tanulási rendszert, ami veled együtt fejlődik — szókincs, elmélet, gyakorlatok, írás, hallgatás, beszéd és olvasás egy helyen.",
+        "twitterDescription": "Építs egy tanulási rendszert, ami veled együtt fejlődik — szókincs, elmélet, gyakorlatok és készséggyakorlat egy munkaterületen."
       }
     }
   },

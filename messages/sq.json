@@ -4498,7 +4498,8 @@
           "p3": "Për opsionet e përgjithshme të mbështetjes dhe kutinë teknike të reagimeve, shihni <contactPage>Na kontaktoni</contactPage> dhe <support>Mbështetje</support>."
         }
       }
-    }
+    },
+    "backToHome": "Kthehu në shtëpi"
   },
   "footer": {
     "navLabel": "Lidhjet e faqes",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Kërkoni përgjigje ose doni të dërgoni reagime?",
         "link": "Mbështetje"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primar",
+        "howItWorks": "Si Funksionon",
+        "features": "Karakteristikat",
+        "faq": "FAQ",
+        "about": "Rreth",
+        "support": "Mbështetje",
+        "signIn": "Hyni",
+        "getStarted": "Filloni",
+        "openMenu": "Hap menun",
+        "closeMenu": "Mbyll menun"
+      },
+      "hero": {
+        "headline": "Ndërtoni një sistem mësimi që rritet me ju.",
+        "description": "Mblidhni fjalor, kuptoni koncepte të reja, praktikoni aftësitë tuaja dhe kthejeni atë që mësoni në njohuri të qëndrueshme — gjithçka në një hapësirë të lidhur.",
+        "supporting": "Notoria është një hapësirë private për vetë-studim të çdo gjuhe. Ajo është ndërtuar rreth materialeve që sjellni — jo një katalog mësimesh që nuk keni zgjedhur.",
+        "primaryCta": "Filloni",
+        "secondaryCta": "Eksploroni Si Funksionon"
+      },
+      "preview": {
+        "windowLabel": "Hapësira e Notoria",
+        "vocabTitle": "Fjalori",
+        "vocabMeta": "Fjalët që mbani",
+        "theoryTitle": "Teoria",
+        "theoryMeta": "Shënime që ngjiten",
+        "practiceTitle": "Praktikë",
+        "practiceMeta": "Nga materiali juaj",
+        "cardKicker": "Hapësira juaj",
+        "cardTitle": "Një gjuhë. Një cikël.",
+        "cardBody": "Ruani atë që ka rëndësi, organizojeni, pastaj praktikoni shkrimin, dëgjimin, të folurit dhe të lexuarit nga e njëjta vend.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "atëherë · më pas",
+        "floatTheory": "Partitive",
+        "floatTheoryMeta": "Kur sasi mbeten të hapura",
+        "floatPractice": "Grupi i kartave",
+        "floatPracticeMeta": "12 të dueshme sot"
+      },
+      "workflow": {
+        "kicker": "Si funksionon Notoria",
+        "title": "Një cikël mësimi rreth materialeve tuaja.",
+        "lede": "Notoria nuk është një katalog kursesh. Ajo është një hapësirë private ku ajo që mbledhni bëhet ajo që praktikoni.",
+        "bridge": "Fjalori, Kapja, Teoria, Ushtrimet, Shkrimi, Dëgjimi, Të Folurit dhe Të Lexuarit mbeten të lidhura — kështu që nuk filloni nga e para çdo herë që ndryshoni mjetet.",
+        "guideLink": "Lexoni udhëzuesin e plotë Si të Përdorni",
+        "steps": {
+          "collect": {
+            "title": "Mblidhni",
+            "body": "Ruani fjalorin dhe copëzat e mësimit ndërsa i takoni — nga mësimet, librat, mediat dhe bisedat."
+          },
+          "organise": {
+            "title": "Organizoni",
+            "body": "Mbani një koleksion të strukturuar për çdo gjuhë, me kuptime, shembuj, etiketa dhe kuptime që mund t'i gjeni përsëri."
+          },
+          "understand": {
+            "title": "Kuptoni",
+            "body": "Shkruani shënime teorike me fjalët tuaja kur një model ka nevojë për shpjegim."
+          },
+          "practise": {
+            "title": "Praktikoni",
+            "body": "Kthejeni atë që keni ruajtur në karta flash, kuize, plotësime bosh dhe më shumë."
+          },
+          "apply": {
+            "title": "Aplikoni",
+            "body": "Shkruani, dëgjoni, flisni dhe lexoni që gjuha të kalojë përtej njohjes në përdorim aktiv."
+          },
+          "review": {
+            "title": "Rishikoni",
+            "body": "Kthehuni më vonë, shtoni atë që është e re, rishikoni atë që ishte e vështirë dhe mbani ciklin në lëvizje."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Karakteristikat kryesore",
+        "title": "Gjithçka në një hapësirë të lidhur.",
+        "lede": "Çdo fushë është ndërtuar për vetë-studim të vërtetë — jo mjete të izoluar me një login të përbashkët.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Fjalori",
+            "title": "Një bankë personale fjalori që mbetet e dobishme",
+            "body": "Ruani fjalë me kuptime, shembuj, pjesë të fjalës, etiketa dhe kuptime primare ose sekondare. Ajo që ruani mund të bëhet praktikë më vonë.",
+            "example": "Shembull: ruani sitten me kuptimin e tij të sekuencës dhe kuptimin e kohës, pastaj praktikoni të dyja nga e njëjta hyrje.",
+            "previewLabel": "Fjalori",
+            "previewKicker": "Detajet e fjalës",
+            "previewTitle": "Kuput e mbeten të lidhura me fjalën",
+            "previewBody": "Kuput primare për ushtrime. Kuput sekondare për referencë kur keni nevojë për to."
+          },
+          "inbox": {
+            "eyebrow": "Kapja",
+            "title": "Një inbox për mësim për copëza të shpejta",
+            "body": "Hidhni shënime shpejt kur diçka shfaqet, pastaj procesoni ato në fjalor, teori, shkrim ose ushtrime kur keni kohë.",
+            "example": "Shembull: kapni një frazë nga një podcast, pastaj kthejeni në një hyrje fjalori pas udhëtimit.",
+            "previewLabel": "Kapja",
+            "previewKicker": "Inbox",
+            "previewTitle": "Kapeni tani. Organizoni më vonë.",
+            "previewBody": "Mbani momentin pa e detyruar një hyrje të plotë kur jeni të zënë."
+          },
+          "theory": {
+            "eyebrow": "Teoria",
+            "title": "Shpjegime pranë gjuhës që po mësoni",
+            "body": "Shkruani shënime mbi gramatikën dhe përdorimin me fjalët tuaja. Mbani ato në të njëjtën hapësirë si fjalorin që shpjegojnë.",
+            "example": "Shembull: një shënim i shkurtër mbi rastin partitiv pranë emrave që vazhdoni të harroni.",
+            "previewLabel": "Teoria",
+            "previewKicker": "Shënimi juaj",
+            "previewTitle": "Modelet e shkruara me fjalët tuaja",
+            "previewBody": "Rishikoni shpjegimin kur e njëjta konfuzion kthehet."
+          },
+          "exercises": {
+            "eyebrow": "Ushtrimet",
+            "title": "Praktikë e nxjerrë nga materiali juaj",
+            "body": "Karta flash, zgjedhje të shumta, plotësime bosh, shkruani-përgjigjen, përputhni çiftet dhe më shumë — të ndërtuara nga fjalët dhe shënimet që keni ruajtur tashmë.",
+            "example": "Shembull: një grup kartash flash nga fjalori i kësaj jave në vend të një deke të përgjithshme.",
+            "previewLabel": "Ushtrimet",
+            "previewKicker": "Grupi i praktikës",
+            "previewTitle": "Fjalët tuaja bëhen ushtrimi",
+            "previewBody": "Puna e memories mbetet e lidhur me atë që vërtet ju intereson të mësoni."
+          },
+          "skills": {
+            "eyebrow": "Aftësitë",
+            "title": "Shkrimi, dëgjimi, të folurit dhe të lexuarit",
+            "body": "Shkoni përtej njohjes. Prodhoni gjuhën, punoni me audio, praktikoni të folurit dhe lexoni me material që i përket hapësirës suaj.",
+            "example": "Shembull: shkruani me fjalorin e javës, pastaj dëgjoni materiale të lidhura dhe flisni nga e njëjta temë.",
+            "previewLabel": "Aftësitë",
+            "previewKicker": "Përdorim aktiv",
+            "previewTitle": "Nga njohja në përdorim",
+            "previewBody": "Fushat kryesore të aftësive janë të disponueshme në çdo plan; kufijtë e përdorimit të AI ndryshojnë sipas planit."
+          },
+          "connected": {
+            "eyebrow": "Lidhjet",
+            "title": "Një cikël në vend të mjeteve të shpërndara",
+            "body": "Ajo që kapni mund të bëhet fjalor. Fjalori mund të bëhet praktikë. Praktika mund të ushqejë shkrimin, dëgjimin dhe të folurit — pa humbur lidhjen.",
+            "example": "Shembull: një copë Kapje bëhet një fjalë, ajo fjalë shfaqet në ushtrime, pastaj shfaqet përsëri në shkrim.",
+            "previewLabel": "Hapësira",
+            "previewKicker": "Mësimi i lidhur",
+            "previewTitle": "Më pak rifillime. Më shumë vazhdimësi.",
+            "previewBody": "Produkti mbetet jashtë rrugës kështu që materiali juaj mund të mbetet në qendër."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Filozofia e mësimit",
+        "title": "Mblidhja e fjalëve nuk është e mjaftueshme.",
+        "lede": "Një listë fjalori pa kuptim, praktikë ose përdorim bëhet një shënim tjetër të braktisur.",
+        "expand": "Notoria ekziston që fjalori, teoria, ushtrimet dhe aftësitë aktive të ndajnë një shtëpi private — pranë librave tuaj, mësuesve dhe mediave, jo në vend të tyre.",
+        "beat": "Materiali juaj i përket në qendër.",
+        "aboutLink": "Rreth Notoria",
+        "storyLink": "Lexoni historinë tonë",
+        "points": {
+          "workspace": "Ndërtoni një hapësirë personale për mësim për një gjuhë në një kohë.",
+          "understand": "Kuptoni konceptet në vend që të memorizoni copëza të izoluar.",
+          "connect": "Lidhni fjalorin, shënimet dhe praktikën në një cikël.",
+          "skills": "Praktikoni shkrimin, dëgjimin, të folurit dhe të lexuarit nga i njëjti material.",
+          "pace": "Mësoni në ritmin tuaj, pa një plan të ngurtë.",
+          "habits": "Kthehuni shpesh dhe ndihmoni vazhdimësinë në vend të sesioneve të shpërndara."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Të fillosh",
+        "title": "Një rrugë e thjeshtë në hapësirë.",
+        "lede": "Nuk keni nevojë të mësoni të gjithë produktin njëherësh. Filloni nga pak, pastaj rritni ciklin.",
+        "expect": "Pas regjistrimit krijoni një hapësirë për gjuhën tuaj të mësimit, pastaj filloni të mbledhni materiale. Udhëzuesi i brendshëm i Fillimit shpjegon çdo fushë kur jeni gati.",
+        "cta": "Krijoni llogarinë tuaj",
+        "secondaryCta": "Lexoni Si të Përdorni",
+        "steps": {
+          "account": {
+            "title": "Krijoni një llogari",
+            "body": "Regjistrohuni dhe hyni në hapësirën tuaj private të mësimit."
+          },
+          "workspace": {
+            "title": "Vendosni një hapësirë",
+            "body": "Jepni studimit tuaj një shtëpi për një gjuhë."
+          },
+          "language": {
+            "title": "Zgjidhni gjuhën tuaj të mësimit",
+            "body": "Çdo hapësirë përqendrohet në gjuhën që po mësoni."
+          },
+          "collect": {
+            "title": "Filloni të mbledhni",
+            "body": "Ruani fjalorin dhe copëzat e Kapjes që kanë rëndësi për ju."
+          },
+          "explore": {
+            "title": "Eksploroni teorinë dhe ushtrimet",
+            "body": "Kthejeni atë që keni ruajtur në kuptim dhe praktikë."
+          },
+          "routine": {
+            "title": "Ndërtoni një rutinë",
+            "body": "Kthehuni, rishikoni, shkruani, dëgjoni, flisni dhe lexoni nga e njëjta vend."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Përgjigje para se të filloni.",
+        "lede": "Pyetje praktike rreth asaj që është Notoria, si funksionon mësimi dhe çfarë ndodh pas regjistrimit.",
+        "supportLink": "Vizitoni Mbështetje për më shumë ndihmë",
+        "groups": {
+          "about": "Rreth Notoria",
+          "features": "Karakteristikat e mësimit",
+          "start": "Të fillosh",
+          "account": "Llogaria dhe disponueshmëria"
+        },
+        "items": {
+          "what": {
+            "q": "Çfarë është saktësisht Notoria?",
+            "a": "Notoria është një hapësirë private për vetë-studim të çdo gjuhe. Ju mbani fjalorin, shënimet, teorinë, ushtrimet, shkrimin, dëgjimin, të folurit dhe të lexuarit në një vend të organizuar sipas gjuhës që po mësoni. Nuk është një platformë shkollore dhe nuk është një bibliotekë kursesh të gatshme."
+          },
+          "onlyVocab": {
+            "q": "A është Notoria vetëm një aplikacion për të mësuar fjalorin?",
+            "a": "Jo. Fjalori është qendror, por Notoria gjithashtu përfshin Kapjen, Teorinë, ushtrime interaktive, shkrim, dëgjim, të folur dhe të lexuar. Qëllimi është të mbani ato fusha të lidhura rreth materialeve tuaja."
+          },
+          "who": {
+            "q": "Për kë është dizajnuar Notoria?",
+            "a": "Mësuesit e pavarur që duan materialet e tyre në qendër të procesit — njerëz që preferojnë të mbledhin atë që ka rëndësi për ta në vend që të ndjekin një plan të ngurtë të dikujt tjetër."
+          },
+          "vsFlashcards": {
+            "q": "Si ndryshon Notoria nga aplikacionet tradicionale të kartave flash?",
+            "a": "Kartat flash janë një modë praktike brenda Notoria. Produkti gjithashtu ruan kuptime dhe shembuj, shënime teorike, copëza Kapje dhe praktikë aftësish në të njëjtën hapësirë, kështu që rishikimi nuk është i izoluar nga kuptimi dhe përdorimi."
+          },
+          "vocabHow": {
+            "q": "Si funksionon menaxhimi i fjalorit?",
+            "a": "Ju ruani fjalë me kuptime, shembuj, etiketa dhe kuptime primare ose sekondare opsionale. Ajo bankë mund të ushqejë ushtrimet dhe rishikimin më vonë në vend që të jetojë në një listë të veçantë që kurrë nuk e rihapni."
+          },
+          "inboxWhy": {
+            "q": "Cili është qëllimi i Learning Inbox (Kapjes)?",
+            "a": "Kapja është pika e shpejtë e hyrjes. Kur vëreni diçka të dobishme por nuk keni kohë për një hyrje të plotë, ruani copëzën dhe procesoni më vonë në fjalor, teori, shkrim ose ushtrime."
+          },
+          "theoryExercises": {
+            "q": "Si funksionojnë së bashku Teoria dhe Ushtrimet?",
+            "a": "Teoria mban shpjegime me fjalët tuaja. Ushtrimet kthejnë fjalorin e ruajtur dhe materialet e lidhura në praktikë. Mund të qëndroni me fjalët dhe ushtrimet e shkurtra për një kohë, pastaj shtoni shënime teorike kur një model ka nevojë për shpjegim."
+          },
+          "skillsSupported": {
+            "q": "Cilat aftësi mësimi mbështeten? A mund të praktikoj shkrimin, dëgjimin, të folurit dhe të lexuarit?",
+            "a": "Po. Shkrimi, dëgjimi, të folurit dhe të lexuarit janë pjesë e hapësirës. Këto fusha janë të disponueshme në çdo plan; kufijtë e përdorimit të AI ndryshojnë sipas planit."
+          },
+          "review": {
+            "q": "Si mund të rishikoj materialet e mbledhura më parë?",
+            "a": "Kthehuni përmes Fjalorit, Teorisë, Ushtrimeve dhe mjeteve të rishikimit të lidhura në hapësirën tuaj. Vazhdimësia është pika: shtoni atë që është e re, rishikoni atë që ishte e vështirë dhe vazhdoni të praktikoni nga materialet që tashmë keni."
+          },
+          "createAccount": {
+            "q": "Si krijoj një llogari?",
+            "a": "Përdorni <signUp>Filloni</signUp> ose <signUp>Regjistrohu</signUp>, pastaj përfundoni regjistrimin. Ju gjithashtu mund të <signIn>identifikoheni</signIn> më vonë nga header-i publik."
+          },
+          "afterSignup": {
+            "q": "Çfarë ndodh pas regjistrimit?",
+            "a": "Ju krijoni një hapësirë mësimi për gjuhën tuaj, pastaj filloni të mbledhni materiale. Një udhëzues në aplikacion <gettingStarted>Si të filloni</gettingStarted> shpjegon çdo fushë pasi të jeni brenda produktit."
+          },
+          "chooseLanguage": {
+            "q": "Si e zgjedh gjuhën time të mësimit?",
+            "a": "Çdo hapësirë është e dedikuar për një gjuhë mësimi. E zgjidhni atë gjuhë kur krijoni hapësirën, kështu që fjalori dhe praktika mbeten të organizuara rreth saj."
+          },
+          "experience": {
+            "q": "A kam nevojë për përvojë të mëparshme mësimi?",
+            "a": "Jo. Notoria nuk kërkon një plan të ngurtë ose përparim të mëparshëm në kurse. Një ditë e mirë e parë mund të jetë një hapësirë dhe një grusht fjalësh që vërtet ju interesojnë."
+          },
+          "languages": {
+            "q": "Cilat gjuhë mbështeten?",
+            "a": "Mund të studioni çdo gjuhë që zgjidhni. Ndërfaqja e produktit është e disponueshme në shumë gjuhë UI; çdo hapësirë përqendrohet në gjuhën që po mësoni."
+          },
+          "devices": {
+            "q": "A mund të aksesoj Notoria në pajisje të ndryshme?",
+            "a": "Po. Notoria është një aplikacion web në <site>notoria.fi</site>, kështu që mund të <signIn>identifikoheni</signIn> nga shfletuesit në pajisjet që tashmë përdorni."
+          },
+          "plans": {
+            "q": "A ka një plan falas?",
+            "a": "Po. Plani falas mbulon thelbësore të mësimit me një shpërblim të përditshëm nga AI. Pro zhbllokon më shumë nga mjetet e AI dhe ekstra të lidhura. Premium shton inteligjencën e mësimit të personalizuar. Ju mund të krahasoni planet në <billing>Faturimin e llogarisë</billing> pasi të <signIn>identifikoheni</signIn>."
+          },
+          "help": {
+            "q": "Si mund të marr ndihmë ose të kontaktoj mbështetje?",
+            "a": "Hapni faqen <support>Mbështetje</support> për pyetje të shpeshta dhe mundësi kontakti. Ju gjithashtu mund të përdorni <contact>Na kontaktoni</contact> për llogari, faturim, privatësi, ose pyetje të përgjithshme."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Bëni mësimin pjesë të jetës suaj të përditshme.",
+        "lede": "Filloni të ndërtoni hapësirën tuaj personale të mësimit me Notoria — private, praktike dhe e përqendruar në materialet tuaja.",
+        "primary": "Filloni",
+        "secondary": "Hyni"
+      },
+      "meta": {
+        "title": "Notoria — Hapësira private për mësimin e gjuhëve",
+        "description": "Mblidhni fjalorin, kuptoni teorinë, praktikoni me ushtrime dhe ndërtoni aftësi gjuhësore të qëndrueshme në një hapësirë personale të lidhur.",
+        "ogDescription": "Ndërtoni një sistem mësimi që rritet me ju — fjalori, teoria, ushtrimet, shkrimi, dëgjimi, të folurit dhe të lexuarit në një vend.",
+        "twitterDescription": "Ndërtoni një sistem mësimi që rritet me ju — fjalori, teoria, ushtrimet dhe praktikën e aftësive në një hapësirë."
       }
     }
   },

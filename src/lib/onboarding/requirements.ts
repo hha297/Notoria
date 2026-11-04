@@ -131,7 +131,7 @@ export function getSuggestedOnboardingActions(
   if (actions.length === 0) {
     actions.push({
       id: "explore-workspace",
-      href: "/",
+      href: "/dashboard",
       titleKey: "actions.exploreWorkspace.title",
       descriptionKey: "actions.exploreWorkspace.description",
     });

@@ -4498,7 +4498,8 @@
           "p3": "Üldiste toe valikute ja tehnilise tagasiside postkasti jaoks vaata <contactPage>Võta ühendust</contactPage> ja <support>Tugi</support>."
         }
       }
-    }
+    },
+    "backToHome": "Tagasi koju"
   },
   "footer": {
     "navLabel": "Saidilingid",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Otsid vastuseid või soovid tagasisidet saata?",
         "link": "Tugi"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Peamine",
+        "howItWorks": "Kuidas see töötab",
+        "features": "Omadused",
+        "faq": "KKK",
+        "about": "Meist",
+        "support": "Tugi",
+        "signIn": "Logi sisse",
+        "getStarted": "Alusta",
+        "openMenu": "Ava menüü",
+        "closeMenu": "Sulge menüü"
+      },
+      "hero": {
+        "headline": "Loo õppesüsteem, mis kasvab koos sinuga.",
+        "description": "Kogu sõnavara, mõista uusi kontseptsioone, harjuta oma oskusi ja muuda see, mida õpid, püsivaks teadmiseks — kõik ühes ühendatud tööruumis.",
+        "supporting": "Notoria on privaatne tööruum, kus saad iseseisvalt õppida igasuguseid keeli. See on üles ehitatud sinu toomisele materjalile — mitte õppetundide kataloogile, mida sa ei ole valinud.",
+        "primaryCta": "Alusta",
+        "secondaryCta": "Uuri, kuidas see töötab"
+      },
+      "preview": {
+        "windowLabel": "Notoria tööruum",
+        "vocabTitle": "Sõnavara",
+        "vocabMeta": "Sõnad, mida hoiad",
+        "theoryTitle": "Teooria",
+        "theoryMeta": "Märkmed, mis jäävad meelde",
+        "practiceTitle": "Harjutamine",
+        "practiceMeta": "Sinu materjalist",
+        "cardKicker": "Sinu tööruum",
+        "cardTitle": "Üks keel. Üks tsükkel.",
+        "cardBody": "Salvesta, mis on oluline, korralda see, seejärel harjuta kirjutamist, kuulamist, rääkimist ja lugemist samast kohast.",
+        "floatVocab": "sõnavara",
+        "floatVocabMeta": "siis · järgmine",
+        "floatTheory": "Osaline",
+        "floatTheoryMeta": "Kui kogused jäävad avatuks",
+        "floatPractice": "Mälukaartide komplekt",
+        "floatPracticeMeta": "12 tähtaega täna"
+      },
+      "workflow": {
+        "kicker": "Kuidas Notoria töötab",
+        "title": "Õppimise tsükkel sinu enda materjali ümber.",
+        "lede": "Notoria ei ole kursuste kataloog. See on privaatne tööruum, kus see, mida sa kogud, muutub harjutamiseks.",
+        "bridge": "Sõnavara, Kogumine, Teooria, Harjutused, Kirjutamine, Kuulamine, Rääkimine ja Lugemine jäävad ühendatuks — nii et sa ei pea iga kord tööriistu vahetades alustama nullist.",
+        "guideLink": "Loe täielikku Kuidas kasutada juhendit",
+        "steps": {
+          "collect": {
+            "title": "Kogu",
+            "body": "Salvesta sõnavara ja õppematerjalid, kui neid kohtad — õppetundidest, raamatutest, meediast ja vestlustest."
+          },
+          "organise": {
+            "title": "Korrasta",
+            "body": "Hoia iga keele jaoks üks struktureeritud kogumik, koos tähenduste, näidete, siltide ja tähendustega, mida saad hiljem uuesti leida."
+          },
+          "understand": {
+            "title": "Mõista",
+            "body": "Kirjuta teooria märkmed oma sõnadega, kui mustri selgitamine on vajalik."
+          },
+          "practise": {
+            "title": "Harjuta",
+            "body": "Muuda see, mida oled salvestanud, mälukaartideks, viktoriinideks, täitmiseks ja muuks."
+          },
+          "apply": {
+            "title": "Rakenda",
+            "body": "Kirjuta, kuula, räägi ja loe, et keel liiguks äratundmisest aktiivsesse kasutusse."
+          },
+          "review": {
+            "title": "Korda",
+            "body": "Naase hiljem, lisa, mis on uus, külastage, mis oli keeruline, ja hoia tsükkel liikumas."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Põhiomadused",
+        "title": "Kõik ühes ühendatud tööruumis.",
+        "lede": "Iga ala on loodud tõeliseks iseseisvaks õppimiseks — mitte isoleeritud tööriistad, millel on ühine sisselogimine.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Sõnavara",
+            "title": "Isiklik sõnavara pank, mis jääb kasulikuks",
+            "body": "Salvesta sõnu koos tähenduste, näidete, kõneosade, siltide ja peamise või teise tähendusega. See, mida sa salvestad, võib hiljem muutuda harjutamiseks.",
+            "example": "Näide: salvesta sitten koos selle järjestuse ja ajamõistega, seejärel harjuta mõlemat samast sissekandest.",
+            "previewLabel": "Sõnavara",
+            "previewKicker": "Sõna detail",
+            "previewTitle": "Tähendused jäävad sõnaga seotud",
+            "previewBody": "Peamised tähendused harjutuste jaoks. Teised tähendused viidatud, kui neid vajad."
+          },
+          "inbox": {
+            "eyebrow": "Kogumine",
+            "title": "Õppimise postkast kiirete märkmete jaoks",
+            "body": "Viska märkmed kiiresti, kui midagi ilmub, seejärel töötle need sõnavaraks, teooriaks, kirjutamiseks või harjutusteks, kui sul on aega.",
+            "example": "Näide: salvesta fraas podcastist, seejärel muuda see sõnavara sissekandeks pärast sõitu.",
+            "previewLabel": "Kogumine",
+            "previewKicker": "Postkast",
+            "previewTitle": "Püüa see nüüd. Korrasta hiljem.",
+            "previewBody": "Hoia hetk, ilma et sunniksid end täielikku sissekannet tegema, kui oled hõivatud."
+          },
+          "theory": {
+            "eyebrow": "Teooria",
+            "title": "Selgitused keele kõrval, mida õpid",
+            "body": "Kirjuta grammatika ja kasutusmärkmid oma sõnadega. Hoia neid samas tööruumis, kus on sõnavara, mida nad selgitavad.",
+            "example": "Näide: lühike märkus osalise juhtumi kohta nimede kõrval, mida sa pidevalt unustad.",
+            "previewLabel": "Teooria",
+            "previewKicker": "Sinu märkus",
+            "previewTitle": "Mustrid kirjutatud sinu sõnades",
+            "previewBody": "Külastage selgitust, kui sama segadus naaseb."
+          },
+          "exercises": {
+            "eyebrow": "Harjutused",
+            "title": "Harjutamine, mis on saadud sinu enda materjalist",
+            "body": "Mälukaardid, valikvastustega, täitmiseks, vasta-tüüpi, paaride sobitamine ja palju muud — loodud sõnadest ja märkmetest, mille oled juba salvestanud.",
+            "example": "Näide: mälukaartide komplekt selle nädala sõnavarast, mitte üldisest komplektist.",
+            "previewLabel": "Harjutused",
+            "previewKicker": "Harjutuste komplekt",
+            "previewTitle": "Sinu sõnad muutuvad harjutuseks",
+            "previewBody": "Mälu töö jääb seotud sellega, mis sulle tegelikult meeldib õppida."
+          },
+          "skills": {
+            "eyebrow": "Oskused",
+            "title": "Kirjutamine, kuulamine, rääkimine ja lugemine",
+            "body": "Liigu äratundmisest kaugemale. Tooda keelt, töötle heli, harjuta rääkimist ja loe materjaliga, mis kuulub sinu tööruumi.",
+            "example": "Näide: kirjuta selle nädala sõnavaraga, seejärel kuula seotud materjali ja räägi sama teema põhjal.",
+            "previewLabel": "Oskused",
+            "previewKicker": "Aktiivne kasutamine",
+            "previewTitle": "Teadmiste muutmine kasutamiseks",
+            "previewBody": "Põhioskuste valdkonnad on saadaval igas plaanis; AI kasutuspiirangud varieeruvad plaani järgi."
+          },
+          "connected": {
+            "eyebrow": "Ühendused",
+            "title": "Üks tsükkel, mitte hajutatud tööriistad",
+            "body": "See, mida sa kogud, võib muutuda sõnavaraks. Sõnavara võib muutuda harjutamiseks. Harjutamine võib toita kirjutamist, kuulamist ja rääkimist — ilma, et niit kaoks.",
+            "example": "Näide: Kogumise märkus muutub sõnaks, see sõna ilmub harjutustes, seejärel näitab see end jälle kirjutamises.",
+            "previewLabel": "Tööruum",
+            "previewKicker": "Ühendatud õppimine",
+            "previewTitle": "Vähem alustamist. Rohkem järjepidevust.",
+            "previewBody": "Toode jääb kõrvale, et sinu materjal saaks jääda keskmesse."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Õppimise filosoofia",
+        "title": "Sõnade kogumine ei ole piisav.",
+        "lede": "Sõnavara loetelu ilma arusaamise, harjutamise või kasutamiseta muutub veel üheks hüljatud märkuseks.",
+        "expand": "Notoria eksisteerib, et sõnavara, teooria, harjutused ja aktiivsed oskused saaksid jagada ühte privaatset kodu — sinu raamatute, õpetajate ja meedia kõrval, mitte nende asemel.",
+        "beat": "Sinu materjal kuulub keskmesse.",
+        "aboutLink": "Meist Notoria",
+        "storyLink": "Loe meie lugu",
+        "points": {
+          "workspace": "Loo isiklik õppimise tööruum ühe keele jaoks korraga.",
+          "understand": "Mõista kontseptsioone, mitte meelde jätta isoleeritud märkmeid.",
+          "connect": "Ühenda sõnavara, märkmed ja harjutused ühte tsüklisse.",
+          "skills": "Harjuta kirjutamist, kuulamist, rääkimist ja lugemist samast materjalist.",
+          "pace": "Õpi oma tempos, ilma fikseeritud õppekavata.",
+          "habits": "Naase sageli ja loo järjepidevus, mitte hajutatud sessioonid."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Alustamine",
+        "title": "Lihtne tee tööruumi.",
+        "lede": "Sa ei pea kogu toodet korraga õppima. Alusta väikselt, seejärel kasvata tsüklit.",
+        "expect": "Pärast registreerimist lood oma õppimise keele jaoks tööruumi, seejärel alusta materjali kogumist. Rakenduses olev Kuidas alustada juhend tutvustab iga ala, kui oled valmis.",
+        "cta": "Loo oma konto",
+        "secondaryCta": "Loe Kuidas kasutada",
+        "steps": {
+          "account": {
+            "title": "Loo konto",
+            "body": "Registreeru ja siseneda oma privaatsetesse õppimisruumidesse."
+          },
+          "workspace": {
+            "title": "Seadista tööruum",
+            "body": "Anna oma õppele kodu ühe keele jaoks."
+          },
+          "language": {
+            "title": "Vali oma õppimise keel",
+            "body": "Iga tööruum keskendub keelele, mida õpid."
+          },
+          "collect": {
+            "title": "Alusta kogumist",
+            "body": "Salvesta sõnavara ja Kogumise märkmed, mis on sulle olulised."
+          },
+          "explore": {
+            "title": "Uuri teooriat ja harjutusi",
+            "body": "Muuda see, mida oled salvestanud, arusaamiseks ja harjutamiseks."
+          },
+          "routine": {
+            "title": "Loo rutiin",
+            "body": "Naase, korda, kirjuta, kuula, räägi ja loe samast kohast."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "KKK",
+        "title": "Küsimused enne alustamist.",
+        "lede": "Praktilised küsimused selle kohta, mis on Notoria, kuidas õppimine töötab ja mis juhtub pärast registreerimist.",
+        "supportLink": "Külastage tuge, et saada rohkem abi",
+        "groups": {
+          "about": "Meist Notoria",
+          "features": "Õppimise omadused",
+          "start": "Alustamine",
+          "account": "Konto ja kättesaadavus"
+        },
+        "items": {
+          "what": {
+            "q": "Mis täpselt on Notoria?",
+            "a": "Notoria on privaatne tööruum, kus saad iseseisvalt õppida igasuguseid keeli. Sa hoiad sõnavara, märkmed, teooria, harjutused, kirjutamise, kuulamise, rääkimise ja lugemise ühes kohas, mis on korraldatud sinu õppimise keele järgi. See ei ole kooli platvorm ega valmis kursuste raamatukogu."
+          },
+          "onlyVocab": {
+            "q": "Kas Notoria on ainult sõnavara õppimise rakendus?",
+            "a": "Ei. Sõnavara on keskne, kuid Notoria sisaldab ka Kogumist, Teooriat, interaktiivseid harjutusi, kirjutamist, kuulamist, rääkimist ja lugemist. Punkt on hoida need valdkonnad ühendatuna sinu enda materjali ümber."
+          },
+          "who": {
+            "q": "Kellele on Notoria mõeldud?",
+            "a": "Iseseisvatele õppijatele, kes soovivad, et nende enda materjal oleks protsessi keskmes — inimestele, kes eelistavad koguda seda, mis neile oluline, mitte järgida kellegi teise fikseeritud õppekava."
+          },
+          "vsFlashcards": {
+            "q": "Kuidas erineb Notoria traditsioonilistest mälukaartide rakendustest?",
+            "a": "Mälukaardid on üks harjutamise režiim Notorias. Toode salvestab ka tähendused ja näited, teooria märkmed, Kogumise märkmed ja oskuste harjutused samas tööruumis, nii et ülevaatus ei ole eraldatud arusaamisest ja kasutamisest."
+          },
+          "vocabHow": {
+            "q": "Kuidas töötab sõnavara haldamine?",
+            "a": "Sa salvestad sõnu koos tähenduste, näidete, siltide ja valikuliste peamiste või teise tähendusega. See pank võib seejärel toita harjutusi ja hilisemaid ülevaatusi, mitte elada eraldi loendis, mida sa kunagi ei ava."
+          },
+          "inboxWhy": {
+            "q": "Mis on Õppimise Postkasti (Kogumine) eesmärk?",
+            "a": "Kogumine on kiire sissepääs. Kui märkad midagi kasulikku, kuid sul ei ole aega täieliku sissekande jaoks, salvestad sa märgi ja töötled selle hiljem sõnavaraks, teooriaks, kirjutamiseks või harjutusteks."
+          },
+          "theoryExercises": {
+            "q": "Kuidas töötavad Teooria ja Harjutused koos?",
+            "a": "Teooria sisaldab selgitusi sinu enda sõnadega. Harjutused muudavad salvestatud sõnavara ja seotud materjali harjutamiseks. Sa saad jääda sõnade ja lühikeste harjutuste juurde mõneks ajaks, seejärel lisada teooria märkmeid, kui muster vajab selgitamist."
+          },
+          "skillsSupported": {
+            "q": "Milliseid õppimisoskusi toetatakse? Kas ma saan harjutada kirjutamist, kuulamist, rääkimist ja lugemist?",
+            "a": "Jah. Kirjutamine, kuulamine, rääkimine ja lugemine on osa tööruumist. Need valdkonnad on saadaval igas plaanis; AI kasutuspiirangud varieeruvad plaani järgi."
+          },
+          "review": {
+            "q": "Kuidas ma saan varem kogutud materjali üle vaadata?",
+            "a": "Naase Sõnavara, Teooria, Harjutuste ja seotud ülevaatustööriistade kaudu oma tööruumis. Järjepidevus on oluline: lisa, mis on uus, külastage, mis oli keeruline, ja hoia harjutamine materjalist, mis sul juba on."
+          },
+          "createAccount": {
+            "q": "Kuidas ma saan konto luua?",
+            "a": "Kasutage <signUp>Alustamiseks</signUp> või <signUp>Registreeru</signUp>, seejärel lõpetage registreerimine. Saate hiljem ka <signIn>sisse logida</signIn> avalikust päisest."
+          },
+          "afterSignup": {
+            "q": "Mis juhtub pärast registreerimist?",
+            "a": "Seate oma keele jaoks õppimisruumi, seejärel alustate materjali kogumist. Rakendusesiseses <gettingStarted>Alustamiseks</gettingStarted> juhendis selgitatakse iga ala, kui olete toote sees."
+          },
+          "chooseLanguage": {
+            "q": "Kuidas ma saan valida oma õppimise keele?",
+            "a": "Iga tööruum on pühendatud ühele õppimise keelele. Sa valid selle keele, kui lood tööruumi, nii et sõnavara ja harjutamine jäävad selle ümber korraldatuks."
+          },
+          "experience": {
+            "q": "Kas mul on vaja eelnevat õppimiskogemust?",
+            "a": "Ei. Notoria ei nõua fikseeritud õppekava ega eelnevat kursuse edenemist. Hea esimene päev võib olla tööruum ja käputäis sõnu, mis sulle tõeliselt meeldivad."
+          },
+          "languages": {
+            "q": "Milliseid keeli toetatakse?",
+            "a": "Sa saad õppida igasuguseid keeli, mida valid. Toote liides on saadaval paljudes kasutajaliidese keeltes; iga tööruum keskendub keelele, mida õpid."
+          },
+          "devices": {
+            "q": "Kas ma saan Notoria kasutada erinevates seadmetes?",
+            "a": "Jah. Notoria on veebirakendus aadressil <site>notoria.fi</site>, seega saate <signIn>sisse logida</signIn> seadmete brauseritest, mida juba kasutate."
+          },
+          "plans": {
+            "q": "Kas on tasuta plaan?",
+            "a": "Jah. Tasuta katab põhivajadused õppimiseks koos igapäevase AI toetusega. Pro avab rohkem AI tööriistu ja seotud lisasid. Premium lisab isikupärastatud õppimise intelligentsi. Saate võrrelda plaane <billing>Konto arveldamine</billing> jaotises pärast seda, kui <signIn>sisse logite</signIn>."
+          },
+          "help": {
+            "q": "Kuidas ma saan abi või kontakteeruda toega?",
+            "a": "Avage <support>Toe</support> leht KKK-de ja kontaktvõimaluste jaoks. Samuti saate kasutada <contact>Võtke meiega ühendust</contact> konto, arveldamise, privaatsuse või üldiste küsimuste jaoks."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Muuda õppimine osaks oma igapäevaelust.",
+        "lede": "Alusta oma isikliku õppimise tööruumi loomist Notoria abil — privaatne, praktiline ja keskendunud sinu enda materjalile.",
+        "primary": "Alusta",
+        "secondary": "Logi sisse"
+      },
+      "meta": {
+        "title": "Notoria — Privaatne keeleõppe tööruum",
+        "description": "Kogu sõnavara, mõista teooriat, harjuta harjutustega ja ehita püsivaid keeleoskusi ühes ühendatud isiklikus tööruumis.",
+        "ogDescription": "Loo õppesüsteem, mis kasvab koos sinuga — sõnavara, teooria, harjutused, kirjutamine, kuulamine, rääkimine ja lugemine ühes kohas.",
+        "twitterDescription": "Loo õppesüsteem, mis kasvab koos sinuga — sõnavara, teooria, harjutused ja oskuste harjutamine ühes tööruumis."
       }
     }
   },

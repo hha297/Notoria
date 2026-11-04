@@ -178,9 +178,11 @@ export function readRememberCookie(
 /**
  * Keep sign-in return paths on this origin. Includes the query string.
  * Rejects protocol-relative and absolute URLs.
+ * Missing/invalid values fall back to the authenticated app home.
  */
 export function safeLocalCallback(value: string | null | undefined): string {
-  if (!value) return "/";
+  const fallback = "/dashboard";
+  if (!value) return fallback;
   const trimmed = value.trim();
   if (
     !trimmed.startsWith("/") ||
@@ -188,15 +190,15 @@ export function safeLocalCallback(value: string | null | undefined): string {
     trimmed.includes("\\") ||
     trimmed.includes("\0")
   ) {
-    return "/";
+    return fallback;
   }
   try {
     const url = new URL(trimmed, "https://notoria.local");
-    if (url.origin !== "https://notoria.local") return "/";
-    if (url.username || url.password) return "/";
+    if (url.origin !== "https://notoria.local") return fallback;
+    if (url.username || url.password) return fallback;
     return `${url.pathname}${url.search}${url.hash}`;
   } catch {
-    return "/";
+    return fallback;
   }
 }
 

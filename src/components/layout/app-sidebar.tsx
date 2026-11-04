@@ -44,7 +44,7 @@ import { prefetchDashboardDestination } from "@/lib/query/prefetch";
 import { cn } from "@/lib/utils";
 
 const navItems = [
-  { titleKey: "dashboard", href: "/", icon: Home },
+  { titleKey: "dashboard", href: "/dashboard", icon: Home },
   { titleKey: "vocabulary", href: "/vocabulary", icon: Languages },
   { titleKey: "theory", href: "/theory", icon: BookOpen },
   { titleKey: "exercises", href: "/exercises", icon: Dumbbell },
@@ -111,7 +111,7 @@ export function AppSidebar({
     >
       <SidebarHeader className="border-b border-sidebar-border px-3 py-3 pb-2">
         <Link
-          href="/"
+          href="/dashboard"
           onClick={closeMobileSidebar}
           onPointerEnter={() => prefetchItem("/")}
           onFocus={() => prefetchItem("/")}
@@ -143,8 +143,8 @@ export function AppSidebar({
                 );
                 const isActive =
                   !locked &&
-                  (item.href === "/"
-                    ? activePath === "/"
+                  (item.href === "/dashboard"
+                    ? activePath === "/dashboard"
                     : activePath.startsWith(item.href));
                 return (
                   <SidebarMenuItem key={item.titleKey} className="py-0.5">

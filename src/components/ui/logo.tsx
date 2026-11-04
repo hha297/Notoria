@@ -56,7 +56,7 @@ export function LogoWordmark({
   return (
     <span
       className={cn(
-        "font-heading text-lg font-bold tracking-tight",
+        "font-heading inline-flex items-center text-[1.5rem] font-bold leading-none tracking-[-0.03em]",
         tone === "sidebar" ? "text-sidebar-foreground" : "text-ink",
         className,
       )}

@@ -4498,7 +4498,8 @@
           "p3": "För allmänna supportalternativ och den tekniska inkorgen för feedback, se <contactPage>Kontakta oss</contactPage> och <support>Support</support>."
         }
       }
-    }
+    },
+    "backToHome": "Tillbaka till startsidan"
   },
   "footer": {
     "navLabel": "Webbplatslänkar",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Letar du efter svar eller vill skicka feedback?",
         "link": "Support"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primär",
+        "howItWorks": "Hur det fungerar",
+        "features": "Funktioner",
+        "faq": "FAQ",
+        "about": "Om",
+        "support": "Support",
+        "signIn": "Logga in",
+        "getStarted": "Kom igång",
+        "openMenu": "Öppna meny",
+        "closeMenu": "Stäng meny"
+      },
+      "hero": {
+        "headline": "Bygg ett lärande system som växer med dig.",
+        "description": "Samla ordförråd, förstå nya koncept, öva dina färdigheter och omvandla det du lär dig till bestående kunskap – allt i en sammanlänkad arbetsyta.",
+        "supporting": "Notoria är en privat arbetsyta för självstudier av vilket språk som helst. Den är byggd kring det material du tar med dig – inte en katalog av lektioner du inte valt.",
+        "primaryCta": "Kom igång",
+        "secondaryCta": "Utforska hur det fungerar"
+      },
+      "preview": {
+        "windowLabel": "Notoria arbetsyta",
+        "vocabTitle": "Ordförråd",
+        "vocabMeta": "Ord du behåller",
+        "theoryTitle": "Teori",
+        "theoryMeta": "Anteckningar som fastnar",
+        "practiceTitle": "Övning",
+        "practiceMeta": "Från ditt material",
+        "cardKicker": "Din arbetsyta",
+        "cardTitle": "Ett språk. En loop.",
+        "cardBody": "Spara det som är viktigt, organisera det, och öva skrivande, lyssnande, talande och läsande från samma plats.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "då · nästa",
+        "floatTheory": "Partitiv",
+        "floatTheoryMeta": "När mängder förblir öppna",
+        "floatPractice": "Flashkortset",
+        "floatPracticeMeta": "12 förfallna idag"
+      },
+      "workflow": {
+        "kicker": "Hur Notoria fungerar",
+        "title": "En lärande loop kring ditt eget material.",
+        "lede": "Notoria är inte en kurskatalog. Det är en privat arbetsyta där det du samlar blir det du övar.",
+        "bridge": "Ordförråd, Fånga, Teori, Övningar, Skrivande, Lyssnande, Talande och Läsande förblir sammanlänkade – så du behöver inte börja om varje gång du byter verktyg.",
+        "guideLink": "Läs hela guiden för hur du använder",
+        "steps": {
+          "collect": {
+            "title": "Samla",
+            "body": "Spara ordförråd och lärande fragment när du möter dem – från lektioner, böcker, media och samtal."
+          },
+          "organise": {
+            "title": "Organisera",
+            "body": "Håll en strukturerad samling per språk, med betydelser, exempel, taggar och sinnen som du kan hitta igen."
+          },
+          "understand": {
+            "title": "Förstå",
+            "body": "Skriv teorianteckningar med dina egna ord när ett mönster behöver förklaras."
+          },
+          "practise": {
+            "title": "Öva",
+            "body": "Omvandla det du sparat till flashkort, quiz, fyll i luckor och mer."
+          },
+          "apply": {
+            "title": "Tillämpa",
+            "body": "Skriv, lyssna, tala och läs så att språket går bortom igenkänning till aktiv användning."
+          },
+          "review": {
+            "title": "Granska",
+            "body": "Återkom senare, lägg till det som är nytt, återbesök det som var svårt, och håll loopen igång."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Kärnfunktioner",
+        "title": "Allt i en sammanlänkad arbetsyta.",
+        "lede": "Varje område är byggt för verkliga självstudier – inte isolerade verktyg med en gemensam inloggning.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Ordförråd",
+            "title": "En personlig ordförrådsbank som förblir användbar",
+            "body": "Lagra ord med betydelser, exempel, ordklass, taggar och primära eller sekundära sinnen. Det du sparar kan bli övning senare.",
+            "example": "Exempel: spara sitten med dess sekvensbetydelse och tidsbetydelse, och öva sedan båda från samma post.",
+            "previewLabel": "Ordförråd",
+            "previewKicker": "Orddetalj",
+            "previewTitle": "Betydelser förblir kopplade till ordet",
+            "previewBody": "Primära sinnen för övningar. Sekundära sinnen för referens när du behöver dem."
+          },
+          "inbox": {
+            "eyebrow": "Fånga",
+            "title": "En lärande inkorg för snabba fragment",
+            "body": "Släpp anteckningar snabbt när något dyker upp, och bearbeta dem sedan till ordförråd, teori, skrivande eller övningar när du har tid.",
+            "example": "Exempel: fånga en fras från en podcast, och omvandla den sedan till en ordförrådspost efter pendlingen.",
+            "previewLabel": "Fånga",
+            "previewKicker": "Inkorg",
+            "previewTitle": "Fånga det nu. Organisera senare.",
+            "previewBody": "Behåll ögonblicket utan att tvinga fram en fullständig post när du är upptagen."
+          },
+          "theory": {
+            "eyebrow": "Teori",
+            "title": "Förklaringar bredvid språket du lär dig",
+            "body": "Skriv grammatik- och användningsanteckningar med dina egna ord. Håll dem i samma arbetsyta som ordförrådet de förklarar.",
+            "example": "Exempel: en kort anteckning om den partitiva formen bredvid de substantiv du ständigt glömmer.",
+            "previewLabel": "Teori",
+            "previewKicker": "Din anteckning",
+            "previewTitle": "Mönster skrivna med dina ord",
+            "previewBody": "Återbesök förklaringen när samma förvirring återkommer."
+          },
+          "exercises": {
+            "eyebrow": "Övningar",
+            "title": "Övning hämtad från ditt eget material",
+            "body": "Flashkort, flervalsfrågor, fyll i luckor, skriv-svaret, matcha par, och mer – byggt från de ord och anteckningar du redan sparat.",
+            "example": "Exempel: ett flashkortset från denna veckas ordförråd istället för en generell kortlek.",
+            "previewLabel": "Övningar",
+            "previewKicker": "Övningsset",
+            "previewTitle": "Dina ord blir drillarna",
+            "previewBody": "Minnesarbete förblir kopplat till det du faktiskt bryr dig om att lära dig."
+          },
+          "skills": {
+            "eyebrow": "Färdigheter",
+            "title": "Skrivande, lyssnande, talande och läsande",
+            "body": "Gå bortom igenkänning. Producera språk, arbeta med ljud, öva talande och läs med material som tillhör din arbetsyta.",
+            "example": "Exempel: skriv med veckans ordförråd, lyssna på relaterat material och tala från samma tema.",
+            "previewLabel": "Färdigheter",
+            "previewKicker": "Aktiv användning",
+            "previewTitle": "Från att veta till att använda",
+            "previewBody": "Kärnområden för färdigheter finns tillgängliga i varje plan; AI-användningsgränser varierar beroende på plan."
+          },
+          "connected": {
+            "eyebrow": "Anslutningar",
+            "title": "En loop istället för spridda verktyg",
+            "body": "Det du fångar kan bli ordförråd. Ordförråd kan bli övning. Övning kan mata skrivande, lyssnande och talande – utan att tappa tråden.",
+            "example": "Exempel: ett fångat fragment blir ett ord, det ordet dyker upp i övningar, och visar sig sedan igen i skrivande.",
+            "previewLabel": "Arbetsyta",
+            "previewKicker": "Sammanlänkat lärande",
+            "previewTitle": "Mindre omstart. Mer kontinuitet.",
+            "previewBody": "Produkten håller sig ur vägen så att ditt material kan förbli i centrum."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Lärande filosofi",
+        "title": "Att samla ord är inte tillräckligt.",
+        "lede": "En lista med ordförråd utan förståelse, övning eller användning blir en annan övergiven anteckning.",
+        "expand": "Notoria finns så att ordförråd, teori, övningar och aktiva färdigheter kan dela ett privat hem – bredvid dina böcker, lärare och media, inte istället för dem.",
+        "beat": "Ditt material hör hemma i centrum.",
+        "aboutLink": "Om Notoria",
+        "storyLink": "Läs vår historia",
+        "points": {
+          "workspace": "Bygg en personlig lärande arbetsyta för ett språk i taget.",
+          "understand": "Förstå koncept istället för att memorera isolerade fragment.",
+          "connect": "Koppla ordförråd, anteckningar och övning till en loop.",
+          "skills": "Öva skrivande, lyssnande, talande och läsande från samma material.",
+          "pace": "Lär i din egen takt, utan en fast läroplan.",
+          "habits": "Återkom ofta och bygg kontinuitet istället för spridda sessioner."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Kom igång",
+        "title": "En enkel väg in i arbetsytan.",
+        "lede": "Du behöver inte lära dig hela produkten på en gång. Börja smått, och väx sedan loopen.",
+        "expect": "Efter registreringen skapar du en arbetsyta för ditt lärande språk, och börjar samla material. Guiden för att komma igång i appen går igenom varje område när du är redo.",
+        "cta": "Skapa ditt konto",
+        "secondaryCta": "Läs hur du använder",
+        "steps": {
+          "account": {
+            "title": "Skapa ett konto",
+            "body": "Registrera dig och gå in i ditt privata lärande utrymme."
+          },
+          "workspace": {
+            "title": "Ställ in en arbetsyta",
+            "body": "Ge din studie ett hem för ett språk."
+          },
+          "language": {
+            "title": "Välj ditt lärande språk",
+            "body": "Varje arbetsyta fokuserar på det språk du lär dig."
+          },
+          "collect": {
+            "title": "Börja samla",
+            "body": "Spara ordförråd och fånga fragment som betyder något för dig."
+          },
+          "explore": {
+            "title": "Utforska teori och övningar",
+            "body": "Omvandla det du sparat till förståelse och övning."
+          },
+          "routine": {
+            "title": "Bygg en rutin",
+            "body": "Återkom, granska, skriv, lyssna, tala och läs från samma plats."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Svar innan du börjar.",
+        "lede": "Praktiska frågor om vad Notoria är, hur lärande fungerar, och vad som händer efter att du registrerat dig.",
+        "supportLink": "Besök supporten för mer hjälp",
+        "groups": {
+          "about": "Om Notoria",
+          "features": "Lärande funktioner",
+          "start": "Kom igång",
+          "account": "Konto och tillgänglighet"
+        },
+        "items": {
+          "what": {
+            "q": "Vad exakt är Notoria?",
+            "a": "Notoria är en privat arbetsyta för självstudier av vilket språk som helst. Du behåller ordförråd, anteckningar, teori, övningar, skrivande, lyssnande, talande och läsande på ett ställe organiserat efter det språk du lär dig. Det är inte en skolplattform och inte ett bibliotek av färdiga kurser."
+          },
+          "onlyVocab": {
+            "q": "Är Notoria bara en applikation för att lära sig ordförråd?",
+            "a": "Nej. Ordförråd är centralt, men Notoria inkluderar också Fånga, Teori, interaktiva övningar, skrivande, lyssnande, talande och läsande. Poängen är att hålla dessa områden kopplade kring ditt eget material."
+          },
+          "who": {
+            "q": "Vem är Notoria designad för?",
+            "a": "Självständiga inlärare som vill ha sitt eget material i centrum av processen – personer som föredrar att samla det som betyder något för dem istället för att följa någon annans fasta läroplan."
+          },
+          "vsFlashcards": {
+            "q": "Hur skiljer sig Notoria från traditionella flashkortapplikationer?",
+            "a": "Flashkort är en övningsmetod inom Notoria. Produkten lagrar också betydelser och exempel, teorianteckningar, fångade fragment och färdighetsövningar i samma arbetsyta, så att granskning inte är isolerad från förståelse och användning."
+          },
+          "vocabHow": {
+            "q": "Hur fungerar hantering av ordförråd?",
+            "a": "Du sparar ord med betydelser, exempel, taggar och valfria primära eller sekundära sinnen. Den banken kan sedan mata övningar och senare granskning istället för att leva i en separat lista som du aldrig öppnar igen."
+          },
+          "inboxWhy": {
+            "q": "Vad är syftet med Lärande Inkorgen (Fånga)?",
+            "a": "Fånga är den snabba ingångspunkten. När du märker något användbart men inte har tid för en fullständig post, sparar du fragmentet och bearbetar det senare till ordförråd, teori, skrivande eller övningar."
+          },
+          "theoryExercises": {
+            "q": "Hur fungerar Teori och Övningar tillsammans?",
+            "a": "Teori innehåller förklaringar med dina egna ord. Övningar omvandlar sparat ordförråd och relaterat material till övning. Du kan stanna kvar med ord och korta drillar ett tag, och sedan lägga till teorianteckningar när ett mönster behöver förklaras."
+          },
+          "skillsSupported": {
+            "q": "Vilka lärande färdigheter stöds? Kan jag öva skrivande, lyssnande, talande och läsande?",
+            "a": "Ja. Skrivande, lyssnande, talande och läsande är en del av arbetsytan. Dessa områden finns tillgängliga i varje plan; AI-användningsgränser varierar beroende på plan."
+          },
+          "review": {
+            "q": "Hur kan jag granska tidigare insamlat material?",
+            "a": "Återkom genom Ordförråd, Teori, Övningar och relaterade granskningsverktyg i din arbetsyta. Kontinuitet är poängen: lägg till det som är nytt, återbesök det som var svårt, och fortsätt öva med material du redan äger."
+          },
+          "createAccount": {
+            "q": "Hur skapar jag ett konto?",
+            "a": "Använd <signUp>Börja här</signUp> eller <signUp>Registrera dig</signUp>, och slutför registreringen. Du kan också <signIn>logga in</signIn> senare från den offentliga menyn."
+          },
+          "afterSignup": {
+            "q": "Vad händer efter registreringen?",
+            "a": "Du sätter upp ett lärande arbetsutrymme för ditt språk, och börjar sedan samla material. En in-app <gettingStarted>Kom igång</gettingStarted> guide förklarar varje område när du är inne i produkten."
+          },
+          "chooseLanguage": {
+            "q": "Hur väljer jag mitt lärande språk?",
+            "a": "Varje arbetsyta är dedikerad till ett lärande språk. Du väljer det språket när du skapar arbetsytan, så att ordförråd och övning förblir organiserade kring det."
+          },
+          "experience": {
+            "q": "Behöver jag tidigare lärande erfarenhet?",
+            "a": "Nej. Notoria kräver ingen fast läroplan eller tidigare kursframsteg. En bra första dag kan vara en arbetsyta och en handfull ord som du faktiskt bryr dig om."
+          },
+          "languages": {
+            "q": "Vilka språk stöds?",
+            "a": "Du kan studera vilket språk du väljer. Produktgränssnittet finns på många UI-språk; varje arbetsyta fokuserar på det språk du lär dig."
+          },
+          "devices": {
+            "q": "Kan jag få tillgång till Notoria på olika enheter?",
+            "a": "Ja. Notoria är en webbapplikation på <site>notoria.fi</site>, så du kan <signIn>logga in</signIn> från webbläsare på de enheter du redan använder."
+          },
+          "plans": {
+            "q": "Finns det en gratis plan?",
+            "a": "Ja. Gratis täcker grundläggande lärande med en daglig AI-avgift. Pro låser upp mer av AI-verktygen och relaterade tillägg. Premium lägger till personlig lärandeintelligens. Du kan jämföra planer i <billing>Kontobetalning</billing> efter att du <signIn>loggar in</signIn>."
+          },
+          "help": {
+            "q": "Hur kan jag få hjälp eller kontakta support?",
+            "a": "Öppna <support>Support</support> sidan för vanliga frågor och kontaktalternativ. Du kan också använda <contact>Kontakta oss</contact> för frågor om konto, betalning, integritet eller allmänna frågor."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Gör lärande till en del av ditt vardagsliv.",
+        "lede": "Börja bygga din personliga lärande arbetsyta med Notoria – privat, praktisk och centrerad kring ditt eget material.",
+        "primary": "Kom igång",
+        "secondary": "Logga in"
+      },
+      "meta": {
+        "title": "Notoria – Privat språk lärande arbetsyta",
+        "description": "Samla ordförråd, förstå teori, öva med övningar och bygg bestående språkkunskaper i en sammanlänkad personlig arbetsyta.",
+        "ogDescription": "Bygg ett lärande system som växer med dig – ordförråd, teori, övningar, skrivande, lyssnande, talande och läsande på ett ställe.",
+        "twitterDescription": "Bygg ett lärande system som växer med dig – ordförråd, teori, övningar och färdighetsövning i en arbetsyta."
       }
     }
   },

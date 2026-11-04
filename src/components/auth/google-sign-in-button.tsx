@@ -51,7 +51,7 @@ type GoogleSignInButtonProps = {
  * and are redirected to shared learning-language onboarding.
  */
 export function GoogleSignInButton({
-  callbackUrl = "/",
+  callbackUrl = "/dashboard",
   disabled = false,
   remember = false,
 }: GoogleSignInButtonProps) {
@@ -110,7 +110,7 @@ export function AuthOAuthDivider() {
 export function AuthGoogleSection({
   enabled,
   disabled = false,
-  callbackUrl = "/",
+  callbackUrl = "/dashboard",
   remember = false,
 }: {
   enabled: boolean;

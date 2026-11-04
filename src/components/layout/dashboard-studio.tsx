@@ -23,7 +23,7 @@ import { exerciseDetailSlugFromPath } from "@/lib/exercise-accents";
 import { cn } from "@/lib/utils";
 
 function studioSceneFromPath(pathname: string) {
-  if (pathname === "/") return "home";
+  if (pathname === "/dashboard") return "home";
   if (pathname === "/tag" || pathname.startsWith("/tag/")) return "tags";
   if (pathname.startsWith("/vocabulary")) return "vocabulary";
   if (pathname.startsWith("/inbox")) return "inbox";
