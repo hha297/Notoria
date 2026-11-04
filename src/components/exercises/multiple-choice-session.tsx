@@ -1,8 +1,8 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
@@ -30,11 +30,13 @@ import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferen
 import { cn } from "@/lib/utils";
 import { isValidLocale } from "@/i18n/config";
 import { requestContextualExerciseAi } from "@/lib/exercises/contextual-ai-client";
+import { requestVocabularyMeaningHints } from "@/lib/exercises/hint-generation-client";
 import {
   deleteExerciseDraft,
   loadExerciseDraft,
   saveExerciseDraft,
 } from "@/lib/exercises/ai-draft-client";
+import { uiLocaleEnglishName } from "@/lib/i18n/ui-locales";
 import {
   CONTEXTUAL_AI_BATCH,
   CONTEXTUAL_DISTRACTOR_POOL_MAX,
@@ -96,6 +98,10 @@ export function MultipleChoiceSession({
     useState<MultipleChoiceStudyMode>("word-to-meaning");
   const [questions, setQuestions] = useState<MultipleChoiceQuestion[]>([]);
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
+  /** False until the first system deck is built (avoids empty-state flash). */
+  const [deckSettled, setDeckSettled] = useState(false);
+  const hintEnrichmentGeneration = useRef(0);
+  const tCommon = useTranslations("common");
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const { difficulty, setDifficulty } = useExerciseDifficulty("multiple_choice");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
@@ -193,6 +199,7 @@ export function MultipleChoiceSession({
   });
 
   const startDeterministicSession = useCallback(() => {
+    setDeckSettled(false);
     const prefs = commitAndBeginNext();
     const built = sampleSessionItems(
       buildMultipleChoiceQuestions(
@@ -207,25 +214,69 @@ export function MultipleChoiceSession({
         softPreferWordIds: prefs.softPreferWordIds,
       },
     );
+
+    // System deck — show immediately. Never clear to [] while waiting on hints.
     setQuestions(built);
     setActiveIds(null);
     resetAttempt();
     resetProcessing();
+    setDeckSettled(true);
     afterNewSet();
+
+    if (built.length === 0) return;
+
+    const generation = ++hintEnrichmentGeneration.current;
+    const locale = isValidLocale(uiLocale) ? uiLocale : "en";
+
+    // Optional hint enrichment in the background (does not gate the UI).
+    void requestVocabularyMeaningHints({
+      explanationLanguage: uiLocaleEnglishName(locale),
+      difficulty,
+      questions: built.map((question) => ({
+        id: question.id,
+        direction:
+          question.direction === "MEANING_TO_WORD"
+            ? "MEANING_TO_WORD"
+            : "WORD_TO_MEANING",
+        prompt: question.prompt,
+        options: question.options,
+        correctOption: question.correctOption,
+        partOfSpeech: question.partOfSpeech,
+        targetWord: question.baseWord ?? null,
+      })),
+    })
+      .then((result) => {
+        if (generation !== hintEnrichmentGeneration.current) return;
+        if (!result.ok || result.items.length === 0) return;
+        const byId = new Map(result.items.map((item) => [item.id, item.hints]));
+        setQuestions((current) =>
+          current.map((question) => {
+            const hints = byId.get(question.id);
+            if (!hints || hints.length === 0) return question;
+            return { ...question, hints };
+          }),
+        );
+      })
+      .catch(() => {
+        /* local hints already on the deck */
+      });
   }, [
     afterNewSet,
     commitAndBeginNext,
     createdAtByWordId,
+    difficulty,
     filteredWords,
     resetAttempt,
     resetProcessing,
     studyMode,
+    uiLocale,
   ]);
 
   const startContextualSession = useCallback(async () => {
     if (filteredWords.length < 2) return;
 
     const mayRestore = questions.length === 0;
+    hintEnrichmentGeneration.current += 1;
 
     const prefs = commitAndBeginNext();
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
@@ -461,7 +512,7 @@ export function MultipleChoiceSession({
             const baseWord = (exercise as { baseWord?: unknown }).baseWord;
             return typeof baseWord !== "string" ||
               baseWord.trim().toLocaleLowerCase() ===
-                byId.get(exercise.wordId)!.word.trim().toLocaleLowerCase();
+              byId.get(exercise.wordId)!.word.trim().toLocaleLowerCase();
           })
           .map((exercise, index) =>
             contextualExerciseToQuestion(
@@ -496,21 +547,16 @@ export function MultipleChoiceSession({
   // Contextual waits for an explicit Generate click so the learner can edit
   // additional instructions first.
   useEffect(() => {
-    let cancelled = false;
-    void Promise.resolve().then(() => {
-      if (cancelled) return;
-      if (isContextual) {
-        setQuestions([]);
-        setActiveIds(null);
-        resetAttempt();
-        resetProcessing();
-        return;
-      }
-      startDeterministicSession();
-    });
-    return () => {
-      cancelled = true;
-    };
+    if (isContextual) {
+      setQuestions([]);
+      setActiveIds(null);
+      setDeckSettled(true);
+      resetAttempt();
+      resetProcessing();
+      return;
+    }
+    setDeckSettled(false);
+    startDeterministicSession();
     // intentionally omit session starters from deps
     // eslint-disable-next-line react-hooks/exhaustive-deps -- avoid infinite reshuffle
   }, [workspaceId, studyMode, filters, isContextual, difficulty]);
@@ -532,7 +578,7 @@ export function MultipleChoiceSession({
       const correct =
         !unanswered &&
         displayContextualOption(question, value) ===
-          contextualSurfaceAnswer(question);
+        contextualSurfaceAnswer(question);
       recordOutcome({ wordId: question.wordId, correct });
       return { correct, unanswered };
     },
@@ -633,6 +679,21 @@ export function MultipleChoiceSession({
   }
 
   if (questions.length === 0 && !isContextual) {
+    if (!deckSettled) {
+      return (
+        <div className="space-y-6">
+          {filtersBar}
+          <div
+            className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+            role="status"
+            aria-live="polite"
+          >
+            <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+            <p className="text-sm">{tCommon("loading")}</p>
+          </div>
+        </div>
+      );
+    }
     return (
       <div className="space-y-6">
         {filtersBar}
@@ -730,8 +791,8 @@ export function MultipleChoiceSession({
       ) : null}
 
       {!isContextual &&
-      practiceQuestions.length > 0 &&
-      practiceQuestions.length < 20 ? (
+        practiceQuestions.length > 0 &&
+        practiceQuestions.length < 20 ? (
         <p className="text-xs text-muted-foreground">
           {tSession("shortSetNote", { count: practiceQuestions.length })}
         </p>

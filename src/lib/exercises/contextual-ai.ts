@@ -198,6 +198,9 @@ function validateMc(
       grounding: word.meaning,
       difficulty,
       visibleMeaning: word.meaning,
+      strategy: "grammar-form",
+      lemma,
+      partOfSpeech: word.partOfSpeech,
     }),
   };
 }
@@ -239,9 +242,11 @@ function validateTypeAnswer(
       grounding: word.meaning,
       difficulty,
       mode: "spelling-progressive",
+      strategy: "grammar-form",
       visibleMeaning: meaningHint,
       spellingAnswer: answer,
       lemma: word.word,
+      partOfSpeech: word.partOfSpeech,
     }),
   };
 }

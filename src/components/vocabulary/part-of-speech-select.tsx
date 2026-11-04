@@ -77,8 +77,12 @@ export function PartOfSpeechSelect({
       </DropdownMenuTrigger>
       <DropdownMenuContent
         align="start"
+        side="bottom"
         sideOffset={8}
-        className={mx(styles, "vocab-pos-menu")}
+        className={cn(
+          mx(styles, "vocab-pos-menu"),
+          "w-auto min-w-(--anchor-width) max-w-[min(22rem,calc(100dvw-1.5rem))]",
+        )}
       >
         <div className={mx(styles, "vocab-pos-grid")} role="none">
           {PARTS_OF_SPEECH.map((pos) => {

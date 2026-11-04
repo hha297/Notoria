@@ -195,9 +195,19 @@ export function TypeAnswerStage({
               grounding={item.meaningHint || item.meanings[0]}
               answers={item.acceptableAnswers}
               mode="spelling-progressive"
-              visibleMeaning={item.meaningHint || item.meanings[0]}
+              strategy={
+                item.direction === "CONTEXTUAL"
+                  ? "grammar-form"
+                  : "vocabulary-meaning"
+              }
+              visibleMeaning={
+                item.direction === "CONTEXTUAL"
+                  ? item.meaningHint || item.meanings[0]
+                  : undefined
+              }
               spellingAnswer={item.acceptableAnswers[0] ?? expected}
               lemma={item.word}
+              direction={item.direction}
               resetKey={item.id}
               answered={revealed}
               correctAnswer={onRevealAnswer ? expected : undefined}

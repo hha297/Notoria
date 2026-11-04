@@ -861,10 +861,8 @@ export function VocabularyForm({
       </VocabularyComposerSection>
 
       <div
-        className={mx(
-          composerStyles,
-          "vocab-composer-actions mt-4 flex flex-col gap-2 sm:mt-6 sm:flex-row sm:justify-end sm:py-1",
-        )}
+        data-scroll-top-clearance=""
+        className={mx(composerStyles, "vocab-composer-actions")}
       >
         {showCancel ? (
           <Button
@@ -873,10 +871,7 @@ export function VocabularyForm({
             size="lg"
             onClick={handleCancel}
             disabled={isSaving}
-            className={mx(
-              composerStyles,
-              "vocab-composer-cancel h-12 w-full sm:h-11 sm:w-auto",
-            )}
+            className={mx(composerStyles, "vocab-composer-cancel h-12 w-full")}
           >
             {tCommon("cancel")}
           </Button>
@@ -886,10 +881,7 @@ export function VocabularyForm({
           disabled={saveDisabled}
           size="lg"
           data-tutorial="vocab-composer-save"
-          className={mx(
-            composerStyles,
-            "vocab-composer-submit h-11 w-full sm:min-w-44 sm:w-auto",
-          )}
+          className={mx(composerStyles, "vocab-composer-submit h-12 w-full")}
         >
           {isSaving ? (
             <>

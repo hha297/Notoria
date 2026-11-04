@@ -112,6 +112,10 @@ export function TagMultiSelect({
   const [isSavingEdit, setIsSavingEdit] = useState(false);
   const [deletingTag, setDeletingTag] = useState<string | null>(null);
   const [isDeleting, setIsDeleting] = useState(false);
+  /** Most recently selected custom tags first — used to pin them above A–Z. */
+  const [recentCustomIds, setRecentCustomIds] = useState<string[]>(() =>
+    value.filter(isCustomTagKey),
+  );
 
   const busy = isCreating || isSavingEdit || isDeleting;
 
@@ -133,24 +137,58 @@ export function TagMultiSelect({
   );
 
   const filteredCustom = useMemo(() => {
-    return customOptions.filter((option) =>
+    const filtered = customOptions.filter((option) =>
       tagMatchesQuery(option, query, optionLabel(option)),
     );
-  }, [customOptions, query, t]);
+    const recentRank = new Map(
+      recentCustomIds.map((id, index) => [id.toLowerCase(), index]),
+    );
+    const selected = new Set(value.map((tag) => tag.toLowerCase()));
+
+    return [...filtered].sort((a, b) => {
+      const aKey = a.id.toLowerCase();
+      const bKey = b.id.toLowerCase();
+      const aPinned = selected.has(aKey) || recentRank.has(aKey);
+      const bPinned = selected.has(bKey) || recentRank.has(bKey);
+
+      if (aPinned !== bPinned) return aPinned ? -1 : 1;
+      if (aPinned && bPinned) {
+        const aRecent = recentRank.get(aKey) ?? Number.MAX_SAFE_INTEGER;
+        const bRecent = recentRank.get(bKey) ?? Number.MAX_SAFE_INTEGER;
+        if (aRecent !== bRecent) return aRecent - bRecent;
+      }
+
+      return optionLabel(a).localeCompare(optionLabel(b), undefined, {
+        sensitivity: "base",
+      });
+    });
+  }, [customOptions, query, recentCustomIds, t, value]);
 
   const exactMatch = findExactCustomMatch(customOptions, query, optionLabel);
   const canCreate = isValidCustomTagName(query) && !exactMatch && !busy;
   const canSubmitQuery =
     Boolean(query.trim()) && !busy && (canCreate || Boolean(exactMatch));
 
+  function bumpRecentCustom(tag: string) {
+    if (!isCustomTagKey(tag)) return;
+    setRecentCustomIds((prev) => [
+      tag,
+      ...prev.filter((id) => id.toLowerCase() !== tag.toLowerCase()),
+    ]);
+  }
+
   function setTagChecked(tag: string, checked: boolean) {
     if (checked) {
       if (!value.includes(tag)) {
         onChange([...value, tag]);
       }
+      bumpRecentCustom(tag);
       return;
     }
 
+    setRecentCustomIds((prev) =>
+      prev.filter((id) => id.toLowerCase() !== tag.toLowerCase()),
+    );
     onChange(value.filter((item) => item !== tag));
   }
 
@@ -276,6 +314,11 @@ export function TagMultiSelect({
         ),
       );
       onChange(replaceSelectedTag(value, fromKey, toKey));
+      setRecentCustomIds((prev) =>
+        prev.map((id) =>
+          id.toLowerCase() === fromKey.toLowerCase() ? toKey : id,
+        ),
+      );
       void queryClient.invalidateQueries({ queryKey: ["workspace"] });
       void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
       toast.success(tSettings("tagUpdated"));
@@ -304,6 +347,9 @@ export function TagMultiSelect({
       );
       onChange(
         value.filter((tag) => tag.toLowerCase() !== removedKey.toLowerCase()),
+      );
+      setRecentCustomIds((prev) =>
+        prev.filter((id) => id.toLowerCase() !== removedKey.toLowerCase()),
       );
       void queryClient.invalidateQueries({ queryKey: ["workspace"] });
       void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });

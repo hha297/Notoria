@@ -8,6 +8,7 @@ import {
   withBlankMeaningHint,
 } from "@/lib/exercises/blank-hint";
 import { optionLooksLikeLemma } from "@/lib/exercises/lexical-surface";
+import { buildLocalVocabularyMeaningHints } from "@/lib/exercises/progressive-hints";
 import {
   assignWordMeanings,
   isMeaningOwnedByWord,
@@ -36,6 +37,7 @@ export type MultipleChoiceQuestion = {
   /** Non-empty vocabulary meaning cue next to the Contextual blank. */
   meaningHint?: string;
   meanings?: string[];
+  partOfSpeech?: string | null;
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
   hints?: string[];
@@ -87,6 +89,14 @@ function buildQuestion(
     prompt: direction === "WORD_TO_MEANING" ? word.word : assignedMeaning,
     options,
     correctOption: correct,
+    partOfSpeech: word.partOfSpeech,
+    baseWord: word.word,
+    hints: buildLocalVocabularyMeaningHints({
+      correctOption: correct,
+      options,
+      partOfSpeech: word.partOfSpeech,
+      direction,
+    }),
   };
 }
 
@@ -158,6 +168,7 @@ export function contextualExerciseToQuestion(
     answerForm: surface,
     meaningHint,
     meanings: word.meanings,
+    partOfSpeech: word.partOfSpeech,
     aiGenerated: true,
     sentenceMeaning: exercise.sentenceMeaning,
     hints: exercise.hints ?? undefined,

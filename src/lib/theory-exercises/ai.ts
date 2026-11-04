@@ -17,7 +17,7 @@ import {
   describeStudyLanguage,
 } from "@/lib/exercises/study-language-contract";
 import {
-  PROGRESSIVE_HINT_PROMPT,
+  THEORY_RULE_HINT_PROMPT,
   progressiveHintPayload,
 } from "@/lib/exercises/progressive-hints";
 import {
@@ -149,7 +149,7 @@ Vary vocabulary and contexts; do not stop early after a few items.
 }
 No markdown.
 
-${PROGRESSIVE_HINT_PROMPT}`;
+${THEORY_RULE_HINT_PROMPT}`;
 
 async function requestExerciseBatch(input: {
   client: ReturnType<typeof requireOpenAiClient>;
@@ -223,6 +223,7 @@ async function requestExerciseBatch(input: {
               ...additionalInstructionFields(input.additionalInstructions),
               ...progressiveHintPayload({
                 explanationLanguage: input.uiLanguage ?? "English",
+                strategy: "theory-rule",
               }),
               reminder:
                 input.questionType === "multiple_choice"

@@ -1,24 +1,12 @@
 "use client";
 
 import { useEffect } from "react";
-import { IBM_Plex_Sans, JetBrains_Mono } from "next/font/google";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ErrorPageFrame } from "@/components/errors/error-page-frame";
+import { ibmPlexSans, jetbrainsMono } from "@/lib/app-fonts";
 import en from "../../messages/en.json";
 import "./globals.css";
-
-const ibmPlexSans = IBM_Plex_Sans({
-  variable: "--font-ibm-plex-sans",
-  subsets: ["latin", "latin-ext", "vietnamese"],
-  weight: ["400", "500", "600", "700"],
-});
-
-const jetbrainsMono = JetBrains_Mono({
-  variable: "--font-jetbrains-mono",
-  subsets: ["latin", "latin-ext"],
-  weight: ["400", "500", "700"],
-});
 
 type GlobalErrorProps = {
   error: Error & { digest?: string };

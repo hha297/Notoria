@@ -2,14 +2,20 @@ import { describe, expect, it } from "vitest";
 import { partialAnswerHint } from "@/lib/exercises/hint";
 import {
   fallbackProgressiveHints,
+  GRAMMAR_FORM_HINT_PROMPT,
   hintRestatesVisibleMeaning,
   hintRevealsAnswer,
   isGenericAdviceHint,
+  isGrammarFormCoachingHint,
   isLetterClue,
   morphologyHintFromForms,
+  progressiveHintPromptFor,
   PROGRESSIVE_HINT_PROMPT,
   resolveProgressiveHints,
   sanitizeProgressiveHints,
+  THEORY_RULE_HINT_PROMPT,
+  vocabularyMeaningFallbackHint,
+  VOCABULARY_MEANING_HINT_PROMPT,
 } from "@/lib/exercises/progressive-hints";
 
 describe("progressive hints", () => {
@@ -60,6 +66,7 @@ describe("progressive hints", () => {
       answers: ["mistään"],
       visibleMeaning: "From anywhere",
       mode: "spelling-progressive",
+      strategy: "grammar-form",
       lemma: "mikään",
       spellingAnswer: "mistään",
     });
@@ -85,6 +92,7 @@ describe("progressive hints", () => {
       grounding: "From anywhere",
       visibleMeaning: "From anywhere",
       mode: "spelling-progressive",
+      strategy: "grammar-form",
       spellingAnswer: "mistään",
     });
     expect(hints[0]).toBe("Use the elative case ending here.");
@@ -100,6 +108,7 @@ describe("progressive hints", () => {
       grounding: "the past tense of the verb in this sentence",
       submittedMistake: "walk",
       mode: "standard",
+      strategy: "grammar-form",
     });
     expect(hints.some((hint) => hint.includes("walk"))).toBe(true);
     expect(hints.join(" ")).not.toContain("correct");
@@ -112,6 +121,7 @@ describe("progressive hints", () => {
       answers: ["veli"],
       grounding: "a sibling",
       mode: "standard",
+      strategy: "grammar-form",
     });
     expect(hints).toEqual(["Notice the time expression in the sentence."]);
   });
@@ -122,5 +132,102 @@ describe("progressive hints", () => {
     expect(PROGRESSIVE_HINT_PROMPT).toContain("submittedMistake");
     expect(PROGRESSIVE_HINT_PROMPT).toMatch(/grammatical|morpholog|construction/i);
     expect(PROGRESSIVE_HINT_PROMPT).not.toMatch(/masked spelling as the default/i);
+    expect(GRAMMAR_FORM_HINT_PROMPT).toBe(PROGRESSIVE_HINT_PROMPT);
+  });
+
+  it("uses usage fallbacks for vocabulary-meaning instead of morphology coaching", () => {
+    const badMorphology =
+      "Focus on the form the sentence structure requires (ending, stem, or polarity).";
+    expect(isGrammarFormCoachingHint(badMorphology)).toBe(true);
+
+    const hints = resolveProgressiveHints({
+      raw: [badMorphology],
+      answers: ["On the contrary", "Consistent", "Flood", "How"],
+      strategy: "vocabulary-meaning",
+      partOfSpeech: "adverb",
+      direction: "WORD_TO_MEANING",
+    });
+
+    expect(hints.join(" ")).not.toMatch(/ending|stem|polarity|sentence structure/i);
+    expect(hints[0]?.toLowerCase()).toMatch(/used to|framing|everyday|stance/);
+    expect(hints.join(" ").toLowerCase()).not.toContain("on the contrary");
+    expect(hints.join(" ").toLowerCase()).not.toMatch(/\bhow\b/);
+  });
+
+  it("builds usage-oriented vocabulary fallbacks without revealing glosses", () => {
+    expect(
+      vocabularyMeaningFallbackHint({
+        partOfSpeech: "adverb",
+        direction: "WORD_TO_MEANING",
+        correctOption: "On the contrary",
+        options: ["Consistent", "Flood", "How", "On the contrary"],
+      }),
+    ).toMatch(/used to|framing|everyday|stance/i);
+
+    expect(
+      vocabularyMeaningFallbackHint({
+        partOfSpeech: "verb",
+        direction: "WORD_TO_MEANING",
+        correctOption: "Play",
+        options: ["Uncle", "Loud", "Look Forward To", "Play"],
+      }),
+    ).toMatch(/used for|action|activity/i);
+
+    expect(
+      vocabularyMeaningFallbackHint({
+        partOfSpeech: "verb",
+        direction: "WORD_TO_MEANING",
+        correctOption: "Play",
+        options: ["Uncle", "Loud", "Look Forward To", "Play"],
+      }),
+    ).not.toMatch(/picture the action/i);
+
+    const resolved = resolveProgressiveHints({
+      raw: ["It means on the contrary."],
+      answers: ["On the contrary", "Consistent", "Flood", "How"],
+      strategy: "vocabulary-meaning",
+      partOfSpeech: "adverb",
+      direction: "WORD_TO_MEANING",
+    });
+    expect(resolved.join(" ").toLowerCase()).not.toContain("on the contrary");
+  });
+
+  it("keeps theory-rule prompts focused on rules rather than vocabulary definitions", () => {
+    expect(progressiveHintPromptFor("theory-rule")).toBe(THEORY_RULE_HINT_PROMPT);
+    expect(THEORY_RULE_HINT_PROMPT).toMatch(/grammatical rule|Theory/i);
+    expect(THEORY_RULE_HINT_PROMPT).not.toMatch(/dictionary definition/i);
+
+    const hints = resolveProgressiveHints({
+      raw: [],
+      answers: ["-ssa"],
+      grounding: "inessive case for location",
+      strategy: "theory-rule",
+    });
+    expect(hints[0]?.toLowerCase()).toMatch(/rule|objective|inessive|location/);
+    expect(hints.join(" ")).not.toContain("-ssa");
+  });
+
+  it("selects exercise-specific prompt builders", () => {
+    expect(progressiveHintPromptFor("vocabulary-meaning")).toBe(
+      VOCABULARY_MEANING_HINT_PROMPT,
+    );
+    expect(progressiveHintPromptFor("grammar-form")).toBe(GRAMMAR_FORM_HINT_PROMPT);
+    expect(VOCABULARY_MEANING_HINT_PROMPT).toMatch(/usage|distractor|partOfSpeech|real life/i);
+    expect(VOCABULARY_MEANING_HINT_PROMPT).not.toMatch(
+      /ending, particle, or stem change/i,
+    );
+  });
+
+  it("drops vocabulary hints that paraphrase the correct option", () => {
+    const hints = sanitizeProgressiveHints(
+      [
+        "Imagine opposing what was just claimed.",
+        "On the contrary",
+        "It means consistent behavior.",
+      ],
+      ["On the contrary", "Consistent", "Flood", "How"],
+      { strategy: "vocabulary-meaning" },
+    );
+    expect(hints).toEqual(["Imagine opposing what was just claimed."]);
   });
 });

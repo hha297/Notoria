@@ -8,6 +8,7 @@ import { isSpellingMaskHint } from "@/lib/exercises/hint";
 import {
   resolveProgressiveHints,
   type ProgressiveHintMode,
+  type ProgressiveHintStrategy,
 } from "@/lib/exercises/progressive-hints";
 
 type ProgressiveHintRevealProps = {
@@ -18,9 +19,12 @@ type ProgressiveHintRevealProps = {
   difficulty?: string | null;
   submittedMistake?: string | null;
   mode?: ProgressiveHintMode;
+  strategy?: ProgressiveHintStrategy;
   visibleMeaning?: string | null;
   spellingAnswer?: string | null;
   lemma?: string | null;
+  partOfSpeech?: string | null;
+  direction?: string | null;
   resetKey: string;
   answered: boolean;
   correctAnswer?: string;
@@ -38,9 +42,12 @@ export function ProgressiveHintReveal({
   difficulty,
   submittedMistake,
   mode = "standard",
+  strategy = "grammar-form",
   visibleMeaning,
   spellingAnswer,
   lemma,
+  partOfSpeech,
+  direction,
   resetKey,
   answered,
   correctAnswer,
@@ -54,9 +61,12 @@ export function ProgressiveHintReveal({
     difficulty,
     submittedMistake,
     mode,
+    strategy,
     visibleMeaning,
     spellingAnswer,
     lemma,
+    partOfSpeech,
+    direction,
   });
   if (resolved.length === 0 || answered) return null;
 

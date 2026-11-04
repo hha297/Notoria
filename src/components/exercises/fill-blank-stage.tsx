@@ -200,6 +200,7 @@ export function FillBlankStage({
               grounding={cue || item.meanings[0]}
               answers={item.acceptableAnswers}
               mode="spelling-progressive"
+              strategy="grammar-form"
               visibleMeaning={cue || item.meanings[0]}
               spellingAnswer={expected}
               lemma={item.word}
