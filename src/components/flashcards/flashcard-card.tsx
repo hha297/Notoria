@@ -3,6 +3,7 @@
 import { motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
+import { highlightLemmaInSentence } from "@/lib/flashcards/highlight-lemma";
 import {
   getTagLabel,
   isBuiltinTag,
@@ -32,15 +33,25 @@ export function FlashcardCard({
   onFlip,
 }: FlashcardCardProps) {
   const t = useTranslations("flashcards");
+  const tVocab = useTranslations("vocabulary");
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const reduceMotion = useReducedMotion();
 
   const isWordFront = direction === "WORD_TO_MEANING";
-  const primaryMeaning = word.meanings[0] ?? t("noMeaning");
-  const extraMeanings = word.meanings.slice(1);
+  const primaryMeanings = word.meanings.filter((item) => item.trim());
+  const secondaryMeanings = (word.secondaryMeanings ?? []).filter((item) =>
+    item.trim(),
+  );
+  const primaryMeaning = primaryMeanings[0] ?? t("noMeaning");
+  const exampleEntries =
+    word.exampleEntries && word.exampleEntries.length > 0
+      ? word.exampleEntries
+      : word.examples.map((sentence) => ({
+          sentence,
+          meaning: null as string | null,
+        }));
   const prompt = isWordFront ? word.word : primaryMeaning;
-  const answer = isWordFront ? word.meanings : [word.word];
   const partOfSpeech = formatPartOfSpeech(word.partOfSpeech, tPos);
   const hasNotes =
     Boolean(word.notes) && !isNotesDocEmpty(parseVocabularyNotes(word.notes));
@@ -102,10 +113,32 @@ export function FlashcardCard({
               <p className="max-w-full font-heading text-3xl leading-[1.12] font-semibold tracking-tight wrap-break-word text-ink sm:text-4xl md:text-5xl">
                 {prompt}
               </p>
-              {!isWordFront && extraMeanings.length > 0 ? (
-                <p className="mt-3 max-w-md text-sm leading-relaxed text-muted-foreground sm:text-base">
-                  {extraMeanings.join(" · ")}
-                </p>
+              {!isWordFront && primaryMeanings.length > 1 ? (
+                <div className="mt-3 max-w-md space-y-1">
+                  {primaryMeanings.slice(1).map((meaning) => (
+                    <p
+                      key={meaning}
+                      className="text-sm leading-relaxed text-muted-foreground sm:text-base"
+                    >
+                      {meaning}
+                    </p>
+                  ))}
+                </div>
+              ) : null}
+              {!isWordFront && secondaryMeanings.length > 0 ? (
+                <div className="mt-3 max-w-md space-y-1 border-t border-hairline-cloud pt-3">
+                  <p className="text-[0.65rem] font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                    {tVocab("otherMeanings")}
+                  </p>
+                  {secondaryMeanings.map((meaning) => (
+                    <p
+                      key={meaning}
+                      className="text-sm leading-relaxed text-muted-foreground/90"
+                    >
+                      {meaning}
+                    </p>
+                  ))}
+                </div>
               ) : null}
               {partOfSpeech ? (
                 <p className="mt-4 text-sm text-muted-foreground">
@@ -145,31 +178,85 @@ export function FlashcardCard({
               <p className="mb-3 text-center text-xs text-muted-foreground wrap-break-word">
                 {prompt}
               </p>
-                <div className="rounded-lg border border-(--exercise-accent)/15 bg-background/50 px-3 py-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] dark:bg-background/35">
-                {answer.map((item, index) => (
-                  <p
-                    key={`${item}-${index}`}
-                    className={cn(
-                      "font-heading leading-tight font-semibold tracking-tight wrap-break-word text-ink",
-                      index === 0
-                        ? "text-2xl sm:text-3xl md:text-4xl"
-                        : "mt-1.5 text-base font-medium text-muted-foreground sm:text-lg",
+
+              {isWordFront ? (
+                <div className="space-y-2.5">
+                  <div className="rounded-lg border border-(--exercise-accent)/25 bg-background/55 px-3 py-3.5 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] dark:bg-background/35">
+                    <p className="mb-2 text-[0.62rem] font-semibold tracking-[0.16em] text-(--exercise-accent) uppercase">
+                      {tVocab(
+                        primaryMeanings.length > 1
+                          ? "primaryMeanings"
+                          : "primaryMeaning",
+                      )}
+                    </p>
+                    {primaryMeanings.length > 0 ? (
+                      <ul className="space-y-2">
+                        {primaryMeanings.map((meaning, index) => (
+                          <li
+                            key={meaning}
+                            className={cn(
+                              "font-heading leading-tight tracking-tight wrap-break-word text-ink",
+                              index === 0
+                                ? "text-2xl font-semibold sm:text-3xl"
+                                : "border-t border-(--exercise-accent)/12 pt-2 text-lg font-medium text-ink/85 sm:text-xl",
+                            )}
+                          >
+                            {meaning}
+                          </li>
+                        ))}
+                      </ul>
+                    ) : (
+                      <p className="font-heading text-2xl font-semibold text-ink">
+                        {t("noMeaning")}
+                      </p>
                     )}
-                  >
-                    {item}
+                  </div>
+
+                  {secondaryMeanings.length > 0 ? (
+                    <div className="rounded-lg border border-dashed border-(--exercise-accent)/18 bg-background/30 px-3 py-3 text-left dark:bg-background/20">
+                      <p className="mb-2 text-[0.62rem] font-semibold tracking-[0.16em] text-muted-foreground uppercase">
+                        {tVocab("otherMeanings")}
+                      </p>
+                      <ul className="space-y-2">
+                        {secondaryMeanings.map((meaning) => (
+                          <li
+                            key={meaning}
+                            className="border-l-2 border-(--exercise-accent)/35 pl-2.5 text-sm leading-snug text-muted-foreground sm:text-[0.95rem]"
+                          >
+                            {meaning}
+                          </li>
+                        ))}
+                      </ul>
+                    </div>
+                  ) : null}
+                </div>
+              ) : (
+                <div className="rounded-lg border border-(--exercise-accent)/15 bg-background/50 px-3 py-4 text-center shadow-[inset_0_1px_0_rgba(255,255,255,0.35)] dark:bg-background/35">
+                  <p className="font-heading text-2xl leading-tight font-semibold tracking-tight wrap-break-word text-ink sm:text-3xl md:text-4xl">
+                    {word.word}
                   </p>
-                ))}
-              </div>
+                </div>
+              )}
 
               <div className="mt-4 space-y-3 text-left">
-                {word.examples.length > 0 ? (
-                  <ul className="space-y-1.5">
-                    {word.examples.map((example, index) => (
+                {exampleEntries.length > 0 ? (
+                  <ul className="space-y-2.5">
+                    {exampleEntries.map((example, index) => (
                       <li
-                        key={`${example}-${index}`}
-                        className="text-sm leading-relaxed text-pretty text-ink/80 italic sm:text-[0.95rem]"
+                        key={`${example.sentence}-${index}`}
+                        className="rounded-md border border-hairline-cloud/80 bg-background/25 px-2.5 py-2"
                       >
-                        {example}
+                        <p className="text-sm leading-relaxed text-pretty text-ink/85 italic sm:text-[0.95rem]">
+                          {highlightLemmaInSentence(
+                            example.sentence,
+                            word.word,
+                          )}
+                        </p>
+                        {example.meaning ? (
+                          <p className="mt-1 text-xs leading-relaxed text-muted-foreground not-italic sm:text-sm">
+                            {example.meaning}
+                          </p>
+                        ) : null}
                       </li>
                     ))}
                   </ul>

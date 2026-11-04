@@ -591,8 +591,8 @@ export function TypeAnswerSession({
       ) : null}
 
       {!isContextual &&
-      practiceItems.length > 0 &&
-      practiceItems.length < 20 ? (
+        practiceItems.length > 0 &&
+        practiceItems.length < 20 ? (
         <p className="text-xs text-muted-foreground">
           {tSession("shortSetNote", { count: practiceItems.length })}
         </p>
