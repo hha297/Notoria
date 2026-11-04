@@ -4,7 +4,7 @@ import { ArrowLeft } from "lucide-react";
 import { auth } from "@/auth";
 import { LocaleThemeControls } from "@/components/layout/locale-theme-controls";
 import { SiteFooter } from "@/components/layout/site-footer";
-import { Logo, LogoWordmark } from "@/components/ui/logo";
+import { BrandMark } from "@/components/ui/brand-mark";
 import styles from "@/components/style/legal/legal.module.css";
 import { mx } from "@/lib/css-module";
 import type { AppLocale } from "@/i18n/config";
@@ -30,25 +30,17 @@ export async function PublicPageShell({
 
   return (
     <div className={mx(styles, "legal-shell")}>
+      <header className={mx(styles, "legal-top-bar")}>
+        <div className={mx(styles, "legal-chrome-shell legal-top-bar-inner")}>
+          <BrandMark href={homeHref} />
+          <div className={mx(styles, "legal-brand-controls")}>
+            <LocaleThemeControls locale={locale} compact />
+          </div>
+        </div>
+      </header>
+
       <div className={mx(styles, "legal-inner")}>
         <header className={mx(styles, "legal-hero")}>
-          <div className={mx(styles, "legal-brand-bar")}>
-            <Link
-              href={homeHref}
-              className={mx(styles, "legal-brand-link")}
-              aria-label="Notoria"
-            >
-              <Logo size="md" />
-              <LogoWordmark
-                tone="ink"
-                className={mx(styles, "legal-brand-wordmark")}
-              />
-            </Link>
-            <div className={mx(styles, "legal-brand-controls")}>
-              <LocaleThemeControls locale={locale} compact />
-            </div>
-          </div>
-
           <p className={mx(styles, "legal-kicker")}>{eyebrow}</p>
           <h1 className={mx(styles, "legal-title")}>{title}</h1>
           {description ? (

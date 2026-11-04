@@ -199,7 +199,7 @@
   --on-dark-muted: #c5c6bd;
   --on-dark-faint: rgba(35, 37, 29, 0.08);
   --foreground-muted: #6c6e63;
-  --link: #1078a3;
+  --link: var(--primary);
 
   --secondary: #efefea;
   --secondary-foreground: #23251d;
@@ -415,7 +415,7 @@
   --on-dark-muted: #9b9c92;
   --on-dark-faint: rgba(238, 239, 233, 0.08);
   --foreground-muted: #9b9c92;
-  --link: #7eb8d4;
+  --link: var(--primary);
 
   --secondary: #2c2e26;
   --secondary-foreground: #eeefe9;

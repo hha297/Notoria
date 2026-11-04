@@ -65,19 +65,6 @@
   padding-block: 0.65rem;
 }
 
-.brand {
-  display: inline-flex;
-  align-items: center;
-  gap: 0.65rem;
-  text-decoration: none;
-  color: inherit;
-  transition: opacity 0.15s ease;
-}
-
-.brand:hover {
-  opacity: 0.9;
-}
-
 .nav {
   display: none;
   align-items: center;
@@ -1048,6 +1035,7 @@
 
 .philosophy-quote {
   position: relative;
+  margin-top: 1.85rem;
   border-radius: 1.15rem;
   border: 1px solid color-mix(in oklab, var(--primary) 22%, var(--border));
   background:
@@ -1058,6 +1046,11 @@
     ),
     color-mix(in oklab, var(--surface-elevated) 78%, transparent);
   padding: clamp(1.35rem, 3vw, 2rem);
+}
+
+.philosophy .section-links {
+  margin-top: 2rem;
+  gap: 1rem 2.75rem;
 }
 
 .philosophy-quote blockquote,

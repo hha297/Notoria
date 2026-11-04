@@ -8,10 +8,11 @@ import { LinkButton } from "@/components/ui/link-button";
 import { LocaleSelector } from "@/components/layout/locale-selector";
 import { LocaleThemeControls } from "@/components/layout/locale-theme-controls";
 import { ThemeToggle } from "@/components/layout/theme-toggle";
-import { Logo, LogoWordmark } from "@/components/ui/logo";
+import { BrandMark } from "@/components/ui/brand-mark";
 import styles from "@/components/style/landing/landing.module.css";
 import type { AppLocale } from "@/i18n/config";
 import { mx } from "@/lib/css-module";
+
 
 const NAV_ITEMS = [
   { href: "#how-it-works", key: "howItWorks" as const },
@@ -32,15 +33,7 @@ export function PublicHeader({ locale }: PublicHeaderProps) {
   return (
     <header className={mx(styles, "header")} data-menu-open={open || undefined}>
       <div className={mx(styles, "landing-shell header-inner")}>
-        <Link
-          href="/"
-          className={mx(styles, "brand")}
-          aria-label="Notoria"
-          onClick={() => setOpen(false)}
-        >
-          <Logo size="md" />
-          <LogoWordmark tone="ink" />
-        </Link>
+        <BrandMark href="/" onClick={() => setOpen(false)} />
 
         <nav className={mx(styles, "nav")} aria-label={t("aria")}>
           {NAV_ITEMS.map((item) => (
