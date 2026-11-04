@@ -4498,7 +4498,8 @@
           "p3": "Genel destek seçenekleri ve teknik geri bildirim gelen kutusu için <contactPage>Bize ulaşın</contactPage> ve <support>Destek</support> sayfalarına bakın."
         }
       }
-    }
+    },
+    "backToHome": "Ana sayfaya dön"
   },
   "footer": {
     "navLabel": "Site bağlantıları",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Yanıt mı arıyorsunuz veya geri bildirim mi göndermek istiyorsunuz?",
         "link": "Destek"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Ana",
+        "howItWorks": "Nasıl Çalışır",
+        "features": "Özellikler",
+        "faq": "SSS",
+        "about": "Hakkında",
+        "support": "Destek",
+        "signIn": "Giriş Yap",
+        "getStarted": "Başlayın",
+        "openMenu": "Menüyü Aç",
+        "closeMenu": "Menüyü Kapat"
+      },
+      "hero": {
+        "headline": "Sizinle birlikte büyüyen bir öğrenme sistemi oluşturun.",
+        "description": "Kelime dağarcığınızı toplayın, yeni kavramları anlayın, becerilerinizi pratik yapın ve öğrendiklerinizi kalıcı bilgiye dönüştürün — hepsi bir bağlı çalışma alanında.",
+        "supporting": "Notoria, herhangi bir dili kendi kendine öğrenmek için özel bir çalışma alanıdır. Getirdiğiniz materyal etrafında inşa edilmiştir — seçmediğiniz derslerin bir kataloğu değildir.",
+        "primaryCta": "Başlayın",
+        "secondaryCta": "Nasıl Çalıştığını Keşfedin"
+      },
+      "preview": {
+        "windowLabel": "Notoria çalışma alanı",
+        "vocabTitle": "Kelime Dağarcığı",
+        "vocabMeta": "Sakladığınız kelimeler",
+        "theoryTitle": "Teori",
+        "theoryMeta": "Akılda kalan notlar",
+        "practiceTitle": "Pratik",
+        "practiceMeta": "Materyalinizden",
+        "cardKicker": "Çalışma alanınız",
+        "cardTitle": "Bir dil. Bir döngü.",
+        "cardBody": "Önemli olanı kaydedin, düzenleyin, ardından aynı yerden yazma, dinleme, konuşma ve okuma pratiği yapın.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "sonra · sonraki",
+        "floatTheory": "Parçalı",
+        "floatTheoryMeta": "Miktarlar açık kaldığında",
+        "floatPractice": "Flashcard seti",
+        "floatPracticeMeta": "Bugün 12 teslim"
+      },
+      "workflow": {
+        "kicker": "Notoria nasıl çalışır",
+        "title": "Kendi materyaliniz etrafında bir öğrenme döngüsü.",
+        "lede": "Notoria bir kurs kataloğu değildir. Topladığınız şeylerin pratik yapıldığı özel bir çalışma alanıdır.",
+        "bridge": "Kelime dağarcığı, Yakalama, Teori, Alıştırmalar, Yazma, Dinleme, Konuşma ve Okuma birbirine bağlı kalır — böylece her seferinde araçları değiştirdiğinizde yeniden başlamazsınız.",
+        "guideLink": "Tam Kullanım Kılavuzunu okuyun",
+        "steps": {
+          "collect": {
+            "title": "Topla",
+            "body": "Derslerden, kitaplardan, medyadan ve konuşmalardan karşılaştığınız kelime dağarcığını ve öğrenme parçalarını kaydedin."
+          },
+          "organise": {
+            "title": "Düzenle",
+            "body": "Her dil için anlamlar, örnekler, etiketler ve tekrar bulabileceğiniz duyularla yapılandırılmış bir koleksiyon tutun."
+          },
+          "understand": {
+            "title": "Anla",
+            "body": "Bir kalıbın açıklanması gerektiğinde, kendi kelimelerinizle teori notları yazın."
+          },
+          "practise": {
+            "title": "Pratik Yap",
+            "body": "Kaydettiğiniz şeyleri flashcard'lara, quizlere, boşluk doldurma alıştırmalarına ve daha fazlasına dönüştürün."
+          },
+          "apply": {
+            "title": "Uygula",
+            "body": "Yazın, dinleyin, konuşun ve okuyun, böylece dil tanımanın ötesine geçip aktif kullanıma geçsin."
+          },
+          "review": {
+            "title": "Gözden Geçir",
+            "body": "Sonra geri dönün, yeni olanı ekleyin, zor olanı tekrar gözden geçirin ve döngüyü devam ettirin."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Temel özellikler",
+        "title": "Her şey bir bağlı çalışma alanında.",
+        "lede": "Her alan gerçek kendi kendine öğrenme için inşa edilmiştir — izole araçlar değil, paylaşılan bir giriş ile.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Kelime Dağarcığı",
+            "title": "Her zaman faydalı kalan kişisel bir kelime bankası",
+            "body": "Anlamlar, örnekler, sözcük türü, etiketler ve birincil veya ikincil duyularla kelimeleri saklayın. Kaydettiğiniz şeyler daha sonra pratik haline gelebilir.",
+            "example": "Örnek: sitten'i sıralama anlamı ve zaman anlamıyla kaydedin, ardından her iki anlamı da aynı girişten pratik yapın.",
+            "previewLabel": "Kelime Dağarcığı",
+            "previewKicker": "Kelime detayı",
+            "previewTitle": "Anlamlar kelimeye bağlı kalır",
+            "previewBody": "Alıştırmalar için birincil anlamlar. İhtiyacınız olduğunda referans için ikincil anlamlar."
+          },
+          "inbox": {
+            "eyebrow": "Yakalama",
+            "title": "Hızlı parçalar için bir öğrenme gelen kutusu",
+            "body": "Bir şey fark ettiğinizde notları hızlıca bırakın, sonra zamanınız olduğunda bunları kelime dağarcığı, teori, yazma veya alıştırmalara dönüştürün.",
+            "example": "Örnek: bir podcast'ten bir ifadeyi yakalayın, sonra işe gidip gelirken bunu bir kelime dağarcığı girişi haline getirin.",
+            "previewLabel": "Yakalama",
+            "previewKicker": "Gelen Kutusu",
+            "previewTitle": "Şimdi yakalayın. Sonra düzenleyin.",
+            "previewBody": "Meşgulken tam bir giriş zorlamadan anı saklayın."
+          },
+          "theory": {
+            "eyebrow": "Teori",
+            "title": "Öğrendiğiniz dilin yanında açıklamalar",
+            "body": "Dil bilgisi ve kullanım notlarını kendi kelimelerinizle yazın. Açıklanan kelimelerle aynı çalışma alanında saklayın.",
+            "example": "Örnek: unuttuğunuz isimlerin yanında parçalı durum hakkında kısa bir not.",
+            "previewLabel": "Teori",
+            "previewKicker": "Notunuz",
+            "previewTitle": "Kendi kelimelerinizle yazılmış kalıplar",
+            "previewBody": "Aynı kafa karışıklığı geri döndüğünde açıklamayı tekrar gözden geçirin."
+          },
+          "exercises": {
+            "eyebrow": "Alıştırmalar",
+            "title": "Kendi materyalinizden alınan pratik",
+            "body": "Flashcard'lar, çoktan seçmeli, boşluk doldurma, cevap yazma, eşleştirme ve daha fazlası — zaten kaydettiğiniz kelimeler ve notlardan oluşturulmuştur.",
+            "example": "Örnek: bu haftanın kelime dağarcığından bir flashcard seti, genel bir desteden ziyade.",
+            "previewLabel": "Alıştırmalar",
+            "previewKicker": "Pratik seti",
+            "previewTitle": "Kelimeniz alıştırma haline gelir",
+            "previewBody": "Hafıza çalışması, gerçekten öğrenmek istediğiniz şeylerle bağlantılı kalır."
+          },
+          "skills": {
+            "eyebrow": "Beceriler",
+            "title": "Yazma, dinleme, konuşma ve okuma",
+            "body": "Tanımanın ötesine geçin. Dil üretin, sesle çalışın, konuşma pratiği yapın ve çalışma alanınıza ait materyallerle okuyun.",
+            "example": "Örnek: haftanın kelime dağarcığı ile yazın, ardından ilgili materyali dinleyin ve aynı temadan konuşun.",
+            "previewLabel": "Beceriler",
+            "previewKicker": "Aktif kullanım",
+            "previewTitle": "Bilmekten kullanmaya",
+            "previewBody": "Temel beceri alanları her planda mevcuttur; AI kullanım sınırları plana göre değişir."
+          },
+          "connected": {
+            "eyebrow": "Bağlantılar",
+            "title": "Dağınık araçlar yerine bir döngü",
+            "body": "Yakaladığınız şey kelime dağarcığına dönüşebilir. Kelime dağarcığı pratik haline gelebilir. Pratik yazma, dinleme ve konuşmaya beslenebilir — ipucunu kaybetmeden.",
+            "example": "Örnek: bir Yakalama parçası bir kelimeye dönüşür, o kelime alıştırmalarda görünür, sonra yazmada tekrar ortaya çıkar.",
+            "previewLabel": "Çalışma Alanı",
+            "previewKicker": "Bağlı öğrenme",
+            "previewTitle": "Daha az yeniden başlama. Daha fazla süreklilik.",
+            "previewBody": "Ürün, materyalinizin merkezde kalabilmesi için yoldan çekilir."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Öğrenme felsefesi",
+        "title": "Kelime toplamak yeterli değildir.",
+        "lede": "Anlam, pratik veya kullanım olmadan bir kelime listesi başka bir terkedilmiş not haline gelir.",
+        "expand": "Notoria, kelime dağarcığı, teori, alıştırmalar ve aktif becerilerin bir özel evde paylaşabilmesi için vardır — kitaplarınızın, öğretmenlerinizin ve medyanızın yanında, onların yerine değil.",
+        "beat": "Materyaliniz merkezde olmalıdır.",
+        "aboutLink": "Notoria Hakkında",
+        "storyLink": "Hikayemizi okuyun",
+        "points": {
+          "workspace": "Bir dil için kişisel bir öğrenme çalışma alanı oluşturun.",
+          "understand": "İzole parçaları ezberlemek yerine kavramları anlayın.",
+          "connect": "Kelime dağarcığını, notları ve pratikleri bir döngüye bağlayın.",
+          "skills": "Aynı materyalden yazma, dinleme, konuşma ve okuma pratiği yapın.",
+          "pace": "Kendi hızınızda öğrenin, sabit bir müfredat olmadan.",
+          "habits": "Sık sık geri dönün ve dağınık oturumlar yerine süreklilik oluşturun."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Başlarken",
+        "title": "Çalışma alanına basit bir yol.",
+        "lede": "Tüm ürünü bir anda öğrenmenize gerek yok. Küçük başlayın, ardından döngüyü büyütün.",
+        "expect": "Kaydolduktan sonra öğrenme diliniz için bir çalışma alanı oluşturursunuz, ardından materyal toplamaya başlarsınız. Uygulama içindeki Başlarken kılavuzu, hazır olduğunuzda her alanı adım adım açıklar.",
+        "cta": "Hesabınızı oluşturun",
+        "secondaryCta": "Nasıl Kullanılır'ı okuyun",
+        "steps": {
+          "account": {
+            "title": "Hesap oluşturun",
+            "body": "Kaydolun ve özel öğrenme alanınıza girin."
+          },
+          "workspace": {
+            "title": "Bir çalışma alanı kurun",
+            "body": "Çalışmanızı bir dil için bir ev verin."
+          },
+          "language": {
+            "title": "Öğrenme dilinizi seçin",
+            "body": "Her çalışma alanı, öğrendiğiniz dile odaklanır."
+          },
+          "collect": {
+            "title": "Toplamaya başlayın",
+            "body": "Sizin için önemli olan kelime dağarcığını ve Yakalama parçalarını kaydedin."
+          },
+          "explore": {
+            "title": "Teori ve alıştırmaları keşfedin",
+            "body": "Kaydettiğiniz şeyleri anlayış ve pratik haline getirin."
+          },
+          "routine": {
+            "title": "Bir rutin oluşturun",
+            "body": "Aynı yerden geri dönün, gözden geçirin, yazın, dinleyin, konuşun ve okuyun."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "SSS",
+        "title": "Başlamadan önceki cevaplar.",
+        "lede": "Notoria'nın ne olduğu, öğrenmenin nasıl çalıştığı ve kaydolduktan sonra neler olacağı hakkında pratik sorular.",
+        "supportLink": "Daha fazla yardım için Destek'i ziyaret edin",
+        "groups": {
+          "about": "Notoria Hakkında",
+          "features": "Öğrenme özellikleri",
+          "start": "Başlarken",
+          "account": "Hesap ve erişilebilirlik"
+        },
+        "items": {
+          "what": {
+            "q": "Notoria tam olarak nedir?",
+            "a": "Notoria, herhangi bir dili kendi kendine öğrenmek için özel bir çalışma alanıdır. Kelime dağarcığınızı, notlarınızı, teorinizi, alıştırmalarınızı, yazma, dinleme, konuşma ve okuma işlemlerinizi bir yerde, öğrendiğiniz dile göre düzenli olarak saklarsınız. Bu bir okul platformu değildir ve hazır kursların bir kütüphanesi değildir."
+          },
+          "onlyVocab": {
+            "q": "Notoria sadece bir kelime öğrenme uygulaması mı?",
+            "a": "Hayır. Kelime dağarcığı merkezi olsa da, Notoria ayrıca Yakalama, Teori, etkileşimli alıştırmalar, yazma, dinleme, konuşma ve okuma içerir. Amaç, bu alanları kendi materyaliniz etrafında bağlı tutmaktır."
+          },
+          "who": {
+            "q": "Notoria kimler için tasarlandı?",
+            "a": "Süreçte kendi materyalini merkezde tutmak isteyen bağımsız öğreniciler — başkalarının sabit müfredatını takip etmek yerine kendileri için önemli olanı toplamayı tercih eden kişiler."
+          },
+          "vsFlashcards": {
+            "q": "Notoria, geleneksel flashcard uygulamalarından nasıl farklıdır?",
+            "a": "Flashcard'lar, Notoria içinde bir pratik modu olarak yer alır. Ürün ayrıca anlamları ve örnekleri, teori notlarını, Yakalama parçalarını ve beceri pratiğini aynı çalışma alanında saklar, böylece gözden geçirme, anlama ve kullanımdan izole değildir."
+          },
+          "vocabHow": {
+            "q": "Kelime yönetimi nasıl çalışır?",
+            "a": "Anlamlar, örnekler, etiketler ve isteğe bağlı birincil veya ikincil duyularla kelimeleri kaydedersiniz. Bu banka daha sonra alıştırmalara ve sonraki gözden geçirmelere beslenebilir, böylece ayrı bir listede yaşamaz."
+          },
+          "inboxWhy": {
+            "q": "Öğrenme Gelen Kutusu (Yakalama) ne amaçla kullanılır?",
+            "a": "Yakalama, hızlı giriş noktasıdır. Kullanışlı bir şey fark ettiğinizde, ama tam bir giriş için zamanınız yoksa, parçayı kaydedersiniz ve daha sonra kelime dağarcığı, teori, yazma veya alıştırmalara dönüştürürsünüz."
+          },
+          "theoryExercises": {
+            "q": "Teori ve Alıştırmalar nasıl birlikte çalışır?",
+            "a": "Teori, kendi kelimelerinizle açıklamaları tutar. Alıştırmalar, kaydedilen kelime dağarcığını ve ilgili materyali pratiğe dönüştürür. Bir süre kelimelerle ve kısa alıştırmalarla kalabilirsiniz, ardından bir kalıbın açıklanması gerektiğinde teori notları ekleyebilirsiniz."
+          },
+          "skillsSupported": {
+            "q": "Hangi öğrenme becerileri destekleniyor? Yazma, dinleme, konuşma ve okuma pratiği yapabilir miyim?",
+            "a": "Evet. Yazma, dinleme, konuşma ve okuma, çalışma alanının bir parçasıdır. Bu alanlar her planda mevcuttur; AI kullanım sınırları plana göre değişir."
+          },
+          "review": {
+            "q": "Önceden toplanmış materyali nasıl gözden geçirebilirim?",
+            "a": "Çalışma alanınızdaki Kelime Dağarcığı, Teori, Alıştırmalar ve ilgili gözden geçirme araçları aracılığıyla geri dönün. Süreklilik önemlidir: yeni olanı ekleyin, zor olanı tekrar gözden geçirin ve zaten sahip olduğunuz materyallerden pratik yapmaya devam edin."
+          },
+          "createAccount": {
+            "q": "Hesap nasıl oluşturabilirim?",
+            "a": "<signUp>Başlayın</signUp> veya <signUp>Kayıt Ol</signUp> seçeneğini kullanın, ardından kaydı tamamlayın. Daha sonra genel başlıktan <signIn>giriş yapabilirsiniz</signIn>."
+          },
+          "afterSignup": {
+            "q": "Kaydolduktan sonra ne olur?",
+            "a": "Diliniz için bir öğrenme çalışma alanı oluşturursunuz, ardından materyal toplamaya başlarsınız. Ürün içinde olduğunuzda, uygulama içi <gettingStarted>Başlarken</gettingStarted> kılavuzu her alanı açıklar."
+          },
+          "chooseLanguage": {
+            "q": "Öğrenme dilimi nasıl seçebilirim?",
+            "a": "Her çalışma alanı bir öğrenme diline adanmıştır. Çalışma alanını oluşturduğunuzda o dili seçersiniz, böylece kelime dağarcığı ve pratik onun etrafında düzenli kalır."
+          },
+          "experience": {
+            "q": "Önceki öğrenim deneyimine ihtiyacım var mı?",
+            "a": "Hayır. Notoria, sabit bir müfredat veya önceki kurs ilerlemesi gerektirmez. İyi bir ilk gün, bir çalışma alanı ve gerçekten önemsediğiniz birkaç kelime olabilir."
+          },
+          "languages": {
+            "q": "Hangi diller destekleniyor?",
+            "a": "Seçtiğiniz herhangi bir dili çalışabilirsiniz. Ürün arayüzü birçok UI dilinde mevcuttur; her çalışma alanı, öğrendiğiniz dile odaklanır."
+          },
+          "devices": {
+            "q": "Notoria'yı farklı cihazlarda erişebilir miyim?",
+            "a": "Evet. Notoria, <site>notoria.fi</site> adresinde bir web uygulamasıdır, bu nedenle zaten kullandığınız cihazlardaki tarayıcılardan <signIn>giriş yapabilirsiniz</signIn>."
+          },
+          "plans": {
+            "q": "Ücretsiz bir plan var mı?",
+            "a": "Evet. Ücretsiz sürüm, günlük bir AI bütçesi ile temel öğrenme gereksinimlerini kapsar. Pro, AI araç setinin daha fazlasını ve ilgili ekleri açar. Premium, kişiselleştirilmiş öğrenme zekası ekler. <billing>Hesap faturalandırması</billing> bölümünde planları <signIn>giriş yaptıktan</signIn> sonra karşılaştırabilirsiniz."
+          },
+          "help": {
+            "q": "Nasıl yardım alabilirim veya destekle nasıl iletişime geçebilirim?",
+            "a": "SSS ve iletişim seçenekleri için <support>Destek</support> sayfasını açın. Hesap, faturalandırma, gizlilik veya genel sorular için <contact>Bize Ulaşın</contact> seçeneğini de kullanabilirsiniz."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Öğrenmeyi günlük yaşamınızın bir parçası haline getirin.",
+        "lede": "Notoria ile kişisel öğrenme çalışma alanınızı oluşturmaya başlayın — özel, pratik ve kendi materyalinize odaklı.",
+        "primary": "Başlayın",
+        "secondary": "Giriş Yap"
+      },
+      "meta": {
+        "title": "Notoria — Özel dil öğrenme çalışma alanı",
+        "description": "Kelime dağarcığını toplayın, teoriyi anlayın, alıştırmalarla pratik yapın ve bir bağlı kişisel çalışma alanında kalıcı dil becerileri geliştirin.",
+        "ogDescription": "Sizinle birlikte büyüyen bir öğrenme sistemi oluşturun — kelime dağarcığı, teori, alıştırmalar, yazma, dinleme, konuşma ve okuma hepsi bir arada.",
+        "twitterDescription": "Sizinle birlikte büyüyen bir öğrenme sistemi oluşturun — kelime dağarcığı, teori, alıştırmalar ve beceri pratiği hepsi bir çalışma alanında."
       }
     }
   },

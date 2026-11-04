@@ -14,7 +14,7 @@ export default async function OnboardingPage() {
   const workspaces = await getUserWorkspaces();
 
   if (workspaces.length > 0) {
-    redirect("/");
+    redirect("/dashboard");
   }
 
   return <LearningLanguageOnboarding />;

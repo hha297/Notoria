@@ -4498,7 +4498,8 @@
           "p3": "Voor algemene ondersteuningsopties en de technische feedbackinbox, zie <contactPage>Contact</contactPage> en <support>Ondersteuning</support>."
         }
       }
-    }
+    },
+    "backToHome": "Terug naar de startpagina"
   },
   "footer": {
     "navLabel": "Sitelinks",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Op zoek naar antwoorden of wilt u feedback sturen?",
         "link": "Ondersteuning"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primair",
+        "howItWorks": "Hoe het werkt",
+        "features": "Kenmerken",
+        "faq": "FAQ",
+        "about": "Over",
+        "support": "Ondersteuning",
+        "signIn": "Inloggen",
+        "getStarted": "Aan de slag",
+        "openMenu": "Menu openen",
+        "closeMenu": "Menu sluiten"
+      },
+      "hero": {
+        "headline": "Bouw een leersysteem dat met je meegroeit.",
+        "description": "Verzamel vocabulaire, begrijp nieuwe concepten, oefen je vaardigheden en zet wat je leert om in blijvende kennis — allemaal in één verbonden werkruimte.",
+        "supporting": "Notoria is een privé werkruimte voor zelfstudie van elke taal. Het is opgebouwd rond het materiaal dat jij inbrengt — niet een catalogus van lessen die je niet hebt gekozen.",
+        "primaryCta": "Aan de slag",
+        "secondaryCta": "Ontdek hoe het werkt"
+      },
+      "preview": {
+        "windowLabel": "Notoria werkruimte",
+        "vocabTitle": "Vocabulaire",
+        "vocabMeta": "Woorden die je behoudt",
+        "theoryTitle": "Theorie",
+        "theoryMeta": "Notities die blijven hangen",
+        "practiceTitle": "Oefening",
+        "practiceMeta": "Van jouw materiaal",
+        "cardKicker": "Jouw werkruimte",
+        "cardTitle": "Één taal. Één cyclus.",
+        "cardBody": "Bewaar wat belangrijk is, organiseer het, en oefen vervolgens schrijven, luisteren, spreken en lezen vanuit dezelfde plek.",
+        "floatVocab": "zitten",
+        "floatVocabMeta": "dan · volgende",
+        "floatTheory": "Partitief",
+        "floatTheoryMeta": "Wanneer hoeveelheden open blijven",
+        "floatPractice": "Flashcard set",
+        "floatPracticeMeta": "12 vandaag vervallen"
+      },
+      "workflow": {
+        "kicker": "Hoe Notoria werkt",
+        "title": "Een leercyclus rond jouw eigen materiaal.",
+        "lede": "Notoria is geen cursuscatalogus. Het is een privé werkruimte waar wat je verzamelt, wordt wat je oefent.",
+        "bridge": "Vocabulaire, Vastleggen, Theorie, Oefeningen, Schrijven, Luisteren, Spreken en Lezen blijven verbonden — zodat je niet elke keer opnieuw hoeft te beginnen als je van hulpmiddel wisselt.",
+        "guideLink": "Lees de volledige gids over hoe je het gebruikt",
+        "steps": {
+          "collect": {
+            "title": "Verzamel",
+            "body": "Bewaar vocabulaire en leermateriaal zoals je ze tegenkomt — uit lessen, boeken, media en gesprekken."
+          },
+          "organise": {
+            "title": "Organiseer",
+            "body": "Houd één gestructureerde verzameling per taal, met betekenissen, voorbeelden, tags en zintuigen die je weer kunt vinden."
+          },
+          "understand": {
+            "title": "Begrijp",
+            "body": "Schrijf theorienotities in je eigen woorden wanneer een patroon uitleg nodig heeft."
+          },
+          "practise": {
+            "title": "Oefen",
+            "body": "Zet wat je hebt opgeslagen om in flashcards, quizzen, invulblanks en meer."
+          },
+          "apply": {
+            "title": "Pas toe",
+            "body": "Schrijf, luister, spreek en lees zodat de taal verder gaat dan herkenning naar actief gebruik."
+          },
+          "review": {
+            "title": "Herzie",
+            "body": "Kom later terug, voeg toe wat nieuw is, herbezoek wat moeilijk was en houd de cyclus in beweging."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Kernfuncties",
+        "title": "Alles in één verbonden werkruimte.",
+        "lede": "Elke sectie is gebouwd voor echte zelfstudie — niet geïsoleerde tools met een gedeelde inlog.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Vocabulaire",
+            "title": "Een persoonlijke vocabulairebank die nuttig blijft",
+            "body": "Bewaar woorden met betekenissen, voorbeelden, woordsoorten, tags en primaire of secundaire zintuigen. Wat je opslaat kan later oefening worden.",
+            "example": "Voorbeeld: bewaar zitten met zijn volgorde-zin en tijd-zin, en oefen beide vanuit dezelfde invoer.",
+            "previewLabel": "Vocabulaire",
+            "previewKicker": "Woorddetail",
+            "previewTitle": "Betekenissen blijven verbonden aan het woord",
+            "previewBody": "Primaire zintuigen voor oefeningen. Secundaire zintuigen voor referentie wanneer je ze nodig hebt."
+          },
+          "inbox": {
+            "eyebrow": "Vastleggen",
+            "title": "Een leerinbox voor snelle scraps",
+            "body": "Laat snel notities vallen wanneer iets opduikt, en verwerk ze later in vocabulaire, theorie, schrijven of oefeningen wanneer je tijd hebt.",
+            "example": "Voorbeeld: vang een zin uit een podcast, en zet deze om in een vocabulaire-invoer na de reis.",
+            "previewLabel": "Vastleggen",
+            "previewKicker": "Inbox",
+            "previewTitle": "Vang het nu. Organiseer later.",
+            "previewBody": "Bewaar het moment zonder een volledige invoer te forceren wanneer je het druk hebt."
+          },
+          "theory": {
+            "eyebrow": "Theorie",
+            "title": "Uitleg naast de taal die je leert",
+            "body": "Schrijf grammatica- en gebruiksnotities in je eigen woorden. Bewaar ze in dezelfde werkruimte als de vocabulaire die ze uitleggen.",
+            "example": "Voorbeeld: een korte notitie over de partitieve case naast de zelfstandige naamwoorden die je blijft vergeten.",
+            "previewLabel": "Theorie",
+            "previewKicker": "Jouw notitie",
+            "previewTitle": "Patronen geschreven in jouw woorden",
+            "previewBody": "Herbezoek de uitleg wanneer dezelfde verwarring terugkomt."
+          },
+          "exercises": {
+            "eyebrow": "Oefeningen",
+            "title": "Oefening gebaseerd op jouw eigen materiaal",
+            "body": "Flashcards, meerkeuze, invulblanks, type-het-antwoord, match paren, en meer — opgebouwd uit de woorden en notities die je al hebt opgeslagen.",
+            "example": "Voorbeeld: een flashcard-set van de vocabulaire van deze week in plaats van een generieke set.",
+            "previewLabel": "Oefeningen",
+            "previewKicker": "Oefen set",
+            "previewTitle": "Jouw woorden worden de oefening",
+            "previewBody": "Geheugenwerk blijft verbonden met wat je daadwerkelijk wilt leren."
+          },
+          "skills": {
+            "eyebrow": "Vaardigheden",
+            "title": "Schrijven, luisteren, spreken en lezen",
+            "body": "Ga verder dan herkenning. Produceer taal, werk met audio, oefen spreken en lees met materiaal dat tot jouw werkruimte behoort.",
+            "example": "Voorbeeld: schrijf met de vocabulaire van de week, luister dan naar gerelateerd materiaal en spreek vanuit hetzelfde thema.",
+            "previewLabel": "Vaardigheden",
+            "previewKicker": "Actief gebruik",
+            "previewTitle": "Van weten naar gebruiken",
+            "previewBody": "Kernvaardigheidsgebieden zijn beschikbaar op elk plan; AI-gebruikslimieten variëren per plan."
+          },
+          "connected": {
+            "eyebrow": "Verbonden",
+            "title": "Één cyclus in plaats van verspreide tools",
+            "body": "Wat je vastlegt kan vocabulaire worden. Vocabulaire kan oefening worden. Oefening kan schrijven, luisteren en spreken voeden — zonder de draad te verliezen.",
+            "example": "Voorbeeld: een Vastleg-scrap wordt een woord, dat woord verschijnt in oefeningen, en komt dan weer terug in schrijven.",
+            "previewLabel": "Werkruimte",
+            "previewKicker": "Verbonden leren",
+            "previewTitle": "Minder opnieuw beginnen. Meer continuïteit.",
+            "previewBody": "Het product blijft op de achtergrond zodat jouw materiaal centraal kan blijven."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Leerfilosofie",
+        "title": "Woorden verzamelen is niet genoeg.",
+        "lede": "Een lijst van vocabulaire zonder begrip, oefening of gebruik wordt een andere verlaten notitie.",
+        "expand": "Notoria bestaat zodat vocabulaire, theorie, oefeningen en actieve vaardigheden één privé thuis kunnen delen — naast jouw boeken, docenten en media, niet in plaats daarvan.",
+        "beat": "Jouw materiaal hoort in het midden.",
+        "aboutLink": "Over Notoria",
+        "storyLink": "Lees ons verhaal",
+        "points": {
+          "workspace": "Bouw een persoonlijke leerwerkruimte voor één taal tegelijk.",
+          "understand": "Begrijp concepten in plaats van geïsoleerde scraps te memoriseren.",
+          "connect": "Verbind vocabulaire, notities en oefening in één cyclus.",
+          "skills": "Oefen schrijven, luisteren, spreken en lezen vanuit hetzelfde materiaal.",
+          "pace": "Leer in je eigen tempo, zonder een vast syllabus.",
+          "habits": "Kom vaak terug en bouw continuïteit op in plaats van verspreide sessies."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Aan de slag",
+        "title": "Een eenvoudig pad naar de werkruimte.",
+        "lede": "Je hoeft het hele product niet in één keer te leren. Begin klein, en laat de cyclus groeien.",
+        "expect": "Na registratie maak je een werkruimte voor de taal die je leert, en begin je met het verzamelen van materiaal. De in-app gids 'Aan de slag' leidt je door elk gebied wanneer je er klaar voor bent.",
+        "cta": "Maak je account aan",
+        "secondaryCta": "Lees hoe je het gebruikt",
+        "steps": {
+          "account": {
+            "title": "Maak een account aan",
+            "body": "Meld je aan en voer je privé leeromgeving in."
+          },
+          "workspace": {
+            "title": "Stel een werkruimte in",
+            "body": "Geef je studie een thuis voor één taal."
+          },
+          "language": {
+            "title": "Kies je leertaal",
+            "body": "Elke werkruimte richt zich op de taal die je leert."
+          },
+          "collect": {
+            "title": "Begin met verzamelen",
+            "body": "Bewaar vocabulaire en Vastleg-scraps die belangrijk voor je zijn."
+          },
+          "explore": {
+            "title": "Verken theorie en oefeningen",
+            "body": "Zet wat je hebt opgeslagen om in begrip en oefening."
+          },
+          "routine": {
+            "title": "Bouw een routine",
+            "body": "Kom terug, herzie, schrijf, luister, spreek en lees vanuit dezelfde plek."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Antwoorden voordat je begint.",
+        "lede": "Praktische vragen over wat Notoria is, hoe leren werkt, en wat er gebeurt nadat je je aanmeldt.",
+        "supportLink": "Bezoek Ondersteuning voor meer hulp",
+        "groups": {
+          "about": "Over Notoria",
+          "features": "Leerfuncties",
+          "start": "Aan de slag",
+          "account": "Account en beschikbaarheid"
+        },
+        "items": {
+          "what": {
+            "q": "Wat is Notoria precies?",
+            "a": "Notoria is een privé werkruimte voor zelfstudie van elke taal. Je houdt vocabulaire, notities, theorie, oefeningen, schrijven, luisteren, spreken en lezen op één plek georganiseerd per taal die je leert. Het is geen schoolplatform en geen bibliotheek van kant-en-klare cursussen."
+          },
+          "onlyVocab": {
+            "q": "Is Notoria alleen een vocabulaire leerapplicatie?",
+            "a": "Nee. Vocabulaire is centraal, maar Notoria omvat ook Vastleggen, Theorie, interactieve oefeningen, schrijven, luisteren, spreken en lezen. Het doel is om die gebieden verbonden te houden rond jouw eigen materiaal."
+          },
+          "who": {
+            "q": "Voor wie is Notoria ontworpen?",
+            "a": "Onafhankelijke leerlingen die hun eigen materiaal centraal in het proces willen — mensen die het verzamelen van wat voor hen belangrijk is, verkiezen boven het volgen van iemands vaste syllabus."
+          },
+          "vsFlashcards": {
+            "q": "Hoe verschilt Notoria van traditionele flashcard-applicaties?",
+            "a": "Flashcards zijn één oefenmodus binnen Notoria. Het product slaat ook betekenissen en voorbeelden, theorienotities, Vastleg-scraps en vaardighedenoefeningen op in dezelfde werkruimte, zodat herziening niet geïsoleerd is van begrip en gebruik."
+          },
+          "vocabHow": {
+            "q": "Hoe werkt het beheer van vocabulaire?",
+            "a": "Je slaat woorden op met betekenissen, voorbeelden, tags en optionele primaire of secundaire zintuigen. Die bank kan vervolgens oefeningen en later herziening voeden in plaats van in een aparte lijst te leven die je nooit opnieuw opent."
+          },
+          "inboxWhy": {
+            "q": "Wat is het doel van de Leer-Inbox (Vastleggen)?",
+            "a": "Vastleggen is het snelle invoerpunt. Wanneer je iets nuttigs opmerkt maar geen tijd hebt voor een volledige invoer, sla je de scrap op en verwerk je deze later in vocabulaire, theorie, schrijven of oefeningen."
+          },
+          "theoryExercises": {
+            "q": "Hoe werken Theorie en Oefeningen samen?",
+            "a": "Theorie bevat uitleg in je eigen woorden. Oefeningen zetten opgeslagen vocabulaire en gerelateerd materiaal om in oefening. Je kunt een tijdje bij woorden en korte drills blijven, en dan theorienotities toevoegen wanneer een patroon uitleg nodig heeft."
+          },
+          "skillsSupported": {
+            "q": "Welke leer vaardigheden worden ondersteund? Kan ik schrijven, luisteren, spreken en lezen oefenen?",
+            "a": "Ja. Schrijven, luisteren, spreken en lezen maken deel uit van de werkruimte. Deze gebieden zijn beschikbaar op elk plan; AI-gebruikslimieten variëren per plan."
+          },
+          "review": {
+            "q": "Hoe kan ik eerder verzameld materiaal herzien?",
+            "a": "Kom terug via Vocabulaire, Theorie, Oefeningen en gerelateerde herzieningstools in jouw werkruimte. Continuïteit is het doel: voeg toe wat nieuw is, herbezoek wat moeilijk was, en blijf oefenen met materiaal dat je al bezit."
+          },
+          "createAccount": {
+            "q": "Hoe maak ik een account aan?",
+            "a": "Gebruik <signUp>Aan de slag</signUp> of <signUp>Registreren</signUp>, en voltooi vervolgens de registratie. Je kunt ook later <signIn>inloggen</signIn> vanuit de openbare header."
+          },
+          "afterSignup": {
+            "q": "Wat gebeurt er na registratie?",
+            "a": "Je stelt een leerwerkruimte in voor jouw taal en begint vervolgens met het verzamelen van materiaal. Een in-app <gettingStarted>Aan de slag</gettingStarted> gids legt elk gebied uit zodra je binnen het product bent."
+          },
+          "chooseLanguage": {
+            "q": "Hoe kies ik mijn leertaal?",
+            "a": "Elke werkruimte is gewijd aan één leertaal. Je kiest die taal wanneer je de werkruimte aanmaakt, zodat vocabulaire en oefening georganiseerd blijven eromheen."
+          },
+          "experience": {
+            "q": "Heb ik eerdere leerervaring nodig?",
+            "a": "Nee. Notoria vereist geen vaste syllabus of eerdere cursusvoortgang. Een goede eerste dag kan een werkruimte en een handvol woorden zijn die je daadwerkelijk belangrijk vindt."
+          },
+          "languages": {
+            "q": "Welke talen worden ondersteund?",
+            "a": "Je kunt elke taal studeren die je kiest. De productinterface is beschikbaar in veel UI-talen; elke werkruimte richt zich op de taal die je leert."
+          },
+          "devices": {
+            "q": "Kan ik Notoria op verschillende apparaten gebruiken?",
+            "a": "Ja. Notoria is een webapplicatie op <site>notoria.fi</site>, dus je kunt je <signIn>inloggen</signIn> vanuit browsers op de apparaten die je al gebruikt."
+          },
+          "plans": {
+            "q": "Is er een gratis plan?",
+            "a": "Ja. Gratis dekt de basis leerbehoeften met een dagelijkse AI-toelage. Pro ontgrendelt meer van de AI-toolkit en gerelateerde extra's. Premium voegt gepersonaliseerde leerintelligentie toe. Je kunt plannen vergelijken in <billing>Accountfacturering</billing> nadat je je hebt <signIn>ingevoerd</signIn>."
+          },
+          "help": {
+            "q": "Hoe kan ik hulp krijgen of ondersteuning contacteren?",
+            "a": "Open de <support>Ondersteuning</support> pagina voor veelgestelde vragen en contactopties. Je kunt ook <contact>Neem contact met ons op</contact> voor account-, facturering-, privacy- of algemene vragen."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Maak leren een onderdeel van je dagelijks leven.",
+        "lede": "Begin met het bouwen van jouw persoonlijke leerwerkruimte met Notoria — privé, praktisch en gericht op jouw eigen materiaal.",
+        "primary": "Aan de slag",
+        "secondary": "Inloggen"
+      },
+      "meta": {
+        "title": "Notoria — Privé taal leerwerkruimte",
+        "description": "Verzamel vocabulaire, begrijp theorie, oefen met oefeningen en bouw blijvende taalvaardigheden in één verbonden persoonlijke werkruimte.",
+        "ogDescription": "Bouw een leersysteem dat met je meegroeit — vocabulaire, theorie, oefeningen, schrijven, luisteren, spreken en lezen op één plek.",
+        "twitterDescription": "Bouw een leersysteem dat met je meegroeit — vocabulaire, theorie, oefeningen en vaardigheden oefenen in één werkruimte."
       }
     }
   },

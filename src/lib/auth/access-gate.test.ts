@@ -26,9 +26,14 @@ describe("safeLocalCallback", () => {
   });
 
   it("rejects external and protocol-relative destinations", () => {
-    expect(safeLocalCallback("https://evil.example/steal")).toBe("/");
-    expect(safeLocalCallback("//evil.example")).toBe("/");
-    expect(safeLocalCallback("/\\evil.example")).toBe("/");
+    expect(safeLocalCallback("https://evil.example/steal")).toBe("/dashboard");
+    expect(safeLocalCallback("//evil.example")).toBe("/dashboard");
+    expect(safeLocalCallback("/\\evil.example")).toBe("/dashboard");
+  });
+
+  it("falls back to the app home when the callback is missing", () => {
+    expect(safeLocalCallback(null)).toBe("/dashboard");
+    expect(safeLocalCallback("")).toBe("/dashboard");
   });
 });
 
@@ -162,6 +167,76 @@ describe("decideAccess", () => {
         authzStale: true,
       }).type,
     ).toBe("next");
+  });
+
+  it("serves the marketing root to guests and sends signed-in users to the dashboard", () => {
+    expect(
+      decideAccess({
+        ...base,
+        pathname: "/",
+        search: "",
+        isLoggedIn: false,
+      }).type,
+    ).toBe("next");
+
+    const signedIn = decideAccess({
+      ...base,
+      pathname: "/",
+      search: "",
+      isLoggedIn: true,
+    });
+    expect(signedIn.type).toBe("redirect");
+    if (signedIn.type === "redirect") {
+      expect(new URL(signedIn.url).pathname).toBe("/dashboard");
+    }
+  });
+
+  it("keeps public info pages open for signed-in users", () => {
+    expect(
+      decideAccess({
+        ...base,
+        pathname: "/about",
+        search: "",
+        isLoggedIn: true,
+      }).type,
+    ).toBe("next");
+    expect(
+      decideAccess({
+        ...base,
+        pathname: "/how-to-use",
+        search: "",
+        isLoggedIn: false,
+      }).type,
+    ).toBe("next");
+  });
+
+  it("sends signed-in users away from guest-only auth pages", () => {
+    for (const pathname of ["/sign-in", "/sign-up", "/forgot-password"]) {
+      const decision = decideAccess({
+        ...base,
+        pathname,
+        search: "",
+        isLoggedIn: true,
+      });
+      expect(decision.type).toBe("redirect");
+      if (decision.type === "redirect") {
+        expect(new URL(decision.url).pathname).toBe("/dashboard");
+      }
+    }
+  });
+
+  it("protects the dashboard home for guests", () => {
+    const decision = decideAccess({
+      ...base,
+      pathname: "/dashboard",
+      search: "",
+      isLoggedIn: false,
+    });
+    expect(decision.type).toBe("redirect");
+    if (decision.type !== "redirect") return;
+    const url = new URL(decision.url);
+    expect(url.pathname).toBe("/sign-in");
+    expect(url.searchParams.get("callbackUrl")).toBe("/dashboard");
   });
 });
 

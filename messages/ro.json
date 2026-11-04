@@ -4498,7 +4498,8 @@
           "p3": "Pentru opțiuni generale de asistență și inbox-ul tehnic de feedback, consultați <contactPage>Contactați-ne</contactPage> și <support>Asistență</support>."
         }
       }
-    }
+    },
+    "backToHome": "Înapoi la acasă"
   },
   "footer": {
     "navLabel": "Linkuri site",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Căutați răspunsuri sau doriți să trimiteți feedback?",
         "link": "Asistență"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Principal",
+        "howItWorks": "Cum funcționează",
+        "features": "Funcționalități",
+        "faq": "Întrebări frecvente",
+        "about": "Despre",
+        "support": "Asistență",
+        "signIn": "Conectare",
+        "getStarted": "Începeți",
+        "openMenu": "Deschideți meniul",
+        "closeMenu": "Închideți meniul"
+      },
+      "hero": {
+        "headline": "Construiește un sistem de învățare care crește odată cu tine.",
+        "description": "Colectează vocabular, înțelege concepte noi, exersează-ți abilitățile și transformă ceea ce înveți în cunoștințe durabile — toate într-un spațiu de lucru conectat.",
+        "supporting": "Notoria este un spațiu de lucru privat pentru auto-studiul oricărei limbi. Este construit în jurul materialului pe care îl aduci — nu un catalog de lecții pe care nu le-ai ales.",
+        "primaryCta": "Începeți",
+        "secondaryCta": "Explorează cum funcționează"
+      },
+      "preview": {
+        "windowLabel": "Spațiul de lucru Notoria",
+        "vocabTitle": "Vocabular",
+        "vocabMeta": "Cuvinte pe care le păstrezi",
+        "theoryTitle": "Teorie",
+        "theoryMeta": "Note care rămân",
+        "practiceTitle": "Exerciții",
+        "practiceMeta": "Din materialul tău",
+        "cardKicker": "Spațiul tău de lucru",
+        "cardTitle": "O limbă. Un ciclu.",
+        "cardBody": "Salvează ceea ce contează, organizează-l, apoi exersează scrierea, ascultarea, vorbirea și citirea din același loc.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "apoi · următor",
+        "floatTheory": "Partitiv",
+        "floatTheoryMeta": "Când cantitățile rămân deschise",
+        "floatPractice": "Set de flashcard-uri",
+        "floatPracticeMeta": "12 de datorii astăzi"
+      },
+      "workflow": {
+        "kicker": "Cum funcționează Notoria",
+        "title": "Un ciclu de învățare în jurul materialului tău.",
+        "lede": "Notoria nu este un catalog de cursuri. Este un spațiu de lucru privat unde ceea ce colectezi devine ceea ce exersezi.",
+        "bridge": "Vocabularul, Captura, Teoria, Exercițiile, Scrierea, Ascultarea, Vorbirea și Citirea rămân conectate — astfel încât să nu reîncepi de fiecare dată când schimbi uneltele.",
+        "guideLink": "Citește ghidul complet Cum să folosești",
+        "steps": {
+          "collect": {
+            "title": "Colectează",
+            "body": "Salvează vocabularul și fragmentele de învățare pe măsură ce le întâlnești — din lecții, cărți, media și conversații."
+          },
+          "organise": {
+            "title": "Organizează",
+            "body": "Păstrează o colecție structurată pe limbă, cu semnificații, exemple, etichete și sensuri pe care le poți găsi din nou."
+          },
+          "understand": {
+            "title": "Înțelege",
+            "body": "Scrie note teoretice cu cuvintele tale atunci când un model necesită explicații."
+          },
+          "practise": {
+            "title": "Exersează",
+            "body": "Transformă ceea ce ai salvat în flashcard-uri, teste, completări și altele."
+          },
+          "apply": {
+            "title": "Aplică",
+            "body": "Scrie, ascultă, vorbește și citește astfel încât limba să treacă dincolo de recunoaștere în utilizare activă."
+          },
+          "review": {
+            "title": "Revizuiește",
+            "body": "Întoarce-te mai târziu, adaugă ceea ce este nou, revizuiește ceea ce a fost greu și menține ciclul în mișcare."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Funcționalități de bază",
+        "title": "Totul într-un spațiu de lucru conectat.",
+        "lede": "Fiecare zonă este construită pentru auto-studiu real — nu unelte izolate cu un login comun.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Vocabular",
+            "title": "O bancă personală de vocabular care rămâne utilă",
+            "body": "Stochează cuvinte cu semnificații, exemple, părți de vorbire, etichete și sensuri primare sau secundare. Ceea ce salvezi poate deveni practică mai târziu.",
+            "example": "Exemplu: salvează sitten cu sensul său de secvență și sensul de timp, apoi exersează ambele din aceeași intrare.",
+            "previewLabel": "Vocabular",
+            "previewKicker": "Detalii despre cuvânt",
+            "previewTitle": "Semnificațiile rămân atașate de cuvânt",
+            "previewBody": "Sensuri primare pentru exerciții. Sensuri secundare pentru referință atunci când ai nevoie de ele."
+          },
+          "inbox": {
+            "eyebrow": "Captură",
+            "title": "O cutie de învățare pentru fragmente rapide",
+            "body": "Lasă note rapid atunci când apare ceva, apoi procesează-le în vocabular, teorie, scriere sau exerciții când ai timp.",
+            "example": "Exemplu: capturează o frază dintr-un podcast, apoi transform-o într-o intrare de vocabular după navetă.",
+            "previewLabel": "Captură",
+            "previewKicker": "Inbox",
+            "previewTitle": "Prinde-l acum. Organizează mai târziu.",
+            "previewBody": "Păstrează momentul fără a forța o intrare completă atunci când ești ocupat."
+          },
+          "theory": {
+            "eyebrow": "Teorie",
+            "title": "Explicații lângă limba pe care o înveți",
+            "body": "Scrie note de gramatică și utilizare cu cuvintele tale. Păstrează-le în același spațiu de lucru cu vocabularul pe care îl explică.",
+            "example": "Exemplu: o notă scurtă despre cazul partitiv lângă substantivele pe care le uiți mereu.",
+            "previewLabel": "Teorie",
+            "previewKicker": "Nota ta",
+            "previewTitle": "Modele scrise în cuvintele tale",
+            "previewBody": "Revisitează explicația atunci când aceeași confuzie revine."
+          },
+          "exercises": {
+            "eyebrow": "Exerciții",
+            "title": "Practică derivată din materialul tău",
+            "body": "Flashcard-uri, întrebări cu alegere multiplă, completări, scrie-răspuns, potriviri și altele — construite din cuvintele și notele pe care le-ai salvat deja.",
+            "example": "Exemplu: un set de flashcard-uri din vocabularul acestei săptămâni în loc de un pachet generic.",
+            "previewLabel": "Exerciții",
+            "previewKicker": "Set de practică",
+            "previewTitle": "Cuvintele tale devin exercițiul",
+            "previewBody": "Munca de memorie rămâne conectată la ceea ce îți pasă cu adevărat să înveți."
+          },
+          "skills": {
+            "eyebrow": "Abilități",
+            "title": "Scriere, ascultare, vorbire și citire",
+            "body": "Treci dincolo de recunoaștere. Produce limbaj, lucrează cu audio, exersează vorbirea și citește cu material care aparține spațiului tău de lucru.",
+            "example": "Exemplu: scrie cu vocabularul săptămânii, apoi ascultă materialul corespunzător și vorbește pe aceeași temă.",
+            "previewLabel": "Abilități",
+            "previewKicker": "Utilizare activă",
+            "previewTitle": "De la cunoaștere la utilizare",
+            "previewBody": "Zonele de abilități de bază sunt disponibile pe fiecare plan; limitele de utilizare AI variază în funcție de plan."
+          },
+          "connected": {
+            "eyebrow": "Conexiuni",
+            "title": "Un ciclu în loc de unelte dispersate",
+            "body": "Ceea ce capturezi poate deveni vocabular. Vocabularul poate deveni practică. Practica poate alimenta scrierea, ascultarea și vorbirea — fără a pierde firul.",
+            "example": "Exemplu: un fragment Capturat devine un cuvânt, acel cuvânt apare în exerciții, apoi reapare în scriere.",
+            "previewLabel": "Spațiu de lucru",
+            "previewKicker": "Învățare conectată",
+            "previewTitle": "Mai puțin restart. Mai multă continuitate.",
+            "previewBody": "Produsul rămâne în fundal astfel încât materialul tău să rămână în centrul atenției."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Filozofia învățării",
+        "title": "Colectarea cuvintelor nu este suficientă.",
+        "lede": "O listă de vocabular fără înțelegere, practică sau utilizare devine o altă notă abandonată.",
+        "expand": "Notoria există astfel încât vocabularul, teoria, exercițiile și abilitățile active să poată împărtăși o singură casă privată — lângă cărțile, profesorii și media tale, nu în locul lor.",
+        "beat": "Materialul tău aparține centrului.",
+        "aboutLink": "Despre Notoria",
+        "storyLink": "Citește povestea noastră",
+        "points": {
+          "workspace": "Construiește un spațiu de învățare personal pentru o limbă la un moment dat.",
+          "understand": "Înțelege conceptele în loc să memorezi fragmente izolate.",
+          "connect": "Conectează vocabularul, notele și practica într-un singur ciclu.",
+          "skills": "Exersează scrierea, ascultarea, vorbirea și citirea din același material.",
+          "pace": "Învăță în ritmul tău, fără un syllabus fix.",
+          "habits": "Întoarce-te des și construiește continuitate în loc de sesiuni dispersate."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Începând",
+        "title": "Un drum simplu în spațiul de lucru.",
+        "lede": "Nu trebuie să înveți întregul produs dintr-o dată. Începe mic, apoi dezvoltă ciclul.",
+        "expect": "După înregistrare, creezi un spațiu de lucru pentru limba ta de învățare, apoi începi să colectezi material. Ghidul în aplicație Getting Started te ghidează prin fiecare zonă când ești pregătit.",
+        "cta": "Creează-ți contul",
+        "secondaryCta": "Citește Cum să folosești",
+        "steps": {
+          "account": {
+            "title": "Creează un cont",
+            "body": "Înscrie-te și intră în spațiul tău privat de învățare."
+          },
+          "workspace": {
+            "title": "Configurează un spațiu de lucru",
+            "body": "Oferă-ți studiului un cămin pentru o limbă."
+          },
+          "language": {
+            "title": "Alege limba ta de învățare",
+            "body": "Fiecare spațiu de lucru se concentrează pe limba pe care o înveți."
+          },
+          "collect": {
+            "title": "Începe să colectezi",
+            "body": "Salvează vocabularul și fragmentele Capturate care contează pentru tine."
+          },
+          "explore": {
+            "title": "Explorează teoria și exercițiile",
+            "body": "Transformă ceea ce ai salvat în înțelegere și practică."
+          },
+          "routine": {
+            "title": "Construiește o rutină",
+            "body": "Întoarce-te, revizuiește, scrie, ascultă, vorbește și citește din același loc."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "Întrebări frecvente",
+        "title": "Răspunsuri înainte să începi.",
+        "lede": "Întrebări practice despre ce este Notoria, cum funcționează învățarea și ce se întâmplă după ce te înscrii.",
+        "supportLink": "Vizitează Asistență pentru mai mult ajutor",
+        "groups": {
+          "about": "Despre Notoria",
+          "features": "Funcționalități de învățare",
+          "start": "Începând",
+          "account": "Cont și disponibilitate"
+        },
+        "items": {
+          "what": {
+            "q": "Ce este exact Notoria?",
+            "a": "Notoria este un spațiu de lucru privat pentru auto-studiul oricărei limbi. Păstrezi vocabular, note, teorie, exerciții, scriere, ascultare, vorbire și citire într-un singur loc organizat după limba pe care o înveți. Nu este o platformă școlară și nu este o bibliotecă de cursuri gata pregătite."
+          },
+          "onlyVocab": {
+            "q": "Este Notoria doar o aplicație de învățare a vocabularului?",
+            "a": "Nu. Vocabularul este central, dar Notoria include și Captură, Teorie, exerciții interactive, scriere, ascultare, vorbire și citire. Scopul este de a menține aceste zone conectate în jurul materialului tău."
+          },
+          "who": {
+            "q": "Pentru cine este concepută Notoria?",
+            "a": "Învățăcei independenți care doresc ca materialul lor să fie în centrul procesului — oameni care preferă să colecteze ceea ce contează pentru ei în loc să urmeze un syllabus fix al altcuiva."
+          },
+          "vsFlashcards": {
+            "q": "Cum se deosebește Notoria de aplicațiile tradiționale de flashcard-uri?",
+            "a": "Flashcard-urile sunt un mod de practică în cadrul Notoria. Produsul stochează de asemenea semnificații și exemple, note teoretice, fragmente Capturate și practică de abilități în același spațiu de lucru, astfel încât revizuirea să nu fie izolată de înțelegere și utilizare."
+          },
+          "vocabHow": {
+            "q": "Cum funcționează gestionarea vocabularului?",
+            "a": "Salvezi cuvinte cu semnificații, exemple, etichete și sensuri primare sau secundare opționale. Acea bancă poate alimenta apoi exerciții și revizuiri ulterioare în loc să trăiască într-o listă separată pe care nu o redeschizi niciodată."
+          },
+          "inboxWhy": {
+            "q": "Care este scopul Inbox-ului de Învățare (Captură)?",
+            "a": "Captura este punctul de intrare rapid. Când observi ceva util dar nu ai timp pentru o intrare completă, salvezi fragmentul și îl procesezi mai târziu în vocabular, teorie, scriere sau exerciții."
+          },
+          "theoryExercises": {
+            "q": "Cum funcționează împreună Teoria și Exercițiile?",
+            "a": "Teoria conține explicații cu cuvintele tale. Exercițiile transformă vocabularul salvat și materialul aferent în practică. Poți rămâne cu cuvintele și exercițiile scurte pentru o vreme, apoi adaugă note teoretice atunci când un model necesită explicații."
+          },
+          "skillsSupported": {
+            "q": "Ce abilități de învățare sunt susținute? Pot exersa scrierea, ascultarea, vorbirea și citirea?",
+            "a": "Da. Scrierea, ascultarea, vorbirea și citirea fac parte din spațiul de lucru. Aceste zone sunt disponibile pe fiecare plan; limitele de utilizare AI variază în funcție de plan."
+          },
+          "review": {
+            "q": "Cum pot revizui materialul colectat anterior?",
+            "a": "Întoarce-te prin Vocabular, Teorie, Exerciții și instrumentele de revizuire aferente din spațiul tău de lucru. Continuitatea este scopul: adaugă ceea ce este nou, revizuiește ceea ce a fost greu și continuă să exersezi din materialul pe care deja îl deții."
+          },
+          "createAccount": {
+            "q": "Cum îmi creez un cont?",
+            "a": "Folosește <signUp>Începe</signUp> sau <signUp>Înscrie-te</signUp>, apoi completează înregistrarea. Poți de asemenea să <signIn>te conectezi</signIn> mai târziu din antetul public."
+          },
+          "afterSignup": {
+            "q": "Ce se întâmplă după înregistrare?",
+            "a": "Îți configurezi un spațiu de învățare pentru limba ta, apoi începi să aduni material. Un ghid în aplicație <gettingStarted>Începe</gettingStarted> explică fiecare zonă odată ce ești în produs."
+          },
+          "chooseLanguage": {
+            "q": "Cum aleg limba mea de învățare?",
+            "a": "Fiecare spațiu de lucru este dedicat unei limbi de învățare. Alegi acea limbă atunci când creezi spațiul de lucru, astfel încât vocabularul și practica să rămână organizate în jurul ei."
+          },
+          "experience": {
+            "q": "Am nevoie de experiență anterioară de învățare?",
+            "a": "Nu. Notoria nu necesită un syllabus fix sau progres anterior în cursuri. O zi bună de început poate fi un spațiu de lucru și o mână de cuvinte care îți pasă cu adevărat."
+          },
+          "languages": {
+            "q": "Ce limbi sunt susținute?",
+            "a": "Poți studia orice limbă alegi. Interfața produsului este disponibilă în multe limbi UI; fiecare spațiu de lucru se concentrează pe limba pe care o înveți."
+          },
+          "devices": {
+            "q": "Pot accesa Notoria pe diferite dispozitive?",
+            "a": "Da. Notoria este o aplicație web la <site>notoria.fi</site>, așa că poți <signIn>te conecta</signIn> din browserele pe dispozitivele pe care le folosești deja."
+          },
+          "plans": {
+            "q": "Există un plan gratuit?",
+            "a": "Da. Planul gratuit acoperă esențele învățării de bază cu o alocație zilnică de AI. Pro deblochează mai multe instrumente AI și extra-uri asociate. Premium adaugă inteligență de învățare personalizată. Poți compara planurile în <billing>Facturarea contului</billing> după ce <signIn>te conectezi</signIn>."
+          },
+          "help": {
+            "q": "Cum pot obține ajutor sau contacta asistența?",
+            "a": "Deschide pagina <support>Asistență</support> pentru întrebări frecvente și opțiuni de contact. Poți folosi de asemenea <contact>Contactează-ne</contact> pentru întrebări legate de cont, facturare, confidențialitate sau întrebări generale."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Fă din învățare parte din viața ta de zi cu zi.",
+        "lede": "Începe să construiești spațiul tău personal de învățare cu Notoria — privat, practic și centrat pe materialul tău.",
+        "primary": "Începeți",
+        "secondary": "Conectare"
+      },
+      "meta": {
+        "title": "Notoria — Spațiu privat de învățare a limbilor",
+        "description": "Colectează vocabular, înțelege teorie, exersează cu exerciții și construiește abilități lingvistice durabile într-un spațiu personal conectat.",
+        "ogDescription": "Construiește un sistem de învățare care crește odată cu tine — vocabular, teorie, exerciții, scriere, ascultare, vorbire și citire într-un singur loc.",
+        "twitterDescription": "Construiește un sistem de învățare care crește odată cu tine — vocabular, teorie, exerciții și practică de abilități într-un singur spațiu de lucru."
       }
     }
   },

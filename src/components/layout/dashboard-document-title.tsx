@@ -18,7 +18,7 @@ export function DashboardDocumentTitle() {
   const tReading = useTranslations("reading");
 
   const title = useMemo(() => {
-    if (pathname === "/") return "Notoria";
+    if (pathname === "/dashboard") return "Notoria";
     if (pathname === "/account" || pathname.startsWith("/account/")) {
       return tNav("account");
     }

@@ -4498,7 +4498,8 @@
           "p3": "Bendrosioms pagalbos galimybėms ir techninei atsiliepimų dėžutei žr. <contactPage>Kontaktai</contactPage> ir <support>Pagalba</support>."
         }
       }
-    }
+    },
+    "backToHome": "Grįžti į pradžią"
   },
   "footer": {
     "navLabel": "Svetainės nuorodos",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Ieškote atsakymų ar norite siųsti atsiliepimą?",
         "link": "Pagalba"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Pagrindinis",
+        "howItWorks": "Kaip tai veikia",
+        "features": "Funkcijos",
+        "faq": "D.U.K.",
+        "about": "Apie",
+        "support": "Pagalba",
+        "signIn": "Prisijungti",
+        "getStarted": "Pradėti",
+        "openMenu": "Atidaryti meniu",
+        "closeMenu": "Uždaryti meniu"
+      },
+      "hero": {
+        "headline": "Sukurkite mokymosi sistemą, kuri auga kartu su jumis.",
+        "description": "Rinkite žodyną, supraskite naujas sąvokas, praktikuokite savo įgūdžius ir paverskite tai, ką išmokote, ilgalaikiu žinojimu — viską vienoje sujungtoje darbo erdvėje.",
+        "supporting": "Notoria yra privati darbo erdvė savarankiškam bet kurios kalbos mokymuisi. Ji sukurta aplink medžiagą, kurią atnešate — o ne pamokų katalogą, kurio nesirinkote.",
+        "primaryCta": "Pradėti",
+        "secondaryCta": "Išnagrinėti, kaip tai veikia"
+      },
+      "preview": {
+        "windowLabel": "Notoria darbo erdvė",
+        "vocabTitle": "Žodynas",
+        "vocabMeta": "Išlaikyti žodžiai",
+        "theoryTitle": "Teorija",
+        "theoryMeta": "Užrašai, kurie išlieka",
+        "practiceTitle": "Praktika",
+        "practiceMeta": "Iš jūsų medžiagos",
+        "cardKicker": "Jūsų darbo erdvė",
+        "cardTitle": "Vienas kalba. Vienas ciklas.",
+        "cardBody": "Išsaugokite, kas svarbu, organizuokite tai, tada praktikuokite rašymą, klausymą, kalbėjimą ir skaitymą iš tos pačios vietos.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "tada · kitas",
+        "floatTheory": "Dalinė",
+        "floatTheoryMeta": "Kai kiekiai lieka atviri",
+        "floatPractice": "Klausimų rinkinys",
+        "floatPracticeMeta": "12 šiandien"
+      },
+      "workflow": {
+        "kicker": "Kaip veikia Notoria",
+        "title": "Mokymosi ciklas aplink jūsų pačių medžiagą.",
+        "lede": "Notoria nėra kursų katalogas. Tai privati darbo erdvė, kur tai, ką renkatės, tampa tuo, ką praktikuojate.",
+        "bridge": "Žodynas, fiksavimas, teorija, pratimai, rašymas, klausymas, kalbėjimas ir skaitymas lieka susiję — todėl jums nereikia pradėti iš naujo kiekvieną kartą keičiant įrankius.",
+        "guideLink": "Perskaitykite visą „Kaip naudoti“ gidą",
+        "steps": {
+          "collect": {
+            "title": "Rinkti",
+            "body": "Išsaugokite žodyną ir mokymosi fragmentus, kai juos sutinkate — iš pamokų, knygų, medijos ir pokalbių."
+          },
+          "organise": {
+            "title": "Organizuoti",
+            "body": "Išlaikykite vieną struktūrizuotą kolekciją kiekvienai kalbai, su reikšmėmis, pavyzdžiais, žymomis ir prasme, kurią vėl galėsite rasti."
+          },
+          "understand": {
+            "title": "Suprasti",
+            "body": "Rašykite teorijos užrašus savo žodžiais, kai reikia paaiškinti modelį."
+          },
+          "practise": {
+            "title": "Praktikuoti",
+            "body": "Paverskite tai, ką išsaugojote, į korteles, testus, užpildykite spragas ir daugiau."
+          },
+          "apply": {
+            "title": "Taikyti",
+            "body": "Rašykite, klausykite, kalbėkite ir skaitykite, kad kalba pereitų nuo atpažinimo prie aktyvaus naudojimo."
+          },
+          "review": {
+            "title": "Peržiūrėti",
+            "body": "Grįžkite vėliau, pridėkite naują, peržiūrėkite, kas buvo sunku, ir tęskite ciklą."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Pagrindinės funkcijos",
+        "title": "Viskas vienoje sujungtoje darbo erdvėje.",
+        "lede": "Kiekviena sritis sukurta tikram savarankiškam mokymuisi — ne izoliuoti įrankiai su bendru prisijungimu.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Žodynas",
+            "title": "Asmeninė žodžių bankas, kuris išlieka naudingas",
+            "body": "Saugojimo žodžius su reikšmėmis, pavyzdžiais, kalbos dalimi, žymomis ir pirminėmis ar antrinėmis prasmėmis. Tai, ką išsaugote, gali tapti praktika vėliau.",
+            "example": "Pavyzdys: išsaugokite sitten su jo sekos prasme ir laiko prasme, tada praktikuokite abi iš to paties įrašo.",
+            "previewLabel": "Žodynas",
+            "previewKicker": "Žodžio detalė",
+            "previewTitle": "Reikšmės lieka prijungtos prie žodžio",
+            "previewBody": "Pirminės prasmės pratimams. Antrinės prasmės nuorodai, kai jų reikia."
+          },
+          "inbox": {
+            "eyebrow": "Fiksavimas",
+            "title": "Mokymosi pašto dėžutė greitiems fragmentams",
+            "body": "Greitai užrašykite pastabas, kai kažkas pasirodo, tada apdorokite jas į žodyną, teoriją, rašymą ar pratimus, kai turite laiko.",
+            "example": "Pavyzdys: užfiksuokite frazę iš tinklalaidės, tada paverskite ją žodyno įrašu po kelionės.",
+            "previewLabel": "Fiksavimas",
+            "previewKicker": "Pašto dėžutė",
+            "previewTitle": "Pagaukite dabar. Organizuokite vėliau.",
+            "previewBody": "Išlaikykite momentą, nesistengdami sukurti pilno įrašo, kai esate užimtas."
+          },
+          "theory": {
+            "eyebrow": "Teorija",
+            "title": "Paaiškinimai šalia kalbos, kurią mokotės",
+            "body": "Rašykite gramatikos ir vartojimo užrašus savo žodžiais. Išlaikykite juos toje pačioje darbo erdvėje kaip ir žodyną, kurį jie paaiškina.",
+            "example": "Pavyzdys: trumpas užrašas apie dalinę formą šalia daiktavardžių, kuriuos nuolat pamirštate.",
+            "previewLabel": "Teorija",
+            "previewKicker": "Jūsų užrašas",
+            "previewTitle": "Modeliai, užrašyti jūsų žodžiais",
+            "previewBody": "Peržiūrėkite paaiškinimą, kai ta pati painiava grįžta."
+          },
+          "exercises": {
+            "eyebrow": "Pratimai",
+            "title": "Praktika, paimta iš jūsų pačių medžiagos",
+            "body": "Kortelės, pasirinkimo klausimai, užpildykite spragas, rašykite atsakymus, suderinkite poras ir daugiau — sukurta iš žodžių ir užrašų, kuriuos jau išsaugojote.",
+            "example": "Pavyzdys: kortelių rinkinys iš šios savaitės žodyno, o ne bendras rinkinys.",
+            "previewLabel": "Pratimai",
+            "previewKicker": "Praktikos rinkinys",
+            "previewTitle": "Jūsų žodžiai tampa treniruote",
+            "previewBody": "Atminties darbas lieka susijęs su tuo, kas jums iš tikrųjų rūpi mokytis."
+          },
+          "skills": {
+            "eyebrow": "Įgūdžiai",
+            "title": "Rašymas, klausymas, kalbėjimas ir skaitymas",
+            "body": "Pereikite nuo atpažinimo. Gaminkite kalbą, dirbkite su garso įrašais, praktikuokite kalbėjimą ir skaitykite su medžiaga, kuri priklauso jūsų darbo erdvei.",
+            "example": "Pavyzdys: rašykite su šios savaitės žodynu, tada klausykite susijusios medžiagos ir kalbėkite iš to paties temos.",
+            "previewLabel": "Įgūdžiai",
+            "previewKicker": "Aktyvus naudojimas",
+            "previewTitle": "Nuo žinojimo iki naudojimo",
+            "previewBody": "Pagrindiniai įgūdžių sritys yra prieinamos kiekviename plane; AI naudojimo ribos skiriasi pagal planą."
+          },
+          "connected": {
+            "eyebrow": "Ryšiai",
+            "title": "Vienas ciklas vietoj išsklaidytų įrankių",
+            "body": "Tai, ką fiksuojate, gali tapti žodynu. Žodynas gali tapti praktika. Praktika gali maitinti rašymą, klausymą ir kalbėjimą — neprarandant siūlo.",
+            "example": "Pavyzdys: fiksavimo fragmentas tampa žodžiu, tas žodis pasirodo pratybose, tada vėl pasirodo rašyme.",
+            "previewLabel": "Darbo erdvė",
+            "previewKicker": "Sujungtas mokymasis",
+            "previewTitle": "Mažiau pradėjimo iš naujo. Daugiau tęstinumo.",
+            "previewBody": "Produktas lieka šone, kad jūsų medžiaga galėtų likti centre."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Mokymosi filosofija",
+        "title": "Žodžių rinkimas nepakanka.",
+        "lede": "Žodžių sąrašas be supratimo, praktikos ar naudojimo tampa dar viena apleista pastaba.",
+        "expand": "Notoria egzistuoja, kad žodynas, teorija, pratimai ir aktyvūs įgūdžiai galėtų dalintis viena privačia namų erdve — šalia jūsų knygų, mokytojų ir medijos, o ne jų vietoje.",
+        "beat": "Jūsų medžiaga priklauso centre.",
+        "aboutLink": "Apie Notoria",
+        "storyLink": "Perskaitykite mūsų istoriją",
+        "points": {
+          "workspace": "Sukurkite asmeninę mokymosi darbo erdvę vienai kalbai vienu metu.",
+          "understand": "Supraskite sąvokas, o ne įsiminkite izoliuotus fragmentus.",
+          "connect": "Sujunkite žodyną, užrašus ir praktiką į vieną ciklą.",
+          "skills": "Praktikuokite rašymą, klausymą, kalbėjimą ir skaitymą iš tos pačios medžiagos.",
+          "pace": "Mokykitės savo tempu, be fiksuoto mokymo plano.",
+          "habits": "Grįžkite dažnai ir kurkite tęstinumą, o ne išsklaidytas sesijas."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Pradėti",
+        "title": "Paprasčiausias kelias į darbo erdvę.",
+        "lede": "Jums nereikia išmokti viso produkto iš karto. Pradėkite mažai, tada auginkite ciklą.",
+        "expect": "Po registracijos sukuriate darbo erdvę savo mokomai kalbai, tada pradedate rinkti medžiagą. Programėlėje esantis „Pradėti“ gidas praeina per kiekvieną sritį, kai esate pasiruošę.",
+        "cta": "Sukurkite savo paskyrą",
+        "secondaryCta": "Perskaitykite, kaip naudoti",
+        "steps": {
+          "account": {
+            "title": "Sukurkite paskyrą",
+            "body": "Užsiregistruokite ir įveskite savo privati mokymosi erdvę."
+          },
+          "workspace": {
+            "title": "Nustatykite darbo erdvę",
+            "body": "Suteikite savo studijoms namus vienai kalbai."
+          },
+          "language": {
+            "title": "Pasirinkite savo mokomąją kalbą",
+            "body": "Kiekviena darbo erdvė orientuota į kalbą, kurią mokotės."
+          },
+          "collect": {
+            "title": "Pradėkite rinkti",
+            "body": "Išsaugokite žodyną ir fiksavimo fragmentus, kurie jums svarbūs."
+          },
+          "explore": {
+            "title": "Išnagrinėkite teoriją ir pratimus",
+            "body": "Paverskite tai, ką išsaugojote, į supratimą ir praktiką."
+          },
+          "routine": {
+            "title": "Sukurkite rutiną",
+            "body": "Grįžkite, peržiūrėkite, rašykite, klausykite, kalbėkite ir skaitykite iš tos pačios vietos."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "D.U.K.",
+        "title": "Atsakymai prieš pradedant.",
+        "lede": "Praktiniai klausimai apie tai, kas yra Notoria, kaip veikia mokymasis ir kas vyksta po registracijos.",
+        "supportLink": "Apsilankykite pagalbos puslapyje, kad gautumėte daugiau pagalbos",
+        "groups": {
+          "about": "Apie Notoria",
+          "features": "Mokymosi funkcijos",
+          "start": "Pradėti",
+          "account": "Paskyra ir prieinamumas"
+        },
+        "items": {
+          "what": {
+            "q": "Kas tiksliai yra Notoria?",
+            "a": "Notoria yra privati darbo erdvė savarankiškam bet kurios kalbos mokymuisi. Jūs laikote žodyną, užrašus, teoriją, pratimus, rašymą, klausymą, kalbėjimą ir skaitymą vienoje vietoje, organizuotą pagal kalbą, kurią mokotės. Tai nėra mokyklos platforma ir ne bibliotekos su paruoštais kursais."
+          },
+          "onlyVocab": {
+            "q": "Ar Notoria yra tik žodyno mokymosi programa?",
+            "a": "Ne. Žodynas yra centrinis, tačiau Notoria taip pat apima fiksavimą, teoriją, interaktyvius pratimus, rašymą, klausymą, kalbėjimą ir skaitymą. Svarbu, kad šios sritys būtų susijusios aplink jūsų pačių medžiagą."
+          },
+          "who": {
+            "q": "Kam skirta Notoria?",
+            "a": "Nepriklausomiems mokiniams, kurie nori, kad jų medžiaga būtų proceso centre — žmonėms, kurie mieliau renkasi tai, kas jiems svarbu, o ne seka kažkieno fiksuotą mokymo planą."
+          },
+          "vsFlashcards": {
+            "q": "Kaip Notoria skiriasi nuo tradicinių kortelių programų?",
+            "a": "Kortelės yra viena praktikos forma Notoria. Produktas taip pat saugo reikšmes ir pavyzdžius, teorijos užrašus, fiksavimo fragmentus ir įgūdžių praktiką toje pačioje darbo erdvėje, todėl peržiūra nėra izoliuota nuo supratimo ir naudojimo."
+          },
+          "vocabHow": {
+            "q": "Kaip veikia žodyno valdymas?",
+            "a": "Išsaugote žodžius su reikšmėmis, pavyzdžiais, žymomis ir pasirenkamomis pirminėmis ar antrinėmis prasmėmis. Tas bankas gali vėliau maitinti pratimus ir peržiūras, o ne gyventi atskirame sąraše, kurio niekada nebeatidarysite."
+          },
+          "inboxWhy": {
+            "q": "Koks yra Mokymosi pašto dėžutės (Fiksavimas) tikslas?",
+            "a": "Fiksavimas yra greitas įėjimo taškas. Kai pastebite kažką naudingo, bet neturite laiko pilnam įrašui, išsaugote fragmentą ir vėliau apdorojate jį į žodyną, teoriją, rašymą ar pratimus."
+          },
+          "theoryExercises": {
+            "q": "Kaip teorija ir pratimai veikia kartu?",
+            "a": "Teorija saugo paaiškinimus jūsų žodžiais. Pratimai paverčia išsaugotą žodyną ir susijusią medžiagą praktika. Galite kurį laiką likti su žodžiais ir trumpais pratimais, tada pridėti teorijos užrašus, kai reikia paaiškinti modelį."
+          },
+          "skillsSupported": {
+            "q": "Kokie mokymosi įgūdžiai yra palaikomi? Ar galiu praktikuoti rašymą, klausymą, kalbėjimą ir skaitymą?",
+            "a": "Taip. Rašymas, klausymas, kalbėjimas ir skaitymas yra darbo erdvės dalis. Šios sritys yra prieinamos kiekviename plane; AI naudojimo ribos skiriasi pagal planą."
+          },
+          "review": {
+            "q": "Kaip galiu peržiūrėti anksčiau surinktą medžiagą?",
+            "a": "Grįžkite per žodyną, teoriją, pratimus ir susijusius peržiūros įrankius savo darbo erdvėje. Tęstinumas yra svarbiausia: pridėkite naują, peržiūrėkite, kas buvo sunku, ir tęskite praktiką iš medžiagos, kurią jau turite."
+          },
+          "createAccount": {
+            "q": "Kaip sukurti paskyrą?",
+            "a": "Naudokite <signUp>Pradėti</signUp> arba <signUp>Užsiregistruoti</signUp>, tada užpildykite registraciją. Taip pat galite <signIn>prisijungti</signIn> vėliau iš viešojo antraštės."
+          },
+          "afterSignup": {
+            "q": "Kas vyksta po registracijos?",
+            "a": "Sukūrėte mokymosi darbo erdvę savo kalbai, tada pradėkite rinkti medžiagą. Programėlėje esantis <gettingStarted>Pirmieji žingsniai</gettingStarted> vadovas paaiškina kiekvieną sritį, kai jau esate produkto viduje."
+          },
+          "chooseLanguage": {
+            "q": "Kaip pasirinkti savo mokomąją kalbą?",
+            "a": "Kiekviena darbo erdvė skirta vienai mokomajai kalbai. Pasirenkate tą kalbą, kai kuriate darbo erdvę, todėl žodynas ir praktika lieka organizuoti aplink ją."
+          },
+          "experience": {
+            "q": "Ar man reikia ankstesnės mokymosi patirties?",
+            "a": "Ne. Notoria nereikalauja fiksuoto mokymo plano ar ankstesnio kurso progreso. Geras pirmas diena gali būti darbo erdvė ir keletas žodžių, kurie jums iš tikrųjų rūpi."
+          },
+          "languages": {
+            "q": "Kokios kalbos yra palaikomos?",
+            "a": "Galite mokytis bet kurios pasirinktos kalbos. Produkto sąsaja yra prieinama daugelyje UI kalbų; kiekviena darbo erdvė orientuota į kalbą, kurią mokotės."
+          },
+          "devices": {
+            "q": "Ar galiu pasiekti Notoria skirtinguose įrenginiuose?",
+            "a": "Taip. Notoria yra internetinė programa adresu <site>notoria.fi</site>, todėl galite <signIn>prisijungti</signIn> iš naršyklių įrenginiuose, kuriuos jau naudojate."
+          },
+          "plans": {
+            "q": "Ar yra nemokamas planas?",
+            "a": "Taip. Nemokama versija apima pagrindinius mokymosi elementus su kasdieniu AI biudžetu. Pro atveria daugiau AI įrankių ir susijusių papildomų funkcijų. Premium prideda personalizuotą mokymosi intelektą. Galite palyginti planus <billing>Vartotojo sąskaitos apmokėjimas</billing> po to, kai <signIn>prisijungiate</signIn>."
+          },
+          "help": {
+            "q": "Kaip galiu gauti pagalbos arba susisiekti su palaikymu?",
+            "a": "Atidarykite <support>Pagalbos</support> puslapį dažniausiai užduodamiems klausimams ir kontaktų galimybėms. Taip pat galite naudoti <contact>Susisiekite su mumis</contact> dėl sąskaitų, apmokėjimo, privatumo ar bendrų klausimų."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Paverskite mokymąsi kasdieniu gyvenimo dalimi.",
+        "lede": "Pradėkite kurti savo asmeninę mokymosi darbo erdvę su Notoria — privati, praktiška ir orientuota į jūsų pačių medžiagą.",
+        "primary": "Pradėti",
+        "secondary": "Prisijungti"
+      },
+      "meta": {
+        "title": "Notoria — Privati kalbų mokymosi darbo erdvė",
+        "description": "Rinkite žodyną, supraskite teoriją, praktikuokite su pratimais ir kurkite ilgalaikius kalbos įgūdžius vienoje sujungtoje asmeninėje darbo erdvėje.",
+        "ogDescription": "Sukurkite mokymosi sistemą, kuri auga kartu su jumis — žodynas, teorija, pratimai, rašymas, klausymas, kalbėjimas ir skaitymas vienoje vietoje.",
+        "twitterDescription": "Sukurkite mokymosi sistemą, kuri auga kartu su jumis — žodynas, teorija, pratimai ir įgūdžių praktika vienoje darbo erdvėje."
       }
     }
   },

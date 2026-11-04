@@ -24,26 +24,22 @@ export async function AuthPageShell({
 
   return (
     <div className={mx(styles, "auth-atelier-shell auth-atelier-shell-footer")}>
+      <header className={mx(styles, "auth-top-bar")}>
+        <Link href="/" className={mx(styles, "auth-brand-link")} aria-label="Notoria">
+          <Logo size="md" />
+          <LogoWordmark
+            tone="ink"
+            className={mx(styles, "auth-brand-wordmark")}
+          />
+        </Link>
+
+        <div className={mx(styles, "auth-brand-controls")}>
+          <LocaleThemeControls locale={locale} compact />
+        </div>
+      </header>
+
       <div className={mx(styles, "auth-atelier")}>
         <header className={mx(styles, "auth-hero")}>
-          <div className={mx(styles, "auth-brand-bar")}>
-            <Link
-              href="/sign-in"
-              className={mx(styles, "auth-brand-link")}
-              aria-label="Notoria"
-            >
-              <Logo size="md" />
-              <LogoWordmark
-                tone="ink"
-                className={mx(styles, "auth-brand-wordmark")}
-              />
-            </Link>
-
-            <div className={mx(styles, "auth-brand-controls")}>
-              <LocaleThemeControls locale={locale} compact />
-            </div>
-          </div>
-
           <div className={mx(styles, "auth-hero-copy")}>
             <p className={mx(styles, "auth-kicker")}>{eyebrow}</p>
             <h1 className={mx(styles, "auth-title")}>{title}</h1>

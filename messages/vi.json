@@ -4498,7 +4498,8 @@
           "p3": "Để biết các lựa chọn hỗ trợ chung và hộp thư kỹ thuật cho phản hồi, xem <contactPage>Liên hệ với chúng tôi</contactPage> và <support>Hỗ trợ</support>."
         }
       }
-    }
+    },
+    "backToHome": "Quay lại trang chủ"
   },
   "footer": {
     "navLabel": "Liên kết trang",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Đang tìm câu trả lời hoặc muốn gửi góp ý?",
         "link": "Hỗ trợ"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Chính",
+        "howItWorks": "Cách hoạt động",
+        "features": "Tính năng",
+        "faq": "Câu hỏi thường gặp",
+        "about": "Về chúng tôi",
+        "support": "Hỗ trợ",
+        "signIn": "Đăng nhập",
+        "getStarted": "Bắt đầu",
+        "openMenu": "Mở menu",
+        "closeMenu": "Đóng menu"
+      },
+      "hero": {
+        "headline": "Xây dựng một hệ thống học tập phát triển cùng bạn.",
+        "description": "Thu thập từ vựng, hiểu các khái niệm mới, rèn luyện kỹ năng của bạn, và biến những gì bạn học thành kiến thức lâu dài — tất cả trong một không gian làm việc kết nối.",
+        "supporting": "Notoria là một không gian làm việc riêng tư cho việc tự học bất kỳ ngôn ngữ nào. Nó được xây dựng xung quanh tài liệu bạn mang vào — không phải là một danh mục bài học mà bạn không chọn.",
+        "primaryCta": "Bắt đầu",
+        "secondaryCta": "Khám phá cách hoạt động"
+      },
+      "preview": {
+        "windowLabel": "Không gian làm việc Notoria",
+        "vocabTitle": "Từ vựng",
+        "vocabMeta": "Những từ bạn giữ lại",
+        "theoryTitle": "Lý thuyết",
+        "theoryMeta": "Ghi chú dễ nhớ",
+        "practiceTitle": "Thực hành",
+        "practiceMeta": "Từ tài liệu của bạn",
+        "cardKicker": "Không gian làm việc của bạn",
+        "cardTitle": "Một ngôn ngữ. Một vòng lặp.",
+        "cardBody": "Lưu lại những gì quan trọng, tổ chức nó, sau đó thực hành viết, nghe, nói và đọc từ cùng một nơi.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "sau · tiếp theo",
+        "floatTheory": "Phần chia",
+        "floatTheoryMeta": "Khi các số lượng vẫn mở",
+        "floatPractice": "Bộ thẻ flash",
+        "floatPracticeMeta": "12 cái đến hạn hôm nay"
+      },
+      "workflow": {
+        "kicker": "Cách Notoria hoạt động",
+        "title": "Một vòng lặp học tập xung quanh tài liệu của bạn.",
+        "lede": "Notoria không phải là một danh mục khóa học. Nó là một không gian làm việc riêng tư nơi những gì bạn thu thập trở thành những gì bạn thực hành.",
+        "bridge": "Từ vựng, Thu thập, Lý thuyết, Bài tập, Viết, Nghe, Nói, và Đọc luôn được kết nối — vì vậy bạn không phải bắt đầu lại mỗi khi chuyển công cụ.",
+        "guideLink": "Đọc hướng dẫn đầy đủ về cách sử dụng",
+        "steps": {
+          "collect": {
+            "title": "Thu thập",
+            "body": "Lưu từ vựng và những mảnh học tập khi bạn gặp chúng — từ bài học, sách, phương tiện truyền thông và cuộc trò chuyện."
+          },
+          "organise": {
+            "title": "Tổ chức",
+            "body": "Giữ một bộ sưu tập có cấu trúc cho mỗi ngôn ngữ, với nghĩa, ví dụ, thẻ và cảm nhận mà bạn có thể tìm lại."
+          },
+          "understand": {
+            "title": "Hiểu",
+            "body": "Viết ghi chú lý thuyết bằng từ của bạn khi một mẫu cần được giải thích."
+          },
+          "practise": {
+            "title": "Thực hành",
+            "body": "Biến những gì bạn đã lưu thành thẻ flash, bài kiểm tra, điền vào chỗ trống, và nhiều hơn nữa."
+          },
+          "apply": {
+            "title": "Áp dụng",
+            "body": "Viết, nghe, nói và đọc để ngôn ngữ vượt ra ngoài nhận thức và trở thành sử dụng chủ động."
+          },
+          "review": {
+            "title": "Ôn tập",
+            "body": "Quay lại sau, thêm những gì mới, xem lại những gì khó, và giữ cho vòng lặp tiếp tục."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Tính năng chính",
+        "title": "Mọi thứ trong một không gian làm việc kết nối.",
+        "lede": "Mỗi khu vực được xây dựng cho việc tự học thực sự — không phải là những công cụ tách biệt với một đăng nhập chung.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Từ vựng",
+            "title": "Một ngân hàng từ vựng cá nhân luôn hữu ích",
+            "body": "Lưu trữ từ với nghĩa, ví dụ, loại từ, thẻ, và cảm nhận chính hoặc phụ. Những gì bạn lưu có thể trở thành thực hành sau này.",
+            "example": "Ví dụ: lưu sitten với cảm nhận chuỗi và cảm nhận thời gian, sau đó thực hành cả hai từ cùng một mục.",
+            "previewLabel": "Từ vựng",
+            "previewKicker": "Chi tiết từ",
+            "previewTitle": "Các nghĩa vẫn gắn liền với từ",
+            "previewBody": "Các nghĩa chính cho bài tập. Các nghĩa phụ để tham khảo khi bạn cần."
+          },
+          "inbox": {
+            "eyebrow": "Thu thập",
+            "title": "Một hộp thư học tập cho những mảnh nhanh chóng",
+            "body": "Ghi chú nhanh chóng khi có điều gì đó xuất hiện, sau đó xử lý chúng thành từ vựng, lý thuyết, viết, hoặc bài tập khi bạn có thời gian.",
+            "example": "Ví dụ: thu thập một cụm từ từ một podcast, sau đó biến nó thành một mục từ vựng sau khi đi làm.",
+            "previewLabel": "Thu thập",
+            "previewKicker": "Hộp thư",
+            "previewTitle": "Bắt ngay bây giờ. Tổ chức sau.",
+            "previewBody": "Giữ lại khoảnh khắc mà không cần ép buộc một mục đầy đủ khi bạn bận."
+          },
+          "theory": {
+            "eyebrow": "Lý thuyết",
+            "title": "Giải thích bên cạnh ngôn ngữ bạn đang học",
+            "body": "Viết ghi chú ngữ pháp và cách sử dụng bằng từ của bạn. Giữ chúng trong cùng một không gian làm việc với từ vựng mà chúng giải thích.",
+            "example": "Ví dụ: một ghi chú ngắn về trường phần chia bên cạnh những danh từ bạn thường quên.",
+            "previewLabel": "Lý thuyết",
+            "previewKicker": "Ghi chú của bạn",
+            "previewTitle": "Các mẫu được viết bằng từ của bạn",
+            "previewBody": "Xem lại giải thích khi sự nhầm lẫn tương tự quay trở lại."
+          },
+          "exercises": {
+            "eyebrow": "Bài tập",
+            "title": "Thực hành từ tài liệu của bạn",
+            "body": "Thẻ flash, câu hỏi trắc nghiệm, điền vào chỗ trống, gõ câu trả lời, ghép cặp, và nhiều hơn nữa — được xây dựng từ những từ và ghi chú bạn đã lưu.",
+            "example": "Ví dụ: một bộ thẻ flash từ từ vựng của tuần này thay vì một bộ thẻ chung.",
+            "previewLabel": "Bài tập",
+            "previewKicker": "Bộ thực hành",
+            "previewTitle": "Những từ của bạn trở thành bài tập",
+            "previewBody": "Công việc ghi nhớ luôn gắn liền với những gì bạn thực sự quan tâm học."
+          },
+          "skills": {
+            "eyebrow": "Kỹ năng",
+            "title": "Viết, nghe, nói, và đọc",
+            "body": "Vượt ra ngoài nhận thức. Sản xuất ngôn ngữ, làm việc với âm thanh, thực hành nói, và đọc với tài liệu thuộc về không gian làm việc của bạn.",
+            "example": "Ví dụ: viết với từ vựng của tuần, sau đó nghe tài liệu liên quan và nói từ cùng một chủ đề.",
+            "previewLabel": "Kỹ năng",
+            "previewKicker": "Sử dụng chủ động",
+            "previewTitle": "Từ biết đến sử dụng",
+            "previewBody": "Các lĩnh vực kỹ năng chính có sẵn trên mọi gói; giới hạn sử dụng AI thay đổi theo gói."
+          },
+          "connected": {
+            "eyebrow": "Kết nối",
+            "title": "Một vòng lặp thay vì các công cụ rải rác",
+            "body": "Những gì bạn thu thập có thể trở thành từ vựng. Từ vựng có thể trở thành thực hành. Thực hành có thể nuôi dưỡng viết, nghe, và nói — mà không mất đi mạch lạc.",
+            "example": "Ví dụ: một mảnh thu thập trở thành một từ, từ đó xuất hiện trong bài tập, sau đó lại xuất hiện trong viết.",
+            "previewLabel": "Không gian làm việc",
+            "previewKicker": "Học tập kết nối",
+            "previewTitle": "Ít khởi động lại. Nhiều liên tục.",
+            "previewBody": "Sản phẩm không gây cản trở để tài liệu của bạn có thể ở trung tâm."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Triết lý học tập",
+        "title": "Thu thập từ vựng không đủ.",
+        "lede": "Một danh sách từ vựng mà không có sự hiểu biết, thực hành, hoặc sử dụng trở thành một ghi chú bị bỏ rơi khác.",
+        "expand": "Notoria tồn tại để từ vựng, lý thuyết, bài tập, và kỹ năng chủ động có thể chia sẻ một ngôi nhà riêng tư — bên cạnh sách, giáo viên, và phương tiện truyền thông của bạn, không phải thay thế chúng.",
+        "beat": "Tài liệu của bạn thuộc về trung tâm.",
+        "aboutLink": "Về Notoria",
+        "storyLink": "Đọc câu chuyện của chúng tôi",
+        "points": {
+          "workspace": "Xây dựng một không gian học tập cá nhân cho một ngôn ngữ tại một thời điểm.",
+          "understand": "Hiểu các khái niệm thay vì ghi nhớ những mảnh tách biệt.",
+          "connect": "Kết nối từ vựng, ghi chú, và thực hành thành một vòng lặp.",
+          "skills": "Thực hành viết, nghe, nói, và đọc từ cùng một tài liệu.",
+          "pace": "Học theo tốc độ của riêng bạn, không có chương trình cố định.",
+          "habits": "Quay lại thường xuyên và xây dựng sự liên tục thay vì các phiên rải rác."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Bắt đầu",
+        "title": "Một con đường đơn giản vào không gian làm việc.",
+        "lede": "Bạn không cần phải học toàn bộ sản phẩm ngay lập tức. Bắt đầu nhỏ, sau đó phát triển vòng lặp.",
+        "expect": "Sau khi đăng ký, bạn tạo một không gian làm việc cho ngôn ngữ học tập của mình, sau đó bắt đầu thu thập tài liệu. Hướng dẫn Bắt đầu trong ứng dụng sẽ hướng dẫn bạn qua từng khu vực khi bạn đã sẵn sàng.",
+        "cta": "Tạo tài khoản của bạn",
+        "secondaryCta": "Đọc cách sử dụng",
+        "steps": {
+          "account": {
+            "title": "Tạo tài khoản",
+            "body": "Đăng ký và nhập không gian học tập riêng tư của bạn."
+          },
+          "workspace": {
+            "title": "Thiết lập không gian làm việc",
+            "body": "Cho việc học của bạn một ngôi nhà cho một ngôn ngữ."
+          },
+          "language": {
+            "title": "Chọn ngôn ngữ học tập của bạn",
+            "body": "Mỗi không gian làm việc tập trung vào ngôn ngữ bạn đang học."
+          },
+          "collect": {
+            "title": "Bắt đầu thu thập",
+            "body": "Lưu từ vựng và những mảnh thu thập quan trọng với bạn."
+          },
+          "explore": {
+            "title": "Khám phá lý thuyết và bài tập",
+            "body": "Biến những gì bạn đã lưu thành sự hiểu biết và thực hành."
+          },
+          "routine": {
+            "title": "Xây dựng thói quen",
+            "body": "Quay lại, xem lại, viết, nghe, nói, và đọc từ cùng một nơi."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "Câu hỏi thường gặp",
+        "title": "Câu trả lời trước khi bạn bắt đầu.",
+        "lede": "Các câu hỏi thực tế về Notoria là gì, cách học tập hoạt động, và điều gì xảy ra sau khi bạn đăng ký.",
+        "supportLink": "Truy cập Hỗ trợ để biết thêm thông tin",
+        "groups": {
+          "about": "Về Notoria",
+          "features": "Các tính năng học tập",
+          "start": "Bắt đầu",
+          "account": "Tài khoản và khả năng sử dụng"
+        },
+        "items": {
+          "what": {
+            "q": "Notoria chính xác là gì?",
+            "a": "Notoria là một không gian làm việc riêng tư cho việc tự học bất kỳ ngôn ngữ nào. Bạn giữ từ vựng, ghi chú, lý thuyết, bài tập, viết, nghe, nói, và đọc trong một nơi được tổ chức theo ngôn ngữ bạn đang học. Nó không phải là một nền tảng trường học và không phải là một thư viện các khóa học đã được chuẩn bị sẵn."
+          },
+          "onlyVocab": {
+            "q": "Notoria chỉ là một ứng dụng học từ vựng?",
+            "a": "Không. Từ vựng là trung tâm, nhưng Notoria cũng bao gồm Thu thập, Lý thuyết, bài tập tương tác, viết, nghe, nói, và đọc. Điểm mấu chốt là giữ những lĩnh vực đó kết nối xung quanh tài liệu của bạn."
+          },
+          "who": {
+            "q": "Notoria được thiết kế cho ai?",
+            "a": "Những người học độc lập muốn tài liệu của riêng họ ở trung tâm của quá trình — những người thích thu thập những gì quan trọng với họ hơn là theo một chương trình cố định của người khác."
+          },
+          "vsFlashcards": {
+            "q": "Notoria khác gì so với các ứng dụng thẻ flash truyền thống?",
+            "a": "Thẻ flash là một chế độ thực hành bên trong Notoria. Sản phẩm cũng lưu trữ nghĩa và ví dụ, ghi chú lý thuyết, mảnh thu thập, và thực hành kỹ năng trong cùng một không gian làm việc, vì vậy việc xem lại không bị tách biệt khỏi sự hiểu biết và sử dụng."
+          },
+          "vocabHow": {
+            "q": "Quản lý từ vựng hoạt động như thế nào?",
+            "a": "Bạn lưu từ với nghĩa, ví dụ, thẻ, và cảm nhận chính hoặc phụ tùy chọn. Ngân hàng đó có thể nuôi dưỡng bài tập và việc xem lại sau này thay vì sống trong một danh sách riêng mà bạn không bao giờ mở lại."
+          },
+          "inboxWhy": {
+            "q": "Mục đích của Hộp thư Học tập (Thu thập) là gì?",
+            "a": "Thu thập là điểm nhập nhanh. Khi bạn nhận thấy điều gì đó hữu ích nhưng không có thời gian cho một mục đầy đủ, bạn lưu lại mảnh đó và xử lý nó sau thành từ vựng, lý thuyết, viết, hoặc bài tập."
+          },
+          "theoryExercises": {
+            "q": "Lý thuyết và Bài tập hoạt động cùng nhau như thế nào?",
+            "a": "Lý thuyết giữ các giải thích bằng từ của bạn. Bài tập biến từ vựng đã lưu và tài liệu liên quan thành thực hành. Bạn có thể ở lại với từ và các bài tập ngắn trong một thời gian, sau đó thêm ghi chú lý thuyết khi một mẫu cần được giải thích."
+          },
+          "skillsSupported": {
+            "q": "Những kỹ năng học tập nào được hỗ trợ? Tôi có thể thực hành viết, nghe, nói, và đọc không?",
+            "a": "Có. Viết, nghe, nói, và đọc là một phần của không gian làm việc. Những lĩnh vực này có sẵn trên mọi gói; giới hạn sử dụng AI thay đổi theo gói."
+          },
+          "review": {
+            "q": "Làm thế nào tôi có thể xem lại tài liệu đã thu thập trước đó?",
+            "a": "Quay lại qua Từ vựng, Lý thuyết, Bài tập, và các công cụ xem lại liên quan trong không gian làm việc của bạn. Sự liên tục là điểm mấu chốt: thêm những gì mới, xem lại những gì khó, và tiếp tục thực hành từ tài liệu bạn đã sở hữu."
+          },
+          "createAccount": {
+            "q": "Làm thế nào để tôi tạo một tài khoản?",
+            "a": "Sử dụng <signUp>Bắt đầu</signUp> hoặc <signUp>Đăng ký</signUp>, sau đó hoàn tất đăng ký. Bạn cũng có thể <signIn>đăng nhập</signIn> sau từ tiêu đề công khai."
+          },
+          "afterSignup": {
+            "q": "Điều gì xảy ra sau khi đăng ký?",
+            "a": "Bạn thiết lập một không gian học tập cho ngôn ngữ của mình, sau đó bắt đầu thu thập tài liệu. Một hướng dẫn <gettingStarted>Bắt đầu</gettingStarted> trong ứng dụng giải thích từng khu vực khi bạn đã vào sản phẩm."
+          },
+          "chooseLanguage": {
+            "q": "Làm thế nào để tôi chọn ngôn ngữ học tập của mình?",
+            "a": "Mỗi không gian làm việc được dành riêng cho một ngôn ngữ học tập. Bạn chọn ngôn ngữ đó khi bạn tạo không gian làm việc, vì vậy từ vựng và thực hành luôn được tổ chức xung quanh nó."
+          },
+          "experience": {
+            "q": "Tôi có cần kinh nghiệm học tập trước đó không?",
+            "a": "Không. Notoria không yêu cầu một chương trình cố định hoặc tiến trình khóa học trước đó. Một ngày đầu tiên tốt có thể là một không gian làm việc và một vài từ mà bạn thực sự quan tâm."
+          },
+          "languages": {
+            "q": "Những ngôn ngữ nào được hỗ trợ?",
+            "a": "Bạn có thể học bất kỳ ngôn ngữ nào bạn chọn. Giao diện sản phẩm có sẵn bằng nhiều ngôn ngữ UI; mỗi không gian làm việc tập trung vào ngôn ngữ bạn đang học."
+          },
+          "devices": {
+            "q": "Tôi có thể truy cập Notoria trên các thiết bị khác nhau không?",
+            "a": "Có. Notoria là một ứng dụng web tại <site>notoria.fi</site>, vì vậy bạn có thể <signIn>đăng nhập</signIn> từ các trình duyệt trên các thiết bị mà bạn đã sử dụng."
+          },
+          "plans": {
+            "q": "Có gói miễn phí không?",
+            "a": "Có. Gói miễn phí bao gồm các yếu tố học tập cơ bản với một khoản trợ cấp AI hàng ngày. Gói Pro mở khóa nhiều công cụ AI hơn và các tiện ích liên quan. Gói Premium thêm trí tuệ học tập cá nhân hóa. Bạn có thể so sánh các gói trong <billing>Hóa đơn tài khoản</billing> sau khi bạn <signIn>đăng nhập</signIn>."
+          },
+          "help": {
+            "q": "Làm thế nào tôi có thể nhận trợ giúp hoặc liên hệ với hỗ trợ?",
+            "a": "Mở trang <support>Hỗ trợ</support> để xem các câu hỏi thường gặp và các tùy chọn liên hệ. Bạn cũng có thể sử dụng <contact>Liên hệ với chúng tôi</contact> cho các câu hỏi về tài khoản, hóa đơn, quyền riêng tư hoặc các câu hỏi chung."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Biến việc học thành một phần trong cuộc sống hàng ngày của bạn.",
+        "lede": "Bắt đầu xây dựng không gian học tập cá nhân của bạn với Notoria — riêng tư, thực tiễn, và tập trung vào tài liệu của bạn.",
+        "primary": "Bắt đầu",
+        "secondary": "Đăng nhập"
+      },
+      "meta": {
+        "title": "Notoria — Không gian học ngôn ngữ riêng tư",
+        "description": "Thu thập từ vựng, hiểu lý thuyết, thực hành với bài tập, và xây dựng kỹ năng ngôn ngữ lâu dài trong một không gian làm việc cá nhân kết nối.",
+        "ogDescription": "Xây dựng một hệ thống học tập phát triển cùng bạn — từ vựng, lý thuyết, bài tập, viết, nghe, nói, và đọc trong một nơi.",
+        "twitterDescription": "Xây dựng một hệ thống học tập phát triển cùng bạn — từ vựng, lý thuyết, bài tập, và thực hành kỹ năng trong một không gian làm việc."
       }
     }
   },

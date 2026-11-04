@@ -25,7 +25,8 @@ export async function LegalPageShell({
   const t = await getTranslations("legal");
   const locale = (await getLocale()) as AppLocale;
   const session = await auth();
-  const homeHref = session?.user ? "/" : "/sign-in";
+  const homeHref = session?.user ? "/dashboard" : "/";
+  const homeLabel = session?.user ? t("backHome") : t("backToHome");
 
   return (
     <div className={mx(styles, "legal-shell")}>
@@ -77,7 +78,7 @@ export async function LegalPageShell({
         <p className={mx(styles, "legal-footer")}>
           <Link href={homeHref} className={mx(styles, "legal-back-link")}>
             <ArrowLeft className="size-4 shrink-0" aria-hidden />
-            {session?.user ? t("backHome") : t("backToSignIn")}
+            {homeLabel}
           </Link>
         </p>
       </div>

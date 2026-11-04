@@ -4498,7 +4498,8 @@
           "p3": "Per a opcions d'assistència general i la bústia tècnica de comentaris, consulteu <contactPage>Contacteu-nos</contactPage> i <support>Assistència</support>."
         }
       }
-    }
+    },
+    "backToHome": "Torna a la pàgina d'inici"
   },
   "footer": {
     "navLabel": "Enllaços del lloc",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Busqueu respostes o voleu enviar comentaris?",
         "link": "Assistència"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Primary",
+        "howItWorks": "How It Works",
+        "features": "Features",
+        "faq": "FAQ",
+        "about": "About",
+        "support": "Support",
+        "signIn": "Sign In",
+        "getStarted": "Get Started",
+        "openMenu": "Open menu",
+        "closeMenu": "Close menu"
+      },
+      "hero": {
+        "headline": "Build a learning system that grows with you.",
+        "description": "Collect vocabulary, understand new concepts, practise your skills, and turn what you learn into lasting knowledge — all in one connected workspace.",
+        "supporting": "Notoria is a private workspace for self-studying any language. It is built around the material you bring in — not a catalogue of lessons you did not choose.",
+        "primaryCta": "Get Started",
+        "secondaryCta": "Explore How It Works"
+      },
+      "preview": {
+        "windowLabel": "Notoria workspace",
+        "vocabTitle": "Vocabulary",
+        "vocabMeta": "Words you keep",
+        "theoryTitle": "Theory",
+        "theoryMeta": "Notes that stick",
+        "practiceTitle": "Practice",
+        "practiceMeta": "From your material",
+        "cardKicker": "Your workspace",
+        "cardTitle": "One language. One loop.",
+        "cardBody": "Save what matters, organise it, then practise writing, listening, speaking, and reading from the same place.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "then · next",
+        "floatTheory": "Partitive",
+        "floatTheoryMeta": "When amounts stay open",
+        "floatPractice": "Flashcard set",
+        "floatPracticeMeta": "12 due today"
+      },
+      "workflow": {
+        "kicker": "How Notoria works",
+        "title": "A learning loop around your own material.",
+        "lede": "Notoria is not a course catalogue. It is a private workspace where what you collect becomes what you practise.",
+        "bridge": "Vocabulary, Capture, Theory, Exercises, Writing, Listening, Speaking, and Reading stay connected — so you do not restart every time you switch tools.",
+        "guideLink": "Read the full How to Use guide",
+        "steps": {
+          "collect": {
+            "title": "Collect",
+            "body": "Save vocabulary and learning scraps as you meet them — from lessons, books, media, and conversations."
+          },
+          "organise": {
+            "title": "Organise",
+            "body": "Keep one structured collection per language, with meanings, examples, tags, and senses you can find again."
+          },
+          "understand": {
+            "title": "Understand",
+            "body": "Write theory notes in your own words when a pattern needs explaining."
+          },
+          "practise": {
+            "title": "Practise",
+            "body": "Turn what you saved into flashcards, quizzes, fill-in blanks, and more."
+          },
+          "apply": {
+            "title": "Apply",
+            "body": "Write, listen, speak, and read so the language moves beyond recognition into active use."
+          },
+          "review": {
+            "title": "Review",
+            "body": "Return later, add what is new, revisit what was hard, and keep the loop moving."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Core features",
+        "title": "Everything in one connected workspace.",
+        "lede": "Each area is built for real self-study — not isolated tools with a shared login.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Vocabulary",
+            "title": "A personal vocabulary bank that stays useful",
+            "body": "Store words with meanings, examples, part of speech, tags, and primary or secondary senses. What you save can become practice later.",
+            "example": "Example: save sitten with its sequence sense and time sense, then practise both from the same entry.",
+            "previewLabel": "Vocabulary",
+            "previewKicker": "Word detail",
+            "previewTitle": "Meanings stay attached to the word",
+            "previewBody": "Primary senses for exercises. Secondary senses for reference when you need them."
+          },
+          "inbox": {
+            "eyebrow": "Capture",
+            "title": "A learning inbox for fast scraps",
+            "body": "Drop notes quickly when something appears, then process them into vocabulary, theory, writing, or exercises when you have time.",
+            "example": "Example: capture a phrase from a podcast, then turn it into a vocabulary entry after the commute.",
+            "previewLabel": "Capture",
+            "previewKicker": "Inbox",
+            "previewTitle": "Catch it now. Organise later.",
+            "previewBody": "Keep the moment without forcing a full entry when you are busy."
+          },
+          "theory": {
+            "eyebrow": "Theory",
+            "title": "Explanations next to the language you are learning",
+            "body": "Write grammar and usage notes in your own words. Keep them in the same workspace as the vocabulary they explain.",
+            "example": "Example: a short note on the partitive case next to the nouns you keep forgetting.",
+            "previewLabel": "Theory",
+            "previewKicker": "Your note",
+            "previewTitle": "Patterns written in your words",
+            "previewBody": "Revisit the explanation when the same confusion returns."
+          },
+          "exercises": {
+            "eyebrow": "Exercises",
+            "title": "Practice drawn from your own material",
+            "body": "Flashcards, multiple choice, fill-in blanks, type-the-answer, match pairs, and more — built from the words and notes you already saved.",
+            "example": "Example: a flashcard set from this week’s vocabulary instead of a generic deck.",
+            "previewLabel": "Exercises",
+            "previewKicker": "Practice set",
+            "previewTitle": "Your words become the drill",
+            "previewBody": "Memory work stays connected to what you actually care about learning."
+          },
+          "skills": {
+            "eyebrow": "Skills",
+            "title": "Writing, listening, speaking, and reading",
+            "body": "Move beyond recognition. Produce language, work with audio, practise speaking, and read with material that belongs to your workspace.",
+            "example": "Example: write with the week’s vocabulary, then listen to related material and speak from the same theme.",
+            "previewLabel": "Skills",
+            "previewKicker": "Active use",
+            "previewTitle": "From knowing to using",
+            "previewBody": "Core skills areas are available on every plan; AI usage limits vary by plan."
+          },
+          "connected": {
+            "eyebrow": "Connections",
+            "title": "One loop instead of scattered tools",
+            "body": "What you capture can become vocabulary. Vocabulary can become practice. Practice can feed writing, listening, and speaking — without losing the thread.",
+            "example": "Example: a Capture scrap becomes a word, that word appears in exercises, then shows up again in writing.",
+            "previewLabel": "Workspace",
+            "previewKicker": "Connected learning",
+            "previewTitle": "Less restarting. More continuity.",
+            "previewBody": "The product stays out of the way so your material can stay in the centre."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Learning philosophy",
+        "title": "Collecting words is not enough.",
+        "lede": "A list of vocabulary without understanding, practice, or use becomes another abandoned note.",
+        "expand": "Notoria exists so vocabulary, theory, exercises, and active skills can share one private home — beside your books, teachers, and media, not instead of them.",
+        "beat": "Your material belongs at the centre.",
+        "aboutLink": "About Notoria",
+        "storyLink": "Read our story",
+        "points": {
+          "workspace": "Build a personal learning workspace for one language at a time.",
+          "understand": "Understand concepts instead of memorising isolated scraps.",
+          "connect": "Connect vocabulary, notes, and practice into one loop.",
+          "skills": "Practise writing, listening, speaking, and reading from the same material.",
+          "pace": "Learn at your own pace, without a fixed syllabus.",
+          "habits": "Return often and build continuity rather than scattered sessions."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Getting started",
+        "title": "A simple path into the workspace.",
+        "lede": "You do not need to learn the whole product at once. Start small, then grow the loop.",
+        "expect": "After registration you create a workspace for your learning language, then begin collecting material. The in-app Getting Started guide walks through each area when you are ready.",
+        "cta": "Create your account",
+        "secondaryCta": "Read How to Use",
+        "steps": {
+          "account": {
+            "title": "Create an account",
+            "body": "Sign up and enter your private learning space."
+          },
+          "workspace": {
+            "title": "Set up a workspace",
+            "body": "Give your study a home for one language."
+          },
+          "language": {
+            "title": "Choose your learning language",
+            "body": "Each workspace focuses on the language you are learning."
+          },
+          "collect": {
+            "title": "Start collecting",
+            "body": "Save vocabulary and Capture scraps that matter to you."
+          },
+          "explore": {
+            "title": "Explore theory and exercises",
+            "body": "Turn what you saved into understanding and practice."
+          },
+          "routine": {
+            "title": "Build a routine",
+            "body": "Return, review, write, listen, speak, and read from the same place."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Answers before you begin.",
+        "lede": "Practical questions about what Notoria is, how learning works, and what happens after you sign up.",
+        "supportLink": "Visit Support for more help",
+        "groups": {
+          "about": "About Notoria",
+          "features": "Learning features",
+          "start": "Getting started",
+          "account": "Account and availability"
+        },
+        "items": {
+          "what": {
+            "q": "What exactly is Notoria?",
+            "a": "Notoria is a private workspace for self-studying any language. You keep vocabulary, notes, theory, exercises, writing, listening, speaking, and reading in one place organised by the language you are learning. It is not a school platform and not a library of ready-made courses."
+          },
+          "onlyVocab": {
+            "q": "Is Notoria only a vocabulary learning application?",
+            "a": "No. Vocabulary is central, but Notoria also includes Capture, Theory, interactive exercises, writing, listening, speaking, and reading. The point is to keep those areas connected around your own material."
+          },
+          "who": {
+            "q": "Who is Notoria designed for?",
+            "a": "Independent learners who want their own material at the centre of the process — people who prefer collecting what matters to them over following someone else’s fixed syllabus."
+          },
+          "vsFlashcards": {
+            "q": "How is Notoria different from traditional flashcard applications?",
+            "a": "Flashcards are one practice mode inside Notoria. The product also stores meanings and examples, theory notes, Capture scraps, and skills practice in the same workspace, so review is not isolated from understanding and use."
+          },
+          "vocabHow": {
+            "q": "How does vocabulary management work?",
+            "a": "You save words with meanings, examples, tags, and optional primary or secondary senses. That bank can then feed exercises and later review instead of living in a separate list you never reopen."
+          },
+          "inboxWhy": {
+            "q": "What is the purpose of the Learning Inbox (Capture)?",
+            "a": "Capture is the quick entry point. When you notice something useful but do not have time for a full entry, you save the scrap and process it later into vocabulary, theory, writing, or exercises."
+          },
+          "theoryExercises": {
+            "q": "How do Theory and Exercises work together?",
+            "a": "Theory holds explanations in your own words. Exercises turn saved vocabulary and related material into practice. You can stay with words and short drills for a while, then add theory notes when a pattern needs explaining."
+          },
+          "skillsSupported": {
+            "q": "What learning skills are supported? Can I practise writing, listening, speaking, and reading?",
+            "a": "Yes. Writing, listening, speaking, and reading are part of the workspace. These areas are available on every plan; AI usage limits vary by plan."
+          },
+          "review": {
+            "q": "How can I review previously collected material?",
+            "a": "Return through Vocabulary, Theory, Exercises, and related review tools in your workspace. Continuity is the point: add what is new, revisit what was hard, and keep practising from material you already own."
+          },
+          "createAccount": {
+            "q": "How do I create an account?",
+            "a": "Utilitza <signUp>Començar</signUp> o <signUp>Registrar-se</signUp>, després completa el registre. També pots <signIn>iniciar sessió</signIn> més tard des del capçalera pública."
+          },
+          "afterSignup": {
+            "q": "What happens after registration?",
+            "a": "Configures un espai de treball d'aprenentatge per al teu idioma, després comences a recopilar material. Una guia dins de l'aplicació <gettingStarted>Començar</gettingStarted> explica cada àrea un cop estiguis dins del producte."
+          },
+          "chooseLanguage": {
+            "q": "How do I choose my learning language?",
+            "a": "Each workspace is dedicated to one learning language. You choose that language when you create the workspace, so vocabulary and practice stay organised around it."
+          },
+          "experience": {
+            "q": "Do I need previous learning experience?",
+            "a": "No. Notoria does not require a fixed syllabus or prior course progress. A good first day can be a workspace and a handful of words you actually care about."
+          },
+          "languages": {
+            "q": "Which languages are supported?",
+            "a": "You can study any language you choose. The product interface is available in many UI languages; each workspace focuses on the language you are learning."
+          },
+          "devices": {
+            "q": "Can I access Notoria on different devices?",
+            "a": "Sí. Notoria és una aplicació web a <site>notoria.fi</site>, així que pots <signIn>iniciar sessió</signIn> des dels navegadors dels dispositius que ja utilitzes."
+          },
+          "plans": {
+            "q": "Is there a free plan?",
+            "a": "Sí. La versió gratuïta cobreix els essencials d'aprenentatge amb una assignació diària d'IA. La versió Pro desbloqueja més eines d'IA i extres relacionats. La versió Premium afegeix intel·ligència d'aprenentatge personalitzada. Pots comparar els plans a <billing>Facturació del compte</billing> després de <signIn>iniciar sessió</signIn>."
+          },
+          "help": {
+            "q": "How can I get help or contact support?",
+            "a": "Obre la pàgina <support>Suport</support> per a preguntes freqüents i opcions de contacte. També pots utilitzar <contact>Contacta'ns</contact> per a preguntes sobre el compte, facturació, privadesa o preguntes generals."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Make learning part of your everyday life.",
+        "lede": "Start building your personal learning workspace with Notoria — private, practical, and centred on your own material.",
+        "primary": "Get Started",
+        "secondary": "Sign In"
+      },
+      "meta": {
+        "title": "Notoria — Private language learning workspace",
+        "description": "Collect vocabulary, understand theory, practise with exercises, and build lasting language skills in one connected personal workspace.",
+        "ogDescription": "Build a learning system that grows with you — vocabulary, theory, exercises, writing, listening, speaking, and reading in one place.",
+        "twitterDescription": "Build a learning system that grows with you — vocabulary, theory, exercises, and skills practice in one workspace."
       }
     }
   },

@@ -4498,7 +4498,8 @@
           "p3": "Yleiset tukivaihtoehdot ja tekninen palaute postilaatikko: katso <contactPage>Ota yhteyttä</contactPage> ja <support>Tuki</support>."
         }
       }
-    }
+    },
+    "backToHome": "Takaisin kotiin"
   },
   "footer": {
     "navLabel": "Sivuston linkit",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Etsitkö vastauksia tai haluatko lähettää palautetta?",
         "link": "Tuki"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Pääasiallinen",
+        "howItWorks": "Kuinka se toimii",
+        "features": "Ominaisuudet",
+        "faq": "UKK",
+        "about": "Tietoa",
+        "support": "Tuki",
+        "signIn": "Kirjaudu sisään",
+        "getStarted": "Aloita",
+        "openMenu": "Avaa valikko",
+        "closeMenu": "Sulje valikko"
+      },
+      "hero": {
+        "headline": "Rakenna oppimisjärjestelmä, joka kasvaa kanssasi.",
+        "description": "Kerää sanastoa, ymmärrä uusia käsitteitä, harjoittele taitojasi ja muunna oppimasi kestäväksi tiedoksi — kaikki yhdessä yhteydessä olevassa työtilassa.",
+        "supporting": "Notoria on yksityinen työtila itsenäiseen kieltenopiskeluun. Se rakentuu materiaalin ympärille, jonka tuot mukanasi — ei valmiiden oppituntien luetteloon, jota et ole valinnut.",
+        "primaryCta": "Aloita",
+        "secondaryCta": "Tutustu siihen, miten se toimii"
+      },
+      "preview": {
+        "windowLabel": "Notoria-työtila",
+        "vocabTitle": "Sanasto",
+        "vocabMeta": "Sanoja, joita säilytät",
+        "theoryTitle": "Teoria",
+        "theoryMeta": "Muistiinpanot, jotka jäävät mieleen",
+        "practiceTitle": "Harjoittelu",
+        "practiceMeta": "Oma materiaalisi",
+        "cardKicker": "Työtilasi",
+        "cardTitle": "Yksi kieli. Yksi silmukka.",
+        "cardBody": "Tallenna tärkeät asiat, järjestä ne, ja harjoittele kirjoittamista, kuuntelua, puhumista ja lukemista samasta paikasta.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "sitten · seuraavaksi",
+        "floatTheory": "Partitiivi",
+        "floatTheoryMeta": "Kun määrät pysyvät avoimina",
+        "floatPractice": "Muistilappuset",
+        "floatPracticeMeta": "12 erää tänään"
+      },
+      "workflow": {
+        "kicker": "Kuinka Notoria toimii",
+        "title": "Oppimislooppi oman materiaalisi ympärillä.",
+        "lede": "Notoria ei ole kurssiluettelo. Se on yksityinen työtila, jossa keräämäsi asiat muuttuvat harjoiteltavaksi.",
+        "bridge": "Sanasto, Kerääminen, Teoria, Harjoitukset, Kirjoittaminen, Kuuntelu, Puhuminen ja Lukeminen pysyvät yhteydessä — joten et aloita alusta joka kerta, kun vaihdat työkaluja.",
+        "guideLink": "Lue koko Kuinka käyttää -opas",
+        "steps": {
+          "collect": {
+            "title": "Kerää",
+            "body": "Tallenna sanastoa ja oppimisjätteitä, kun kohtaat niitä — oppitunneilta, kirjoista, medioista ja keskusteluista."
+          },
+          "organise": {
+            "title": "Järjestä",
+            "body": "Pidä yksi jäsennelty kokoelma per kieli, merkityksineen, esimerkkeineen, tageineen ja merkityksineen, jotka löydät uudelleen."
+          },
+          "understand": {
+            "title": "Ymmärrä",
+            "body": "Kirjoita teoriahuomautuksia omilla sanoillasi, kun kaava tarvitsee selittämistä."
+          },
+          "practise": {
+            "title": "Harjoittele",
+            "body": "Muunna tallentamasi asiat muistilapuiksi, tietovisaksi, täydennä tyhjät kohdat ja muuhun."
+          },
+          "apply": {
+            "title": "Sovella",
+            "body": "Kirjoita, kuuntele, puhu ja lue niin, että kieli siirtyy tunnistamisesta aktiiviseen käyttöön."
+          },
+          "review": {
+            "title": "Tarkista",
+            "body": "Palaa myöhemmin, lisää uutta, käy läpi vaikeaa ja pidä silmukka liikkeessä."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Keskeiset ominaisuudet",
+        "title": "Kaikki yhdessä yhteydessä olevassa työtilassa.",
+        "lede": "Jokainen alue on rakennettu todellista itsenäistä opiskelua varten — ei eristyneitä työkaluja, joilla on yhteinen kirjautuminen.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Sanasto",
+            "title": "Henkilökohtainen sanastopankki, joka pysyy hyödyllisenä",
+            "body": "Tallenna sanoja merkityksineen, esimerkkeineen, sanaluokkineen, tageineen ja ensisijaisine tai toissijaisine merkityksineen. Se, mitä tallennat, voi myöhemmin muuttua harjoitukseksi.",
+            "example": "Esimerkki: tallenna sitten sen sekvenssi- ja aikamerkitys, ja harjoittele molempia samasta merkinnästä.",
+            "previewLabel": "Sanasto",
+            "previewKicker": "Sanan yksityiskohta",
+            "previewTitle": "Merkitykset pysyvät kiinni sanassa",
+            "previewBody": "Ensisijaiset merkitykset harjoituksia varten. Toissijaiset merkitykset viittauksena, kun tarvitset niitä."
+          },
+          "inbox": {
+            "eyebrow": "Kerääminen",
+            "title": "Oppimislaatikko nopeille jätteille",
+            "body": "Heitä muistiinpanot nopeasti, kun jotain ilmenee, ja käsittele ne myöhemmin sanastoksi, teoriaksi, kirjoittamiseksi tai harjoituksiksi, kun sinulla on aikaa.",
+            "example": "Esimerkki: tallenna lause podcastista, ja muunna se sanastomerkinnäksi työmatkan jälkeen.",
+            "previewLabel": "Kerääminen",
+            "previewKicker": "Saapuneet",
+            "previewTitle": "Tartu siihen nyt. Järjestä myöhemmin.",
+            "previewBody": "Pidä hetki ilman, että pakotat täyttä merkintää, kun olet kiireinen."
+          },
+          "theory": {
+            "eyebrow": "Teoria",
+            "title": "Selitykset oppimasi kielen vieressä",
+            "body": "Kirjoita kielioppi- ja käyttöhuomautuksia omilla sanoillasi. Pidä ne samassa työtilassa kuin sanasto, jota ne selittävät.",
+            "example": "Esimerkki: lyhyt huomautus partitiivista unohtamiesi substantiivien vieressä.",
+            "previewLabel": "Teoria",
+            "previewKicker": "Sinun huomautuksesi",
+            "previewTitle": "Kaavat kirjoitettuina omilla sanoillasi",
+            "previewBody": "Käy läpi selitys, kun sama hämmennys palaa."
+          },
+          "exercises": {
+            "eyebrow": "Harjoitukset",
+            "title": "Harjoittelu omasta materiaalistasi",
+            "body": "Muistilaput, monivalinta, täydennä tyhjät kohdat, kirjoita vastaus, yhdistä parit ja muuta — rakennettu jo tallentamistasi sanoista ja muistiinpanoista.",
+            "example": "Esimerkki: muistilappuset tältä viikolta sen sijaan, että käyttäisit yleistä pakkaa.",
+            "previewLabel": "Harjoitukset",
+            "previewKicker": "Harjoituspakka",
+            "previewTitle": "Sanoistasi tulee harjoitus",
+            "previewBody": "Muistityö pysyy yhteydessä siihen, mitä todella haluat oppia."
+          },
+          "skills": {
+            "eyebrow": "Taidot",
+            "title": "Kirjoittaminen, kuuntelu, puhuminen ja lukeminen",
+            "body": "Siirry tunnistamisesta eteenpäin. Tuota kieltä, työskentele äänen kanssa, harjoittele puhumista ja lue materiaalista, joka kuuluu työtilaasi.",
+            "example": "Esimerkki: kirjoita viikon sanastolla, kuuntele sitten siihen liittyvää materiaalia ja puhu samasta teemasta.",
+            "previewLabel": "Taidot",
+            "previewKicker": "Aktiivinen käyttö",
+            "previewTitle": "Tunnistamisesta käyttämiseen",
+            "previewBody": "Keskeiset taitoalueet ovat saatavilla jokaisessa suunnitelmassa; AI-käyttörajoitukset vaihtelevat suunnitelman mukaan."
+          },
+          "connected": {
+            "eyebrow": "Yhteydet",
+            "title": "Yksi silmukka hajautettujen työkalujen sijaan",
+            "body": "Mitä keräät, voi muuttua sanastoksi. Sanasto voi muuttua harjoitukseksi. Harjoittelu voi ruokkia kirjoittamista, kuuntelua ja puhumista — ilman, että lanka katkeaa.",
+            "example": "Esimerkki: keräysjätteestä tulee sana, joka esiintyy harjoituksissa, ja sitten se ilmestyy uudelleen kirjoittamisessa.",
+            "previewLabel": "Työtila",
+            "previewKicker": "Yhteydessä oppiminen",
+            "previewTitle": "Vähemmän uudelleenkäynnistystä. Enemmän jatkuvuutta.",
+            "previewBody": "Tuote pysyy pois tieltä, jotta materiaalisi voi pysyä keskiössä."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Oppimisfilosofia",
+        "title": "Sanojen kerääminen ei riitä.",
+        "lede": "Sanastoluettelo ilman ymmärrystä, harjoittelua tai käyttöä muuttuu jälleen yhdeksi hylätyksi muistiinpanoksi.",
+        "expand": "Notoria on olemassa, jotta sanasto, teoria, harjoitukset ja aktiiviset taidot voivat jakaa yhden yksityisen kodin — kirjojesi, opettajiesi ja medioidesi vieressä, eivät niiden sijaan.",
+        "beat": "Materiaalisi kuuluu keskiöön.",
+        "aboutLink": "Tietoa Notoriasta",
+        "storyLink": "Lue tarinamme",
+        "points": {
+          "workspace": "Rakenna henkilökohtainen oppimis työtila yhdelle kielelle kerrallaan.",
+          "understand": "Ymmärrä käsitteet sen sijaan, että muistaisit eristyneitä jätteitä.",
+          "connect": "Yhdistä sanasto, muistiinpanot ja harjoittelu yhdeksi silmukaksi.",
+          "skills": "Harjoittele kirjoittamista, kuuntelua, puhumista ja lukemista samasta materiaalista.",
+          "pace": "Opettele omassa tahdissasi, ilman kiinteää opetussuunnitelmaa.",
+          "habits": "Palaa usein ja rakenna jatkuvuutta hajautettujen sessioiden sijaan."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Aloittaminen",
+        "title": "Yksinkertainen polku työtilaan.",
+        "lede": "Sinun ei tarvitse oppia koko tuotetta kerralla. Aloita pienestä, ja kasvata silmukkaa.",
+        "expect": "Rekisteröitymisen jälkeen luot työtilan oppimiskielellesi ja alat kerätä materiaalia. Sovelluksen sisäinen Aloita-opas käy läpi jokaisen alueen, kun olet valmis.",
+        "cta": "Luo tili",
+        "secondaryCta": "Lue Kuinka käyttää",
+        "steps": {
+          "account": {
+            "title": "Luo tili",
+            "body": "Rekisteröidy ja siirry yksityiseen oppimistilaasi."
+          },
+          "workspace": {
+            "title": "Aseta työtila",
+            "body": "Anna opiskelullesi koti yhdelle kielelle."
+          },
+          "language": {
+            "title": "Valitse oppimiskieli",
+            "body": "Jokainen työtila keskittyy oppimaasi kieleen."
+          },
+          "collect": {
+            "title": "Aloita kerääminen",
+            "body": "Tallenna sanastoa ja keräysjätteitä, jotka ovat sinulle tärkeitä."
+          },
+          "explore": {
+            "title": "Tutki teoriaa ja harjoituksia",
+            "body": "Muunna tallentamasi asiat ymmärrykseksi ja harjoitteluksi."
+          },
+          "routine": {
+            "title": "Rakenna rutiini",
+            "body": "Palaa, tarkista, kirjoita, kuuntele, puhu ja lue samasta paikasta."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "UKK",
+        "title": "Vastauksia ennen aloittamista.",
+        "lede": "Käytännön kysymyksiä siitä, mitä Notoria on, kuinka oppiminen toimii ja mitä tapahtuu rekisteröitymisen jälkeen.",
+        "supportLink": "Vieraile tuessa saadaksesi lisää apua",
+        "groups": {
+          "about": "Tietoa Notoriasta",
+          "features": "Oppimisominaisuudet",
+          "start": "Aloittaminen",
+          "account": "Tili ja saatavuus"
+        },
+        "items": {
+          "what": {
+            "q": "Mitä tarkalleen ottaen Notoria on?",
+            "a": "Notoria on yksityinen työtila itsenäiseen kieltenopiskeluun. Säilytät sanastoa, muistiinpanoja, teoriaa, harjoituksia, kirjoittamista, kuuntelua, puhumista ja lukemista yhdessä paikassa, joka on järjestetty oppimasi kielen mukaan. Se ei ole koulualusta eikä valmiiden kurssien kirjasto."
+          },
+          "onlyVocab": {
+            "q": "Onko Notoria vain sanaston oppimisohjelma?",
+            "a": "Ei. Sanasto on keskeinen, mutta Notoria sisältää myös Keräämisen, Teorian, interaktiivisia harjoituksia, kirjoittamista, kuuntelua, puhumista ja lukemista. Tavoitteena on pitää nämä alueet yhteydessä oman materiaalisi ympärillä."
+          },
+          "who": {
+            "q": "Kenelle Notoria on suunniteltu?",
+            "a": "Itsenäisille oppijoille, jotka haluavat oman materiaalinsa prosessin keskiöön — ihmisille, jotka mieluummin keräävät heille tärkeitä asioita kuin seuraavat jonkun toisen kiinteää opetussuunnitelmaa."
+          },
+          "vsFlashcards": {
+            "q": "Miten Notoria eroaa perinteisistä muistilappusovelluksista?",
+            "a": "Muistilaput ovat yksi harjoittelumuoto Notoriassa. Tuote tallentaa myös merkityksiä ja esimerkkejä, teoriahuomautuksia, keräysjätteitä ja taitoharjoituksia samaan työtilaan, joten tarkistus ei ole eristyksissä ymmärryksestä ja käytöstä."
+          },
+          "vocabHow": {
+            "q": "Miten sanaston hallinta toimii?",
+            "a": "Tallennat sanoja merkityksineen, esimerkkeineen, tageineen ja valinnaisine ensisijaisine tai toissijaisine merkityksineen. Tämä pankki voi sitten ruokkia harjoituksia ja myöhempää tarkistusta sen sijaan, että se eläisi eristyksissä erillisessä luettelossa, jota et koskaan avaa."
+          },
+          "inboxWhy": {
+            "q": "Mikä on oppimislaatikon (Kerääminen) tarkoitus?",
+            "a": "Kerääminen on nopea sisäänkäynti. Kun huomaat jotain hyödyllistä, mutta sinulla ei ole aikaa täydelle merkinnälle, tallennat jätteet ja käsittelet ne myöhemmin sanastoksi, teoriaksi, kirjoittamiseksi tai harjoituksiksi."
+          },
+          "theoryExercises": {
+            "q": "Miten Teoria ja Harjoitukset toimivat yhdessä?",
+            "a": "Teoria pitää selityksiä omilla sanoillasi. Harjoitukset muuttavat tallennetun sanaston ja siihen liittyvän materiaalin harjoitukseksi. Voit pysyä sanoissa ja lyhyissä harjoituksissa jonkin aikaa, ja lisätä teoriahuomautuksia, kun kaava tarvitsee selittämistä."
+          },
+          "skillsSupported": {
+            "q": "Mitä oppimistaitoja tuetaan? Voinko harjoitella kirjoittamista, kuuntelua, puhumista ja lukemista?",
+            "a": "Kyllä. Kirjoittaminen, kuuntelu, puhuminen ja lukeminen ovat osa työtilaa. Nämä alueet ovat saatavilla jokaisessa suunnitelmassa; AI-käyttörajoitukset vaihtelevat suunnitelman mukaan."
+          },
+          "review": {
+            "q": "Miten voin tarkistaa aiemmin kerättyä materiaalia?",
+            "a": "Palaa Sanastoon, Teoriaan, Harjoituksiin ja niihin liittyviin tarkistustyökaluihin työtilassasi. Jatkuvuus on tärkeää: lisää uutta, käy läpi vaikeaa ja jatka harjoittelua materiaalista, joka sinulla jo on."
+          },
+          "createAccount": {
+            "q": "Miten luon tilin?",
+            "a": "Käytä <signUp>Aloita</signUp> tai <signUp>Rekisteröidy</signUp>, ja viimeistele rekisteröinti. Voit myös <signIn>kirjautua sisään</signIn> myöhemmin julkisesta yläosasta."
+          },
+          "afterSignup": {
+            "q": "Mitä tapahtuu rekisteröitymisen jälkeen?",
+            "a": "Asetat oppimisympäristön kielellesi ja alat kerätä materiaalia. Sovelluksen sisäinen <gettingStarted>Aloitusopas</gettingStarted> selittää jokaisen alueen, kun olet tuotteen sisällä."
+          },
+          "chooseLanguage": {
+            "q": "Miten valitsen oppimiskieleni?",
+            "a": "Jokainen työtila on omistettu yhdelle oppimiskielelle. Valitset sen kielen, kun luot työtilan, joten sanasto ja harjoittelu pysyvät sen ympärillä järjestettyinä."
+          },
+          "experience": {
+            "q": "Tarvitseeko minulla aiempaa oppimiskokemusta?",
+            "a": "Ei. Notoria ei vaadi kiinteää opetussuunnitelmaa tai aikaisempaa kurssikehitystä. Hyvä ensimmäinen päivä voi olla työtila ja kourallinen sanoja, joista todella välität."
+          },
+          "languages": {
+            "q": "Mitä kieliä tuetaan?",
+            "a": "Voit opiskella mitä tahansa kieltä, jonka valitset. Tuotteen käyttöliittymä on saatavilla monilla käyttöliittymäkielillä; jokainen työtila keskittyy oppimaasi kieleen."
+          },
+          "devices": {
+            "q": "Voinko käyttää Notoria eri laitteilla?",
+            "a": "Kyllä. Notoria on verkkosovellus osoitteessa <site>notoria.fi</site>, joten voit <signIn>kirjautua sisään</signIn> selaimilla laitteilla, joita jo käytät."
+          },
+          "plans": {
+            "q": "Onko olemassa ilmaista suunnitelmaa?",
+            "a": "Kyllä. Ilmainen versio kattaa keskeiset oppimistarpeet päivittäisellä AI-rahastolla. Pro avaa lisää AI-työkaluja ja niihin liittyviä lisäominaisuuksia. Premium lisää henkilökohtaista oppimisälyä. Voit vertailla suunnitelmia <billing>Tilin laskutuksessa</billing> sen jälkeen, kun <signIn>kirjaudut sisään</signIn>."
+          },
+          "help": {
+            "q": "Miten voin saada apua tai ottaa yhteyttä tukeen?",
+            "a": "Avaa <support>Tuki</support>-sivu usein kysytyille kysymyksille ja yhteydenottovaihtoehdoille. Voit myös käyttää <contact>Ota meihin yhteyttä</contact> -vaihtoehtoa tilikysymyksiin, laskutukseen, yksityisyyteen tai yleisiin kysymyksiin."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Tee oppimisesta osa päivittäistä elämääsi.",
+        "lede": "Aloita henkilökohtaisen oppimis työtilasi rakentaminen Notorian avulla — yksityinen, käytännöllinen ja keskittynyt omaan materiaaliisi.",
+        "primary": "Aloita",
+        "secondary": "Kirjaudu sisään"
+      },
+      "meta": {
+        "title": "Notoria — Yksityinen kieltenoppimis työtila",
+        "description": "Kerää sanastoa, ymmärrä teoriaa, harjoittele harjoitusten avulla ja rakenna kestäviä kielitaitoja yhdessä yhteydessä olevassa henkilökohtaisessa työtilassa.",
+        "ogDescription": "Rakenna oppimisjärjestelmä, joka kasvaa kanssasi — sanasto, teoria, harjoitukset, kirjoittaminen, kuuntelu, puhuminen ja lukeminen yhdessä paikassa.",
+        "twitterDescription": "Rakenna oppimisjärjestelmä, joka kasvaa kanssasi — sanasto, teoria, harjoitukset ja taitoharjoittelu yhdessä työtilassa."
       }
     }
   },

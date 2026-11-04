@@ -22,7 +22,7 @@ export default async function AdminLayout({
       error instanceof AccountSuspendedError ||
       (error instanceof Error && error.message === "Unauthorized")
     ) {
-      redirect("/");
+      redirect("/dashboard");
     }
     throw error;
   }

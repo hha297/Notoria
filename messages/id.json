@@ -4498,7 +4498,8 @@
           "p3": "Untuk opsi dukungan umum dan kotak masuk umpan balik teknis, lihat <contactPage>Hubungi kami</contactPage> dan <support>Dukungan</support>."
         }
       }
-    }
+    },
+    "backToHome": "Kembali ke beranda"
   },
   "footer": {
     "navLabel": "Tautan situs",
@@ -4857,6 +4858,290 @@
       "supportCta": {
         "prompt": "Mencari jawaban atau ingin mengirim umpan balik?",
         "link": "Dukungan"
+      }
+    },
+    "landing": {
+      "nav": {
+        "aria": "Utama",
+        "howItWorks": "Cara Kerja",
+        "features": "Fitur",
+        "faq": "FAQ",
+        "about": "Tentang",
+        "support": "Dukungan",
+        "signIn": "Masuk",
+        "getStarted": "Mulai",
+        "openMenu": "Buka menu",
+        "closeMenu": "Tutup menu"
+      },
+      "hero": {
+        "headline": "Bangun sistem pembelajaran yang tumbuh bersama Anda.",
+        "description": "Kumpulkan kosakata, pahami konsep baru, latih keterampilan Anda, dan ubah apa yang Anda pelajari menjadi pengetahuan yang bertahan lama — semuanya dalam satu ruang kerja yang terhubung.",
+        "supporting": "Notoria adalah ruang kerja pribadi untuk belajar mandiri bahasa apa pun. Ini dibangun di sekitar materi yang Anda bawa — bukan katalog pelajaran yang tidak Anda pilih.",
+        "primaryCta": "Mulai",
+        "secondaryCta": "Jelajahi Cara Kerja"
+      },
+      "preview": {
+        "windowLabel": "Ruang kerja Notoria",
+        "vocabTitle": "Kosakata",
+        "vocabMeta": "Kata-kata yang Anda simpan",
+        "theoryTitle": "Teori",
+        "theoryMeta": "Catatan yang melekat",
+        "practiceTitle": "Latihan",
+        "practiceMeta": "Dari materi Anda",
+        "cardKicker": "Ruang kerja Anda",
+        "cardTitle": "Satu bahasa. Satu siklus.",
+        "cardBody": "Simpan yang penting, atur, lalu latih menulis, mendengarkan, berbicara, dan membaca dari tempat yang sama.",
+        "floatVocab": "sitten",
+        "floatVocabMeta": "kemudian · berikutnya",
+        "floatTheory": "Partitif",
+        "floatTheoryMeta": "Ketika jumlah tetap terbuka",
+        "floatPractice": "Set kartu flash",
+        "floatPracticeMeta": "12 jatuh tempo hari ini"
+      },
+      "workflow": {
+        "kicker": "Cara kerja Notoria",
+        "title": "Siklus pembelajaran di sekitar materi Anda sendiri.",
+        "lede": "Notoria bukanlah katalog kursus. Ini adalah ruang kerja pribadi di mana apa yang Anda kumpulkan menjadi apa yang Anda latih.",
+        "bridge": "Kosakata, Tangkap, Teori, Latihan, Menulis, Mendengarkan, Berbicara, dan Membaca tetap terhubung — sehingga Anda tidak memulai ulang setiap kali Anda beralih alat.",
+        "guideLink": "Baca panduan Cara Menggunakan secara lengkap",
+        "steps": {
+          "collect": {
+            "title": "Kumpulkan",
+            "body": "Simpan kosakata dan potongan pembelajaran saat Anda menemukannya — dari pelajaran, buku, media, dan percakapan."
+          },
+          "organise": {
+            "title": "Atur",
+            "body": "Jaga satu koleksi terstruktur per bahasa, dengan makna, contoh, tag, dan arti yang dapat Anda temukan kembali."
+          },
+          "understand": {
+            "title": "Pahami",
+            "body": "Tulis catatan teori dengan kata-kata Anda sendiri ketika suatu pola perlu dijelaskan."
+          },
+          "practise": {
+            "title": "Latih",
+            "body": "Ubah apa yang Anda simpan menjadi kartu flash, kuis, isian, dan lainnya."
+          },
+          "apply": {
+            "title": "Terapkan",
+            "body": "Tulis, dengarkan, berbicara, dan baca sehingga bahasa bergerak dari pengenalan ke penggunaan aktif."
+          },
+          "review": {
+            "title": "Tinjau",
+            "body": "Kembali nanti, tambahkan yang baru, kunjungi kembali yang sulit, dan teruskan siklus."
+          }
+        }
+      },
+      "features": {
+        "kicker": "Fitur inti",
+        "title": "Semuanya dalam satu ruang kerja yang terhubung.",
+        "lede": "Setiap area dibangun untuk pembelajaran mandiri yang nyata — bukan alat terpisah dengan login bersama.",
+        "items": {
+          "vocabulary": {
+            "eyebrow": "Kosakata",
+            "title": "Bank kosakata pribadi yang tetap berguna",
+            "body": "Simpan kata-kata dengan makna, contoh, bagian dari ucapan, tag, dan arti utama atau sekunder. Apa yang Anda simpan dapat menjadi latihan nanti.",
+            "example": "Contoh: simpan sitten dengan arti urutan dan arti waktu, lalu latih keduanya dari entri yang sama.",
+            "previewLabel": "Kosakata",
+            "previewKicker": "Detail kata",
+            "previewTitle": "Makna tetap terikat pada kata",
+            "previewBody": "Makna utama untuk latihan. Makna sekunder untuk referensi saat Anda membutuhkannya."
+          },
+          "inbox": {
+            "eyebrow": "Tangkap",
+            "title": "Kotak masuk pembelajaran untuk potongan cepat",
+            "body": "Jatuhkan catatan dengan cepat saat sesuatu muncul, lalu proses menjadi kosakata, teori, menulis, atau latihan saat Anda memiliki waktu.",
+            "example": "Contoh: tangkap frasa dari podcast, lalu ubah menjadi entri kosakata setelah perjalanan.",
+            "previewLabel": "Tangkap",
+            "previewKicker": "Kotak masuk",
+            "previewTitle": "Tangkap sekarang. Atur nanti.",
+            "previewBody": "Simpan momen tanpa memaksa entri penuh saat Anda sibuk."
+          },
+          "theory": {
+            "eyebrow": "Teori",
+            "title": "Penjelasan di samping bahasa yang Anda pelajari",
+            "body": "Tulis catatan tata bahasa dan penggunaan dengan kata-kata Anda sendiri. Simpan di ruang kerja yang sama dengan kosakata yang mereka jelaskan.",
+            "example": "Contoh: catatan singkat tentang kasus partitif di samping kata benda yang terus Anda lupakan.",
+            "previewLabel": "Teori",
+            "previewKicker": "Catatan Anda",
+            "previewTitle": "Pola ditulis dengan kata-kata Anda",
+            "previewBody": "Kunjungi kembali penjelasan saat kebingungan yang sama muncul kembali."
+          },
+          "exercises": {
+            "eyebrow": "Latihan",
+            "title": "Latihan yang diambil dari materi Anda sendiri",
+            "body": "Kartu flash, pilihan ganda, isian, ketik-jawaban, padankan pasangan, dan lainnya — dibangun dari kata-kata dan catatan yang sudah Anda simpan.",
+            "example": "Contoh: set kartu flash dari kosakata minggu ini alih-alih dek generik.",
+            "previewLabel": "Latihan",
+            "previewKicker": "Set latihan",
+            "previewTitle": "Kata-kata Anda menjadi latihan",
+            "previewBody": "Pekerjaan memori tetap terhubung dengan apa yang sebenarnya Anda pedulikan untuk dipelajari."
+          },
+          "skills": {
+            "eyebrow": "Keterampilan",
+            "title": "Menulis, mendengarkan, berbicara, dan membaca",
+            "body": "Bergerak melampaui pengenalan. Hasilkan bahasa, bekerja dengan audio, latih berbicara, dan baca dengan materi yang menjadi milik ruang kerja Anda.",
+            "example": "Contoh: menulis dengan kosakata minggu ini, lalu mendengarkan materi terkait dan berbicara dari tema yang sama.",
+            "previewLabel": "Keterampilan",
+            "previewKicker": "Penggunaan aktif",
+            "previewTitle": "Dari mengetahui ke menggunakan",
+            "previewBody": "Area keterampilan inti tersedia di setiap rencana; batas penggunaan AI bervariasi berdasarkan rencana."
+          },
+          "connected": {
+            "eyebrow": "Koneksi",
+            "title": "Satu siklus alih-alih alat yang tersebar",
+            "body": "Apa yang Anda tangkap dapat menjadi kosakata. Kosakata dapat menjadi latihan. Latihan dapat memberi makan menulis, mendengarkan, dan berbicara — tanpa kehilangan benang merah.",
+            "example": "Contoh: potongan Tangkap menjadi kata, kata itu muncul dalam latihan, lalu muncul lagi dalam menulis.",
+            "previewLabel": "Ruang kerja",
+            "previewKicker": "Pembelajaran terhubung",
+            "previewTitle": "Lebih sedikit memulai ulang. Lebih banyak kontinuitas.",
+            "previewBody": "Produk tetap tidak mengganggu sehingga materi Anda dapat tetap di pusat."
+          }
+        }
+      },
+      "philosophy": {
+        "kicker": "Filosofi pembelajaran",
+        "title": "Mengumpulkan kata-kata tidaklah cukup.",
+        "lede": "Daftar kosakata tanpa pemahaman, latihan, atau penggunaan menjadi catatan lain yang ditinggalkan.",
+        "expand": "Notoria ada agar kosakata, teori, latihan, dan keterampilan aktif dapat berbagi satu rumah pribadi — di samping buku, guru, dan media Anda, bukan sebagai penggantinya.",
+        "beat": "Materi Anda berada di pusat.",
+        "aboutLink": "Tentang Notoria",
+        "storyLink": "Baca cerita kami",
+        "points": {
+          "workspace": "Bangun ruang kerja pembelajaran pribadi untuk satu bahasa pada satu waktu.",
+          "understand": "Pahami konsep alih-alih menghafal potongan yang terpisah.",
+          "connect": "Hubungkan kosakata, catatan, dan latihan menjadi satu siklus.",
+          "skills": "Latih menulis, mendengarkan, berbicara, dan membaca dari materi yang sama.",
+          "pace": "Belajar dengan kecepatan Anda sendiri, tanpa silabus tetap.",
+          "habits": "Kembali sering dan bangun kontinuitas alih-alih sesi yang tersebar."
+        }
+      },
+      "gettingStarted": {
+        "kicker": "Memulai",
+        "title": "Jalur sederhana ke ruang kerja.",
+        "lede": "Anda tidak perlu mempelajari seluruh produk sekaligus. Mulailah kecil, lalu kembangkan siklus.",
+        "expect": "Setelah pendaftaran, Anda membuat ruang kerja untuk bahasa yang Anda pelajari, lalu mulai mengumpulkan materi. Panduan Memulai di dalam aplikasi menjelaskan setiap area saat Anda siap.",
+        "cta": "Buat akun Anda",
+        "secondaryCta": "Baca Cara Menggunakan",
+        "steps": {
+          "account": {
+            "title": "Buat akun",
+            "body": "Daftar dan masukkan ruang belajar pribadi Anda."
+          },
+          "workspace": {
+            "title": "Atur ruang kerja",
+            "body": "Beri studi Anda rumah untuk satu bahasa."
+          },
+          "language": {
+            "title": "Pilih bahasa yang ingin Anda pelajari",
+            "body": "Setiap ruang kerja fokus pada bahasa yang Anda pelajari."
+          },
+          "collect": {
+            "title": "Mulai mengumpulkan",
+            "body": "Simpan kosakata dan potongan Tangkap yang penting bagi Anda."
+          },
+          "explore": {
+            "title": "Jelajahi teori dan latihan",
+            "body": "Ubah apa yang Anda simpan menjadi pemahaman dan latihan."
+          },
+          "routine": {
+            "title": "Bangun rutinitas",
+            "body": "Kembali, tinjau, tulis, dengarkan, berbicara, dan baca dari tempat yang sama."
+          }
+        }
+      },
+      "faq": {
+        "kicker": "FAQ",
+        "title": "Jawaban sebelum Anda mulai.",
+        "lede": "Pertanyaan praktis tentang apa itu Notoria, bagaimana pembelajaran bekerja, dan apa yang terjadi setelah Anda mendaftar.",
+        "supportLink": "Kunjungi Dukungan untuk bantuan lebih lanjut",
+        "groups": {
+          "about": "Tentang Notoria",
+          "features": "Fitur pembelajaran",
+          "start": "Memulai",
+          "account": "Akun dan ketersediaan"
+        },
+        "items": {
+          "what": {
+            "q": "Apa sebenarnya Notoria?",
+            "a": "Notoria adalah ruang kerja pribadi untuk belajar mandiri bahasa apa pun. Anda menyimpan kosakata, catatan, teori, latihan, menulis, mendengarkan, berbicara, dan membaca di satu tempat yang terorganisir berdasarkan bahasa yang Anda pelajari. Ini bukan platform sekolah dan bukan perpustakaan kursus siap pakai."
+          },
+          "onlyVocab": {
+            "q": "Apakah Notoria hanya aplikasi pembelajaran kosakata?",
+            "a": "Tidak. Kosakata adalah pusat, tetapi Notoria juga mencakup Tangkap, Teori, latihan interaktif, menulis, mendengarkan, berbicara, dan membaca. Tujuannya adalah untuk menjaga area tersebut terhubung di sekitar materi Anda sendiri."
+          },
+          "who": {
+            "q": "Untuk siapa Notoria dirancang?",
+            "a": "Pembelajar independen yang ingin materi mereka sendiri berada di pusat proses — orang-orang yang lebih suka mengumpulkan apa yang penting bagi mereka daripada mengikuti silabus tetap orang lain."
+          },
+          "vsFlashcards": {
+            "q": "Bagaimana Notoria berbeda dari aplikasi kartu flash tradisional?",
+            "a": "Kartu flash adalah salah satu mode latihan di dalam Notoria. Produk ini juga menyimpan makna dan contoh, catatan teori, potongan Tangkap, dan latihan keterampilan di ruang kerja yang sama, sehingga tinjauan tidak terpisah dari pemahaman dan penggunaan."
+          },
+          "vocabHow": {
+            "q": "Bagaimana cara kerja manajemen kosakata?",
+            "a": "Anda menyimpan kata-kata dengan makna, contoh, tag, dan arti utama atau sekunder yang opsional. Bank itu kemudian dapat memberi umpan latihan dan tinjauan nanti alih-alih hidup dalam daftar terpisah yang tidak pernah Anda buka kembali."
+          },
+          "inboxWhy": {
+            "q": "Apa tujuan Kotak Masuk Pembelajaran (Tangkap)?",
+            "a": "Tangkap adalah titik masuk cepat. Ketika Anda melihat sesuatu yang berguna tetapi tidak memiliki waktu untuk entri penuh, Anda menyimpan potongan dan memprosesnya nanti menjadi kosakata, teori, menulis, atau latihan."
+          },
+          "theoryExercises": {
+            "q": "Bagaimana Teori dan Latihan bekerja bersama?",
+            "a": "Teori menyimpan penjelasan dengan kata-kata Anda sendiri. Latihan mengubah kosakata yang disimpan dan materi terkait menjadi praktik. Anda dapat tetap dengan kata-kata dan latihan singkat untuk sementara waktu, lalu menambahkan catatan teori ketika pola perlu dijelaskan."
+          },
+          "skillsSupported": {
+            "q": "Keterampilan belajar apa yang didukung? Bisakah saya berlatih menulis, mendengarkan, berbicara, dan membaca?",
+            "a": "Ya. Menulis, mendengarkan, berbicara, dan membaca adalah bagian dari ruang kerja. Area ini tersedia di setiap rencana; batas penggunaan AI bervariasi berdasarkan rencana."
+          },
+          "review": {
+            "q": "Bagaimana saya bisa meninjau materi yang telah dikumpulkan sebelumnya?",
+            "a": "Kembali melalui Kosakata, Teori, Latihan, dan alat tinjauan terkait di ruang kerja Anda. Kontinuitas adalah poinnya: tambahkan yang baru, kunjungi kembali yang sulit, dan terus berlatih dari materi yang sudah Anda miliki."
+          },
+          "createAccount": {
+            "q": "Bagaimana cara membuat akun?",
+            "a": "Gunakan <signUp>Mulai</signUp> atau <signUp>Daftar</signUp>, lalu lengkapi pendaftaran. Anda juga dapat <signIn>masuk</signIn> nanti dari header publik."
+          },
+          "afterSignup": {
+            "q": "Apa yang terjadi setelah pendaftaran?",
+            "a": "Anda mengatur ruang kerja pembelajaran untuk bahasa Anda, lalu mulai mengumpulkan materi. Panduan dalam aplikasi <gettingStarted>Memulai</gettingStarted> menjelaskan setiap area setelah Anda berada di dalam produk."
+          },
+          "chooseLanguage": {
+            "q": "Bagaimana cara memilih bahasa yang ingin saya pelajari?",
+            "a": "Setiap ruang kerja didedikasikan untuk satu bahasa pembelajaran. Anda memilih bahasa itu saat Anda membuat ruang kerja, sehingga kosakata dan latihan tetap terorganisir di sekitarnya."
+          },
+          "experience": {
+            "q": "Apakah saya perlu pengalaman belajar sebelumnya?",
+            "a": "Tidak. Notoria tidak memerlukan silabus tetap atau kemajuan kursus sebelumnya. Hari pertama yang baik bisa berupa ruang kerja dan segenggam kata yang benar-benar Anda pedulikan."
+          },
+          "languages": {
+            "q": "Bahasa apa saja yang didukung?",
+            "a": "Anda dapat mempelajari bahasa apa pun yang Anda pilih. Antarmuka produk tersedia dalam banyak bahasa UI; setiap ruang kerja fokus pada bahasa yang Anda pelajari."
+          },
+          "devices": {
+            "q": "Bisakah saya mengakses Notoria di berbagai perangkat?",
+            "a": "Ya. Notoria adalah aplikasi web di <site>notoria.fi</site>, jadi Anda dapat <signIn>masuk</signIn> dari browser di perangkat yang sudah Anda gunakan."
+          },
+          "plans": {
+            "q": "Apakah ada rencana gratis?",
+            "a": "Ya. Gratis mencakup kebutuhan pembelajaran inti dengan alokasi AI harian. Pro membuka lebih banyak alat AI dan ekstra terkait. Premium menambahkan kecerdasan pembelajaran yang dipersonalisasi. Anda dapat membandingkan rencana di <billing>Tagihan akun</billing> setelah Anda <signIn>masuk</signIn>."
+          },
+          "help": {
+            "q": "Bagaimana cara mendapatkan bantuan atau menghubungi dukungan?",
+            "a": "Buka halaman <support>Dukungan</support> untuk FAQ dan opsi kontak. Anda juga dapat menggunakan <contact>Hubungi Kami</contact> untuk pertanyaan tentang akun, penagihan, privasi, atau pertanyaan umum."
+          }
+        }
+      },
+      "finalCta": {
+        "title": "Jadikan pembelajaran bagian dari kehidupan sehari-hari Anda.",
+        "lede": "Mulailah membangun ruang kerja pembelajaran pribadi Anda dengan Notoria — pribadi, praktis, dan berpusat pada materi Anda sendiri.",
+        "primary": "Mulai",
+        "secondary": "Masuk"
+      },
+      "meta": {
+        "title": "Notoria — Ruang kerja pembelajaran bahasa pribadi",
+        "description": "Kumpulkan kosakata, pahami teori, latih dengan latihan, dan bangun keterampilan bahasa yang bertahan lama dalam satu ruang kerja pribadi yang terhubung.",
+        "ogDescription": "Bangun sistem pembelajaran yang tumbuh bersama Anda — kosakata, teori, latihan, menulis, mendengarkan, berbicara, dan membaca di satu tempat.",
+        "twitterDescription": "Bangun sistem pembelajaran yang tumbuh bersama Anda — kosakata, teori, latihan, dan praktik keterampilan dalam satu ruang kerja."
       }
     }
   },

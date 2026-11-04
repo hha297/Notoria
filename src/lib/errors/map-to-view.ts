@@ -124,7 +124,7 @@ function viewForKind(
         },
         secondaryAction: {
           labelKey: "actions.dashboard",
-          href: "/",
+          href: "/dashboard",
           variant: "outline",
         },
       };
@@ -137,7 +137,7 @@ function viewForKind(
         descriptionKey: "forbidden.description",
         primaryAction: {
           labelKey: "actions.dashboard",
-          href: "/",
+          href: "/dashboard",
           variant: "default",
         },
         secondaryAction: report,
@@ -188,7 +188,7 @@ function viewForKind(
         descriptionKey: "notFound.description",
         primaryAction: {
           labelKey: "actions.dashboard",
-          href: "/",
+          href: "/dashboard",
           variant: "default",
         },
         secondaryAction: report,
@@ -203,7 +203,7 @@ function viewForKind(
         primaryAction: tryAgain,
         secondaryAction: {
           labelKey: "actions.dashboard",
-          href: "/",
+          href: "/dashboard",
           variant: "outline",
         },
         tertiaryAction: {
