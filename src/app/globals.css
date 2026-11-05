@@ -6,27 +6,12 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
-  /* Previous Notoria font
-     Kept for reference / rollback.
-     Do not delete unless explicitly requested.
-  */
-  /*
   --font-sans:
-    var(--font-chakra-petch), -apple-system, system-ui, "Segoe UI", Helvetica,
-    Arial, sans-serif;
-  --font-heading: var(--font-vt323), var(--font-chakra-petch), sans-serif;
-  --font-mono: Monaco, Menlo, "Ubuntu Mono", monospace;
-  */
-
-  --font-sans:
-    var(--font-ibm-plex-sans), "IBM Plex Sans", Helvetica, Arial, sans-serif;
+    var(--font-bricolage-grotesque), "Bricolage Grotesque", Helvetica, Arial,
+    sans-serif;
   --font-heading:
-    var(--font-ibm-plex-sans), "IBM Plex Sans", Helvetica, Arial, sans-serif;
-  /* Previous OpenCode heading font:
-  --font-heading:
-    var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
-    Menlo, Monaco, monospace;
-  */
+    var(--font-bricolage-grotesque), "Bricolage Grotesque", Helvetica, Arial,
+    sans-serif;
   --font-mono:
     var(--font-jetbrains-mono), "JetBrains Mono", ui-monospace, SFMono-Regular,
     Menlo, Monaco, monospace;
@@ -135,29 +120,6 @@
   --radius-2xl: 16px;
   --radius-pill: 9999px;
 }
-
-/* Previous Notoria font utilities.
-   Kept for reference / rollback.
-   Do not delete unless explicitly requested.
-*/
-/*
-@utility font-sans {
-  font-family:
-    var(--font-chakra-petch),
-    -apple-system,
-    system-ui,
-    "Segoe UI",
-    Helvetica,
-    Arial,
-    sans-serif;
-}
-
-@utility font-heading {
-  font-family: var(--font-vt323), var(--font-chakra-petch), sans-serif;
-}
-*/
-
-/* Font families are defined in @theme --font-sans / --font-heading / --font-mono. */
 
 :root {
   color-scheme: light;

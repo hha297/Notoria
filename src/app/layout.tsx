@@ -1,31 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-// Previous Notoria fonts.
-// Kept intentionally for rollback/reference.
-// Do not delete unless explicitly requested.
-//
-// Original Notoria font:
-// import { Chakra_Petch, VT323 } from "next/font/google";
-//
-// const chakraPetch = Chakra_Petch({
-//   variable: "--font-chakra-petch",
-//   subsets: ["latin"],
-//   weight: ["300", "400", "500", "600", "700"],
-// });
-//
-// const vt323 = VT323({
-//   variable: "--font-vt323",
-//   subsets: ["latin"],
-//   weight: "400",
-// });
-//
-// Previous OpenCode-inspired heading font (JetBrains Mono was also used as --font-heading):
-// Headings now use IBM Plex Sans. JetBrains Mono remains for code only.
-//
-// Google Fonts via next/font/google was replaced with self-hosted next/font/local
-// (see @/lib/app-fonts) to avoid Turbopack production build failures resolving
-// `@vercel/turbopack-next/internal/font/google/font`.
-
 import { NextIntlClientProvider } from "next-intl";
 import { getLocale, getMessages } from "next-intl/server";
 import { ScrollToTopButton } from "@/components/layout/scroll-to-top-button";
@@ -35,7 +9,7 @@ import { QueryProvider } from "@/components/providers/query-provider";
 import { AuthSessionProvider } from "@/components/providers/auth-session-provider";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { PreferencesProvider } from "@/components/providers/preferences-provider";
-import { ibmPlexSans, jetbrainsMono } from "@/lib/app-fonts";
+import { bricolageGrotesque, jetbrainsMono } from "@/lib/app-fonts";
 import { localeTextDirection } from "@/lib/i18n/ui-locales";
 import "./globals.css";
 
@@ -134,9 +108,9 @@ export default async function RootLayout({
       lang={locale}
       dir={direction}
       suppressHydrationWarning
-      className={`${ibmPlexSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${bricolageGrotesque.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
-      <body className={`${ibmPlexSans.className} min-h-full font-sans`} suppressHydrationWarning>
+      <body className={`${bricolageGrotesque.className} min-h-full font-sans`} suppressHydrationWarning>
         <Script
           async
           src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-7602749915037597"

@@ -69,10 +69,10 @@ export function DashboardGuide() {
         <p className="mt-2 max-w-2xl text-sm font-semibold text-module-home-fg">
           {t("guideTagline")}
         </p>
-        <p className="mt-4 max-w-3xl text-sm leading-relaxed text-ink/80">
+        <p className="mt-4 max-w-3xl text-base font-semibold leading-relaxed text-foreground-muted">
           {t("guideSubtitle")}
         </p>
-        <p className="mt-2 max-w-3xl text-sm leading-relaxed text-ink/80">
+        <p className="mt-2 max-w-3xl text-base font-semibold leading-relaxed text-foreground-muted">
           {t("guideSubtitleSecondary")}
         </p>
         <Link
@@ -137,7 +137,7 @@ function ModuleCard({
           ) : null}
         </div>
       </div>
-      <p className="mt-3 text-sm leading-relaxed text-ink/80">
+      <p className="mt-3 text-base font-semibold leading-relaxed text-foreground-muted">
         {t(`steps.${module.id}.body`)}
       </p>
       <LinkButton
