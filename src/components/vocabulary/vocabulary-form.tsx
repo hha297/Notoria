@@ -871,7 +871,7 @@ export function VocabularyForm({
             size="lg"
             onClick={handleCancel}
             disabled={isSaving}
-            className={mx(composerStyles, "vocab-composer-cancel h-12 w-full")}
+            className={mx(composerStyles, "vocab-composer-cancel h-12")}
           >
             {tCommon("cancel")}
           </Button>
@@ -881,7 +881,7 @@ export function VocabularyForm({
           disabled={saveDisabled}
           size="lg"
           data-tutorial="vocab-composer-save"
-          className={mx(composerStyles, "vocab-composer-submit h-12 w-full")}
+          className={mx(composerStyles, "vocab-composer-submit h-12")}
         >
           {isSaving ? (
             <>

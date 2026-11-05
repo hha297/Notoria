@@ -677,9 +677,17 @@ export function TheoryExerciseSessionView({
     resetAttempt();
     afterNewSet();
     setPhase(hasLesson ? "overview" : "practice");
-    // Only reset when the theory document / item source changes.
-    // eslint-disable-next-line react-hooks/exhaustive-deps -- intentional: avoid reshuffling mid-attempt
-  }, [hasLesson, session.theoryId, session.items]);
+    // Theory AI sessions ship `session.items: []`. Locale/RSC refresh recreates a
+    // new empty array identity and must NOT wipe an in-progress local set.
+    // Seed only when the theory / import source revision changes.
+    // eslint-disable-next-line react-hooks/exhaustive-deps -- session.items identity is unstable across refresh
+  }, [
+    hasLesson,
+    session.theoryId,
+    sourceRevision,
+    importPractice?.id,
+    importPractice?.sourceRevision,
+  ]);
 
   const beginExercise = useCallback(async () => {
     if (items.length > 0) {

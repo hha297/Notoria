@@ -260,7 +260,7 @@ export function DashboardHome({
             <p className={mx(homeStyles, "writing-kicker home-kicker")}>
               {t("nextStepTitle")}
             </p>
-            <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink/80">
+            <p className="mt-2 max-w-2xl text-base font-semibold leading-relaxed text-foreground-muted">
               {t(`modules.${next.id}.how`)}
             </p>
           </div>
@@ -300,7 +300,7 @@ export function DashboardHome({
               <p className={mx(homeStyles, "writing-kicker home-kicker")}>
                 {t("inbox.title")}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-base font-semibold text-foreground-muted">
                 {t("inbox.subtitle")}
               </p>
             </div>
@@ -329,7 +329,7 @@ export function DashboardHome({
               <p className={mx(homeStyles, "writing-kicker home-kicker")}>
                 {t("reviewLater.title")}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-base font-semibold text-foreground-muted">
                 {t("reviewLater.subtitle")}
               </p>
             </div>
@@ -372,7 +372,7 @@ export function DashboardHome({
               <p className={mx(homeStyles, "writing-kicker home-kicker")}>
                 {t("recentActivity.title")}
               </p>
-              <p className="mt-1 text-sm text-muted-foreground">
+              <p className="mt-1 text-base font-semibold text-foreground-muted">
                 {t("recentActivity.subtitle")}
               </p>
             </div>
@@ -452,7 +452,7 @@ export function DashboardHome({
         <p className={mx(homeStyles, "writing-kicker home-kicker writing-stage-kicker")}>
           {t("continueLearning")}
         </p>
-        <p className="mb-5 max-w-xl text-sm text-muted-foreground">
+        <p className="mb-5 max-w-xl text-base font-semibold text-foreground-muted">
           {t("continueLearningSubtitle")}
         </p>
         <div className={mx(homeStyles, "home-hub-grid")}>
@@ -472,7 +472,7 @@ export function DashboardHome({
                   <h2 className="font-heading text-lg font-bold tracking-tight text-ink">
                     {t(`modules.${module.id}.title`)}
                   </h2>
-                  <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                  <p className="mt-1 text-base font-semibold leading-relaxed text-foreground-muted">
                     {t(`modules.${module.id}.description`)}
                   </p>
                   <Link
@@ -499,7 +499,7 @@ export function DashboardHome({
         <h2 className="mt-2 font-heading text-2xl font-bold tracking-tight text-ink sm:text-[1.75rem]">
           {t("loopTitle")}
         </h2>
-        <p className="mt-2 max-w-2xl text-sm leading-relaxed text-ink/80">
+        <p className="mt-2 max-w-2xl text-base font-semibold leading-relaxed text-foreground-muted">
           {t("loopSubtitle")}
         </p>
         <ol className={mx(homeStyles, "home-loop-steps")}>
@@ -512,7 +512,7 @@ export function DashboardHome({
                 <h3 className="font-heading text-base font-bold text-ink">
                   {t(`loop.${step}.title`)}
                 </h3>
-                <p className="mt-1 text-sm leading-relaxed text-muted-foreground">
+                <p className="mt-1 text-base font-semibold leading-relaxed text-foreground-muted">
                   {t(`loop.${step}.body`)}
                 </p>
               </div>

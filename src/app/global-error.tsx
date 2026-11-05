@@ -4,7 +4,7 @@ import { useEffect } from "react";
 import { NextIntlClientProvider } from "next-intl";
 import { ThemeProvider } from "@/components/providers/theme-provider";
 import { ErrorPageFrame } from "@/components/errors/error-page-frame";
-import { ibmPlexSans, jetbrainsMono } from "@/lib/app-fonts";
+import { bricolageGrotesque, jetbrainsMono } from "@/lib/app-fonts";
 import en from "../../messages/en.json";
 import "./globals.css";
 
@@ -29,10 +29,10 @@ export default function GlobalError({ error, reset }: GlobalErrorProps) {
     <html
       lang="en"
       suppressHydrationWarning
-      className={`${ibmPlexSans.variable} ${jetbrainsMono.variable} h-full antialiased`}
+      className={`${bricolageGrotesque.variable} ${jetbrainsMono.variable} h-full antialiased`}
     >
       <body
-        className={`${ibmPlexSans.className} min-h-full font-sans`}
+        className={`${bricolageGrotesque.className} min-h-full font-sans`}
         suppressHydrationWarning
       >
         <NextIntlClientProvider locale="en" messages={en}>

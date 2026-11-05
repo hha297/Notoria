@@ -100,24 +100,38 @@ export function TheoryMultipleChoiceCard({
                   disabled={submitted}
                   onClick={() => onChange(option)}
                   className={cn(
-                    "min-h-14 rounded-xl border px-4 py-3.5 text-left text-[0.95rem] font-medium wrap-anywhere transition-[border-color,background-color,transform] duration-150",
+                    "relative min-h-14 overflow-hidden rounded-xl border px-4 py-3.5 text-left text-[0.95rem] font-medium wrap-anywhere transition-[border-color,background-color,background-image,transform] duration-150",
                     "focus-visible:ring-2 focus-visible:ring-(--exercise-accent)/35 focus-visible:outline-none",
                     !submitted &&
+                      !isSelected &&
                       "border-hairline-cloud control-surface hover:border-(--exercise-accent)/40 hover:bg-(--exercise-accent-soft)/40",
                     !submitted &&
                       isSelected &&
-                      "border-(--exercise-accent) bg-(--exercise-accent-soft)",
+                      "border-(--exercise-accent) [background-image:none] bg-[color-mix(in_oklab,var(--exercise-accent)_24%,var(--exercise-accent-soft))] shadow-sm",
                     showState &&
                       isAnswer &&
-                      "border-success bg-success-muted text-success",
+                      "border-success bg-success-muted text-success [background-image:none]",
                     showState &&
                       isSelected &&
                       !isCorrect &&
-                      "border-error bg-error-muted text-error",
+                      "border-error bg-error-muted text-error [background-image:none]",
                     submitted && !isSelected && !isAnswer && "opacity-55",
                     !reduceMotion && !submitted && "active:scale-[0.99]",
                   )}
+                  aria-pressed={!submitted ? isSelected : undefined}
                 >
+                  <span
+                    aria-hidden
+                    className={cn(
+                      "absolute inset-y-0 left-0 w-0.75",
+                      !submitted && isSelected && "bg-(--exercise-accent)",
+                      showState && isAnswer && "bg-success",
+                      showState &&
+                        isSelected &&
+                        !isCorrect &&
+                        "bg-error",
+                    )}
+                  />
                   <span className="grid grid-cols-[1.25rem_minmax(0,1fr)_auto] items-center gap-2">
                     <span className="inline-flex h-6 items-center justify-center font-mono text-[0.68rem] leading-none tracking-[0.08em] text-muted-foreground uppercase">
                       {String.fromCharCode(65 + optionIndex)}

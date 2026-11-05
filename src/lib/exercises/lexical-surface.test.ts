@@ -96,6 +96,10 @@ describe("lexical surface invariants", () => {
 
   it("is included in generation and evaluation prompts without embedding vocabulary items", () => {
     expect(FILL_BLANK_GENERATOR_PROMPT).toContain(LEXICAL_SURFACE_GUIDANCE);
+    expect(FILL_BLANK_GENERATOR_PROMPT).toContain(
+      LEXICAL_COMPLETE_THEN_BLANK_GUIDANCE,
+    );
+    expect(FILL_BLANK_GENERATOR_PROMPT).toMatch(/completeSentence/);
     expect(CONTEXTUAL_MC_GENERATOR_PROMPT).toContain(LEXICAL_SURFACE_GUIDANCE);
     expect(CONTEXTUAL_MC_GENERATOR_PROMPT).toContain(
       LEXICAL_SURFACE_MC_GUIDANCE,

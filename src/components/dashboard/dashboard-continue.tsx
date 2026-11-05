@@ -43,7 +43,7 @@ export function DashboardContinue({ items }: DashboardContinueProps) {
       <p className={mx(homeStyles, "writing-kicker home-kicker writing-stage-kicker")}>
         {t("continueTitle")}
       </p>
-      <p className="mb-5 max-w-xl text-sm text-muted-foreground">
+      <p className="mb-5 max-w-xl text-base font-semibold text-foreground-muted">
         {t("continueSubtitle")}
       </p>
 
