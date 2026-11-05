@@ -105,6 +105,8 @@ export type ExerciseAiRequest = z.infer<typeof exerciseAiRequestSchema>;
 export const exerciseAiFillBlankSchema = z.object({
   wordId: z.string().trim().min(1).optional(),
   type: z.literal("fill-in-blank").optional(),
+  /** Complete grammatical sentence before blanking (preferred generation path). */
+  completeSentence: optionalTextSchema.catch(null),
   sentence: z.string().trim().min(1).max(500),
   answer: z.string().trim().min(1).max(120),
   baseWord: z.string().trim().min(1).max(120).optional(),

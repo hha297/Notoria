@@ -175,6 +175,39 @@ describe("fill-in-blank AI validation", () => {
     expect(answersMatchAny("alpha", [validated!.answer])).toBe(false);
   });
 
+  it("prefers the surface form extracted from completeSentence", () => {
+    const validated = validateFillBlankExercise(
+      {
+        wordId: alpha.id,
+        completeSentence: "I met an old alphas at the cafe yesterday.",
+        sentence: SAMPLE_BLANK,
+        answer: "alphas",
+        baseWord: "alpha",
+      },
+      alpha,
+    );
+
+    expect(validated).not.toBeNull();
+    expect(validated!.answer).toBe("alphas");
+    expect(countFillBlanks(validated!.sentence)).toBe(1);
+    expect(validated!.sentence).toContain(FILL_BLANK_PLACEHOLDER);
+  });
+
+  it("rejects when completeSentence and blanked sentence disagree", () => {
+    expect(
+      validateFillBlankExercise(
+        {
+          wordId: alpha.id,
+          completeSentence: "I met an old alphas at the cafe yesterday.",
+          sentence: `Someone else saw ${FILL_BLANK_PLACEHOLDER} elsewhere.`,
+          answer: "alphas",
+          baseWord: "alpha",
+        },
+        alpha,
+      ),
+    ).toBeNull();
+  });
+
   it("maps a blanked sentence onto the existing fill-in-blank item shape", () => {
     const item = fillBlankExerciseToItem(
       {

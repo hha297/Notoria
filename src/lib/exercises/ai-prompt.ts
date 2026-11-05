@@ -5,7 +5,10 @@ import {
   progressiveHintPayload,
 } from "@/lib/exercises/progressive-hints";
 import { FILL_BLANK_PLACEHOLDER } from "@/lib/exercises/ai-types";
-import { LEXICAL_SURFACE_GUIDANCE } from "@/lib/exercises/lexical-surface";
+import {
+  LEXICAL_COMPLETE_THEN_BLANK_GUIDANCE,
+  LEXICAL_SURFACE_GUIDANCE,
+} from "@/lib/exercises/lexical-surface";
 import {
   getExerciseDifficultyProfile,
   parseExerciseDifficulty,
@@ -20,38 +23,45 @@ The goal is to test whether the learner can use the target vocabulary in a new c
 
 ${LEXICAL_SURFACE_GUIDANCE}
 
+${LEXICAL_COMPLETE_THEN_BLANK_GUIDANCE}
+
 Requirements:
 1. Invent a completely new, natural, grammatically correct sentence from scratch.
 2. Do NOT use, copy, paraphrase, or lightly rewrite any sentence in avoidSentences.
 3. Do NOT reuse existing example sentences or previous exercise questions.
-4. Generate the full grammatical context first, then decide the required surface form. Replace that surface form — not automatically the saved lemma — with exactly one blank.
+4. Write completeSentence first: a FULL grammatical study-language sentence that already contains the correctly inflected target token. Then set answer to that exact in-sentence token. Then produce sentence by replacing ONLY that token with the blank. Never blank first and guess the inflection afterward.
 5. Use this exact blank placeholder: ${FILL_BLANK_PLACEHOLDER}
-6. Return the expected answer separately. Do not put the answer in the sentence.
-7. answer MUST be the exact surface form that fills the blank. baseWord MUST stay the saved lemma. Inflected, conjugated, agreeing, or other context-required forms are mandatory when grammar needs them. Never copy the lemma into the answer when the sentence requires another form.
-8. CRITICAL — meaningful context aligned with the taught meaning:
+6. Return the expected answer separately. Do not put the answer in the blanked sentence field.
+7. answer MUST equal the exact surface form that appears in completeSentence (and fills the blank). baseWord MUST stay the saved lemma. Inflected, conjugated, agreeing, or other context-required forms are mandatory when grammar needs them. Never copy the lemma into the answer when the sentence requires another form.
+8. CRITICAL — sentence-driven morphology (read the WHOLE sentence before choosing a form):
+   - Determine number, case, tense, person, agreement, and other required morphology from the surrounding words and syntactic role — not from partOfSpeech alone and not from a guessed "common" form.
+   - Numerals, quantifiers, prepositions/postpositions, verbs, and agreement targets constrain the blank. The answer must satisfy ALL of those constraints at once.
+   - Reject frames where more than one grammatical form would be equally defensible; rewrite until one form is clearly required.
+   - instruction (if present), sentenceMeaning, and answer must describe the SAME grammatical outcome. Never label one category while returning another.
+9. CRITICAL — meaningful context aligned with the taught meaning:
    - The sentence must clearly reflect the specific vocabulary meaning provided (if the word has multiple senses, use THAT meaning).
    - Provide enough context that a learner understands what is happening and why this word fits.
    - Avoid vague, incomplete, or context-free frames that leave the blank unconstrained.
    - Prefer natural everyday usage a teacher would accept as a useful example.
    - Make the answer inferable from context without being trivially spoon-fed.
-9. Do not include the answer or the base word anywhere else in the sentence.
-10. Match the requested language. Do not translate into another language.
-11. Follow exerciseDifficulty + fillBlankGuidance in the user payload exactly (Easy / Medium / Hard / Intensive).
+10. Do not include the answer or the base word anywhere else in the blanked sentence.
+11. Match the requested language. Do not translate into another language.
+12. Follow exerciseDifficulty + fillBlankGuidance in the user payload exactly (Easy / Medium / Hard / Intensive).
     Difficulty means how the *same* learner word is tested (context complexity / cognitive demand) — NOT selecting harder vocabulary and NOT longer/obscure/unnatural sentences.
     Keep a clear, defensible correct answer. Never change the taught meaning just to feel harder.
     NEVER introduce a new target word that was not provided in the input list.
-12. Prefer realistic everyday usage. Avoid artificial AI-sounding sentences.
-13. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
-14. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
-15. Keep explanation empty.
-16. Optionally include instruction: a short neutral learner-facing task line in the SAME language as the sentence. Do NOT invent a specific grammar topic unless the word metadata clearly supports it.
-17. ALWAYS include sentenceMeaning: a short natural translation/gloss of the COMPLETE correct sentence (with the answer filled in).
+13. Prefer realistic everyday usage. Avoid artificial AI-sounding sentences.
+14. Vary sentence structure and context. If the same word appears more than once, write a clearly different sentence each time.
+15. Do not invent unnecessary facts. Do not change the vocabulary word or meaning.
+16. Keep explanation empty.
+17. Optionally include instruction: a short neutral learner-facing task line in the SAME language as the sentence. Do NOT invent a specific grammar topic unless the word metadata clearly supports it.
+18. ALWAYS include sentenceMeaning: a short natural translation/gloss of the COMPLETE correct sentence (with the answer filled in).
     - Write sentenceMeaning in uiLanguage (the website interface language), NOT in the practice/study language (unless they are the same).
     - Do NOT put sentenceMeaning inside the practice sentence. It is a separate field for post-answer UI.
-18. Prefer sentence-final punctuation attached immediately after the blank — avoid leaving a lone period as a separate fragment.
-19. Return one exercise per input entry. Copy wordId from the input.
-20. Quality test: would a language teacher consider this a useful example for this exact word/meaning? If not, rewrite.
-21. Put the selected exerciseDifficulty id into the difficulty field of each exercise.
+19. Prefer sentence-final punctuation attached immediately after the blank — avoid leaving a lone period as a separate fragment.
+20. Return one exercise per input entry. Copy wordId from the input.
+21. Quality test: would a language teacher consider this a useful example for this exact word/meaning with this exact blank form? If not, rewrite.
+22. Put the selected exerciseDifficulty id into the difficulty field of each exercise.
 
 ${GRAMMAR_FORM_HINT_PROMPT}
 
@@ -61,6 +71,7 @@ Return structured JSON only:
     {
       "wordId": string,
       "type": "fill-in-blank",
+      "completeSentence": string,
       "sentence": string,
       "answer": string,
       "baseWord": string,
@@ -109,7 +120,7 @@ export function fillBlankUserPayload(input: {
     difficultyGuidance: profile.aiGuidance,
     fillBlankGuidance: profile.fillBlankGuidance,
     reminder:
-      "Practice sentence/answer must be in languageHint. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form. Hints follow hintStrategy=grammar-form: grammar/structure only in explanationLanguage; never restate the on-screen meaning gloss; never invent spelling masks or reveal the full answer.",
+      "Practice sentence/answer must be in languageHint. Write completeSentence first with the correctly inflected target already inside it; answer must be that exact token; sentence blanks only that token. ALWAYS include sentenceMeaning in uiLanguage (website language), not the study language. Obey difficultyGuidance and fillBlankGuidance. Target words must come from the provided list only. Difficulty controls sentence construction only — never swap targets. word/baseWord is the lemma; answer is the contextual surface form required by the FULL sentence (case/number/tense/agreement). Hints follow hintStrategy=grammar-form: grammar/structure only in explanationLanguage; never restate the on-screen meaning gloss; never invent spelling masks or reveal the full answer.",
     regenerateReason: input.regenerateReason,
     ...additionalInstructionFields(input.additionalInstructions),
     ...progressiveHintPayload({

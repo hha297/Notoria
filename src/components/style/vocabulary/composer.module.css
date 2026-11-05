@@ -1895,17 +1895,34 @@
 
 .vocab-composer-page .vocab-composer-actions {
   margin-top: 0.75rem !important;
+  min-width: 0;
+  box-sizing: border-box;
+}
+
+/*
+ * Sticky footer: both buttons must share the row. `width: 100%` on each
+ * (plus Button `shrink-0`) overflows when Cancel appears in edit mode.
+ */
+.vocab-composer-page .vocab-composer-submit,
+.vocab-composer-page .vocab-composer-cancel {
+  width: 100% !important;
+  min-width: 0 !important;
+  max-width: 100% !important;
+  flex: 1 1 auto;
+  flex-shrink: 1 !important;
 }
 
 .vocab-composer-page .vocab-composer-submit {
-  width: 100% !important;
-  min-width: 0 !important;
   background: var(--module-vocab-fg) !important;
   color: var(--background) !important;
 }
 
-.vocab-composer-page .vocab-composer-cancel {
-  width: 100% !important;
+@media (min-width: 640px) {
+  .vocab-composer-page .vocab-composer-submit,
+  .vocab-composer-page .vocab-composer-cancel {
+    width: auto !important;
+    flex: 1 1 0;
+  }
 }
 
 .vocab-composer-modal .vocab-composer-actions {

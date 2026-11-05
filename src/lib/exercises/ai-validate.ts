@@ -11,6 +11,7 @@ import {
 import {
   acceptResolvedSurfaceForm,
   isRelatedWordForm,
+  resolveContextualFromCompleteSentence,
 } from "@/lib/exercises/lexical-surface";
 import {
   buildFillBlankAcceptableAnswers,
@@ -20,6 +21,21 @@ import { normalizeAnswer } from "@/lib/exercises/utils";
 import { resolveProgressiveHints } from "@/lib/exercises/progressive-hints";
 
 export { FILL_BLANK_PLACEHOLDER, isRelatedWordForm };
+
+function completeSentenceSource(draft: {
+  completeSentence?: string | null;
+  sentence?: string | null;
+  answer?: string | null;
+}) {
+  const complete = draft.completeSentence?.trim() ?? "";
+  if (complete) return complete;
+  // Legacy blank-first drafts: rebuild a complete sentence only when the blank
+  // can be filled uniquely with the proposed answer.
+  const blanked = draft.sentence?.trim() ?? "";
+  const answer = draft.answer?.trim() ?? "";
+  if (!blanked || !answer || countFillBlanks(blanked) !== 1) return "";
+  return normalizePromptBlank(blanked).replace(FILL_BLANK_PLACEHOLDER, answer);
+}
 
 function blankRegex(global = false) {
   return global ? /_{3,}/g : /_{3,}/;
@@ -85,26 +101,69 @@ export function validateFillBlankExercise(
   raw: ExerciseAiFillBlankDraft,
   word: ExerciseAiWordInput,
 ): ExerciseAiFillBlank | null {
-  const sentence = normalizePromptBlank(raw.sentence.trim());
-  const proposed = raw.answer.trim();
   const lemma = word.word.trim();
+  const proposed = raw.answer?.trim() ?? "";
+  if (!lemma) return null;
 
-  if (!sentence || !proposed || !lemma) return null;
+  // Prefer complete-then-blank: extract the exact token from the complete
+  // sentence so blank-first morphology guesses cannot pass validation.
+  const completeSentence = completeSentenceSource(raw);
+  const fromComplete = completeSentence
+    ? resolveContextualFromCompleteSentence({
+        completeSentence,
+        lemma,
+        proposed: proposed || undefined,
+      }) ??
+      resolveContextualFromCompleteSentence({
+        completeSentence,
+        lemma: raw.baseWord?.trim() || lemma,
+        proposed: proposed || undefined,
+      })
+    : null;
+
+  let sentence: string;
+  let answer: string;
+
+  if (fromComplete) {
+    sentence = normalizePromptBlank(fromComplete.prompt);
+    answer = fromComplete.answerForm;
+  } else {
+    sentence = normalizePromptBlank(raw.sentence?.trim() ?? "");
+    if (!sentence || !proposed) return null;
+    if (countFillBlanks(sentence) !== 1) return null;
+    if (!splitSentenceAtBlank(sentence)) return null;
+
+    const resolved =
+      acceptResolvedSurfaceForm({
+        prompt: sentence,
+        lemma,
+        proposed,
+      }) ??
+      acceptResolvedSurfaceForm({
+        prompt: sentence,
+        lemma: raw.baseWord?.trim() || lemma,
+        proposed,
+      });
+    if (!resolved) return null;
+    answer = resolved;
+  }
+
+  if (!sentence || !answer) return null;
   if (countFillBlanks(sentence) !== 1) return null;
   if (!splitSentenceAtBlank(sentence)) return null;
 
-  const answer =
-    acceptResolvedSurfaceForm({
-      prompt: sentence,
-      lemma,
-      proposed,
-    }) ??
-    acceptResolvedSurfaceForm({
-      prompt: sentence,
-      lemma: raw.baseWord?.trim() || lemma,
-      proposed,
-    });
-  if (!answer) return null;
+  // When both completeSentence and a blanked sentence were provided, they must
+  // describe the same item (same blank slot after normalization).
+  const blankedRaw = raw.sentence?.trim()
+    ? normalizePromptBlank(raw.sentence.trim())
+    : "";
+  if (
+    blankedRaw &&
+    countFillBlanks(blankedRaw) === 1 &&
+    normalizeSentence(blankedRaw) !== normalizeSentence(sentence)
+  ) {
+    return null;
+  }
 
   if (sentenceLeaksAnswer(sentence, answer, lemma, raw.baseWord ?? "")) {
     return null;
@@ -132,6 +191,7 @@ export function validateFillBlankExercise(
   return {
     wordId: word.id,
     type: "fill-in-blank",
+    completeSentence: null,
     sentence,
     answer,
     baseWord: lemma,

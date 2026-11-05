@@ -25,6 +25,7 @@ import {
   theoryAiResponseSchema,
   type TheoryAiExerciseDraft,
 } from "@/lib/theory-exercises/generate-ai";
+import { validateTheoryExercisesSemantically } from "@/lib/theory-exercises/semantic-validate";
 import {
   extractTheoryGenerationMaterial,
   maxExampleReuseAllowed,
@@ -355,8 +356,8 @@ export async function generateAiTheoryExercises(input: {
       }
     }
 
-    const items = mapDrafts(drafts, count);
-    if (items.length === 0) {
+    const mapped = mapDrafts(drafts, count);
+    if (mapped.length === 0) {
       console.warn("[theory-exercise] all provider drafts rejected locally", {
         questionType: input.questionType ?? "fill_blank",
         parsedDraftCount: drafts.length,
@@ -372,6 +373,51 @@ export async function generateAiTheoryExercises(input: {
       );
       if (hard) throw afterProviderError(hard);
       throw new Error("AI_INVALID_RESPONSE");
+    }
+
+    // Structural mapping alone cannot catch form-category mismatches (e.g. wrong
+    // case/number that still looks related). Run the semantic judge when time remains.
+    // Fail open if the judge drops everything: a strict false-negative batch must not
+    // block an otherwise usable structurally-validated set.
+    let items = mapped;
+    if (!deadline.expired()) {
+      try {
+        const judged = await validateTheoryExercisesSemantically({
+          items: mapped,
+          theoryTitle: title,
+          theoryRules,
+          studyLanguage,
+          signal: deadline.signal,
+        });
+        if (judged.length === 0) {
+          console.warn(
+            "[theory-exercise] semantic judge rejected all items; keeping structural set",
+            {
+              questionType: input.questionType ?? "fill_blank",
+              mappedCount: mapped.length,
+            },
+          );
+        } else {
+          items = judged;
+          if (judged.length < mapped.length) {
+            console.info("[theory-exercise] semantic judge filtered items", {
+              questionType: input.questionType ?? "fill_blank",
+              mappedCount: mapped.length,
+              keptCount: judged.length,
+            });
+          }
+        }
+      } catch (error) {
+        if (isDeadlineExceeded(error) || deadline.expired()) {
+          items = mapped;
+        } else {
+          console.error(
+            "[theory-exercise] semantic judge failed; keeping structural set",
+            error,
+          );
+          items = mapped;
+        }
+      }
     }
 
     if (deadline.expired()) {
