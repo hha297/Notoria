@@ -1192,6 +1192,12 @@
           "headline": "Quasi hi sou",
           "body": "Acabeu primer els que no han estat respostos — després la puntuació explicarà una història més clara."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

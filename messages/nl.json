@@ -1192,6 +1192,12 @@
           "headline": "Bijna daar",
           "body": "Beantwoord eerst de onbeantwoorde vragen — dan zal de score een duidelijker verhaal vertellen."
         }
+      },
+      "explanation": "Waarom",
+      "howToUseIt": "Zo gebruik je het",
+      "feedbackStatus": {
+        "correct": "Juist",
+        "incorrect": "Niet helemaal"
       }
     },
     "multipleChoice": {

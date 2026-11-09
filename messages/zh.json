@@ -1192,6 +1192,12 @@
           "headline": "快到了",
           "body": "先完成未回答的问题 — 然后分数会更清晰。"
         }
+      },
+      "explanation": "为什么",
+      "howToUseIt": "用法示例",
+      "feedbackStatus": {
+        "correct": "正确",
+        "incorrect": "不太对"
       }
     },
     "multipleChoice": {

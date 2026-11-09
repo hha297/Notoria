@@ -2,6 +2,7 @@
 
 import { useCallback, useMemo, useState, useTransition } from "react";
 import { useTranslations } from "next-intl";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { ExerciseDisplayModePicker } from "@/components/exercises/exercise-display-mode-picker";
@@ -19,6 +20,7 @@ import { VocabularyFiltersBar } from "@/components/exercises/vocabulary-filters-
 import { Button } from "@/components/ui/button";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
+import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { appendVocabularyExample } from "@/lib/actions/vocabulary";
 import { requestFormSentenceAi } from "@/lib/exercises/form-sentence-ai-client";
@@ -71,6 +73,7 @@ export function FormSentenceSession({
   const t = useTranslations("exercises.formSentence");
   const tSession = useTranslations("exercises.session");
   const tBilling = useTranslations("billing");
+  const tCommon = useTranslations("common");
   const { openUpgrade } = useProAccess();
   const [filters, setFilters] = useState<FlashcardFilters>(
     DEFAULT_FLASHCARD_FILTERS,
@@ -83,9 +86,14 @@ export function FormSentenceSession({
   >({});
   const [activeIds, setActiveIds] = useState<string[] | null>(null);
 
+  const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
+    workspaceId,
+    words,
+    filters,
+  );
   const filteredWords = useMemo(
-    () => filterFlashcardWords(words, filters),
-    [words, filters],
+    () => filterFlashcardWords(deckWords, filters),
+    [deckWords, filters],
   );
   const poolItems = useMemo(
     () => buildFormSentenceItems(filteredWords),
@@ -359,11 +367,32 @@ export function FormSentenceSession({
   };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
+  if (deckLoading) {
+    return (
+      <div className="space-y-6">
+        <VocabularyFiltersBar
+          words={words}
+          workspaceId={workspaceId}
+          filters={filters}
+          onFiltersChange={setFilters}
+        />
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+          <p className="text-sm">{tCommon("loading")}</p>
+        </div>
+      </div>
+    );
+  }
   if (poolItems.length === 0) {
     return (
       <div className="space-y-6">
         <VocabularyFiltersBar
           words={words}
+          workspaceId={workspaceId}
           filters={filters}
           onFiltersChange={setFilters}
         />
@@ -385,6 +414,7 @@ export function FormSentenceSession({
       <div id="fs-set-top" className="scroll-mt-24" />
       <VocabularyFiltersBar
         words={words}
+        workspaceId={workspaceId}
         filters={filters}
         onFiltersChange={setFilters}
       />

@@ -1192,6 +1192,12 @@
           "headline": "Gati aty",
           "body": "Mbaro ato pa përgjigje së pari — pastaj rezultati do të tregojë një histori më të qartë."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

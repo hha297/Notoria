@@ -1192,6 +1192,12 @@
           "headline": "Casi allí",
           "body": "Termina primero los que no has respondido — luego la puntuación contará una historia más clara."
         }
+      },
+      "explanation": "Por qué",
+      "howToUseIt": "Cómo usarlo",
+      "feedbackStatus": {
+        "correct": "Correcto",
+        "incorrect": "Casi"
       }
     },
     "multipleChoice": {

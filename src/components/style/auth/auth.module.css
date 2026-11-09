@@ -1,11 +1,4 @@
 /* --- Auth atelier --- */
-/* Compact mobile auth shell — less vertical waste on narrow screens */
-@media (max-width: 639px) {
-  .auth-layout {
-    padding-inline: 0.85rem;
-  }
-}
-
 .auth-layout {
   min-height: 100svh;
   background: var(--background);
@@ -20,7 +13,7 @@
   min-height: 100svh;
   align-items: center;
   justify-content: center;
-  padding: 1.15rem 0.85rem 1.5rem;
+  padding: 1.15rem 1rem 1.5rem;
 }
 
 @media (min-width: 640px) {
@@ -38,13 +31,16 @@
 
 /* Match landing `.landing-shell` so chrome lines up with `/`. */
 .auth-chrome-shell {
-  width: min(72rem, calc(100% - 2rem));
+  box-sizing: border-box;
+  width: 100%;
   margin-inline: auto;
+  padding-inline: 1rem;
 }
 
 @media (min-width: 640px) {
   .auth-chrome-shell {
     width: min(72rem, calc(100% - 3rem));
+    padding-inline: 0;
   }
 }
 
@@ -70,12 +66,18 @@
 }
 
 .auth-atelier-shell-footer .auth-atelier {
-  width: min(100%, 26.5rem);
+  width: 100%;
   margin-inline: auto;
   padding-inline: 1rem;
   padding-block: 0.75rem 1.75rem;
   flex: 1 1 auto;
   justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .auth-atelier-shell-footer .auth-atelier {
+    width: min(100%, 26.5rem);
+  }
 }
 
 .auth-site-footer {
@@ -306,9 +308,15 @@
   position: relative;
   z-index: 1;
   display: flex;
-  width: min(100%, 26.5rem);
+  width: 100%;
   flex-direction: column;
   gap: 1.35rem;
+}
+
+@media (min-width: 640px) {
+  .auth-atelier {
+    width: min(100%, 26.5rem);
+  }
 }
 
 .auth-hero {
@@ -380,10 +388,16 @@
 }
 
 .auth-panel-body {
-  padding: 1.25rem 1.2rem 1.35rem;
+  padding: 1.15rem 1rem 1.25rem;
 }
 
 @media (min-width: 480px) {
+  .auth-panel-body {
+    padding: 1.25rem 1.2rem 1.35rem;
+  }
+}
+
+@media (min-width: 640px) {
   .auth-panel-body {
     padding: 1.4rem 1.45rem 1.5rem;
   }

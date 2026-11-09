@@ -1192,6 +1192,12 @@
           "headline": "Melkein perillä",
           "body": "Lopeta ensin vastaamattomat — sitten tulos kertoo selvemmän tarinan."
         }
+      },
+      "explanation": "Miksi",
+      "howToUseIt": "Näin käytät sitä",
+      "feedbackStatus": {
+        "correct": "Oikein",
+        "incorrect": "Ei ihan"
       }
     },
     "multipleChoice": {

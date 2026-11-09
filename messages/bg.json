@@ -1192,6 +1192,12 @@
           "headline": "Почти си там",
           "body": "Завърши неотговорените първо — след това резултатът ще разкаже по-ясна история."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

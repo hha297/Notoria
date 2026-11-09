@@ -1192,6 +1192,12 @@
           "headline": "Aproape acolo",
           "body": "Finalizați întâi cele nesolicitate — apoi scorul va spune o poveste mai clară."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

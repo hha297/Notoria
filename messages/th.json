@@ -1192,6 +1192,12 @@
           "headline": "เกือบถึงแล้ว",
           "body": "ทำให้เสร็จสิ้นคำถามที่ยังไม่ได้ตอบก่อน — จากนั้นคะแนนจะบอกเรื่องราวที่ชัดเจนขึ้น"
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

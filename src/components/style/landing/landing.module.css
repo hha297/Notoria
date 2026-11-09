@@ -285,22 +285,21 @@
 }
 
 @media (max-width: 479px) {
+  /* Stack CTAs so labels like "Explore How It Works" stay on one line. */
   .cta-row {
+    flex-direction: column;
     flex-wrap: nowrap;
     align-items: stretch;
-    gap: 0.55rem;
+    gap: 0.65rem;
   }
 
   .cta-row > * {
-    flex: 1 1 0;
+    flex: 0 0 auto;
+    width: 100%;
     min-width: 0;
     justify-content: center;
-    padding-inline: 0.7rem;
-    white-space: normal;
+    white-space: nowrap;
     text-align: center;
-    line-height: 1.2;
-    height: auto;
-    min-height: 2.75rem;
   }
 }
 

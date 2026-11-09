@@ -1192,6 +1192,12 @@
           "headline": "Gotovo ste tu",
           "body": "Prvo završite neodgovorena pitanja — tada će rezultat dati jasniju sliku."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

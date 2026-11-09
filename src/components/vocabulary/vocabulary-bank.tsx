@@ -6,6 +6,7 @@ import { format } from "date-fns";
 import { Download, Plus, Upload } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useMemo, useState } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import type { MultiFilterOptionGroup } from "@/components/filters/multi-filter-select";
 import { PageShell } from "@/components/layout/page-shell";
@@ -27,6 +28,7 @@ import {
   multiFilterKey,
   type MultiFilterValue,
 } from "@/lib/filters/multi-select";
+import { workspaceCustomTagsQueryOptions } from "@/lib/query/options";
 import {
   filterVocabularyWords,
   groupVocabularyWordsByPos,
@@ -36,6 +38,7 @@ import {
 import type { VocabularyExportSourceWord } from "@/lib/vocabulary/export/build-document";
 import {
   BUILTIN_TAG_GROUPS,
+  customTagKey,
   getCustomTagName,
   getTagLabel,
   isCustomTagKey,
@@ -82,6 +85,10 @@ export function VocabularyBank({
   const [importOpen, setImportOpen] = useState(false);
   const [editingWord, setEditingWord] = useState<VocabularyWordRow | null>(null);
   const { invalidateVocabulary } = useInvalidateWorkspaceQueries(workspaceId);
+  const customTagsQuery = useQuery({
+    ...workspaceCustomTagsQueryOptions(workspaceId),
+    enabled: Boolean(workspaceId),
+  });
 
   const customTagOptions = useMemo(() => {
     const seen = new Set<string>();
@@ -92,11 +99,15 @@ export function VocabularyBank({
         }
       }
     }
+    for (const name of customTagsQuery.data ?? []) {
+      const trimmed = name.trim();
+      if (trimmed) seen.add(customTagKey(trimmed));
+    }
 
     return Array.from(seen).sort((a, b) =>
       getCustomTagName(a).localeCompare(getCustomTagName(b)),
     );
-  }, [words]);
+  }, [customTagsQuery.data, words]);
 
   const tagFilterGroups = useMemo((): MultiFilterOptionGroup[] => {
     return TAG_PICKER_GROUPS.map((group) => ({

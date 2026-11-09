@@ -1192,6 +1192,12 @@
           "headline": "Beveik ten",
           "body": "Pabaikite neatsakytus klausimus pirmiausia — tada rezultatas pasakys aiškesnę istoriją."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

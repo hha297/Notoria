@@ -1192,6 +1192,12 @@
           "headline": "Gandrīz tur",
           "body": "Vispirms pabeidziet neatbildētos — tad rezultāts pastāstīs skaidrāku stāstu."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

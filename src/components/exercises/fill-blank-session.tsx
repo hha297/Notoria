@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { toast } from "sonner";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
@@ -53,6 +53,7 @@ import { answersMatchAny, shuffleArray } from "@/lib/exercises/utils";
 import { useExerciseDifficulty } from "@/hooks/use-exercise-difficulty";
 import { useExerciseSetAttempt } from "@/hooks/use-exercise-set-attempt";
 import { useExerciseSetUi } from "@/hooks/use-exercise-set-ui";
+import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { cn } from "@/lib/utils";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
@@ -78,6 +79,7 @@ export function FillBlankSession({
   const t = useTranslations("exercises.fillInBlank");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const tCommon = useTranslations("common");
   const uiLocale = useLocale();
   const { hasProAccess, openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
@@ -104,10 +106,15 @@ export function FillBlankSession({
     complete: completeProcessing,
     isActive: generating,
   } = useAiProcessing();
+  const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
+    workspaceId,
+    words,
+    filters,
+  );
 
   const filteredWords = useMemo(
-    () => filterFlashcardWords(words, filters),
-    [words, filters],
+    () => filterFlashcardWords(deckWords, filters),
+    [deckWords, filters],
   );
   const exampleItems = useMemo(
     () => buildFillBlankItems(filteredWords),
@@ -638,6 +645,22 @@ export function FillBlankSession({
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
 
+  if (deckLoading) {
+    return (
+      <div className="space-y-6">
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+          <p className="text-sm">{tCommon("loading")}</p>
+        </div>
+      </div>
+    );
+  }
+
   const aiBar = (
     <ExerciseAiBar
       generating={generating}
@@ -665,7 +688,7 @@ export function FillBlankSession({
   if (filteredWords.length === 0) {
     return (
       <div className="space-y-6">
-        <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
         {sourcePicker}
         {usingAiGenerated ? aiBar : null}
         <VocabularyEmpty variant="no-filtered" />
@@ -676,7 +699,7 @@ export function FillBlankSession({
   if (usingSavedExamples && exampleItems.length === 0) {
     return (
       <div className="space-y-6">
-        <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
         {sourcePicker}
         <EmptySavedExamplesCard
           canUseAi={hasProAccess}
@@ -703,7 +726,7 @@ export function FillBlankSession({
   return (
     <div className="space-y-6">
       <div id="fb-set-top" className="scroll-mt-24" />
-      <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+      <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
       {sourcePicker}
       {usingAiGenerated ? aiBar : null}
 

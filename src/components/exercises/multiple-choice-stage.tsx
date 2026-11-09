@@ -2,8 +2,10 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles, XCircle } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
+import { ExerciseAnswerReview } from "@/components/exercises/exercise-answer-review";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
+import { VocabularyUsageExample } from "@/components/exercises/vocabulary-usage-example";
 import {
   applyAnswerFormCasing,
   splitPromptAtBlank,
@@ -17,6 +19,7 @@ import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercis
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+import type { WordUsageExample } from "@/lib/exercises/word-usage-example";
 
 type MultipleChoiceStageProps = {
   question: MultipleChoiceQuestion;
@@ -31,6 +34,8 @@ type MultipleChoiceStageProps = {
   /** 1-based index when rendering a full set list. */
   number?: number;
   unanswered?: boolean;
+  /** Saved vocabulary example for post-answer context. */
+  usageExample?: WordUsageExample | null;
 };
 
 export function MultipleChoiceStage({
@@ -44,15 +49,18 @@ export function MultipleChoiceStage({
   onRevealAnswer,
   number,
   unanswered = false,
+  usageExample = null,
 }: MultipleChoiceStageProps) {
   const t = useTranslations("exercises.multipleChoice");
-  const tSession = useTranslations("exercises.session");
   const tType = useTranslations("exercises.types.multiple-choice");
   const tAi = useTranslations("exercises.ai");
   const reduceMotion = useReducedMotion();
   const surface = contextualSurfaceAnswer(question);
   const cue = question.meaningHint?.trim() || null;
   const sentenceMeaning = question.sentenceMeaning?.trim() || "";
+  const selectedLabel = selected
+    ? displayContextualOption(question, selected)
+    : null;
 
   const inSetList = typeof number === "number";
 
@@ -196,17 +204,33 @@ export function MultipleChoiceStage({
           })}
         </div>
 
-        <AnswerCaption
+        <ExerciseAnswerReview
           revealed={revealed}
           peeked={peeked}
           isCorrect={isCorrect}
           unanswered={unanswered}
-          surface={surface}
+          userAnswer={selectedLabel}
+          correctAnswer={surface}
+          compactComparison
+          explanation={null}
           correctLabel={t("correct")}
-          incorrectLabel={t("incorrect", { answer: surface })}
-          unansweredLabel={tSession("unanswered")}
-          reduceMotion={Boolean(reduceMotion)}
-        />
+        >
+          <VocabularyUsageExample
+            example={usageExample?.example}
+            lemma={usageExample?.lemma ?? question.baseWord}
+            highlightTerms={[
+              ...(usageExample?.meanings ?? []),
+              ...(question.meanings ?? []),
+              question.meaningHint,
+              // Gloss / surface form when it differs from the lemma itself.
+              surface !== (question.baseWord ?? "").trim() ? surface : null,
+              question.correctOption !== (question.baseWord ?? "").trim()
+                ? question.correctOption
+                : null,
+            ]}
+            revealed={revealed}
+          />
+        </ExerciseAnswerReview>
       </div>
     </motion.article>
   );
@@ -368,7 +392,7 @@ function ChoiceOption({
       />
       <span
         className={cn(
-          "flex size-7 shrink-0 items-center justify-center self-center font-mono text-[11px] leading-none tracking-wide tabular-nums",
+          "flex size-7 shrink-0 items-center justify-center font-mono text-[11px] leading-none tracking-wide tabular-nums",
           "sm:size-auto sm:justify-start sm:self-auto sm:text-[0.68rem] sm:tracking-[0.18em]",
           showCorrect
             ? "text-success"
@@ -383,63 +407,10 @@ function ChoiceOption({
           mark
         )}
       </span>
-      <span className="min-w-0 self-center font-heading text-[1.05rem] leading-snug font-semibold tracking-tight wrap-anywhere sm:self-auto sm:text-[1.2rem]">
+      <span className="min-w-0 font-heading text-[1.05rem] leading-none font-semibold tracking-tight wrap-anywhere sm:self-auto sm:text-[1.2rem] sm:leading-snug">
         {label}
       </span>
     </motion.button>
   );
 }
 
-function AnswerCaption({
-  revealed,
-  peeked,
-  isCorrect,
-  unanswered,
-  correctLabel,
-  incorrectLabel,
-  unansweredLabel,
-  reduceMotion,
-}: {
-  revealed: boolean;
-  peeked: boolean;
-  isCorrect: boolean;
-  unanswered: boolean;
-  surface: string;
-  correctLabel: string;
-  incorrectLabel: string;
-  unansweredLabel: string;
-  reduceMotion: boolean;
-}) {
-  return (
-    <AnimatePresence>
-      {revealed ? (
-        <motion.p
-          initial={reduceMotion ? false : { opacity: 0, y: 6 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.18 }}
-          className={cn(
-            "mt-5 inline-flex items-center gap-1.5 text-sm font-medium wrap-anywhere",
-            unanswered
-              ? "font-semibold text-warning"
-              : peeked || !isCorrect
-                ? "text-muted-foreground"
-                : "text-success",
-          )}
-          aria-live="polite"
-        >
-          {unanswered ? (
-            <>
-              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
-              {unansweredLabel}
-            </>
-          ) : peeked || !isCorrect ? (
-            incorrectLabel
-          ) : (
-            correctLabel
-          )}
-        </motion.p>
-      ) : null}
-    </AnimatePresence>
-  );
-}

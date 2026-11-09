@@ -6,6 +6,7 @@ import {
   isCustomTagKey,
   isValidCustomTagName,
   listCustomTagOptions,
+  tagsEqualForFilter,
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
 import type { VocabularyWordRow } from "@/lib/vocabulary/types";
@@ -74,13 +75,7 @@ export function storedTagMatchesManagerTag(
   storedTag: string,
   tagId: string,
 ): boolean {
-  const stored = canonicalizeTagId(storedTag);
-  const target = canonicalizeTagId(tagId) ?? tagId.trim();
-  if (!stored || !target) return false;
-  if (isCustomTagKey(stored) && isCustomTagKey(target)) {
-    return stored.toLowerCase() === target.toLowerCase();
-  }
-  return stored === target;
+  return tagsEqualForFilter(storedTag, tagId);
 }
 
 export function wordHasTag(

@@ -62,6 +62,7 @@ export default async function NewVocabularyPage({
           prefillNotes={notes || undefined}
           prefillExample={exampleSentence || undefined}
           fromInboxId={fromInboxId}
+          previewHref="/vocabulary"
         />
       </div>
     </PageShell>
