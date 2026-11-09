@@ -175,7 +175,7 @@ export function buildFillBlankItems(words: FlashcardWord[]): FillBlankItem[] {
       const split = findBlankInExample(example, lemma);
       if (!split) continue;
 
-      const entryMeaning = word.exampleEntries?.[index]?.meaning?.trim() || null;
+      const entryMeaning = word.exampleEntries?.[index]?.meaning?.trim() || undefined;
 
       seenSentences.add(sentenceKey);
       items.push({
