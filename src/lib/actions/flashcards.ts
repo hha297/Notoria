@@ -7,14 +7,21 @@ import {
   flashcardProgress,
   flashcardReviews,
   vocabularySynonyms,
+  vocabularyWordTags,
   vocabularyWords,
   wordExamples,
   wordMeanings,
 } from "@/db/schema";
 import { getCurrentUserId } from "@/lib/auth/session";
+import {
+  isMultiFilterActive,
+  matchesMultiFilter,
+  matchesMultiFilterAny,
+} from "@/lib/filters/multi-select";
 import { getActiveWorkspace, requireActiveWorkspace } from "@/lib/workspace";
 import type {
   FlashcardCardDirection,
+  FlashcardFilters,
   FlashcardRating,
   FlashcardWord,
 } from "@/types/flashcards";
@@ -93,6 +100,8 @@ function computeNextProgress(
 
 export async function getFlashcardWords(params?: {
   focus?: "weak" | "due";
+  /** When set, select from the full bank (not only the uncapped-by-filter deck). */
+  filters?: FlashcardFilters;
 }): Promise<FlashcardWord[]> {
   const userId = await getCurrentUserId();
   const workspace = await getActiveWorkspace();
@@ -101,15 +110,27 @@ export async function getFlashcardWords(params?: {
     return [];
   }
 
+  const filters = params?.filters;
+  const filterActive = Boolean(
+    filters &&
+      (isMultiFilterActive(filters.tag) ||
+        isMultiFilterActive(filters.partOfSpeech) ||
+        isMultiFilterActive(filters.status)),
+  );
+
   // Lean ID pass first — avoid loading full word graphs for the entire bank.
   // Prefer newest vocabulary so the capped deck stays relevant for practice.
-  const [wordIds, progressRows] = await Promise.all([
+  // When filters are active, pull POS/status (and tags below) so the cap applies
+  // *after* filtering the full workspace — otherwise tags outside the top 500 vanish.
+  const [wordRows, progressRows] = await Promise.all([
     db.query.vocabularyWords.findMany({
       where: and(
         eq(vocabularyWords.userId, userId),
         eq(vocabularyWords.workspaceId, workspace.id),
       ),
-      columns: { id: true, createdAt: true },
+      columns: filterActive
+        ? { id: true, createdAt: true, partOfSpeech: true, status: true }
+        : { id: true, createdAt: true },
       orderBy: [desc(vocabularyWords.createdAt)],
     }),
     db.query.flashcardProgress.findMany({
@@ -120,6 +141,55 @@ export async function getFlashcardWords(params?: {
       columns: { wordId: true, nextReviewAt: true, lastRating: true },
     }),
   ]);
+
+  let candidateRows = wordRows;
+
+  if (filterActive && filters) {
+    const tagsByWordId = new Map<string, string[]>();
+    if (isMultiFilterActive(filters.tag)) {
+      const tagRows = await db
+        .select({
+          wordId: vocabularyWordTags.wordId,
+          tag: vocabularyWordTags.tag,
+        })
+        .from(vocabularyWordTags)
+        .innerJoin(
+          vocabularyWords,
+          eq(vocabularyWordTags.wordId, vocabularyWords.id),
+        )
+        .where(
+          and(
+            eq(vocabularyWords.userId, userId),
+            eq(vocabularyWords.workspaceId, workspace.id),
+          ),
+        );
+
+      for (const row of tagRows) {
+        const normalized = canonicalizeTagId(row.tag) ?? row.tag.trim();
+        if (!normalized) continue;
+        const list = tagsByWordId.get(row.wordId);
+        if (list) list.push(normalized);
+        else tagsByWordId.set(row.wordId, [normalized]);
+      }
+    }
+
+    candidateRows = wordRows.filter((row) => {
+      const partOfSpeech =
+        "partOfSpeech" in row ? (row.partOfSpeech as string | null) : null;
+      const status = "status" in row ? (row.status as string) : null;
+      if (!matchesMultiFilter(filters.partOfSpeech, partOfSpeech)) return false;
+      if (!matchesMultiFilter(filters.status, status)) return false;
+      if (
+        !matchesMultiFilterAny(
+          filters.tag,
+          tagsByWordId.get(row.id) ?? [],
+        )
+      ) {
+        return false;
+      }
+      return true;
+    });
+  }
 
   const now = Date.now();
   const nextReviewByWordId = new Map(
@@ -158,16 +228,20 @@ export async function getFlashcardWords(params?: {
 
   let orderedIds: string[];
   if (params?.focus === "weak") {
-    const weakOrdered = wordIds
+    const weakOrdered = candidateRows
       .filter((row) => weakWordIds.has(row.id))
       .map((row) => row.id);
     orderedIds =
       weakOrdered.length > 0
         ? weakOrdered
-        : wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
+        : candidateRows.filter((row) => isDue(row.id)).map((row) => row.id);
   } else {
-    const dueIds = wordIds.filter((row) => isDue(row.id)).map((row) => row.id);
-    const laterIds = wordIds.filter((row) => !isDue(row.id)).map((row) => row.id);
+    const dueIds = candidateRows
+      .filter((row) => isDue(row.id))
+      .map((row) => row.id);
+    const laterIds = candidateRows
+      .filter((row) => !isDue(row.id))
+      .map((row) => row.id);
     orderedIds = [...dueIds, ...laterIds];
   }
 

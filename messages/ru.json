@@ -1192,6 +1192,12 @@
           "headline": "Почти там",
           "body": "Сначала завершите незавершенные — тогда результат будет более ясным."
         }
+      },
+      "explanation": "Почему",
+      "howToUseIt": "Как это использовать",
+      "feedbackStatus": {
+        "correct": "Верно",
+        "incorrect": "Не совсем"
       }
     },
     "multipleChoice": {

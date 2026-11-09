@@ -1192,6 +1192,12 @@
           "headline": "Nästan där",
           "body": "Avsluta de obesvarade först — då kommer poängen att berätta en tydligare historia."
         }
+      },
+      "explanation": "Varför",
+      "howToUseIt": "Så här används det",
+      "feedbackStatus": {
+        "correct": "Rätt",
+        "incorrect": "Inte riktigt"
       }
     },
     "multipleChoice": {

@@ -1192,6 +1192,12 @@
           "headline": "もう少しです",
           "body": "まず未回答のものを終わらせてください — その後、スコアがより明確なストーリーを伝えます。"
         }
+      },
+      "explanation": "なぜ",
+      "howToUseIt": "使い方",
+      "feedbackStatus": {
+        "correct": "正解",
+        "incorrect": "残念"
       }
     },
     "multipleChoice": {

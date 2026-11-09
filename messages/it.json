@@ -1192,6 +1192,12 @@
           "headline": "Quasi arrivato",
           "body": "Finisci prima quelli non risposti — poi il punteggio racconterà una storia più chiara."
         }
+      },
+      "explanation": "Perché",
+      "howToUseIt": "Come usarlo",
+      "feedbackStatus": {
+        "correct": "Corretto",
+        "incorrect": "Non proprio"
       }
     },
     "multipleChoice": {

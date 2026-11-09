@@ -1192,6 +1192,12 @@
           "headline": "Skoro si tu",
           "body": "Prvo završi neodgovorena — tada će rezultat bolje prikazati priču."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

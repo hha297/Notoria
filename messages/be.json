@@ -1192,6 +1192,12 @@
           "headline": "Амаль там",
           "body": "Спачатку скончыце неадказаныя — тады вынік раскажа больш ясную гісторыю."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

@@ -1,3 +1,5 @@
+import { tagsEqualForFilter } from "@/lib/vocabulary-tags";
+
 export type MultiFilterValue = string[];
 
 /** Empty array means “no constraint” (all values allowed). */
@@ -47,7 +49,9 @@ export function matchesMultiFilterAny(
   candidates: readonly string[],
 ): boolean {
   if (selected.length === 0) return true;
-  return selected.some((value) => candidates.includes(value));
+  return selected.some((value) =>
+    candidates.some((candidate) => tagsEqualForFilter(value, candidate)),
+  );
 }
 
 export function formatMultiFilterLabel(

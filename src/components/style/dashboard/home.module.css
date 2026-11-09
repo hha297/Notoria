@@ -184,9 +184,26 @@
   color: var(--home-accent-fg);
   font-size: 1.0625rem;
   font-weight: 700;
+  white-space: nowrap;
   transition:
     border-color 160ms ease,
     background-color 160ms ease;
+}
+
+/* Mobile: full-width stacked chips — avoid uneven wrap staircase. */
+@media (max-width: 639px) {
+  .home-quick {
+    flex-direction: column;
+    flex-wrap: nowrap;
+    align-items: stretch;
+    gap: 0.55rem;
+  }
+
+  .home-quick-chip {
+    width: 100%;
+    justify-content: center;
+    text-align: center;
+  }
 }
 
 .home-quick-chip:hover {

@@ -168,6 +168,38 @@ export function canonicalizeTagId(raw: string): string | null {
   return null;
 }
 
+function customTagNameForFilter(raw: string): string | null {
+  const trimmed = raw.trim();
+  if (!trimmed) return null;
+  if (isCustomTagKey(trimmed)) {
+    const name = getCustomTagName(trimmed).trim();
+    return isValidCustomTagName(name) ? name.toLowerCase() : null;
+  }
+  // Bare custom names that are not builtin taxonomy ids.
+  if (canonicalizeTagId(trimmed)) return null;
+  return isValidCustomTagName(trimmed) ? trimmed.toLowerCase() : null;
+}
+
+/**
+ * Equality for filter / membership checks.
+ * Custom tags compare case-insensitively; also accepts bare name vs `custom:name`.
+ */
+export function tagsEqualForFilter(a: string, b: string): boolean {
+  if (a === b) return true;
+
+  const leftCustom = customTagNameForFilter(a);
+  const rightCustom = customTagNameForFilter(b);
+  if (leftCustom && rightCustom) {
+    return leftCustom === rightCustom;
+  }
+
+  const left = canonicalizeTagId(a);
+  const right = canonicalizeTagId(b);
+  if (left && right) return left === right;
+
+  return false;
+}
+
 /** Canonicalize and de-dupe tags stored on a word. */
 export function normalizeWordTags(
   tags: string[],

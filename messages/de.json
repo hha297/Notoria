@@ -1192,6 +1192,12 @@
           "headline": "Fast geschafft",
           "body": "Beenden Sie zuerst die unbeantworteten Fragen — dann wird die Punktzahl eine klarere Geschichte erzählen."
         }
+      },
+      "explanation": "Warum",
+      "howToUseIt": "So wird es verwendet",
+      "feedbackStatus": {
+        "correct": "Richtig",
+        "incorrect": "Nicht ganz"
       }
     },
     "multipleChoice": {

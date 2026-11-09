@@ -91,6 +91,8 @@ function buildQuestion(
     correctOption: correct,
     partOfSpeech: word.partOfSpeech,
     baseWord: word.word,
+    meanings: word.meanings,
+    meaningHint: assignedMeaning,
     hints: buildLocalVocabularyMeaningHints({
       correctOption: correct,
       options,

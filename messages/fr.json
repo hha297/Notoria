@@ -1192,6 +1192,12 @@
           "headline": "Presque là",
           "body": "Terminez d'abord les questions sans réponse — ensuite, le score racontera une histoire plus claire."
         }
+      },
+      "explanation": "Pourquoi",
+      "howToUseIt": "Comment l'utiliser",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Pas tout à fait"
       }
     },
     "multipleChoice": {

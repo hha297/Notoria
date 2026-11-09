@@ -629,7 +629,7 @@ export function VocabularyForm({
         composerStyles,
         "vocab-composer vocab-composer-page",
         isModal
-          ? "vocab-composer-modal flex flex-col gap-6"
+          ? "vocab-composer-modal flex min-h-0 flex-1 flex-col"
           : "flex flex-col gap-6",
       )}
     >
@@ -650,6 +650,14 @@ export function VocabularyForm({
         />
       ) : null}
 
+      <div
+        data-vocabulary-scroll-root={isModal ? "" : undefined}
+        className={
+          isModal
+            ? mx(composerStyles, "vocab-composer-modal-body")
+            : "contents"
+        }
+      >
       <VocabularyComposerSection
         slot="word"
         index={1}
@@ -859,23 +867,14 @@ export function VocabularyForm({
           </div>
         </div>
       </VocabularyComposerSection>
+      </div>
 
       <div
         data-scroll-top-clearance=""
         className={mx(composerStyles, "vocab-composer-actions")}
+        role="group"
+        aria-label={initialData ? t("updateWord") : t("saveWord")}
       >
-        {showCancel ? (
-          <Button
-            type="button"
-            variant="outline"
-            size="lg"
-            onClick={handleCancel}
-            disabled={isSaving}
-            className={mx(composerStyles, "vocab-composer-cancel h-12")}
-          >
-            {tCommon("cancel")}
-          </Button>
-        ) : null}
         <Button
           type="submit"
           disabled={saveDisabled}
@@ -895,6 +894,18 @@ export function VocabularyForm({
             </>
           )}
         </Button>
+        {showCancel ? (
+          <Button
+            type="button"
+            variant="outline"
+            size="lg"
+            onClick={handleCancel}
+            disabled={isSaving}
+            className={mx(composerStyles, "vocab-composer-cancel h-12")}
+          >
+            {tCommon("cancel")}
+          </Button>
+        ) : null}
       </div>
     </form>
   );

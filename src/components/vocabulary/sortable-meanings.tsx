@@ -117,33 +117,36 @@ function MeaningRowShell({
           item.isPrimary ? "vocab-composer-item-primary" : null,
         )}
       >
-        <div className="flex min-w-0 items-center gap-2.5 sm:gap-3">
-          {dragHandle}
-          <span
-            className={mx(composerStyles, "vocab-composer-index")}
-            aria-hidden
-          >
-            {index + 1}
-          </span>
-          <Button
-            type="button"
-            variant="ghost"
-            size="icon-sm"
-            onClick={() => onTogglePrimary(item.id)}
-            disabled={!item.isPrimary && !canMarkPrimary}
-            aria-pressed={item.isPrimary}
-            aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
-            title={item.isPrimary ? primaryLabel : secondaryLabel}
-            className={cn(
-              mx(composerStyles, "vocab-composer-icon-btn"),
-              "shrink-0 cursor-pointer",
-              item.isPrimary && mx(composerStyles, "vocab-composer-star-primary"),
-            )}
-          >
-            <Star
-              className={cn("size-4", item.isPrimary && "fill-current")}
-            />
-          </Button>
+        <div className={mx(composerStyles, "vocab-meaning-toolbar")}>
+          <div className={mx(composerStyles, "vocab-meaning-toolbar-meta")}>
+            {dragHandle}
+            <span
+              className={mx(composerStyles, "vocab-composer-index")}
+              aria-hidden
+            >
+              {index + 1}
+            </span>
+            <Button
+              type="button"
+              variant="ghost"
+              size="icon-sm"
+              onClick={() => onTogglePrimary(item.id)}
+              disabled={!item.isPrimary && !canMarkPrimary}
+              aria-pressed={item.isPrimary}
+              aria-label={item.isPrimary ? primaryLabel : secondaryLabel}
+              title={item.isPrimary ? primaryLabel : secondaryLabel}
+              className={cn(
+                mx(composerStyles, "vocab-composer-icon-btn"),
+                "shrink-0 cursor-pointer",
+                item.isPrimary &&
+                  mx(composerStyles, "vocab-composer-star-primary"),
+              )}
+            >
+              <Star
+                className={cn("size-4", item.isPrimary && "fill-current")}
+              />
+            </Button>
+          </div>
           <div
             className={mx(composerStyles, "vocab-meaning-input-row min-w-0 flex-1")}
           >

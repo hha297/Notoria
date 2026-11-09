@@ -1192,6 +1192,12 @@
           "headline": "Quase lá",
           "body": "Termine os que estão sem resposta primeiro — então a pontuação contará uma história mais clara."
         }
+      },
+      "explanation": "Porquê",
+      "howToUseIt": "Como usar",
+      "feedbackStatus": {
+        "correct": "Correto",
+        "incorrect": "Quase"
       }
     },
     "multipleChoice": {

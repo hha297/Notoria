@@ -1192,6 +1192,12 @@
           "headline": "Neredeyse orada",
           "body": "Önce cevapsız olanları bitirin — ardından puan daha net bir hikaye anlatacaktır."
         }
+      },
+      "explanation": "Neden",
+      "howToUseIt": "Nasıl kullanılır",
+      "feedbackStatus": {
+        "correct": "Doğru",
+        "incorrect": "Tam değil"
       }
     },
     "multipleChoice": {

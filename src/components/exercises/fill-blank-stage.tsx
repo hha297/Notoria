@@ -2,7 +2,8 @@
 
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles, XCircle } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
+import { ExerciseAnswerReview } from "@/components/exercises/exercise-answer-review";
 import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { CharacterSlotInput } from "@/components/exercises/character-slot-input";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
@@ -13,9 +14,13 @@ import {
   expectedFillBlankAnswer,
   type FillBlankItem,
 } from "@/lib/exercises/fill-blank";
+import { highlightTermsInText } from "@/lib/flashcards/highlight-lemma";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+
+const MEANING_MATCH_CLASS =
+  "font-extrabold text-(--exercise-accent) underline decoration-(--exercise-accent)/70 decoration-2 underline-offset-[0.18em]";
 
 type FillBlankStageProps = {
   item: FillBlankItem;
@@ -49,7 +54,6 @@ export function FillBlankStage({
 }: FillBlankStageProps) {
   const deferCheck = deferCheckProp ?? onRevealAnswer == null;
   const t = useTranslations("exercises.fillInBlank");
-  const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const reduceMotion = useReducedMotion();
   const expected = expectedFillBlankAnswer(item);
@@ -59,8 +63,6 @@ export function FillBlankStage({
   const trailingPunctuation = /^[.!?…]+$/.test(afterText) ? afterText : "";
   const bodyAfter = trailingPunctuation ? "" : item.sentenceAfter;
   const filledText = revealed ? (isCorrect ? input : expected) : "";
-  const showUserAttempt =
-    revealed && !peeked && !isCorrect && input.trim().length > 0;
   const inSetList = typeof number === "number";
 
   return (
@@ -165,7 +167,7 @@ export function FillBlankStage({
               </p>
 
               <AnimatePresence>
-                {revealed && item.aiGenerated && sentenceMeaning ? (
+                {revealed && sentenceMeaning ? (
                   <motion.p
                     initial={reduceMotion ? false : { opacity: 0, y: 6 }}
                     animate={{ opacity: 1, y: 0 }}
@@ -173,23 +175,23 @@ export function FillBlankStage({
                     transition={{ duration: reduceMotion ? 0 : 0.2 }}
                     className="mt-4 max-w-2xl text-sm leading-relaxed text-muted-foreground wrap-anywhere sm:text-[0.9375rem]"
                   >
-                    {sentenceMeaning}
+                    {highlightTermsInText(
+                      sentenceMeaning,
+                      [...item.meanings, cue, item.word],
+                      { matchClassName: MEANING_MATCH_CLASS },
+                    )}
                   </motion.p>
                 ) : null}
               </AnimatePresence>
 
-              <AnswerFeedback
+              <ExerciseAnswerReview
                 revealed={revealed}
                 peeked={peeked}
                 isCorrect={isCorrect}
                 unanswered={unanswered}
-                expected={expected}
-                showUserAttempt={showUserAttempt}
-                userInput={input}
+                userAnswer={input}
+                correctAnswer={expected}
                 correctLabel={t("correct")}
-                incorrectLabel={t("incorrect", { answer: expected })}
-                unansweredLabel={tSession("unanswered")}
-                reduceMotion={Boolean(reduceMotion)}
               />
             </div>
           </div>
@@ -301,72 +303,3 @@ function BlankSlot({
   );
 }
 
-function AnswerFeedback({
-  revealed,
-  peeked,
-  isCorrect,
-  unanswered,
-  expected,
-  showUserAttempt,
-  userInput,
-  correctLabel,
-  incorrectLabel,
-  unansweredLabel,
-  reduceMotion,
-}: {
-  revealed: boolean;
-  peeked: boolean;
-  isCorrect: boolean;
-  unanswered: boolean;
-  expected: string;
-  showUserAttempt: boolean;
-  userInput: string;
-  correctLabel: string;
-  incorrectLabel: string;
-  unansweredLabel: string;
-  reduceMotion: boolean;
-}) {
-  return (
-    <AnimatePresence>
-      {revealed ? (
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{ duration: reduceMotion ? 0 : 0.2, delay: reduceMotion ? 0 : 0.04 }}
-          className="mt-5"
-          aria-live="polite"
-        >
-          {unanswered ? (
-            <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-warning">
-              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
-              {unansweredLabel}
-            </p>
-          ) : peeked ? (
-            <p className="text-sm text-muted-foreground">{incorrectLabel}</p>
-          ) : isCorrect ? (
-            <p className="text-sm font-medium tracking-wide text-success">
-              {correctLabel}
-            </p>
-          ) : (
-            <div className="space-y-1">
-              {showUserAttempt ? (
-                <p className="text-sm text-muted-foreground">
-                  <span className="line-through decoration-error/70">
-                    {userInput}
-                  </span>
-                  <span className="mx-2 text-muted-foreground/50">→</span>
-                  <span className="font-medium text-ink wrap-anywhere">
-                    {expected}
-                  </span>
-                </p>
-              ) : (
-                <p className="text-sm text-muted-foreground">{incorrectLabel}</p>
-              )}
-            </div>
-          )}
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  );
-}

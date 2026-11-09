@@ -1,17 +1,21 @@
 "use client";
 
 import { useMemo } from "react";
+import { useQuery } from "@tanstack/react-query";
 import { useTranslations } from "next-intl";
 import { Badge } from "@/components/ui/badge";
 import { ToggleGroup, ToggleGroupItem } from "@/components/ui/toggle-group";
 import { MultiFilterSelect } from "@/components/filters/multi-filter-select";
 import {
   BUILTIN_TAG_GROUPS,
+  customTagKey,
   getCustomTagName,
   isCustomTagKey,
   PARTS_OF_SPEECH,
   TAG_PICKER_GROUPS,
+  uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
+import { workspaceCustomTagsQueryOptions } from "@/lib/query/options";
 import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
 import type { MultipleChoiceStudyMode } from "@/lib/exercises/multiple-choice";
 import type { TypeAnswerStudyMode } from "@/lib/exercises/type-answer";
@@ -22,6 +26,8 @@ type VocabularyFiltersBarProps = {
   words: FlashcardWord[];
   filters: FlashcardFilters;
   onFiltersChange: (filters: FlashcardFilters) => void;
+  /** Used to load the full workspace custom-tag list (not only tags on loaded words). */
+  workspaceId?: string;
   studyMode?: FlashcardStudyMode | MultipleChoiceStudyMode | TypeAnswerStudyMode;
   onStudyModeChange?: (mode: string) => void;
   showStudyMode?: boolean;
@@ -35,6 +41,7 @@ export function VocabularyFiltersBar({
   words,
   filters,
   onFiltersChange,
+  workspaceId,
   studyMode = "word-to-meaning",
   onStudyModeChange,
   showStudyMode = false,
@@ -48,29 +55,37 @@ export function VocabularyFiltersBar({
   const tTags = useTranslations("tags");
   const tPos = useTranslations("tags.pos");
   const tVocab = useTranslations("vocabulary");
+  const tSearch = useTranslations("search");
+
+  const customTagsQuery = useQuery({
+    ...workspaceCustomTagsQueryOptions(workspaceId ?? ""),
+    enabled: Boolean(workspaceId),
+  });
 
   const customTagOptions = useMemo(() => {
-    const tags = new Set<string>();
+    const namesFromWords: string[] = [];
     for (const word of words) {
       for (const tag of word.tags) {
-        if (isCustomTagKey(tag)) tags.add(tag);
+        if (isCustomTagKey(tag)) namesFromWords.push(getCustomTagName(tag));
       }
     }
-    return [...tags].sort((a, b) =>
-      getCustomTagName(a).localeCompare(getCustomTagName(b)),
-    );
-  }, [words]);
+    // Full workspace list + tags on loaded words (covers orphaned / unused tags).
+    return uniqueCustomTagNames([
+      ...namesFromWords,
+      ...(customTagsQuery.data ?? []),
+    ]).map((name) => customTagKey(name));
+  }, [customTagsQuery.data, words]);
 
-  const tagGroups = useMemo(
-    () => [
-      ...TAG_PICKER_GROUPS.map((group) => ({
-        label: tTags(`groups.${group}`),
-        options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
-          value: tag.id,
-          label: tTags(`${group}.${tag.id}`),
-        })),
+  const tagGroups = useMemo(() => {
+    const builtin = TAG_PICKER_GROUPS.map((group) => ({
+      label: tTags(`groups.${group}`),
+      options: BUILTIN_TAG_GROUPS[group].map((tag) => ({
+        value: tag.id,
+        label: tTags(`${group}.${tag.id}`),
       })),
-      ...(customTagOptions.length > 0
+    }));
+    const custom =
+      customTagOptions.length > 0
         ? [
             {
               label: tTags("groups.custom"),
@@ -80,10 +95,10 @@ export function VocabularyFiltersBar({
               })),
             },
           ]
-        : []),
-    ],
-    [customTagOptions, tTags],
-  );
+        : [];
+    // Custom first — long builtin lists used to bury personal tags.
+    return [...custom, ...builtin];
+  }, [customTagOptions, tTags]);
 
   return (
     <div className="exercise-panel space-y-4 rounded-2xl border p-3 sm:p-4">
@@ -174,8 +189,10 @@ export function VocabularyFiltersBar({
           values={filters.tag}
           onChange={(tag) => onFiltersChange({ ...filters, tag })}
           triggerClassName="h-10 sm:h-8"
-          contentClassName="max-h-80 min-w-56"
+          contentClassName="max-h-[min(24rem,70vh)] min-w-56"
           groups={tagGroups}
+          searchable
+          searchPlaceholder={tSearch("placeholder")}
         />
       </div>
     </div>

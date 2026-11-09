@@ -3,18 +3,21 @@
 import { useEffect, useRef } from "react";
 import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useTranslations } from "next-intl";
-import { Check, Sparkles, XCircle } from "lucide-react";
+import { Check, Sparkles } from "lucide-react";
+import { ExerciseAnswerReview } from "@/components/exercises/exercise-answer-review";
+import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
+import { VocabularyUsageExample } from "@/components/exercises/vocabulary-usage-example";
 import {
   applyAnswerFormCasing,
   blankMeaningHintFromItem,
   splitPromptAtBlank,
 } from "@/lib/exercises/blank-hint";
 import type { TypeAnswerItem } from "@/lib/exercises/type-answer";
-import { ProgressiveHintReveal } from "@/components/exercises/progressive-hint-reveal";
 import { EXERCISE_SET_QUESTION_CARD_CLASS } from "@/components/exercises/exercise-set-question-card";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
+import type { WordUsageExample } from "@/lib/exercises/word-usage-example";
 
 type TypeAnswerStageProps = {
   item: TypeAnswerItem;
@@ -32,6 +35,8 @@ type TypeAnswerStageProps = {
   /** 1-based index when rendering a full set list. */
   number?: number;
   unanswered?: boolean;
+  /** Saved vocabulary example for post-answer context. */
+  usageExample?: WordUsageExample | null;
 };
 
 export function TypeAnswerStage({
@@ -47,10 +52,10 @@ export function TypeAnswerStage({
   deferCheck: deferCheckProp,
   number,
   unanswered = false,
+  usageExample = null,
 }: TypeAnswerStageProps) {
   const deferCheck = deferCheckProp ?? onRevealAnswer == null;
   const t = useTranslations("exercises.typeAnswer");
-  const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const tType = useTranslations("exercises.types.type-answer");
   const reduceMotion = useReducedMotion();
@@ -59,8 +64,6 @@ export function TypeAnswerStage({
   const sentenceMeaning = item.sentenceMeaning?.trim() || "";
   const isContextual = item.direction === "CONTEXTUAL";
   const filledText = revealed ? (isCorrect ? input : expected) : "";
-  const showUserAttempt =
-    revealed && !peeked && !isCorrect && input.trim().length > 0;
   const split = isContextual ? splitPromptAtBlank(item.prompt) : null;
   const inSetList = typeof number === "number";
 
@@ -173,21 +176,31 @@ export function TypeAnswerStage({
             ) : null}
           </AnimatePresence>
 
-          <AnswerFeedback
+          <ExerciseAnswerReview
             revealed={revealed}
             peeked={peeked}
             isCorrect={isCorrect}
             unanswered={unanswered}
-            expected={expected}
-            showUserAttempt={showUserAttempt}
-            userInput={input}
-            yourAnswerLabel={t("yourAnswer")}
-            correctAnswerLabel={t("correctAnswer")}
+            userAnswer={input}
+            correctAnswer={expected}
             correctLabel={t("correct")}
             incorrectLabel={t("incorrect")}
-            unansweredLabel={tSession("unanswered")}
-            reduceMotion={Boolean(reduceMotion)}
-          />
+          >
+            <VocabularyUsageExample
+              example={usageExample?.example}
+              lemma={usageExample?.lemma ?? item.word}
+              highlightTerms={[
+                ...(usageExample?.meanings ?? []),
+                ...item.meanings,
+                item.meaningHint,
+                expected !== item.word.trim() ? expected : null,
+                ...item.acceptableAnswers.filter(
+                  (answer) => answer.trim() !== item.word.trim(),
+                ),
+              ]}
+              revealed={revealed}
+            />
+          </ExerciseAnswerReview>
 
           {!revealed ? (
             <ProgressiveHintReveal
@@ -559,91 +572,3 @@ function RecallField({
   );
 }
 
-function AnswerFeedback({
-  revealed,
-  peeked,
-  isCorrect,
-  unanswered,
-  expected,
-  showUserAttempt,
-  userInput,
-  yourAnswerLabel,
-  correctAnswerLabel,
-  correctLabel,
-  incorrectLabel,
-  unansweredLabel,
-  reduceMotion,
-}: {
-  revealed: boolean;
-  peeked: boolean;
-  isCorrect: boolean;
-  unanswered: boolean;
-  expected: string;
-  showUserAttempt: boolean;
-  userInput: string;
-  yourAnswerLabel: string;
-  correctAnswerLabel: string;
-  correctLabel: string;
-  incorrectLabel: string;
-  unansweredLabel: string;
-  reduceMotion: boolean;
-}) {
-  return (
-    <AnimatePresence>
-      {revealed ? (
-        <motion.div
-          initial={reduceMotion ? false : { opacity: 0, y: 8 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={reduceMotion ? undefined : { opacity: 0 }}
-          transition={{
-            duration: reduceMotion ? 0 : 0.2,
-            delay: reduceMotion ? 0 : 0.04,
-          }}
-          className="mt-6"
-          aria-live="polite"
-        >
-          {unanswered ? (
-            <p className="inline-flex items-center gap-1.5 text-sm font-semibold text-warning">
-              <XCircle className="size-4 shrink-0" strokeWidth={2.4} />
-              {unansweredLabel}
-            </p>
-          ) : peeked ? (
-            <p className="text-sm text-muted-foreground">
-              {incorrectLabel}
-              <span className="mt-1 block font-heading text-base font-semibold text-ink wrap-anywhere">
-                {expected}
-              </span>
-            </p>
-          ) : isCorrect ? (
-            <p className="text-sm font-medium tracking-wide text-success">
-              {correctLabel}
-            </p>
-          ) : (
-            <div className="space-y-2">
-              <p className="text-sm font-medium text-error">{incorrectLabel}</p>
-              {showUserAttempt ? (
-                <p className="text-sm leading-relaxed text-muted-foreground">
-                  <span className="sr-only">{yourAnswerLabel}: </span>
-                  <span className="line-through decoration-error/70 wrap-anywhere">
-                    {userInput}
-                  </span>
-                  <span className="mx-2 text-muted-foreground/50" aria-hidden>
-                    →
-                  </span>
-                  <span className="sr-only">{correctAnswerLabel}: </span>
-                  <span className="font-medium text-ink wrap-anywhere">
-                    {expected}
-                  </span>
-                </p>
-              ) : (
-                <p className="font-heading text-base font-semibold text-ink wrap-anywhere">
-                  {expected}
-                </p>
-              )}
-            </div>
-          )}
-        </motion.div>
-      ) : null}
-    </AnimatePresence>
-  );
-}

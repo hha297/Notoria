@@ -1192,6 +1192,12 @@
           "headline": "Skoraj tam",
           "body": "Najprej dokončaj neodgovorjena vprašanja — nato bo rezultat povedal jasnejšo zgodbo."
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

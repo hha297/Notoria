@@ -42,6 +42,14 @@ export function filterFlashcardWords(
   });
 }
 
+export function isFlashcardFiltersActive(filters: FlashcardFilters) {
+  return (
+    filters.tag.length > 0 ||
+    filters.partOfSpeech.length > 0 ||
+    filters.status.length > 0
+  );
+}
+
 export function resolveCardDirection(
   studyMode: FlashcardStudyMode,
   wordId: string,

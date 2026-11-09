@@ -78,14 +78,21 @@ function ExampleRowShell({
 
   return (
     <div className={mx(composerStyles, "vocab-composer-item")}>
-      <div className="flex items-center gap-2.5 p-3.5 sm:gap-3 sm:p-4">
-        {dragHandle}
-        <span
-          className={mx(composerStyles, "vocab-composer-index")}
-          aria-hidden
-        >
-          {index + 1}
-        </span>
+      <div
+        className={cn(
+          mx(composerStyles, "vocab-example-toolbar"),
+          "p-3.5 sm:p-4",
+        )}
+      >
+        <div className={mx(composerStyles, "vocab-example-toolbar-meta")}>
+          {dragHandle}
+          <span
+            className={mx(composerStyles, "vocab-composer-index")}
+            aria-hidden
+          >
+            {index + 1}
+          </span>
+        </div>
         <CapitalizedInput
           ref={inputRef}
           value={item.sentence}

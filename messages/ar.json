@@ -1192,6 +1192,12 @@
           "headline": "قريب من الانتهاء",
           "body": "قم بإنهاء الأسئلة غير المجابة أولاً — ثم ستخبر النتيجة قصة أوضح."
         }
+      },
+      "explanation": "لماذا",
+      "howToUseIt": "كيف تستخدمه",
+      "feedbackStatus": {
+        "correct": "صحيح",
+        "incorrect": "ليس تمامًا"
       }
     },
     "multipleChoice": {

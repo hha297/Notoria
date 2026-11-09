@@ -1192,6 +1192,12 @@
           "headline": "প্রায় সেখানে",
           "body": "প্রথমে উত্তর দেওয়া হয়নি এমনগুলো শেষ করুন — তারপর স্কোর একটি পরিষ্কার গল্প বলবে।"
         }
+      },
+      "explanation": "Why",
+      "howToUseIt": "How to use it",
+      "feedbackStatus": {
+        "correct": "Correct",
+        "incorrect": "Not quite"
       }
     },
     "multipleChoice": {

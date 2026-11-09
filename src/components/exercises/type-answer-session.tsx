@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useState } from "react";
 import { useLocale, useTranslations } from "next-intl";
-import { Sparkles } from "lucide-react";
+import { Loader2, Sparkles } from "lucide-react";
 import { QuotaLockButton } from "@/components/billing/quota-lock-button";
 import { useProAccess } from "@/components/billing/pro-access-provider";
 import { AiProcessingProgress } from "@/components/exercises/ai-processing-progress";
@@ -45,7 +45,12 @@ import {
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny } from "@/lib/exercises/utils";
+import {
+  buildWordsById,
+  usageExampleForWord,
+} from "@/lib/exercises/word-usage-example";
 import { cn } from "@/lib/utils";
+import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
@@ -73,6 +78,7 @@ export function TypeAnswerSession({
   const t = useTranslations("exercises.typeAnswer");
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
+  const tCommon = useTranslations("common");
   const uiLocale = useLocale();
   const { openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
@@ -92,10 +98,19 @@ export function TypeAnswerSession({
     complete: completeProcessing,
     isActive: generating,
   } = useAiProcessing();
+  const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
+    workspaceId,
+    words,
+    filters,
+  );
 
   const filteredWords = useMemo(
-    () => filterFlashcardWords(words, filters),
-    [words, filters],
+    () => filterFlashcardWords(deckWords, filters),
+    [deckWords, filters],
+  );
+  const wordsById = useMemo(
+    () => buildWordsById(filteredWords),
+    [filteredWords],
   );
   const createdAtByWordId = useMemo(
     () => new Map(filteredWords.map((word) => [word.id, word.createdAt] as const)),
@@ -432,6 +447,7 @@ export function TypeAnswerSession({
   const filtersBar = (
     <VocabularyFiltersBar
       words={words}
+      workspaceId={workspaceId}
       filters={filters}
       onFiltersChange={setFilters}
       studyMode={studyMode}
@@ -441,6 +457,22 @@ export function TypeAnswerSession({
       contextualPro={false}
     />
   );
+
+  if (deckLoading) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+          <p className="text-sm">{tCommon("loading")}</p>
+        </div>
+      </div>
+    );
+  }
 
   if (filteredWords.length < 2 && isContextual) {
     return (
@@ -654,6 +686,11 @@ export function TypeAnswerSession({
                 peeked={false}
                 isCorrect={isCorrect}
                 unanswered={unanswered}
+                usageExample={usageExampleForWord(
+                  wordsById,
+                  item.wordId,
+                  { lemma: item.word },
+                )}
                 onInputChange={(value) => setAnswer(item.id, value)}
               />
             </div>

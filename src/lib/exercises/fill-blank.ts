@@ -175,6 +175,8 @@ export function buildFillBlankItems(words: FlashcardWord[]): FillBlankItem[] {
       const split = findBlankInExample(example, lemma);
       if (!split) continue;
 
+      const entryMeaning = word.exampleEntries?.[index]?.meaning?.trim() || null;
+
       seenSentences.add(sentenceKey);
       items.push({
         id: `${word.id}-${index}`,
@@ -188,6 +190,7 @@ export function buildFillBlankItems(words: FlashcardWord[]): FillBlankItem[] {
           lemma,
           split.matched,
         ),
+        sentenceMeaning: entryMeaning,
         aiGenerated: false,
       });
     }

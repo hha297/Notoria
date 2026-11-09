@@ -2,7 +2,7 @@
 
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslations } from "next-intl";
-import { ArrowRight, RotateCcw } from "lucide-react";
+import { ArrowRight, Loader2, RotateCcw } from "lucide-react";
 import { ExerciseProgressHeader } from "@/components/exercises/exercise-progress-header";
 import { MatchPairsStage } from "@/components/exercises/match-pairs-stage";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
@@ -17,6 +17,7 @@ import {
 } from "@/lib/exercises/match-pairs";
 import { scrollToNewExerciseSet } from "@/lib/exercises/scroll-set";
 import { shuffleArray } from "@/lib/exercises/utils";
+import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
@@ -32,6 +33,7 @@ type RoundGate = "playing" | "round-complete" | "session-complete";
 export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps) {
   const t = useTranslations("exercises.matchPairs");
   const tSession = useTranslations("exercises.session");
+  const tCommon = useTranslations("common");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [rounds, setRounds] = useState<MatchPairItem[][]>([]);
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
@@ -42,6 +44,11 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const [sessionComplete, setSessionComplete] = useState(false);
   const wrongTimerRef = useRef<number | null>(null);
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
+  const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
+    workspaceId,
+    words,
+    filters,
+  );
 
   const clearWrongTimer = useCallback(() => {
     if (wrongTimerRef.current == null) return;
@@ -50,8 +57,8 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   }, []);
 
   const filteredWords = useMemo(
-    () => filterFlashcardWords(words, filters),
-    [words, filters],
+    () => filterFlashcardWords(deckWords, filters),
+    [deckWords, filters],
   );
   const poolItems = useMemo(() => buildMatchPairItems(filteredWords), [filteredWords]);
   const createdAtByWordId = useMemo(
@@ -183,10 +190,25 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   };
 
   if (words.length === 0) return <VocabularyEmpty variant="no-words" />;
+  if (deckLoading) {
+    return (
+      <div className="space-y-6">
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+          <p className="text-sm">{tCommon("loading")}</p>
+        </div>
+      </div>
+    );
+  }
   if (poolItems.length < 2) {
     return (
       <div className="space-y-6">
-        <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
         <VocabularyEmpty variant="need-more-words" minWords={2} />
       </div>
     );
@@ -195,7 +217,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   return (
     <div className="space-y-6">
       <div id="match-pairs-set-top" className="scroll-mt-24" />
-      <VocabularyFiltersBar words={words} filters={filters} onFiltersChange={setFilters} />
+      <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
       {sessionComplete ? (
         <SessionCompleteCard
           title={t("complete")}

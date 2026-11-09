@@ -4,6 +4,7 @@ import { AnimatePresence, motion, useReducedMotion } from "motion/react";
 import { useCallback, useEffect, useMemo, useRef, useState, useTransition } from "react";
 import { useHotkeys } from "react-hotkeys-hook";
 import { useTranslations } from "next-intl";
+import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { FlashcardCard } from "@/components/flashcards/flashcard-card";
 import { FlashcardControls } from "@/components/flashcards/flashcard-controls";
@@ -13,6 +14,7 @@ import { FlashcardProgress } from "@/components/flashcards/flashcard-progress";
 import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar";
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
+import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
 import {
   canRestoreSession,
@@ -42,6 +44,7 @@ type FlashcardSessionProps = {
 
 export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) {
   const t = useTranslations("flashcards");
+  const tCommon = useTranslations("common");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FILTERS);
   const [studyMode, setStudyMode] = useState<FlashcardStudyMode>("word-to-meaning");
   const [session, setSession] = useState<FlashcardSessionState | null>(null);
@@ -51,15 +54,20 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const reduceMotion = useReducedMotion();
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
   const ratingLock = useRef(false);
+  const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
+    workspaceId,
+    words,
+    filters,
+  );
 
   const filteredWords = useMemo(
-    () => filterFlashcardWords(words, filters),
-    [words, filters],
+    () => filterFlashcardWords(deckWords, filters),
+    [deckWords, filters],
   );
 
   const wordMap = useMemo(
-    () => new Map(words.map((word) => [word.id, word])),
-    [words],
+    () => new Map(deckWords.map((word) => [word.id, word])),
+    [deckWords],
   );
 
   const filtersKey = getFiltersKey(filters, studyMode);
@@ -320,29 +328,50 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     [sessionComplete, session?.isFlipped, isPending, handleRate],
   );
 
+  const filtersBar = (
+    <VocabularyFiltersBar
+      words={words}
+      workspaceId={workspaceId}
+      filters={filters}
+      studyMode={studyMode}
+      onFiltersChange={setFilters}
+      onStudyModeChange={(mode) => {
+        if (
+          mode === "word-to-meaning" ||
+          mode === "meaning-to-word" ||
+          mode === "mixed"
+        ) {
+          setStudyMode(mode);
+        }
+      }}
+      showStudyMode
+    />
+  );
+
   if (words.length === 0) {
     return <VocabularyEmpty variant="no-words" />;
+  }
+
+  if (deckLoading) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <div
+          className="flex min-h-40 flex-col items-center justify-center gap-3 text-muted-foreground"
+          role="status"
+          aria-live="polite"
+        >
+          <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
+          <p className="text-sm">{tCommon("loading")}</p>
+        </div>
+      </div>
+    );
   }
 
   if (filteredWords.length === 0) {
     return (
       <div className="space-y-6">
-        <VocabularyFiltersBar
-          words={words}
-          filters={filters}
-          studyMode={studyMode}
-          onFiltersChange={setFilters}
-          onStudyModeChange={(mode) => {
-            if (
-              mode === "word-to-meaning" ||
-              mode === "meaning-to-word" ||
-              mode === "mixed"
-            ) {
-              setStudyMode(mode);
-            }
-          }}
-          showStudyMode
-        />
+        {filtersBar}
         <VocabularyEmpty variant="no-filtered" />
       </div>
     );
@@ -354,22 +383,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
 
   return (
     <div className="flex flex-col gap-5 sm:gap-6">
-      <VocabularyFiltersBar
-        words={words}
-        filters={filters}
-        studyMode={studyMode}
-        onFiltersChange={setFilters}
-        onStudyModeChange={(mode) => {
-          if (
-            mode === "word-to-meaning" ||
-            mode === "meaning-to-word" ||
-            mode === "mixed"
-          ) {
-            setStudyMode(mode);
-          }
-        }}
-        showStudyMode
-      />
+      {filtersBar}
       {sessionComplete ? (
         <SessionCompleteCard
           title={t("sessionComplete")}

@@ -1192,6 +1192,12 @@
           "headline": "거의 다 왔습니다",
           "body": "먼저 미응답 질문을 마무리하세요 — 그러면 점수가 더 명확한 이야기를 전할 것입니다."
         }
+      },
+      "explanation": "이유",
+      "howToUseIt": "이렇게 써요",
+      "feedbackStatus": {
+        "correct": "정답",
+        "incorrect": "아쉬워요"
       }
     },
     "multipleChoice": {

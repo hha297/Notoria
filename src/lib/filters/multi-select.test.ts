@@ -29,6 +29,21 @@ describe("multi-select filters", () => {
     expect(matchesMultiFilterAny(["a"], ["c", "b"])).toBe(false);
   });
 
+  it("matches custom tags case-insensitively and with bare names", () => {
+    expect(
+      matchesMultiFilterAny(["custom:Pikkusana"], ["custom:pikkusana"]),
+    ).toBe(true);
+    expect(matchesMultiFilterAny(["custom:Pikkusana"], ["Pikkusana"])).toBe(
+      true,
+    );
+    expect(matchesMultiFilterAny(["Pikkusana"], ["custom:Pikkusana"])).toBe(
+      true,
+    );
+    expect(
+      matchesMultiFilterAny(["custom:Pikkusana"], ["custom:Other"]),
+    ).toBe(false);
+  });
+
   it("formats labels with truncation", () => {
     expect(
       formatMultiFilterLabel(
