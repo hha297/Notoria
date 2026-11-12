@@ -608,7 +608,8 @@ export function VocabularyForm({
     }
   }
 
-  const showCancel = Boolean(onCancel || previewHref);
+  // Cancel only for edit / quick-edit. Add Word already has Back to list.
+  const showCancel = Boolean(onCancel || (initialData && previewHref));
 
   useRegisterShortcutAction("quickSave", () => {
     formRef.current?.requestSubmit();
