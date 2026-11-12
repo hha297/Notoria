@@ -285,11 +285,6 @@ export function TagMultiSelect({
         ),
       );
       onChange(replaceSelectedTag(value, fromKey, toKey));
-      setRecentCustomIds((prev) =>
-        prev.map((id) =>
-          id.toLowerCase() === fromKey.toLowerCase() ? toKey : id,
-        ),
-      );
       void queryClient.invalidateQueries({ queryKey: ["workspace"] });
       void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
       toast.success(tSettings("tagUpdated"));
@@ -318,9 +313,6 @@ export function TagMultiSelect({
       );
       onChange(
         value.filter((tag) => tag.toLowerCase() !== removedKey.toLowerCase()),
-      );
-      setRecentCustomIds((prev) =>
-        prev.filter((id) => id.toLowerCase() !== removedKey.toLowerCase()),
       );
       void queryClient.invalidateQueries({ queryKey: ["workspace"] });
       void queryClient.invalidateQueries({ queryKey: ["vocabulary"] });
