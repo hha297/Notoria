@@ -103,22 +103,27 @@ function VocabularyCard({
         variant="card"
         className="mt-3"
       />
-      {word.tags.length > 0 ? (
-        <div className="mt-3">
-          <VocabularyWordTags tags={word.tags} limit={3} matchCardAccent />
-        </div>
-      ) : null}
 
-      <div className={mx(featureStyles, "vocab-module-card-foot")}>
-        <p className="text-xs text-muted-foreground">
-          {t("updatedAgo", { time: updated })}
-        </p>
-        <VocabularyRowActions
-          wordId={word.id}
-          word={word.word}
-          workspaceId={workspaceId}
-          onEdit={() => onEditWord(word)}
-        />
+      <div className={mx(featureStyles, "vocab-module-card-bottom")}>
+        {word.tags.length > 0 ? (
+          <VocabularyWordTags
+            tags={word.tags}
+            limit={3}
+            matchCardAccent
+            className={mx(featureStyles, "vocab-module-card-tags")}
+          />
+        ) : null}
+        <div className={mx(featureStyles, "vocab-module-card-foot")}>
+          <p className="text-xs text-muted-foreground">
+            {t("updatedAgo", { time: updated })}
+          </p>
+          <VocabularyRowActions
+            wordId={word.id}
+            word={word.word}
+            workspaceId={workspaceId}
+            onEdit={() => onEditWord(word)}
+          />
+        </div>
       </div>
     </article>
   );
