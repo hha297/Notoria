@@ -11,6 +11,7 @@ import { exerciseStudioQueryOptions } from "@/lib/query/options";
 type ExerciseStudioClientProps = {
   workspaceId: string;
   workspaceName: string;
+  workspaceLanguage: string;
 };
 
 function isStudioSource(value: unknown): value is "vocabulary" | "theory" | "import" {
@@ -39,6 +40,7 @@ function subscribeStudioSource(onStoreChange: () => void) {
 export function ExerciseStudioClient({
   workspaceId,
   workspaceName,
+  workspaceLanguage,
 }: ExerciseStudioClientProps) {
   const source = useSyncExternalStore(
     subscribeStudioSource,
@@ -63,6 +65,7 @@ export function ExerciseStudioClient({
         imports={data.imports}
         folders={data.folders ?? []}
         workspaceName={workspaceName}
+        workspaceLanguage={workspaceLanguage}
         vocabularyCount={data.vocabularyCount}
       />
   );

@@ -47,6 +47,7 @@ import { sampleSessionItems } from "@/lib/exercises/session-size";
 import { answersMatchAny } from "@/lib/exercises/utils";
 import {
   buildWordsById,
+  meaningIdForAssignedText,
   usageExampleForWord,
 } from "@/lib/exercises/word-usage-example";
 import { cn } from "@/lib/utils";
@@ -686,11 +687,18 @@ export function TypeAnswerSession({
                 peeked={false}
                 isCorrect={isCorrect}
                 unanswered={unanswered}
-                usageExample={usageExampleForWord(
-                  wordsById,
-                  item.wordId,
-                  { lemma: item.word },
-                )}
+                usageExample={(() => {
+                  const bankWord = wordsById.get(item.wordId);
+                  return usageExampleForWord(wordsById, item.wordId, {
+                    lemma: item.word,
+                    meaningId: bankWord
+                      ? meaningIdForAssignedText(
+                          bankWord,
+                          item.meaningHint ?? item.meanings[0],
+                        )
+                      : null,
+                  });
+                })()}
                 onInputChange={(value) => setAnswer(item.id, value)}
               />
             </div>

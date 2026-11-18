@@ -13,20 +13,29 @@ describe("pickVocabularyExample", () => {
   it("returns the first usable example", () => {
     expect(
       pickVocabularyExample([
-        { sentence: "  ", meaning: null },
-        { sentence: "I imagine the scene.", meaning: "Kuvittelen kohtauksen." },
+        { sentence: "  ", meaning: null, meaningId: null },
+        {
+          sentence: "I imagine the scene.",
+          meaning: "Kuvittelen kohtauksen.",
+          meaningId: null,
+        },
       ]),
     ).toEqual({
       sentence: "I imagine the scene.",
       meaning: "Kuvittelen kohtauksen.",
+      meaningId: null,
     });
   });
 
   it("prefers a distinct example over the exercise stem", () => {
     const picked = pickVocabularyExample(
       [
-        { sentence: "I imagine the scene.", meaning: null },
-        { sentence: "Can you imagine that?", meaning: "Voitko kuvitella sen?" },
+        { sentence: "I imagine the scene.", meaning: null, meaningId: null },
+        {
+          sentence: "Can you imagine that?",
+          meaning: "Voitko kuvitella sen?",
+          meaningId: null,
+        },
       ],
       { excludeSentence: "I imagine the scene." },
     );
@@ -36,7 +45,7 @@ describe("pickVocabularyExample", () => {
   it("omits a lone stem-only example without translation", () => {
     expect(
       pickVocabularyExample(
-        [{ sentence: "I imagine the scene.", meaning: null }],
+        [{ sentence: "I imagine the scene.", meaning: null, meaningId: null }],
         { excludeSentence: "I imagine the scene." },
       ),
     ).toBeNull();
@@ -45,13 +54,57 @@ describe("pickVocabularyExample", () => {
   it("keeps a stem example when a translation exists", () => {
     expect(
       pickVocabularyExample(
-        [{ sentence: "I imagine the scene.", meaning: "Kuvittelen kohtauksen." }],
+        [
+          {
+            sentence: "I imagine the scene.",
+            meaning: "Kuvittelen kohtauksen.",
+            meaningId: null,
+          },
+        ],
         { excludeSentence: "I imagine the scene." },
       ),
     ).toEqual({
       sentence: "I imagine the scene.",
       meaning: "Kuvittelen kohtauksen.",
+      meaningId: null,
     });
+  });
+
+  it("sense-scopes examples and never falls back to unassigned", () => {
+    const entries = [
+      {
+        sentence: "Unassigned sentence.",
+        meaning: "orphan",
+        meaningId: null,
+      },
+      {
+        sentence: "Sense A sentence.",
+        meaning: "a",
+        meaningId: "sense-a",
+      },
+      {
+        sentence: "Sense B sentence.",
+        meaning: "b",
+        meaningId: "sense-b",
+      },
+    ];
+
+    expect(
+      pickVocabularyExample(entries, { meaningId: "sense-a" })?.sentence,
+    ).toBe("Sense A sentence.");
+    expect(pickVocabularyExample(entries, { meaningId: "sense-z" })).toBeNull();
+  });
+
+  it("allows unassigned examples when meaningId is omitted", () => {
+    expect(
+      pickVocabularyExample([
+        {
+          sentence: "Word-level example.",
+          meaning: null,
+          meaningId: null,
+        },
+      ])?.sentence,
+    ).toBe("Word-level example.");
   });
 });
 

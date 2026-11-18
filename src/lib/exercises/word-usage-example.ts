@@ -19,11 +19,16 @@ export function buildWordsById(words: FlashcardWord[]) {
 
 function exampleEntriesFor(word: FlashcardWord): FlashcardExample[] {
   if (word.exampleEntries && word.exampleEntries.length > 0) {
-    return word.exampleEntries;
+    return word.exampleEntries.map((entry) => ({
+      sentence: entry.sentence,
+      meaning: entry.meaning,
+      meaningId: entry.meaningId ?? null,
+    }));
   }
   return word.examples.map((sentence) => ({
     sentence,
     meaning: null,
+    meaningId: null,
   }));
 }
 
@@ -39,7 +44,12 @@ function meaningsFor(word: FlashcardWord) {
 export function usageExampleForWord(
   wordsById: Map<string, FlashcardWord>,
   wordId: string,
-  options?: { excludeSentence?: string | null; lemma?: string | null },
+  options?: {
+    excludeSentence?: string | null;
+    lemma?: string | null;
+    /** When set, only examples for this sense (no unassigned fallback). */
+    meaningId?: string | null;
+  },
 ): WordUsageExample | null {
   const word = wordsById.get(wordId);
   if (!word) return null;
@@ -47,6 +57,7 @@ export function usageExampleForWord(
   const example = pickVocabularyExample(exampleEntriesFor(word), {
     excludeSentence: options?.excludeSentence,
     lemma: options?.lemma ?? word.word,
+    meaningId: options?.meaningId,
   });
   if (!example) return null;
 
@@ -55,6 +66,21 @@ export function usageExampleForWord(
     lemma: word.word,
     meanings: meaningsFor(word),
   };
+}
+
+/** Resolve the primary-sense id that matches an assigned meaning string. */
+export function meaningIdForAssignedText(
+  word: FlashcardWord,
+  meaningText: string | null | undefined,
+): string | null {
+  const needle = meaningText?.trim();
+  if (!needle) return null;
+  const ids = word.meaningIds ?? [];
+  const index = word.meanings.findIndex(
+    (meaning) => meaning.trim() === needle,
+  );
+  if (index < 0) return null;
+  return ids[index] ?? null;
 }
 
 /** Prefer a different saved example than the fill-blank stem when possible. */

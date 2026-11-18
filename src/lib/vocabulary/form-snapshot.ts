@@ -13,7 +13,12 @@ export type VocabularyFormSnapshot = {
     isPrimary: boolean;
     usageLabels: string[];
   }>;
-  examples: Array<{ sentence: string; meaning: string; notes: string }>;
+  examples: Array<{
+    sentence: string;
+    meaning: string;
+    notes: string;
+    meaningId: string | null;
+  }>;
   tags: string[];
   synonymIds: string[];
 };
@@ -28,6 +33,7 @@ type ExampleLike = {
   sentence: string;
   meaning: string;
   notes: string;
+  meaningId?: string | null;
 };
 
 /** Normalize editable vocabulary form values into a comparable snapshot. */
@@ -57,6 +63,7 @@ export function buildVocabularyFormSnapshot(input: {
         sentence: item.sentence.trim(),
         meaning: item.meaning.trim(),
         notes: item.notes.trim(),
+        meaningId: item.meaningId?.trim() ? item.meaningId.trim() : null,
       }))
       .filter((item) => item.sentence.length > 0),
     tags: normalizeWordTags(input.tags, input.customTags).slice().sort(),

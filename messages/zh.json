@@ -599,7 +599,12 @@
     "selectedCustomTags": "已选择标签",
     "selectedSynonyms": "已选择同义词",
     "removeCustomTag": "移除 {name}",
-    "pickerLoading": "加载中…"
+    "pickerLoading": "加载中…",
+    "unassignedExamples": "Unassigned examples",
+    "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
+    "noExamplesForMeaning": "No examples for this meaning yet.",
+    "noUnassignedExamples": "No unassigned examples.",
+    "assignExampleMeaning": "Move example to a meaning"
   },
   "tags": {
     "groups": {

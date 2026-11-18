@@ -600,6 +600,7 @@ export async function exportAccountBackup() {
         meaning: example.meaning,
         notes: example.notes,
         sortOrder: example.sortOrder,
+        meaningId: example.meaningId ?? null,
       })),
       tags: word.tags.map((tag) => tag.tag),
       createdAt: word.createdAt.toISOString(),

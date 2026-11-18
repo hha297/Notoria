@@ -183,6 +183,7 @@ export function TypeAnswerStage({
             unanswered={unanswered}
             userAnswer={input}
             correctAnswer={expected}
+            hideCorrectAnswer
             correctLabel={t("correct")}
             incorrectLabel={t("incorrect")}
           >

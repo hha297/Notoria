@@ -28,6 +28,10 @@ import {
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
 import {
+  buildMeaningIdRemap,
+  remapExampleMeaningId,
+} from "@/lib/vocabulary/example-meaning-link";
+import {
   formatSynonymNames,
   matchLegacySynonyms,
   orderedSynonymPair,
@@ -110,28 +114,45 @@ async function replaceWordRelations(
   data: VocabularyFormValues,
   tx: DbExecutor = db,
 ) {
-  await tx.delete(wordMeanings).where(eq(wordMeanings.wordId, wordId));
+  // Examples first so meaning FK SET NULL is irrelevant; then meanings.
   await tx.delete(wordExamples).where(eq(wordExamples.wordId, wordId));
+  await tx.delete(wordMeanings).where(eq(wordMeanings.wordId, wordId));
   await tx
     .delete(vocabularyWordTags)
     .where(eq(vocabularyWordTags.wordId, wordId));
 
+  const clientMeaningIds: Array<string | undefined | null> = [];
+  const insertedMeaningIds: string[] = [];
+
   if (data.meanings.length > 0) {
-    await tx.insert(wordMeanings).values(
-      data.meanings.map((meaning, index) => ({
-        wordId,
-        meaning: meaning.meaning,
-        isPrimary: meaning.isPrimary,
-        sortOrder: meaning.sortOrder ?? index,
-        usageLabels: meaning.usageLabels ?? [],
-      })),
-    );
+    const inserted = await tx
+      .insert(wordMeanings)
+      .values(
+        data.meanings.map((meaning, index) => {
+          clientMeaningIds.push(meaning.id);
+          return {
+            wordId,
+            meaning: meaning.meaning,
+            isPrimary: meaning.isPrimary,
+            sortOrder: meaning.sortOrder ?? index,
+            usageLabels: meaning.usageLabels ?? [],
+          };
+        }),
+      )
+      .returning({ id: wordMeanings.id });
+    for (const row of inserted) insertedMeaningIds.push(row.id);
   }
+
+  const meaningIdRemap = buildMeaningIdRemap(
+    clientMeaningIds,
+    insertedMeaningIds,
+  );
 
   if (data.examples.length > 0) {
     await tx.insert(wordExamples).values(
       data.examples.map((example, index) => ({
         wordId,
+        meaningId: remapExampleMeaningId(example.meaningId, meaningIdRemap),
         sentence: example.sentence,
         meaning: example.meaning?.trim() || null,
         notes: example.notes?.trim() || null,

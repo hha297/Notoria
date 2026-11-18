@@ -9,11 +9,17 @@ import { lockedFeatureClassName } from "@/components/billing/locked-styles";
 import { Badge } from "@/components/ui/badge";
 import { buttonVariants } from "@/components/ui/button";
 import { EXERCISE_TYPES, type ExerciseTypeSlug } from "@/lib/exercise-types";
+import { getActivityPreviewSamples } from "@/lib/exercises/activity-preview-samples";
+import { getLanguageName } from "@/lib/languages";
 import featureStyles from "@/components/style/exercises/session.module.css";
 import { mx } from "@/lib/css-module";
 import { cn } from "@/lib/utils";
 
-export function ExerciseTypePicker() {
+export function ExerciseTypePicker({
+  workspaceLanguage,
+}: {
+  workspaceLanguage: string;
+}) {
   const t = useTranslations("exercises");
   const tBilling = useTranslations("billing");
   const { hasProAccess, openUpgrade } = useProAccess();
@@ -35,7 +41,12 @@ export function ExerciseTypePicker() {
             actionLabel={locked ? t("unlockActivity") : t("startActivity")}
             href={`/exercises/${item.slug}`}
             onLockedClick={openUpgrade}
-            preview={<ActivityPreview slug={item.slug} />}
+            preview={
+              <ActivityPreview
+                slug={item.slug}
+                workspaceLanguage={workspaceLanguage}
+              />
+            }
           />
         );
       })}
@@ -161,8 +172,16 @@ function ActivityCta({ locked, label }: { locked: boolean; label: string }) {
   );
 }
 
-function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
+function ActivityPreview({
+  slug,
+  workspaceLanguage,
+}: {
+  slug: ExerciseTypeSlug;
+  workspaceLanguage: string;
+}) {
   const t = useTranslations("exercises");
+  const samples = getActivityPreviewSamples(workspaceLanguage);
+  const studyLanguageName = getLanguageName(workspaceLanguage);
 
   switch (slug) {
     case "flashcard":
@@ -171,10 +190,10 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
           <div className="absolute inset-x-5 top-3 bottom-1 rotate-[6deg] rounded-md border border-hairline-cloud bg-muted/80" />
           <div className="relative rounded-md border border-hairline-cloud bg-background px-5 py-6 shadow-[0_1px_2px_rgba(35,37,29,0.04)] transition-transform duration-200 group-hover:-translate-y-1 group-hover:-rotate-1">
             <p className="text-[11px] font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
-              {t("types.flashcard.previewHint")}
+              {studyLanguageName}
             </p>
             <p className="mt-3 font-heading text-2xl font-bold tracking-tight text-ink">
-              {t("types.flashcard.previewWord")}
+              {samples.flashcardWord}
             </p>
             <p className="mt-5 font-mono text-[10px] tracking-[0.16em] text-muted-foreground uppercase">
               {t("types.flashcard.previewFlow")}
@@ -183,25 +202,25 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
         </div>
       );
 
-    case "fill-in-blank": {
-      const sentence = t("types.fill-in-blank.preview");
-      const [before = "", after = ""] = sentence.split("______");
+    case "fill-in-blank":
       return (
         <p className="max-w-lg font-heading text-[1.35rem] leading-snug font-semibold text-pretty text-ink sm:text-[1.65rem]">
-          {before}
+          {samples.fillBlankBefore}
           <span className="mx-1 inline-block min-w-[5.5rem] border-b-2 border-(--exercise-accent) bg-(--exercise-accent-soft) px-2 text-center font-mono text-(--exercise-accent) transition-colors group-hover:bg-[color-mix(in_srgb,var(--exercise-accent)_18%,transparent)]">
             ______
           </span>
-          {after}
+          {samples.fillBlankAfter}
         </p>
       );
-    }
 
     case "multiple-choice":
       return (
         <div className="max-w-sm space-y-3 border border-hairline-cloud bg-background p-4">
-          <p className="text-sm font-semibold text-ink">
+          <p className="text-[11px] font-semibold tracking-[0.14em] text-(--exercise-accent) uppercase">
             {t("types.multiple-choice.previewPrompt")}
+          </p>
+          <p className="font-heading text-xl font-bold tracking-tight text-ink">
+            {samples.mcPromptWord}
           </p>
           <ul className="space-y-2">
             {[
@@ -235,8 +254,8 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
       return (
         <div className="grid max-w-sm grid-cols-[minmax(0,1fr)_auto_minmax(0,1fr)] items-center gap-x-3 gap-y-3">
           {[
-            [t("types.match-pairs.previewLeft"), t("types.match-pairs.previewRight")],
-            [t("types.match-pairs.previewLeftB"), t("types.match-pairs.previewRightB")],
+            [samples.matchLeft, t("types.match-pairs.previewRight")],
+            [samples.matchLeftB, t("types.match-pairs.previewRightB")],
           ].map(([left, right]) => (
             <div key={left} className="contents">
               <span className="border border-hairline-cloud bg-background px-3 py-2 text-center text-sm font-medium text-ink transition-transform duration-200 group-hover:-translate-x-0.5">
@@ -266,11 +285,7 @@ function ActivityPreview({ slug }: { slug: ExerciseTypeSlug }) {
     case "form-sentence":
       return (
         <div className="flex max-w-md flex-wrap items-center gap-2 border-b border-dashed border-hairline-cloud pb-3">
-          {[
-            t("types.form-sentence.previewChipA"),
-            t("types.form-sentence.previewChipB"),
-            t("types.form-sentence.previewChipC"),
-          ].map((chip, chipIndex) => (
+          {samples.formChips.map((chip, chipIndex) => (
             <span
               key={chip}
               className="border border-hairline-cloud bg-background px-3 py-1.5 text-sm font-medium text-ink transition-transform duration-200 group-hover:-translate-y-0.5"

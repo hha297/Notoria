@@ -117,6 +117,7 @@ function parseExample(raw: unknown, index: number): BackupWordExample | null {
     meaning: asNullableString(raw.meaning),
     notes: asNullableString(raw.notes),
     sortOrder: asNumber(raw.sortOrder, index),
+    meaningId: asNullableString(raw.meaningId),
   };
 }
 

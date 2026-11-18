@@ -599,7 +599,12 @@
     "selectedCustomTags": "선택한 태그",
     "selectedSynonyms": "선택한 동의어",
     "removeCustomTag": "{name} 제거",
-    "pickerLoading": "로딩 중…"
+    "pickerLoading": "로딩 중…",
+    "unassignedExamples": "Unassigned examples",
+    "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
+    "noExamplesForMeaning": "No examples for this meaning yet.",
+    "noUnassignedExamples": "No unassigned examples.",
+    "assignExampleMeaning": "Move example to a meaning"
   },
   "tags": {
     "groups": {

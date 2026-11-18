@@ -37,6 +37,10 @@ import {
   countPrimaryMeanings,
   MAX_PRIMARY_MEANINGS,
 } from "@/lib/vocabulary/primary-meanings";
+import {
+  SortableExamples,
+  type ExampleItem,
+} from "@/components/vocabulary/sortable-examples";
 import { composerStyles } from "@/components/vocabulary/vocabulary-composer";
 import { mx } from "@/lib/css-module";
 import { sanitizeMeaningSuggestions } from "@/lib/vocabulary/ai-sanitize";
@@ -46,6 +50,10 @@ import {
   meaningCheckDebounceMs,
 } from "@/lib/vocabulary/meaning-ready";
 import type { MeaningUsageId } from "@/lib/vocabulary/meaning-usage";
+import {
+  replaceExamplesForMeaning,
+  unassignExamplesForMeaning,
+} from "@/lib/vocabulary/replace-examples-for-meaning";
 import { cn } from "@/lib/utils";
 
 const MEANING_DEBOUNCE_MS = 500;
@@ -62,6 +70,9 @@ export type MeaningItem = {
 type SortableMeaningsProps = {
   meanings: MeaningItem[];
   onChange: (meanings: MeaningItem[]) => void;
+  /** Flat example list; filtered/nested under each meaning by meaningId. */
+  examples?: ExampleItem[];
+  onExamplesChange?: (examples: ExampleItem[]) => void;
   ai?: {
     enabled: boolean;
     word: string;
@@ -91,6 +102,7 @@ function MeaningRowShell({
   dragHandle,
   inputRef,
   aiFooter,
+  examplesFooter,
 }: {
   item: MeaningItem;
   index: number;
@@ -107,6 +119,7 @@ function MeaningRowShell({
   dragHandle: ReactNode;
   inputRef?: (node: HTMLInputElement | null) => void;
   aiFooter?: ReactNode;
+  examplesFooter?: ReactNode;
 }) {
   return (
     <div className={mx(composerStyles, "vocab-composer-sortable-row")}>
@@ -192,6 +205,11 @@ function MeaningRowShell({
         />
       </div>
       {aiFooter}
+      {examplesFooter ? (
+        <div className="mt-3 border-t border-hairline-cloud/70 px-3.5 pt-3 pb-3.5 sm:px-4 sm:pb-4">
+          {examplesFooter}
+        </div>
+      ) : null}
     </div>
   );
 }
@@ -211,6 +229,7 @@ function SortableMeaningRow({
   secondaryLabel,
   inputRef,
   aiFooter,
+  examplesFooter,
 }: {
   item: MeaningItem;
   index: number;
@@ -226,6 +245,7 @@ function SortableMeaningRow({
   secondaryLabel: string;
   inputRef?: (node: HTMLInputElement | null) => void;
   aiFooter?: ReactNode;
+  examplesFooter?: ReactNode;
 }) {
   const {
     attributes,
@@ -263,6 +283,7 @@ function SortableMeaningRow({
         secondaryLabel={secondaryLabel}
         inputRef={inputRef}
         aiFooter={aiFooter}
+        examplesFooter={examplesFooter}
         dragHandle={
           <button
             type="button"
@@ -285,6 +306,8 @@ function SortableMeaningRow({
 export function SortableMeanings({
   meanings,
   onChange,
+  examples = [],
+  onExamplesChange,
   ai,
 }: SortableMeaningsProps) {
   const mounted = useMounted();
@@ -714,7 +737,35 @@ export function SortableMeanings({
     onChange(
       remaining.map((item, index) => ({ ...item, sortOrder: index })),
     );
+    if (onExamplesChange) {
+      onExamplesChange(unassignExamplesForMeaning(examples, id));
+    }
   }
+
+  function examplesFooterFor(meaningId: string) {
+    if (!onExamplesChange) return null;
+    const group = examples.filter((example) => example.meaningId === meaningId);
+    return (
+      <SortableExamples
+        compact
+        allowEmpty
+        meaningId={meaningId}
+        dndId={`vocabulary-examples-${meaningId}`}
+        title={t("examples")}
+        emptyLabel={t("noExamplesForMeaning")}
+        examples={group}
+        onChange={(next) =>
+          onExamplesChange(
+            replaceExamplesForMeaning(examples, meaningId, next),
+          )
+        }
+      />
+    );
+  }
+
+  const unassignedExamples = examples.filter(
+    (example) => example.meaningId == null || example.meaningId === "",
+  );
 
   const list = (
     <div className="space-y-3">
@@ -736,6 +787,7 @@ export function SortableMeanings({
             secondaryLabel={t("markAsPrimary")}
             inputRef={bindRef(item.id)}
             aiFooter={meaningAiFooter(item)}
+            examplesFooter={examplesFooterFor(item.id)}
           />
         ) : (
           <MeaningRowShell
@@ -754,6 +806,7 @@ export function SortableMeanings({
             secondaryLabel={t("markAsPrimary")}
             inputRef={bindRef(item.id)}
             aiFooter={meaningAiFooter(item)}
+            examplesFooter={examplesFooterFor(item.id)}
             dragHandle={
               <span
                 className={mx(composerStyles, "vocab-composer-drag p-1.5")}
@@ -807,6 +860,30 @@ export function SortableMeanings({
       ) : (
         list
       )}
+
+      {onExamplesChange && unassignedExamples.length > 0 ? (
+        <div className="mt-5 rounded-xl border border-dashed border-hairline-cloud/90 p-3.5 sm:p-4">
+          <p className="mb-1 text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+            {t("unassignedExamples")}
+          </p>
+          <p className="mb-3 text-sm text-muted-foreground">
+            {t("unassignedExamplesHint")}
+          </p>
+          <SortableExamples
+            compact
+            hideTitle
+            allowEmpty
+            meaningId={null}
+            dndId="vocabulary-examples-unassigned"
+            examples={unassignedExamples}
+            onChange={(next) =>
+              onExamplesChange(
+                replaceExamplesForMeaning(examples, null, next),
+              )
+            }
+          />
+        </div>
+      ) : null}
     </div>
   );
 }

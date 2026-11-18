@@ -188,11 +188,16 @@ export function MultipleChoiceStage({
             const label = displayContextualOption(question, option);
             const isSelected = selected === option;
             const isAnswer = label === surface;
+            const enrichment =
+              revealed || peeked
+                ? question.optionEnrichments?.[option]?.trim() || null
+                : null;
             return (
               <ChoiceOption
                 key={option}
                 index={optionIndex}
                 label={label}
+                enrichment={enrichment}
                 revealed={revealed}
                 peeked={peeked}
                 isSelected={isSelected}
@@ -209,8 +214,6 @@ export function MultipleChoiceStage({
           peeked={peeked}
           isCorrect={isCorrect}
           unanswered={unanswered}
-          userAnswer={selectedLabel}
-          correctAnswer={surface}
           compactComparison
           explanation={null}
           correctLabel={t("correct")}
@@ -327,6 +330,7 @@ function ContextualPrompt({
 function ChoiceOption({
   index,
   label,
+  enrichment,
   revealed,
   peeked,
   isSelected,
@@ -336,6 +340,7 @@ function ChoiceOption({
 }: {
   index: number;
   label: string;
+  enrichment?: string | null;
   revealed: boolean;
   peeked: boolean;
   isSelected: boolean;
@@ -348,6 +353,14 @@ function ChoiceOption({
   const showReveal = revealed && peeked && isAnswer;
   const dimmed = revealed && !isSelected && !isAnswer;
   const mark = String(index + 1).padStart(2, "0");
+  const showEnrichment = Boolean(enrichment);
+  const stateLabel = showCorrect || showReveal
+    ? "correct"
+    : showWrong
+      ? "your pick, incorrect"
+      : isSelected
+        ? "your pick"
+        : undefined;
 
   return (
     <motion.button
@@ -355,7 +368,11 @@ function ChoiceOption({
       disabled={revealed}
       onClick={onPick}
       aria-pressed={isSelected}
-      aria-label={`${index + 1}. ${label}`}
+      aria-label={
+        stateLabel
+          ? `${index + 1}. ${label}${enrichment ? ` (${enrichment})` : ""}. ${stateLabel}`
+          : `${index + 1}. ${label}`
+      }
       whileHover={reduceMotion || revealed ? undefined : { y: -1 }}
       whileTap={reduceMotion || revealed ? undefined : { scale: 0.985 }}
       transition={{ duration: 0.12 }}
@@ -376,7 +393,7 @@ function ChoiceOption({
           "border-error-border bg-error-muted/80 text-error shadow-sm",
         showReveal &&
           "border-(--exercise-accent) bg-(--exercise-accent-soft) text-ink shadow-sm",
-        dimmed && "opacity-40",
+        dimmed && "opacity-55",
         showWrong && !reduceMotion && mx(featureStyles, "exercise-shake"),
       )}
     >
@@ -407,8 +424,24 @@ function ChoiceOption({
           mark
         )}
       </span>
-      <span className="min-w-0 font-heading text-[1.05rem] leading-none font-semibold tracking-tight wrap-anywhere sm:self-auto sm:text-[1.2rem] sm:leading-snug">
-        {label}
+      <span className="min-w-0 flex-1 sm:self-auto">
+        <span className="block font-heading text-[1.05rem] leading-none font-semibold tracking-tight wrap-anywhere sm:text-[1.2rem] sm:leading-snug">
+          {label}
+        </span>
+        {showEnrichment ? (
+          <span
+            className={cn(
+              "mt-1.5 block text-[0.8rem] leading-snug font-medium wrap-anywhere sm:mt-2 sm:text-[0.85rem]",
+              showCorrect || showReveal
+                ? "text-current/80"
+                : showWrong
+                  ? "text-current/80"
+                  : "text-muted-foreground",
+            )}
+          >
+            {enrichment}
+          </span>
+        ) : null}
       </span>
     </motion.button>
   );
