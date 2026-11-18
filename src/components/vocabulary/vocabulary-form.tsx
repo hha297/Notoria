@@ -135,7 +135,7 @@ function normalizeWordInput(word: string) {
 function createDefaultMeanings(): MeaningItem[] {
   return [
     {
-      id: "new-meaning-0",
+      id: crypto.randomUUID(),
       meaning: "",
       isPrimary: true,
       sortOrder: 0,
@@ -221,7 +221,7 @@ export function VocabularyForm({
     if (prefillExample?.trim()) {
       return [
         {
-          id: "new-example-0",
+          id: crypto.randomUUID(),
           meaningId: null,
           sentence: prefillExample.trim(),
           meaning: "",
@@ -456,7 +456,7 @@ export function VocabularyForm({
     const filledExamples = examples
       .map((item, index) => ({
         id: item.id,
-        meaningId: item.meaningId ?? null,
+        meaningId: item.meaningId?.trim() ? item.meaningId.trim() : null,
         sentence: item.sentence.trim(),
         meaning: item.meaning.trim(),
         notes: item.notes.trim(),

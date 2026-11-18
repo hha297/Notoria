@@ -931,23 +931,46 @@
   letter-spacing: -0.02em;
 }
 
-/* Meaning input + usage trigger share one row height. */
-.vocab-meaning-input-row {
+/* Meaning toolbar: meta | input | usage | delete (desktop). */
+.vocab-meaning-toolbar {
   display: grid;
-  grid-template-columns: minmax(0, 1fr) auto;
-  align-items: stretch;
-  gap: 0.5rem;
   min-width: 0;
+  width: 100%;
+  grid-template-columns: auto minmax(0, 1fr) auto auto;
+  grid-template-areas: "meta field usage delete";
+  align-items: center;
+  gap: 0.625rem;
 }
 
-/* Toolbar wrapping the drag / index / star / fields / delete controls. */
-.vocab-meaning-toolbar,
 .vocab-example-toolbar {
   display: flex;
   min-width: 0;
   width: 100%;
   align-items: center;
   gap: 0.625rem;
+}
+
+.vocab-meaning-toolbar-meta {
+  grid-area: meta;
+}
+
+.vocab-meaning-field {
+  grid-area: field;
+}
+
+.vocab-meaning-usage {
+  grid-area: usage;
+  display: flex;
+  align-items: stretch;
+  align-self: stretch;
+}
+
+.vocab-meaning-usage .vocab-usage-trigger {
+  height: 100%;
+}
+
+.vocab-meaning-delete {
+  grid-area: delete;
 }
 
 .vocab-meaning-toolbar-meta,
@@ -959,37 +982,59 @@
 }
 
 @media (max-width: 639px) {
-  .vocab-meaning-toolbar,
+  /* Mobile: [1 ★ …… Käyttö] then input, then delete. */
+  .vocab-meaning-toolbar {
+    grid-template-columns: minmax(0, 1fr) auto;
+    grid-template-areas:
+      "meta usage"
+      "field field"
+      ". delete";
+    align-items: center;
+    justify-items: stretch;
+    gap: 0.65rem 0.5rem;
+  }
+
+  .vocab-meaning-toolbar-meta {
+    min-height: 2.5rem;
+    justify-self: start;
+  }
+
+  .vocab-meaning-usage {
+    justify-self: end;
+    width: auto;
+  }
+
+  .vocab-meaning-usage .vocab-usage-trigger {
+    width: auto;
+    min-height: 2.5rem;
+    padding-inline: 0.7rem;
+  }
+
+  .vocab-meaning-field {
+    width: 100%;
+    min-width: 0;
+  }
+
+  .vocab-meaning-delete {
+    justify-self: end;
+  }
+
   .vocab-example-toolbar {
     flex-wrap: wrap;
     align-items: flex-start;
     gap: 0.65rem 0.5rem;
   }
 
-  .vocab-meaning-toolbar-meta,
   .vocab-example-toolbar-meta {
     min-height: 2.5rem;
   }
 
-  .vocab-meaning-toolbar .vocab-meaning-input-row,
   .vocab-example-toolbar .vocab-composer-field {
     flex: 1 1 100%;
     width: 100%;
     min-width: 0;
   }
 
-  .vocab-meaning-input-row {
-    grid-template-columns: minmax(0, 1fr);
-    gap: 0.55rem;
-  }
-
-  .vocab-usage-trigger {
-    width: 100%;
-    min-height: 2.75rem;
-    justify-content: center;
-  }
-
-  .vocab-meaning-toolbar > .vocab-composer-icon-btn-danger,
   .vocab-example-toolbar > .vocab-composer-icon-btn-danger {
     margin-left: auto;
   }

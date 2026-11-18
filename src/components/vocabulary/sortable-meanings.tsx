@@ -160,20 +160,18 @@ function MeaningRowShell({
               />
             </Button>
           </div>
-          <div
-            className={mx(composerStyles, "vocab-meaning-input-row min-w-0 flex-1")}
-          >
-            <CapitalizedInput
-              ref={inputRef}
-              value={item.meaning}
-              onChange={(event) => onUpdate(item.id, event.target.value)}
-              onBlur={() => onBlur?.(item.id)}
-              placeholder={placeholder}
-              className={mx(
-                composerStyles,
-                "vocab-composer-field min-w-0",
-              )}
-            />
+          <CapitalizedInput
+            ref={inputRef}
+            value={item.meaning}
+            onChange={(event) => onUpdate(item.id, event.target.value)}
+            onBlur={() => onBlur?.(item.id)}
+            placeholder={placeholder}
+            className={mx(
+              composerStyles,
+              "vocab-composer-field vocab-meaning-field min-w-0",
+            )}
+          />
+          <div className={mx(composerStyles, "vocab-meaning-usage")}>
             <MeaningUsageTrigger
               value={item.usageLabels}
               onChange={(usageLabels) =>
@@ -190,7 +188,7 @@ function MeaningRowShell({
             aria-label="Remove meaning"
             className={mx(
               composerStyles,
-              "vocab-composer-icon-btn vocab-composer-icon-btn-danger shrink-0 cursor-pointer",
+              "vocab-composer-icon-btn vocab-composer-icon-btn-danger vocab-meaning-delete shrink-0 cursor-pointer",
             )}
           >
             <Trash2 className="size-4" />
