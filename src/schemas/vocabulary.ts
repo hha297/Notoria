@@ -19,10 +19,23 @@ export const meaningSchema = z.object({
     .transform((labels) => normalizeMeaningUsageLabels(labels)),
 });
 
+/**
+ * Client temp meaning ids (may be non-UUID placeholders) or DB uuids.
+ * Empty → null (word-level / unassigned). Remapped to DB ids on save.
+ */
+const exampleMeaningIdSchema = z.preprocess(
+  (value) => {
+    if (value == null) return null;
+    if (typeof value === "string" && value.trim() === "") return null;
+    return typeof value === "string" ? value.trim() : value;
+  },
+  z.string().min(1).nullable().optional(),
+);
+
 export const exampleSchema = z.object({
   id: z.string().optional(),
   /** Client/DB meaning id; null = word-level (unassigned) example. */
-  meaningId: z.string().uuid().nullable().optional(),
+  meaningId: exampleMeaningIdSchema,
   sentence: z.string().min(1, "Example is required"),
   /** Sentence gloss/translation — not a sense FK. */
   meaning: z.string().optional().default(""),
