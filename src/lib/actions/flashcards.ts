@@ -327,10 +327,17 @@ export async function getFlashcardWords(params?: {
       meanings: word.meanings
         .filter((meaning) => meaning.isPrimary)
         .map((meaning) => meaning.meaning),
+      meaningIds: word.meanings
+        .filter((meaning) => meaning.isPrimary)
+        .map((meaning) => meaning.id),
       secondaryMeanings: word.meanings
         .filter((meaning) => !meaning.isPrimary)
         .map((meaning) => meaning.meaning)
         .filter((text) => Boolean(text.trim())),
+      secondaryMeaningIds: word.meanings
+        .filter((meaning) => !meaning.isPrimary)
+        .filter((meaning) => Boolean(meaning.meaning.trim()))
+        .map((meaning) => meaning.id),
       meaningUsageLabels: word.meanings
         .filter((meaning) => meaning.isPrimary)
         .map((meaning) => meaning.usageLabels ?? []),
@@ -338,6 +345,7 @@ export async function getFlashcardWords(params?: {
       exampleEntries: word.examples.map((example) => ({
         sentence: example.sentence,
         meaning: example.meaning?.trim() ? example.meaning.trim() : null,
+        meaningId: example.meaningId ?? null,
       })),
       tags: [
         ...new Set(

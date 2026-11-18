@@ -77,6 +77,7 @@ function ActionButton({
       <Button
         type="button"
         variant={action.variant ?? "default"}
+        className="h-11 w-full justify-center"
         onClick={() => onReset?.()}
       >
         <RefreshCw className="size-4" aria-hidden />
@@ -90,6 +91,7 @@ function ActionButton({
       <Button
         type="button"
         variant={action.variant ?? "default"}
+        className="h-11 w-full justify-center"
         onClick={() => window.location.reload()}
       >
         <RefreshCw className="size-4" aria-hidden />
@@ -103,6 +105,7 @@ function ActionButton({
       <Button
         type="button"
         variant={action.variant ?? "outline"}
+        className="h-11 w-full justify-center"
         onClick={() => router.back()}
       >
         {label}
@@ -113,7 +116,11 @@ function ActionButton({
   if (action.href) {
     const isReport = action.labelKey === "actions.report";
     return (
-      <LinkButton href={action.href} variant={action.variant ?? "default"}>
+      <LinkButton
+        href={action.href}
+        variant={action.variant ?? "default"}
+        className="h-11 w-full justify-center"
+      >
         {isReport ? (
           <MessageSquareWarning className="size-4" aria-hidden />
         ) : null}

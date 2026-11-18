@@ -12,6 +12,7 @@ import { buildLocalVocabularyMeaningHints } from "@/lib/exercises/progressive-hi
 import {
   assignWordMeanings,
   isMeaningOwnedByWord,
+  normalizeAnswer,
   normalizeMeaningKey,
   pickDistractors,
   shuffleArray,
@@ -41,9 +42,62 @@ export type MultipleChoiceQuestion = {
   aiGenerated?: boolean;
   sentenceMeaning?: string | null;
   hints?: string[];
+  /**
+   * Post-answer enrichment keyed by option label.
+   * WORD_TO_MEANING → source word; MEANING_TO_WORD → that word's meaning.
+   */
+  optionEnrichments?: Record<string, string>;
 };
 
 const OPTION_COUNT = 4;
+
+function findWordForMeaning(
+  meaning: string,
+  allWords: FlashcardWord[],
+  assignments: Map<string, string>,
+): FlashcardWord | undefined {
+  const key = normalizeMeaningKey(meaning);
+  if (!key) return undefined;
+
+  const byAssignment = allWords.find(
+    (item) => normalizeMeaningKey(assignments.get(item.id) ?? "") === key,
+  );
+  if (byAssignment) return byAssignment;
+
+  return allWords.find((item) =>
+    item.meanings.some((entry) => normalizeMeaningKey(entry) === key),
+  );
+}
+
+function buildOptionEnrichments(
+  direction: StudyDirection,
+  options: string[],
+  allWords: FlashcardWord[],
+  assignments: Map<string, string>,
+): Record<string, string> {
+  const enrichments: Record<string, string> = {};
+
+  for (const option of options) {
+    if (direction === "WORD_TO_MEANING") {
+      const owner = findWordForMeaning(option, allWords, assignments);
+      const lemma = owner?.word.trim();
+      if (lemma) enrichments[option] = lemma;
+      continue;
+    }
+
+    const match = allWords.find(
+      (item) => normalizeAnswer(item.word) === normalizeAnswer(option),
+    );
+    if (!match) continue;
+    const meaning =
+      assignments.get(match.id)?.trim() ||
+      match.meanings.map((entry) => entry.trim()).find(Boolean) ||
+      "";
+    if (meaning) enrichments[option] = meaning;
+  }
+
+  return enrichments;
+}
 
 function buildQuestion(
   word: FlashcardWord,
@@ -93,6 +147,12 @@ function buildQuestion(
     baseWord: word.word,
     meanings: word.meanings,
     meaningHint: assignedMeaning,
+    optionEnrichments: buildOptionEnrichments(
+      direction,
+      options,
+      allWords,
+      assignments,
+    ),
     hints: buildLocalVocabularyMeaningHints({
       correctOption: correct,
       options,

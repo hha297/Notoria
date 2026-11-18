@@ -18,10 +18,12 @@ export type ExerciseAnswerReviewProps = {
   /** Canonical correct answer / surface form. */
   correctAnswer?: string | null;
   /**
-   * Compact mode: hide the “Your answer / Correct answer” comparison when the
-   * stage already highlights options (e.g. multiple choice). Still shows status.
+   * Compact mode: hide Your/Correct answer comparison when the stage already
+   * highlights options (e.g. multiple choice). Status + children only.
    */
   compactComparison?: boolean;
+  /** Hide the Correct answer row when the answer field already shows it. */
+  hideCorrectAnswer?: boolean;
   /** Optional grammatical / contextual explanation (never fabricated). */
   explanation?: string | null;
   /** Extra learning content (e.g. vocabulary usage example). */
@@ -45,6 +47,7 @@ export function ExerciseAnswerReview({
   userAnswer,
   correctAnswer,
   compactComparison = false,
+  hideCorrectAnswer = false,
   explanation,
   children,
   className,
@@ -61,8 +64,7 @@ export function ExerciseAnswerReview({
 
   const trimmedUser = userAnswer?.trim() ?? "";
   const trimmedCorrect = correctAnswer?.trim() ?? "";
-  // Compact (e.g. multiple choice) skips the struck-through attempt — options
-  // already show the selection — but still surfaces the correct answer.
+  // Compact (e.g. multiple choice): options already show selection/correctness.
   const showUserAttempt =
     !compactComparison &&
     !peeked &&
@@ -70,7 +72,10 @@ export function ExerciseAnswerReview({
     !unanswered &&
     trimmedUser.length > 0;
   const showCorrectAnswer =
-    trimmedCorrect.length > 0 && (unanswered || peeked || !isCorrect);
+    !compactComparison &&
+    !hideCorrectAnswer &&
+    trimmedCorrect.length > 0 &&
+    (unanswered || peeked || !isCorrect);
   const showExplanation = Boolean(explanation?.trim());
 
   return (

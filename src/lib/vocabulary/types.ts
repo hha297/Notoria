@@ -16,6 +16,8 @@ export type VocabularyWordRow = {
   }>;
   examples: Array<{
     id: string;
+    /** Null = word-level example (not tied to a sense). */
+    meaningId?: string | null;
     sentence: string;
     meaning?: string | null;
     notes?: string | null;

@@ -10,6 +10,8 @@ export type FlashcardExample = {
   sentence: string;
   /** Translation / gloss of the example sentence, when available. */
   meaning: string | null;
+  /** Sense this example illustrates; null = word-level (unassigned). */
+  meaningId: string | null;
 };
 
 export type FlashcardWord = {
@@ -23,8 +25,12 @@ export type FlashcardWord = {
   createdAt: string;
   /** Primary meanings — used by exercises and as the main flashcard answer. */
   meanings: string[];
+  /** DB ids aligned with `meanings` (same index). */
+  meaningIds?: string[];
   /** Non-primary senses shown as secondary on the flashcard answer face. */
   secondaryMeanings?: string[];
+  /** DB ids aligned with `secondaryMeanings` (same index). */
+  secondaryMeaningIds?: string[];
   /**
    * Usage labels aligned with `meanings` (same index).
    * Retained for context; do not surface as the answer face.

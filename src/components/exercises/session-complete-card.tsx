@@ -292,7 +292,7 @@ export function SessionCompleteCard({
         ) : null}
 
         <motion.div
-          className="mt-8 flex flex-wrap items-center justify-center gap-2.5"
+          className="mt-8 flex w-full flex-col items-stretch gap-2.5 sm:flex-row sm:flex-wrap sm:items-center sm:justify-center"
           initial={reduceMotion ? false : { opacity: 0, y: 8 }}
           animate={{ opacity: 1, y: 0 }}
           transition={
@@ -305,25 +305,40 @@ export function SessionCompleteCard({
             type="button"
             onClick={onTryAgain}
             disabled={extraAction?.loading}
-            className="min-w-[9.5rem] shadow-sm shadow-(--exercise-accent)/15"
+            className="h-11 w-full min-w-0 shadow-sm shadow-(--exercise-accent)/15 sm:h-9 sm:w-auto sm:min-w-[9.5rem]"
           >
             <RotateCcw className="size-4" />
             {tryAgainLabel}
           </Button>
           {needsReview > 0 && onViewWrong ? (
-            <Button type="button" variant="outline" onClick={onViewWrong}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onViewWrong}
+              className="h-11 w-full sm:h-9 sm:w-auto"
+            >
               <Focus className="size-4" />
               {t("review.viewWrong")}
             </Button>
           ) : null}
           {showRetryIncorrect ? (
-            <Button type="button" variant="outline" onClick={onRetryIncorrect}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onRetryIncorrect}
+              className="h-11 w-full sm:h-9 sm:w-auto"
+            >
               <XCircle className="size-4 text-error" />
               {t("retryIncorrect")}
             </Button>
           ) : null}
           {showRetryUnanswered ? (
-            <Button type="button" variant="outline" onClick={onRetryUnanswered}>
+            <Button
+              type="button"
+              variant="outline"
+              onClick={onRetryUnanswered}
+              className="h-11 w-full sm:h-9 sm:w-auto"
+            >
               <CircleHelp className="size-4 text-warning" />
               {t("retryUnanswered")}
             </Button>
@@ -338,6 +353,7 @@ export function SessionCompleteCard({
               disabled={extraAction.disabled}
               icon={<Sparkles className="size-4" />}
               onClick={extraAction.onClick}
+              className="h-11 w-full sm:h-9 sm:w-auto"
             >
               {extraAction.label}
             </QuotaLockButton>

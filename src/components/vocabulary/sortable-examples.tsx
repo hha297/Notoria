@@ -35,6 +35,8 @@ import { cn } from "@/lib/utils";
 
 export type ExampleItem = {
   id: string;
+  /** Null / undefined = word-level (unassigned) example. */
+  meaningId?: string | null;
   sentence: string;
   meaning: string;
   notes: string;
@@ -42,12 +44,23 @@ export type ExampleItem = {
 };
 
 type ExamplePatch = Partial<
-  Pick<ExampleItem, "sentence" | "meaning" | "notes">
+  Pick<ExampleItem, "sentence" | "meaning" | "notes" | "meaningId">
 >;
 
 type SortableExamplesProps = {
   examples: ExampleItem[];
   onChange: (examples: ExampleItem[]) => void;
+  /** Stamp new examples with this sense id (null = unassigned). */
+  meaningId?: string | null;
+  /** Allow zero examples (nested under a meaning). */
+  allowEmpty?: boolean;
+  /** Compact nested layout without the large section chrome. */
+  compact?: boolean;
+  /** Hide the section title (e.g. unassigned board already has its own heading). */
+  hideTitle?: boolean;
+  title?: string;
+  emptyLabel?: string;
+  dndId?: string;
 };
 
 function ExampleRowShell({
@@ -270,6 +283,13 @@ function SortableExampleRow({
 export function SortableExamples({
   examples,
   onChange,
+  meaningId = null,
+  allowEmpty = false,
+  compact = false,
+  hideTitle = false,
+  title,
+  emptyLabel,
+  dndId = "vocabulary-examples",
 }: SortableExamplesProps) {
   const mounted = useMounted();
   const t = useTranslations("vocabulary");
@@ -305,6 +325,7 @@ export function SortableExamples({
       ...examples,
       {
         id,
+        meaningId: meaningId ?? null,
         sentence: "",
         meaning: "",
         notes: "",
@@ -323,7 +344,7 @@ export function SortableExamples({
   }
 
   function removeExample(id: string) {
-    if (examples.length <= 1) {
+    if (!allowEmpty && examples.length <= 1) {
       return;
     }
 
@@ -346,8 +367,13 @@ export function SortableExamples({
     }));
   }
 
+  const canRemove = allowEmpty ? examples.length > 0 : examples.length > 1;
+
   const list = (
-    <div className="space-y-3.5">
+    <div className={cn("space-y-3.5", compact && "space-y-2.5")}>
+      {examples.length === 0 && emptyLabel ? (
+        <p className="text-sm text-muted-foreground">{emptyLabel}</p>
+      ) : null}
       {examples.map((item, index) =>
         mounted ? (
           <SortableExampleRow
@@ -356,7 +382,7 @@ export function SortableExamples({
             index={index}
             onUpdate={updateExample}
             onRemove={removeExample}
-            canRemove={examples.length > 1}
+            canRemove={canRemove}
             placeholder={t("examplePlaceholder")}
             detailsOpen={openDetails[item.id] !== false}
             onToggleDetails={() => toggleDetails(item.id)}
@@ -369,7 +395,7 @@ export function SortableExamples({
             index={index}
             onUpdate={updateExample}
             onRemove={removeExample}
-            canRemove={examples.length > 1}
+            canRemove={canRemove}
             placeholder={t("examplePlaceholder")}
             detailsOpen={openDetails[item.id] !== false}
             onToggleDetails={() => toggleDetails(item.id)}
@@ -391,19 +417,45 @@ export function SortableExamples({
   );
 
   return (
-    <div className={mx(composerStyles, "vocab-composer-block")}>
-      <div className={mx(composerStyles, "vocab-composer-section-head")}>
-        <div className={mx(composerStyles, "vocab-composer-section-copy")}>
-          <h3 className={mx(composerStyles, "vocab-composer-section-title")}>
-            {t("examples")}
-          </h3>
-        </div>
+    <div
+      className={mx(
+        composerStyles,
+        compact ? "vocab-composer-examples-nested" : "vocab-composer-block",
+      )}
+    >
+      <div
+        className={mx(
+          composerStyles,
+          compact
+            ? "mb-2 flex items-center justify-between gap-2"
+            : "vocab-composer-section-head",
+        )}
+      >
+        {hideTitle ? (
+          <span className="sr-only">{title ?? t("examples")}</span>
+        ) : (
+          <div className={mx(composerStyles, "vocab-composer-section-copy")}>
+            <h3
+              className={mx(
+                composerStyles,
+                compact
+                  ? "text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
+                  : "vocab-composer-section-title",
+              )}
+            >
+              {title ?? t("examples")}
+            </h3>
+          </div>
+        )}
         <Button
           type="button"
           variant="outline"
           size="sm"
           onClick={addExample}
-          className={mx(composerStyles, "vocab-composer-add")}
+          className={cn(
+            mx(composerStyles, "vocab-composer-add"),
+            hideTitle && "ml-auto",
+          )}
         >
           <Plus className="size-4" />
           {t("addExample")}
@@ -412,7 +464,7 @@ export function SortableExamples({
 
       {mounted ? (
         <DndContext
-          id="vocabulary-examples"
+          id={dndId}
           sensors={sensors}
           collisionDetection={closestCenter}
           onDragEnd={handleDragEnd}

@@ -21,7 +21,10 @@ export const meaningSchema = z.object({
 
 export const exampleSchema = z.object({
   id: z.string().optional(),
+  /** Client/DB meaning id; null = word-level (unassigned) example. */
+  meaningId: z.string().uuid().nullable().optional(),
   sentence: z.string().min(1, "Example is required"),
+  /** Sentence gloss/translation — not a sense FK. */
   meaning: z.string().optional().default(""),
   notes: z.string().optional().default(""),
   sortOrder: z.number().int().nonnegative(),

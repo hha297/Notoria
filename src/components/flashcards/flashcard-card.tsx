@@ -44,13 +44,23 @@ export function FlashcardCard({
     item.trim(),
   );
   const primaryMeaning = primaryMeanings[0] ?? t("noMeaning");
-  const exampleEntries =
+  const primaryIds = new Set(word.meaningIds ?? []);
+  const allExampleEntries =
     word.exampleEntries && word.exampleEntries.length > 0
       ? word.exampleEntries
       : word.examples.map((sentence) => ({
           sentence,
           meaning: null as string | null,
+          meaningId: null as string | null,
         }));
+  const primaryLinkedExamples = allExampleEntries.filter(
+    (entry) => entry.meaningId && primaryIds.has(entry.meaningId),
+  );
+  // Prefer sense-linked primary examples; legacy unassigned-only words keep all.
+  const exampleEntries =
+    primaryLinkedExamples.length > 0
+      ? primaryLinkedExamples
+      : allExampleEntries;
   const prompt = isWordFront ? word.word : primaryMeaning;
   const partOfSpeech = formatPartOfSpeech(word.partOfSpeech, tPos);
   const hasNotes =

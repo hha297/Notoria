@@ -41,6 +41,7 @@ export default async function ExercisesPage() {
         <ExerciseStudioClient
           workspaceId={workspace.id}
           workspaceName={workspace.name}
+          workspaceLanguage={workspace.language}
         />
       </div>
     </PageShell>

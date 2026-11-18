@@ -191,6 +191,7 @@ export function FillBlankStage({
                 unanswered={unanswered}
                 userAnswer={input}
                 correctAnswer={expected}
+                hideCorrectAnswer
                 correctLabel={t("correct")}
               />
             </div>

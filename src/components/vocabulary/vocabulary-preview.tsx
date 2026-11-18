@@ -36,6 +36,7 @@ type VocabularyPreviewProps = {
   }>;
   examples: Array<{
     id: string;
+    meaningId?: string | null;
     sentence: string;
     meaning?: string | null;
     notes?: string | null;
@@ -68,6 +69,58 @@ export function VocabularyPreview({
 
   const sortedMeanings = [...meanings].sort((a, b) => a.sortOrder - b.sortOrder);
   const sortedExamples = [...examples].sort((a, b) => a.sortOrder - b.sortOrder);
+  const unassignedExamples = sortedExamples.filter(
+    (example) => example.meaningId == null || example.meaningId === "",
+  );
+
+  function renderExampleList(
+    items: typeof sortedExamples,
+    listKey: string,
+  ) {
+    if (items.length === 0) return null;
+    return (
+      <ol className={mx(lexiconStyles, "vocab-preview-list")}>
+        {items.map((example, index) => (
+          <li
+            key={`${listKey}-${example.id}`}
+            className={mx(lexiconStyles, "vocab-preview-example")}
+          >
+            <span
+              className={mx(lexiconStyles, "vocab-preview-index")}
+              aria-hidden
+            >
+              {String(index + 1).padStart(2, "0")}
+            </span>
+            <div className={mx(lexiconStyles, "vocab-preview-example-body")}>
+              <p className={mx(lexiconStyles, "vocab-preview-copy")}>
+                {example.sentence}
+              </p>
+              {example.meaning?.trim() ? (
+                <p className={mx(lexiconStyles, "vocab-preview-aside")}>
+                  <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
+                    {t("exampleMeaning")}
+                  </span>
+                  <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
+                    {example.meaning.trim()}
+                  </span>
+                </p>
+              ) : null}
+              {example.notes?.trim() ? (
+                <p className={mx(lexiconStyles, "vocab-preview-aside")}>
+                  <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
+                    {t("exampleNotes")}
+                  </span>
+                  <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
+                    {example.notes.trim()}
+                  </span>
+                </p>
+              ) : null}
+            </div>
+          </li>
+        ))}
+      </ol>
+    );
+  }
 
   const knownPos =
     partOfSpeech &&
@@ -153,69 +206,46 @@ export function VocabularyPreview({
 
       <div className={mx(detailStyles, "body")}>
         <div className={mx(lexiconStyles, "vocab-preview-stages")}>
-          {sortedMeanings.length > 0 ? (
-            <section
-              className={mx(lexiconStyles, "vocab-preview-stage")}
-              data-vocab-section="meanings"
-            >
-              <p className="writing-kicker writing-stage-kicker">
-                {t("meanings")}
-              </p>
-              <VocabularyMeaningPreview
-                word={{ meanings: sortedMeanings }}
-                variant="list"
-                limit={sortedMeanings.length}
-                clamp={false}
-              />
-            </section>
-          ) : null}
+          {sortedMeanings.map((sense, senseIndex) => {
+            const senseExamples = sortedExamples.filter(
+              (example) => example.meaningId === sense.id,
+            );
+            return (
+              <section
+                key={sense.id}
+                className={mx(lexiconStyles, "vocab-preview-stage")}
+                data-vocab-section="meanings"
+              >
+                <p className="writing-kicker writing-stage-kicker">
+                  {t("meanings")} · {String(senseIndex + 1).padStart(2, "0")}
+                </p>
+                <VocabularyMeaningPreview
+                  word={{ meanings: [sense] }}
+                  variant="list"
+                  limit={1}
+                  clamp={false}
+                />
+                {senseExamples.length > 0 ? (
+                  <div className="mt-4 space-y-2">
+                    <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                      {t("examples")}
+                    </p>
+                    {renderExampleList(senseExamples, sense.id)}
+                  </div>
+                ) : null}
+              </section>
+            );
+          })}
 
-          {sortedExamples.length > 0 ? (
+          {unassignedExamples.length > 0 ? (
             <section
               className={mx(lexiconStyles, "vocab-preview-stage")}
               data-vocab-section="examples"
             >
-              <p className="writing-kicker writing-stage-kicker">{t("examples")}</p>
-              <ol className={mx(lexiconStyles, "vocab-preview-list")}>
-                {sortedExamples.map((example, index) => (
-                  <li
-                    key={example.id}
-                    className={mx(lexiconStyles, "vocab-preview-example")}
-                  >
-                    <span
-                      className={mx(lexiconStyles, "vocab-preview-index")}
-                      aria-hidden
-                    >
-                      {String(index + 1).padStart(2, "0")}
-                    </span>
-                    <div className={mx(lexiconStyles, "vocab-preview-example-body")}>
-                      <p className={mx(lexiconStyles, "vocab-preview-copy")}>
-                        {example.sentence}
-                      </p>
-                      {example.meaning?.trim() ? (
-                        <p className={mx(lexiconStyles, "vocab-preview-aside")}>
-                          <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
-                            {t("exampleMeaning")}
-                          </span>
-                          <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
-                            {example.meaning.trim()}
-                          </span>
-                        </p>
-                      ) : null}
-                      {example.notes?.trim() ? (
-                        <p className={mx(lexiconStyles, "vocab-preview-aside")}>
-                          <span className={mx(lexiconStyles, "vocab-preview-aside-label")}>
-                            {t("exampleNotes")}
-                          </span>
-                          <span className={mx(lexiconStyles, "vocab-preview-aside-copy")}>
-                            {example.notes.trim()}
-                          </span>
-                        </p>
-                      ) : null}
-                    </div>
-                  </li>
-                ))}
-              </ol>
+              <p className="writing-kicker writing-stage-kicker">
+                {t("unassignedExamples")}
+              </p>
+              {renderExampleList(unassignedExamples, "unassigned")}
             </section>
           ) : null}
 

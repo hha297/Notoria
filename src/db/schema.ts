@@ -486,7 +486,15 @@ export const wordExamples = pgTable(
     wordId: uuid("word_id")
       .notNull()
       .references(() => vocabularyWords.id, { onDelete: "cascade" }),
+    /**
+     * Optional link to a specific sense. Null = word-level example (not shared
+     * by every meaning). ON DELETE SET NULL so sense edits never wipe sentences.
+     */
+    meaningId: uuid("meaning_id").references(() => wordMeanings.id, {
+      onDelete: "set null",
+    }),
     sentence: text("sentence").notNull(),
+    /** Free-text gloss/translation of the sentence — not a sense FK. */
     meaning: text("meaning"),
     notes: text("notes"),
     sortOrder: integer("sort_order").notNull().default(0),
@@ -496,6 +504,10 @@ export const wordExamples = pgTable(
   },
   (table) => [
     index("word_examples_word_id_idx").on(table.wordId),
+    index("word_examples_word_id_meaning_id_idx").on(
+      table.wordId,
+      table.meaningId,
+    ),
     index("word_examples_fts_idx").using(
       "gin",
       sql`to_tsvector('simple', coalesce(${table.sentence}, '') || ' ' || coalesce(${table.meaning}, '') || ' ' || coalesce(${table.notes}, ''))`,
@@ -1177,17 +1189,25 @@ export const vocabularyWordsRelations = relations(
   }),
 );
 
-export const wordMeaningsRelations = relations(wordMeanings, ({ one }) => ({
-  word: one(vocabularyWords, {
-    fields: [wordMeanings.wordId],
-    references: [vocabularyWords.id],
+export const wordMeaningsRelations = relations(
+  wordMeanings,
+  ({ one, many }) => ({
+    word: one(vocabularyWords, {
+      fields: [wordMeanings.wordId],
+      references: [vocabularyWords.id],
+    }),
+    examples: many(wordExamples),
   }),
-}));
+);
 
 export const wordExamplesRelations = relations(wordExamples, ({ one }) => ({
   word: one(vocabularyWords, {
     fields: [wordExamples.wordId],
     references: [vocabularyWords.id],
+  }),
+  meaningRef: one(wordMeanings, {
+    fields: [wordExamples.meaningId],
+    references: [wordMeanings.id],
   }),
 }));
 

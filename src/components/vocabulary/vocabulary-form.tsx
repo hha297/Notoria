@@ -9,10 +9,7 @@ import type { Editor, JSONContent } from "@tiptap/react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
 import { RichTextEditor } from "@/components/editor/rich-text-editor";
-import {
-  SortableExamples,
-  type ExampleItem,
-} from "@/components/vocabulary/sortable-examples";
+import { type ExampleItem } from "@/components/vocabulary/sortable-examples";
 import {
   SortableMeanings,
   type MeaningItem,
@@ -147,21 +144,10 @@ function createDefaultMeanings(): MeaningItem[] {
   ];
 }
 
-function createDefaultExamples(): ExampleItem[] {
-  return [
-    {
-      id: "new-example-0",
-      sentence: "",
-      meaning: "",
-      notes: "",
-      sortOrder: 0,
-    },
-  ];
-}
-
 function getInitialExamples(
   examples?: Array<{
     id: string;
+    meaningId?: string | null;
     sentence: string;
     meaning?: string | null;
     notes?: string | null;
@@ -169,11 +155,12 @@ function getInitialExamples(
   }>,
 ): ExampleItem[] {
   if (!examples?.length) {
-    return createDefaultExamples();
+    return [];
   }
 
   return examples.map((example) => ({
     id: example.id,
+    meaningId: example.meaningId ?? null,
     sentence: example.sentence,
     meaning: example.meaning ?? "",
     notes: example.notes ?? "",
@@ -235,6 +222,7 @@ export function VocabularyForm({
       return [
         {
           id: "new-example-0",
+          meaningId: null,
           sentence: prefillExample.trim(),
           meaning: "",
           notes: "",
@@ -242,7 +230,7 @@ export function VocabularyForm({
         },
       ];
     }
-    return createDefaultExamples();
+    return [];
   });
   const [tags, setTags] = useState<string[]>(() =>
     normalizeWordTags(
@@ -468,6 +456,7 @@ export function VocabularyForm({
     const filledExamples = examples
       .map((item, index) => ({
         id: item.id,
+        meaningId: item.meaningId ?? null,
         sentence: item.sentence.trim(),
         meaning: item.meaning.trim(),
         notes: item.notes.trim(),
@@ -794,33 +783,29 @@ export function VocabularyForm({
         index={2}
         data-tutorial="vocab-composer-meanings"
       >
-        <SortableMeanings
-          meanings={meanings}
-          onChange={setMeanings}
-          ai={{
-            enabled: suggestionsAllowed,
-            word: watchedWord ?? "",
-            language,
-            partOfSpeech: selectedPartOfSpeech,
-            examples: examples
-              .map((example) => example.sentence.trim())
-              .filter(Boolean)
-              .slice(0, 6),
-            autoApply: shouldAutoApplyContentChange,
-            quotaLocked: vocabQuota.locked,
-          }}
-        />
+        <div data-tutorial="vocab-composer-examples">
+          <SortableMeanings
+            meanings={meanings}
+            onChange={setMeanings}
+            examples={examples}
+            onExamplesChange={setExamples}
+            ai={{
+              enabled: suggestionsAllowed,
+              word: watchedWord ?? "",
+              language,
+              partOfSpeech: selectedPartOfSpeech,
+              examples: examples
+                .map((example) => example.sentence.trim())
+                .filter(Boolean)
+                .slice(0, 6),
+              autoApply: shouldAutoApplyContentChange,
+              quotaLocked: vocabQuota.locked,
+            }}
+          />
+        </div>
       </VocabularyComposerSection>
 
-      <VocabularyComposerSection
-        slot="example"
-        index={3}
-        data-tutorial="vocab-composer-examples"
-      >
-        <SortableExamples examples={examples} onChange={setExamples} />
-      </VocabularyComposerSection>
-
-      <VocabularyComposerSection slot="extra" index={4} title={t("tags")}>
+      <VocabularyComposerSection slot="extra" index={3} title={t("tags")}>
         <div className={mx(composerStyles, "vocab-composer-extra-stack")}>
           <div data-tutorial="vocab-composer-tags">
             <TagMultiSelect

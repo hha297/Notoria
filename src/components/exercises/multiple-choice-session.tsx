@@ -38,6 +38,7 @@ import {
 } from "@/lib/exercises/ai-draft-client";
 import {
   buildWordsById,
+  meaningIdForAssignedText,
   usageExampleForWord,
 } from "@/lib/exercises/word-usage-example";
 import { uiLocaleEnglishName } from "@/lib/i18n/ui-locales";
@@ -891,11 +892,18 @@ export function MultipleChoiceSession({
                 peeked={false}
                 isCorrect={isCorrect}
                 unanswered={unanswered}
-                usageExample={usageExampleForWord(
-                  wordsById,
-                  question.wordId,
-                  { lemma: question.baseWord },
-                )}
+                usageExample={(() => {
+                  const bankWord = wordsById.get(question.wordId);
+                  return usageExampleForWord(wordsById, question.wordId, {
+                    lemma: question.baseWord,
+                    meaningId: bankWord
+                      ? meaningIdForAssignedText(
+                          bankWord,
+                          question.meaningHint,
+                        )
+                      : null,
+                  });
+                })()}
                 onPick={(option) => {
                   setAnswer(question.id, option);
                   if (isContextual) notifyAnswerInteraction();

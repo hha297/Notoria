@@ -599,7 +599,12 @@
     "selectedCustomTags": "নির্বাচিত ট্যাগ",
     "selectedSynonyms": "নির্বাচিত সমার্থক শব্দ",
     "removeCustomTag": "{name} মুছুন",
-    "pickerLoading": "লোড হচ্ছে…"
+    "pickerLoading": "লোড হচ্ছে…",
+    "unassignedExamples": "Unassigned examples",
+    "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
+    "noExamplesForMeaning": "No examples for this meaning yet.",
+    "noUnassignedExamples": "No unassigned examples.",
+    "assignExampleMeaning": "Move example to a meaning"
   },
   "tags": {
     "groups": {

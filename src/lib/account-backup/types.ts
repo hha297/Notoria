@@ -35,6 +35,8 @@ export type BackupWordExample = {
   meaning: string | null;
   notes: string | null;
   sortOrder: number;
+  /** Optional sense link; may be null / omitted on older backups. */
+  meaningId?: string | null;
 };
 
 export type BackupVocabularyItem = {

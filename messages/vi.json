@@ -405,6 +405,11 @@
     "exampleMeaningPlaceholder": "Dịch hoặc giải thích câu này…",
     "exampleNotes": "Ghi chú",
     "exampleNotesPlaceholder": "Ngữ pháp, cách dùng…",
+    "unassignedExamples": "Câu ví dụ chưa gắn nghĩa",
+    "unassignedExamplesHint": "Câu ở cấp từ, chưa gắn với một nghĩa cụ thể. Gán vào đúng nghĩa khi bạn biết nó minh họa sense nào.",
+    "noExamplesForMeaning": "Nghĩa này chưa có câu ví dụ.",
+    "noUnassignedExamples": "Không có câu ví dụ chưa gắn nghĩa.",
+    "assignExampleMeaning": "Chuyển câu ví dụ sang một nghĩa",
     "optional": "không bắt buộc",
     "tags": "Thẻ",
     "selectTags": "Chọn thẻ",
@@ -993,9 +998,9 @@
         "description": "Ghép từng từ với đúng nghĩa — kiểu Quizlet.",
         "preview": "Từ ↔ Nghĩa",
         "previewLeft": "talo",
-        "previewRight": "house",
+        "previewRight": "nhà",
         "previewLeftB": "koti",
-        "previewRightB": "home"
+        "previewRightB": "nhà ở"
       },
       "type-answer": {
         "label": "Gõ đáp án",

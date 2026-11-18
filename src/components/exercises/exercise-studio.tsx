@@ -45,6 +45,7 @@ type ExerciseStudioProps = {
   imports?: ExerciseImportListItem[];
   folders?: { id: string; name: string; parentId: string | null }[];
   workspaceName: string;
+  workspaceLanguage: string;
   vocabularyCount: number;
 };
 
@@ -53,6 +54,7 @@ export function ExerciseStudio({
   imports = [],
   folders = [],
   workspaceName,
+  workspaceLanguage,
   vocabularyCount,
 }: ExerciseStudioProps) {
   const t = useTranslations("exercises");
@@ -93,7 +95,7 @@ export function ExerciseStudio({
               <p className="text-sm text-muted-foreground">
                 {t("sources.vocabularyHint")}
               </p>
-              <ExerciseTypePicker />
+              <ExerciseTypePicker workspaceLanguage={workspaceLanguage} />
             </div>
           ) : source === "theory" ? (
             <TheoryExercisePicker theories={theories} folders={folders} />
