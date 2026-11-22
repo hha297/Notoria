@@ -80,6 +80,7 @@ export function TypeAnswerSession({
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const tCommon = useTranslations("common");
+  const tFlash = useTranslations("flashcards");
   const uiLocale = useLocale();
   const { openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
@@ -471,6 +472,28 @@ export function TypeAnswerSession({
           <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
           <p className="text-sm">{tCommon("loading")}</p>
         </div>
+      </div>
+    );
+  }
+
+  if (filters.recentlyAdded && filteredWords.length === 0) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <div className="empty-state">
+          <p className="max-w-md text-muted-foreground">
+            {tFlash("recentlyAddedEmpty")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (filteredWords.length === 0) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <VocabularyEmpty variant="no-filtered" />
       </div>
     );
   }

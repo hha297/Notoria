@@ -34,6 +34,7 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
   const t = useTranslations("exercises.matchPairs");
   const tSession = useTranslations("exercises.session");
   const tCommon = useTranslations("common");
+  const tFlash = useTranslations("flashcards");
   const [filters, setFilters] = useState<FlashcardFilters>(DEFAULT_FLASHCARD_FILTERS);
   const [rounds, setRounds] = useState<MatchPairItem[][]>([]);
   const [currentRoundIndex, setCurrentRoundIndex] = useState(0);
@@ -205,6 +206,19 @@ export function MatchPairsSession({ workspaceId, words }: MatchPairsSessionProps
       </div>
     );
   }
+  if (filters.recentlyAdded && filteredWords.length === 0) {
+    return (
+      <div className="space-y-6">
+        <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
+        <div className="empty-state">
+          <p className="max-w-md text-muted-foreground">
+            {tFlash("recentlyAddedEmpty")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
   if (poolItems.length < 2) {
     return (
       <div className="space-y-6">

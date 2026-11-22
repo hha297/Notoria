@@ -398,6 +398,8 @@
     "examples": "Câu ví dụ",
     "addExample": "Thêm câu ví dụ",
     "removeExample": "Xóa câu ví dụ",
+    "expandExample": "Mở rộng câu ví dụ",
+    "collapseExample": "Thu gọn câu ví dụ",
     "examplePlaceholder": "Viết một câu có dùng từ này",
     "exampleDetails": "Thêm chi tiết",
     "exampleDetailsFilled": "Đã điền",
@@ -1354,7 +1356,18 @@
     "sessionComplete": "Xong một phiên học!",
     "tryAgain": "Học tiếp",
     "ratingFailed": "Không lưu được đánh giá",
-    "weakTitle": "Luyện các từ khó"
+    "weakTitle": "Luyện các từ khó",
+    "filterRecentlyAdded": "Vừa thêm (48 giờ)",
+    "practiceSort": {
+      "label": "Thứ tự luyện tập",
+      "newest": "Mới nhất trước",
+      "oldest": "Cũ nhất trước",
+      "last_practiced": "Luyện gần đây nhất",
+      "least_recently_practiced": "Lâu nhất chưa luyện",
+      "most_practiced": "Luyện nhiều nhất",
+      "least_practiced": "Luyện ít nhất"
+    },
+    "recentlyAddedEmpty": "Không có từ nào được thêm trong 48 giờ qua."
   },
   "dashboard": {
     "overview": "Tổng quan",

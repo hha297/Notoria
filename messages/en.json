@@ -401,6 +401,8 @@
     "examples": "Example sentences",
     "addExample": "Add example",
     "removeExample": "Remove example",
+    "expandExample": "Expand example",
+    "collapseExample": "Collapse example",
     "examplePlaceholder": "Enter an example sentence",
     "exampleDetails": "Additional details",
     "exampleDetailsFilled": "Filled",
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Session complete!",
     "tryAgain": "Try again",
-    "ratingFailed": "Could not save your rating"
+    "ratingFailed": "Could not save your rating",
+    "filterRecentlyAdded": "Recently added (48h)",
+    "practiceSort": {
+      "label": "Practice order",
+      "newest": "Newest first",
+      "oldest": "Oldest first",
+      "last_practiced": "Last practiced",
+      "least_recently_practiced": "Least recently practiced",
+      "most_practiced": "Most practiced",
+      "least_practiced": "Least practiced"
+    },
+    "recentlyAddedEmpty": "No words added in the last 48 hours."
   },
   "dashboard": {
     "overview": "Overview",

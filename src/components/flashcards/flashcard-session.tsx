@@ -15,7 +15,9 @@ import { FlashcardRatingBar } from "@/components/flashcards/flashcard-rating-bar
 import { SessionCompleteCard } from "@/components/exercises/session-complete-card";
 import { recordFlashcardReview } from "@/lib/actions/flashcards";
 import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
+import { usePracticeHistory } from "@/hooks/use-practice-history";
 import { useRecentSectionPreferences } from "@/hooks/use-recent-section-preferences";
+import { sortWordsByPractice } from "@/lib/exercises/practice-history";
 import {
   canRestoreSession,
   clearSessionState,
@@ -53,6 +55,7 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
   const [isPending, startTransition] = useTransition();
   const reduceMotion = useReducedMotion();
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
+  const { history: practiceHistory } = usePracticeHistory(workspaceId);
   const ratingLock = useRef(false);
   const { words: deckWords, isLoading: deckLoading } = usePracticeDeckWords(
     workspaceId,
@@ -60,10 +63,16 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     filters,
   );
 
-  const filteredWords = useMemo(
-    () => filterFlashcardWords(deckWords, filters),
-    [deckWords, filters],
-  );
+  const filteredWords = useMemo(() => {
+    const filtered = filterFlashcardWords(deckWords, filters);
+    return sortWordsByPractice(
+      filtered,
+      filters.practiceSort ?? "newest",
+      (word) => word.id,
+      (word) => word.createdAt,
+      practiceHistory,
+    );
+  }, [deckWords, filters, practiceHistory]);
 
   const wordMap = useMemo(
     () => new Map(deckWords.map((word) => [word.id, word])),
@@ -372,7 +381,15 @@ export function FlashcardSession({ workspaceId, words }: FlashcardSessionProps) 
     return (
       <div className="space-y-6">
         {filtersBar}
-        <VocabularyEmpty variant="no-filtered" />
+        {filters.recentlyAdded ? (
+          <div className="empty-state">
+            <p className="max-w-md text-muted-foreground">
+              {t("recentlyAddedEmpty")}
+            </p>
+          </div>
+        ) : (
+          <VocabularyEmpty variant="no-filtered" />
+        )}
       </div>
     );
   }

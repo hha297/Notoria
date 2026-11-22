@@ -68,7 +68,7 @@ export function WritingExportDialog({
         hasProAccess,
         DOCUMENT_EXPORT_FORMATS,
       ) as ExportFormat,
-      appearance: DEFAULT_EXPORT_APPEARANCE,
+      appearance: resolvedTheme === "dark" ? "theme" : DEFAULT_EXPORT_APPEARANCE,
       themeMode: resolvedTheme === "dark" ? "dark" : "light",
     }));
   }, [open, hasProAccess, resolvedTheme]);

@@ -1,3 +1,9 @@
+import {
+  practiceSelectionWeight,
+  weightedSampleUnique,
+  type PracticeHistorySnapshot,
+  type WordPracticeStats,
+} from "@/lib/exercises/practice-history";
 import { shuffleArray } from "@/lib/exercises/utils";
 
 export type ExerciseSessionMode =
@@ -32,8 +38,11 @@ export const SESSION_SIZE_RANGE_BY_MODE: Partial<
   form_sentence: { min: 10, max: 20 },
 };
 
-/** Target share of items drawn from the newest-word pool when possible. */
-export const DEFAULT_NEWEST_RATIO = 0.8;
+/**
+ * Target share of items drawn from the newest-word pool when possible.
+ * Kept for legacy callers; MC uses learning-aware sampling instead.
+ */
+export const DEFAULT_NEWEST_RATIO = 0.35;
 
 export type SessionSamplePreferences<T> = {
   getWordId: (item: T) => string;
@@ -157,7 +166,7 @@ export function sampleItemsWithPreferences<T>(
 
   const newestPoolSize = Math.min(
     wordsByNewest.length,
-    // Keep the newest band focused so the ~80% quota lands on recent vocab,
+    // Keep the newest band focused so the newest quota lands on recent vocab,
     // while still leaving spare words for consecutive-section rotation.
     Math.max(Math.ceil(target / Math.max(newestRatio, 0.5)) + 5, 12),
   );
@@ -284,4 +293,88 @@ export function sampleSessionItems<T>(
   }
 
   return sampleItemsWithPreferences(items, size, preferences);
+}
+
+export type LearningAwareSampleOptions<T> = {
+  getWordId: (item: T) => string;
+  getCreatedAt?: (item: T) => Date | string | number | null | undefined;
+  history: PracticeHistorySnapshot;
+  now?: number;
+  random?: () => number;
+};
+
+function createdAtMs(
+  value: Date | string | number | null | undefined,
+): number {
+  if (value == null) return 0;
+  if (typeof value === "number") return Number.isFinite(value) ? value : 0;
+  if (value instanceof Date) {
+    const time = value.getTime();
+    return Number.isFinite(time) ? time : 0;
+  }
+  const parsed = Date.parse(String(value));
+  return Number.isFinite(parsed) ? parsed : 0;
+}
+
+/**
+ * Learning-aware weighted sample: unseen / misses / spaced review, with
+ * strong deprioritization of words from the immediately prior sessions.
+ * One item per wordId; final order shuffled.
+ */
+export function sampleItemsLearningAware<T>(
+  items: T[],
+  count: number,
+  options: LearningAwareSampleOptions<T>,
+): T[] {
+  if (items.length === 0 || count <= 0) return [];
+
+  const now = options.now ?? Date.now();
+  const lastSession = new Set(options.history.recentSessions[0] ?? []);
+  const priorSession = new Set(options.history.recentSessions[1] ?? []);
+
+  // One candidate per word (first occurrence wins — callers usually pass
+  // already-shuffled question lists).
+  const byWord = new Map<string, T>();
+  for (const item of items) {
+    const wordId = options.getWordId(item);
+    if (!byWord.has(wordId)) byWord.set(wordId, item);
+  }
+  const unique = [...byWord.values()];
+  const target = Math.min(count, unique.length);
+
+  const picked = weightedSampleUnique(
+    unique,
+    target,
+    (item) => {
+      const wordId = options.getWordId(item);
+      const stats: WordPracticeStats | undefined =
+        options.history.words[wordId];
+      return practiceSelectionWeight(stats, {
+        now,
+        inLastSession: lastSession.has(wordId),
+        inPriorSession: priorSession.has(wordId),
+        createdAtMs: options.getCreatedAt
+          ? createdAtMs(options.getCreatedAt(item))
+          : undefined,
+      });
+    },
+    options.random,
+  );
+
+  return shuffleArray(picked);
+}
+
+export function sampleSessionItemsLearningAware<T>(
+  items: T[],
+  mode: ExerciseSessionMode,
+  options: LearningAwareSampleOptions<T>,
+): T[] {
+  if (items.length === 0) return [];
+  const range = SESSION_SIZE_RANGE_BY_MODE[mode];
+  const max = SESSION_SIZE_MAX_BY_MODE[mode];
+  const preferred = Math.min(DEFAULT_SESSION_QUESTION_COUNT, max);
+  const size = range
+    ? pickSessionSizeInRange(items.length, range.min, range.max)
+    : pickSessionSize(items.length, preferred);
+  return sampleItemsLearningAware(items, size, options);
 }

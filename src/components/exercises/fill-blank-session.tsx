@@ -80,6 +80,7 @@ export function FillBlankSession({
   const tSession = useTranslations("exercises.session");
   const tAi = useTranslations("exercises.ai");
   const tCommon = useTranslations("common");
+  const tFlash = useTranslations("flashcards");
   const uiLocale = useLocale();
   const { hasProAccess, openUpgrade } = useProAccess();
   const exerciseQuota = useQuotaLockMessage("ai_exercise");
@@ -691,7 +692,15 @@ export function FillBlankSession({
         <VocabularyFiltersBar words={words} workspaceId={workspaceId} filters={filters} onFiltersChange={setFilters} />
         {sourcePicker}
         {usingAiGenerated ? aiBar : null}
-        <VocabularyEmpty variant="no-filtered" />
+        {filters.recentlyAdded ? (
+          <div className="empty-state">
+            <p className="max-w-md text-muted-foreground">
+              {tFlash("recentlyAddedEmpty")}
+            </p>
+          </div>
+        ) : (
+          <VocabularyEmpty variant="no-filtered" />
+        )}
       </div>
     );
   }

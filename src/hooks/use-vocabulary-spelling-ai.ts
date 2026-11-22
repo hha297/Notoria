@@ -6,7 +6,8 @@ import { toast } from "sonner";
 import { suggestVocabularySpelling } from "@/lib/actions/vocabulary-ai";
 import type { VocabularySpellingResult } from "@/lib/vocabulary/ai-types";
 
-const SPELLING_DEBOUNCE_MS = 200;
+/** Silent background spelling check — only after the learner pauses. */
+const SPELLING_DEBOUNCE_MS = 4_000;
 const MIN_WORD_LENGTH = 3;
 const MIN_CONFIDENCE = 0.55;
 

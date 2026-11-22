@@ -34,15 +34,34 @@ export function ExportAppearanceOptions({
   const t = useTranslations("common.exportAppearance");
   const { resolvedTheme } = useTheme();
 
+  const colorMode = resolvedTheme === "dark" ? "dark" : "light";
   const previewTheme = useMemo(
-    () =>
-      resolveExportTheme(
-        value,
-        surface,
-        resolvedTheme === "dark" ? "dark" : "light",
-      ),
-    [value, surface, resolvedTheme],
+    () => resolveExportTheme(value, surface, colorMode),
+    [value, surface, colorMode],
   );
+
+  // Theme preview uses live CSS vars so dark mode never falls back to print white.
+  // Print preview keeps fixed paper tokens, inset inside a dark-mode shell.
+  const previewStyle = useMemo(() => {
+    if (value === "theme") {
+      return {
+        "--export-preview-paper": "var(--surface)",
+        "--export-preview-ink": "var(--ink)",
+        "--export-preview-muted": "var(--muted-foreground)",
+        "--export-preview-accent": `var(--module-${surface === "vocabulary" ? "vocab" : surface}-fg)`,
+        "--export-preview-wash": "var(--surface-muted)",
+        "--export-preview-hairline": "var(--hairline-cloud)",
+      } as CSSProperties;
+    }
+    return {
+      "--export-preview-paper": previewTheme.paper,
+      "--export-preview-ink": previewTheme.ink,
+      "--export-preview-muted": previewTheme.muted,
+      "--export-preview-accent": previewTheme.accent,
+      "--export-preview-wash": previewTheme.wash,
+      "--export-preview-hairline": previewTheme.hairline,
+    } as CSSProperties;
+  }, [value, surface, previewTheme]);
 
   return (
     <div className="space-y-3">
@@ -81,31 +100,28 @@ export function ExportAppearanceOptions({
       </div>
 
       <div
-        className={mx(styles, "export-appearance-preview")}
-        style={
-          {
-            "--export-preview-paper": previewTheme.paper,
-            "--export-preview-ink": previewTheme.ink,
-            "--export-preview-muted": previewTheme.muted,
-            "--export-preview-accent": previewTheme.accent,
-            "--export-preview-wash": previewTheme.wash,
-            "--export-preview-hairline": previewTheme.hairline,
-        } as CSSProperties
-      }
+        className={mx(styles, "export-appearance-preview-shell")}
         data-export-appearance={value}
-        data-export-mode={previewTheme.mode}
+        data-export-ui-mode={colorMode}
       >
-        <p className={mx(styles, "export-appearance-preview-kicker")}>
-          {t("previewKicker")}
-        </p>
-        <p className={mx(styles, "export-appearance-preview-title")}>
-          {t("previewTitle")}
-        </p>
-        <p className={mx(styles, "export-appearance-preview-body")}>
-          {t("previewBody")}
-        </p>
-        <div className={mx(styles, "export-appearance-preview-callout")}>
-          {t("previewCallout")}
+        <div
+          className={mx(styles, "export-appearance-preview")}
+          style={previewStyle}
+          data-export-appearance={value}
+          data-export-mode={previewTheme.mode}
+        >
+          <p className={mx(styles, "export-appearance-preview-kicker")}>
+            {t("previewKicker")}
+          </p>
+          <p className={mx(styles, "export-appearance-preview-title")}>
+            {t("previewTitle")}
+          </p>
+          <p className={mx(styles, "export-appearance-preview-body")}>
+            {t("previewBody")}
+          </p>
+          <div className={mx(styles, "export-appearance-preview-callout")}>
+            {t("previewCallout")}
+          </div>
         </div>
       </div>
 

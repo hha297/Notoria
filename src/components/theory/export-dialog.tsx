@@ -67,8 +67,9 @@ export function TheoryExportDialog({
     setFormat(
       getDefaultExportFormat(hasProAccess, DOCUMENT_EXPORT_FORMATS) as ExportFormat,
     );
-    setAppearance(DEFAULT_EXPORT_APPEARANCE);
-  }, [open, hasProAccess]);
+    // Dark UI: open on current theme so the preview isn't a white flash.
+    setAppearance(resolvedTheme === "dark" ? "theme" : DEFAULT_EXPORT_APPEARANCE);
+  }, [open, hasProAccess, resolvedTheme]);
 
   useEffect(() => {
     return () => {

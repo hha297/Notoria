@@ -58,9 +58,11 @@ import {
   type MultipleChoiceStudyMode,
 } from "@/lib/exercises/multiple-choice";
 import { isNonEmptyAnswer, type SetQuestionResult } from "@/lib/exercises/set-attempt";
-import { sampleSessionItems } from "@/lib/exercises/session-size";
+import { sampleSessionItemsLearningAware } from "@/lib/exercises/session-size";
 import { usePracticeDeckWords } from "@/hooks/use-practice-deck-words";
+import { usePracticeHistory } from "@/hooks/use-practice-history";
 import { filterFlashcardWords } from "@/lib/flashcards/session";
+import { sortWordsByPractice } from "@/lib/exercises/practice-history";
 import type { FlashcardFilters, FlashcardWord } from "@/types/flashcards";
 import { DEFAULT_FLASHCARD_FILTERS } from "@/types/flashcards";
 
@@ -108,7 +110,13 @@ export function MultipleChoiceSession({
   const [deckSettled, setDeckSettled] = useState(false);
   const hintEnrichmentGeneration = useRef(0);
   const tCommon = useTranslations("common");
+  const tFlash = useTranslations("flashcards");
   const { recordOutcome, commitAndBeginNext } = useRecentSectionPreferences();
+  const {
+    history: practiceHistory,
+    recordOutcome: recordPracticeOutcome,
+    beginNextSession,
+  } = usePracticeHistory(workspaceId);
   const { difficulty, setDifficulty } = useExerciseDifficulty("multiple_choice");
   const [additionalInstructions, setAdditionalInstructions] = useState("");
   const {
@@ -125,10 +133,16 @@ export function MultipleChoiceSession({
     filters,
   );
 
-  const filteredWords = useMemo(
-    () => filterFlashcardWords(deckWords, filters),
-    [deckWords, filters],
-  );
+  const filteredWords = useMemo(() => {
+    const filtered = filterFlashcardWords(deckWords, filters);
+    return sortWordsByPractice(
+      filtered,
+      filters.practiceSort ?? "newest",
+      (word) => word.id,
+      (word) => word.createdAt,
+      practiceHistory,
+    );
+  }, [deckWords, filters, practiceHistory]);
   const wordsById = useMemo(
     () => buildWordsById(filteredWords),
     [filteredWords],
@@ -215,8 +229,9 @@ export function MultipleChoiceSession({
 
   const startDeterministicSession = useCallback(() => {
     setDeckSettled(false);
-    const prefs = commitAndBeginNext();
-    const built = sampleSessionItems(
+    commitAndBeginNext();
+    const history = beginNextSession();
+    const built = sampleSessionItemsLearningAware(
       buildMultipleChoiceQuestions(
         filteredWords,
         studyMode === "meaning-to-word" ? "meaning-to-word" : "word-to-meaning",
@@ -225,8 +240,7 @@ export function MultipleChoiceSession({
       {
         getWordId: (item) => item.wordId,
         getCreatedAt: (item) => createdAtByWordId.get(item.wordId),
-        softAvoidWordIds: prefs.softAvoidWordIds,
-        softPreferWordIds: prefs.softPreferWordIds,
+        history,
       },
     );
 
@@ -277,6 +291,7 @@ export function MultipleChoiceSession({
       });
   }, [
     afterNewSet,
+    beginNextSession,
     commitAndBeginNext,
     createdAtByWordId,
     difficulty,
@@ -287,13 +302,38 @@ export function MultipleChoiceSession({
     uiLocale,
   ]);
 
+  const softPrefsFromHistory = useCallback(
+    (history: typeof practiceHistory, sectionPrefs: ReturnType<typeof commitAndBeginNext>) => {
+      const softAvoidWordIds = [
+        ...new Set([
+          ...sectionPrefs.softAvoidWordIds,
+          ...(history.recentSessions[0] ?? []),
+        ]),
+      ];
+      const softPreferWordIds = [
+        ...new Set([
+          ...sectionPrefs.softPreferWordIds,
+          ...Object.entries(history.words)
+            .filter(
+              ([, stats]) => stats.correctStreak === 0 && stats.incorrect > 0,
+            )
+            .map(([wordId]) => wordId),
+        ]),
+      ];
+      return { softAvoidWordIds, softPreferWordIds };
+    },
+    [],
+  );
+
   const startContextualSession = useCallback(async () => {
     if (filteredWords.length < 2) return;
 
     const mayRestore = questions.length === 0;
     hintEnrichmentGeneration.current += 1;
 
-    const prefs = commitAndBeginNext();
+    const sectionPrefs = commitAndBeginNext();
+    const history = beginNextSession();
+    const pickPrefs = softPrefsFromHistory(history, sectionPrefs);
     const eligibleWords = filteredWords.filter(wordHasBlankMeaningHint);
     const sampledWords = pickDistinctContextualWords(
       eligibleWords,
@@ -301,8 +341,8 @@ export function MultipleChoiceSession({
       {
         getWordId: (word) => word.id,
         getWordForm: (word) => word.word,
-        softAvoidWordIds: prefs.softAvoidWordIds,
-        softPreferWordIds: prefs.softPreferWordIds,
+        softAvoidWordIds: pickPrefs.softAvoidWordIds,
+        softPreferWordIds: pickPrefs.softPreferWordIds,
       },
     );
 
@@ -424,6 +464,7 @@ export function MultipleChoiceSession({
   }, [
     additionalInstructions,
     afterNewSet,
+    beginNextSession,
     commitAndBeginNext,
     completeProcessing,
     difficulty,
@@ -438,20 +479,28 @@ export function MultipleChoiceSession({
     resetAttempt,
     resetProcessing,
     setStage,
+    softPrefsFromHistory,
     tAi,
     uiLocale,
   ]);
 
   const buildContextualNextPayload = useCallback((): ContextualNextPayload | null => {
-    const prefs = commitAndBeginNext();
+    // Prefetch only — do not commit the in-progress session yet.
+    const pickPrefs = softPrefsFromHistory(practiceHistory, {
+      softAvoidWordIds: practiceHistory.recentSessions[0] ?? [],
+      softPreferWordIds: Object.entries(practiceHistory.words)
+        .filter(([, stats]) => stats.correctStreak === 0 && stats.incorrect > 0)
+        .map(([wordId]) => wordId),
+      softAvoidItemKeys: [],
+    });
     const picked = pickDistinctContextualWords(
       filteredWords.filter(wordHasBlankMeaningHint),
       CONTEXTUAL_AI_BATCH,
       {
         getWordId: (word) => word.id,
         getWordForm: (word) => word.word,
-        softAvoidWordIds: prefs.softAvoidWordIds,
-        softPreferWordIds: prefs.softPreferWordIds,
+        softAvoidWordIds: pickPrefs.softAvoidWordIds,
+        softPreferWordIds: pickPrefs.softPreferWordIds,
       },
     );
     if (!picked.length) return null;
@@ -469,7 +518,7 @@ export function MultipleChoiceSession({
         ),
       })),
     };
-  }, [commitAndBeginNext, filteredWords]);
+  }, [filteredWords, practiceHistory, softPrefsFromHistory]);
 
   const { notifyAnswerInteraction, openNextSet } = useExerciseNextSet<
     ContextualNextPayload,
@@ -594,10 +643,13 @@ export function MultipleChoiceSession({
         !unanswered &&
         displayContextualOption(question, value) ===
         contextualSurfaceAnswer(question);
-      recordOutcome({ wordId: question.wordId, correct });
+      if (!unanswered) {
+        recordOutcome({ wordId: question.wordId, correct });
+        recordPracticeOutcome(question.wordId, correct);
+      }
       return { correct, unanswered };
     },
-    [recordOutcome],
+    [recordOutcome, recordPracticeOutcome],
   );
 
   const handleSubmit = async () => {
@@ -655,6 +707,28 @@ export function MultipleChoiceSession({
           <Loader2 className="size-5 animate-spin text-page-accent motion-reduce:animate-none" />
           <p className="text-sm">{tCommon("loading")}</p>
         </div>
+      </div>
+    );
+  }
+
+  if (filters.recentlyAdded && filteredWords.length === 0) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <div className="empty-state">
+          <p className="max-w-md text-muted-foreground">
+            {tFlash("recentlyAddedEmpty")}
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  if (filteredWords.length === 0) {
+    return (
+      <div className="space-y-6">
+        {filtersBar}
+        <VocabularyEmpty variant="no-filtered" />
       </div>
     );
   }

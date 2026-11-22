@@ -76,7 +76,7 @@ describe("sampleItemsWithPreferences", () => {
   );
   const pool = [...newest, ...older];
 
-  it("prefers newest words for most of the section", () => {
+  it("keeps a moderate newest-word share without dominating the section", () => {
     const newestIds = new Set(newest.map((row) => row.wordId));
     let newestHits = 0;
     const runs = 50;
@@ -90,8 +90,10 @@ describe("sampleItemsWithPreferences", () => {
       newestHits += sampled.filter((row) => newestIds.has(row.wordId)).length;
     }
 
-    // Target ~80%; allow statistical slack across randomized runs.
-    expect(newestHits / (runs * 10)).toBeGreaterThan(0.7);
+    // DEFAULT_NEWEST_RATIO is 0.35 — expect a meaningful but not dominant share.
+    const ratio = newestHits / (runs * 10);
+    expect(ratio).toBeGreaterThan(0.2);
+    expect(ratio).toBeLessThan(0.65);
   });
 
   it("soft-avoids recently correct words when alternatives exist", () => {
