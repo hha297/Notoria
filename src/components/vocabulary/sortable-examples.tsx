@@ -71,6 +71,8 @@ function ExampleRowShell({
   canRemove,
   placeholder,
   dragHandle,
+  expanded,
+  onToggleExpanded,
   detailsOpen,
   onToggleDetails,
   inputRef,
@@ -82,12 +84,15 @@ function ExampleRowShell({
   canRemove: boolean;
   placeholder: string;
   dragHandle: ReactNode;
+  expanded: boolean;
+  onToggleExpanded: () => void;
   detailsOpen: boolean;
   onToggleDetails: () => void;
   inputRef?: (node: HTMLInputElement | null) => void;
 }) {
   const t = useTranslations("vocabulary");
   const hasDetails = Boolean(item.meaning.trim() || item.notes.trim());
+  const preview = item.sentence.trim() || placeholder;
 
   return (
     <div className={mx(composerStyles, "vocab-composer-item")}>
@@ -95,6 +100,7 @@ function ExampleRowShell({
         className={cn(
           mx(composerStyles, "vocab-example-toolbar"),
           "p-3.5 sm:p-4",
+          !expanded && "items-center",
         )}
       >
         <div className={mx(composerStyles, "vocab-example-toolbar-meta")}>
@@ -105,17 +111,51 @@ function ExampleRowShell({
           >
             {index + 1}
           </span>
+          <Button
+            type="button"
+            variant="ghost"
+            size="icon-sm"
+            onClick={onToggleExpanded}
+            aria-expanded={expanded}
+            aria-label={expanded ? t("collapseExample") : t("expandExample")}
+            className={mx(composerStyles, "vocab-composer-icon-btn shrink-0")}
+          >
+            <ChevronDown
+              className={cn(
+                "size-4 transition-transform",
+                expanded ? "rotate-0" : "-rotate-90",
+              )}
+            />
+          </Button>
         </div>
-        <CapitalizedInput
-          ref={inputRef}
-          value={item.sentence}
-          onChange={(event) =>
-            onUpdate(item.id, { sentence: event.target.value })
-          }
-          placeholder={placeholder}
-          className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
-          aria-label={`${t("examples")} ${index + 1}`}
-        />
+        {expanded ? (
+          <CapitalizedInput
+            ref={inputRef}
+            value={item.sentence}
+            onChange={(event) =>
+              onUpdate(item.id, { sentence: event.target.value })
+            }
+            placeholder={placeholder}
+            className={mx(composerStyles, "vocab-composer-field min-w-0 flex-1")}
+            aria-label={`${t("examples")} ${index + 1}`}
+          />
+        ) : (
+          <button
+            type="button"
+            onClick={onToggleExpanded}
+            className="min-w-0 flex-1 truncate rounded-md px-1 py-1.5 text-left text-sm text-ink hover:bg-surface-hover/40"
+            title={preview}
+          >
+            <span
+              className={cn(
+                "block truncate",
+                !item.sentence.trim() && "text-muted-foreground",
+              )}
+            >
+              {preview}
+            </span>
+          </button>
+        )}
         <Button
           type="button"
           variant="ghost"
@@ -131,82 +171,89 @@ function ExampleRowShell({
           <Trash2 className="size-4" />
         </Button>
       </div>
-      <div className="flex px-3.5 pb-3.5 sm:px-4 sm:pb-4">
-        <button
-          type="button"
-          onClick={onToggleDetails}
-          className={mx(composerStyles, "vocab-composer-details-toggle")}
-          aria-expanded={detailsOpen}
-        >
-          <ChevronDown
-            className={cn(
-              "size-3.5 transition-transform",
-              detailsOpen ? "rotate-0" : "-rotate-90",
-            )}
-          />
-          {t("exampleDetails")}
-          {hasDetails && !detailsOpen ? (
-            <span className={mx(composerStyles, "vocab-composer-details-badge")}>
-              {t("exampleDetailsFilled")}
-            </span>
-          ) : null}
-        </button>
-      </div>
 
-      {detailsOpen ? (
-        <div
-          className={mx(
-            composerStyles,
-            "vocab-composer-details space-y-3 px-3 py-3",
-          )}
-        >
-          <div className="space-y-1.5">
-            <Label
-              htmlFor={`example-meaning-${item.id}`}
+      {expanded ? (
+        <>
+          <div className="flex px-3.5 pb-3.5 sm:px-4 sm:pb-4">
+            <button
+              type="button"
+              onClick={onToggleDetails}
+              className={mx(composerStyles, "vocab-composer-details-toggle")}
+              aria-expanded={detailsOpen}
+            >
+              <ChevronDown
+                className={cn(
+                  "size-3.5 transition-transform",
+                  detailsOpen ? "rotate-0" : "-rotate-90",
+                )}
+              />
+              {t("exampleDetails")}
+              {hasDetails && !detailsOpen ? (
+                <span
+                  className={mx(composerStyles, "vocab-composer-details-badge")}
+                >
+                  {t("exampleDetailsFilled")}
+                </span>
+              ) : null}
+            </button>
+          </div>
+
+          {detailsOpen ? (
+            <div
               className={mx(
                 composerStyles,
-                "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
+                "vocab-composer-details space-y-3 px-3 py-3",
               )}
             >
-              {t("exampleMeaning")}{" "}
-              <span className="font-normal tracking-normal text-muted-foreground normal-case">
-                ({t("optional")})
-              </span>
-            </Label>
-            <CapitalizedTextarea
-              id={`example-meaning-${item.id}`}
-              value={item.meaning}
-              onChange={(event) =>
-                onUpdate(item.id, { meaning: event.target.value })
-              }
-              placeholder={t("exampleMeaningPlaceholder")}
-              className={mx(composerStyles, "vocab-composer-field min-h-16")}
-            />
-          </div>
-          <div className="space-y-1.5">
-            <Label
-              htmlFor={`example-notes-${item.id}`}
-              className={mx(
-                composerStyles,
-                "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
-              )}
-            >
-              {t("exampleNotes")}{" "}
-              <span className="font-normal tracking-normal text-muted-foreground normal-case">
-                ({t("optional")})
-              </span>
-            </Label>
-            <CapitalizedTextarea
-              id={`example-notes-${item.id}`}
-              value={item.notes}
-              onChange={(event) =>
-                onUpdate(item.id, { notes: event.target.value })
-              }
-              placeholder={t("exampleNotesPlaceholder")}
-              className={mx(composerStyles, "vocab-composer-field min-h-14")}
-            />
-          </div>
-        </div>
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor={`example-meaning-${item.id}`}
+                  className={mx(
+                    composerStyles,
+                    "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
+                  )}
+                >
+                  {t("exampleMeaning")}{" "}
+                  <span className="font-normal tracking-normal text-muted-foreground normal-case">
+                    ({t("optional")})
+                  </span>
+                </Label>
+                <CapitalizedTextarea
+                  id={`example-meaning-${item.id}`}
+                  value={item.meaning}
+                  onChange={(event) =>
+                    onUpdate(item.id, { meaning: event.target.value })
+                  }
+                  placeholder={t("exampleMeaningPlaceholder")}
+                  className={mx(composerStyles, "vocab-composer-field min-h-16")}
+                />
+              </div>
+              <div className="space-y-1.5">
+                <Label
+                  htmlFor={`example-notes-${item.id}`}
+                  className={mx(
+                    composerStyles,
+                    "vocab-composer-kicker text-[0.8rem] font-semibold tracking-[0.14em] uppercase",
+                  )}
+                >
+                  {t("exampleNotes")}{" "}
+                  <span className="font-normal tracking-normal text-muted-foreground normal-case">
+                    ({t("optional")})
+                  </span>
+                </Label>
+                <CapitalizedTextarea
+                  id={`example-notes-${item.id}`}
+                  value={item.notes}
+                  onChange={(event) =>
+                    onUpdate(item.id, { notes: event.target.value })
+                  }
+                  placeholder={t("exampleNotesPlaceholder")}
+                  className={mx(composerStyles, "vocab-composer-field min-h-14")}
+                />
+              </div>
+            </div>
+          ) : null}
+        </>
       ) : null}
     </div>
   );
@@ -219,6 +266,8 @@ function SortableExampleRow({
   onRemove,
   canRemove,
   placeholder,
+  expanded,
+  onToggleExpanded,
   detailsOpen,
   onToggleDetails,
   inputRef,
@@ -229,6 +278,8 @@ function SortableExampleRow({
   onRemove: (id: string) => void;
   canRemove: boolean;
   placeholder: string;
+  expanded: boolean;
+  onToggleExpanded: () => void;
   detailsOpen: boolean;
   onToggleDetails: () => void;
   inputRef?: (node: HTMLInputElement | null) => void;
@@ -258,6 +309,8 @@ function SortableExampleRow({
         onRemove={onRemove}
         canRemove={canRemove}
         placeholder={placeholder}
+        expanded={expanded}
+        onToggleExpanded={onToggleExpanded}
         detailsOpen={detailsOpen}
         onToggleDetails={onToggleDetails}
         inputRef={inputRef}
@@ -294,6 +347,9 @@ export function SortableExamples({
   const mounted = useMounted();
   const t = useTranslations("vocabulary");
   const { requestFocus, bindRef } = useFocusNewItem<HTMLInputElement>();
+  const [expandedById, setExpandedById] = useState<Record<string, boolean>>(
+    () => Object.fromEntries(examples.map((item) => [item.id, true])),
+  );
   const [openDetails, setOpenDetails] = useState<Record<string, boolean>>(
     () => Object.fromEntries(examples.map((item) => [item.id, true])),
   );
@@ -332,6 +388,7 @@ export function SortableExamples({
         sortOrder: examples.length,
       },
     ]);
+    setExpandedById((current) => ({ ...current, [id]: true }));
     setOpenDetails((current) => ({ ...current, [id]: true }));
   }
 
@@ -353,11 +410,23 @@ export function SortableExamples({
         .filter((item) => item.id !== id)
         .map((item, index) => ({ ...item, sortOrder: index })),
     );
+    setExpandedById((current) => {
+      const next = { ...current };
+      delete next[id];
+      return next;
+    });
     setOpenDetails((current) => {
       const next = { ...current };
       delete next[id];
       return next;
     });
+  }
+
+  function toggleExpanded(id: string) {
+    setExpandedById((current) => ({
+      ...current,
+      [id]: current[id] === false,
+    }));
   }
 
   function toggleDetails(id: string) {
@@ -374,8 +443,10 @@ export function SortableExamples({
       {examples.length === 0 && emptyLabel ? (
         <p className="text-sm text-muted-foreground">{emptyLabel}</p>
       ) : null}
-      {examples.map((item, index) =>
-        mounted ? (
+      {examples.map((item, index) => {
+        const expanded = expandedById[item.id] !== false;
+        const detailsOpen = openDetails[item.id] !== false;
+        return mounted ? (
           <SortableExampleRow
             key={item.id}
             item={item}
@@ -384,7 +455,9 @@ export function SortableExamples({
             onRemove={removeExample}
             canRemove={canRemove}
             placeholder={t("examplePlaceholder")}
-            detailsOpen={openDetails[item.id] !== false}
+            expanded={expanded}
+            onToggleExpanded={() => toggleExpanded(item.id)}
+            detailsOpen={detailsOpen}
             onToggleDetails={() => toggleDetails(item.id)}
             inputRef={bindRef(item.id)}
           />
@@ -397,7 +470,9 @@ export function SortableExamples({
             onRemove={removeExample}
             canRemove={canRemove}
             placeholder={t("examplePlaceholder")}
-            detailsOpen={openDetails[item.id] !== false}
+            expanded={expanded}
+            onToggleExpanded={() => toggleExpanded(item.id)}
+            detailsOpen={detailsOpen}
             onToggleDetails={() => toggleDetails(item.id)}
             inputRef={bindRef(item.id)}
             dragHandle={
@@ -411,9 +486,47 @@ export function SortableExamples({
               </span>
             }
           />
-        ),
-      )}
+        );
+      })}
     </div>
+  );
+
+  const addButton = (
+    <Button
+      type="button"
+      variant={compact ? "ghost" : "outline"}
+      size="sm"
+      onClick={addExample}
+      className={cn(
+        mx(
+          composerStyles,
+          "vocab-composer-add",
+          compact && "vocab-composer-add-nested",
+        ),
+        compact ? "w-full justify-start sm:w-auto" : hideTitle && "ml-auto",
+      )}
+    >
+      <Plus className="size-4" />
+      {t("addExample")}
+    </Button>
+  );
+
+  const examplesList = mounted ? (
+    <DndContext
+      id={dndId}
+      sensors={sensors}
+      collisionDetection={closestCenter}
+      onDragEnd={handleDragEnd}
+    >
+      <SortableContext
+        items={examples.map((item) => item.id)}
+        strategy={verticalListSortingStrategy}
+      >
+        {list}
+      </SortableContext>
+    </DndContext>
+  ) : (
+    list
   );
 
   return (
@@ -423,61 +536,41 @@ export function SortableExamples({
         compact ? "vocab-composer-examples-nested" : "vocab-composer-block",
       )}
     >
-      <div
-        className={mx(
-          composerStyles,
-          compact
-            ? "mb-2 flex items-center justify-between gap-2"
-            : "vocab-composer-section-head",
-        )}
-      >
-        {hideTitle ? (
-          <span className="sr-only">{title ?? t("examples")}</span>
-        ) : (
-          <div className={mx(composerStyles, "vocab-composer-section-copy")}>
+      {compact ? (
+        <>
+          {hideTitle ? (
+            <span className="sr-only">{title ?? t("examples")}</span>
+          ) : (
             <h3
               className={mx(
                 composerStyles,
-                compact
-                  ? "text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase"
-                  : "vocab-composer-section-title",
+                "mb-2 text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase",
               )}
             >
               {title ?? t("examples")}
             </h3>
-          </div>
-        )}
-        <Button
-          type="button"
-          variant="outline"
-          size="sm"
-          onClick={addExample}
-          className={cn(
-            mx(composerStyles, "vocab-composer-add"),
-            hideTitle && "ml-auto",
           )}
-        >
-          <Plus className="size-4" />
-          {t("addExample")}
-        </Button>
-      </div>
-
-      {mounted ? (
-        <DndContext
-          id={dndId}
-          sensors={sensors}
-          collisionDetection={closestCenter}
-          onDragEnd={handleDragEnd}
-        >
-          <SortableContext
-            items={examples.map((item) => item.id)}
-            strategy={verticalListSortingStrategy}
-          >
-            {list}
-          </SortableContext>
-        </DndContext>
+          {examplesList}
+          <div className="mt-2">{addButton}</div>
+        </>
       ) : (
-        list
+        <>
+          <div className={mx(composerStyles, "vocab-composer-section-head")}>
+            {hideTitle ? (
+              <span className="sr-only">{title ?? t("examples")}</span>
+            ) : (
+              <div className={mx(composerStyles, "vocab-composer-section-copy")}>
+                <h3
+                  className={mx(composerStyles, "vocab-composer-section-title")}
+                >
+                  {title ?? t("examples")}
+                </h3>
+              </div>
+            )}
+            {addButton}
+          </div>
+          {examplesList}
+        </>
       )}
     </div>
   );

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "توسيع المثال",
+    "collapseExample": "طي المثال"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "اكتملت الجلسة!",
     "tryAgain": "حاول مرة أخرى",
-    "ratingFailed": "تعذّر حفظ تقييمك"
+    "ratingFailed": "تعذّر حفظ تقييمك",
+    "filterRecentlyAdded": "المضافة حديثًا (48 س)",
+    "practiceSort": {
+      "label": "ترتيب التمرين",
+      "newest": "الأحدث أولًا",
+      "oldest": "الأقدم أولًا",
+      "last_practiced": "آخر تمرين",
+      "least_recently_practiced": "الأقل تمرينًا مؤخرًا",
+      "most_practiced": "الأكثر تمرينًا",
+      "least_practiced": "الأقل تمرينًا"
+    },
+    "recentlyAddedEmpty": "لا كلمات أُضيفت خلال آخر 48 ساعة."
   },
   "dashboard": {
     "overview": "نظرة عامة",

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Izvērst piemēru",
+    "collapseExample": "Sakļaut piemēru"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sesija pabeigta!",
     "tryAgain": "Mēģināt vēlreiz",
-    "ratingFailed": "Neizdevās saglabāt vērtējumu"
+    "ratingFailed": "Neizdevās saglabāt vērtējumu",
+    "filterRecentlyAdded": "Nesen pievienoti (48 h)",
+    "practiceSort": {
+      "label": "Vingrinājumu secība",
+      "newest": "Jaunākie vispirms",
+      "oldest": "Vecākie vispirms",
+      "last_practiced": "Pēdējā prakse",
+      "least_recently_practiced": "Senākā prakse",
+      "most_practiced": "Visvairāk praktizēti",
+      "least_practiced": "Vismazāk praktizēti"
+    },
+    "recentlyAddedEmpty": "Pēdējo 48 stundu laikā nav pievienoti vārdi."
   },
   "dashboard": {
     "overview": "Pārskats",

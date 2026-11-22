@@ -398,6 +398,8 @@
     "examples": "Exempelmeningar",
     "addExample": "Lägg till exempel",
     "removeExample": "Ta bort exempel",
+    "expandExample": "Expandera exempel",
+    "collapseExample": "Minimera exempel",
     "examplePlaceholder": "Ange en exempelmening",
     "exampleDetails": "Ytterligare detaljer",
     "exampleDetailsFilled": "Fyllt",
@@ -1549,7 +1551,18 @@
     "sessionComplete": "Sessionen är komplett!",
     "tryAgain": "Försök igen",
     "ratingFailed": "Kunde inte spara ditt betyg",
-    "weakTitle": "Öva svåra ord"
+    "weakTitle": "Öva svåra ord",
+    "filterRecentlyAdded": "Nyligen tillagda (48 h)",
+    "practiceSort": {
+      "label": "Övningsordning",
+      "newest": "Nyast först",
+      "oldest": "Äldst först",
+      "last_practiced": "Senast övad",
+      "least_recently_practiced": "Längst sedan övad",
+      "most_practiced": "Mest övad",
+      "least_practiced": "Minst övad"
+    },
+    "recentlyAddedEmpty": "Inga ord tillagda under de senaste 48 timmarna."
   },
   "dashboard": {
     "overview": "Översikt",

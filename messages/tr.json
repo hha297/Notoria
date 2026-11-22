@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Örneği genişlet",
+    "collapseExample": "Örneği daralt"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Oturum tamamlandı!",
     "tryAgain": "Tekrar dene",
-    "ratingFailed": "Puanınız kaydedilemedi"
+    "ratingFailed": "Puanınız kaydedilemedi",
+    "filterRecentlyAdded": "Yeni eklenenler (48 sa)",
+    "practiceSort": {
+      "label": "Alıştırma sırası",
+      "newest": "En yeniler önce",
+      "oldest": "En eskiler önce",
+      "last_practiced": "Son alıştırmalar",
+      "least_recently_practiced": "En uzun süredir çalışılmayanlar",
+      "most_practiced": "En çok çalışılanlar",
+      "least_practiced": "En az çalışılanlar"
+    },
+    "recentlyAddedEmpty": "Son 48 saatte eklenen kelime yok."
   },
   "dashboard": {
     "overview": "Genel bakış",

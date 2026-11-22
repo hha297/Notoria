@@ -17,7 +17,7 @@ import {
 import { TagMultiSelect } from "@/components/vocabulary/tag-multi-select";
 import { SynonymPicker } from "@/components/vocabulary/synonym-picker";
 import { PartOfSpeechSelect } from "@/components/vocabulary/part-of-speech-select";
-import { VocabularyAiChecking, VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
+import { VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
 import { useAiPreferences } from "@/components/providers/ai-preferences-provider";
 import { ShowTutorialButton } from "@/components/onboarding/show-tutorial-button";
 import { Button } from "@/components/ui/button";
@@ -126,7 +126,8 @@ type VocabularyFormProps = {
 
 type WordCheckStatus = "idle" | "pending" | "checking" | "duplicate" | "unique" | "error";
 
-const WORD_CHECK_DEBOUNCE_MS = 300;
+/** Wait for typing to settle before duplicate checks (silent background). */
+const WORD_CHECK_DEBOUNCE_MS = 4_000;
 
 function normalizeWordInput(word: string) {
   return normalizeVocabularyWord(word);
@@ -418,11 +419,8 @@ export function VocabularyForm({
   ]);
 
   async function onSubmit(values: VocabularyFormClientValues) {
-    if (
-      wordCheckStatus === "duplicate" ||
-      wordCheckStatus === "checking" ||
-      wordCheckStatus === "pending"
-    ) {
+    // Only block on a confirmed duplicate — pending/checking runs silently.
+    if (wordCheckStatus === "duplicate") {
       return;
     }
 
@@ -568,15 +566,8 @@ export function VocabularyForm({
     // eslint-disable-next-line react-hooks/exhaustive-deps -- accept/setValue are stable enough for this apply-once path
   }, [shouldAutoApplyContentChange, spellingAi.suggestion?.suggestion]);
   const isDuplicate = wordCheckStatus === "duplicate";
-  const isCheckingWord = wordCheckStatus === "checking";
-  const isWordBusy = isCheckingWord || spellingAi.isChecking;
   const saveDisabled =
-    isSaving ||
-    !canSave ||
-    isDuplicate ||
-    isCheckingWord ||
-    wordCheckStatus === "pending" ||
-    notesImageUploading;
+    isSaving || !canSave || isDuplicate || notesImageUploading;
 
   function handleNotesChange(doc: JSONContent) {
     setNotesDoc(doc);
@@ -675,20 +666,12 @@ export function VocabularyForm({
                 )}
                 aria-invalid={isDuplicate || undefined}
                 aria-describedby={
-                  isDuplicate ||
-                    wordCheckStatus === "error" ||
-                    isWordBusy
+                  isDuplicate || wordCheckStatus === "error"
                     ? "word-duplicate-status"
                     : undefined
                 }
                 {...form.register("word")}
               />
-              {isWordBusy ? (
-                <Loader2
-                  className="pointer-events-none absolute top-1/2 right-4 size-5 -translate-y-1/2 animate-spin text-(--composer-word)"
-                  aria-hidden
-                />
-              ) : null}
             </div>
           </div>
 
@@ -721,15 +704,6 @@ export function VocabularyForm({
                 {form.formState.errors.word.message}
               </p>
             ) : null}
-            {isCheckingWord ? (
-              <p
-                id="word-duplicate-status"
-                className="flex items-center gap-1.5 text-xs text-muted-foreground"
-                role="status"
-              >
-                {t("wordExistsChecking")}
-              </p>
-            ) : null}
             {isDuplicate ? (
               <p
                 id="word-duplicate-status"
@@ -747,9 +721,6 @@ export function VocabularyForm({
               >
                 {t("wordExistsCheckFailed")}
               </p>
-            ) : null}
-            {!isCheckingWord && spellingAi.isChecking ? (
-              <VocabularyAiChecking id="word-duplicate-status" />
             ) : null}
             {spellingAi.suggestion?.suggestion ? (
               <VocabularyAiSuggestionCard

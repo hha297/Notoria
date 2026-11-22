@@ -79,7 +79,7 @@ export function VocabularyExportDialog({
         hasProAccess,
         VOCABULARY_EXPORT_FORMATS,
       ) as VocabularyExportFormat,
-      appearance: DEFAULT_EXPORT_APPEARANCE,
+      appearance: resolvedTheme === "dark" ? "theme" : DEFAULT_EXPORT_APPEARANCE,
       themeMode: resolvedTheme === "dark" ? "dark" : "light",
     }));
   }, [open, hasProAccess, resolvedTheme]);

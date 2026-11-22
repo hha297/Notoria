@@ -16,11 +16,25 @@ import {
   uniqueCustomTagNames,
 } from "@/lib/vocabulary-tags";
 import { workspaceCustomTagsQueryOptions } from "@/lib/query/options";
-import type { FlashcardFilters, FlashcardStudyMode, FlashcardWord } from "@/types/flashcards";
+import {
+  PRACTICE_SORT_OPTIONS,
+  type FlashcardFilters,
+  type FlashcardStudyMode,
+  type FlashcardWord,
+  type PracticeSortId,
+} from "@/types/flashcards";
 import type { MultipleChoiceStudyMode } from "@/lib/exercises/multiple-choice";
 import type { TypeAnswerStudyMode } from "@/lib/exercises/type-answer";
-
-const STATUS_OPTIONS = ["NEW", "LEARNING", "REVIEW", "MASTERED"] as const;
+import { buttonVariants } from "@/components/ui/button";
+import {
+  DropdownMenu,
+  DropdownMenuContent,
+  DropdownMenuRadioGroup,
+  DropdownMenuRadioItem,
+  DropdownMenuTrigger,
+} from "@/components/ui/dropdown-menu";
+import { ChevronDownIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
 
 type VocabularyFiltersBarProps = {
   words: FlashcardWord[];
@@ -158,7 +172,7 @@ export function VocabularyFiltersBar({
         </div>
       )}
 
-      <div className="grid gap-3 sm:grid-cols-3">
+      <div className="grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
         <MultiFilterSelect
           label={tVocab("filterPartOfSpeech")}
           emptyLabel={tVocab("filterAll")}
@@ -168,18 +182,6 @@ export function VocabularyFiltersBar({
           options={PARTS_OF_SPEECH.map((pos) => ({
             value: pos,
             label: tPos(pos),
-          }))}
-        />
-
-        <MultiFilterSelect
-          label={tFlash("filterStatus")}
-          emptyLabel={tVocab("filterAll")}
-          values={filters.status}
-          onChange={(status) => onFiltersChange({ ...filters, status })}
-          triggerClassName="h-10 sm:h-8"
-          options={STATUS_OPTIONS.map((status) => ({
-            value: status,
-            label: tFlash(`status.${status}`),
           }))}
         />
 
@@ -194,6 +196,49 @@ export function VocabularyFiltersBar({
           searchable
           searchPlaceholder={tSearch("placeholder")}
         />
+
+        <div className="space-y-2">
+          <p className="text-xs font-semibold tracking-wide text-muted-foreground uppercase">
+            {tFlash("practiceSort.label")}
+          </p>
+          <DropdownMenu>
+            <DropdownMenuTrigger
+              className={cn(
+                buttonVariants({ variant: "outline" }),
+                "h-10 w-full min-w-0 justify-between gap-1.5 border-page-accent-border px-2.5 font-normal normal-case tracking-normal shadow-none sm:h-8",
+                "focus-visible:border-page-accent",
+              )}
+            >
+              <span className="min-w-0 flex-1 truncate text-left">
+                {tFlash(
+                  `practiceSort.${filters.practiceSort ?? "newest"}`,
+                )}
+              </span>
+              <ChevronDownIcon className="size-4 shrink-0 text-muted-foreground" />
+            </DropdownMenuTrigger>
+            <DropdownMenuContent
+              align="start"
+              className="min-w-[var(--anchor-width)]"
+            >
+              <DropdownMenuRadioGroup
+                value={filters.practiceSort ?? "newest"}
+                onValueChange={(value) => {
+                  if (!value) return;
+                  onFiltersChange({
+                    ...filters,
+                    practiceSort: value as PracticeSortId,
+                  });
+                }}
+              >
+                {PRACTICE_SORT_OPTIONS.map((option) => (
+                  <DropdownMenuRadioItem key={option} value={option}>
+                    {tFlash(`practiceSort.${option}`)}
+                  </DropdownMenuRadioItem>
+                ))}
+              </DropdownMenuRadioGroup>
+            </DropdownMenuContent>
+          </DropdownMenu>
+        </div>
       </div>
     </div>
   );

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "예문 펼치기",
+    "collapseExample": "예문 접기"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "세션 완료!",
     "tryAgain": "다시 시도",
-    "ratingFailed": "평가를 저장하지 못했습니다"
+    "ratingFailed": "평가를 저장하지 못했습니다",
+    "filterRecentlyAdded": "최근 추가 (48시간)",
+    "practiceSort": {
+      "label": "연습 순서",
+      "newest": "최신순",
+      "oldest": "오래된순",
+      "last_practiced": "최근 연습",
+      "least_recently_practiced": "오래 연습 안 함",
+      "most_practiced": "가장 많이 연습",
+      "least_practiced": "가장 적게 연습"
+    },
+    "recentlyAddedEmpty": "지난 48시간 동안 추가된 단어가 없습니다."
   },
   "dashboard": {
     "overview": "개요",

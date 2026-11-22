@@ -5,6 +5,7 @@ import type {
   FlashcardStudyMode,
   FlashcardWord,
 } from "@/types/flashcards";
+import { isRecentlyAdded } from "@/lib/exercises/practice-history";
 import { sampleSessionItems } from "@/lib/exercises/session-size";
 import {
   matchesMultiFilter,
@@ -18,12 +19,15 @@ export function getFiltersKey(filters: FlashcardFilters, studyMode: FlashcardStu
     multiFilterKey(filters.tag),
     multiFilterKey(filters.partOfSpeech),
     multiFilterKey(filters.status),
+    filters.recentlyAdded ? "recent" : "",
+    filters.practiceSort ?? "newest",
   ].join(":");
 }
 
 export function filterFlashcardWords(
   words: FlashcardWord[],
   filters: FlashcardFilters,
+  now = Date.now(),
 ) {
   return words.filter((word) => {
     if (!matchesMultiFilter(filters.partOfSpeech, word.partOfSpeech)) {
@@ -38,6 +42,10 @@ export function filterFlashcardWords(
       return false;
     }
 
+    if (filters.recentlyAdded && !isRecentlyAdded(word.createdAt, now)) {
+      return false;
+    }
+
     return true;
   });
 }
@@ -46,7 +54,8 @@ export function isFlashcardFiltersActive(filters: FlashcardFilters) {
   return (
     filters.tag.length > 0 ||
     filters.partOfSpeech.length > 0 ||
-    filters.status.length > 0
+    filters.status.length > 0 ||
+    Boolean(filters.recentlyAdded)
   );
 }
 

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Ընդլայնել օրինակը",
+    "collapseExample": "Ծալել օրինակը"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Նստաշրջանն ավարտված է։",
     "tryAgain": "Փորձել կրկին",
-    "ratingFailed": "Չհաջողվեց պահել Ձեր գնահատականը"
+    "ratingFailed": "Չհաջողվեց պահել Ձեր գնահատականը",
+    "filterRecentlyAdded": "Վերջերս ավելացված (48 ժ)",
+    "practiceSort": {
+      "label": "Վարժանքի կարգ",
+      "newest": "Նորերը առաջինը",
+      "oldest": "Հիները առաջինը",
+      "last_practiced": "Վերջին վարժանք",
+      "least_recently_practiced": "Ամենահին վարժանք",
+      "most_practiced": "Ամենաշատ վարժված",
+      "least_practiced": "Ամենաքիչ վարժված"
+    },
+    "recentlyAddedEmpty": "Վերջին 48 ժամում բառեր չեն ավելացվել։"
   },
   "dashboard": {
     "overview": "Ակնարկ",

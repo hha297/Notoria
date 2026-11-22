@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "例文を展開",
+    "collapseExample": "例文を折りたたむ"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "セッション完了！",
     "tryAgain": "もう一度",
-    "ratingFailed": "評価を保存できませんでした"
+    "ratingFailed": "評価を保存できませんでした",
+    "filterRecentlyAdded": "最近追加（48時間）",
+    "practiceSort": {
+      "label": "練習の並び順",
+      "newest": "新しい順",
+      "oldest": "古い順",
+      "last_practiced": "最近練習した順",
+      "least_recently_practiced": "長期間練習していない順",
+      "most_practiced": "練習回数が多い順",
+      "least_practiced": "練習回数が少ない順"
+    },
+    "recentlyAddedEmpty": "過去48時間に追加された単語はありません。"
   },
   "dashboard": {
     "overview": "概要",

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Разгъни пример",
+    "collapseExample": "Свий пример"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Сесията е завършена!",
     "tryAgain": "Опитайте отново",
-    "ratingFailed": "Оценката не можа да бъде запазена"
+    "ratingFailed": "Оценката не можа да бъде запазена",
+    "filterRecentlyAdded": "Наскоро добавени (48 ч)",
+    "practiceSort": {
+      "label": "Ред на упражнение",
+      "newest": "Най-новите първо",
+      "oldest": "Най-старите първо",
+      "last_practiced": "Последно упражнявани",
+      "least_recently_practiced": "Най-отдавна упражнявани",
+      "most_practiced": "Най-много упражнявани",
+      "least_practiced": "Най-малко упражнявани"
+    },
+    "recentlyAddedEmpty": "Няма думи, добавени през последните 48 часа."
   },
   "dashboard": {
     "overview": "Преглед",

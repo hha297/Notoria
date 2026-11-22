@@ -43,10 +43,23 @@ export type FlashcardWord = {
   tags: string[];
 };
 
+/** Practice-aware deck ordering (replaces misleading learning-status sorts). */
+export type PracticeSortId =
+  | "newest"
+  | "oldest"
+  | "last_practiced"
+  | "least_recently_practiced"
+  | "most_practiced"
+  | "least_practiced";
+
 export type FlashcardFilters = {
   tag: string[];
   partOfSpeech: string[];
+  /** @deprecated Prefer practiceSort / recentlyAdded — kept for older saved prefs. */
   status: string[];
+  /** Only words created within the last 48 hours. */
+  recentlyAdded?: boolean;
+  practiceSort?: PracticeSortId;
 };
 
 export type FlashcardSessionState = {
@@ -63,4 +76,15 @@ export const DEFAULT_FLASHCARD_FILTERS: FlashcardFilters = {
   tag: [],
   partOfSpeech: [],
   status: [],
+  recentlyAdded: false,
+  practiceSort: "newest",
 };
+
+export const PRACTICE_SORT_OPTIONS: PracticeSortId[] = [
+  "newest",
+  "oldest",
+  "last_practiced",
+  "least_recently_practiced",
+  "most_practiced",
+  "least_practiced",
+];

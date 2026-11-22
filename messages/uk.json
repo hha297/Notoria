@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Розгорнути приклад",
+    "collapseExample": "Згорнути приклад"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Сесію завершено!",
     "tryAgain": "Спробувати ще раз",
-    "ratingFailed": "Не вдалося зберегти вашу оцінку"
+    "ratingFailed": "Не вдалося зберегти вашу оцінку",
+    "filterRecentlyAdded": "Нещодавно додані (48 год)",
+    "practiceSort": {
+      "label": "Порядок практики",
+      "newest": "Спочатку нові",
+      "oldest": "Спочатку старі",
+      "last_practiced": "Остання практика",
+      "least_recently_practiced": "Давно не практикувались",
+      "most_practiced": "Найбільше практики",
+      "least_practiced": "Найменше практики"
+    },
+    "recentlyAddedEmpty": "За останні 48 годин слова не додавались."
   },
   "dashboard": {
     "overview": "Огляд",

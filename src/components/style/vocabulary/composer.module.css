@@ -314,6 +314,55 @@
   gap: 1rem;
 }
 
+/* Nested meanings sit inside the word form — indent from the section edge. */
+.vocab-composer-section[data-composer="meaning"] .vocab-composer-block {
+  padding-left: 0.35rem;
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-section[data-composer="meaning"] .vocab-composer-block {
+    padding-left: 0.75rem;
+  }
+}
+
+/* Example sentences nested under a meaning — inset with the cards. */
+.vocab-composer-examples-nested {
+  display: flex;
+  flex-direction: column;
+  gap: 0.75rem;
+  margin-inline: 0.15rem 0.35rem;
+  padding-left: 0.85rem;
+  border-left: 2px solid
+    color-mix(in oklab, var(--composer-example, var(--module-writing-fg)) 42%, transparent);
+}
+
+@media (min-width: 640px) {
+  .vocab-composer-examples-nested {
+    margin-inline: 0.35rem 0.75rem;
+    padding-left: 1.1rem;
+  }
+}
+
+.vocab-composer-meaning-examples {
+  background: color-mix(in oklab, var(--surface-elevated) 28%, transparent);
+  border-radius: 0 0 0.75rem 0.75rem;
+}
+
+/* Nested Add actions — quieter than word-level / primary CTAs. */
+.vocab-composer-add-nested {
+  border-style: dashed !important;
+  font-weight: 500 !important;
+  background: transparent !important;
+}
+
+.vocab-composer-add-nested:hover:not(:disabled) {
+  background: color-mix(
+    in oklab,
+    var(--composer-accent) 12%,
+    transparent
+  ) !important;
+}
+
 .vocab-composer-section-copy {
   display: flex;
   min-width: 0;
@@ -510,12 +559,12 @@
 }
 
 .vocab-composer-star-primary {
-  color: #f5c542 !important;
+  color: var(--accent-lime) !important;
 }
 
 .vocab-composer-star-primary:hover:not(:disabled) {
-  color: #ffd666 !important;
-  background: color-mix(in oklab, #f5c542 16%, transparent) !important;
+  color: color-mix(in oklab, var(--accent-lime) 88%, white) !important;
+  background: color-mix(in oklab, var(--accent-lime) 16%, transparent) !important;
 }
 
 /* --- Chip boards (tags / synonyms) --- */
@@ -995,8 +1044,11 @@
   }
 
   .vocab-meaning-toolbar-meta {
+    display: inline-flex;
     min-height: 2.5rem;
-    justify-self: start;
+    width: 100%;
+    justify-content: flex-start;
+    justify-self: stretch;
   }
 
   .vocab-meaning-usage {

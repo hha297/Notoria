@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Laienda näidet",
+    "collapseExample": "Ahenda näidet"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Seanss lõpetatud!",
     "tryAgain": "Proovi uuesti",
-    "ratingFailed": "Hinnangut ei õnnestunud salvestada"
+    "ratingFailed": "Hinnangut ei õnnestunud salvestada",
+    "filterRecentlyAdded": "Hiljuti lisatud (48 h)",
+    "practiceSort": {
+      "label": "Harjutamise järjekord",
+      "newest": "Uusimad enne",
+      "oldest": "Vanimad enne",
+      "last_practiced": "Viimati harjutatud",
+      "least_recently_practiced": "Kõige kauem harjutamata",
+      "most_practiced": "Enim harjutatud",
+      "least_practiced": "Kõige vähem harjutatud"
+    },
+    "recentlyAddedEmpty": "Viimase 48 tunni jooksul ei lisatud ühtegi sõna."
   },
   "dashboard": {
     "overview": "Ülevaade",

@@ -398,6 +398,8 @@
     "examples": "Esimerkkilauseet",
     "addExample": "Lisää esimerkki",
     "removeExample": "Poista esimerkki",
+    "expandExample": "Laajenna esimerkki",
+    "collapseExample": "Pienennä esimerkki",
     "examplePlaceholder": "Kirjoita esimerkkilause",
     "exampleDetails": "Lisätiedot",
     "exampleDetailsFilled": "Täytetty",
@@ -1354,7 +1356,18 @@
     },
     "sessionComplete": "Harjoitus valmis!",
     "tryAgain": "Yritä uudelleen",
-    "ratingFailed": "Arviota ei voitu tallentaa"
+    "ratingFailed": "Arviota ei voitu tallentaa",
+    "filterRecentlyAdded": "Vasta lisätyt (48 h)",
+    "practiceSort": {
+      "label": "Harjoittelujärjestys",
+      "newest": "Uusimmat ensin",
+      "oldest": "Vanhimmat ensin",
+      "last_practiced": "Viimeksi harjoiteltu",
+      "least_recently_practiced": "Kauan sitten harjoiteltu",
+      "most_practiced": "Eniten harjoiteltu",
+      "least_practiced": "Vähiten harjoiteltu"
+    },
+    "recentlyAddedEmpty": "Ei sanoja lisätty viimeisen 48 tunnin aikana."
   },
   "dashboard": {
     "overview": "Yleiskatsaus",

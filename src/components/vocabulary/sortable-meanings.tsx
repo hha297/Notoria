@@ -21,10 +21,7 @@ import { CSS } from "@dnd-kit/utilities";
 import { GripVertical, Plus, Star, Trash2 } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { toast } from "sonner";
-import {
-  VocabularyAiChecking,
-  VocabularyAiSuggestionCard,
-} from "@/components/vocabulary/ai-suggestion-card";
+import { VocabularyAiSuggestionCard } from "@/components/vocabulary/ai-suggestion-card";
 import { CapitalizedInput } from "@/components/form/capitalized-text";
 import { Button } from "@/components/ui/button";
 import {
@@ -56,8 +53,9 @@ import {
 } from "@/lib/vocabulary/replace-examples-for-meaning";
 import { cn } from "@/lib/utils";
 
-const MEANING_DEBOUNCE_MS = 500;
-const MEANING_PARTIAL_DEBOUNCE_MS = 1_200;
+/** Silent background meaning check — only after the learner pauses. */
+const MEANING_DEBOUNCE_MS = 4_000;
+const MEANING_PARTIAL_DEBOUNCE_MS = 5_500;
 
 export type MeaningItem = {
   id: string;
@@ -204,7 +202,12 @@ function MeaningRowShell({
       </div>
       {aiFooter}
       {examplesFooter ? (
-        <div className="mt-3 border-t border-hairline-cloud/70 px-3.5 pt-3 pb-3.5 sm:px-4 sm:pb-4">
+        <div
+          className={mx(
+            composerStyles,
+            "vocab-composer-meaning-examples mt-3 border-t border-hairline-cloud/70 px-3 pt-3 pb-3.5 sm:px-3.5 sm:pb-4",
+          )}
+        >
           {examplesFooter}
         </div>
       ) : null}
@@ -387,11 +390,6 @@ export function SortableMeanings({
     abortById.current[id]?.abort();
     const controller = new AbortController();
     abortById.current[id] = controller;
-    setAiState((current) => ({
-      ...current,
-      [id]: { checking: true, result: null },
-    }));
-
     try {
       const response = await fetch("/api/ai/vocabulary/meaning", {
         method: "POST",
@@ -490,10 +488,7 @@ export function SortableMeanings({
     if (!checkQueue.current.includes(id)) {
       checkQueue.current.push(id);
     }
-    setAiState((current) => ({
-      ...current,
-      [id]: { checking: true, result: current[id]?.result ?? null },
-    }));
+    // Keep validation silent — no checking spinner/label while requests run.
     void drainCheckQueue();
   }
 
@@ -623,9 +618,6 @@ export function SortableMeanings({
   function meaningAiFooter(item: MeaningItem) {
     const state = aiState[item.id];
     if (!ai?.enabled) return null;
-    if (state?.checking) {
-      return <VocabularyAiChecking />;
-    }
     if (!state?.result || state.result.isLikelyCorrect !== false) return null;
 
     const suggestion = sanitizeMeaningSuggestions(
@@ -831,10 +823,13 @@ export function SortableMeanings({
         </div>
         <Button
           type="button"
-          variant="outline"
+          variant="ghost"
           size="sm"
           onClick={addMeaning}
-          className={mx(composerStyles, "vocab-composer-add")}
+          className={mx(
+            composerStyles,
+            "vocab-composer-add vocab-composer-add-nested",
+          )}
         >
           <Plus className="size-4" />
           {t("addMeaning")}

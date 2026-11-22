@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Proširi primjer",
+    "collapseExample": "Sažmi primjer"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sesija je završena!",
     "tryAgain": "Pokušaj ponovo",
-    "ratingFailed": "Ne moguće sačuvati vašu ocjenu"
+    "ratingFailed": "Ne moguće sačuvati vašu ocjenu",
+    "filterRecentlyAdded": "Nedavno dodano (48 h)",
+    "practiceSort": {
+      "label": "Redoslijed vježbanja",
+      "newest": "Najnovije prvo",
+      "oldest": "Najstarije prvo",
+      "last_practiced": "Zadnje vježbano",
+      "least_recently_practiced": "Najduže nevježbano",
+      "most_practiced": "Najviše vježbano",
+      "least_practiced": "Najmanje vježbano"
+    },
+    "recentlyAddedEmpty": "Nema riječi dodanih u posljednjih 48 sati."
   },
   "dashboard": {
     "overview": "Pregled",

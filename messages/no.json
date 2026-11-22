@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Utvid eksempel",
+    "collapseExample": "Skjul eksempel"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Økten er fullført!",
     "tryAgain": "Prøv igjen",
-    "ratingFailed": "Kunne ikke lagre vurderingen din"
+    "ratingFailed": "Kunne ikke lagre vurderingen din",
+    "filterRecentlyAdded": "Nylig lagt til (48 t)",
+    "practiceSort": {
+      "label": "Øvingsrekkefølge",
+      "newest": "Nyeste først",
+      "oldest": "Eldste først",
+      "last_practiced": "Sist øvd",
+      "least_recently_practiced": "Lengst siden øvd",
+      "most_practiced": "Mest øvd",
+      "least_practiced": "Minst øvd"
+    },
+    "recentlyAddedEmpty": "Ingen ord lagt til de siste 48 timene."
   },
   "dashboard": {
     "overview": "Oversikt",
