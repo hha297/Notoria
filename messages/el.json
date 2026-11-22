@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Ανάπτυξη παραδείγματος",
+    "collapseExample": "Σύμπτυξη παραδείγματος"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Η συνεδρία ολοκληρώθηκε!",
     "tryAgain": "Δοκιμάστε ξανά",
-    "ratingFailed": "Δεν ήταν δυνατή η αποθήκευση της βαθμολόγησής σας"
+    "ratingFailed": "Δεν ήταν δυνατή η αποθήκευση της βαθμολόγησής σας",
+    "filterRecentlyAdded": "Πρόσφατα προστεθέντα (48 ώρες)",
+    "practiceSort": {
+      "label": "Σειρά εξάσκησης",
+      "newest": "Νεότερα πρώτα",
+      "oldest": "Παλαιότερα πρώτα",
+      "last_practiced": "Τελευταία εξάσκηση",
+      "least_recently_practiced": "Πιο παλιά εξάσκηση",
+      "most_practiced": "Περισσότερη εξάσκηση",
+      "least_practiced": "Λιγότερη εξάσκηση"
+    },
+    "recentlyAddedEmpty": "Δεν προστέθηκαν λέξεις τις τελευταίες 48 ώρες."
   },
   "dashboard": {
     "overview": "Επισκόπηση",

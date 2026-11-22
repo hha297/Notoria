@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Išskleisti pavyzdį",
+    "collapseExample": "Suskleisti pavyzdį"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sesija baigta!",
     "tryAgain": "Bandyti dar kartą",
-    "ratingFailed": "Nepavyko išsaugoti įvertinimo"
+    "ratingFailed": "Nepavyko išsaugoti įvertinimo",
+    "filterRecentlyAdded": "Neseniai pridėti (48 val.)",
+    "practiceSort": {
+      "label": "Treniruočių tvarka",
+      "newest": "Naujausi pirmi",
+      "oldest": "Seniausi pirmi",
+      "last_practiced": "Paskutinė treniruotė",
+      "least_recently_practiced": "Ilgiausiai netreniruoti",
+      "most_practiced": "Daugiausia treniruoti",
+      "least_practiced": "Mažiausiai treniruoti"
+    },
+    "recentlyAddedEmpty": "Per pastarąsias 48 valandas nepridėta jokių žodžių."
   },
   "dashboard": {
     "overview": "Apžvalga",

@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Zgjero shembullin",
+    "collapseExample": "Palos shembullin"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Seanca përfundoi!",
     "tryAgain": "Provo përsëri",
-    "ratingFailed": "Nuk mund të ruhej vlerësimi juaj"
+    "ratingFailed": "Nuk mund të ruhej vlerësimi juaj",
+    "filterRecentlyAdded": "Shtuar së fundmi (48 orë)",
+    "practiceSort": {
+      "label": "Renditja e ushtrimit",
+      "newest": "Më të rejat fillimisht",
+      "oldest": "Më të vjetrat fillimisht",
+      "last_practiced": "Ushtrimi i fundit",
+      "least_recently_practiced": "Më gjatë pa ushtruar",
+      "most_practiced": "Më të ushtruara",
+      "least_practiced": "Më pak të ushtruara"
+    },
+    "recentlyAddedEmpty": "Nuk u shtuan fjalë në 48 orët e fundit."
   },
   "dashboard": {
     "overview": "Përmbledhje",

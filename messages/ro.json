@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Extinde exemplul",
+    "collapseExample": "Restrânge exemplul"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sesiune finalizată!",
     "tryAgain": "Încercați din nou",
-    "ratingFailed": "Nu s-a putut salva evaluarea"
+    "ratingFailed": "Nu s-a putut salva evaluarea",
+    "filterRecentlyAdded": "Adăugate recent (48 h)",
+    "practiceSort": {
+      "label": "Ordinea exercițiilor",
+      "newest": "Cele mai noi primele",
+      "oldest": "Cele mai vechi primele",
+      "last_practiced": "Ultima practică",
+      "least_recently_practiced": "Cel mai demult practicate",
+      "most_practiced": "Cele mai practicate",
+      "least_practiced": "Cele mai puțin practicate"
+    },
+    "recentlyAddedEmpty": "Nu au fost adăugate cuvinte în ultimele 48 de ore."
   },
   "dashboard": {
     "overview": "Prezentare generală",

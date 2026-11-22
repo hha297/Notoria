@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Voorbeeld uitklappen",
+    "collapseExample": "Voorbeeld inklappen"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sessie voltooid!",
     "tryAgain": "Opnieuw proberen",
-    "ratingFailed": "Uw beoordeling kon niet worden opgeslagen"
+    "ratingFailed": "Uw beoordeling kon niet worden opgeslagen",
+    "filterRecentlyAdded": "Recent toegevoegd (48 u)",
+    "practiceSort": {
+      "label": "Oefenvolgorde",
+      "newest": "Nieuwste eerst",
+      "oldest": "Oudste eerst",
+      "last_practiced": "Laatst geoefend",
+      "least_recently_practiced": "Langst niet geoefend",
+      "most_practiced": "Meest geoefend",
+      "least_practiced": "Minst geoefend"
+    },
+    "recentlyAddedEmpty": "Geen woorden toegevoegd in de afgelopen 48 uur."
   },
   "dashboard": {
     "overview": "Overzicht",

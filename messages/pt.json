@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "Expandir exemplo",
+    "collapseExample": "Recolher exemplo"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "Sessão concluída!",
     "tryAgain": "Tentar novamente",
-    "ratingFailed": "Não foi possível guardar a classificação"
+    "ratingFailed": "Não foi possível guardar a classificação",
+    "filterRecentlyAdded": "Adicionados recentemente (48 h)",
+    "practiceSort": {
+      "label": "Ordem de prática",
+      "newest": "Mais recentes primeiro",
+      "oldest": "Mais antigos primeiro",
+      "last_practiced": "Última prática",
+      "least_recently_practiced": "Menos praticados recentemente",
+      "most_practiced": "Mais praticados",
+      "least_practiced": "Menos praticados"
+    },
+    "recentlyAddedEmpty": "Nenhuma palavra adicionada nas últimas 48 horas."
   },
   "dashboard": {
     "overview": "Visão geral",

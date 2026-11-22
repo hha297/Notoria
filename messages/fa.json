@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "باز کردن مثال",
+    "collapseExample": "بستن مثال"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "جلسه تمام شد!",
     "tryAgain": "دوباره امتحان کنید",
-    "ratingFailed": "ذخیره امتیاز ممکن نشد"
+    "ratingFailed": "ذخیره امتیاز ممکن نشد",
+    "filterRecentlyAdded": "به‌تازگی اضافه‌شده (۴۸ ساعت)",
+    "practiceSort": {
+      "label": "ترتیب تمرین",
+      "newest": "جدیدترین‌ها اول",
+      "oldest": "قدیمی‌ترین‌ها اول",
+      "last_practiced": "آخرین تمرین",
+      "least_recently_practiced": "دیرترین تمرین",
+      "most_practiced": "بیشترین تمرین",
+      "least_practiced": "کمترین تمرین"
+    },
+    "recentlyAddedEmpty": "در ۴۸ ساعت گذشته واژه‌ای اضافه نشده است."
   },
   "dashboard": {
     "overview": "نمای کلی",

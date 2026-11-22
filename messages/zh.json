@@ -604,7 +604,9 @@
     "unassignedExamplesHint": "Word-level examples not tied to a specific meaning. Assign them to a meaning when you know which sense they illustrate.",
     "noExamplesForMeaning": "No examples for this meaning yet.",
     "noUnassignedExamples": "No unassigned examples.",
-    "assignExampleMeaning": "Move example to a meaning"
+    "assignExampleMeaning": "Move example to a meaning",
+    "expandExample": "展开例句",
+    "collapseExample": "收起例句"
   },
   "tags": {
     "groups": {
@@ -1549,7 +1551,18 @@
     },
     "sessionComplete": "本轮完成！",
     "tryAgain": "再试一次",
-    "ratingFailed": "无法保存评分"
+    "ratingFailed": "无法保存评分",
+    "filterRecentlyAdded": "最近添加（48 小时）",
+    "practiceSort": {
+      "label": "练习顺序",
+      "newest": "最新优先",
+      "oldest": "最旧优先",
+      "last_practiced": "最近练习",
+      "least_recently_practiced": "最久未练习",
+      "most_practiced": "练习最多",
+      "least_practiced": "练习最少"
+    },
+    "recentlyAddedEmpty": "过去 48 小时内没有添加单词。"
   },
   "dashboard": {
     "overview": "概览",
