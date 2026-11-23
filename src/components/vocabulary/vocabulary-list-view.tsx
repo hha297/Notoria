@@ -76,33 +76,47 @@ function VocabularyListItem({
         data-vocab-pos={pos || "none"}
         className={mx(
           featureStyles,
-          "vocab-module group grid gap-2.5 px-3 pt-3.5 pb-2.5 sm:grid-cols-[3.5rem_minmax(0,1fr)_auto] sm:items-center sm:gap-3 sm:gap-x-4 sm:px-3.5 sm:pt-4 sm:pb-3",
+          "vocab-module group grid grid-cols-[2.75rem_minmax(0,1fr)] items-start gap-x-3 gap-y-2.5 px-3 pt-3.5 pb-2.5 sm:grid-cols-[3.5rem_minmax(0,1fr)] sm:gap-x-4 sm:px-3.5 sm:pt-4 sm:pb-3",
         )}
       >
         <p
-          className={mx(
-            featureStyles,
-            "vocab-module-index max-sm:hidden",
-          )}
+          className={mx(featureStyles, "vocab-module-index self-start pt-0.5")}
           aria-hidden
         >
           {String(index + 1).padStart(2, "0")}
         </p>
 
         <div className="min-w-0">
-          <p className={mx(featureStyles, "vocab-module-kicker")}>{posLabel}</p>
-          <h3 className={mx(featureStyles, "vocab-module-title")}>
+          <div className="flex items-center justify-between gap-3">
+            <div className="min-w-0 flex-1">
+              <p className={mx(featureStyles, "vocab-module-kicker")}>
+                {posLabel}
+              </p>
+              <h3 className={mx(featureStyles, "vocab-module-title")}>
+                <Link
+                  href={href}
+                  className={cn(
+                    "rounded-sm text-ink transition-colors",
+                    "group-hover:text-(--vocab-pos-accent) hover:text-(--vocab-pos-accent)",
+                    "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--vocab-pos-accent)/40",
+                  )}
+                >
+                  {word.word}
+                </Link>
+              </h3>
+            </div>
             <Link
               href={href}
-              className={cn(
-                "rounded-sm text-ink transition-colors",
-                "group-hover:text-(--vocab-pos-accent) hover:text-(--vocab-pos-accent)",
-                "focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--vocab-pos-accent)/40",
+              className={mx(
+                featureStyles,
+                "vocab-module-cta vocab-module-cta-desktop shrink-0",
               )}
             >
-              {word.word}
+              {tCommon("open")}
+              <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
             </Link>
-          </h3>
+          </div>
+
           <VocabularyMeaningPreview
             word={word}
             variant="list"
@@ -113,26 +127,29 @@ function VocabularyListItem({
               <VocabularyWordTags tags={word.tags} limit={4} matchCardAccent />
             </div>
           ) : null}
-          <p className="mt-1.5 text-[11px] leading-4 text-muted-foreground">
-            {t("updatedAgo", { time: updated })}
-          </p>
+          <div className="mt-1.5 flex items-center justify-between gap-2">
+            <p className="min-w-0 text-[11px] leading-4 text-muted-foreground">
+              {t("updatedAgo", { time: updated })}
+            </p>
+            <VocabularyRowActions
+              wordId={word.id}
+              word={word.word}
+              workspaceId={workspaceId}
+              onEdit={() => onEditWord(word)}
+            />
+          </div>
         </div>
 
-        <div className="flex min-w-0 flex-wrap items-center gap-1.5 max-sm:col-span-full sm:shrink-0 sm:flex-col sm:items-end">
-          <Link
-            href={href}
-            className={mx(featureStyles, "vocab-module-cta max-sm:flex-1 max-sm:justify-center")}
-          >
-            {tCommon("open")}
-            <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
-          </Link>
-          <VocabularyRowActions
-            wordId={word.id}
-            word={word.word}
-            workspaceId={workspaceId}
-            onEdit={() => onEditWord(word)}
-          />
-        </div>
+        <Link
+          href={href}
+          className={mx(
+            featureStyles,
+            "vocab-module-cta vocab-module-cta-mobile col-span-full",
+          )}
+        >
+          {tCommon("open")}
+          <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
+        </Link>
       </article>
     </li>
   );

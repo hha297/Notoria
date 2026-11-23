@@ -12,6 +12,7 @@ import { SynonymLinks } from "@/components/vocabulary/synonym-links";
 import { VocabularyNotesContent } from "@/components/vocabulary/vocabulary-notes-content";
 import detailStyles from "@/components/style/workspace/detail.module.css";
 import lexiconStyles from "@/components/style/vocabulary/lexicon.module.css";
+import { cn } from "@/lib/utils";
 import { mx } from "@/lib/css-module";
 import {
   isNotesDocEmpty,
@@ -134,7 +135,7 @@ export function VocabularyPreview({
 
   return (
     <div
-      className={mx(detailStyles, "shell")}
+      className={cn(mx(detailStyles, "shell"), "vocab-lexicon")}
       data-detail="vocab"
       data-vocab-pos={posKey}
     >
@@ -226,8 +227,13 @@ export function VocabularyPreview({
                   clamp={false}
                 />
                 {senseExamples.length > 0 ? (
-                  <div className="mt-4 space-y-2">
-                    <p className="text-xs font-semibold tracking-[0.14em] text-muted-foreground uppercase">
+                  <div
+                    className={mx(
+                      lexiconStyles,
+                      "vocab-preview-sense-examples",
+                    )}
+                  >
+                    <p className={mx(lexiconStyles, "vocab-preview-sense-examples-label")}>
                       {t("examples")}
                     </p>
                     {renderExampleList(senseExamples, sense.id)}
