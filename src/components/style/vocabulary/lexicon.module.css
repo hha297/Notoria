@@ -3315,6 +3315,29 @@
   padding-inline: 0.55rem;
 }
 
+/* Beat base .vocab-module-cta { display: inline-flex } — Tailwind hidden loses. */
+.vocab-module-cta-desktop {
+  display: none;
+}
+
+@media (min-width: 640px) {
+  .vocab-module-cta-desktop {
+    display: inline-flex;
+  }
+}
+
+.vocab-module-cta-mobile {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+}
+
+@media (min-width: 640px) {
+  .vocab-module-cta-mobile {
+    display: none;
+  }
+}
+
 .vocab-module-actions {
   display: flex;
   justify-content: flex-end;
@@ -3939,4 +3962,123 @@
   width: 100%;
   max-width: none;
   border-radius: 0;
+}
+
+/* Sense-scoped examples under meanings — match meaning inset padding. */
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples {
+  display: flex;
+  flex-direction: column;
+  gap: 0.55rem;
+  margin: 0;
+  padding: 0.15rem 1rem 1rem;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples-label {
+  margin: 0;
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--muted-foreground);
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-list {
+  gap: 0;
+  padding: 0;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-example {
+  grid-template-columns: 2rem minmax(0, 1fr);
+  gap: 0.75rem;
+  align-items: start;
+  padding: 0.85rem 0;
+  border-top: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 10%, var(--border));
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-example:first-child {
+  padding-top: 0.35rem;
+  border-top: 0;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-index {
+  display: inline-flex;
+  width: 1.75rem;
+  height: 1.55rem;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 30%, transparent);
+  border-radius: 0.35rem;
+  background: color-mix(in oklab, var(--vocab-pos-accent) 8%, transparent);
+  color: var(--vocab-pos-accent);
+  font-family: var(--font-mono, ui-monospace, monospace);
+  font-size: 0.62rem;
+  line-height: 1;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-aside {
+  display: grid;
+  grid-template-columns: minmax(7.5rem, auto) minmax(0, 1fr);
+  gap: 0.25rem 0.7rem;
+  align-items: baseline;
+  margin: 0;
+  padding: 0.55rem 0.7rem;
+  border-left: 2px solid
+    color-mix(in oklab, var(--vocab-pos-accent) 44%, transparent);
+  background: color-mix(in oklab, var(--vocab-pos-accent) 4%, transparent);
+  font-size: 0.86rem;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-aside-label {
+  margin: 0;
+  color: color-mix(in oklab, var(--vocab-pos-accent) 72%, var(--ink));
+  font-size: 0.66rem;
+  font-weight: 750;
+  letter-spacing: 0.055em;
+  text-transform: uppercase;
+}
+
+:global([data-detail="vocab"])
+  .vocab-preview-stage
+  .vocab-preview-sense-examples
+  .vocab-preview-aside-label::after {
+  content: none;
+}
+
+@media (max-width: 639px) {
+  :global([data-detail="vocab"])
+    .vocab-preview-stage
+    .vocab-preview-sense-examples {
+    padding: 0.1rem 0.85rem 0.85rem;
+  }
+
+  :global([data-detail="vocab"])
+    .vocab-preview-stage
+    .vocab-preview-sense-examples
+    .vocab-preview-aside {
+    grid-template-columns: minmax(0, 1fr);
+  }
 }

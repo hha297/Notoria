@@ -126,8 +126,13 @@ type VocabularyFormProps = {
 
 type WordCheckStatus = "idle" | "pending" | "checking" | "duplicate" | "unique" | "error";
 
-/** Wait for typing to settle before duplicate checks (silent background). */
-const WORD_CHECK_DEBOUNCE_MS = 4_000;
+/**
+ * Minimal settle so duplicate feedback appears as soon as typing pauses.
+ * Request ids already drop stale responses — keep this short, not absent,
+ * so a burst of keystrokes does not fan out one server action each.
+ * (AI spelling checks keep their own longer debounce elsewhere.)
+ */
+const WORD_CHECK_DEBOUNCE_MS = 100;
 
 function normalizeWordInput(word: string) {
   return normalizeVocabularyWord(word);
@@ -518,14 +523,15 @@ export function VocabularyForm({
             .prefetchQuery(vocabularyListQueryOptions(workspaceId))
             .catch(() => undefined);
         }
-        try {
-          router.prefetch("/vocabulary");
-        } catch {
-          // Prefetch is best-effort.
+        const afterCreateHref = previewHref ?? "/vocabulary";
+        toast.success(t("saved"));
+        // One hard navigation after create — soft replace can race with
+        // revalidatePath and briefly remount the form (list → form → list).
+        if (typeof window !== "undefined") {
+          window.location.replace(afterCreateHref);
+        } else {
+          navigateAfterSuccess(router, afterCreateHref);
         }
-        navigateAfterSuccess(router, "/vocabulary", {
-          toast: () => toast.success(t("saved")),
-        });
       }
       // Keep isSaving/lock true through navigation so Save cannot flash enabled.
     } catch (error) {

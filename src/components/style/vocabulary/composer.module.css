@@ -1820,8 +1820,9 @@
 }
 
 @media (min-width: 640px) {
+  /* Cancel left, Save right (submit stays first in DOM for mobile stack). */
   .vocab-composer-actions {
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: center;
     justify-content: stretch;
     gap: 0.65rem;

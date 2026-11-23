@@ -73,24 +73,36 @@ function VocabularyCard({
       data-vocab-pos={pos || "none"}
       className={mx(featureStyles, "vocab-module-card group")}
     >
-      <div className="flex items-start justify-between gap-3 max-sm:justify-end">
+      <div className="flex items-center justify-between gap-3">
         <p
           className={mx(
             featureStyles,
-            "vocab-module-index vocab-module-index-sm max-sm:hidden",
+            "vocab-module-index vocab-module-index-sm",
           )}
           aria-hidden
         >
           {String(index + 1).padStart(2, "0")}
         </p>
-        <Link href={href} className={mx(featureStyles, "vocab-module-cta vocab-module-cta-sm")}>
+        <Link
+          href={href}
+          className={mx(
+            featureStyles,
+            "vocab-module-cta vocab-module-cta-sm shrink-0",
+          )}
+        >
           {tCommon("open")}
           <ArrowRight className="size-3.5 transition-transform duration-200 group-hover:translate-x-0.5 motion-reduce:transform-none" />
         </Link>
       </div>
-
-      <p className={mx(featureStyles, "vocab-module-kicker")}>{posLabel}</p>
-      <h3 className={mx(featureStyles, "vocab-module-title vocab-module-title-card")}>
+      <p className={mx(featureStyles, "vocab-module-kicker mt-1.5")}>
+        {posLabel}
+      </p>
+      <h3
+        className={mx(
+          featureStyles,
+          "vocab-module-title vocab-module-title-card",
+        )}
+      >
         <Link
           href={href}
           className="rounded-sm text-ink transition-colors group-hover:text-(--vocab-pos-accent) hover:text-(--vocab-pos-accent) focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-(--vocab-pos-accent)/40"

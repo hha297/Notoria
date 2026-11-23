@@ -28,20 +28,18 @@ export default async function VocabularyWordPage({
 
   return (
     <PageShell className="vocab-lexicon-shell">
-      <div className="vocab-lexicon writing-atelier">
-        <VocabularyPreview
-          id={word.id}
-          word={word.word}
-          partOfSpeech={word.partOfSpeech}
-          synonyms={word.synonymRefs}
-          unmatchedSynonyms={word.unmatchedSynonyms}
-          notes={word.notes}
-          meanings={word.meanings}
-          examples={word.examples}
-          tags={word.tags}
-          reviewLaterMarked={reviewLaterMarked}
-        />
-      </div>
+      <VocabularyPreview
+        id={word.id}
+        word={word.word}
+        partOfSpeech={word.partOfSpeech}
+        synonyms={word.synonymRefs}
+        unmatchedSynonyms={word.unmatchedSynonyms}
+        notes={word.notes}
+        meanings={word.meanings}
+        examples={word.examples}
+        tags={word.tags}
+        reviewLaterMarked={reviewLaterMarked}
+      />
     </PageShell>
   );
 }
